@@ -1,0 +1,4 @@
+pip-tools
+django~=3.2.3
+django-environ~=0.4.5
+mysqlclient~=2.0.3
