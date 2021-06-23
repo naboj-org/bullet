@@ -2,14 +2,15 @@ import os
 from pathlib import Path
 import environ
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
-SECRET_KEY = env('SECRET_KEY')
+# This will be overwritten by prod ENV
+SECRET_KEY = '3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^'
 DEBUG = env('DEBUG', default=False)
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=[])
+ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=['localhost'])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -18,6 +19,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('POSTGRES_DB', 'bullet'),
+        'USER': os.environ.get('POSTGRES_USER', 'bullet'),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "bullet"),
+        'HOST': os.environ.get('POSTGRES_HOST', 'bullet-db'),
+        'PORT': os.environ.get('POSTGRES_PORT', 5432)
+    }
+}
+
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 MIDDLEWARE = [
@@ -49,10 +65,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'bullet.wsgi.application'
-
-DATABASES = {
-    'default': env.db('DATABASE_URL')
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {

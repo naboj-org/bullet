@@ -1,0 +1,33 @@
+version: '3'
+services:
+  bullet-db:
+    image: postgres:10-alpine
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_USER=bullet
+      - POSTGRES_PASSWORD=bullet
+      - POSTGRES_DB=bullet
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+  bullet-web:
+    build:
+      context: .
+      dockerfile: development.Dockerfile
+    image: bullet
+    env_file:
+      - .env
+    environment:
+      - DJANGO_SETTINGS_MODULE=bullet.settings.development
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./bullet/:/usr/src/bullet/
+    depends_on:
+      - bullet-db
+    command: python manage.py runserver 0.0.0.0:8000
+
+volumes:
+  postgres_data:
