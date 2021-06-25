@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath bullet bullet.wsgi --log-level DEBUG --access-logfile - --log-file -

@@ -16,8 +16,6 @@ django==3.2.4
     #   django-debug-toolbar
 django-debug-toolbar==3.2.1
     # via -r requirements.in
-django-environ==0.4.5
-    # via -r requirements.in
 gunicorn==20.1.0
     # via -r requirements.in
 pep517==0.10.0
