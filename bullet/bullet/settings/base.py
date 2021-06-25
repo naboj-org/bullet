@@ -1,16 +1,11 @@
 import os
 from pathlib import Path
-import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-env = environ.Env()
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
 # This will be overwritten by prod ENV
 SECRET_KEY = '3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^'
-DEBUG = env('DEBUG', default=False)
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default=['localhost'])
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", 'localhost').split(" ")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -88,5 +83,5 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
-STATIC_ROOT = env('STATIC_ROOT', default=BASE_DIR / 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
