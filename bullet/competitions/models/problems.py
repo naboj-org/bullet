@@ -30,5 +30,5 @@ class CompetitionProblem(models.Model):
 class SolutionSubmitLog(models.Model):
     problem = models.ForeignKey('competitions.CompetitionProblem', on_delete=models.CASCADE)
     team = models.ForeignKey('users.Team', on_delete=models.CASCADE)
-    staff = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
+    staff = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)

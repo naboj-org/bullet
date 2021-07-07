@@ -15,10 +15,10 @@ class CompetitionSite(models.Model):
     capacity = models.PositiveIntegerField(default=0)
 
     accepted_languages = ArrayField(base_field=models.IntegerField())
-    local_start = models.DateTimeField(null=True)
+    local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)
     participants_hidden = models.BooleanField(default=False)
-    email_alias = models.EmailField(null=True)
+    email_alias = models.EmailField(null=True, blank=True)
 
     class Meta:
         unique_together = ('category_competition', 'site')

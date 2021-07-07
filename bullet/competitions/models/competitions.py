@@ -1,5 +1,4 @@
 from django.contrib.postgres.fields import ArrayField
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import IntegerChoices
 from django.utils.translation import ugettext_lazy as _
@@ -19,7 +18,7 @@ class Competition(models.Model):
     web_start = models.DateTimeField()
 
     registration_start = models.DateTimeField()
-    registration_second_round_start = models.DateTimeField(null=True)
+    registration_second_round_start = models.DateTimeField(null=True, blank=True)
     registration_end = models.DateTimeField()
 
     competition_start = models.DateTimeField()
@@ -43,10 +42,10 @@ class CategoryCompetition(models.Model):
     competition = models.ForeignKey('competitions.Competition', on_delete=models.CASCADE)
     category = models.IntegerField(choices=Category.choices)
 
-    problems_per_team = models.PositiveIntegerField(null=True)
-    max_teams_per_school = models.PositiveIntegerField(null=True)
-    max_teams_second_round = models.PositiveIntegerField(null=True)
-    max_members_per_team = models.PositiveIntegerField(null=True)
+    problems_per_team = models.PositiveIntegerField(null=True, blank=True)
+    max_teams_per_school = models.PositiveIntegerField(null=True, blank=True)
+    max_teams_second_round = models.PositiveIntegerField(null=True, blank=True)
+    max_members_per_team = models.PositiveIntegerField(null=True, blank=True)
 
     ranking = ArrayField(base_field=models.PositiveIntegerField(choices=RankingCriteria.choices))
 
