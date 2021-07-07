@@ -14,12 +14,21 @@ django==3.2.4
     # via
     #   -r requirements.in
     #   django-debug-toolbar
+    #   django-phonenumber-field
+django-address==0.2.5
+    # via -r requirements.in
+django-countries==7.2.1
+    # via -r requirements.in
 django-debug-toolbar==3.2.1
+    # via -r requirements.in
+django-phonenumber-field==5.2.0
     # via -r requirements.in
 gunicorn==20.1.0
     # via -r requirements.in
 pep517==0.10.0
     # via pip-tools
+phonenumbers==8.12.26
+    # via -r requirements.in
 pip-tools==6.1.0
     # via -r requirements.in
 psycopg2==2.9.1
