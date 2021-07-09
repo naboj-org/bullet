@@ -21,6 +21,8 @@ django-countries==7.2.1
     # via -r requirements.in
 django-debug-toolbar==3.2.1
     # via -r requirements.in
+django-hosts==4.0
+    # via -r requirements.in
 django-phonenumber-field==5.2.0
     # via -r requirements.in
 gunicorn==20.1.0
