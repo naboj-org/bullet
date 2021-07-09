@@ -5,10 +5,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # This will be overwritten by prod ENV
 SECRET_KEY = '3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", 'localhost').split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", 'localhost math.localhost physics.localhost junior.localhost').split(" ")
 
 INSTALLED_APPS = [
     'address',
+    'django_hosts',
     'phonenumber_field',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -17,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'users',
-    'competitions'
+    'competitions',
+    'web'
 ]
 
 DATABASES = {
@@ -36,6 +38,7 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
+    'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -43,9 +46,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_hosts.middleware.HostsResponseMiddleware'
 ]
 
-ROOT_URLCONF = 'bullet.urls'
+DEFAULT_HOST = 'math'
+ROOT_URLCONF = 'web.urls_shared'
+ROOT_HOSTCONF = 'bullet.hosts'
 
 TEMPLATES = [
     {
