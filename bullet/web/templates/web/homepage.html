@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Welcome to {{ branch.name }} Naboj</title>
-</head>
-<body>
-    <h1>Welcome to {{ branch.name }} Naboj</h1>
-</body>
-</html>
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block content %}
+    <div id="banner">
+        <img src="{% static 'web/img/naboj_logo_big.png' %}">
+    </div>
+{% endblock %}

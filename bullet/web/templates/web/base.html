@@ -1,0 +1,82 @@
+{% load static %}
+{% load hosts %}
+{% load web %}
+
+<meta charset="utf-8">
+<title>Náboj {{ branch.label }}</title>
+
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" type="text/css"/>
+    {% if branch %}
+        <link rel="stylesheet" href="{% branch_static 'web/css/{branch}.css' %}" type="text/css"/>
+    {% endif %}
+{% endblock %}
+
+<body>
+{% block main %}
+    <div class="container">
+        <div class="row navigation">
+            <a class="btn btn-dark" href="{% host_url 'homepage' host 'math' %}">Math</a>
+            <a class="btn btn-dark" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
+            <a class="btn btn-dark" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
+        </div>
+
+        {% block messages %}
+            {% if messages %}
+                <ul class="messagelist">{% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+                {% endfor %}</ul>
+            {% endif %}
+        {% endblock messages %}
+
+        {% block content %}
+            {# Actual page content goes here #}
+        {% endblock %}
+
+        <div class="card-footer">
+            <h5>Organizátori</h5>
+            <a href="https://trojsten.sk/">
+                <img src="{% static 'web/img/organizers/logo_trojsten.png' %}">
+            </a>
+            <a href="https://seminar.strom.sk/sk/prispevky/">
+                <img src="{% static 'web/img/organizers/logo_strom.png' %}">
+            </a>
+            <a href="https://fykos.cz/">
+                <img src="{% static 'web/img/organizers/logo_fykos.png' %}">
+            </a>
+            <br>
+            <a href="https://www.gvoz.cz/">
+                <img src="{% static 'web/img/organizers/ostrava-logo.png' %}">
+            </a>
+            <a href="https://www.epsyoungminds.org/">
+                <img src="{% static 'web/img/organizers/logo_byms.png' %}">
+            </a>
+            <div class="divider"></div>
+
+            <h5>Partneri</h5>
+            <a href="https://www.nadaciaeset.sk/">
+                <img src="{% static 'web/img/partners/logo_eset_nadacia.png' %}">
+            </a>
+            <a href="https://www.fmph.uniba.sk/">
+                <img src="{% static 'web/img/partners/bratislava-logo.png' %}">
+            </a>
+            <a href="https://upjs.sk/">
+                <img src="{% static 'web/img/partners/kosice-logo.png' %}">
+            </a>
+            <a href="https://www.mff.cuni.cz/">
+                <img src="{% static 'web/img/partners/praha-logo.png' %}">
+            </a>
+            <br>
+            <a href="https://bmstu.ru/en/">
+                <img src="{% static 'web/img/partners/moscow-mgtu-logo.png' %}">
+            </a>
+            <a href="https://www.ostrava.cz/en">
+                <img src="{% static 'web/img/partners/logo_ostrava.png' %}">
+            </a>
+            <a href="https://ttk.elte.hu/">
+                <img src="{% static 'web/img/partners/budapest-logo.png' %}">
+            </a>
+        </div>
+    </div>
+{% endblock %}
+</body>
