@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-07-28 04:53-0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: bullet/constants.py:6
+msgid "Slovak"
+msgstr ""
+
+#: bullet/constants.py:7
+msgid "Czech"
+msgstr ""
+
+#: bullet/constants.py:8
+msgid "British English"
+msgstr ""
+
+#: bullet/constants.py:9
+msgid "Swiss German"
+msgstr ""
+
+#: bullet/constants.py:10
+msgid "German"
+msgstr ""
+
+#: bullet/constants.py:11
+msgid "Finnish"
+msgstr ""
+
+#: bullet/constants.py:12
+msgid "Polish"
+msgstr ""
+
+#: bullet/constants.py:13
+msgid "Hungarian"
+msgstr ""
+
+#: bullet/constants.py:14
+msgid "Romanian"
+msgstr ""
+
+#: bullet/constants.py:15
+msgid "Russian"
+msgstr ""
+
+#: bullet/constants.py:16
+msgid "Ukrainian"
+msgstr ""
+
+#: bullet/constants.py:17
+msgid "Belarusian"
+msgstr ""
+
+#: bullet/constants.py:18
+msgid "Persian"
+msgstr ""
+
+#: competitions/models/competitions.py:9
+msgid "Math"
+msgstr ""
+
+#: competitions/models/competitions.py:10
+msgid "Physics"
+msgstr ""
+
+#: competitions/models/competitions.py:11
+#: competitions/models/competitions.py:33
+msgid "Junior"
+msgstr ""
+
+#: competitions/models/competitions.py:32
+msgid "Senior"
+msgstr ""
+
+#: competitions/models/competitions.py:34
+msgid "Cadet"
+msgstr ""
+
+#: competitions/models/competitions.py:35
+msgid "Open"
+msgstr ""
+
+#: competitions/models/competitions.py:38
+msgid "Score"
+msgstr ""
+
+#: competitions/models/competitions.py:39
+msgid "Problems"
+msgstr ""
+
+#: competitions/models/competitions.py:40
+msgid "Time"
+msgstr ""
+
+#: users/models/organizers.py:14
+msgid "username"
+msgstr ""
+
+#: users/models/organizers.py:17
+msgid "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+msgstr ""
+
+#: users/models/organizers.py:20
+msgid "A user with that username already exists."
+msgstr ""
+
+#: users/models/organizers.py:24
+msgid "first name"
+msgstr ""
+
+#: users/models/organizers.py:25
+msgid "last name"
+msgstr ""
+
+#: users/models/organizers.py:26
+msgid "email address"
+msgstr ""
+
+#: users/models/organizers.py:28
+msgid "staff status"
+msgstr ""
+
+#: users/models/organizers.py:30
+msgid "Designates whether the user can log into this admin site."
+msgstr ""
+
+#: users/models/organizers.py:33
+msgid "active"
+msgstr ""
+
+#: users/models/organizers.py:36
+msgid ""
+"Designates whether this user should be treated as active. Unselect this "
+"instead of deleting accounts."
+msgstr ""
+
+#: users/models/organizers.py:40
+msgid "date joined"
+msgstr ""
+
+#: users/models/organizers.py:49
+msgid "user"
+msgstr ""
+
+#: users/models/organizers.py:50
+msgid "users"
+msgstr ""
+
+#: users/models/participants.py:14
+msgid "High school"
+msgstr ""
+
+#: users/models/participants.py:15
+msgid "Elementary school"
+msgstr ""

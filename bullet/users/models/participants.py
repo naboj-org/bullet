@@ -5,6 +5,8 @@ from django.db.models import IntegerChoices
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+from bullet.constants import Languages
+
 
 class School(models.Model):
     class SchoolType(IntegerChoices):
@@ -26,8 +28,7 @@ class Team(models.Model):
     secret_link = models.CharField(max_length=48, unique=True)
 
     school = models.ForeignKey('users.School', on_delete=models.CASCADE)
-    # TODO language enum or code
-    language = models.IntegerField()
+    language = models.TextField(choices=Languages.choices)
 
     registered_at = models.DateTimeField(auto_now_add=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)

@@ -19,6 +19,8 @@
             <a class="btn btn-dark" href="{% host_url 'homepage' host 'math' %}">Math</a>
             <a class="btn btn-dark" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
             <a class="btn btn-dark" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
+
+            {% include 'web/snippets/language_switcher.html' %}
         </div>
 
         {% block messages %}
