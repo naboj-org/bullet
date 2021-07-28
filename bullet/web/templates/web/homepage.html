@@ -1,7 +1,9 @@
 {% extends "web/base.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block content %}
+    {% trans "dynamic:intro" context branch.label %}
     <div id="banner">
         <img src="{% static 'web/img/naboj_logo_big.png' %}">
     </div>

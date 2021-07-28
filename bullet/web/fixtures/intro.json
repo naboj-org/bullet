@@ -1,0 +1,62 @@
+[
+  {
+    "model": "web.translation",
+    "pk": 1,
+    "fields": {
+      "reference": "intro",
+      "language": "sk",
+      "context": "Math",
+      "content": "<h1>Súťaž</h1>\n\n<p>Náboj Online je súťaž nahrádzajúca Náboj 2021 konajúca sa virtuálne 23. Apríla 2021.</p>\n\n<p>Náboj je medzinárodná matematická súťaž pre päťčlenné tímy stredoškolákov,\nktoré reprezentujú jednotlivé školy. Celá súťaž trvá {duration} minút, počas ktorých\nsa tímy snažia na jednom zo súťažných miest vyriešiť čo najviac príkladov.</p>\n\n<p>Na začiatku súťaže dostane každý tím zadania šiestich príkladov. Akonáhle\ntím dospeje u niektorého z nich k správnemu, väčšinou číselnému výsledku,\ndostane zadanie ďalšieho. Kto vyrieši v časovom limite najviac príkladov,\nvyhráva.</p>\n\n<p>Viac o priebehu súťaže nájdete v sekcii <a href=\"rules.php\">pravidlá</a>. Predstavu o súťaži si môžete urobiť tiež z nasledujúcej reportáže TV Markíza:</p>\n<p style=\"text-align: center;\">\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/TyX-HqIlq3E\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n</p>\n\n<p>Účasť v súťaži je bezplatná.</p>\n\n\n<!--\n<h1>Súťaž</h1>\n\n<p>Náboj je medzinárodná matematická súťaž pre päťčlenné tímy stredoškolákov,\nktoré reprezentujú jednotlivé školy. Celá súťaž trvá {duration} minút, počas ktorých\nsa tímy snažia na jednom zo súťažných miest vyriešiť čo najviac príkladov.</p>\n\n<p>Na začiatku súťaže dostane každý tím zadania šiestich príkladov. Akonáhle\ntím dospeje u niektorého z nich k správnemu, väčšinou číselnému výsledku,\ndostane zadanie ďalšieho. Kto vyrieši v časovom limite najviac príkladov,\nvyhráva.</p>\n\n<p>Viac o priebehu súťaže nájdete v sekcii <a href=\"rules.php\">pravidlá</a>. Predstavu o súťaži si môžete urobiť tiež z nasledujúcej reportáže TV Markíza:</p>\n<p style=\"text-align: center;\">\n<iframe width=\"560\" height=\"315\" src=\"https://www.youtube.com/embed/TyX-HqIlq3E\" frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>\n</p>\n\n<p>Účasť v súťaži je bezplatná.</p>\n-->"
+    }
+  },
+  {
+    "model": "web.translation",
+    "pk": 2,
+    "fields": {
+      "reference": "intro",
+      "language": "sk",
+      "context": "Physics",
+      "content": "<h1>Súťaž</h1>\n\n<p>Fyzikálny Náboj je medzinárodná fyzikálna súťaž pre päťčlenné tímy stredoškolákov, ktoré\nreprezentujú jednotlivé školy. Celá súťaž trvá {duration} minút, počas ktorých sa\ntímy snažia vyriešiť čo najviac úloh.</p>\n\n\n<p>Na začiatku súťaže dostane každý tím zadania niekoľkých úloh. Akonáhle\ntím vyrieši úlohu, príde výsledok odovzdať a ak je správny, obdrží zadanie\nďalšieho. Kto vyrieši v časovom limite najviac úloh, vyhráva.</p>\n\n<p>Viac o priebehu súťaže nájdete v sekcii <a href=\"rules.php\">pravidlá</a>."
+    }
+  },
+  {
+    "model": "web.translation",
+    "pk": 3,
+    "fields": {
+      "reference": "intro",
+      "language": "sk",
+      "context": "Junior",
+      "content": "<h1> Súťaž </h1> \n\n <p> Náboj Junior je medzinárodná matematicko-fyzikálna súťaž pre štvorčlenné tímy žiakov druhého stupňa základných škôl a osemročných gymnázií, ktoré reprezentujú jednotlivé školy. Celá súťaž trvá {duration} minút, počas ktorých sa \n tímy snažia v jednom zo súťažných miest vyriešiť čo najviac úloh. </p> \n\n <p> Na začiatku súťaže dostane každý tím zadania šiestich úloh. Akonáhle tím správne vyrieši úlohu, dostane ďalšiu. Tím, ktorý vyrieši v časovom limite najviac úloh, vyhráva. </p>"
+    }
+  },
+  {
+    "model": "web.translation",
+    "pk": 4,
+    "fields": {
+      "reference": "intro",
+      "language": "cs",
+      "context": "Math",
+      "content": "<h1>Soutěž</h1>\n<p>Náboj Online 2021 je online soutěž, která proběhne dne 23. dubna ve virtuálním prostoru.</p>\n<p>Náboj je mezinárodní matematická soutěž pro pětičlenné týmy středoškoláků,\nkteré reprezentují jednotlivé školy. Celá soutěž trvá {duration} minut, během nichž se\ntýmy snaží na jednom ze soutěžních míst vyřešit co nejvíce příkladů.</p>\n\n<p>Na začátku soutěže obdrží každý tým zadání šesti příkladů. Jakmile tým dospěje\nu některého z nich ke správnému, většinou číselnému výsledku, dostane zadání\ndalšího. Kdo vyřeší v časovém limitu nejvíce příkladů, vyhrává.</p>\n\n<p>Více o průběhu soutěže naleznete v sekci <a href=\"rules.php\">pravidla</a>. Představu o soutěži si můžete udělat také z následující reportáže ČT z roku 2011:</p>\n<p style=\"text-align: center; margin: 20px 0px;\">\n<a href=\"content/math/res/reportaz.flv\" id=\"about_player\"><img src=\"content/math/res/reportaz_splash.png\"></a>\n<script>\n$f(\"about_player\", \"public/flowplayer/flowplayer-3.2.7.swf\");\n</script>\n</p>\n\n<p>Účast v soutěži je bezplatná.</p>\n\n<p>Od roku 2012 je Náboj zařazen do <a href=\"http://excelence.nidm.cz/\">programu Excelence</a>. Jde o program Ministerstva školství, mládeže a tělovýchovy ČR, jehož cílem je finančně podpořit pedagogické pracovníky středních škol na základě výsledků jejich studentů ve významných soutěžích.\n</p>"
+    }
+  },
+  {
+    "model": "web.translation",
+    "pk": 5,
+    "fields": {
+      "reference": "intro",
+      "language": "cs",
+      "context": "Physics",
+      "content": "<h1>Soutěž</h1>\n\n<p>Fyzikální Náboj je soutěž pro pětičlenné týmy středoškoláků, kteří reprezentují svoji školu. Celá soutěž trvá 120 minut, během kterých se týmy pokouší vyřešit co nejvíce zadaných úloh.</p>\n\n\n<p>Na začátku soutěže dostane každý tým 8 úloh. Jakmile tým vyřeší libovolnou z těchto úloh, získá novou úlohu. Výsledkem úlohy je zpravidla číslo. Vítězí tým, který v daném časovém limitu vyřeší nejvíce úloh.</p>\n\n<p>Přesnější popis soutěže naleznete v sekci <a href=\"rules.php\">pravidla</a>."
+    }
+  },
+  {
+    "model": "web.translation",
+    "pk": 6,
+    "fields": {
+      "reference": "intro",
+      "language": "cs",
+      "context": "Junior",
+      "content": "<h1>Soutěž</h1>\n\n<p>Náboj Junior je mezinárodní matematicko-fyzikální soutěž pro čtyřčlenné týmy žáků druhého stupně základní školy, které reprezentují jednotlivé školy. Celá soutěž trvá {duration} minut, během nichž se týmy snaží na jednom ze soutěžních míst vyřešit co nejvíce příkladů.</p>\n\n<p>Na začátku soutěže obdrží každý tým zadání šesti příkladů. Jakmile tým dospěje\nu některého z nich ke správnému, většinou číselnému výsledku, dostane zadání\ndalšího. Kdo vyřeší v časovém limitu nejvíce příkladů, vyhrává.</p>\n\n<p>Účast v soutěži je v České republice bezplatná.</p>\n\n<p>Náboj Junior je od roku 2015 zařazen do programu Excelence ZŠ a do programu Podpora soutěží a přehlídek v zájmovém vzdělávání, vyhlašovanými MŠMT ČR.</p>\n"
+    }
+  }
+]
