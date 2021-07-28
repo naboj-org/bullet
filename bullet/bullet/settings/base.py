@@ -1,11 +1,17 @@
 import os
 from pathlib import Path
 
+import django.conf.locale
+import django.conf.locale
+from bullet.constants import Languages
+from django.conf import global_settings
+
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # This will be overwritten by prod ENV
 SECRET_KEY = '3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^'
-ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", 'localhost math.localhost physics.localhost junior.localhost').split(" ")
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS",
+                               'localhost math.localhost physics.localhost junior.localhost').split(" ")
 
 INSTALLED_APPS = [
     'address',
@@ -41,6 +47,7 @@ MIDDLEWARE = [
     'django_hosts.middleware.HostsRequestMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -51,6 +58,7 @@ MIDDLEWARE = [
 
 DEFAULT_HOST = 'math'
 PARENT_HOST = os.environ.get("PARENT_HOST")
+HOST_PORT = os.environ.get('HOST_PORT', '')
 ROOT_URLCONF = 'web.urls_shared'
 ROOT_HOSTCONF = 'bullet.hosts'
 
@@ -98,7 +106,7 @@ PASSWORD_HASHERS = [
 
 AUTH_USER_MODEL = 'users.User'
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-GB'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
@@ -109,3 +117,25 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
 GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+
+LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
+LANGUAGES = Languages.choices
+
+EXTRA_LANG_INFO = {
+    'de-de': {
+        'bidi': False,
+        'code': 'de-de',
+        'name': 'German',
+        'name_local': u'Deutsch'
+    },
+    'de-ch': {
+        'bidi': False,
+        'code': 'de-ch',
+        'name': 'Swiss German',
+        'name_local': u'Schweizerdeutsch'
+    }
+}
+
+LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
+django.conf.locale.LANG_INFO = LANG_INFO
+global_settings.LANGUAGES = LANGUAGES
