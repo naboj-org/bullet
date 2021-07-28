@@ -58,6 +58,7 @@ MIDDLEWARE = [
 
 DEFAULT_HOST = 'math'
 PARENT_HOST = os.environ.get("PARENT_HOST")
+HOST_PORT = os.environ.get('HOST_PORT', '')
 ROOT_URLCONF = 'web.urls_shared'
 ROOT_HOSTCONF = 'bullet.hosts'
 
