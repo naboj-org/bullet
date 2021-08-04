@@ -8,11 +8,12 @@ INTERNAL_IPS = [
     '127.0.0.1',
 ]
 
-ALLOWED_HOSTS += ['bullet.top']
-
 MIDDLEWARE = list(MIDDLEWARE)
 MIDDLEWARE.remove('django_hosts.middleware.HostsRequestMiddleware')
 MIDDLEWARE = tuple(MIDDLEWARE)
+
+PARENT_HOST = 'localhost'
+HOST_PORT = os.environ.get('HOST_PORT', '8000')
 
 MIDDLEWARE = (
     'django_hosts.middleware.HostsRequestMiddleware',

@@ -34,7 +34,7 @@ DATABASES = {
         'NAME': os.environ.get('POSTGRES_DB', 'bullet'),
         'USER': os.environ.get('POSTGRES_USER', 'bullet'),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "bullet"),
-        'HOST': os.environ.get('POSTGRES_HOST', 'bullet-db'),
+        'HOST': os.environ.get('POSTGRES_HOST', 'localhost'),
         'PORT': os.environ.get('POSTGRES_PORT', 5432)
     }
 }
@@ -57,7 +57,7 @@ MIDDLEWARE = [
 ]
 
 DEFAULT_HOST = 'math'
-PARENT_HOST = os.environ.get("PARENT_HOST")
+PARENT_HOST = os.environ.get('PARENT_HOST', 'localhost')
 HOST_PORT = os.environ.get('HOST_PORT', '')
 ROOT_URLCONF = 'web.urls_shared'
 ROOT_HOSTCONF = 'bullet.hosts'
@@ -116,7 +116,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 
-GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY')
+GOOGLE_API_KEY = os.environ.get('GOOGLE_API_KEY', 'notarealkey')
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, 'locale'),)
 LANGUAGES = Languages.choices

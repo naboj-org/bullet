@@ -21,6 +21,7 @@ services:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=bullet.settings.development
+      - POSTGRES_HOST=bullet-db
     ports:
       - "8000:8000"
     volumes:
