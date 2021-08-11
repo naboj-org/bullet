@@ -1,0 +1,14 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <div class="align-content-lg-center">
+        {% if error %}
+            {{ error }}
+        {% else %}
+            {# TODO translate #}
+            You have successfully confirmed registration of your team
+        {% endif %}
+    </div>
+{% endblock %}

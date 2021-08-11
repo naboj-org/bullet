@@ -9,9 +9,15 @@ class UserAdmin(DefaultUserAdmin):
     pass
 
 
+class TeamParticipantAdmin(admin.TabularInline):
+    model = Participant
+    extra = 0
+
+
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    pass
+    inlines = (TeamParticipantAdmin, )
+    list_display = ('school', 'competition_site', 'contact_email', 'language', 'is_reviewed')
 
 
 @admin.register(Participant)
@@ -21,4 +27,4 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('name', 'type', 'address', 'izo')

@@ -7,6 +7,9 @@ from bullet.constants import Languages
 class Problem(models.Model):
     name = models.CharField(max_length=128)
 
+    def __str__(self):
+        return self.name
+
 
 class LocalizedProblem(models.Model):
     problem = models.ForeignKey('competitions.Problem', on_delete=models.CASCADE)
@@ -26,6 +29,9 @@ class CompetitionProblem(models.Model):
 
     class Meta:
         unique_together = ('category_competition', 'number')
+
+    def __str__(self):
+        return f'#{self.number} {self.problem} in {self.category_competition}'
 
 
 class SolutionSubmitLog(models.Model):

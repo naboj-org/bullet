@@ -1,7 +1,18 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import IntegerChoices
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
+
+
+class CompetitionQuerySet(models.QuerySet):
+    def currently_running_registration(self):
+        now = timezone.now()
+        return self.filter(
+            registration_end__gte=now,
+            registration_start__lte=now,
+            is_cancelled=False,
+        )
 
 
 class Competition(models.Model):
@@ -26,6 +37,18 @@ class Competition(models.Model):
 
     is_cancelled = models.BooleanField(default=False)
 
+    objects = CompetitionQuerySet.as_manager()
+
+    def __str__(self):
+        return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'
+
+
+class CategoryCompetitionQueryset(models.QuerySet):
+    def registration_possible(self):
+        return self.filter(
+            competition__in=Competition.objects.currently_running_registration()
+        )
+
 
 class CategoryCompetition(models.Model):
     class Category(IntegerChoices):
@@ -49,8 +72,13 @@ class CategoryCompetition(models.Model):
 
     ranking = ArrayField(base_field=models.PositiveIntegerField(choices=RankingCriteria.choices))
 
+    objects = CategoryCompetitionQueryset.as_manager()
+
     class Meta:
         unique_together = ('competition', 'category')
+
+    def __str__(self):
+        return f'{self.competition.name} - {self.get_category_display()}'
 
 
 class Wildcard(models.Model):
