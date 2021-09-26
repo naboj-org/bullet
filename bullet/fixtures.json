@@ -1,0 +1,165 @@
+[
+  {
+    "model": "address.country",
+    "pk": 1,
+    "fields": {
+      "name": "Slovakia",
+      "code": "SK"
+    }
+  },
+  {
+    "model": "address.state",
+    "pk": 1,
+    "fields": {
+      "name": "Bratislavský kraj",
+      "code": "",
+      "country": 1
+    }
+  },
+  {
+    "model": "address.locality",
+    "pk": 1,
+    "fields": {
+      "name": "Bratislava",
+      "postal_code": "841 04",
+      "state": 1
+    }
+  },
+  {
+    "model": "address.locality",
+    "pk": 2,
+    "fields": {
+      "name": "Bratislava",
+      "postal_code": "821 09",
+      "state": 1
+    }
+  },
+  {
+    "model": "address.address",
+    "pk": 1,
+    "fields": {
+      "street_number": "36",
+      "route": "Staré Grunty",
+      "locality": 1,
+      "raw": "Staré Grunty 36, Karlova Ves, Slovakia",
+      "formatted": "Staré Grunty 211/36, 841 04 Bratislava-Karlova Ves, Slovakia",
+      "latitude": 48.1608767,
+      "longitude": 17.0654743
+    }
+  },
+  {
+    "model": "address.address",
+    "pk": 2,
+    "fields": {
+      "street_number": "3",
+      "route": "Novohradská",
+      "locality": 2,
+      "raw": "Novohradská 3, Ružinov, Slovakia",
+      "formatted": "Novohradská 3, 821 09 Bratislava-Ružinov, Slovakia",
+      "latitude": 48.1460233,
+      "longitude": 17.1338452
+    }
+  },
+  {
+    "model": "users.school",
+    "pk": 1,
+    "fields": {
+      "name": "Gymnázium Jura Hronca",
+      "type": 1,
+      "address": 2,
+      "izo": "842986986"
+    }
+  },
+  {
+    "model": "competitions.competition",
+    "pk": 1,
+    "fields": {
+      "name": "Náboj Physics 2021",
+      "branch": 2,
+      "graduation_year": 2021,
+      "web_start": "2021-08-10T14:33:34Z",
+      "registration_start": "2021-09-26T06:00:00Z",
+      "registration_second_round_start": "2021-10-20T06:00:00Z",
+      "registration_end": "2021-12-31T08:54:08Z",
+      "competition_start": "2021-12-31T12:00:00Z",
+      "competition_duration": "00:02:00",
+      "is_cancelled": false
+    }
+  },
+  {
+    "model": "competitions.categorycompetition",
+    "pk": 1,
+    "fields": {
+      "competition": 1,
+      "category": 2,
+      "problems_per_team": 10,
+      "max_teams_per_school": 4,
+      "max_teams_second_round": 2,
+      "max_members_per_team": 5,
+      "ranking": "[\"1\"]"
+    }
+  },
+  {
+    "model": "competitions.categorycompetition",
+    "pk": 2,
+    "fields": {
+      "competition": 1,
+      "category": 1,
+      "problems_per_team": 10,
+      "max_teams_per_school": 4,
+      "max_teams_second_round": 2,
+      "max_members_per_team": 5,
+      "ranking": "[\"1\"]"
+    }
+  },
+  {
+    "model": "competitions.problem",
+    "pk": 1,
+    "fields": {
+      "name": "Life, Universe and Everything"
+    }
+  },
+  {
+    "model": "competitions.localizedproblem",
+    "pk": 1,
+    "fields": {
+      "problem": 1,
+      "language": "en-gb",
+      "statement_text": "What is the answer to the Life, Universe and Everything?",
+      "result_text": "42",
+      "solution_text": "Just read the book, duh"
+    }
+  },
+  {
+    "model": "competitions.competitionproblem",
+    "pk": 1,
+    "fields": {
+      "category_competition": 1,
+      "problem": 1,
+      "number": 1
+    }
+  },
+  {
+    "model": "competitions.site",
+    "pk": 1,
+    "fields": {
+      "name": "UPeCe Bratislava",
+      "short_name": "BA",
+      "address": 1
+    }
+  },
+  {
+    "model": "competitions.competitionsite",
+    "pk": 1,
+    "fields": {
+      "category_competition": 1,
+      "site": 1,
+      "capacity": 200,
+      "accepted_languages": "[\"sk\"]",
+      "local_start": "2021-09-01T12:00:00Z",
+      "results_announced": false,
+      "participants_hidden": false,
+      "email_alias": null
+    }
+  }
+]
