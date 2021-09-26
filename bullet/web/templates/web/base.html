@@ -1,84 +1,132 @@
 {% load static %}
 {% load hosts %}
 {% load web %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Náboj {{ branch.label }}</title>
 
-<meta charset="utf-8">
-<title>Náboj {{ branch.label }}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-{% block extrahead %}
-    <link rel="stylesheet" href="{% static 'web/css/bootstrap.min.css' %}" type="text/css"/>
-    {% if branch %}
-        <link rel="stylesheet" href="{% branch_static 'web/css/{branch}.css' %}" type="text/css"/>
-    {% endif %}
-{% endblock %}
+    {% block extrahead %}
+        <link rel="stylesheet" href="{% static 'app.css' %}" type="text/css"/>
+{#        {% if branch %}#}
+{#            <link rel="stylesheet" href="{% branch_static 'web/css/{branch}.css' %}" type="text/css"/>#}
+{#        {% endif %}#}
+    {% endblock %}
+</head>
 
-<body>
+<body class="branch-{{ branch }}">
 {% block main %}
-    <div class="container">
-        <div class="row navigation">
-            <a class="btn btn-dark" href="{% host_url 'homepage' host 'math' %}">Math</a>
-            <a class="btn btn-dark" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
-            <a class="btn btn-dark" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
-
-            {% include 'web/snippets/language_switcher.html' %}
+<div class="bg-gray-900 py-4 px-2 border-b-4 border-primary">
+    <div class="container mx-auto text-white flex items-center">
+        <div class="font-medium">
+            <a class="{% if branch == 1 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'math' %}">Math</a>
+            <a class="{% if branch == 2 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
+            <a class="{% if branch == 3 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
         </div>
 
-        {% block messages %}
-            {% if messages %}
-                <ul class="messagelist">{% for message in messages %}
-                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
-                {% endfor %}</ul>
-            {% endif %}
-        {% endblock messages %}
+        <div class="ml-auto flex">
+            {% include 'web/snippets/language_switcher.html' %}
+        </div>
+    </div>
+</div>
 
-        {% block content %}
-            {# Actual page content goes here #}
-        {% endblock %}
+<div class="bg-hero">
+    <div class="container mx-auto py-12 px-2 {% block heroclass %}{% endblock %}">
 
-        <div class="card-footer">
-            <h5>Organizátori</h5>
-            <a href="https://trojsten.sk/">
-                <img src="{% static 'web/img/organizers/logo_trojsten.png' %}">
-            </a>
-            <a href="https://seminar.strom.sk/sk/prispevky/">
-                <img src="{% static 'web/img/organizers/logo_strom.png' %}">
-            </a>
-            <a href="https://fykos.cz/">
-                <img src="{% static 'web/img/organizers/logo_fykos.png' %}">
-            </a>
-            <br>
-            <a href="https://www.gvoz.cz/">
-                <img src="{% static 'web/img/organizers/ostrava-logo.png' %}">
-            </a>
-            <a href="https://www.epsyoungminds.org/">
-                <img src="{% static 'web/img/organizers/logo_byms.png' %}">
-            </a>
-            <div class="divider"></div>
+        <div class="flex items-center gap-x-6 text-lg font-light">
+            <img src="{% static 'web/img/naboj_logo_big.png' %}" class="w-32 mr-2">
 
-            <h5>Partneri</h5>
-            <a href="https://www.nadaciaeset.sk/">
+            {% include 'web/snippets/main_nav.html' %}
+        </div>
+
+        {% block hero %}{% endblock %}
+    </div>
+</div>
+
+<div class="border-b-2 border-primary shadow-lg">
+    <div class="container mx-auto flex items-center px-2 py-4">
+        <img src="{% static 'web/img/naboj_logo_big.png' %}" class="w-24">
+
+        <div class="ml-auto flex font-light gap-x-4 text-lg">
+            {% include 'web/snippets/main_nav.html' %}
+        </div>
+    </div>
+</div>
+{##}
+{#<div class="mx-auto container px-2 mt-16">#}
+{#    {% block messages %}#}
+{#        {% if messages %}#}
+{#            <ul class="messagelist">{% for message in messages %}#}
+{#                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>#}
+{#            {% endfor %}</ul>#}
+{#        {% endif %}#}
+{#    {% endblock messages %}#}
+{##}
+{#</div>#}
+
+{% block content %}
+    {# Actual page content goes here #}
+{% endblock %}
+
+
+<div class="bg-primary-lighter mt-48 py-24">
+    <div class="container mx-auto px-2">
+        <h2 class="font-bold text-primary text-2xl mb-8">Our Partners</h2>
+        <div class="grid grid-cols-8 gap-6">
+            <a href="https://www.nadaciaeset.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/logo_eset_nadacia.png' %}">
             </a>
-            <a href="https://www.fmph.uniba.sk/">
+            <a href="https://www.fmph.uniba.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/bratislava-logo.png' %}">
             </a>
-            <a href="https://upjs.sk/">
+
+            <a href="https://upjs.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/kosice-logo.png' %}">
             </a>
-            <a href="https://www.mff.cuni.cz/">
+            <a href="https://www.mff.cuni.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/praha-logo.png' %}">
             </a>
-            <br>
-            <a href="https://bmstu.ru/en/">
+            <a href="https://bmstu.ru/en/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/moscow-mgtu-logo.png' %}">
             </a>
-            <a href="https://www.ostrava.cz/en">
+            <a href="https://www.ostrava.cz/en" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/logo_ostrava.png' %}">
             </a>
-            <a href="https://ttk.elte.hu/">
+            <a href="https://ttk.elte.hu/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/budapest-logo.png' %}">
             </a>
         </div>
+
+        <h2 class="font-bold text-primary text-2xl mb-8 mt-16">Organizers</h2>
+        <div class="grid grid-cols-8 gap-6">
+            <a href="https://trojsten.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+                <img src="{% static 'web/img/organizers/logo_trojsten.png' %}">
+            </a>
+            <a href="https://seminar.strom.sk/sk/prispevky/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+                <img src="{% static 'web/img/organizers/logo_strom.png' %}">
+            </a>
+            <a href="https://fykos.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+                <img src="{% static 'web/img/organizers/logo_fykos.png' %}">
+            </a>
+            <a href="https://www.gvoz.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+                <img src="{% static 'web/img/organizers/ostrava-logo.png' %}">
+            </a>
+            <a href="https://www.epsyoungminds.org/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+                <img src="{% static 'web/img/organizers/logo_byms.png' %}">
+            </a>
+        </div>
+
+        <div class="text-gray-700 text-center mt-16">&copy; Naboj IT Team {% now "Y" %}</div>
     </div>
+</div>
 {% endblock %}
 </body>
+</html>
