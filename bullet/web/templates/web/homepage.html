@@ -2,24 +2,24 @@
 {% load static %}
 {% load i18n %}
 
-{% block heroclass %}bg-hero-image{% endblock %}
+{% block heroclass %}md:bg-hero-image{% endblock %}
 {% block hero %}
 <div class="flex">
-    <div class="w-2/5 mt-24 mb-8">
-        <p class="text-6xl font-bold mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
-        <a href="#" class="bg-primary text-white text-2xl font-medium rounded-full px-10 py-5 shadow">Registration</a>
+    <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
+        <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
+        <a href="#" class="bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow">Registration</a>
 
-        <p class="font-light mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio.</p>
+        <p class="font-light mt-12 md:mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio.</p>
     </div>
 </div>
 {% endblock %}
 
 {% block content %}
 <div class="container mx-auto px-2">
-    <div class="flex content-between items-center gap-16 my-32">
-        <img src="https://picsum.photos/800/500" class="w-3/5 flex-shrink-0 rounded-md shadow-md">
+    <div class="flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col md:flex-row">
+        <img src="https://picsum.photos/800/500" class="md:w-3/5 flex-shrink-0 rounded-md shadow-md">
         <div class="flex-grow">
-            <h2 class="font-bold text-4xl mb-6">
+            <h2 class="font-bold text-3xl md:text-4xl mb-6">
                 <span class="text-primary">International competition</span>
                 liked by students everywhere
             </h2>
@@ -27,10 +27,10 @@
         </div>
     </div>
 
-    <div class="my-32">
-        <h2 class="font-bold text-4xl mb-16 text-center">What is <span class="text-primary">Naboj</span>?</h2>
+    <div class="my-16 md:my-32">
+        <h2 class="font-bold text-4xl mb-6 md:mb-16 text-center">What is <span class="text-primary">Naboj</span>?</h2>
 
-        <div class="grid grid-cols-2 mx-auto max-w-4xl gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 mx-auto md:max-w-4xl gap-8">
             <div class="flex items-center">
                 <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
                 <div>
@@ -63,22 +63,22 @@
     </div>
 </div>
 
-<div class="bg-gradient py-32">
-    <div class="container mx-auto px-2 flex content-between items-center gap-16">
+<div class="bg-gradient py-12 md:py-32">
+    <div class="container mx-auto px-2 flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col-reverse md:flex-row">
         <div class="flex-grow">
-            <h2 class="font-bold text-4xl mb-6">
+            <h2 class="font-bold text-3xl md:text-4xl mb-6">
                 <span class="text-primary">International competition</span>
                 liked by students everywhere
             </h2>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at blanditiis excepturi facilis, id ipsum natus neque nihil, nulla obcaecati placeat provident quo repudiandae sequi voluptate. Architecto nihil nulla voluptatem.
         </div>
-        <img src="https://picsum.photos/800/500" class="w-3/5 flex-shrink-0 rounded-md shadow-md">
+        <img src="https://picsum.photos/800/500" class="md:w-3/5 flex-shrink-0 rounded-md shadow-md">
     </div>
 </div>
 
 
 <div class="container mx-auto px-2">
-    <div class="my-24 text-center">
+    <div class="my-10 md:my-24 text-center">
         <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
 
         <div class="mx-auto max-w-4xl">
