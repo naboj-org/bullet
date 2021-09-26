@@ -60,17 +60,16 @@
         </div>
     </div>
 </div>
-{##}
-{#<div class="mx-auto container px-2 mt-16">#}
-{#    {% block messages %}#}
-{#        {% if messages %}#}
-{#            <ul class="messagelist">{% for message in messages %}#}
-{#                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>#}
-{#            {% endfor %}</ul>#}
-{#        {% endif %}#}
-{#    {% endblock messages %}#}
-{##}
-{#</div>#}
+
+<div class="mx-auto container px-2 mt-16">
+    {% block messages %}
+        {% if messages %}
+            <ul class="messagelist">{% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message|capfirst }}</li>
+            {% endfor %}</ul>
+        {% endif %}
+    {% endblock messages %}
+</div>
 
 {% block content %}
     {# Actual page content goes here #}
