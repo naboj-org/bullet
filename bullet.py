@@ -54,6 +54,12 @@ def update(*args):
     run("venv/bin/pip install -U pip")
     run("venv/bin/pip install -r requirements.txt")
 
+    logging.info("Installing NPM dependencies")
+    run("npm install")
+
+    logging.info("Building development CSS")
+    run("npm run css-dev")
+
     logging.info("Rebuilding containers")
     run("docker-compose build")
     reset()
