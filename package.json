@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "autoprefixer": "^10.3.2",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.3.6",
+    "tailwindcss": "^2.2.7"
+  },
+  "scripts": {
+    "css-dev": "npx tailwindcss -i css/app.css -o bullet/web/static/app.css",
+    "css-prod": "cross-env NODE_ENV=production npm run css-dev"
+  }
+}
