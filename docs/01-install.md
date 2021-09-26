@@ -31,7 +31,7 @@ You should run the commands above whenever you pull new commits from our reposit
 If you need to run a `manage.py` command, you can use this "shortcut":
 
 ```shell
-./bullet.py run migrate
+./bullet.py cmd migrate
 ```
 
 Now, let's look at your [code editor](02-ide.md).
