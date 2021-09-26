@@ -4,14 +4,14 @@
 
 System requirements:
 - [Python 3.6](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
-- [Docker Desktop]https://www.docker.com/products/docker-desktop)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Linux
 
 System requirements:
 - Python 3.6 or newer
 - [Docker](https://docs.docker.com/engine/install/)
-- docker-compose
+- [docker-compose](https://docs.docker.com/compose/install/)
 
 ## Running
 
