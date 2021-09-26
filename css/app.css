@@ -28,10 +28,19 @@
 }
 
 .bg-hero-image {
-    background: url("/static/web/img/hero.png");
     background-repeat: no-repeat;
     background-position: right bottom;
     background-size: contain;
+}
+
+.branch-1 .bg-hero-image {
+    background-image: url('/static/img/math/hero.png');
+}
+.branch-2 .bg-hero-image {
+    background-image: url('/static/img/physics/hero.png');
+}
+.branch-3 .bg-hero-image {
+    background-image: url('/static/img/junior/hero.png');
 }
 
 .bg-gradient {
