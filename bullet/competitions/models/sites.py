@@ -12,7 +12,7 @@ from users.models import Team, Participant
 class Site(models.Model):
     name = models.CharField(max_length=256)
     short_name = models.CharField(max_length=256)
-    address = AddressField()
+    address = AddressField(null=True)
 
     def __str__(self):
         return f'{self.name} at {self.address}'
