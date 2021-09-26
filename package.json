@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@tailwindcss/forms": "^0.3.3",
     "autoprefixer": "^10.3.2",
     "cross-env": "^7.0.3",
     "postcss": "^8.3.6",
