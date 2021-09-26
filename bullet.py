@@ -29,6 +29,7 @@ def run(cmd, *args, **kwargs):
         **kwargs,
     )
 
+
 def exec(cmd, *args, **kwargs):
     logging.debug(f"Exec: {cmd}")
     os.execlp(shlex.split(cmd)[0], *shlex.split(cmd))
@@ -48,7 +49,7 @@ def reset(*args):
 
 def update(*args):
     logging.info("(Re)creating virtualenv")
-    shutil.rmtree("venv")
+    shutil.rmtree("venv") if os.path.exists("venv") else None
     run("python3 -m venv venv")
     logging.info("Installing dependencies")
     run("venv/bin/pip install -U pip")
