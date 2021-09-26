@@ -16,7 +16,7 @@ Setting up PyCharm project is pretty simple:
 3. Open Settings, select Languages & Frameworks → Django
     - Enable Django support
     - Django project root: select folder with `manage.py`
-    - Settings: `bullet/settings.py`
+    - Settings: `bullet/settings/development.py`
 
 ## VS Code setup
 
