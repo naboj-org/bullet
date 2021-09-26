@@ -1,19 +1,55 @@
 {% extends "web/base.html" %}
+{% load web %}
 {% load static %}
 {% load i18n %}
 
+
+{% block hero %}
+<div class="flex">
+    <div class="w-2/5 mt-24 mb-8">
+        <p class="text-6xl font-bold mb-16">Team Registration</p>
+    </div>
+</div>
+{% endblock %}
+
 {% block content %}
-    <div class="align-content-lg-center">
+    <div class="mx-auto w-full max-w-4xl p-3">
         <form method="POST">
             {% csrf_token %}
-            <table>
-                {{ form.as_table }}
-            </table>
+            {% render_form form %}
             <br>
-            <table>
-                {{ formset }}
-            </table>
-            <input type="submit" value="Register">
+
+            {{ formset.management_form }}
+
+            <div class="grid grid-cols-1 md:grid-cols-registration gap-2 items-center mb-8">
+                <div class="w-auto md:block hidden font-bold"></div>
+                <div class="hidden md:block font-bold">First name</div>
+                <div class="hidden md:block font-bold">Last name</div>
+                <div class="hidden md:block font-bold">Birth year</div>
+                <div class="hidden md:block font-bold">Graduation year</div>
+
+                {% for form in formset %}
+                <div class="w-auto whitespace-nowrap text-xl font-bold mt-4 md:mt-0 md:text-base">Participant {{ forloop.counter }}</div>
+                <div>
+                    <label class="md:hidden font-bold" for="id_{{ form.first_name.html_name }}">First name:</label>
+                    {{ form.first_name }}
+                </div>
+                <div>
+                    <label class="md:hidden font-bold" for="id_{{ form.last_name.html_name }}">Last name:</label>
+                    {{ form.last_name }}
+                </div>
+                <div>
+                    <label class="md:hidden font-bold" for="id_{{ form.birth_year.html_name }}">Birth year:</label>
+                    {{ form.birth_year }}
+                </div>
+                <div>
+                    <label class="md:hidden font-bold" for="id_{{ form.graduation_year.html_name }}">Graduation year:</label>
+                    {{ form.graduation_year }}
+                </div>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn">Register</button>
         </form>
     </div>
 {% endblock %}

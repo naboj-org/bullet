@@ -25,7 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'users',
     'competitions',
-    'web'
+    'web',
+    'django.forms',
 ]
 
 DATABASES = {
@@ -77,6 +78,7 @@ TEMPLATES = [
         },
     },
 ]
+FORM_RENDERER = 'django.forms.renderers.TemplatesSetting'
 
 WSGI_APPLICATION = 'bullet.wsgi.application'
 

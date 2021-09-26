@@ -12,3 +12,8 @@ register = template.Library()
 def do_branch_static(context, path):
     if 'branch' in context and isinstance(context['branch'], Competition.Branch):
         return static(path.format(branch=context['branch'].label.lower()))
+
+
+@register.inclusion_tag('form.html')
+def render_form(form):
+    return {'form': form}

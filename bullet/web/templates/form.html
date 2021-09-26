@@ -1,0 +1,24 @@
+{% if errors %}
+  <tr>
+    <td colspan="2">
+      {{ errors }}
+    </td>
+  </tr>
+{% endif %}
+{% for field in form.visible_fields %}
+<div class="flex items-center mb-3 flex-col md:flex-row">
+    <div class="w-full md:w-1/4 flex-shrink-0 md:text-right md:mr-4 font-bold {% if field.errors %}text-red-600{% endif %}">
+        {% if field.label %}{{ field.label_tag }}{% endif %}
+    </div>
+    <div class="flex-grow w-full">
+        {% if field.errors %}
+            <span class="text-red-600">{{ field.errors|first }}</span>
+        {% endif %}
+        {{ field }}
+        {% if field.help_text %}
+            <span class="text-sm text-gray-500">{{ field.help_text }}</span>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+{% for field in hidden_fields %}{{ field }}{% endfor %}
