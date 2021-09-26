@@ -20,6 +20,9 @@ class School(models.Model):
     address = AddressField()
     izo = models.CharField(max_length=128, unique=True)
 
+    def __str__(self):
+        return f'{self.name} ({self.get_type_display()})'
+
 
 class Team(models.Model):
     contact_name = models.CharField(max_length=256)
@@ -48,6 +51,9 @@ class Team(models.Model):
             ('school', 'in_school_symbol')
         ]
 
+    def __str__(self):
+        return f'{self.school} team in {self.competition_site}'
+
 
 class Participant(models.Model):
     team = models.ForeignKey('users.Team', on_delete=models.CASCADE, related_name='participants')
@@ -56,3 +62,6 @@ class Participant(models.Model):
     last_name = models.CharField(max_length=128)
     graduation_year = models.IntegerField()
     birth_year = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f'{self.first_name} {self.last_name} ({self.graduation_year})'

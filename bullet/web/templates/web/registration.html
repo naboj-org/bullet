@@ -1,0 +1,19 @@
+{% extends "web/base.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+    <div class="align-content-lg-center">
+        <form method="POST">
+            {% csrf_token %}
+            <table>
+                {{ form.as_table }}
+            </table>
+            <br>
+            <table>
+                {{ formset }}
+            </table>
+            <input type="submit" value="Register">
+        </form>
+    </div>
+{% endblock %}
