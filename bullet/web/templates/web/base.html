@@ -22,14 +22,14 @@
 <body class="branch-{{ branch }}">
 {% block main %}
 <div class="bg-gray-900 py-4 px-2 border-b-4 border-primary">
-    <div class="container mx-auto text-white flex items-center">
+    <div class="container mx-auto text-white flex flex-col md:flex-row md:items-center">
         <div class="font-medium">
             <a class="{% if branch == 1 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'math' %}">Math</a>
             <a class="{% if branch == 2 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
             <a class="{% if branch == 3 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
         </div>
 
-        <div class="ml-auto flex">
+        <div class="md:ml-auto md:mt-0 mt-3 flex">
             {% include 'web/snippets/language_switcher.html' %}
         </div>
     </div>
@@ -50,7 +50,7 @@
 
 <div class="border-b-2 border-primary shadow-lg">
     <div class="container mx-auto flex items-center px-2 py-4">
-        <img src="{% static 'web/img/naboj_logo_big.png' %}" class="w-24">
+        <img src="{% static 'web/img/naboj_logo_big.png' %}" class="md:w-24 w-20">
 
         <div class="ml-auto flex font-light gap-x-4 text-lg">
             {% include 'web/snippets/main_nav.html' %}
@@ -73,11 +73,15 @@
 {% endblock %}
 
 
-<div class="bg-primary-lighter mt-48 py-24">
+<div class="bg-primary-lighter md:mt-48 mt-32 md:py-24 py-12">
     <div class="container mx-auto px-2">
         <h2 class="font-bold text-primary text-2xl mb-8">Our Partners</h2>
-        <div class="grid grid-cols-8 gap-6">
-            <a href="https://www.nadaciaeset.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
+        <div class="grid grid-cols-2 md:grid-cols-8 gap-6">
+            <!-- The first one is representative -->
+            <a href="https://bmstu.ru/en/" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
+                <img src="{% static 'web/img/partners/moscow-mgtu-logo.png' %}" class="max-w-full max-h-full">
+            </a>
+            <a href="https://www.nadaciaeset.sk/" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/logo_eset_nadacia.png' %}">
             </a>
             <a href="https://www.fmph.uniba.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
@@ -90,9 +94,6 @@
             <a href="https://www.mff.cuni.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/praha-logo.png' %}">
             </a>
-            <a href="https://bmstu.ru/en/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/moscow-mgtu-logo.png' %}">
-            </a>
             <a href="https://www.ostrava.cz/en" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/partners/logo_ostrava.png' %}">
             </a>
@@ -101,7 +102,7 @@
             </a>
         </div>
 
-        <h2 class="font-bold text-primary text-2xl mb-8 mt-16">Organizers</h2>
+        <h2 class="font-bold text-primary text-2xl mb-8 md:mt-16 mt-10">Organizers</h2>
         <div class="grid grid-cols-8 gap-6">
             <a href="https://trojsten.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
                 <img src="{% static 'web/img/organizers/logo_trojsten.png' %}">
@@ -120,7 +121,7 @@
             </a>
         </div>
 
-        <div class="text-gray-700 text-center mt-16">&copy; Naboj IT Team {% now "Y" %}</div>
+        <div class="text-gray-700 text-center md:mt-16 mt-10">&copy; Naboj IT Team {% now "Y" %}</div>
     </div>
 </div>
 {% endblock %}
