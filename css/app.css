@@ -27,20 +27,22 @@
     background: linear-gradient(265.04deg, var(--gradient-light) -5.34%, var(--gradient-dark) 110.03%);
 }
 
-.bg-hero-image {
-    background-repeat: no-repeat;
-    background-position: right bottom;
-    background-size: contain;
-}
+@responsive {
+    .bg-hero-image {
+        background-repeat: no-repeat;
+        background-position: right bottom;
+        background-size: contain;
+    }
 
-.branch-1 .bg-hero-image {
-    background-image: url('/static/img/math/hero.png');
-}
-.branch-2 .bg-hero-image {
-    background-image: url('/static/img/physics/hero.png');
-}
-.branch-3 .bg-hero-image {
-    background-image: url('/static/img/junior/hero.png');
+    .branch-1 .bg-hero-image {
+        background-image: url('/static/img/math/hero.png');
+    }
+    .branch-2 .bg-hero-image {
+        background-image: url('/static/img/physics/hero.png');
+    }
+    .branch-3 .bg-hero-image {
+        background-image: url('/static/img/junior/hero.png');
+    }
 }
 
 .bg-gradient {
