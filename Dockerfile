@@ -16,7 +16,7 @@ ENV PYTHONUNBUFFERED 1
 ENV DEBUG 0
 
 COPY ./bullet .
-COPY --from=cssbuild /app/bullet/web/static/app.css ./static/app.css
+COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
 
 RUN apk update \
     && apk add --virtual build-deps gcc musl-dev \
