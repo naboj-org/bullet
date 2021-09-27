@@ -1,11 +1,11 @@
-FROM node:current-alpine3.11 AS cssbuild
+FROM node:current-alpine AS cssbuild
 
 WORKDIR /app
 
-COPY package.json postcss.config.js tailwind.config.js css/app.css ./
+COPY . .
 
 RUN npm install
-RUN npx tailwindcss -i app.css -o app-built.css
+RUN npm run css-prod
 
 FROM python:3.9-alpine AS basebuild
 
@@ -15,18 +15,18 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV DEBUG 0
 
+COPY ./bullet .
+COPY --from=cssbuild /app/bullet/web/static/app.css ./static/app.css
+
 RUN apk update \
     && apk add --virtual build-deps gcc musl-dev \
     && apk add libc-dev libffi-dev make \
     && apk add postgresql-dev openssl-dev bash
 
-COPY ./bullet .
-
 RUN pip install --upgrade pip
 COPY ./requirements.txt .
 RUN pip install -r requirements.txt
 
-COPY --from=cssbuild /app/app-built.css ./static/app.css
 
 # Heroku
 FROM basebuild AS herokubuild
