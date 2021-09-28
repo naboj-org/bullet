@@ -26,7 +26,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./bullet/:/usr/src/bullet/
+      - ./bullet/:/app/
     depends_on:
       - bullet-db
     command: ./entrypoint.sh
