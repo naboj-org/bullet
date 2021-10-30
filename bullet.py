@@ -1,5 +1,5 @@
 #!/bin/env python3
-
+import platform
 import subprocess
 import shlex
 import shutil
@@ -11,6 +11,8 @@ import logging
 PREFIX = "\033[0;30m\033[47m"
 RESET = "\033[0m"
 CWD = os.getcwd()
+
+PYTHON = "python" if platform.system() == "Windows" else "python3"
 
 logging.basicConfig(
     level=logging.INFO,
@@ -50,7 +52,7 @@ def reset(*args):
 def update(*args):
     logging.info("(Re)creating virtualenv")
     shutil.rmtree("venv") if os.path.exists("venv") else None
-    run("python3 -m venv venv")
+    run(f"{PYTHON} -m venv venv")
     logging.info("Installing dependencies")
     run("venv/bin/pip install -U pip")
     run("venv/bin/pip install -r requirements.txt")
