@@ -28,7 +28,6 @@ def run(cmd, *args, **kwargs):
         stdout=sys.stdout,
         stderr=sys.stderr,
         check=True,
-        shell=True,
         *args,
         **kwargs,
     )
@@ -61,10 +60,10 @@ def update(*args):
     run(f"{PIP} install -r requirements.txt")
 
     logging.info("Installing NPM dependencies")
-    run("npm install")
+    run("npm install", shell=platform.system() == "Windows")
 
     logging.info("Building development CSS")
-    run("npm run css-dev")
+    run("npm install", shell=platform.system() == "Windows")
 
     logging.info("Rebuilding containers")
     run("docker-compose build")
