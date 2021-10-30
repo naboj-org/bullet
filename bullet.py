@@ -28,6 +28,7 @@ def run(cmd, *args, **kwargs):
         stdout=sys.stdout,
         stderr=sys.stderr,
         check=True,
+        shell=True,
         *args,
         **kwargs,
     )
@@ -55,8 +56,9 @@ def update(*args):
     shutil.rmtree("venv") if os.path.exists("venv") else None
     run(f"{PYTHON} -m venv venv")
     logging.info("Installing dependencies")
-    run(f"{PIP} install --user -U pip")
-    run(f"{PIP} install --user -r requirements.txt")
+    if platform.system() != "Windows":
+        run(f"{PIP} install -U pip")
+    run(f"{PIP} install -r requirements.txt")
 
     logging.info("Installing NPM dependencies")
     run("npm install")
