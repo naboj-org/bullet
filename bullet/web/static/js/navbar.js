@@ -1,4 +1,4 @@
-window.onscroll = function() {scrollFunction()};
+document.addEventListener("scroll", scrollFunction);
 
 function scrollFunction() {
   if (document.body.scrollTop > 165 || document.documentElement.scrollTop > 165) {
