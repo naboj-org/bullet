@@ -48,7 +48,7 @@
     </div>
 </div>
 
-<div class="border-b-2 border-primary shadow-lg">
+<div class="border-b-2 border-primary shadow-lg transition-all fixed bg-white" style="top: -100px; width: 100%;" id="main-nav">
     <div class="container mx-auto flex items-center px-2 py-4">
         <img src="{% static 'web/img/naboj.svg' %}" class="md:w-24 w-20">
 
@@ -125,5 +125,6 @@
     </div>
 </div>
 {% endblock %}
+<script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
 </body>
 </html>
