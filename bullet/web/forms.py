@@ -1,5 +1,7 @@
+from django.utils.translation import get_language
 from django.forms import forms, ModelForm, ModelChoiceField
 
+from bullet.constants import PHONE_REGIONS
 from competitions.models import CompetitionSite
 from users.models import Team
 
@@ -13,6 +15,7 @@ class RegistrationForm(ModelForm):
         self.fields['competition_site'] = ModelChoiceField(
             queryset=self.available_sites
         )
+        self.fields['contact_phone'].region = PHONE_REGIONS[get_language()]
 
     # TODO validate that the participants don't overlap between teams, that maximum team occupancy was not reached
     #  for a school, that seat occupancy  isn't reached for the venue
