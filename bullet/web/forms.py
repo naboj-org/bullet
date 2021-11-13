@@ -4,6 +4,8 @@ from django.forms import forms, ModelForm, ModelChoiceField, inlineformset_facto
 from bullet.constants import PHONE_REGIONS
 from competitions.models import CompetitionSite
 from users.models import Team, Participant
+from captcha.fields import ReCaptchaField
+from captcha.widgets import ReCaptchaV2Invisible
 
 
 class RegistrationForm(ModelForm):
@@ -17,6 +19,7 @@ class RegistrationForm(ModelForm):
         )
         self.fields['contact_phone'].region = PHONE_REGIONS[get_language()]
 
+
     # TODO validate that the participants don't overlap between teams, that maximum team occupancy was not reached
     #  for a school, that seat occupancy  isn't reached for the venue
 
@@ -24,6 +27,7 @@ class RegistrationForm(ModelForm):
         model = Team
         fields = ['contact_name', 'contact_email', 'contact_phone', 'school', 'language', 'competition_site']
 
+    captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
 ParticipantsFormSet = inlineformset_factory(
     Team,
