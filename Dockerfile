@@ -23,9 +23,9 @@ RUN apk update \
     && apk add libc-dev libffi-dev make \
     && apk add postgresql-dev openssl-dev bash
 
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pipenv
+COPY Pipfile Pipfile.lock ./
+RUN pipenv install --system --deploy
 
 
 # Heroku

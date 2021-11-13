@@ -51,13 +51,8 @@ def reset(*args):
 
 
 def update(*args):
-    logging.info("(Re)creating virtualenv")
-    shutil.rmtree("venv") if os.path.exists("venv") else None
-    run(f"{PYTHON} -m venv venv")
     logging.info("Installing dependencies")
-    if platform.system() != "Windows":
-        run(f"{PIP} install -U pip")
-    run(f"{PIP} install -r requirements.txt")
+    run(f"{PYTHON} -m pipenv install")
 
     logging.info("Installing NPM dependencies")
     run("npm install", shell=platform.system() == "Windows")
