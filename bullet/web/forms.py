@@ -1,9 +1,9 @@
 from django.utils.translation import get_language
-from django.forms import forms, ModelForm, ModelChoiceField
+from django.forms import forms, ModelForm, ModelChoiceField, inlineformset_factory
 
 from bullet.constants import PHONE_REGIONS
 from competitions.models import CompetitionSite
-from users.models import Team
+from users.models import Team, Participant
 
 
 class RegistrationForm(ModelForm):
@@ -23,3 +23,11 @@ class RegistrationForm(ModelForm):
     class Meta:
         model = Team
         fields = ['contact_name', 'contact_email', 'contact_phone', 'school', 'language', 'competition_site']
+
+
+ParticipantsFormSet = inlineformset_factory(
+    Team,
+    Participant,
+    min_num=1,
+    fields=('first_name', 'last_name', 'graduation_year', 'birth_year')
+)
