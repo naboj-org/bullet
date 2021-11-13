@@ -6,6 +6,7 @@
   </tr>
 {% endif %}
 {% for field in form.visible_fields %}
+{% if field.widget_type != 'recaptchav2invisible' %}
 <div class="flex items-center mb-3 flex-col md:flex-row">
     <div class="w-full md:w-1/4 flex-shrink-0 md:text-right md:mr-4 font-bold {% if field.errors %}text-red-600{% endif %}">
         {% if field.label %}{{ field.label_tag }}{% endif %}
@@ -20,5 +21,8 @@
         {% endif %}
     </div>
 </div>
+{% else %}
+    {{ field }}
+{% endif %}
 {% endfor %}
 {% for field in hidden_fields %}{{ field }}{% endfor %}
