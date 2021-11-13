@@ -19,7 +19,7 @@ COPY ./bullet .
 COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
 
 RUN apk update \
-    && apk add --virtual build-deps gcc musl-dev \
+    && apk add --virtual build-deps curl gcc musl-dev \
     && apk add libc-dev libffi-dev make \
     && apk add postgresql-dev openssl-dev bash
 
