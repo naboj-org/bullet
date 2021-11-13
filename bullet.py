@@ -63,7 +63,7 @@ def update(*args):
     run("npm install", shell=platform.system() == "Windows")
 
     logging.info("Building development CSS")
-    run("npm install", shell=platform.system() == "Windows")
+    run("npm run css-dev", shell=platform.system() == "Windows")
 
     logging.info("Rebuilding containers")
     run("docker-compose build")
