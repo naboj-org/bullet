@@ -16,3 +16,20 @@ class Languages(models.TextChoices):
     UKRAINIAN = 'uk', gettext_noop('Ukrainian')
     BELARUSSIAN = 'be', gettext_noop('Belarusian')
     PERSIAN = 'fa', gettext_noop('Persian')
+
+
+PHONE_REGIONS = {
+    'sk': 'SK',
+    'cs': 'CZ',
+    'en-gb': 'GB',
+    'de-ch': 'CH',
+    'de-de': 'DE',
+    'fi': 'FI',
+    'pl': 'PL',
+    'hu': 'HU',
+    'ro': 'RO',
+    'ru': 'RU',
+    'uk': 'UA',
+    'be': 'BE',
+    'fa': 'IR',
+}
