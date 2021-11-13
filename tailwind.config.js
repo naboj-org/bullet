@@ -12,6 +12,7 @@ module.exports = {
       },
       gridTemplateColumns: {
         'registration': 'min-content 3fr 3fr 2fr 2fr',
+        'participants-edit': 'min-content 3fr 3fr 2fr 2fr min-content',
       }
     },
     fontFamily: {

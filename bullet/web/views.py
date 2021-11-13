@@ -8,6 +8,7 @@ from django.db import transaction
 from django.db.models import F
 from django.forms import inlineformset_factory, ModelForm
 from django.http import HttpResponseRedirect
+from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
@@ -16,7 +17,7 @@ from django_hosts import reverse
 
 from competitions.models import Competition, CategoryCompetition, CompetitionSite
 from users.models import Team, Participant
-from web.forms import RegistrationForm
+from web.forms import RegistrationForm, ParticipantsFormSet
 
 
 class BranchSpecificViewMixin:
@@ -161,7 +162,7 @@ class RegistrationConfirmView(TemplateView, BranchSpecificViewMixin):
                 secret_link=secret_link
             )
             if team.confirmed_at is not None:
-                error = _('Registration of this team has already been confirmed')
+                return redirect('team_edit', secret_link=secret_link)
             else:
                 team.confirmed_at = timezone.now()
                 team.save(update_fields=('confirmed_at',))
@@ -175,3 +176,38 @@ class RegistrationConfirmView(TemplateView, BranchSpecificViewMixin):
         context['error'] = error
 
         return self.render_to_response(context)
+
+
+class TeamEditView(FormView, BranchSpecificViewMixin):
+    template_name = 'web/team_edit.html'
+    form_class = ParticipantsFormSet
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx['branch'] = self.branch
+        ctx['team'] = self.team
+        return ctx
+
+    def form_valid(self, form):
+        form.save()
+        messages.success(self.request, 'Team successfully edited.')
+        return redirect('team_edit', secret_link=self.team.secret_link)
+
+    def get_form_kwargs(self):
+        kw = super(TeamEditView, self).get_form_kwargs()
+        kw['instance'] = self.team
+        return kw
+
+    def get_form(self, form_class=None):
+        form = super(TeamEditView, self).get_form(form_class)
+        category_competition: CategoryCompetition = self.team.competition_site.category_competition
+
+        form.max_num = category_competition.max_members_per_team
+        form.extra = category_competition.max_members_per_team - 1
+        return form
+
+    def dispatch(self, request, *args, **kwargs):
+        self.team = Team.objects.select_related('competition_site__category_competition').prefetch_related("participants").get(
+            secret_link=kwargs.pop("secret_link")
+        )
+        return super(TeamEditView, self).dispatch(request, *args, **kwargs)
