@@ -25,7 +25,7 @@ RUN apk update \
 
 RUN pip install --upgrade pipenv
 COPY Pipfile Pipfile.lock ./
-RUN pipenv install --system --deploy
+RUN pipenv install --system --dev --deploy
 
 
 # Heroku
