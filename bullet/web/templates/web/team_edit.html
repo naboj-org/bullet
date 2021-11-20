@@ -8,68 +8,97 @@
 {% endblock %}
 
 {% block content %}
-    <div class="mx-auto w-full max-w-4xl p-3">
-        <form method="POST">
-            {% csrf_token %}
+    <main class="mx-auto w-full max-w-4xl p-3">
+
+        <section class="py-5 my-5 border-b">
             <h2 class="text-3xl mb-3">Team Information</h2>
 
             <p>
-                <b>School:</b>
+                <strong>School:</strong>
                 {{ team.school }}
 
                 {% if team.in_school_symbol %}
-                <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
+                    <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
                 {% endif %}
             </p>
-            <p><b>Competition site:</b> {{ team.competition_site }}</p>
-            <p><b>Contact name:</b> {{ team.contact_name }}</p>
-            <p><b>Contact email:</b> {{ team.contact_email }}</p>
+            <p><strong>Competition site:</strong> {{ team.competition_site }}</p>
+            <p><strong>Contact name:</strong> {{ team.contact_name }}</p>
+            <p><strong>Contact email:</strong> {{ team.contact_email }}</p>
             {% if team.contact_phone %}
-            <p><b>Contact phone:</b> {{ team.contact_phone }}</p>
+                <p><strong>Contact phone:</strong> {{ team.contact_phone }}</p>
             {% endif %}
-
-            <hr class="my-6">
+        </section>
+        <section>
             <h2 class="text-3xl mb-4">Participants</h2>
 
-            {{ form.management_form }}
+            {% if can_be_changed %}
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.management_form }}
 
-            <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 items-center mb-8">
-                <div class="w-auto md:block hidden"></div>
-                <div class="hidden md:block font-bold">First name</div>
-                <div class="hidden md:block font-bold">Last name</div>
-                <div class="hidden md:block font-bold">Birth year</div>
-                <div class="hidden md:block font-bold">Graduation year</div>
-                <div class="hidden md:block font-bold text-center">Delete?</div>
+                    <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 items-center mb-8">
+                        <div class="w-auto md:block hidden"></div>
+                        <div class="hidden md:block font-bold">First name</div>
+                        <div class="hidden md:block font-bold">Last name</div>
+                        <div class="hidden md:block font-bold">Birth year</div>
+                        <div class="hidden md:block font-bold">Graduation year</div>
+                        <div class="hidden md:block font-bold text-center">Delete?</div>
 
+                        {% for f in form %}
+                        <div class="w-auto whitespace-nowrap text-xl font-bold mt-4 md:mt-0 md:text-base">
+                            Participant {{ forloop.counter }}
+                            {{ f.id }}
+                        </div>
+                        <div>
+                            <label class="md:hidden font-bold" for="id_{{ f.first_name.html_name }}">First name:</label>
+                            {{ f.first_name }}
+                        </div>
+                        <div>
+                            <label class="md:hidden font-bold" for="id_{{ f.last_name.html_name }}">Last name:</label>
+                            {{ f.last_name }}
+                        </div>
+                        <div>
+                            <label class="md:hidden font-bold" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
+                            {{ f.birth_year }}
+                        </div>
+                        <div>
+                            <label class="md:hidden font-bold" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
+                            {{ f.graduation_year }}
+                        </div>
+                        <div class="flex md:justify-center items-center gap-2">
+                            {{ f.DELETE }}
+                            <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">Delete?</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit" class="btn">Update</button>
+                </form>
+            {% else %}
+                <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
                 {% for f in form %}
-                <div class="w-auto whitespace-nowrap text-xl font-bold mt-4 md:mt-0 md:text-base">
-                    Participant {{ forloop.counter }}
-                    {{ f.id }}
-                </div>
-                <div>
-                    <label class="md:hidden font-bold" for="id_{{ f.first_name.html_name }}">First name:</label>
-                    {{ f.first_name }}
-                </div>
-                <div>
-                    <label class="md:hidden font-bold" for="id_{{ f.last_name.html_name }}">Last name:</label>
-                    {{ f.last_name }}
-                </div>
-                <div>
-                    <label class="md:hidden font-bold" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
-                    {{ f.birth_year }}
-                </div>
-                <div>
-                    <label class="md:hidden font-bold" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
-                    {{ f.graduation_year }}
-                </div>
-                <div class="flex md:justify-center items-center gap-2">
-                    {{ f.DELETE }}
-                    <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">Delete?</label>
-                </div>
+                    <div>
+                        <h3 class="text-xl mt-3 mb-1">
+                            Participant {{ forloop.counter }}
+                            {{ f.id }}
+                        </h3>
+                        <p>
+                            <strong>Name:</strong>
+                            {{ f.first_name.value|stringformat:'s' }}
+                            {{ f.last_name.value|stringformat:'s' }}
+                        </p>
+                        <p>
+                            <strong>Birth year:</strong>
+                            {{ f.birth_year.value|stringformat:'s' }}
+                        </p>
+                        <p>
+                            <strong>Graduation year:</strong>
+                            {{ f.graduation_year.value|stringformat:'s' }}
+                        </p>
+                    </div>
                 {% endfor %}
-            </div>
-
-            <button type="submit" class="btn">Update</button>
-        </form>
-    </div>
+                </div>
+            {% endif %}
+        </section>
+    </main>
 {% endblock %}

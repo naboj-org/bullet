@@ -9,7 +9,7 @@
 <div class="flex">
     <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
         <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
-        <a href="#" class="bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow">Registration</a>
+        <a href="#" class="hero-btn">Registration</a>
 
         <p class="font-light mt-12 md:mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio.</p>
     </div>
@@ -89,9 +89,8 @@
                 <p class="text-xl mb-10">{{ registration_open_for }}</p>
 
                 {% for category_comp in open_competition.categorycompetition_set.all %}
-                    <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow">Register ({{ category_comp.get_category_display }})</a>
+                    <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}" class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
                 {% endfor %}
-
             </div>
         </div>
     </div>
