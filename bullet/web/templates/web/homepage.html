@@ -1,6 +1,7 @@
 {% extends "web/base.html" %}
 {% load static %}
 {% load i18n %}
+{% load hosts %}
 
 {% block title %}Homepage{% endblock %}
 {% block heroclass %}md:bg-hero-image{% endblock %}
@@ -77,19 +78,23 @@
     </div>
 </div>
 
+{% if open_competition %}
+    <div class="container mx-auto px-2">
+        <div class="my-10 md:my-24 text-center">
+            <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
 
-<div class="container mx-auto px-2">
-    <div class="my-10 md:my-24 text-center">
-        <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
+            <div class="mx-auto max-w-4xl">
+                <p>Registration closes in</p>
+                {# TODO more human readable display & actual countdown in JS #}
+                <p class="text-xl mb-10">{{ registration_open_for }}</p>
 
-        <div class="mx-auto max-w-4xl">
-            <p>Registration closes in</p>
-            <p class="text-xl mb-10">10 days 00:15:00</p>
-
-            <a href="#" class="hero-btn">Register now</a>
+                {% for category_comp in open_competition.categorycompetition_set.all %}
+                    <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}" class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
+                {% endfor %}
+            </div>
         </div>
     </div>
-</div>
+{% endif %}
 
 {#    {% trans "dynamic:intro" context branch.label %}#}
 {% endblock %}
