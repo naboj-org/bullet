@@ -60,3 +60,7 @@
 .btn {
     @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow leading-none border-none;
 }
+
+.hero-btn {
+    @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow hover:bg-white hover:text-primary transition-all
+}
