@@ -49,3 +49,7 @@ class CompetitionSite(models.Model):
 
     def __str__(self):
         return f'{self.site.name} hosting {self.category_competition}'
+
+    @property
+    def remaining_capacity(self):
+        return self.capacity - self.team_set.count()

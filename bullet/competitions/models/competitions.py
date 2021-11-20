@@ -13,6 +13,8 @@ class CompetitionQuerySet(models.QuerySet):
             registration_start__lte=now,
             is_cancelled=False,
         )
+    def get_current_competition(self, branch):
+        return self.filter(branch = branch).order_by("-web_start").first()
 
 
 class Competition(models.Model):
