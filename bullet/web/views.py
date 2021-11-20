@@ -1,25 +1,24 @@
 import random
 import string
-from typing import Tuple, List
+from typing import List, Tuple
 
+from competitions.models import CategoryCompetition, Competition, CompetitionSite
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models import F, QuerySet
-from django.forms import inlineformset_factory, ModelForm
+from django.forms import ModelForm, inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from django.views.generic import TemplateView, FormView
+from django.views.generic import FormView, TemplateView
 from django_hosts import reverse
-
-from competitions.models import Competition, CategoryCompetition, CompetitionSite
-from users.models import Team, Participant
-from web.forms import RegistrationForm, ParticipantsFormSet
+from users.models import Participant, Team
+from web.forms import ParticipantsFormSet, RegistrationForm
 
 
 class BranchSpecificViewMixin:

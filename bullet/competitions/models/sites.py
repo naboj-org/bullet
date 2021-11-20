@@ -1,12 +1,11 @@
 from address.models import AddressField
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Count, OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
+from users.models import Team
 
 from bullet.constants import Languages
-from django.db.models import Subquery, OuterRef, Count, Value
-from django.db.models.functions import Coalesce
-
-from users.models import Team
 
 
 class Site(models.Model):

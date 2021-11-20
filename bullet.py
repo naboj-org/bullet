@@ -1,12 +1,11 @@
 #!/bin/env python3
+import logging
+import os
 import platform
-import subprocess
 import shlex
 import shutil
+import subprocess
 import sys
-import os
-import logging
-
 
 PREFIX = "\033[0;30m\033[47m"
 RESET = "\033[0m"

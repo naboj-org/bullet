@@ -1,6 +1,5 @@
 from address.models import AddressField
 from django.db import models
-
 from django.db.models import IntegerChoices
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField

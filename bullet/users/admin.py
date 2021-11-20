@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-
-from users.models import User, Team, Participant, School
+from users.models import Participant, School, Team, User
 
 
 @admin.register(User)

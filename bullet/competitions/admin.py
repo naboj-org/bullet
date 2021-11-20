@@ -1,7 +1,15 @@
+from competitions.models import (
+    CategoryCompetition,
+    Competition,
+    CompetitionProblem,
+    CompetitionSite,
+    LocalizedProblem,
+    Problem,
+    Site,
+    SolutionSubmitLog,
+    Wildcard,
+)
 from django.contrib import admin
-
-from competitions.models import Competition, CategoryCompetition, Site, CompetitionSite, Problem, CompetitionProblem, \
-    LocalizedProblem, SolutionSubmitLog, Wildcard
 
 
 class CategoryCompetitionInlineAdmin(admin.TabularInline):

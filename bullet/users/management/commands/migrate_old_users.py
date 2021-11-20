@@ -2,7 +2,6 @@ import json
 
 from django.core.management import BaseCommand
 from django.db import transaction
-
 from users.models import User
 
 

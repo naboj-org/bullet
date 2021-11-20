@@ -1,11 +1,11 @@
 import re
-from typing import Dict, Tuple, Optional
+from typing import Dict, Optional, Tuple
 
 from django.template import Variable
 from django.utils import translation
 from django.utils.functional import lazy
-from django.utils.safestring import SafeData, mark_safe, SafeString
-from django.utils.translation import pgettext_lazy, gettext_lazy
+from django.utils.safestring import SafeData, SafeString, mark_safe
+from django.utils.translation import gettext_lazy, pgettext_lazy
 
 
 class TranslationCache:

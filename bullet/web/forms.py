@@ -1,12 +1,12 @@
-from django.core.exceptions import ValidationError
-from django.utils.translation import get_language
-from django.forms import ModelForm, ModelChoiceField, inlineformset_factory
-
-from bullet.constants import PHONE_REGIONS
-from competitions.models import CategoryCompetition, CompetitionSite
-from users.models import Team, Participant
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
+from competitions.models import CategoryCompetition, CompetitionSite
+from django.core.exceptions import ValidationError
+from django.forms import ModelChoiceField, ModelForm, inlineformset_factory
+from django.utils.translation import get_language
+from users.models import Participant, Team
+
+from bullet.constants import PHONE_REGIONS
 
 
 class RegistrationForm(ModelForm):

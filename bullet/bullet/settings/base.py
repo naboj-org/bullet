@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 
 import django.conf.locale
-import django.conf.locale
-from bullet.constants import Languages
 from django.conf import global_settings
+
+from bullet.constants import Languages
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 

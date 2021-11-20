@@ -1,9 +1,9 @@
-from django.urls import path
-from django.conf.urls.i18n import i18n_patterns
-
 from competitions.models import Competition
-from .urls_shared import urlpatterns as shared_patterns
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import path
+
 from .urls_shared import branch_shared_patterns
+from .urls_shared import urlpatterns as shared_patterns
 
 urlpatterns = i18n_patterns(
     *(shared_patterns + [

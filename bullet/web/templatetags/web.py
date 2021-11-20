@@ -1,7 +1,6 @@
+from competitions.models import Competition
 from django import template
 from django.templatetags.static import static
-
-from competitions.models import Competition
 
 register = template.Library()
 
