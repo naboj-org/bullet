@@ -11,11 +11,19 @@ class CompetitionQuerySet(models.QuerySet):
         return self.filter(
             registration_end__gte=now,
             registration_start__lte=now,
+            registration_second_round_start__lte=now,
             is_cancelled=False,
         )
 
     def get_current_competition(self, branch):
         return self.filter(branch=branch).order_by("-web_start").first()
+
+    def currently_active(self):
+        now = timezone.now()
+
+        return self.filter(
+            web_start__lte=now,
+        ).order_by("-web_start")
 
 
 class Competition(models.Model):

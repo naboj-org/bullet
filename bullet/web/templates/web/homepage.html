@@ -17,6 +17,41 @@
 {% endblock %}
 
 {% block content %}
+<div class="my-16 md:my-32">
+    <h2 class="font-bold text-4xl mb-6 md:mb-16 text-center">What is <span class="text-primary">Naboj</span>?</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 mx-auto md:max-w-4xl gap-8">
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
+            <div>
+                <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
+            <div>
+                <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
+            <div>
+                <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+            </div>
+        </div>
+        <div class="flex items-center">
+            <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
+            <div>
+                <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container mx-auto px-2">
     <div class="flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col md:flex-row">
         <img src="https://picsum.photos/800/500" class="md:w-3/5 shrink-0 rounded-md shadow-md">
@@ -65,7 +100,89 @@
     </div>
 </div>
 
-<div class="bg-gradient py-12 md:py-32">
+
+<div class="container mx-auto px-2">
+    <div class="mb-10 md:mb-40 text-center">
+        <h2 class="font-bold text-4xl m-12">All you <span class="text-primary">need</span> to know</h2>
+
+
+        <div class="flex justify-center mb-10">
+             <div class="timeline" style="box-sizing: border-box;">
+
+                 {% now "Y-m-d" as today %}
+
+                 {% if today < registration.registration_start|date:"Y-m-d" %}
+                    <div class="container flex items-center m-0">
+                    <div class="content">
+                        <p class="text-lg">{{ registration.registration_start|date }}, {{ registration.registration_start|time }}</p>
+                        <p class="text-2xl">Registration starts</p>
+                    </div>
+                </div>
+                 {% else %}
+                    <div class="container gray-border flex items-center m-0 text-gray-400">
+                    <div class="content">
+                        <p class="text-lg">{{ registration.registration_start|date }}, {{ registration.registration_start|time }}</p>
+                        <p class="text-2xl">Registration starts</p>
+                    </div>
+                </div>
+                 {% endif %}
+
+                 {% if today < registration.registration_second_round_end|date:"Y-m-d" %}
+                     <div class="container flex items-center m-0">
+                        <div class="content">
+                            <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{ registration.registration_second_round_start|time }}</p>
+                            <p class="text-2xl">Second round of registration</p>
+                        </div>
+                    </div>
+                 {% else %}
+                     <div class="container gray-border flex items-center m-0 text-gray-400">
+                        <div class="content">
+                            <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{ registration.registration_second_round_start|time }}</p>
+                            <p class="text-2xl">Second round of registration</p>
+                        </div>
+                    </div>
+                 {% endif %}
+
+                 {% if today < registration.registration_end|date:"Y-m-d" %}
+                     <div class="container flex items-center m-0">
+                        <div class="content">
+                            <p class="text-lg">{{ registration.registration_end|date }}, {{ registration.registration_end|time }}</p>
+                            <p class="text-2xl">Registration end</p>
+                        </div>
+                    </div>
+                 {% else %}
+                     <div class="container gray-border flex items-center m-0 text-gray-400">
+                        <div class="content">
+                            <p class="text-lg">{{ registration.registration_end|date }}, {{ registration.registration_end|time }}</p>
+                            <p class="text-2xl">Registration end</p>
+                        </div>
+                    </div>
+                 {% endif %}
+
+                 {% if today < competition.competition_start|date:"Y-m-d" %}
+                    <div class="container flex items-center m-0">
+                    <div class="content">
+                        <p class="text-lg">{{ competition.competition_start|date}}, {{ competition.competition_start|time }}</p>
+                        <p class="text-2xl">Competition day</p>
+                    </div>
+                </div>
+                 {% else %}
+                    <div class="container gray-border flex items-center m-0 text-gray-400">
+                    <div class="content">
+                        <p class="text-lg">{{ competition.competition_start|date}}, {{ competition.competition_start|time }}</p>
+                        <p class="text-2xl">Competition day</p>
+                    </div>
+                </div>
+                 {% endif %}
+
+            </div>
+        </div>
+
+    <a href="#" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow mt-10">Register now</a>
+    </div>
+</div>
+
+<div class="bg-gradient py-10 md:py-24">
     <div class="container mx-auto px-2 flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col-reverse md:flex-row">
         <div class="grow">
             <h2 class="font-bold text-3xl md:text-4xl mb-6">
@@ -94,7 +211,72 @@
             </div>
         </div>
     </div>
+
+    <div class="container mx-auto px-2">
+        <div class="mb-10 md:mb-16 text-center">
+            <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
+            <div class="mx-auto max-w-4xl">
+                <p>Registration closes in</p>
+                <p class="text-xl mb-10">10 days 00:15:00</p>
+
+                <a href="#" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow">Register now</a>
+            </div>
+        </div>
+    </div>
 {% endif %}
+
+<style>
+
+    .timeline {
+        position: relative;
+    }
+
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: rgb(255,255,255);
+        border: rgb(218,218,218) solid 2px;
+        border-radius: 10px;
+        top: 0;
+        bottom: 0;
+        left:0;
+    }
+
+    .timeline .container {
+        padding: 10px 0 10px 40px;
+        position: relative;
+        width: 100%;
+    }
+
+    .timeline .container::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: -9px;
+        border: solid 4px var(--primary);
+        background-color: white;
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
+
+    .timeline .content {
+        position: relative;
+        text-align: left;
+        left: 0;
+    }
+
+    .timeline .content::after{
+        left: -3px;
+    }
+
+    .timeline .container.gray-border::after{
+        border-color: #9ca3af;
+    }
+
+</style>
 
 {#    {% trans "dynamic:intro" context branch.label %}#}
 
