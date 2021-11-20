@@ -8,10 +8,12 @@
 {% block hero %}
 <div class="flex">
     <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
-        <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
+        <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span>
+            adipisicing elit.</p>
         <a href="#" class="hero-btn">Registration</a>
 
-        <p class="font-light mt-12 md:mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio.</p>
+        <p class="font-light mt-12 md:mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque,
+            optio.</p>
     </div>
 </div>
 {% endblock %}
@@ -25,28 +27,32 @@
             <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
             <div>
                 <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem
+                    inventore labore odio pariatur quidem, repellat velit.</p>
             </div>
         </div>
         <div class="flex items-center">
             <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
             <div>
                 <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem
+                    inventore labore odio pariatur quidem, repellat velit.</p>
             </div>
         </div>
         <div class="flex items-center">
             <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
             <div>
                 <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem
+                    inventore labore odio pariatur quidem, repellat velit.</p>
             </div>
         </div>
         <div class="flex items-center">
             <div class="w-12 h-12 rounded-full bg-primary flex-shrink-0 mr-4"></div>
             <div>
                 <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem
+                    inventore labore odio pariatur quidem, repellat velit.</p>
             </div>
         </div>
     </div>
@@ -107,78 +113,87 @@
 
 
         <div class="flex justify-center mb-10">
-             <div class="timeline" style="box-sizing: border-box;">
+            <div class="timeline" style="box-sizing: border-box;">
+                {% now "Y-m-d" as today %}
 
-                 {% now "Y-m-d" as today %}
-
-                 {% if today < registration.registration_start|date:"Y-m-d" %}
-                    <div class="container flex items-center m-0">
+                {% if today < registration.registration_start|date:"Y-m-d" %}
+                <div class="container flex items-center m-0">
                     <div class="content">
-                        <p class="text-lg">{{ registration.registration_start|date }}, {{ registration.registration_start|time }}</p>
+                        <p class="text-lg">{{ registration.registration_start|date }}, {{
+                            registration.registration_start|time }}</p>
                         <p class="text-2xl">Registration starts</p>
                     </div>
                 </div>
-                 {% else %}
-                    <div class="container gray-border flex items-center m-0 text-gray-400">
+                {% else %}
+                <div class="container gray-border flex items-center m-0 text-gray-400">
                     <div class="content">
-                        <p class="text-lg">{{ registration.registration_start|date }}, {{ registration.registration_start|time }}</p>
+                        <p class="text-lg">{{ registration.registration_start|date }}, {{
+                            registration.registration_start|time }}</p>
                         <p class="text-2xl">Registration starts</p>
                     </div>
                 </div>
-                 {% endif %}
+                {% endif %}
 
-                 {% if today < registration.registration_second_round_end|date:"Y-m-d" %}
-                     <div class="container flex items-center m-0">
-                        <div class="content">
-                            <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{ registration.registration_second_round_start|time }}</p>
-                            <p class="text-2xl">Second round of registration</p>
-                        </div>
-                    </div>
-                 {% else %}
-                     <div class="container gray-border flex items-center m-0 text-gray-400">
-                        <div class="content">
-                            <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{ registration.registration_second_round_start|time }}</p>
-                            <p class="text-2xl">Second round of registration</p>
-                        </div>
-                    </div>
-                 {% endif %}
-
-                 {% if today < registration.registration_end|date:"Y-m-d" %}
-                     <div class="container flex items-center m-0">
-                        <div class="content">
-                            <p class="text-lg">{{ registration.registration_end|date }}, {{ registration.registration_end|time }}</p>
-                            <p class="text-2xl">Registration end</p>
-                        </div>
-                    </div>
-                 {% else %}
-                     <div class="container gray-border flex items-center m-0 text-gray-400">
-                        <div class="content">
-                            <p class="text-lg">{{ registration.registration_end|date }}, {{ registration.registration_end|time }}</p>
-                            <p class="text-2xl">Registration end</p>
-                        </div>
-                    </div>
-                 {% endif %}
-
-                 {% if today < competition.competition_start|date:"Y-m-d" %}
-                    <div class="container flex items-center m-0">
+                {% if today < registration.registration_second_round_end|date:"Y-m-d" %}
+                <div class="container flex items-center m-0">
                     <div class="content">
-                        <p class="text-lg">{{ competition.competition_start|date}}, {{ competition.competition_start|time }}</p>
+                        <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{
+                            registration.registration_second_round_start|time }}</p>
+                        <p class="text-2xl">Second round of registration</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="container gray-border flex items-center m-0 text-gray-400">
+                    <div class="content">
+                        <p class="text-lg">{{ registration.registration_second_round_start|date }}, {{
+                            registration.registration_second_round_start|time }}</p>
+                        <p class="text-2xl">Second round of registration</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if today < registration.registration_end|date:"Y-m-d" %}
+                <div class="container flex items-center m-0">
+                    <div class="content">
+                        <p class="text-lg">{{ registration.registration_end|date }}, {{
+                            registration.registration_end|time }}</p>
+                        <p class="text-2xl">Registration end</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="container gray-border flex items-center m-0 text-gray-400">
+                    <div class="content">
+                        <p class="text-lg">{{ registration.registration_end|date }}, {{
+                            registration.registration_end|time }}</p>
+                        <p class="text-2xl">Registration end</p>
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if today < competition.competition_start|date:"Y-m-d" %}
+                <div class="container flex items-center m-0">
+                    <div class="content">
+                        <p class="text-lg">{{ competition.competition_start|date}}, {{
+                            competition.competition_start|time }}</p>
                         <p class="text-2xl">Competition day</p>
                     </div>
                 </div>
-                 {% else %}
-                    <div class="container gray-border flex items-center m-0 text-gray-400">
+                {% else %}
+                <div class="container gray-border flex items-center m-0 text-gray-400">
                     <div class="content">
-                        <p class="text-lg">{{ competition.competition_start|date}}, {{ competition.competition_start|time }}</p>
+                        <p class="text-lg">{{ competition.competition_start|date}}, {{
+                            competition.competition_start|time }}</p>
                         <p class="text-2xl">Competition day</p>
                     </div>
                 </div>
-                 {% endif %}
+                {% endif %}
 
             </div>
         </div>
 
-    <a href="#" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow mt-10">Register now</a>
+        <a href="#" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow mt-10">
+            Register now
+        </a>
     </div>
 </div>
 
@@ -189,40 +204,31 @@
                 <span class="text-primary">International competition</span>
                 liked by students everywhere
             </h2>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at blanditiis excepturi facilis, id ipsum natus neque nihil, nulla obcaecati placeat provident quo repudiandae sequi voluptate. Architecto nihil nulla voluptatem.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at blanditiis excepturi facilis, id ipsum
+            natus neque nihil, nulla obcaecati placeat provident quo repudiandae sequi voluptate. Architecto nihil nulla
+            voluptatem.
         </div>
         <img src="https://picsum.photos/800/500" class="md:w-3/5 shrink-0 rounded-md shadow-md">
     </div>
 </div>
 
 {% if open_competition %}
-    <div class="container mx-auto px-2">
-        <div class="my-10 md:my-24 text-center">
-            <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
+<div class="container mx-auto px-2">
+    <div class="my-10 md:my-24 text-center">
+        <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
 
-            <div class="mx-auto max-w-4xl">
-                <p>Registration closes in</p>
-                {# TODO more human readable display & actual countdown in JS #}
-                <p class="text-xl mb-10">{{ registration_open_for }}</p>
+        <div class="mx-auto max-w-4xl">
+            <p>Registration closes in</p>
+            {# TODO more human readable display & actual countdown in JS #}
+            <p class="text-xl mb-10">TODO</p>
 
-                {% for category_comp in open_competition.categorycompetition_set.all %}
-                    <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}" class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
-                {% endfor %}
-            </div>
+            {% for category_comp in competition.categorycompetition_set.all %}
+            <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}"
+               class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
+            {% endfor %}
         </div>
     </div>
-
-    <div class="container mx-auto px-2">
-        <div class="mb-10 md:mb-16 text-center">
-            <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
-            <div class="mx-auto max-w-4xl">
-                <p>Registration closes in</p>
-                <p class="text-xl mb-10">10 days 00:15:00</p>
-
-                <a href="#" class="bg-primary text-white text-xl font-medium rounded-full px-8 py-4 shadow">Register now</a>
-            </div>
-        </div>
-    </div>
+</div>
 {% endif %}
 
 <style>
@@ -235,12 +241,12 @@
         content: '';
         position: absolute;
         width: 6px;
-        background-color: rgb(255,255,255);
-        border: rgb(218,218,218) solid 2px;
+        background-color: rgb(255, 255, 255);
+        border: rgb(218, 218, 218) solid 2px;
         border-radius: 10px;
         top: 0;
         bottom: 0;
-        left:0;
+        left: 0;
     }
 
     .timeline .container {
@@ -268,11 +274,11 @@
         left: 0;
     }
 
-    .timeline .content::after{
+    .timeline .content::after {
         left: -3px;
     }
 
-    .timeline .container.gray-border::after{
+    .timeline .container.gray-border::after {
         border-color: #9ca3af;
     }
 

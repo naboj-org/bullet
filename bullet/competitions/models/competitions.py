@@ -16,14 +16,11 @@ class CompetitionQuerySet(models.QuerySet):
         )
 
     def get_current_competition(self, branch):
-        return self.filter(branch=branch).order_by("-web_start").first()
-
-    def currently_active(self):
-        now = timezone.now()
-
-        return self.filter(
-            web_start__lte=now,
-        ).order_by("-web_start")
+        return (
+            self.filter(branch=branch, web_start__lte=timezone.now())
+            .order_by("-web_start")
+            .first()
+        )
 
 
 class Competition(models.Model):
@@ -77,7 +74,6 @@ class CategoryCompetition(models.Model):
         "competitions.Competition", on_delete=models.CASCADE
     )
     category = models.IntegerField(choices=Category.choices)
-    educations = models.ManyToManyField("education.Education")
 
     problems_per_team = models.PositiveIntegerField(null=True, blank=True)
     max_teams_per_school = models.PositiveIntegerField(null=True, blank=True)
@@ -102,5 +98,5 @@ class Wildcard(models.Model):
     competition = models.ForeignKey(
         "competitions.CategoryCompetition", on_delete=models.CASCADE
     )
-    school = models.ForeignKey("education.School", on_delete=models.CASCADE)
+    school = models.ForeignKey("users.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)
