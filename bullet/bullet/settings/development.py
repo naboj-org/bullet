@@ -21,3 +21,4 @@ MIDDLEWARE = (
 ) + MIDDLEWARE
 
 INSTALLED_APPS += ['debug_toolbar']
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
