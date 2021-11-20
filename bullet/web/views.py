@@ -3,6 +3,7 @@ import string
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models import F
@@ -186,6 +187,7 @@ class TeamEditView(FormView, BranchSpecificViewMixin):
         ctx = super().get_context_data(**kwargs)
         ctx['branch'] = self.branch
         ctx['team'] = self.team
+        ctx['can_be_changed'] = self.can_be_changed
         return ctx
 
     def form_valid(self, form):
@@ -210,4 +212,11 @@ class TeamEditView(FormView, BranchSpecificViewMixin):
         self.team = Team.objects.select_related('competition_site__category_competition').prefetch_related("participants").get(
             secret_link=kwargs.pop("secret_link")
         )
+        self.can_be_changed = self.team.competition_site.category_competition.competition.competition_start > timezone.now()
+
         return super(TeamEditView, self).dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if not self.can_be_changed:
+            raise PermissionDenied
+        return super(TeamEditView, self).post(request, *args, **kwargs)
