@@ -6,7 +6,7 @@ from bullet.constants import Languages
 from django.db.models import Subquery, OuterRef, Count, Value
 from django.db.models.functions import Coalesce
 
-from users.models import Team, Participant
+from users.models import Team
 
 
 class Site(models.Model):
@@ -23,8 +23,8 @@ class CompetitionSiteQuerySet(models.QuerySet):
         return self.annotate(
             occupancy=Coalesce(
                 Subquery(
-                    Participant.objects.filter(team__competition_site=OuterRef('pk')).values(
-                        'team__competition_site').annotate(count=Count('pk')).values('count')
+                    Team.objects.filter(confirmed_at__isnull=False, competition_site=OuterRef('pk')).values(
+                        'competition_site').annotate(count=Count('pk')).values('count')
                 ),
                 Value(0)
             )

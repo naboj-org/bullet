@@ -1,12 +1,13 @@
 import random
 import string
+from typing import Tuple, List
 
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import transaction
-from django.db.models import F
+from django.db.models import F, QuerySet
 from django.forms import inlineformset_factory, ModelForm
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
@@ -48,7 +49,7 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
     def get_success_url(self):
         return reverse('homepage', host=self.branch.label.lower())
 
-    def get_competition_model_instances(self):
+    def get_competition_model_instances(self) -> Tuple[CategoryCompetition, QuerySet[CompetitionSite]]:
         try:
             competition = Competition.objects.currently_running_registration().get(branch=self.branch)
         except Competition.DoesNotExist:
@@ -75,7 +76,7 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['available_sites'] = self.kwargs['sites']
-        kwargs['competition'] = self.kwargs['category_competition'].competition
+        kwargs['category_competition'] = self.kwargs['category_competition']
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -214,7 +215,8 @@ class TeamEditView(FormView, BranchSpecificViewMixin):
         return form
 
     def dispatch(self, request, *args, **kwargs):
-        self.team = Team.objects.select_related('competition_site__category_competition').prefetch_related("participants").get(
+        self.team = Team.objects.select_related('competition_site__category_competition').prefetch_related(
+            "participants").get(
             secret_link=kwargs.pop("secret_link")
         )
         self.can_be_changed = self.team.competition_site.category_competition.competition.competition_start > timezone.now()
