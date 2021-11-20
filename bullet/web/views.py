@@ -225,3 +225,20 @@ class TeamEditView(FormView, BranchSpecificViewMixin):
         if not self.can_be_changed:
             raise PermissionDenied
         return super(TeamEditView, self).post(request, *args, **kwargs)
+
+
+class TeamList(TemplateView, BranchSpecificViewMixin):
+    template_name = "web/team_list.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        ctx['branch'] = self.branch
+        competition: Competition = Competition.objects.get_current_competition(self.branch)
+        ctx['sites'] = CompetitionSite.objects.filter(category_competition__competition = competition).order_by("site__name").all()
+        total_teams = 0
+        for site in ctx['sites']:
+            total_teams += site.team_set.count()
+        ctx['total_teams'] = total_teams
+        ctx['countries'] =  set([site.site.address.locality.state.country for site in ctx['sites']])
+        ctx['categories'] = CategoryCompetition.objects.filter(competition = competition).all()
+        return ctx
