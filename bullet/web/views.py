@@ -82,7 +82,7 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
         return inlineformset_factory(
             Team,
             Participant,
-            min_num=1,
+            min_num=0,
             max_num=category_competition.max_members_per_team,
             extra=category_competition.max_members_per_team - 1,
             fields=('first_name', 'last_name', 'graduation_year', 'birth_year')
@@ -126,12 +126,10 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
         team.save()
 
         form: ModelForm
-        participants = []
-        for form in formset.forms:
-            participant = form.save(commit=False)
+        participants = formset.save(commit=False)
+        for participant in participants:
             participant.team = team
             participant.save()
-            participants.append(participant)
 
         send_mail(
             _("Confirm team registration for Náboj"),
