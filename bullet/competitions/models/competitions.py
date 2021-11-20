@@ -13,15 +13,16 @@ class CompetitionQuerySet(models.QuerySet):
             registration_start__lte=now,
             is_cancelled=False,
         )
+
     def get_current_competition(self, branch):
-        return self.filter(branch = branch).order_by("-web_start").first()
+        return self.filter(branch=branch).order_by("-web_start").first()
 
 
 class Competition(models.Model):
     class Branch(IntegerChoices):
-        MATH = 1, _('Math')
-        PHYSICS = 2, _('Physics')
-        JUNIOR = 3, _('Junior')
+        MATH = 1, _("Math")
+        PHYSICS = 2, _("Physics")
+        JUNIOR = 3, _("Junior")
 
     name = models.CharField(max_length=128)
     branch = models.IntegerField(choices=Branch.choices)
@@ -54,17 +55,19 @@ class CategoryCompetitionQueryset(models.QuerySet):
 
 class CategoryCompetition(models.Model):
     class Category(IntegerChoices):
-        SENIOR = 1, _('Senior')
-        JUNIOR = 2, _('Junior')
-        CADET = 3, _('Cadet')
-        OPEN = 4, _('Open')
+        SENIOR = 1, _("Senior")
+        JUNIOR = 2, _("Junior")
+        CADET = 3, _("Cadet")
+        OPEN = 4, _("Open")
 
     class RankingCriteria(models.IntegerChoices):
-        SCORE = 1, _('Score')
-        PROBLEMS = 2, _('Problems')
-        TIME = 3, _('Time')
+        SCORE = 1, _("Score")
+        PROBLEMS = 2, _("Problems")
+        TIME = 3, _("Time")
 
-    competition = models.ForeignKey('competitions.Competition', on_delete=models.CASCADE)
+    competition = models.ForeignKey(
+        "competitions.Competition", on_delete=models.CASCADE
+    )
     category = models.IntegerField(choices=Category.choices)
 
     problems_per_team = models.PositiveIntegerField(null=True, blank=True)
@@ -72,19 +75,23 @@ class CategoryCompetition(models.Model):
     max_teams_second_round = models.PositiveIntegerField(null=True, blank=True)
     max_members_per_team = models.PositiveIntegerField(null=True, blank=True)
 
-    ranking = ArrayField(base_field=models.PositiveIntegerField(choices=RankingCriteria.choices))
+    ranking = ArrayField(
+        base_field=models.PositiveIntegerField(choices=RankingCriteria.choices)
+    )
 
     objects = CategoryCompetitionQueryset.as_manager()
 
     class Meta:
-        unique_together = ('competition', 'category')
-        ordering = ('-category', )
+        unique_together = ("competition", "category")
+        ordering = ("-category",)
 
     def __str__(self):
-        return f'{self.competition.name} - {self.get_category_display()}'
+        return f"{self.competition.name} - {self.get_category_display()}"
 
 
 class Wildcard(models.Model):
-    competition = models.ForeignKey('competitions.CategoryCompetition', on_delete=models.CASCADE)
-    school = models.ForeignKey('users.School', on_delete=models.CASCADE)
+    competition = models.ForeignKey(
+        "competitions.CategoryCompetition", on_delete=models.CASCADE
+    )
+    school = models.ForeignKey("users.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)

@@ -1,12 +1,11 @@
 #!/bin/env python3
+import logging
+import os
 import platform
-import subprocess
 import shlex
 import shutil
+import subprocess
 import sys
-import os
-import logging
-
 
 PREFIX = "\033[0;30m\033[47m"
 RESET = "\033[0m"
@@ -36,6 +35,7 @@ def run(cmd, *args, **kwargs):
 def exec(cmd, *args, **kwargs):
     logging.debug(f"Exec: {cmd}")
     os.execlp(shlex.split(cmd)[0], *shlex.split(cmd))
+
 
 # Handlers
 

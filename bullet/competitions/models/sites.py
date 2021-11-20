@@ -1,12 +1,11 @@
 from address.models import AddressField
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.db.models import Count, OuterRef, Subquery, Value
+from django.db.models.functions import Coalesce
+from users.models import Team
 
 from bullet.constants import Languages
-from django.db.models import Subquery, OuterRef, Count, Value
-from django.db.models.functions import Coalesce
-
-from users.models import Team
 
 
 class Site(models.Model):
@@ -15,7 +14,7 @@ class Site(models.Model):
     address = AddressField()
 
     def __str__(self):
-        return f'{self.name} at {self.address}'
+        return f"{self.name} at {self.address}"
 
 
 class CompetitionSiteQuerySet(models.QuerySet):
@@ -23,20 +22,28 @@ class CompetitionSiteQuerySet(models.QuerySet):
         return self.annotate(
             occupancy=Coalesce(
                 Subquery(
-                    Team.objects.filter(confirmed_at__isnull=False, competition_site=OuterRef('pk')).values(
-                        'competition_site').annotate(count=Count('pk')).values('count')
+                    Team.objects.filter(
+                        confirmed_at__isnull=False, competition_site=OuterRef("pk")
+                    )
+                    .values("competition_site")
+                    .annotate(count=Count("pk"))
+                    .values("count")
                 ),
-                Value(0)
+                Value(0),
             )
         )
 
 
 class CompetitionSite(models.Model):
-    category_competition = models.ForeignKey('competitions.CategoryCompetition', on_delete=models.CASCADE)
-    site = models.ForeignKey('competitions.Site', on_delete=models.CASCADE)
+    category_competition = models.ForeignKey(
+        "competitions.CategoryCompetition", on_delete=models.CASCADE
+    )
+    site = models.ForeignKey("competitions.Site", on_delete=models.CASCADE)
     capacity = models.PositiveIntegerField(default=0)
 
-    accepted_languages = ArrayField(base_field=models.CharField(choices=Languages.choices, max_length=10))
+    accepted_languages = ArrayField(
+        base_field=models.CharField(choices=Languages.choices, max_length=10)
+    )
     local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)
     participants_hidden = models.BooleanField(default=False)
@@ -45,10 +52,10 @@ class CompetitionSite(models.Model):
     objects = CompetitionSiteQuerySet.as_manager()
 
     class Meta:
-        unique_together = ('category_competition', 'site')
+        unique_together = ("category_competition", "site")
 
     def __str__(self):
-        return f'{self.site.name} hosting {self.category_competition}'
+        return f"{self.site.name} hosting {self.category_competition}"
 
     @property
     def remaining_capacity(self):

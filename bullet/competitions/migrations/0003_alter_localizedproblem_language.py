@@ -6,13 +6,29 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('competitions', '0002_initial'),
+        ("competitions", "0002_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='localizedproblem',
-            name='language',
-            field=models.TextField(choices=[('sk', 'Slovak'), ('cs', 'Czech'), ('en-gb', 'British English'), ('de-ch', 'Swiss German'), ('de-de', 'German'), ('fi', 'Finnish'), ('pl', 'Polish'), ('hu', 'Hungarian'), ('ro', 'Romanian'), ('ru', 'Russian'), ('uk', 'Ukrainian'), ('be', 'Belarusian'), ('fa', 'Persian')]),
+            model_name="localizedproblem",
+            name="language",
+            field=models.TextField(
+                choices=[
+                    ("sk", "Slovak"),
+                    ("cs", "Czech"),
+                    ("en-gb", "British English"),
+                    ("de-ch", "Swiss German"),
+                    ("de-de", "German"),
+                    ("fi", "Finnish"),
+                    ("pl", "Polish"),
+                    ("hu", "Hungarian"),
+                    ("ro", "Romanian"),
+                    ("ru", "Russian"),
+                    ("uk", "Ukrainian"),
+                    ("be", "Belarusian"),
+                    ("fa", "Persian"),
+                ]
+            ),
         ),
     ]

@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-
-from users.models import User, Team, Participant, School
+from users.models import Participant, School, Team, User
 
 
 @admin.register(User)
@@ -16,8 +15,14 @@ class TeamParticipantAdmin(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    inlines = (TeamParticipantAdmin, )
-    list_display = ('school', 'competition_site', 'contact_email', 'language', 'is_reviewed')
+    inlines = (TeamParticipantAdmin,)
+    list_display = (
+        "school",
+        "competition_site",
+        "contact_email",
+        "language",
+        "is_reviewed",
+    )
 
 
 @admin.register(Participant)
@@ -27,4 +32,4 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'address', 'izo')
+    list_display = ("name", "type", "address", "izo")
