@@ -76,6 +76,7 @@ class CategoryCompetition(models.Model):
 
     class Meta:
         unique_together = ('competition', 'category')
+        ordering = ('-category', )
 
     def __str__(self):
         return f'{self.competition.name} - {self.get_category_display()}'

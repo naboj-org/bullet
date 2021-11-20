@@ -30,6 +30,13 @@ class HomepageView(TemplateView, BranchSpecificViewMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['branch'] = self.branch
+
+        try:
+            context['open_competition'] = Competition.objects.currently_running_registration().get(branch=self.branch)
+            context['registration_open_for'] = context['open_competition'].registration_end - timezone.now()
+        except Competition.DoesNotExist:
+            pass
+
         return context
 
 
