@@ -9,10 +9,10 @@ urlpatterns = [
 ]
 
 branch_shared_patterns = [
-    (r'^$', views.HomepageView, 'homepage'),
-    (r'^register/(?P<category>\d)/$', views.RegistrationView, 'registration'),
-    (r'^confirm_registration/(?P<secret_link>\w{48})/$', views.RegistrationConfirmView, 'registration_confirm'),
-    (r'^edit_team/(?P<secret_link>\w{48})/$', views.TeamEditView, 'team_edit'),
+    ('', views.HomepageView, 'homepage'),
+    ('register/<category>/', views.RegistrationView, 'registration'),
+    ('confirm_registration/<secret_link>/', views.RegistrationConfirmView, 'registration_confirm'),
+    ('edit_team/<secret_link>/', views.TeamEditView, 'team_edit'),
 ]
 
 if settings.DEBUG:
