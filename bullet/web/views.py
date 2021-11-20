@@ -125,12 +125,10 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
         team.save()
 
         form: ModelForm
-        participants = []
-        for form in formset.forms:
-            participant = form.save(commit=False)
+        participants = formset.save(commit=False)
+        for participant in participants:
             participant.team = team
             participant.save()
-            participants.append(participant)
 
         send_mail(
             _("Confirm team registration for Náboj"),
