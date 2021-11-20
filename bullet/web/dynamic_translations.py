@@ -15,8 +15,11 @@ class TranslationCache:
 
     def reload(self):
         from web.models import Translation
+
         for trans in Translation.objects.filter(content__isnull=False):
-            self.__cache[(trans.language, trans.context, trans.reference)] = mark_safe(trans.content)
+            self.__cache[(trans.language, trans.context, trans.reference)] = mark_safe(
+                trans.content
+            )
         return
 
     def translate(self, reference, context):
@@ -33,7 +36,7 @@ def translate(reference, context=None):
 
 translate_lazy = lazy(translate, str)
 
-translation_cache: 'TranslationCache'
+translation_cache: "TranslationCache"
 
 
 def init():
@@ -48,10 +51,10 @@ def init():
             value = self.literal
         if self.translate:
             is_safe = isinstance(value, SafeData)
-            msgid = value.replace('%', '%%')
+            msgid = value.replace("%", "%%")
             msgid = mark_safe(msgid) if is_safe else msgid
 
-            if re.match(r'^dynamic:.*', msgid):
+            if re.match(r"^dynamic:.*", msgid):
                 msgid = msgid[8:]
                 return translate_lazy(msgid, self.message_context)
             else:

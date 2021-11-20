@@ -11,82 +11,111 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('competitions', '0001_initial'),
+        ("competitions", "0001_initial"),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-        ('address', '0003_auto_20200830_1851'),
-        ('users', '0001_initial'),
+        ("address", "0003_auto_20200830_1851"),
+        ("users", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='wildcard',
-            name='school',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.school'),
+            model_name="wildcard",
+            name="school",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="users.school"
+            ),
         ),
         migrations.AddField(
-            model_name='solutionsubmitlog',
-            name='problem',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.competitionproblem'),
+            model_name="solutionsubmitlog",
+            name="problem",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="competitions.competitionproblem",
+            ),
         ),
         migrations.AddField(
-            model_name='solutionsubmitlog',
-            name='staff',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL),
+            model_name="solutionsubmitlog",
+            name="staff",
+            field=models.ForeignKey(
+                blank=True,
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                to=settings.AUTH_USER_MODEL,
+            ),
         ),
         migrations.AddField(
-            model_name='solutionsubmitlog',
-            name='team',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.team'),
+            model_name="solutionsubmitlog",
+            name="team",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="users.team"
+            ),
         ),
         migrations.AddField(
-            model_name='site',
-            name='address',
-            field=address.models.AddressField(on_delete=django.db.models.deletion.CASCADE, to='address.address'),
+            model_name="site",
+            name="address",
+            field=address.models.AddressField(
+                on_delete=django.db.models.deletion.CASCADE, to="address.address"
+            ),
         ),
         migrations.AddField(
-            model_name='localizedproblem',
-            name='problem',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.problem'),
+            model_name="localizedproblem",
+            name="problem",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="competitions.problem"
+            ),
         ),
         migrations.AddField(
-            model_name='competitionsite',
-            name='category_competition',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.categorycompetition'),
+            model_name="competitionsite",
+            name="category_competition",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="competitions.categorycompetition",
+            ),
         ),
         migrations.AddField(
-            model_name='competitionsite',
-            name='site',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.site'),
+            model_name="competitionsite",
+            name="site",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="competitions.site"
+            ),
         ),
         migrations.AddField(
-            model_name='competitionproblem',
-            name='category_competition',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.categorycompetition'),
+            model_name="competitionproblem",
+            name="category_competition",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="competitions.categorycompetition",
+            ),
         ),
         migrations.AddField(
-            model_name='competitionproblem',
-            name='problem',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.problem'),
+            model_name="competitionproblem",
+            name="problem",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to="competitions.problem"
+            ),
         ),
         migrations.AddField(
-            model_name='categorycompetition',
-            name='competition',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='competitions.competition'),
+            model_name="categorycompetition",
+            name="competition",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                to="competitions.competition",
+            ),
         ),
         migrations.AlterUniqueTogether(
-            name='localizedproblem',
-            unique_together={('problem', 'language')},
+            name="localizedproblem",
+            unique_together={("problem", "language")},
         ),
         migrations.AlterUniqueTogether(
-            name='competitionsite',
-            unique_together={('category_competition', 'site')},
+            name="competitionsite",
+            unique_together={("category_competition", "site")},
         ),
         migrations.AlterUniqueTogether(
-            name='competitionproblem',
-            unique_together={('category_competition', 'number')},
+            name="competitionproblem",
+            unique_together={("category_competition", "number")},
         ),
         migrations.AlterUniqueTogether(
-            name='categorycompetition',
-            unique_together={('competition', 'category')},
+            name="categorycompetition",
+            unique_together={("competition", "category")},
         ),
     ]

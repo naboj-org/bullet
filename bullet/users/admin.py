@@ -15,8 +15,14 @@ class TeamParticipantAdmin(admin.TabularInline):
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    inlines = (TeamParticipantAdmin, )
-    list_display = ('school', 'competition_site', 'contact_email', 'language', 'is_reviewed')
+    inlines = (TeamParticipantAdmin,)
+    list_display = (
+        "school",
+        "competition_site",
+        "contact_email",
+        "language",
+        "is_reviewed",
+    )
 
 
 @admin.register(Participant)
@@ -26,4 +32,4 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type', 'address', 'izo')
+    list_display = ("name", "type", "address", "izo")

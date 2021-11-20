@@ -19,8 +19,14 @@ class CategoryCompetitionInlineAdmin(admin.TabularInline):
 
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    inlines = (CategoryCompetitionInlineAdmin, )
-    list_display = ('name', 'branch', 'registration_start', 'registration_end', 'competition_start')
+    inlines = (CategoryCompetitionInlineAdmin,)
+    list_display = (
+        "name",
+        "branch",
+        "registration_start",
+        "registration_end",
+        "competition_start",
+    )
 
 
 class CompetitionSiteInlineAdmin(admin.TabularInline):
@@ -30,18 +36,31 @@ class CompetitionSiteInlineAdmin(admin.TabularInline):
 
 @admin.register(CategoryCompetition)
 class CategoryCompetitionAdmin(admin.ModelAdmin):
-    inlines = (CompetitionSiteInlineAdmin, )
-    list_display = ('competition', 'category', 'problems_per_team', 'max_teams_per_school', 'max_members_per_team', 'ranking')
+    inlines = (CompetitionSiteInlineAdmin,)
+    list_display = (
+        "competition",
+        "category",
+        "problems_per_team",
+        "max_teams_per_school",
+        "max_members_per_team",
+        "ranking",
+    )
 
 
 @admin.register(Site)
 class SiteAdmin(admin.ModelAdmin):
-    list_display = ('name', 'short_name', 'address')
+    list_display = ("name", "short_name", "address")
 
 
 @admin.register(CompetitionSite)
 class CompetitionSiteAdmin(admin.ModelAdmin):
-    list_display = ('site', 'category_competition', 'capacity', 'accepted_languages', 'local_start')
+    list_display = (
+        "site",
+        "category_competition",
+        "capacity",
+        "accepted_languages",
+        "local_start",
+    )
 
 
 class LocalizedProblemInlineAdmin(admin.TabularInline):
@@ -51,17 +70,17 @@ class LocalizedProblemInlineAdmin(admin.TabularInline):
 
 @admin.register(Problem)
 class ProblemAdmin(admin.ModelAdmin):
-    inlines = (LocalizedProblemInlineAdmin, )
+    inlines = (LocalizedProblemInlineAdmin,)
 
 
 @admin.register(CompetitionProblem)
 class CompetitionProblemAdmin(admin.ModelAdmin):
-    list_display = ('problem', 'category_competition', 'number')
+    list_display = ("problem", "category_competition", "number")
 
 
 @admin.register(LocalizedProblem)
 class LocalizedProblemAdmin(admin.ModelAdmin):
-    list_display = ('problem', 'language')
+    list_display = ("problem", "language")
 
 
 @admin.register(SolutionSubmitLog)

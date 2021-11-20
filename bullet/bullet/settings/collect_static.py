@@ -5,9 +5,11 @@ from .development import *
 
 class BulletStaticConfig(StaticFilesConfig):
     ignore_patterns = [
-        '*.sh', 'node_modules', '*.json',
+        "*.sh",
+        "node_modules",
+        "*.json",
     ]
 
 
-INSTALLED_APPS.remove('django.contrib.staticfiles')
-INSTALLED_APPS.append('bullet.settings.collect_static.BulletStaticConfig')
+INSTALLED_APPS.remove("django.contrib.staticfiles")
+INSTALLED_APPS.append("bullet.settings.collect_static.BulletStaticConfig")

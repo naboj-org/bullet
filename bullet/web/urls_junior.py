@@ -6,10 +6,14 @@ from .urls_shared import branch_shared_patterns
 from .urls_shared import urlpatterns as shared_patterns
 
 urlpatterns = i18n_patterns(
-    *(shared_patterns + [
-        path(url, view.as_view(branch=Competition.Branch.JUNIOR), name=name)
-        for url, view, name in branch_shared_patterns
-    ] + [
-          # Any branch specific patterns
-      ])
+    *(
+        shared_patterns
+        + [
+            path(url, view.as_view(branch=Competition.Branch.JUNIOR), name=name)
+            for url, view, name in branch_shared_patterns
+        ]
+        + [
+            # Any branch specific patterns
+        ]
+    )
 )

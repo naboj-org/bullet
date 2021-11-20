@@ -36,6 +36,7 @@ def exec(cmd, *args, **kwargs):
     logging.debug(f"Exec: {cmd}")
     os.execlp(shlex.split(cmd)[0], *shlex.split(cmd))
 
+
 # Handlers
 
 
