@@ -63,6 +63,7 @@ def update(*args):
     logging.info("Rebuilding containers")
     run("docker-compose build")
     reset()
+    create_superuser()
 
 
 def cmd(*args):
@@ -70,6 +71,14 @@ def cmd(*args):
         logging.error("Please specify command to run.")
         raise SystemExit(1)
     run(f"docker-compose run --rm bullet-web python manage.py {' '.join(args)}")
+
+
+def create_superuser(*args):
+    run("docker-compose run --rm bullet-web python manage.py migrate")
+    run(
+        "docker-compose run -e DJANGO_SUPERUSER_PASSWORD=admin --rm bullet-web python manage.py createsuperuser "
+        "--username=admin --email=admin@localhost --no-input"
+    )
 
 
 handlers = {
