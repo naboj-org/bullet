@@ -4,7 +4,8 @@ from web.models import Page, Translation
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["title", "branch", "language", "url"]
+    list_filter = ["branch", "language"]
 
 
 @admin.register(Translation)
