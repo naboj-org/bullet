@@ -35,3 +35,12 @@ def save_profile(sender, instance, **kwargs):
     from web.dynamic_translations import translation_cache
 
     translation_cache.reload()
+
+
+class Menu(models.Model):
+    url = models.CharField(max_length=128)
+    branch = models.IntegerField(choices=Competition.Branch.choices)
+    title = models.CharField(max_length=128)
+
+    def __str__(self):
+        return self.title
