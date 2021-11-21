@@ -1,8 +1,17 @@
+from competitions.models import Competition
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from bullet.constants import Languages
+
+
+class Page(models.Model):
+    url = models.CharField(max_length=128)
+    language = models.TextField(choices=Languages.choices)
+    branch = models.IntegerField(choices=Competition.Branch.choices)
+    title = models.CharField(max_length=128)
+    content = models.TextField(blank=True)
 
 
 class Translation(models.Model):
