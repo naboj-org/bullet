@@ -4,7 +4,9 @@ from django.db import models
 
 class SchoolType(models.Model):
     name = models.CharField(max_length=64)
-    note = models.CharField(max_length=32, help_text="shown in admin interface")
+    note = models.CharField(
+        max_length=32, help_text="shown in admin interface", blank=True
+    )
 
     def __str__(self):
         return f"{self.name} ({self.note})"
@@ -12,7 +14,10 @@ class SchoolType(models.Model):
 
 class Grade(models.Model):
     class Meta:
-        ordering = ("order",)
+        ordering = (
+            "school_type",
+            "order",
+        )
         unique_together = ("school_type", "order")
 
     school_type = models.ForeignKey(SchoolType, on_delete=models.CASCADE)
