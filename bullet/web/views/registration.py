@@ -1,11 +1,10 @@
 import random
 import string
-from typing import List, Tuple
+from typing import Tuple
 
 from competitions.models import CategoryCompetition, Competition, CompetitionSite
 from django.conf import settings
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.db import transaction
 from django.db.models import F, QuerySet
@@ -18,36 +17,11 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic import FormView, TemplateView
 from django_hosts import reverse
 from users.models import Participant, Team
-from web.forms import ParticipantsFormSet, RegistrationForm
+from web.forms import RegistrationForm
+from web.views import BranchViewMixin
 
 
-class BranchSpecificViewMixin:
-    branch: Competition.Branch = None
-
-
-class HomepageView(TemplateView, BranchSpecificViewMixin):
-    template_name = "web/homepage.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["branch"] = self.branch
-
-        try:
-            context[
-                "open_competition"
-            ] = Competition.objects.currently_running_registration().get(
-                branch=self.branch
-            )
-            context["registration_open_for"] = (
-                context["open_competition"].registration_end - timezone.now()
-            )
-        except Competition.DoesNotExist:
-            pass
-
-        return context
-
-
-class RegistrationView(FormView, BranchSpecificViewMixin):
+class RegistrationView(BranchViewMixin, FormView):
     template_name = "web/registration.html"
     form_class = RegistrationForm
 
@@ -92,7 +66,6 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["branch"] = self.branch
         ctx["formset"] = self.get_formset()
         return ctx
 
@@ -170,13 +143,8 @@ class RegistrationView(FormView, BranchSpecificViewMixin):
         return super().form_valid(form)
 
 
-class RegistrationConfirmView(TemplateView, BranchSpecificViewMixin):
+class RegistrationConfirmView(BranchViewMixin, TemplateView):
     template_name = "web/registration_confirm.html"
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data()
-        ctx["branch"] = self.branch
-        return ctx
 
     @transaction.atomic
     def get(self, request, *args, **kwargs):
@@ -201,82 +169,3 @@ class RegistrationConfirmView(TemplateView, BranchSpecificViewMixin):
         context["error"] = error
 
         return self.render_to_response(context)
-
-
-class TeamEditView(FormView, BranchSpecificViewMixin):
-    template_name = "web/team_edit.html"
-    form_class = ParticipantsFormSet
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["branch"] = self.branch
-        ctx["team"] = self.team
-        ctx["can_be_changed"] = self.can_be_changed
-        return ctx
-
-    def form_valid(self, form):
-        form.save()
-        messages.success(self.request, "Team successfully edited.")
-        return redirect("team_edit", secret_link=self.team.secret_link)
-
-    def get_form_kwargs(self):
-        kw = super(TeamEditView, self).get_form_kwargs()
-        kw["instance"] = self.team
-        return kw
-
-    def get_form(self, form_class=None):
-        form = super(TeamEditView, self).get_form(form_class)
-        category_competition: CategoryCompetition = (
-            self.team.competition_site.category_competition
-        )
-
-        form.max_num = category_competition.max_members_per_team
-        form.extra = category_competition.max_members_per_team - 1
-        return form
-
-    def dispatch(self, request, *args, **kwargs):
-        self.team = (
-            Team.objects.select_related("competition_site__category_competition")
-            .prefetch_related("participants")
-            .get(secret_link=kwargs.pop("secret_link"))
-        )
-        self.can_be_changed = (
-            self.team.competition_site.category_competition.competition.competition_start
-            > timezone.now()
-        )
-
-        return super(TeamEditView, self).dispatch(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if not self.can_be_changed:
-            raise PermissionDenied
-        return super(TeamEditView, self).post(request, *args, **kwargs)
-
-
-class TeamList(TemplateView, BranchSpecificViewMixin):
-    template_name = "web/team_list.html"
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data()
-        ctx["branch"] = self.branch
-        competition: Competition = Competition.objects.get_current_competition(
-            self.branch
-        )
-        ctx["sites"] = (
-            CompetitionSite.objects.filter(
-                category_competition__competition=competition
-            )
-            .order_by("site__name")
-            .all()
-        )
-        total_teams = 0
-        for site in ctx["sites"]:
-            total_teams += site.team_set.count()
-        ctx["total_teams"] = total_teams
-        ctx["countries"] = set(
-            [site.site.address.locality.state.country for site in ctx["sites"]]
-        )
-        ctx["categories"] = CategoryCompetition.objects.filter(
-            competition=competition
-        ).all()
-        return ctx

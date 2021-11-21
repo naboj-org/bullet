@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from web import views
+from web.views import registration, teams
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -9,14 +10,14 @@ urlpatterns = [
 
 branch_shared_patterns = [
     ("", views.HomepageView, "homepage"),
-    ("register/<category>/", views.RegistrationView, "registration"),
+    ("register/<category>/", registration.RegistrationView, "registration"),
     (
         "confirm_registration/<secret_link>/",
-        views.RegistrationConfirmView,
+        registration.RegistrationConfirmView,
         "registration_confirm",
     ),
-    ("edit_team/<secret_link>/", views.TeamEditView, "team_edit"),
-    ("teams/", views.TeamList, "teams"),
+    ("edit_team/<secret_link>/", teams.TeamEditView, "team_edit"),
+    ("teams/", teams.TeamList, "teams"),
 ]
 
 if settings.DEBUG:
