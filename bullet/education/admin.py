@@ -24,4 +24,18 @@ class EducationAdmin(admin.ModelAdmin):
     formfield_overrides = {ManyToManyField: {"widget": CheckboxSelectMultiple()}}
 
     def grade_list(self, obj):
-        return ", ".join([str(x) for x in obj.grades.all()])
+        x = []
+        last_school = None
+        from_this = []
+
+        for grade in obj.grades.all():
+            if last_school is not None and last_school != grade.school_type:
+                x.append(f"{last_school.name} ({', '.join(from_this)})")
+                from_this.clear()
+            last_school = grade.school_type
+            from_this.append(grade.name)
+
+        if len(from_this):
+            x.append(f"{last_school.name} ({', '.join(from_this)})")
+
+        return ", ".join(x)
