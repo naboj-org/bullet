@@ -1,4 +1,5 @@
-<a href="#" class="font-medium">Link</a>
-<a href="#">Link</a>
-<a href="#">Link</a>
-<a href="#">Link</a>
+{% for item in menu %}
+    <a href="/{{ request.LANGUAGE_CODE }}{{ item.url }}">{{ item.title }}</a>
+{% endfor %}
+
+
