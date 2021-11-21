@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "users",
     "competitions",
     "web",
+    "education",
     "django.forms",
     "captcha",
 ]
