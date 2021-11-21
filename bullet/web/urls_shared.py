@@ -1,22 +1,24 @@
+import web.views
+import web.views.registration
+import web.views.teams
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
-from web import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
 ]
 
 branch_shared_patterns = [
-    ("", views.HomepageView, "homepage"),
-    ("register/<category>/", views.RegistrationView, "registration"),
+    ("", web.views.HomepageView, "homepage"),
+    ("register/<category>/", web.views.registration.RegistrationView, "registration"),
     (
         "confirm_registration/<secret_link>/",
-        views.RegistrationConfirmView,
+        web.views.registration.RegistrationConfirmView,
         "registration_confirm",
     ),
-    ("edit_team/<secret_link>/", views.TeamEditView, "team_edit"),
-    ("teams/", views.TeamList, "teams"),
+    ("edit_team/<secret_link>/", web.views.teams.TeamEditView, "team_edit"),
+    ("teams/", web.views.teams.TeamList, "teams"),
 ]
 
 if settings.DEBUG:
