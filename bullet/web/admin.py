@@ -1,5 +1,10 @@
 from django.contrib import admin
-from web.models import Translation
+from web.models import Page, Translation
+
+
+@admin.register(Page)
+class PageAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(Translation)
