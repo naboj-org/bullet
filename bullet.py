@@ -51,6 +51,9 @@ def reset(*args):
 
 
 def update(*args):
+    if not os.path.exists(".env"):
+        shutil.copyfile(".env.example", ".env")
+
     logging.info("Installing dependencies")
     run(f"{PYTHON} -m pipenv install")
 
