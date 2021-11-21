@@ -1,0 +1,16 @@
+{% extends "web/base.html" %}
+{% load markdownify %}
+
+
+{% block title %}{{ page.title }}{% endblock %}
+{% block hero %}
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">{{ page.title }}</h1>
+{% endblock %}
+
+{% block content %}
+    <main class="mx-auto container px-2">
+        <article class="prose max-w-none">
+    {{ page.content | markdownify }}
+        </article>
+    </main>
+{% endblock %}
