@@ -29,6 +29,7 @@ Now, you can update and start the development server:
 ```
 
 You can now visit bullet on http://localhost:8000 or http://math.localhost:8000.
+You can also log in as admin with username `admin` and password `admin`.
 
 You should run the commands above whenever you pull new commits from our repository.
 
