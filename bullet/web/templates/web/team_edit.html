@@ -37,7 +37,7 @@
                     {% csrf_token %}
                     {{ form.management_form }}
 
-                    <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 items-center mb-8">
+                    <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 mb-8">
                         <div class="w-auto md:block hidden"></div>
                         <div class="hidden md:block font-bold">First name</div>
                         <div class="hidden md:block font-bold">Last name</div>
@@ -46,25 +46,46 @@
                         <div class="hidden md:block font-bold text-center">Delete?</div>
 
                         {% for f in form %}
-                        <div class="w-auto whitespace-nowrap text-xl font-bold mt-4 md:mt-0 md:text-base">
-                            Participant {{ forloop.counter }}
-                            {{ f.id }}
-                        </div>
+                        <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">Participant {{ forloop.counter }}</div>
                         <div>
-                            <label class="md:hidden font-bold" for="id_{{ f.first_name.html_name }}">First name:</label>
+                            <label class="md:hidden font-bold {% if f.first_name.errors %}text-red-600{% endif %}" for="id_{{ f.first_name.html_name }}">First name:</label>
                             {{ f.first_name }}
+                            {% if f.first_name.errors %}
+                                <span class="text-red-600">{{ f.first_name.errors }}</span>
+                            {% endif %}
+                            {% if f.first_name.help_text %}
+                                <span class="text-sm text-gray-500">{{ f.first_name.help_text }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold" for="id_{{ f.last_name.html_name }}">Last name:</label>
+                            <label class="md:hidden font-bold {% if f.last_name.errors %}text-red-600{% endif %}" for="id_{{ f.last_name.html_name }}">Last name:</label>
                             {{ f.last_name }}
+                            {% if f.last_name.errors %}
+                                <span class="text-red-600">{{ f.last_name.errors }}</span>
+                            {% endif %}
+                            {% if f.last_name.help_text %}
+                                <span class="text-sm text-gray-500">{{ f.last_name.help_text }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
+                            <label class="md:hidden font-bold {% if f.birth_year.errors %}text-red-600{% endif %}" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
                             {{ f.birth_year }}
+                            {% if f.birth_year.errors %}
+                                <span class="text-red-600">{{ f.birth_year.errors }}</span>
+                            {% endif %}
+                            {% if f.birth_year.help_text %}
+                                <span class="text-sm text-gray-500">{{ f.birth_year.help_text }}</span>
+                            {% endif %}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
+                            <label class="md:hidden font-bold {% if f.graduation_year.errors %}text-red-600{% endif %}" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
                             {{ f.graduation_year }}
+                            {% if f.graduation_year.errors %}
+                                <span class="text-red-600">{{ f.graduation_year.errors }}</span>
+                            {% endif %}
+                            {% if f.graduation_year.help_text %}
+                                <span class="text-sm text-gray-500">{{ f.graduation_year.help_text }}</span>
+                            {% endif %}
                         </div>
                         <div class="flex md:justify-center items-center gap-2">
                             {{ f.DELETE }}

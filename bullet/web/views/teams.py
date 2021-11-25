@@ -35,6 +35,7 @@ class TeamEditView(BranchViewMixin, FormView):
             self.team.competition_site.category_competition
         )
 
+        form.min_num = 0
         form.max_num = category_competition.max_members_per_team
         form.extra = category_competition.max_members_per_team - 1
         return form
