@@ -2,7 +2,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
 from web import views
-from web.views import registration, teams
+from web.views import page, registration, teams
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -18,6 +18,7 @@ branch_shared_patterns = [
     ),
     ("edit_team/<secret_link>/", teams.TeamEditView, "team_edit"),
     ("teams/", teams.TeamList, "teams"),
+    ("<url>/", page.PageView, "page"),
 ]
 
 if settings.DEBUG:

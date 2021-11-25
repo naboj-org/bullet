@@ -5,6 +5,7 @@
 /* math */
 .branch-1, .branch- {
     --primary: #27C349;
+    --primary-dark: #21a43e;
     --gradient-light: #fafff8;
     --gradient-dark: #d6ffcb;
 }
@@ -12,6 +13,7 @@
 /* physics */
 .branch-2 {
     --primary: #D7860E;
+    --primary-dark: #b77005;
     --gradient-light: #fffcf8;
     --gradient-dark: #ffeacb;
 }
@@ -19,6 +21,7 @@
 /* junior */
 .branch-3 {
     --primary: #C32F27;
+    --primary-dark: #9d231c;
     --gradient-light: #FFF8F8;
     --gradient-dark: #FFCBCB;
 }
