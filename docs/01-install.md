@@ -41,4 +41,12 @@ If you need to run a `manage.py` command, you can use this "shortcut":
 ./bullet.py cmd migrate
 ```
 
+## Pre-commit hooks
+
+We use `pre-commit` to run some code checks (black + isort) before commiting. Install them using:
+
+```shell
+pipenv run pre-commit install
+```
+
 Now, let's look at your [code editor](02-ide.md).
