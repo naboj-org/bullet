@@ -2,6 +2,7 @@ from competitions.factories.generate import create_base, create_competition
 from competitions.models import Competition
 from django.core.management import BaseCommand
 from django.db import transaction
+from web.factories.generate import create_pages
 
 
 class Command(BaseCommand):
@@ -10,4 +11,5 @@ class Command(BaseCommand):
     @transaction.atomic
     def handle(self, *args, **options):
         create_base()
+        create_pages(branch=Competition.Branch.PHYSICS)
         create_competition(branch=Competition.Branch.PHYSICS)
