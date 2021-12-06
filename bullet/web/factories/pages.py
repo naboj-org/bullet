@@ -14,4 +14,4 @@ class PageFactory(DjangoModelFactory):
     language = factory.Faker("random_element", elements=Languages.values)
     branch = factory.Faker("random_element", elements=Competition.Branch.choices)
     title = factory.Faker("sentence")
-    content = factory.Faker("paragraphs")
+    content = factory.Faker("text")

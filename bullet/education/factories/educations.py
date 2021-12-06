@@ -7,7 +7,7 @@ class EducationFactory(DjangoModelFactory):
     class Meta:
         model = Education
 
-    name = factory.Faker("words")
+    name = factory.Faker("word")
 
     @factory.post_generation
     def grades(self, create, extracted, **kwargs):
@@ -22,5 +22,5 @@ class GradeFactory(DjangoModelFactory):
         model = Grade
 
     school_type = factory.Faker("random_element", elements=SchoolType.objects.all())
-    name = factory.Faker("words")
+    name = factory.Faker("word")
     order = factory.Sequence(lambda x: x)

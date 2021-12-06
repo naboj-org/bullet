@@ -10,7 +10,7 @@ class SchoolTypeFactory(DjangoModelFactory):
     class Meta:
         model = SchoolType
 
-    name = factory.Faker("words")
+    name = factory.Faker("word")
     note = factory.Faker("word")
 
 
