@@ -5,8 +5,8 @@ import datetime
 import factory
 import faker
 from competitions.models import CategoryCompetition, Competition
+from education.models import School
 from factory.django import DjangoModelFactory
-from users.models import School
 
 fake = faker.Faker()
 

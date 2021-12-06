@@ -6,14 +6,13 @@ from competitions.factories.competition import (
 )
 from competitions.factories.sites import CompetitionSiteFactory, SiteFactory
 from competitions.models import Competition
-from users.factories.participants import ParticipantFactory, SchoolFactory, TeamFactory
+from users.factories.participants import ParticipantFactory, TeamFactory
 
 
 def create_base():
     """
-    Helper function to generate common data (schools...)
+    Helper function to generate common data
     """
-    SchoolFactory.create_batch(200)
     SiteFactory.create_batch(20)
 
 

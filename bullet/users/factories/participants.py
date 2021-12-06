@@ -1,21 +1,10 @@
 import factory
 from competitions.models import CompetitionSite
+from education.models import School
 from factory.django import DjangoModelFactory
-from users.models import Participant, School, Team
-from web.factories.addresses import AddressFactory
+from users.models import Participant, Team
 
 from bullet.constants import Languages
-
-
-class SchoolFactory(DjangoModelFactory):
-    class Meta:
-        model = School
-
-    name = factory.Faker("sentence")
-    type = factory.Faker("random_element", elements=School.SchoolType.values)
-
-    address = factory.SubFactory(AddressFactory)
-    izo = factory.Faker("lexify", text="???? ???")
 
 
 class TeamFactory(DjangoModelFactory):
