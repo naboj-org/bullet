@@ -32,6 +32,7 @@ class HomepageView(TemplateView, BranchSpecificViewMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         competition = Competition.objects.get_current_competition(branch=self.branch)
+        registration = Competition.objects.currently_running_registration()
 
         context.update(
             {
