@@ -6,7 +6,6 @@ System requirements:
 - [Python 3.6](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
 - [Pipenv](https://pypi.org/project/pipenv/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
-- [Node.js](https://nodejs.org/en/download/) and npm
 
 ## Linux
 
@@ -15,7 +14,6 @@ System requirements:
 - [Pipenv](https://pypi.org/project/pipenv/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [docker-compose](https://docs.docker.com/compose/install/)
-- [Node.js](https://nodejs.org/en/download/) and npm
 
 ## Running
 
