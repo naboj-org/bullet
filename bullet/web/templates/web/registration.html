@@ -19,31 +19,20 @@
 
             <div class="grid grid-cols-1 md:grid-cols-registration gap-2 mb-8">
                 <div class="w-auto md:block hidden font-bold"></div>
-                <div class="hidden md:block font-bold">First name</div>
-                <div class="hidden md:block font-bold">Last name</div>
+                <div class="hidden md:block font-bold">Full name</div>
                 <div class="hidden md:block font-bold">Birth year</div>
                 <div class="hidden md:block font-bold">Graduation year</div>
 
                 {% for form in formset %}
                 <div class="w-auto whitespace-nowrap text-xl {% if form.field.required %}font-bold{% endif %} mt-4 md:mt-0 md:py-3 md:text-base">Participant {{ forloop.counter }}</div>
                 <div>
-                    <label class="md:hidden font-bold {% if form.first_name.errors %}text-red-600{% endif %}" for="id_{{ form.first_name.html_name }}">First name:</label>
-                    {{ form.first_name }}
-                    {% if form.first_name.errors %}
-                        <span class="text-red-600">{{ form.first_name.errors }}</span>
+                    <label class="md:hidden font-bold {% if form.full_name.errors %}text-red-600{% endif %}" for="id_{{ form.full_name.html_name }}">Full name:</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                        <span class="text-red-600">{{ form.full_name.errors }}</span>
                     {% endif %}
-                    {% if form.first_name.help_text %}
-                        <span class="text-sm text-gray-500">{{ form.first_name.help_text }}</span>
-                    {% endif %}
-                </div>
-                <div>
-                    <label class="md:hidden font-bold {% if form.last_name.errors %}text-red-600{% endif %}" for="id_{{ form.last_name.html_name }}">Last name:</label>
-                    {{ form.last_name }}
-                    {% if form.last_name.errors %}
-                        <span class="text-red-600">{{ form.last_name.errors }}</span>
-                    {% endif %}
-                    {% if form.last_name.help_text %}
-                        <span class="text-sm text-gray-500">{{ form.last_name.help_text }}</span>
+                    {% if form.full_name.help_text %}
+                        <span class="text-sm text-gray-500">{{ form.full_name.help_text }}</span>
                     {% endif %}
                 </div>
                 <div>

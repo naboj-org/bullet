@@ -40,7 +40,6 @@ class ParticipantFactory(DjangoModelFactory):
 
     team = factory.Faker("random_element", elements=Team.objects.all())
 
-    first_name = factory.Faker("first_name")
-    last_name = factory.Faker("last_name")
+    full_name = factory.Faker("name")
     graduation_year = factory.Faker("year")
     birth_year = factory.Faker("year")

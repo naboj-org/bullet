@@ -77,7 +77,7 @@ class RegistrationView(BranchViewMixin, FormView):
             min_num=0,
             max_num=category_competition.max_members_per_team,
             extra=category_competition.max_members_per_team - 1,
-            fields=("first_name", "last_name", "graduation_year", "birth_year"),
+            fields=("full_name", "graduation_year", "birth_year"),
         )(**self.get_formset_kwargs())
 
     def get_formset_kwargs(self):

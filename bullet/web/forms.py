@@ -70,5 +70,5 @@ ParticipantsFormSet = inlineformset_factory(
     Team,
     Participant,
     min_num=1,
-    fields=("first_name", "last_name", "graduation_year", "birth_year"),
+    fields=("full_name", "graduation_year", "birth_year"),
 )
