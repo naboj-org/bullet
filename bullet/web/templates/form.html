@@ -8,10 +8,10 @@
 {% for field in form.visible_fields %}
 {% if field.widget_type != 'recaptchav2invisible' %}
 <div class="flex mb-3 flex-col md:flex-row">
-    <div class="w-full h-full flex-shrink-0 md:w-1/4 md:py-3 md:text-right md:mr-4 {% if field.field.required %}font-bold{% endif %} {% if field.errors %}text-red-600{% endif %}">
+    <div class="w-full h-full shrink-0 md:w-1/4 md:py-3 md:text-right md:mr-4 {% if field.field.required %}font-bold{% endif %} {% if field.errors %}text-red-600{% endif %}">
         {% if field.label %}{{ field.label_tag }}{% endif %}
     </div>
-    <div class="flex-grow w-full">
+    <div class="grow w-full">
         {{ field }}
         {% if field.errors %}
             <span class="text-red-600">{{ field.errors|first }}</span>
