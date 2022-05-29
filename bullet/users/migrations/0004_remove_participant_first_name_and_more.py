@@ -6,22 +6,22 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('users', '0003_auto_20211121_1222'),
+        ("users", "0003_auto_20211121_1222"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='participant',
-            name='first_name',
+            model_name="participant",
+            name="first_name",
         ),
         migrations.RemoveField(
-            model_name='participant',
-            name='last_name',
+            model_name="participant",
+            name="last_name",
         ),
         migrations.AddField(
-            model_name='participant',
-            name='full_name',
-            field=models.CharField(default='', max_length=256),
+            model_name="participant",
+            name="full_name",
+            field=models.CharField(default="", max_length=256),
             preserve_default=False,
         ),
     ]

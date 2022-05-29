@@ -1,3 +1,3 @@
-from .competitions import *
-from .problems import *
-from .sites import *
+from .competitions import *  # noqa
+from .problems import *  # noqa
+from .sites import *  # noqa

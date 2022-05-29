@@ -45,7 +45,8 @@ class SolutionSubmitLogFactory(DjangoModelFactory):
     class Meta:
         model = SolutionSubmitLog
 
-    # TODO: Might generate submits from teams that are not participating for this competition
+    # TODO: Might generate submits from teams
+    #  that are not participating for this competition
     problem = factory.Faker("random_element", elements=Problem.objects.all())
     team = factory.Faker("random_element", elements=Team.objects.all())
     staff = factory.Faker("random_element", elements=User.objects.all())

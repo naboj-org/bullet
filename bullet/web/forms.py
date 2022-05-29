@@ -1,6 +1,6 @@
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
-from competitions.models import CategoryCompetition, CompetitionSite
+from competitions.models import CategoryCompetition
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField, ModelForm, inlineformset_factory
 from django.utils.translation import get_language
@@ -32,7 +32,8 @@ class RegistrationForm(ModelForm):
 
         if same_school_teams_count >= self.category_competition.max_teams_per_school:
             raise ValidationError(
-                f"Registered teams limit for this school has been reached ( max {self.category_competition.max_teams_per_school} per school)"
+                "Registered teams limit for this school has been reached ( max"
+                f" {self.category_competition.max_teams_per_school} per school)"
             )
 
         return data
@@ -47,7 +48,7 @@ class RegistrationForm(ModelForm):
         )
         if same_site_teams_count >= data.capacity:
             raise ValidationError(
-                f"Full occupancy for this competition venue has been reached"
+                "Full occupancy for this competition venue has been reached"
             )
 
         return data

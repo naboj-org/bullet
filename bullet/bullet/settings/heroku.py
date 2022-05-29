@@ -1,6 +1,7 @@
 import dj_database_url
 
-from .development import *
+from .development import *  # noqa
+from .development import MIDDLEWARE
 
 MIDDLEWARE = list(MIDDLEWARE)
 MIDDLEWARE.remove("django_hosts.middleware.HostsRequestMiddleware")

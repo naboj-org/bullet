@@ -1,9 +1,6 @@
 import random
 
-from competitions.factories.competition import (
-    CategoryCompetitionFactory,
-    CompetitionFactory,
-)
+from competitions.factories.competition import CompetitionFactory
 from competitions.factories.sites import CompetitionSiteFactory, SiteFactory
 from competitions.models import Competition
 from users.factories.participants import ParticipantFactory, TeamFactory
@@ -21,7 +18,7 @@ def create_competition(branch=None) -> Competition:
     Helper function to generate a full competition with everything.
     """
     competition = CompetitionFactory(branch=branch)
-    categories = CategoryCompetitionFactory.create_batch(2, competition=competition)
+    # categories = CategoryCompetitionFactory.create_batch(2, competition=competition)
     competition_sites = CompetitionSiteFactory.create_batch(5)
 
     for _ in range(200):
