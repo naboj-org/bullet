@@ -17,8 +17,6 @@ System requirements:
 
 ## Running
 
-You need to create your `.env` file in `bullet` directory. The easiest way to do that it to copy `.env.example`.
-
 Now, you can update and start the development server:
 
 ```shell
