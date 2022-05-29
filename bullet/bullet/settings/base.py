@@ -39,7 +39,7 @@ DATABASES = {
         "NAME": os.environ.get("POSTGRES_DB", "bullet"),
         "USER": os.environ.get("POSTGRES_USER", "bullet"),
         "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "bullet"),
-        "HOST": os.environ.get("POSTGRES_HOST", "bullet-db"),
+        "HOST": os.environ.get("POSTGRES_HOST", "db"),
         "PORT": os.environ.get("POSTGRES_PORT", 5432),
     }
 }
@@ -132,13 +132,13 @@ EXTRA_LANG_INFO = {
         "bidi": False,
         "code": "de-de",
         "name": "German",
-        "name_local": u"Deutsch",
+        "name_local": "Deutsch",
     },
     "de-ch": {
         "bidi": False,
         "code": "de-ch",
         "name": "Swiss German",
-        "name_local": u"Schweizerdeutsch",
+        "name_local": "Schweizerdeutsch",
     },
 }
 
