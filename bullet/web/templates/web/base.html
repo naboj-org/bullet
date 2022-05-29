@@ -1,5 +1,4 @@
 {% load static %}
-{% load hosts %}
 {% load web %}
 <!doctype html>
 <html lang="{{ request.LANGUAGE_CODE }}">
@@ -8,7 +7,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %} – Náboj {{ branch.label }}</title>
+    <title>{% block title %}{% endblock %} – {{ branch.name }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,14 +18,14 @@
     {% endblock %}
 </head>
 
-<body class="branch-{{ branch }}">
+<body class="branch-{{ branch.identifier }}">
 {% block main %}
 <div class="bg-gray-900 py-4 px-2 border-b-4 border-primary">
     <div class="container mx-auto text-white flex flex-col md:flex-row md:items-center">
         <div class="font-medium">
-            <a class="{% if branch == 1 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'math' %}">Math</a>
-            <a class="{% if branch == 2 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'physics' %}">Physics</a>
-            <a class="{% if branch == 3 %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="{% host_url 'homepage' host 'junior' %}">Junior</a>
+            {% for b in branches %}
+            <a class="{% if branch == b %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.short_name }}</a>
+            {% endfor %}
         </div>
 
         <div class="md:ml-auto md:mt-0 mt-3 flex">
