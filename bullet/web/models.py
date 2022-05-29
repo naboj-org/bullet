@@ -41,7 +41,7 @@ class Menu(models.Model):
     url = models.CharField(max_length=128)
     branch = models.IntegerField(choices=Competition.Branch.choices)
     title = models.CharField(max_length=128)
-    order = models.IntegerField()
+    order = models.IntegerField(default=1)
 
     def __str__(self):
         return self.title
