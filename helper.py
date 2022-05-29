@@ -6,6 +6,7 @@ import shlex
 import shutil
 import subprocess
 import sys
+import time
 
 PREFIX = "\033[0;30m\033[47m"
 RESET = "\033[0m"
@@ -71,11 +72,7 @@ def cmd(*args):
 
 
 def create_superuser(*args):
-    run("docker-compose run --rm web python manage.py migrate")
-    run(
-        "docker-compose run -e DJANGO_SUPERUSER_PASSWORD=admin --rm web python manage.py createsuperuser "
-        "--username=admin --email=admin@localhost --no-input"
-    )
+    run("docker-compose run --rm web /app/dev_setup.sh")
 
 
 handlers = {
