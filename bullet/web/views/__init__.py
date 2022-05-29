@@ -1,6 +1,7 @@
 from competitions.models import Competition
 from django.utils import timezone
 from django.views.generic import TemplateView
+from web.models import Organizer, Partner
 
 
 class BranchViewMixin:
@@ -29,5 +30,8 @@ class HomepageView(BranchViewMixin, TemplateView):
             )
         except Competition.DoesNotExist:
             pass
+
+        context["partners"] = Partner.objects.filter(branch=self.branch).all()
+        context["organizers"] = Organizer.objects.filter(branch=self.branch).all()
 
         return context

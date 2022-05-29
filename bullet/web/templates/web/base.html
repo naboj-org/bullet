@@ -72,58 +72,6 @@
     {# Actual page content goes here #}
 {% endblock %}
 
-
-<div class="bg-primary-lighter md:mt-48 mt-32 md:py-24 py-12">
-    <div class="container mx-auto px-2">
-        <h2 class="font-bold text-primary text-2xl mb-8">Our Partners</h2>
-        <div class="grid grid-cols-2 md:grid-cols-8 gap-6">
-            <!-- The first one is representative -->
-            <a href="https://bmstu.ru/en/" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
-                <img src="{% static 'web/img/partners/moscow-mgtu-logo.png' %}" class="max-w-full max-h-full">
-            </a>
-            <a href="https://www.nadaciaeset.sk/" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/logo_eset_nadacia.png' %}">
-            </a>
-            <a href="https://www.fmph.uniba.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/bratislava-logo.png' %}">
-            </a>
-
-            <a href="https://upjs.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/kosice-logo.png' %}">
-            </a>
-            <a href="https://www.mff.cuni.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/praha-logo.png' %}">
-            </a>
-            <a href="https://www.ostrava.cz/en" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/logo_ostrava.png' %}">
-            </a>
-            <a href="https://ttk.elte.hu/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/partners/budapest-logo.png' %}">
-            </a>
-        </div>
-
-        <h2 class="font-bold text-primary text-2xl mb-8 md:mt-16 mt-10">Organizers</h2>
-        <div class="grid grid-cols-8 gap-6">
-            <a href="https://trojsten.sk/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/organizers/logo_trojsten.png' %}">
-            </a>
-            <a href="https://seminar.strom.sk/sk/prispevky/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/organizers/logo_strom.png' %}">
-            </a>
-            <a href="https://fykos.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/organizers/logo_fykos.png' %}">
-            </a>
-            <a href="https://www.gvoz.cz/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/organizers/ostrava-logo.png' %}">
-            </a>
-            <a href="https://www.epsyoungminds.org/" class="bg-white h-32 rounded-md flex items-center justify-center p-8">
-                <img src="{% static 'web/img/organizers/logo_byms.png' %}">
-            </a>
-        </div>
-
-        <div class="text-gray-700 text-center md:mt-16 mt-10">&copy; Naboj IT Team {% now "Y" %}</div>
-    </div>
-</div>
 {% endblock %}
 <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
 </body>
