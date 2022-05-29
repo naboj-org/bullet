@@ -1,4 +1,3 @@
-from competitions import branches
 from competitions.branches import Branches
 from django.http import HttpResponseForbidden
 

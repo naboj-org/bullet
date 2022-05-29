@@ -1,4 +1,3 @@
-from competitions import branches
 from competitions.models import Competition
 from django.utils import timezone
 from django.views.generic import TemplateView

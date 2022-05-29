@@ -1,7 +1,7 @@
-import os
 import socket
 
-from .base import *
+from .base import *  # noqa
+from .base import INSTALLED_APPS, MIDDLEWARE
 
 DEBUG = True
 
