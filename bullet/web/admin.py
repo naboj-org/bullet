@@ -26,4 +26,4 @@ class OrganizerAdmin(admin.ModelAdmin):
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
     list_display = ["title", "branch", "url", "order"]
-    list_filter = ["branch", "url", "order"]
+    list_filter = ["branch"]
