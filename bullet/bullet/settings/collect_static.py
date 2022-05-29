@@ -1,6 +1,7 @@
 from django.contrib.staticfiles.apps import StaticFilesConfig
 
-from .development import *
+from .development import *  # noqa
+from .development import INSTALLED_APPS
 
 
 class BulletStaticConfig(StaticFilesConfig):

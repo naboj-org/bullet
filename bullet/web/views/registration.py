@@ -54,7 +54,7 @@ class RegistrationView(BranchViewMixin, FormView):
         )
 
         if competition_sites.count() == 0:
-            raise ValueError(f"All competition sites have reached full occupancy")
+            raise ValueError("All competition sites have reached full occupancy")
 
         return category_competition, competition_sites
 
@@ -164,7 +164,8 @@ class RegistrationConfirmView(BranchViewMixin, TemplateView):
         except Team.DoesNotExist:
             error = _("Confirmation link is invalid")
 
-        # TODO forbid confirmation if the registration is not running/capacity has been filled
+        # TODO forbid confirmation if the registration
+        #  is not running/capacity has been filled
         context = self.get_context_data(**kwargs)
         context["error"] = error
 

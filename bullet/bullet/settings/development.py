@@ -1,4 +1,5 @@
-from .base import *
+from .base import *  # noqa
+from .base import ALLOWED_HOSTS, INSTALLED_APPS, MIDDLEWARE
 
 DEBUG = True
 

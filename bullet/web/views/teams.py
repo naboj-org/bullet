@@ -46,9 +46,9 @@ class TeamEditView(BranchViewMixin, FormView):
             .prefetch_related("participants")
             .get(secret_link=kwargs.pop("secret_link"))
         )
+        category_competition = self.team.competition_site.category_competition
         self.can_be_changed = (
-            self.team.competition_site.category_competition.competition.competition_start
-            > timezone.now()
+            category_competition.competition.competition_start > timezone.now()
         )
 
         return super(TeamEditView, self).dispatch(request, *args, **kwargs)

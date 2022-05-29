@@ -6,7 +6,6 @@ import shlex
 import shutil
 import subprocess
 import sys
-import time
 
 PREFIX = "\033[0;30m\033[47m"
 RESET = "\033[0m"

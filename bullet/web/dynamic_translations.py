@@ -43,7 +43,8 @@ def init():
     global translation_cache
     translation_cache = TranslationCache()
 
-    # Pretty much copy-paste from django.template.base.Variable.resolve with added dynamic trans handling
+    # Pretty much copy-paste from django.template.base.Variable.resolve
+    # with added dynamic trans handling
     def modified_variable_resolve(self, context):
         if self.lookups is not None:
             value = self._resolve_lookup(context)

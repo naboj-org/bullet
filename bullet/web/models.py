@@ -24,7 +24,10 @@ class Translation(models.Model):
     content = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return f"Translation of {self.reference} in {self.language} with context {self.context}"
+        return (
+            f"Translation of {self.reference} in {self.language} with context"
+            f" {self.context}"
+        )
 
     class Meta:
         unique_together = [("reference", "language", "context")]

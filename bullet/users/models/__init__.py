@@ -1,2 +1,2 @@
-from .organizers import *
-from .participants import *
+from .organizers import *  # noqa
+from .participants import *  # noqac
