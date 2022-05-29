@@ -24,8 +24,8 @@ You need to create your `.env` file in `bullet` directory. The easiest way to do
 Now, you can update and start the development server:
 
 ```shell
-./bullet.py update
-./bullet.py start
+./helper.py update
+./helper.py start
 ```
 
 You can now visit bullet on http://localhost:8000 or http://math.localhost:8000.
@@ -38,7 +38,7 @@ You should run the commands above whenever you pull new commits from our reposit
 If you need to run a `manage.py` command, you can use this "shortcut":
 
 ```shell
-./bullet.py cmd migrate
+./helper.py cmd migrate
 ```
 
 ## Pre-commit hooks
