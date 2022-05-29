@@ -13,7 +13,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import get_template
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
 from django_hosts import reverse
 from users.models import Participant, Team
