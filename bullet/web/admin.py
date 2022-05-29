@@ -14,6 +14,6 @@ class TranslationAdmin(admin.ModelAdmin):
 
 
 @admin.register(Menu)
-class PageAdmin(admin.ModelAdmin):
+class MenuAdmin(admin.ModelAdmin):
     list_display = ["title", "branch", "url"]
     list_filter = ["branch", "url"]
