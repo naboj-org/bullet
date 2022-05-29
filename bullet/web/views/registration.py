@@ -12,32 +12,31 @@ from django.forms import ModelForm, inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.template.loader import get_template
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import FormView, TemplateView
-from django_hosts import reverse
 from users.models import Participant, Team
 from web.forms import RegistrationForm
-from web.views import BranchViewMixin
 
 
-class RegistrationView(BranchViewMixin, FormView):
+class RegistrationView(FormView):
     template_name = "web/registration.html"
     form_class = RegistrationForm
 
     def get_success_url(self):
-        return reverse("homepage", host=self.branch.label.lower())
+        return reverse("homepage")
 
     def get_competition_model_instances(
         self,
     ) -> Tuple[CategoryCompetition, QuerySet[CompetitionSite]]:
         try:
             competition = Competition.objects.currently_running_registration().get(
-                branch=self.branch
+                branch=self.request.BRANCH
             )
         except Competition.DoesNotExist:
             raise ValueError(
-                f"No {self.branch} competition has an open registration now"
+                f"No {self.request.BRANCH} competition has an open registration now"
             )
 
         try:
@@ -100,9 +99,7 @@ class RegistrationView(BranchViewMixin, FormView):
             )
         except ValueError as e:
             messages.error(request, str(e))
-            return HttpResponseRedirect(
-                reverse("homepage", host=self.branch.label.lower())
-            )
+            return HttpResponseRedirect(reverse("homepage"))
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -132,7 +129,7 @@ class RegistrationView(BranchViewMixin, FormView):
             _("Confirm team registration for Náboj"),
             get_template("users/email/registration_secret_link.html").render(
                 {
-                    "host": self.branch.label.lower(),
+                    "host": self.request.BRANCH.identifier.lower(),
                     "team": team,
                     "participants": participants,
                 }
@@ -143,7 +140,7 @@ class RegistrationView(BranchViewMixin, FormView):
         return super().form_valid(form)
 
 
-class RegistrationConfirmView(BranchViewMixin, TemplateView):
+class RegistrationConfirmView(TemplateView):
     template_name = "web/registration_confirm.html"
 
     @transaction.atomic

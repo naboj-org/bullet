@@ -6,10 +6,9 @@ from django.utils import timezone
 from django.views.generic import FormView, TemplateView
 from users.models import Team
 from web.forms import ParticipantsFormSet
-from web.views import BranchViewMixin
 
 
-class TeamEditView(BranchViewMixin, FormView):
+class TeamEditView(FormView):
     template_name = "web/team_edit.html"
     form_class = ParticipantsFormSet
 
@@ -59,13 +58,13 @@ class TeamEditView(BranchViewMixin, FormView):
         return super(TeamEditView, self).post(request, *args, **kwargs)
 
 
-class TeamList(BranchViewMixin, TemplateView):
+class TeamList(TemplateView):
     template_name = "web/team_list.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
         competition: Competition = Competition.objects.get_current_competition(
-            self.branch
+            self.request.BRANCH
         )
         ctx["sites"] = (
             CompetitionSite.objects.filter(
