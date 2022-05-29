@@ -30,7 +30,7 @@
     background: linear-gradient(265.04deg, var(--gradient-light) -5.34%, var(--gradient-dark) 110.03%);
 }
 
-@responsive {
+@layer utilities {
     .bg-hero-image {
         background-repeat: no-repeat;
         background-position: right bottom;

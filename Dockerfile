@@ -2,10 +2,12 @@ FROM node:current-alpine AS cssbuild
 
 WORKDIR /app
 
-COPY . .
-
+COPY package.json package-lock.json ./
 RUN npm install
+
+COPY . .
 RUN npm run css-prod
+CMD ["npm", "run", "css-dev"]
 
 FROM python:3.10-slim-bullseye AS basebuild
 

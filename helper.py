@@ -57,12 +57,6 @@ def update(*args):
     logging.info("Installing dependencies")
     run(f"{PYTHON} -m pipenv install")
 
-    logging.info("Installing NPM dependencies")
-    run("npm install", shell=platform.system() == "Windows")
-
-    logging.info("Building development CSS")
-    run("npm run css-dev", shell=platform.system() == "Windows")
-
     logging.info("Rebuilding containers")
     run("docker-compose build")
     reset()

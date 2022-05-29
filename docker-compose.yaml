@@ -12,10 +12,10 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5433:5432"
+
   web:
     build:
       context: .
-      dockerfile: Dockerfile
       target: basebuild
     image: bullet
     env_file:
@@ -30,6 +30,16 @@ services:
     depends_on:
       - db
     command: ./entrypoint.sh
+
+  tailwind:
+    build:
+      context: .
+      target: cssbuild
+    volumes:
+      - ./bullet/:/app/bullet/
+      - ./tailwind.config.js:/app/tailwind.config.js
+      - ./package.json:/app/package.json
+    tty: true
 
 volumes:
   postgres_data:
