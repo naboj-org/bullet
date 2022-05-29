@@ -29,7 +29,6 @@ class BranchRepository:
 
     def get_from_domain(self, domain: str) -> Branch | None:
         domain = domain.strip().lstrip("www.").lower()
-        print(domain)
         if not domain.endswith(settings.PARENT_HOST):
             return None
 
