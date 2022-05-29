@@ -92,7 +92,7 @@ handlers = {
 }
 
 if len(sys.argv) == 1:
-    print("Usage: ./bullet.py [command]")
+    print("Usage: ./helper.py [command]")
     print("Available commands:")
     for name, handler in handlers.items():
         print(f" * {name} : {handler[1]}")
