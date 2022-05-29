@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web.models import Menu, Page, Translation
+from web.models import Menu, Organizer, Page, Partner, Translation
 
 
 @admin.register(Page)
@@ -10,6 +10,16 @@ class PageAdmin(admin.ModelAdmin):
 
 @admin.register(Translation)
 class TranslationAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Partner)
+class PartnerAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Organizer)
+class OrganizerAdmin(admin.ModelAdmin):
     pass
 
 

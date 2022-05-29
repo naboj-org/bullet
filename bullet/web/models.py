@@ -44,3 +44,17 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Partner(models.Model):
+    branch = models.IntegerField(choices=Competition.Branch.choices)
+    name = models.CharField(max_length=128)
+    url = models.CharField(max_length=128)
+    image = models.FileField()
+
+
+class Organizer(models.Model):
+    branch = models.IntegerField(choices=Competition.Branch.choices)
+    name = models.CharField(max_length=128)
+    url = models.CharField(max_length=128)
+    image = models.FileField()
