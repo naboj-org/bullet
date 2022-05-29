@@ -1,18 +1,12 @@
 {
-  "devDependencies": {
-    "@tailwindcss/forms": "^0.3.3",
-    "autoprefixer": "^10.3.2",
-    "cross-env": "^7.0.3",
-    "cssnano": "^5.0.8",
-    "postcss": "^8.3.6",
-    "postcss-cli": "^9.0.0",
-    "tailwindcss": "^2.2.7"
-  },
+  "name": "bullet",
   "scripts": {
-    "css-dev": "npx postcss css/app.css -o bullet/web/static/app.css",
-    "css-prod": "cross-env NODE_ENV=production npm run css-dev"
+    "css-dev": "tailwindcss -i css/app.css -o bullet/web/static/app.css --watch",
+    "css-prod": "tailwindcss -i css/app.css -o bullet/web/static/app.css --minify"
   },
   "dependencies": {
-    "@tailwindcss/typography": "^0.4.1"
+    "@tailwindcss/typography": "^0.5.2",
+    "@tailwindcss/forms": "^0.5.2",
+    "tailwindcss": "^3.0.24"
   }
 }
