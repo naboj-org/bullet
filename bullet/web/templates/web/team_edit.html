@@ -39,8 +39,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 mb-8">
                         <div class="w-auto md:block hidden"></div>
-                        <div class="hidden md:block font-bold">First name</div>
-                        <div class="hidden md:block font-bold">Last name</div>
+                        <div class="hidden md:block font-bold">Full name</div>
                         <div class="hidden md:block font-bold">Birth year</div>
                         <div class="hidden md:block font-bold">Graduation year</div>
                         <div class="hidden md:block font-bold text-center">Delete?</div>
@@ -48,23 +47,13 @@
                         {% for f in form %}
                         <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">Participant {{ forloop.counter }}</div>
                         <div>
-                            <label class="md:hidden font-bold {% if f.first_name.errors %}text-red-600{% endif %}" for="id_{{ f.first_name.html_name }}">First name:</label>
-                            {{ f.first_name }}
-                            {% if f.first_name.errors %}
-                                <span class="text-red-600">{{ f.first_name.errors }}</span>
+                            <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name:</label>
+                            {{ f.full_name }}
+                            {% if f.full_name.errors %}
+                                <span class="text-red-600">{{ f.full_name.errors }}</span>
                             {% endif %}
-                            {% if f.first_name.help_text %}
-                                <span class="text-sm text-gray-500">{{ f.first_name.help_text }}</span>
-                            {% endif %}
-                        </div>
-                        <div>
-                            <label class="md:hidden font-bold {% if f.last_name.errors %}text-red-600{% endif %}" for="id_{{ f.last_name.html_name }}">Last name:</label>
-                            {{ f.last_name }}
-                            {% if f.last_name.errors %}
-                                <span class="text-red-600">{{ f.last_name.errors }}</span>
-                            {% endif %}
-                            {% if f.last_name.help_text %}
-                                <span class="text-sm text-gray-500">{{ f.last_name.help_text }}</span>
+                            {% if f.full_name.help_text %}
+                                <span class="text-sm text-gray-500">{{ f.full_name.help_text }}</span>
                             {% endif %}
                         </div>
                         <div>
@@ -97,7 +86,7 @@
                     <button type="submit" class="btn">Update</button>
                 </form>
             {% else %}
-                <div class="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {% for f in form %}
                     <div>
                         <h3 class="text-xl mt-3 mb-1">
@@ -106,8 +95,7 @@
                         </h3>
                         <p>
                             <strong>Name:</strong>
-                            {{ f.first_name.value|stringformat:'s' }}
-                            {{ f.last_name.value|stringformat:'s' }}
+                            {{ f.full_name.value|stringformat:'s' }}
                         </p>
                         <p>
                             <strong>Birth year:</strong>

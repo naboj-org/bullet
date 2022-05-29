@@ -42,10 +42,9 @@ class Participant(models.Model):
         "users.Team", on_delete=models.CASCADE, related_name="participants"
     )
 
-    first_name = models.CharField(max_length=128)
-    last_name = models.CharField(max_length=128)
+    full_name = models.CharField(max_length=256)
     graduation_year = models.IntegerField()
     birth_year = models.PositiveIntegerField()
 
     def __str__(self):
-        return f"{self.first_name} {self.last_name} ({self.graduation_year})"
+        return f"{self.full_name} ({self.graduation_year})"

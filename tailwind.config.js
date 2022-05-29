@@ -9,8 +9,8 @@ module.exports = {
         "primary-lighter": "var(--gradient-dark)",
       },
       gridTemplateColumns: {
-        'registration': 'min-content 3fr 3fr 2fr 2fr',
-        'participants-edit': 'min-content 3fr 3fr 2fr 2fr min-content',
+        'registration': 'min-content 3fr 2fr 2fr',
+        'participants-edit': 'min-content 3fr 2fr 2fr min-content',
       },
       typography: {
         DEFAULT: {
