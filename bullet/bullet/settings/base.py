@@ -17,7 +17,6 @@ ALLOWED_HOSTS = os.environ.get(
 
 INSTALLED_APPS = [
     "address",
-    "django_hosts",
     "phonenumber_field",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -49,7 +48,6 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
-    "django_hosts.middleware.HostsRequestMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
@@ -58,14 +56,11 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django_hosts.middleware.HostsResponseMiddleware",
+    "competitions.middleware.BranchMiddleware",
 ]
 
-DEFAULT_HOST = "math"
 PARENT_HOST = os.environ.get("PARENT_HOST")
-HOST_PORT = os.environ.get("HOST_PORT", "")
-ROOT_URLCONF = "web.urls_shared"
-ROOT_HOSTCONF = "bullet.hosts"
+ROOT_URLCONF = "web.urls"
 
 TEMPLATES = [
     {

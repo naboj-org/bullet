@@ -1,25 +1,18 @@
-from .base import *  # noqa
-from .base import ALLOWED_HOSTS, INSTALLED_APPS, MIDDLEWARE
+import os
+import socket
+
+from .base import *
 
 DEBUG = True
 
 PRODUCTION = False
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "172.18.0.1",
-]
+hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1"]
 
-ALLOWED_HOSTS += ["bullet.top"]
-
-MIDDLEWARE = list(MIDDLEWARE)
-MIDDLEWARE.remove("django_hosts.middleware.HostsRequestMiddleware")
-MIDDLEWARE = tuple(MIDDLEWARE)
-
-MIDDLEWARE = (
-    "django_hosts.middleware.HostsRequestMiddleware",
+MIDDLEWARE.append(
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-) + MIDDLEWARE
+)
 
 INSTALLED_APPS += ["debug_toolbar"]
 SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
