@@ -1,6 +1,6 @@
 version: '3.4'
 services:
-  bullet-db:
+  db:
     image: postgres:10-alpine
     env_file:
       - .env
@@ -12,7 +12,7 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5433:5432"
-  bullet-web:
+  web:
     build:
       context: .
       dockerfile: Dockerfile
@@ -28,7 +28,7 @@ services:
     volumes:
       - ./bullet/:/app/
     depends_on:
-      - bullet-db
+      - db
     command: ./entrypoint.sh
 
 volumes:
