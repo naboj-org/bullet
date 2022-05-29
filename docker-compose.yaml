@@ -36,7 +36,9 @@ services:
       context: .
       target: cssbuild
     volumes:
-      - ./:/app/
+      - ./bullet/:/app/bullet/
+      - ./tailwind.config.js:/app/tailwind.config.js
+      - ./package.json:/app/package.json
     tty: true
 
 volumes:
