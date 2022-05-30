@@ -74,6 +74,7 @@ class CategoryCompetition(models.Model):
         "competitions.Competition", on_delete=models.CASCADE
     )
     category = models.IntegerField(choices=Category.choices)
+    educations = models.ManyToManyField("education.Education")
 
     problems_per_team = models.PositiveIntegerField(null=True, blank=True)
     max_teams_per_school = models.PositiveIntegerField(null=True, blank=True)
@@ -98,5 +99,5 @@ class Wildcard(models.Model):
     competition = models.ForeignKey(
         "competitions.CategoryCompetition", on_delete=models.CASCADE
     )
-    school = models.ForeignKey("users.School", on_delete=models.CASCADE)
+    school = models.ForeignKey("education.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)

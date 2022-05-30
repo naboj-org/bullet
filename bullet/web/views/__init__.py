@@ -19,6 +19,10 @@ class HomepageView(BranchViewMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
+        context["competition"] = Competition.objects.get_current_competition(
+            branch=self.branch
+        )
+
         try:
             context[
                 "open_competition"
