@@ -3,14 +3,7 @@ import dj_database_url
 from .development import *  # noqa
 from .development import MIDDLEWARE
 
-MIDDLEWARE = list(MIDDLEWARE)
-MIDDLEWARE.remove("django_hosts.middleware.HostsRequestMiddleware")
-MIDDLEWARE = tuple(MIDDLEWARE)
-
-MIDDLEWARE = (
-    "django_hosts.middleware.HostsRequestMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
-) + MIDDLEWARE
+MIDDLEWARE = ("whitenoise.middleware.WhiteNoiseMiddleware",) + MIDDLEWARE
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 

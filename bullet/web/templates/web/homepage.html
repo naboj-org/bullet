@@ -1,7 +1,6 @@
 {% extends "web/base.html" %}
 {% load static %}
 {% load i18n %}
-{% load hosts %}
 
 {% block title %}Homepage{% endblock %}
 {% block heroclass %}md:bg-hero-image{% endblock %}
@@ -89,7 +88,7 @@
                 <p class="text-xl mb-10">{{ registration_open_for }}</p>
 
                 {% for category_comp in open_competition.categorycompetition_set.all %}
-                    <a href="{% host_url 'registration' category=category_comp.category host branch.label|lower %}" class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
+                    <a href="{% url 'registration' category=category_comp.category %}" class="hero-btn">Register ({{ category_comp.get_category_display }})</a>
                 {% endfor %}
             </div>
         </div>

@@ -1,8 +1,15 @@
+from competitions.branches import Branches
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import IntegerChoices
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+
+
+class BranchField(models.IntegerField):
+    def __init__(self, *args, **kwargs):
+        kwargs["choices"] = Branches.choices()
+        super().__init__(*args, **kwargs)
 
 
 class CompetitionQuerySet(models.QuerySet):
@@ -19,13 +26,8 @@ class CompetitionQuerySet(models.QuerySet):
 
 
 class Competition(models.Model):
-    class Branch(IntegerChoices):
-        MATH = 1, _("Math")
-        PHYSICS = 2, _("Physics")
-        JUNIOR = 3, _("Junior")
-
     name = models.CharField(max_length=128)
-    branch = models.IntegerField(choices=Branch.choices)
+    branch = BranchField()
 
     graduation_year = models.PositiveIntegerField()
 

@@ -4,20 +4,12 @@ from django.views.generic import TemplateView
 from web.models import Organizer, Partner
 
 
-class BranchViewMixin:
-    branch: Competition.Branch = None
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["branch"] = self.branch
-        return ctx
-
-
-class HomepageView(BranchViewMixin, TemplateView):
+class HomepageView(TemplateView):
     template_name = "web/homepage.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        self.branch = self.request.BRANCH
 
         try:
             context[

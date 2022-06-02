@@ -4,6 +4,7 @@ import datetime
 
 import factory
 import faker
+from competitions.branches import Branches
 from competitions.models import CategoryCompetition, Competition
 from education.models import School
 from factory.django import DjangoModelFactory
@@ -24,7 +25,7 @@ class CompetitionFactory(DjangoModelFactory):
         model = Competition
 
     name = factory.Faker("sentence")
-    branch = factory.Faker("random_element", elements=Competition.Branch.values)
+    branch = factory.Faker("random_element", elements=[b.id for b in Branches])
 
     graduation_year = factory.Faker("year")
 

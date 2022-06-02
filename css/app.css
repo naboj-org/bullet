@@ -2,24 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* math */
-.branch-1, .branch- {
+.branch-math {
     --primary: #27C349;
     --primary-dark: #21a43e;
     --gradient-light: #fafff8;
     --gradient-dark: #d6ffcb;
 }
 
-/* physics */
-.branch-2 {
+.branch-physics {
     --primary: #D7860E;
     --primary-dark: #b77005;
     --gradient-light: #fffcf8;
     --gradient-dark: #ffeacb;
 }
 
-/* junior */
-.branch-3 {
+.branch-junior {
     --primary: #C32F27;
     --primary-dark: #9d231c;
     --gradient-light: #FFF8F8;
@@ -37,13 +34,13 @@
         background-size: contain;
     }
 
-    .branch-1 .bg-hero-image {
+    .branch-math .bg-hero-image {
         background-image: url('/static/img/math/hero.png');
     }
-    .branch-2 .bg-hero-image {
+    .branch-physics .bg-hero-image {
         background-image: url('/static/img/physics/hero.png');
     }
-    .branch-3 .bg-hero-image {
+    .branch-junior .bg-hero-image {
         background-image: url('/static/img/junior/hero.png');
     }
 }

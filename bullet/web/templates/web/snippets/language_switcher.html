@@ -1,12 +1,11 @@
 {% load static %}
 {% load i18n %}
-{% load hosts %}
 
 {% get_available_languages as languages %}
 
 {% for lang_code, lang_name in languages %}
     {% language lang_code %}
-    <a href="{% host_url 'homepage' host branch.label|lower %}">
+    <a href="{% url 'homepage' %}">
         <img src="{% with 'web/img/lang_flags/'|add:lang_code|add:'.svg' as image_static %}{% static image_static %}{% endwith %}" style="height: 17px; margin-left: 5px">
     </a>
     {% endlanguage %}
