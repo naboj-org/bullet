@@ -61,7 +61,7 @@ class BranchRepository:
 
 
 Branches = BranchRepository(
-    Branch(1, "math", _("Mathematical Náboj"), pgettext_lazy("branch name", "Math")),
+    Branch(1, "math", _("Math Náboj"), pgettext_lazy("branch name", "Math")),
     Branch(2, "physics", _("Physics Náboj"), pgettext_lazy("branch name", "Physics")),
     Branch(3, "junior", _("Náboj Junior"), pgettext_lazy("branch name", "Junior")),
 )
