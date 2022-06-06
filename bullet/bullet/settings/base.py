@@ -28,6 +28,8 @@ INSTALLED_APPS = [
     "competitions",
     "web",
     "education",
+    "countries",
+    "django_countries",
     "django.forms",
     "captcha",
 ]
@@ -57,6 +59,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "competitions.middleware.BranchMiddleware",
+    "countries.middleware.CountryLanguageMiddleware",
 ]
 
 PARENT_HOST = os.environ.get("PARENT_HOST")
