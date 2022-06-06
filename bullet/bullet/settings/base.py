@@ -1,9 +1,6 @@
 import os
 from pathlib import Path
 
-import django.conf.locale
-from django.conf import global_settings
-
 from bullet.constants import Languages
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -129,25 +126,6 @@ GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 LANGUAGES = Languages.choices
-
-EXTRA_LANG_INFO = {
-    "de-de": {
-        "bidi": False,
-        "code": "de-de",
-        "name": "German",
-        "name_local": "Deutsch",
-    },
-    "de-ch": {
-        "bidi": False,
-        "code": "de-ch",
-        "name": "Swiss German",
-        "name_local": "Schweizerdeutsch",
-    },
-}
-
-LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
-django.conf.locale.LANG_INFO = LANG_INFO
-global_settings.LANGUAGES = LANGUAGES
 
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
