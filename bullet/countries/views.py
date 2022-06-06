@@ -24,6 +24,7 @@ class CountryDetectView(View):
 
         response = HttpResponseRedirect(redirect_to=url)
         response.headers["Vary"] = "Cookie, Accept-Language"
+        response.headers["Cache-Control"] = "no-cache"
         return response
 
 

@@ -47,7 +47,7 @@ class CountryLanguageMiddleware:
                     "bullet_country",
                     expected,
                     expires=365 * 24 * 60 * 60,
-                    samesite="Strict",
+                    samesite="Lax",
                 )
 
         return response
