@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web.models import Menu, Organizer, Page, Partner, Translation
+from web.models import ContentBlock, Menu, Organizer, Page, Partner, Translation
 
 
 @admin.register(Page)
@@ -27,3 +27,9 @@ class OrganizerAdmin(admin.ModelAdmin):
 class MenuAdmin(admin.ModelAdmin):
     list_display = ["title", "branch", "url", "order"]
     list_filter = ["branch"]
+
+
+@admin.register(ContentBlock)
+class ContentBlockAdmin(admin.ModelAdmin):
+    list_filter = ["branch", "country", "language"]
+    list_display = ["reference", "branch", "country", "language"]
