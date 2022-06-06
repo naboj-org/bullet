@@ -16,7 +16,14 @@ class Branch:
         return self.id
 
     def __str__(self):
-        return self.name
+        return str(self.name)
+
+    def __eq__(self, other):
+        if isinstance(other, Branch):
+            return self.id == other.id
+        if isinstance(other, int):
+            return self.id == other
+        return False
 
     @property
     def domain(self):
@@ -54,7 +61,7 @@ class BranchRepository:
                 if b.identifier == item:
                     return b
 
-        raise TypeError()
+        raise KeyError()
 
     def __iter__(self):
         return (b for b in self.branches)
