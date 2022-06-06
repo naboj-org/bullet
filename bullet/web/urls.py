@@ -1,12 +1,16 @@
+from countries.resolvers import country_patterns
+from countries.views import CountryDetectView, CountrySelectView
 from django.conf import settings
-from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from web import views
 from web.views import page, registration, teams
 
-urlpatterns = i18n_patterns(
+urlpatterns = [
+    path("", CountryDetectView.as_view()),
+    path("country_selector/", CountrySelectView.as_view(), name="country_selector"),
+] + country_patterns(
     path("admin/", admin.site.urls),
     path("", views.HomepageView.as_view(), name="homepage"),
     path(
