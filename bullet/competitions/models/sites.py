@@ -1,11 +1,10 @@
 from address.models import AddressField
+from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Count, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
 from users.models import Team
-
-from bullet.constants import Languages
 
 
 class Site(models.Model):
@@ -42,7 +41,7 @@ class CompetitionSite(models.Model):
     capacity = models.PositiveIntegerField(default=0)
 
     accepted_languages = ArrayField(
-        base_field=models.CharField(choices=Languages.choices, max_length=10)
+        base_field=models.CharField(choices=settings.LANGUAGES, max_length=10)
     )
     local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)

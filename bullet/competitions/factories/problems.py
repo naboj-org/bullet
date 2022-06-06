@@ -6,10 +6,9 @@ from competitions.models import (
     Problem,
     SolutionSubmitLog,
 )
+from django.conf import settings
 from factory.django import DjangoModelFactory
 from users.models import Team, User
-
-from bullet.constants import Languages
 
 
 class ProblemFactory(DjangoModelFactory):
@@ -24,7 +23,9 @@ class LocalizedProblemFactory(DjangoModelFactory):
         model = LocalizedProblem
 
     problem = factory.Faker("random_element", elements=Problem.objects.all())
-    language = factory.Faker("random_element", elements=Languages.values)
+    language = factory.Faker(
+        "random_element", elements=[x[0] for x in settings.LANGUAGES]
+    )
     statement_text = factory.Faker("paragraph")
     result_text = factory.Faker("sentence")
     solution_text = factory.Faker("paragraph")

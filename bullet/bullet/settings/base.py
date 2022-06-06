@@ -1,8 +1,6 @@
 import os
 from pathlib import Path
 
-from bullet.constants import Languages
-
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # This will be overwritten by prod ENV
@@ -112,7 +110,7 @@ PASSWORD_HASHERS = [
 
 AUTH_USER_MODEL = "users.User"
 
-LANGUAGE_CODE = "en-GB"
+LANGUAGE_CODE = "en"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
@@ -125,7 +123,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
-LANGUAGES = Languages.choices
 
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"

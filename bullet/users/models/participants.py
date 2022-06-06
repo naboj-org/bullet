@@ -1,7 +1,6 @@
+from django.conf import settings
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
-
-from bullet.constants import Languages
 
 
 class Team(models.Model):
@@ -11,7 +10,7 @@ class Team(models.Model):
     secret_link = models.CharField(max_length=48, unique=True)
 
     school = models.ForeignKey("education.School", on_delete=models.CASCADE)
-    language = models.TextField(choices=Languages.choices)
+    language = models.TextField(choices=settings.LANGUAGES)
 
     registered_at = models.DateTimeField(auto_now_add=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
