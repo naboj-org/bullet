@@ -4,4 +4,5 @@ from django.contrib import admin
 
 @admin.register(BranchCountry)
 class BranchCountryAdmin(admin.ModelAdmin):
-    pass
+    list_display = ["branch", "country", "languages"]
+    list_filter = ["branch"]
