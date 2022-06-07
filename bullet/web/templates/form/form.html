@@ -1,3 +1,5 @@
+{% load bform %}
+{% load widget_tweaks %}
 {% if errors %}
   <tr>
     <td colspan="2">
@@ -12,13 +14,7 @@
         {% if field.label %}{{ field.label_tag }}{% endif %}
     </div>
     <div class="grow w-full">
-        {{ field }}
-        {% if field.errors %}
-            <span class="text-red-600">{{ field.errors|first }}</span>
-        {% endif %}
-        {% if field.help_text %}
-            <span class="text-sm text-gray-500">{{ field.help_text }}</span>
-        {% endif %}
+        {% bfield field %}
     </div>
 </div>
 {% else %}

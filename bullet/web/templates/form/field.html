@@ -1,0 +1,8 @@
+{% load widget_tweaks %}
+{{ field|add_class:"input" }}
+{% if field.errors %}
+    <span class="text-red-600">{{ field.errors|first }}</span>
+{% endif %}
+{% if field.help_text %}
+    <span class="text-sm text-gray-500">{{ field.help_text }}</span>
+{% endif %}
