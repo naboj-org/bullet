@@ -5,7 +5,7 @@ from countries.logic.cache import get_country_cache
 from django.http import HttpResponseNotFound
 from django.utils import translation
 
-country_language_re = re.compile(r"^/([a-z]{2})/([a-z]{2})/")
+country_language_re = re.compile(r"^/([a-z]{2})/([^/]+)/")
 
 
 def country_language_from_request(request):
