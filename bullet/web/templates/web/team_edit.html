@@ -59,7 +59,7 @@
                             {% bfield f.graduation_year %}
                         </div>
                         <div class="flex md:justify-center items-center gap-2">
-                            {{ f.DELETE }}
+                            {% bcheckbox f.DELETE %}
                             <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">Delete?</label>
                         </div>
                         {% endfor %}
