@@ -129,7 +129,7 @@ class RegistrationView(FormView):
             _("Confirm team registration for Náboj"),
             get_template("users/email/registration_secret_link.html").render(
                 {
-                    "host": self.request.BRANCH.identifier.lower(),
+                    "host": self.request.get_host(),
                     "team": team,
                     "participants": participants,
                 }
