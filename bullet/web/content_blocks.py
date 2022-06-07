@@ -11,7 +11,7 @@ def get_blocks_cache():
         for block in blocks:
             key = (
                 block.branch,
-                block.country.code.lower(),
+                block.country.code.lower() if block.country else None,
                 block.language,
                 block.reference,
             )
