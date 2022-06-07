@@ -1,4 +1,5 @@
 {% extends "web/base.html" %}
+{% load content_blocks %}
 {% load static %}
 {% load i18n %}
 
@@ -96,6 +97,8 @@
 {% endif %}
 
 {#    {% trans "dynamic:intro" context branch.label %}#}
+
+    {% content_block "hello" %}
 
 
 <div class="bg-primary-lighter md:mt-48 mt-32 md:py-24 py-12">

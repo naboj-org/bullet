@@ -1,8 +1,11 @@
+from competitions.branches import Branches
 from competitions.models import BranchField
 from django.conf import settings
 from django.db import models
+from django.db.models import UniqueConstraint
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django_countries.fields import CountryField
 
 
 class Page(models.Model):
@@ -61,3 +64,25 @@ class Organizer(models.Model):
     name = models.CharField(max_length=128)
     url = models.CharField(max_length=128)
     image = models.FileField()
+
+
+class ContentBlock(models.Model):
+    reference = models.CharField(max_length=256)
+    branch = BranchField(blank=True, null=True)
+    country = CountryField(blank=True, null=True)
+    language = models.CharField(choices=settings.LANGUAGES, max_length=8)
+    content = models.TextField(blank=True)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                ["reference", "branch", "country", "language"],
+                name="ref_branch_country_lang_unique",
+            )
+        ]
+
+    def __str__(self):
+        if self.branch:
+            branch = Branches[self.branch].short_name
+            return f"{self.reference} ({branch} {self.country.code}-{self.language})"
+        return f"{self.reference} ({self.country.code}-{self.language})"
