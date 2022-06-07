@@ -12,3 +12,4 @@ done
 
 python manage.py migrate
 DJANGO_SUPERUSER_PASSWORD=admin python manage.py createsuperuser --username=admin --email=admin@localhost --no-input
+python manage.py loaddata branchcountry

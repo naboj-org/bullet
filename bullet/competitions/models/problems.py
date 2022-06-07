@@ -1,8 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-from bullet.constants import Languages
-
 
 class Problem(models.Model):
     name = models.CharField(max_length=128)
@@ -13,7 +11,7 @@ class Problem(models.Model):
 
 class LocalizedProblem(models.Model):
     problem = models.ForeignKey("competitions.Problem", on_delete=models.CASCADE)
-    language = models.TextField(choices=Languages.choices)
+    language = models.TextField(choices=settings.LANGUAGES)
     statement_text = models.TextField()
     result_text = models.TextField()
     solution_text = models.TextField()

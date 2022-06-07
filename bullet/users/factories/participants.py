@@ -1,10 +1,9 @@
 import factory
 from competitions.models import CompetitionSite
+from django.conf import settings
 from education.models import School
 from factory.django import DjangoModelFactory
 from users.models import Participant, Team
-
-from bullet.constants import Languages
 
 
 class TeamFactory(DjangoModelFactory):
@@ -18,7 +17,9 @@ class TeamFactory(DjangoModelFactory):
     secret_link = factory.Faker("hexify", text="^" * 48)
 
     school = factory.Faker("random_element", elements=School.objects.all())
-    language = factory.Faker("random_element", elements=Languages.values)
+    language = factory.Faker(
+        "random_element", elements=[x[0] for x in settings.LANGUAGES]
+    )
 
     registered_at = factory.Faker("past_datetime")
     confirmed_at = factory.Faker("past_datetime")

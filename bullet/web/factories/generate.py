@@ -1,9 +1,8 @@
+from django.conf import settings
 from web.factories.pages import PageFactory
-
-from bullet.constants import Languages
 
 
 def create_pages(branch):
-    for lang in Languages.values:
+    for lang, _ in settings.LANGUAGES:
         for slug in ["rules", "about", "contact"]:
             PageFactory(language=lang, branch=branch, url=slug)

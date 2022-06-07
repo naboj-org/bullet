@@ -7,6 +7,7 @@ module.exports = {
       colors: {
         primary: "var(--primary)",
         "primary-lighter": "var(--gradient-dark)",
+        "primary-dark": "var(--primary-dark)",
       },
       gridTemplateColumns: {
         'registration': 'min-content 3fr 2fr 2fr',

@@ -1,12 +1,10 @@
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
 from competitions.models import CategoryCompetition
+from countries.logic.country import get_country
 from django.core.exceptions import ValidationError
 from django.forms import ModelChoiceField, ModelForm, inlineformset_factory
-from django.utils.translation import get_language
 from users.models import Participant, Team
-
-from bullet.constants import PHONE_REGIONS
 
 
 class RegistrationForm(ModelForm):
@@ -20,7 +18,7 @@ class RegistrationForm(ModelForm):
         self.fields["competition_site"] = ModelChoiceField(
             queryset=self.available_sites
         )
-        self.fields["contact_phone"].region = PHONE_REGIONS[get_language()]
+        self.fields["contact_phone"].region = get_country()
 
     def clean_school(self):
         data = self.cleaned_data["school"]

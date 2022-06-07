@@ -1,11 +1,6 @@
 import os
 from pathlib import Path
 
-import django.conf.locale
-from django.conf import global_settings
-
-from bullet.constants import Languages
-
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # This will be overwritten by prod ENV
@@ -28,6 +23,8 @@ INSTALLED_APPS = [
     "competitions",
     "web",
     "education",
+    "countries",
+    "django_countries",
     "django.forms",
     "captcha",
 ]
@@ -57,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "competitions.middleware.BranchMiddleware",
+    "countries.middleware.CountryLanguageMiddleware",
 ]
 
 PARENT_HOST = os.environ.get("PARENT_HOST")
@@ -112,7 +110,7 @@ PASSWORD_HASHERS = [
 
 AUTH_USER_MODEL = "users.User"
 
-LANGUAGE_CODE = "en-GB"
+LANGUAGE_CODE = "en"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
@@ -125,26 +123,6 @@ DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
 
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
-LANGUAGES = Languages.choices
-
-EXTRA_LANG_INFO = {
-    "de-de": {
-        "bidi": False,
-        "code": "de-de",
-        "name": "German",
-        "name_local": "Deutsch",
-    },
-    "de-ch": {
-        "bidi": False,
-        "code": "de-ch",
-        "name": "Swiss German",
-        "name_local": "Schweizerdeutsch",
-    },
-}
-
-LANG_INFO = dict(django.conf.locale.LANG_INFO, **EXTRA_LANG_INFO)
-django.conf.locale.LANG_INFO = LANG_INFO
-global_settings.LANGUAGES = LANGUAGES
 
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
