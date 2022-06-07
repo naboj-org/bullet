@@ -26,7 +26,6 @@ INSTALLED_APPS = [
     "education",
     "countries",
     "django_countries",
-    "django.forms",
     "captcha",
 ]
 
@@ -79,7 +78,6 @@ TEMPLATES = [
         },
     },
 ]
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "bullet.wsgi.application"
 
