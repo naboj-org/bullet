@@ -19,13 +19,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "widget_tweaks",
     "users",
     "competitions",
     "web",
     "education",
     "countries",
     "django_countries",
-    "django.forms",
     "captcha",
 ]
 
@@ -78,7 +78,6 @@ TEMPLATES = [
         },
     },
 ]
-FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
 
 WSGI_APPLICATION = "bullet.wsgi.application"
 

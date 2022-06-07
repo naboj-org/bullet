@@ -1,5 +1,6 @@
 {% extends "web/base.html" %}
-{% load web %}
+{% load bform %}
+{% load widget_tweaks %}
 {% load static %}
 {% load i18n %}
 
@@ -12,7 +13,7 @@
     <div class="mx-auto w-full max-w-4xl p-3">
         <form method="POST">
             {% csrf_token %}
-            {% render_form form %}
+            {% bform form %}
             <br>
 
             {{ formset.management_form }}
@@ -27,33 +28,15 @@
                 <div class="w-auto whitespace-nowrap text-xl {% if form.field.required %}font-bold{% endif %} mt-4 md:mt-0 md:py-3 md:text-base">Participant {{ forloop.counter }}</div>
                 <div>
                     <label class="md:hidden font-bold {% if form.full_name.errors %}text-red-600{% endif %}" for="id_{{ form.full_name.html_name }}">Full name:</label>
-                    {{ form.full_name }}
-                    {% if form.full_name.errors %}
-                        <span class="text-red-600">{{ form.full_name.errors }}</span>
-                    {% endif %}
-                    {% if form.full_name.help_text %}
-                        <span class="text-sm text-gray-500">{{ form.full_name.help_text }}</span>
-                    {% endif %}
+                    {% bfield form.full_name %}
                 </div>
                 <div>
                     <label class="md:hidden font-bold {% if form.birth_year.errors %}text-red-600{% endif %}" for="id_{{ form.birth_year.html_name }}">Birth year:</label>
-                    {{ form.birth_year }}
-                    {% if form.birth_year.errors %}
-                        <span class="text-red-600">{{ form.birth_year.errors }}</span>
-                    {% endif %}
-                    {% if form.birth_year.help_text %}
-                        <span class="text-sm text-gray-500">{{ form.birth_year.help_text }}</span>
-                    {% endif %}
+                    {% bfield form.birth_year %}
                 </div>
                 <div>
                     <label class="md:hidden font-bold {% if form.graduation_year.errors %}text-red-600{% endif %}" for="id_{{ form.graduation_year.html_name }}">Graduation year:</label>
-                    {{ form.graduation_year }}
-                    {% if form.graduation_year.errors %}
-                        <span class="text-red-600">{{ form.graduation_year.errors }}</span>
-                    {% endif %}
-                    {% if form.graduation_year.help_text %}
-                        <span class="text-sm text-gray-500">{{ form.graduation_year.help_text }}</span>
-                    {% endif %}
+                    {% bfield form.graduation_year %}
                 </div>
                 {% endfor %}
             </div>

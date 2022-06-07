@@ -1,5 +1,5 @@
 {% extends "web/base.html" %}
-{% load web %}
+{% load bform %}
 {% load static %}
 {% load i18n %}
 
@@ -48,33 +48,15 @@
                         <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">Participant {{ forloop.counter }}</div>
                         <div>
                             <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name:</label>
-                            {{ f.full_name }}
-                            {% if f.full_name.errors %}
-                                <span class="text-red-600">{{ f.full_name.errors }}</span>
-                            {% endif %}
-                            {% if f.full_name.help_text %}
-                                <span class="text-sm text-gray-500">{{ f.full_name.help_text }}</span>
-                            {% endif %}
+                            {% bfield f.full_name %}
                         </div>
                         <div>
                             <label class="md:hidden font-bold {% if f.birth_year.errors %}text-red-600{% endif %}" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
-                            {{ f.birth_year }}
-                            {% if f.birth_year.errors %}
-                                <span class="text-red-600">{{ f.birth_year.errors }}</span>
-                            {% endif %}
-                            {% if f.birth_year.help_text %}
-                                <span class="text-sm text-gray-500">{{ f.birth_year.help_text }}</span>
-                            {% endif %}
+                            {% bfield f.birth_year %}
                         </div>
                         <div>
                             <label class="md:hidden font-bold {% if f.graduation_year.errors %}text-red-600{% endif %}" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
-                            {{ f.graduation_year }}
-                            {% if f.graduation_year.errors %}
-                                <span class="text-red-600">{{ f.graduation_year.errors }}</span>
-                            {% endif %}
-                            {% if f.graduation_year.help_text %}
-                                <span class="text-sm text-gray-500">{{ f.graduation_year.help_text }}</span>
-                            {% endif %}
+                            {% bfield f.graduation_year %}
                         </div>
                         <div class="flex md:justify-center items-center gap-2">
                             {{ f.DELETE }}
