@@ -8,6 +8,11 @@ def bfield(field):
     return {"field": field}
 
 
+@register.inclusion_tag("form/checkbox.html")
+def bcheckbox(checkbox):
+    return {"checkbox": checkbox}
+
+
 @register.inclusion_tag("form/form.html")
 def bform(form):
     return {"form": form}
