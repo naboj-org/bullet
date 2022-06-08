@@ -55,7 +55,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "myadmin.middleware.AdminDomainMiddleware",
-    # "competitions.middleware.BranchMiddleware",
+    "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
 ]
 
