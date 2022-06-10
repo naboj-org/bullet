@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.http import HttpResponseNotFound
 from django.urls import set_urlconf
 
 
@@ -11,7 +12,7 @@ class AdminDomainMiddleware:
         domain = request.get_host()
         domain = domain.strip().lstrip("www.").lower()
         if not domain.endswith(settings.PARENT_HOST):
-            return None
+            return HttpResponseNotFound("Invalid subdomain.")
 
         domain = domain.rstrip(settings.PARENT_HOST).strip(".")
 
@@ -19,7 +20,7 @@ class AdminDomainMiddleware:
         request._subdomain_resolved = False
 
         if domain == "admin":
-            settings.ROOT_URLCONF = "myadmin.urls"
+            settings.ROOT_URLCONF = "web.urls_admin"
             request.BRANCH = None
             request._subdomain_resolved = True
 

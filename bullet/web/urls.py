@@ -11,7 +11,6 @@ urlpatterns = [
     path("", CountryDetectView.as_view()),
     path("country_selector/", CountrySelectView.as_view(), name="country_selector"),
 ] + country_patterns(
-    path("admin/", admin.site.urls),
     path("", views.HomepageView.as_view(), name="homepage"),
     path(
         "register/<category>/",

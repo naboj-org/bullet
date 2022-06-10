@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     "countries",
     "django_countries",
     "captcha",
-    "myadmin",
 ]
 
 DATABASES = {
@@ -54,7 +53,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "myadmin.middleware.AdminDomainMiddleware",
+    "web.middleware.AdminDomainMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
 ]
