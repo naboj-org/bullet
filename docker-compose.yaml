@@ -27,8 +27,10 @@ services:
       - "8000:8000"
     volumes:
       - ./bullet/:/app/
+      - geiop_data:/geoip/
     depends_on:
       - db
+      - geoip
     command: ./entrypoint.sh
 
   tailwind:
@@ -42,5 +44,12 @@ services:
       - ./package.json:/app/package.json
     tty: true
 
+  geoip:
+    image: maxmindinc/geoipupdate
+    env_file:
+      - .env
+    volumes:
+      -  geiop_data:/usr/share/GeoIP
 volumes:
   postgres_data:
+  geiop_data:
