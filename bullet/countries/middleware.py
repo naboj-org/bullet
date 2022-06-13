@@ -25,8 +25,7 @@ class CountryLanguageMiddleware:
 
         if c:
             cache = get_country_cache()
-            key = (request.BRANCH.id, c, lang)
-            if key not in cache:
+            if lang not in cache[request.BRANCH.id][c]:
                 return HttpResponseNotFound(
                     "BranchCountryLanguage combination not found."
                 )
