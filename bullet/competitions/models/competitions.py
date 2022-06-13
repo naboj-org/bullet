@@ -1,6 +1,5 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import IntegerChoices
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from web.fields import BranchField
@@ -50,12 +49,6 @@ class CategoryCompetitionQueryset(models.QuerySet):
 
 
 class CategoryCompetition(models.Model):
-    class Category(IntegerChoices):
-        SENIOR = 1, _("Senior")
-        JUNIOR = 2, _("Junior")
-        CADET = 3, _("Cadet")
-        OPEN = 4, _("Open")
-
     class RankingCriteria(models.IntegerChoices):
         SCORE = 1, _("Score")
         PROBLEMS = 2, _("Problems")
@@ -64,7 +57,7 @@ class CategoryCompetition(models.Model):
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE
     )
-    category = models.IntegerField(choices=Category.choices)
+    category = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
     educations = models.ManyToManyField("education.Education")
 
     problems_per_team = models.PositiveIntegerField(null=True, blank=True)
