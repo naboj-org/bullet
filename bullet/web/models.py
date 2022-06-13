@@ -11,8 +11,9 @@ from web.fields import BranchField, LanguageField
 
 class Page(models.Model):
     url = models.CharField(max_length=128)
-    language = models.TextField(choices=settings.LANGUAGES)
     branch = BranchField()
+    language = LanguageField()
+    countries = ArrayField(base_field=CountryField())
     title = models.CharField(max_length=128)
     content = models.TextField(blank=True)
 
@@ -22,7 +23,7 @@ class Page(models.Model):
 
 class Translation(models.Model):
     reference = models.CharField(max_length=256)
-    language = models.TextField(choices=settings.LANGUAGES)
+    language = LanguageField()
     context = models.CharField(max_length=128, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
 
