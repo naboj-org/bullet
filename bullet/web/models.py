@@ -1,11 +1,12 @@
 from competitions.branches import Branches
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
-from web.fields import BranchField
+from web.fields import BranchField, LanguageField
 
 
 class Page(models.Model):
@@ -43,8 +44,10 @@ def save_profile(sender, instance, **kwargs):
 
 
 class Menu(models.Model):
-    url = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128)
     branch = BranchField()
+    language = LanguageField()
+    countries = ArrayField(base_field=CountryField())
     title = models.CharField(max_length=128)
     order = models.IntegerField(default=1)
 
