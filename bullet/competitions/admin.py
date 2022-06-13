@@ -1,5 +1,7 @@
 from competitions.models import (
+    Category,
     CategoryCompetition,
+    CategoryDescription,
     Competition,
     CompetitionProblem,
     CompetitionSite,
@@ -91,3 +93,14 @@ class SolutionSubmitLogAdmin(admin.ModelAdmin):
 @admin.register(Wildcard)
 class WildcardAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_filter = ["branch"]
+
+
+@admin.register(CategoryDescription)
+class CategoryDescriptionAdmin(admin.ModelAdmin):
+    list_filter = ["category__branch"]
+    list_display = ["category", "name", "language", "countries"]
