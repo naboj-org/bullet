@@ -8,7 +8,7 @@ class BranchMiddleware:
 
     def __call__(self, request):
         branch = Branches.get_from_domain(request.get_host())
-        if branch is None:
+        if branch is None and not request._subdomain_resolved:
             return HttpResponseForbidden("Unknown branch.")
 
         request.BRANCH = branch
