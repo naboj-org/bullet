@@ -23,6 +23,13 @@
     --gradient-dark: #FFCBCB;
 }
 
+.branch-chemistry {
+    --primary: #7737db;
+    --primary-dark: #6529c4;
+    --gradient-light: #faf8ff;
+    --gradient-dark: #dccbff;
+}
+
 .bg-hero {
     background: linear-gradient(265.04deg, var(--gradient-light) -5.34%, var(--gradient-dark) 110.03%);
 }
@@ -42,6 +49,9 @@
     }
     .branch-junior .bg-hero-image {
         background-image: url('/static/img/junior/hero.png');
+    }
+    .branch-chemistry .bg-hero-image {
+        background-image: url('/static/img/chemistry/hero.png');
     }
 }
 
