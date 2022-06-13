@@ -1,11 +1,11 @@
 from competitions.branches import Branches
-from competitions.models import BranchField
 from django.conf import settings
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
+from web.fields import BranchField
 
 
 class Page(models.Model):

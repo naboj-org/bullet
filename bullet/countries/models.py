@@ -1,9 +1,9 @@
-from competitions.models import BranchField
 from django.conf import settings
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 from django_countries.fields import CountryField
+from web.fields import BranchField
 
 
 class BranchCountry(models.Model):
