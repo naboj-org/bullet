@@ -1,4 +1,5 @@
 from django.contrib.postgres.fields import ArrayField
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -76,7 +77,13 @@ class CategoryCompetition(models.Model):
         ordering = ("-category",)
 
     def __str__(self):
-        return f"{self.competition.name} - {self.get_category_display()}"
+        return f"{self.competition.name} - {self.category}"
+
+    def clean(self):
+        super().clean()
+
+        if self.competition.branch != self.category.branch:
+            raise ValidationError("Branch of category and competition must be equal.")
 
 
 class Wildcard(models.Model):
