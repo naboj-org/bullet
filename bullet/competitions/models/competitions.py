@@ -1,15 +1,9 @@
-from competitions.branches import Branches
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import IntegerChoices
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
-
-
-class BranchField(models.IntegerField):
-    def __init__(self, *args, **kwargs):
-        kwargs["choices"] = Branches.choices()
-        super().__init__(*args, **kwargs)
+from web.fields import BranchField
 
 
 class CompetitionQuerySet(models.QuerySet):
