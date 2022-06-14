@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('web', '0011_alter_menu_countries_alter_page_countries'),
+        ("web", "0011_alter_menu_countries_alter_page_countries"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='menu',
-            name='is_external',
+            model_name="menu",
+            name="is_external",
             field=models.BooleanField(default=False),
         ),
     ]
