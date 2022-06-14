@@ -1,5 +1,5 @@
 {% for item in menu %}
-    <a href="/{{ request.LANGUAGE_CODE }}{{ item.url }}">{{ item.title }}</a>
+    <a href="{{ item.slug }}">{{ item.title }}</a>
 {% endfor %}
 
 

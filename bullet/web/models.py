@@ -1,19 +1,18 @@
 from competitions.branches import Branches
 from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
-from web.fields import BranchField, LanguageField
+from web.fields import BranchField, ChoiceArrayField, LanguageField
 
 
 class Page(models.Model):
-    url = models.CharField(max_length=128)
+    slug = models.SlugField(max_length=128)
     branch = BranchField()
     language = LanguageField()
-    countries = ArrayField(base_field=CountryField())
+    countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     content = models.TextField(blank=True)
 
@@ -48,7 +47,7 @@ class Menu(models.Model):
     slug = models.SlugField(max_length=128)
     branch = BranchField()
     language = LanguageField()
-    countries = ArrayField(base_field=CountryField())
+    countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     order = models.IntegerField(default=1)
 

@@ -4,8 +4,8 @@ from web.models import ContentBlock, Menu, Organizer, Page, Partner, Translation
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
-    list_display = ["title", "branch", "language", "url"]
-    list_filter = ["branch", "language"]
+    list_display = ["title", "branch", "language", "countries", "slug"]
+    list_filter = ["branch", "language", "slug"]
 
 
 @admin.register(Translation)
@@ -25,8 +25,8 @@ class OrganizerAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ["title", "branch", "url", "order"]
-    list_filter = ["branch"]
+    list_display = ["title", "branch", "language", "countries", "slug", "order"]
+    list_filter = ["branch", "language", "slug"]
 
 
 @admin.register(ContentBlock)
