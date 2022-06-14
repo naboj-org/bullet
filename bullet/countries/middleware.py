@@ -23,7 +23,7 @@ class CountryLanguageMiddleware:
     def __call__(self, request):
         c, lang = country_language_from_request(request)
 
-        if c:
+        if c and not request._subdomain_resolved:
             cache = get_country_cache()
             if request.BRANCH is not None and lang not in cache[request.BRANCH.id][c]:
                 return HttpResponseNotFound(
@@ -38,7 +38,7 @@ class CountryLanguageMiddleware:
 
         response = self.get_response(request)
 
-        if c:
+        if c and not request._subdomain_resolved:
             ckie = request.COOKIES.get("bullet_country", "")
             expected = f"{c}|{lang}"
             if ckie != expected:
