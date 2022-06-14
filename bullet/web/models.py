@@ -50,6 +50,7 @@ class Menu(models.Model):
     countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     order = models.IntegerField(default=1)
+    is_external = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
