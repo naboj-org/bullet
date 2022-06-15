@@ -2,8 +2,9 @@ import re
 
 from countries.logic import country
 from countries.logic.cache import get_country_cache
+from countries.models import BranchCountry
 from django.http import HttpResponseNotFound
-from django.utils import translation
+from django.utils import timezone, translation
 
 country_language_re = re.compile(r"^/([a-z]{2})/([^/]+)/")
 
@@ -32,6 +33,11 @@ class CountryLanguageMiddleware:
 
             country.activate(c)
             request.COUNTRY_CODE = c
+
+            branch_country = BranchCountry.objects.get(
+                branch=request.BRANCH, country=c.upper()
+            )
+            timezone.activate(branch_country.timezone)
 
             translation.activate(lang)
             request.LANGUAGE_CODE = translation.get_language()
