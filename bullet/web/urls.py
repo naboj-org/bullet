@@ -23,7 +23,7 @@ urlpatterns = [
     ),
     path("edit_team/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
     path("teams/", teams.TeamList.as_view(), name="teams"),
-    path("<url>/", page.PageView.as_view(), name="page"),
+    path("<slug>/", page.PageView.as_view(), name="page"),
 )
 
 if settings.DEBUG:
