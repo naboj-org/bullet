@@ -25,8 +25,8 @@ class OrganizerAdmin(admin.ModelAdmin):
 
 @admin.register(Menu)
 class MenuAdmin(admin.ModelAdmin):
-    list_display = ["title", "branch", "language", "countries", "slug", "order"]
-    list_filter = ["branch", "language", "slug"]
+    list_display = ["title", "branch", "language", "countries", "url", "order"]
+    list_filter = ["branch", "language", "url"]
 
 
 @admin.register(ContentBlock)

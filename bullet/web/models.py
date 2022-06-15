@@ -44,7 +44,7 @@ def save_profile(sender, instance, **kwargs):
 
 
 class Menu(models.Model):
-    slug = models.CharField(max_length=128)
+    url = models.CharField(max_length=128)
     branch = BranchField()
     language = LanguageField()
     countries = ChoiceArrayField(CountryField())
