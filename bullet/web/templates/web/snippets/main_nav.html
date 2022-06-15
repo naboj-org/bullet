@@ -1,5 +1,9 @@
 {% for item in menu %}
-    <a href="/{{ request.LANGUAGE_CODE }}{{ item.url }}">{{ item.title }}</a>
+    {% if item.is_external %}
+        <a href="{{ item.url }}">{{ item.title }}</a>
+    {% else %}
+        <a href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.url }}">{{ item.title }}</a>
+    {% endif %}
 {% endfor %}
 
 

@@ -14,7 +14,7 @@ class PageView(TemplateView):
             Page,
             branch=self.request.BRANCH,
             language=translation.get_language(),
-            url=kwargs["url"],
+            slug=kwargs["slug"],
         )
 
         return context

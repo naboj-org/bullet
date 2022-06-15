@@ -5,13 +5,14 @@ from django.db.models import UniqueConstraint
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django_countries.fields import CountryField
-from web.fields import BranchField
+from web.fields import BranchField, ChoiceArrayField, LanguageField
 
 
 class Page(models.Model):
-    url = models.CharField(max_length=128)
-    language = models.TextField(choices=settings.LANGUAGES)
+    slug = models.SlugField(max_length=128)
     branch = BranchField()
+    language = LanguageField()
+    countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     content = models.TextField(blank=True)
 
@@ -21,7 +22,7 @@ class Page(models.Model):
 
 class Translation(models.Model):
     reference = models.CharField(max_length=256)
-    language = models.TextField(choices=settings.LANGUAGES)
+    language = LanguageField()
     context = models.CharField(max_length=128, null=True, blank=True)
     content = models.TextField(null=True, blank=True)
 
@@ -45,8 +46,11 @@ def save_profile(sender, instance, **kwargs):
 class Menu(models.Model):
     url = models.CharField(max_length=128)
     branch = BranchField()
+    language = LanguageField()
+    countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     order = models.IntegerField(default=1)
+    is_external = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

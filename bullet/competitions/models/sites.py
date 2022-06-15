@@ -1,10 +1,9 @@
 from address.models import AddressField
-from django.conf import settings
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import Count, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
 from users.models import Team
+from web.fields import ChoiceArrayField, LanguageField
 
 
 class Venue(models.Model):
@@ -40,9 +39,7 @@ class CompetitionVenue(models.Model):
     venue = models.ForeignKey("competitions.Venue", on_delete=models.CASCADE)
     capacity = models.PositiveIntegerField(default=0)
 
-    accepted_languages = ArrayField(
-        base_field=models.CharField(choices=settings.LANGUAGES, max_length=10)
-    )
+    accepted_languages = ChoiceArrayField(LanguageField())
     local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)
     participants_hidden = models.BooleanField(default=False)
