@@ -4,11 +4,11 @@ from competitions.models import (
     CategoryDescription,
     Competition,
     CompetitionProblem,
-    CompetitionSite,
+    CompetitionVenue,
     LocalizedProblem,
     Problem,
-    Site,
     SolutionSubmitLog,
+    Venue,
     Wildcard,
 )
 from django.contrib import admin
@@ -31,14 +31,14 @@ class CompetitionAdmin(admin.ModelAdmin):
     )
 
 
-class CompetitionSiteInlineAdmin(admin.TabularInline):
-    model = CompetitionSite
+class CompetitionVenueInlineAdmin(admin.TabularInline):
+    model = CompetitionVenue
     extra = 0
 
 
 @admin.register(CategoryCompetition)
 class CategoryCompetitionAdmin(admin.ModelAdmin):
-    inlines = (CompetitionSiteInlineAdmin,)
+    inlines = (CompetitionVenueInlineAdmin,)
     list_display = (
         "competition",
         "category",
@@ -49,15 +49,15 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Site)
-class SiteAdmin(admin.ModelAdmin):
+@admin.register(Venue)
+class VenueAdmin(admin.ModelAdmin):
     list_display = ("name", "short_name", "address")
 
 
-@admin.register(CompetitionSite)
-class CompetitionSiteAdmin(admin.ModelAdmin):
+@admin.register(CompetitionVenue)
+class CompetitionVenueAdmin(admin.ModelAdmin):
     list_display = (
-        "site",
+        "venue",
         "category_competition",
         "capacity",
         "accepted_languages",

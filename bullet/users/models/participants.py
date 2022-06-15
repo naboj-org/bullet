@@ -16,8 +16,8 @@ class Team(models.Model):
     confirmed_at = models.DateTimeField(null=True, blank=True)
     approved_at = models.DateTimeField(null=True, blank=True)
 
-    competition_site = models.ForeignKey(
-        "competitions.CompetitionSite", on_delete=models.CASCADE
+    competition_venue = models.ForeignKey(
+        "competitions.CompetitionVenue", on_delete=models.CASCADE
     )
     number = models.IntegerField(null=True, blank=True)
     in_school_symbol = models.CharField(max_length=1, null=True, blank=True)
@@ -28,12 +28,12 @@ class Team(models.Model):
 
     class Meta:
         unique_together = [
-            ("competition_site", "number"),
+            ("competition_venue", "number"),
             ("school", "in_school_symbol"),
         ]
 
     def __str__(self):
-        return f"{self.school} team in {self.competition_site}"
+        return f"{self.school} team in {self.competition_venue}"
 
 
 class Participant(models.Model):

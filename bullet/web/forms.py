@@ -15,7 +15,7 @@ class RegistrationForm(ModelForm):
         )
 
         super().__init__(**kwargs)
-        self.fields["competition_site"] = ModelChoiceField(
+        self.fields["competition_venue"] = ModelChoiceField(
             queryset=self.available_sites
         )
         self.fields["contact_phone"].region = get_country()
@@ -24,7 +24,7 @@ class RegistrationForm(ModelForm):
         data = self.cleaned_data["school"]
 
         same_school_teams_count = Team.objects.filter(
-            competition_site__category_competition=self.category_competition,
+            competition_venue__category_competition=self.category_competition,
             confirmed_at__isnull=False,
         ).count()
 
@@ -36,11 +36,11 @@ class RegistrationForm(ModelForm):
 
         return data
 
-    def clean_competition_site(self):
-        data = self.cleaned_data["competition_site"]
+    def clean_competition_venue(self):
+        data = self.cleaned_data["competition_venue"]
 
         same_site_teams_count = (
-            Team.objects.filter(competition_site=data)
+            Team.objects.filter(competition_venue=data)
             .filter(confirmed_at__isnull=False)
             .count()
         )
@@ -59,7 +59,7 @@ class RegistrationForm(ModelForm):
             "contact_phone",
             "school",
             "language",
-            "competition_site",
+            "competition_venue",
         ]
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
