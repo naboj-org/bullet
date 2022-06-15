@@ -45,7 +45,10 @@
                         <div class="hidden md:block font-bold text-center">Delete?</div>
 
                         {% for f in form %}
-                        <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">Participant {{ forloop.counter }}</div>
+                        <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">
+                            Participant {{ forloop.counter }}
+                            {{ f.id }}
+                        </div>
                         <div>
                             <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name:</label>
                             {% bfield f.full_name %}
