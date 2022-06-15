@@ -1,10 +1,8 @@
 {% for item in menu %}
-    {% if item.branch == branch and request.LANGUAGE_CODE == item.language and request.COUNTRY_CODE.upper in item.countries %}
-        {% if item.is_external %}
-            <a href="{{ item.slug }}">{{ item.title }}</a>
-        {% else %}
-            <a href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.slug }}">{{ item.title }}</a>
-        {% endif %}
+    {% if item.is_external %}
+        <a href="{{ item.url }}">{{ item.title }}</a>
+    {% else %}
+        <a href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.url }}">{{ item.title }}</a>
     {% endif %}
 {% endfor %}
 
