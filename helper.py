@@ -54,8 +54,18 @@ def update(*args):
     if not os.path.exists(".env"):
         shutil.copyfile(".env.example", ".env")
 
+    logging.info("Removing old pipenv")
+    try:
+        run(f"{PYTHON} -m pipenv --rm")
+    except subprocess.CalledProcessError:
+        logging.info("No old pipenv")
+
     logging.info("Installing dependencies")
-    run(f"{PYTHON} -m pipenv install")
+    try:
+        run(f"{PYTHON} -m pipenv install")
+    except subprocess.CalledProcessError:
+        logging.info("Try installing one more time")
+        run(f"{PYTHON} -m pipenv install")
 
     logging.info("Rebuilding containers")
     run("docker-compose build")
