@@ -1,5 +1,5 @@
 import factory
-from competitions.models import CompetitionSite
+from competitions.models import CompetitionVenue
 from django.conf import settings
 from education.models import School
 from factory.django import DjangoModelFactory
@@ -25,8 +25,8 @@ class TeamFactory(DjangoModelFactory):
     confirmed_at = factory.Faker("past_datetime")
     approved_at = factory.Faker("past_datetime")
 
-    competition_site = factory.Faker(
-        "random_element", elements=CompetitionSite.objects.all()
+    competition_venue = factory.Faker(
+        "random_element", elements=CompetitionVenue.objects.all()
     )
     number = factory.Sequence(lambda n: n)
     in_school_symbol = factory.Faker("random_letter")

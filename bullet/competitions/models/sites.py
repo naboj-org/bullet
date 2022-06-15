@@ -7,7 +7,7 @@ from django.db.models.functions import Coalesce
 from users.models import Team
 
 
-class Site(models.Model):
+class Venue(models.Model):
     name = models.CharField(max_length=256)
     short_name = models.CharField(max_length=256)
     address = AddressField()
@@ -16,15 +16,15 @@ class Site(models.Model):
         return f"{self.name} at {self.address}"
 
 
-class CompetitionSiteQuerySet(models.QuerySet):
+class CompetitionVenueQuerySet(models.QuerySet):
     def with_occupancy(self):
         return self.annotate(
             occupancy=Coalesce(
                 Subquery(
                     Team.objects.filter(
-                        confirmed_at__isnull=False, competition_site=OuterRef("pk")
+                        confirmed_at__isnull=False, competition_venue=OuterRef("pk")
                     )
-                    .values("competition_site")
+                    .values("competition_venue")
                     .annotate(count=Count("pk"))
                     .values("count")
                 ),
@@ -33,11 +33,11 @@ class CompetitionSiteQuerySet(models.QuerySet):
         )
 
 
-class CompetitionSite(models.Model):
+class CompetitionVenue(models.Model):
     category_competition = models.ForeignKey(
         "competitions.CategoryCompetition", on_delete=models.CASCADE
     )
-    site = models.ForeignKey("competitions.Site", on_delete=models.CASCADE)
+    venue = models.ForeignKey("competitions.Venue", on_delete=models.CASCADE)
     capacity = models.PositiveIntegerField(default=0)
 
     accepted_languages = ArrayField(
@@ -48,13 +48,13 @@ class CompetitionSite(models.Model):
     participants_hidden = models.BooleanField(default=False)
     email_alias = models.EmailField(null=True, blank=True)
 
-    objects = CompetitionSiteQuerySet.as_manager()
+    objects = CompetitionVenueQuerySet.as_manager()
 
     class Meta:
-        unique_together = ("category_competition", "site")
+        unique_together = ("category_competition", "venue")
 
     def __str__(self):
-        return f"{self.site.name} hosting {self.category_competition}"
+        return f"{self.venue.name} hosting {self.category_competition}"
 
     @property
     def remaining_capacity(self):

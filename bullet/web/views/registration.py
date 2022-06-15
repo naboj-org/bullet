@@ -2,7 +2,7 @@ import random
 import string
 from typing import Tuple
 
-from competitions.models import CategoryCompetition, Competition, CompetitionSite
+from competitions.models import CategoryCompetition, Competition, CompetitionVenue
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import send_mail
@@ -29,7 +29,7 @@ class RegistrationView(FormView):
 
     def get_competition_model_instances(
         self,
-    ) -> Tuple[CategoryCompetition, QuerySet[CompetitionSite]]:
+    ) -> Tuple[CategoryCompetition, QuerySet[CompetitionVenue]]:
         try:
             competition = Competition.objects.currently_running_registration().get(
                 branch=self.request.BRANCH
@@ -48,14 +48,14 @@ class RegistrationView(FormView):
                 f'{self.kwargs["category"]} category cannot compete in {competition}'
             )
 
-        competition_sites = CompetitionSite.objects.with_occupancy().filter(
+        competition_venues = CompetitionVenue.objects.with_occupancy().filter(
             category_competition=category_competition, occupancy__lt=F("capacity")
         )
 
-        if competition_sites.count() == 0:
+        if competition_venues.count() == 0:
             raise ValueError("All competition sites have reached full occupancy")
 
-        return category_competition, competition_sites
+        return category_competition, competition_venues
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -134,7 +134,7 @@ class RegistrationView(FormView):
                     "participants": participants,
                 }
             ),
-            team.competition_site.email_alias or settings.EMAIL_HOST_USER,
+            team.competition_venue.email_alias or settings.EMAIL_HOST_USER,
             [team.contact_email],
         )
         return super().form_valid(form)
@@ -149,7 +149,7 @@ class RegistrationConfirmView(TemplateView):
 
         try:
             team = Team.objects.select_related(
-                "competition_site__category_competition__competition"
+                "competition_venue__category_competition__competition"
             ).get(secret_link=secret_link)
             if team.confirmed_at is not None:
                 return redirect("team_edit", secret_link=secret_link)

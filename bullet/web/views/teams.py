@@ -1,4 +1,4 @@
-from competitions.models import CategoryCompetition, Competition, CompetitionSite
+from competitions.models import CategoryCompetition, Competition, CompetitionVenue
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
@@ -31,7 +31,7 @@ class TeamEditView(FormView):
     def get_form(self, form_class=None):
         form = super(TeamEditView, self).get_form(form_class)
         category_competition: CategoryCompetition = (
-            self.team.competition_site.category_competition
+            self.team.competition_venue.category_competition
         )
 
         form.min_num = 0
@@ -41,11 +41,11 @@ class TeamEditView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.team = (
-            Team.objects.select_related("competition_site__category_competition")
+            Team.objects.select_related("competition_venue__category_competition")
             .prefetch_related("participants")
             .get(secret_link=kwargs.pop("secret_link"))
         )
-        category_competition = self.team.competition_site.category_competition
+        category_competition = self.team.competition_venue.category_competition
         self.can_be_changed = (
             category_competition.competition.competition_start > timezone.now()
         )
@@ -67,7 +67,7 @@ class TeamList(TemplateView):
             self.request.BRANCH
         )
         ctx["sites"] = (
-            CompetitionSite.objects.filter(
+            CompetitionVenue.objects.filter(
                 category_competition__competition=competition
             )
             .order_by("site__name")

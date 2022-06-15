@@ -18,7 +18,7 @@ class TeamAdmin(admin.ModelAdmin):
     inlines = (TeamParticipantAdmin,)
     list_display = (
         "school",
-        "competition_site",
+        "competition_venue",
         "contact_email",
         "language",
         "is_reviewed",
