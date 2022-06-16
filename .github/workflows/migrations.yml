@@ -24,4 +24,4 @@ jobs:
         python -m pip install --upgrade pipenv
         pipenv install
     - name: Tests for missing migrations
-      run: pipenv run bullet/manage.py makemigrations | grep "No changes detected"
+      run: pipenv run bullet/manage.py makemigrations --check
