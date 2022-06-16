@@ -50,12 +50,26 @@ def reset(*args):
     run("docker-compose down -v")
 
 
+def update_python(*args):
+    logging.info("Removing old pipenv")
+    try:
+        run(f"{PYTHON} -m pipenv --rm")
+    except subprocess.CalledProcessError:
+        logging.info("No old pipenv")
+
+    update()
+
+
 def update(*args):
     if not os.path.exists(".env"):
         shutil.copyfile(".env.example", ".env")
 
     logging.info("Installing dependencies")
-    run(f"{PYTHON} -m pipenv install")
+    try:
+        run(f"{PYTHON} -m pipenv install")
+    except subprocess.CalledProcessError:
+        logging.info("Try installing one more time")
+        run(f"{PYTHON} -m pipenv install")
 
     logging.info("Rebuilding containers")
     run("docker-compose build")
@@ -78,6 +92,7 @@ handlers = {
     "start": (start, "Start Bullet system"),
     "reset": (reset, "Reset everything"),
     "update": (update, "Rebuild images and reset"),
+    "update_python": (update_python, "Rebuild python virtual environment"),
     "cmd": (cmd, "Run command in container"),
 }
 
