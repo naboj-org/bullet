@@ -1,4 +1,5 @@
 from competitions.branches import Branches
+from countries.models import BranchCountry
 from web.models import Menu
 
 
@@ -15,4 +16,12 @@ def menu_context(request):
 
 
 def branch_context(request):
-    return {"branch": request.BRANCH, "branches": Branches}
+    if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
+        return {}
+    return {
+        "branch": request.BRANCH,
+        "branches": [
+            Branches[i.branch]
+            for i in BranchCountry.objects.filter(country=request.COUNTRY_CODE.upper())
+        ],
+    }
