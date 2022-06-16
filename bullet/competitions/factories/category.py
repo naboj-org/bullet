@@ -12,6 +12,7 @@ class CategoryFactory(DjangoModelFactory):
 
     branch = factory.Faker("random_element", elements=Branches.choices())
     name = factory.Faker("word")
+    slug = factory.Faker("word")
 
 
 class CategoryDescriptionFactory(DjangoModelFactory):

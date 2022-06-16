@@ -11,6 +11,7 @@ urlpatterns = [
     path("country_selector/", CountrySelectView.as_view(), name="country_selector"),
 ] + country_patterns(
     path("", views.HomepageView.as_view(), name="homepage"),
+    path("", include("competitions.urls")),
     path(
         "register/<category>/",
         registration.RegistrationView.as_view(),
