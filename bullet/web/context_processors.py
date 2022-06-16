@@ -3,7 +3,7 @@ from web.models import Menu
 
 
 def menu_context(request):
-    if request.BRANCH is None:
+    if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
         return {}
     return {
         "menu": Menu.objects.filter(
