@@ -17,6 +17,7 @@ class VenueFactory(DjangoModelFactory):
 class CompetitionVenueFactory(DjangoModelFactory):
     class Meta:
         model = CompetitionVenue
+        django_get_or_create = ["category_competition", "venue"]
 
     category_competition = factory.Faker(
         "random_element", elements=CategoryCompetition.objects.all()
