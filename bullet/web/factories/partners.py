@@ -25,8 +25,8 @@ class PartnerFactory(DjangoModelFactory):
     image = RandomImage(
         color=factory.Faker("color"),
         format=factory.Faker("random_element", elements=["jpeg", "png", "bmp", "gif"]),
-        height=factory.Faker("random_number", digits=3),
-        width=factory.Faker("random_number", digits=3),
+        height=factory.Faker("random_number", digits=3, fix_len=True),
+        width=factory.Faker("random_number", digits=3, fix_len=True),
         filename=factory.SelfAttribute("..name"),
     )
 
@@ -43,7 +43,7 @@ class OrganizerFactory(DjangoModelFactory):
     image = RandomImage(
         color=factory.Faker("color"),
         format=factory.Faker("random_element", elements=["jpeg", "png", "bmp", "gif"]),
-        height=factory.Faker("random_number", digits=3),
-        width=factory.Faker("random_number", digits=3),
+        height=factory.Faker("random_number", digits=3, fix_len=True),
+        width=factory.Faker("random_number", digits=3, fix_len=True),
         filename=factory.SelfAttribute("..name"),
     )
