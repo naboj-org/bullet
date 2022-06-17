@@ -4,7 +4,7 @@ from countries.factories.generate import create_branch_countries
 from django.core.management import BaseCommand
 from django.db import transaction
 from education.factories.generate import create_education
-from web.factories.generate import create_pages
+from web.factories.generate import create_pages, create_partners
 
 
 class Command(BaseCommand):
@@ -17,3 +17,4 @@ class Command(BaseCommand):
         create_branch_countries(branch=Branches["physics"])
         create_pages(branch=Branches["physics"])
         create_competition(branch=Branches["physics"])
+        create_partners()
