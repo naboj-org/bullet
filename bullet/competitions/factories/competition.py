@@ -6,6 +6,7 @@ import factory
 import faker
 from competitions.branches import Branches
 from competitions.models import Category, CategoryCompetition, Competition
+from django.utils import timezone
 from education.models import School
 from factory.django import DjangoModelFactory
 
@@ -13,7 +14,9 @@ fake = faker.Faker()
 
 
 def make_date_after(date):
-    return fake.date_between(start_date=date)
+    return fake.date_time_between(
+        start_date=date, tzinfo=timezone.get_current_timezone()
+    )
 
 
 def make_duration():
@@ -29,8 +32,10 @@ class CompetitionFactory(DjangoModelFactory):
 
     graduation_year = factory.Faker("year")
 
-    web_start = factory.Faker("date_time")
-    registration_start = factory.Faker("date_between")
+    web_start = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
+    registration_start = factory.Faker(
+        "date_time_between", tzinfo=timezone.get_current_timezone()
+    )
     # TODO: maybe allow this to be None
     registration_second_round_start = factory.LazyAttribute(
         lambda o: make_date_after(o.registration_start)
