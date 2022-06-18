@@ -75,6 +75,7 @@ def update(*args):
     run("docker-compose build")
     reset()
     create_superuser()
+    generatedata()
 
 
 def cmd(*args):
@@ -88,11 +89,20 @@ def create_superuser(*args):
     run("docker-compose run --rm web /app/dev_setup.sh")
 
 
+def generatedata(*args):
+    logging.info("Remove uploads folder")
+    shutil.rmtree("bullet/uploads")
+    os.makedirs("bullet/uploads")
+    logging.info("generate new data")
+    run("docker-compose run --rm web python manage.py generatedata")
+
+
 handlers = {
     "start": (start, "Start Bullet system"),
     "reset": (reset, "Reset everything"),
     "update": (update, "Rebuild images and reset"),
     "update_python": (update_python, "Rebuild python virtual environment"),
+    "generatedata": (generatedata, "Generate testing data"),
     "cmd": (cmd, "Run command in container"),
 }
 
