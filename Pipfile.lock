@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3478078aa9679a53b28e334154937ce03e2fc7ddb1264658bf18a4d7d4e8e391"
+            "sha256": "4031f742fe8a9c81f73b9669e33bb477e2dc4c915db37f9eaad1a398c5dafe81"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -280,11 +280,11 @@
         },
         "geoip2": {
             "hashes": [
-                "sha256:2aed03b45f8037b9e16f02567bcf3623801d6d20689c5fc5676d7c08ed067334",
-                "sha256:b542252e87eb40adc3a2fc0f4e84b514c4c5e04ed46923a3a74d509f25f3103a"
+                "sha256:745e2d7a665072690056f9566774727da89216c7858793f89804f6945f969714",
+                "sha256:f0e80bce80b06bb38bd08bf4877d5a84e354e932095e6ccfb4d27bb598fa4f83"
             ],
             "index": "pypi",
-            "version": "==4.5.0"
+            "version": "==4.6.0"
         },
         "gunicorn": {
             "hashes": [
