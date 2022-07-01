@@ -1,6 +1,7 @@
 import factory
 from competitions.models import CompetitionVenue
 from django.conf import settings
+from django.utils import timezone
 from education.models import School
 from factory.django import DjangoModelFactory
 from users.models import Participant, Team
@@ -21,9 +22,13 @@ class TeamFactory(DjangoModelFactory):
         "random_element", elements=[x[0] for x in settings.LANGUAGES]
     )
 
-    registered_at = factory.Faker("past_datetime")
-    confirmed_at = factory.Faker("past_datetime")
-    approved_at = factory.Faker("past_datetime")
+    registered_at = factory.Faker(
+        "past_datetime", tzinfo=timezone.get_current_timezone()
+    )
+    confirmed_at = factory.Faker(
+        "past_datetime", tzinfo=timezone.get_current_timezone()
+    )
+    approved_at = factory.Faker("past_datetime", tzinfo=timezone.get_current_timezone())
 
     competition_venue = factory.Faker(
         "random_element", elements=CompetitionVenue.objects.all()
