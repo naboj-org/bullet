@@ -17,7 +17,9 @@ def menu_context(request):
 
 def branch_context(request):
     if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
-        return {}
+        return {
+            "branch": request.BRANCH,
+        }
     return {
         "branch": request.BRANCH,
         "branches": [
