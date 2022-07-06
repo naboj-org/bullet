@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "countries",
     "django_countries",
     "captcha",
+    "django_minify_html",
 ]
 
 DATABASES = {
@@ -46,6 +47,7 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
+    "django_minify_html.middleware.MinifyHtmlMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "web.middleware.AdminDomainMiddleware",
