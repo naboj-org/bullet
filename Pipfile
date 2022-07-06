@@ -20,7 +20,7 @@ django-widget-tweaks = "==1.4.12"
 geoip2 = "==4.6.0"
 django-timezone-field = "==5.0"
 tzdata = "==2022.1"
-pillow = "==9.1.1"
+pillow = "==9.2.0"
 
 [dev-packages]
 black = "==22.6.0"
