@@ -23,6 +23,7 @@ urlpatterns = [
     ),
     path("edit_team/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
     path("teams/", teams.TeamList.as_view(), name="teams"),
+    path("test/", views.test),
     path("<slug>/", page.PageView.as_view(), name="page"),
 )
 
