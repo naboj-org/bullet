@@ -7,6 +7,10 @@ from web.models import Organizer, Partner
 class BranchSpecificTemplateMixin:
     def get_template_names(self):
         previous = super().get_template_names()
+
+        if self.request.BRANCH is None:
+            return previous
+
         templates = []
         for template in previous:
             templates.append(f"{self.request.BRANCH.identifier}/{template}")
