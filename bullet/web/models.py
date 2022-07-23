@@ -71,6 +71,7 @@ class Organizer(models.Model):
 
 
 class ContentBlock(models.Model):
+    group = models.CharField(max_length=256)
     reference = models.CharField(max_length=256)
     branch = BranchField(blank=True, null=True)
     country = CountryField(blank=True, null=True)
@@ -80,8 +81,8 @@ class ContentBlock(models.Model):
     class Meta:
         constraints = [
             UniqueConstraint(
-                ["reference", "branch", "country", "language"],
-                name="ref_branch_country_lang_unique",
+                ["group", "reference", "branch", "country", "language"],
+                name="content_block__reference_unique",
             )
         ]
 
