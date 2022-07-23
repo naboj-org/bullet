@@ -4,7 +4,17 @@ from django.views.generic import TemplateView
 from web.models import Organizer, Partner
 
 
-class HomepageView(TemplateView):
+class BranchSpecificTemplateMixin:
+    def get_template_names(self):
+        previous = super().get_template_names()
+        templates = []
+        for template in previous:
+            templates.append(f"{self.request.BRANCH.identifier}/{template}")
+            templates.append(template)
+        return templates
+
+
+class HomepageView(BranchSpecificTemplateMixin, TemplateView):
     template_name = "web/homepage.html"
 
     def get_context_data(self, **kwargs):
