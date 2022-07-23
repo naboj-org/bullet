@@ -1,16 +1,11 @@
 from django.contrib import admin
-from web.models import ContentBlock, Menu, Organizer, Page, Partner, Translation
+from web.models import ContentBlock, Menu, Organizer, Page, Partner
 
 
 @admin.register(Page)
 class PageAdmin(admin.ModelAdmin):
     list_display = ["title", "branch", "language", "countries", "slug"]
     list_filter = ["branch", "language", "slug"]
-
-
-@admin.register(Translation)
-class TranslationAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(Partner)

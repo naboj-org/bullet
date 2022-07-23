@@ -2,8 +2,6 @@ from competitions.branches import Branches
 from django.conf import settings
 from django.db import models
 from django.db.models import UniqueConstraint
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django_countries.fields import CountryField
 from web.fields import BranchField, ChoiceArrayField, LanguageField
 
@@ -18,29 +16,6 @@ class Page(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Translation(models.Model):
-    reference = models.CharField(max_length=256)
-    language = LanguageField()
-    context = models.CharField(max_length=128, null=True, blank=True)
-    content = models.TextField(null=True, blank=True)
-
-    def __str__(self):
-        return (
-            f"Translation of {self.reference} in {self.language} with context"
-            f" {self.context}"
-        )
-
-    class Meta:
-        unique_together = [("reference", "language", "context")]
-
-
-@receiver(post_save, sender=Translation)
-def save_profile(sender, instance, **kwargs):
-    from web.dynamic_translations import translation_cache
-
-    translation_cache.reload()
 
 
 class Menu(models.Model):
