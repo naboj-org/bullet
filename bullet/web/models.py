@@ -87,7 +87,8 @@ class ContentBlock(models.Model):
         ]
 
     def __str__(self):
+        prefix = f"{self.group}:{self.reference} "
         if self.branch:
             branch = Branches[self.branch].short_name
-            return f"{self.reference} ({branch} {self.country.code}-{self.language})"
-        return f"{self.reference} ({self.country.code}-{self.language})"
+            return prefix + f"({branch} {self.country.code}-{self.language})"
+        return prefix + f"({self.country.code}-{self.language})"
