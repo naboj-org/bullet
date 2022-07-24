@@ -1,0 +1,41 @@
+{% extends "web/base.html" %}
+{% load bform %}
+{% load widget_tweaks %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Team Registration" %}{% endblock %}
+{% block hero %}
+<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-16 mb-4 md:mb-12">
+    {% trans "Team Registration" %}
+</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="mx-auto w-full max-w-2xl p-3 mt-10">
+        <div class="font-bold text-2xl mb-6">
+            {% trans "Category" %}:
+        </div>
+
+        <div class="text-left px-8 py-4 bg-gray-100 flex items-center rounded-md border">
+            <div class="font-bold text-xl">
+                {{ category_description.name }}
+            </div>
+            <a href="{% url 'team_register' %}" class="ml-auto shrink-0 text-primary hover:underline">
+                {% trans "Change" %}
+            </a>
+        </div>
+
+        <div class="font-bold text-2xl mb-6 mt-6">
+            {% trans "Venue" %}:
+        </div>
+
+        <input type="text" class="input mb-4" placeholder="Search venues..." name="q"
+            hx-get="{% url 'team_register_venue' %}" hx-swap="outerHTML" hx-target="#js_venue_list" hx-trigger="keyup changed delay:100ms">
+
+        <form method="POST">
+            {% csrf_token %}
+            {% include "teams/_register_venues.html" %}
+        </form>
+    </div>
+{% endblock %}

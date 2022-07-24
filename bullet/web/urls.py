@@ -13,11 +13,6 @@ urlpatterns = [
     path("", views.HomepageView.as_view(), name="homepage"),
     path("", include("competitions.urls")),
     path(
-        "register/<category>/",
-        registration.RegistrationView.as_view(),
-        name="registration",
-    ),
-    path(
         "confirm_registration/<secret_link>/",
         registration.RegistrationConfirmView.as_view(),
         name="registration_confirm",

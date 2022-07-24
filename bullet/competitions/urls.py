@@ -8,8 +8,8 @@ urlpatterns = [
         name="team_register",
     ),
     path(
-        "register/<slug:category>/",
-        register.CategorySelectView.as_view(),
-        name="team_register_category",
+        "register/venue/",
+        register.VenueSelectView.as_view(),
+        name="team_register_venue",
     ),
 ]
