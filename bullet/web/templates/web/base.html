@@ -91,6 +91,8 @@
 {% block footer %}
     <footer class="text-gray-700 text-center md:mt-16 mt-10">&copy; Naboj IT Team {% now "Y" %} Timezone: {% now "e (O)" %}</footer>
 {% endblock %}
-<script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.0"></script>
 </body>
 </html>

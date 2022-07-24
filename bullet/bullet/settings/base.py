@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "captcha",
     "django_minify_html",
     "fontawesomefree",
+    "django_htmx",
 ]
 
 DATABASES = {
@@ -60,6 +61,7 @@ MIDDLEWARE = [
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
     "django_minify_html.middleware.MinifyHtmlMiddleware",
+    "django_htmx.middleware.HtmxMiddleware",
 ]
 
 PARENT_HOST = os.environ.get("PARENT_HOST")
