@@ -22,6 +22,7 @@ django-timezone-field = "==5.0"
 tzdata = "==2022.1"
 pillow = "==9.2.0"
 django-minify-html = "==1.3.0"
+fontawesomefree = "==6.1.1"
 
 [dev-packages]
 black = "==22.6.0"

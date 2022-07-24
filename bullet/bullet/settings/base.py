@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "django_countries",
     "captcha",
     "django_minify_html",
+    "fontawesomefree",
 ]
 
 DATABASES = {
