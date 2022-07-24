@@ -47,7 +47,6 @@ INTERNAL_IPS = [
 ]
 
 MIDDLEWARE = [
-    "django_minify_html.middleware.MinifyHtmlMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "web.middleware.AdminDomainMiddleware",
@@ -59,6 +58,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
+    "django_minify_html.middleware.MinifyHtmlMiddleware",
 ]
 
 PARENT_HOST = os.environ.get("PARENT_HOST")
