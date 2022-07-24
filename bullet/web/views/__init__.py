@@ -1,10 +1,10 @@
 from competitions.models import Competition
-from django.core.mail import EmailMultiAlternatives
 from django.http import HttpResponse
-from django.template.loader import get_template
 from django.utils import timezone
 from django.views.generic import TemplateView
 from web.models import Organizer, Partner
+
+from bullet.utils.email import send_email
 
 
 class HomepageView(TemplateView):
@@ -32,11 +32,13 @@ class HomepageView(TemplateView):
         return context
 
 
-def test(self):
-    subject, from_email, to = "guten tag", "naboj@naboj.wtf", "michal.barnas@hostnow.cz"
-    text_content = "Das ist eine wichtige Nachricht"
-    html_content = get_template("mail/test.html").render()
-    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-    msg.attach_alternative(html_content, "text/html")
-    msg.send()
+def test(request):
+    send_email(
+        request.BRANCH,
+        "adam@zahradnik.xyz",
+        "Registrácia tímu",
+        "mail/messages/registration.html",
+        "mail/messages/registration.txt",
+        {},
+    )
     return HttpResponse("417")
