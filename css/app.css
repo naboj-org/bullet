@@ -7,7 +7,7 @@
     --primary-dark: #21a43e;
     --gradient-light: #fafff8;
     --gradient-dark: #d6ffcb;
-    /* todo: add primary-light var based on junior */
+    --primary-light: #f0ffee;
 }
 
 .branch-physics {
@@ -15,7 +15,7 @@
     --primary-dark: #b77005;
     --gradient-light: #fffcf8;
     --gradient-dark: #ffeacb;
-    /* todo: add primary-light var based on junior */
+    --primary-light: #fff6ee;
 }
 
 .branch-junior {
@@ -31,7 +31,7 @@
     --primary-dark: #6529c4;
     --gradient-light: #faf8ff;
     --gradient-dark: #dccbff;
-    /* todo: add primary-light var based on junior */
+    --primary-light: #f6eeff;
 }
 
 .bg-hero {
