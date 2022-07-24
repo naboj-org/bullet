@@ -1,0 +1,189 @@
+{% extends "web/base.html" %}
+{% load content_blocks %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Homepage{% endblock %}
+{% block heroclass %}{% endblock %}
+{% block hero %}
+    <div class="flex items-center">
+        <div class="lg:w-2/5 mt-8 lg:mt-24 mb-4 md:mb-8">
+            <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Compete with
+                <span class="text-primary">pupils</span> across Europe</p>
+            <a href="#" class="hero-btn">Registration</a>
+
+            <p class="font-light mt-12 md:mt-16">Registration ends soon. REGISTER NOW!</p>
+        </div>
+        <div class="w-1/2 ml-auto text-center hidden lg:block">
+            <img src="{% static 'img/junior/home/hall.jpg' %}" alt="Pupils competing" class="shadow-md rounded-lg mb-2">
+            <p>(note: TODO)</p>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% load_blocks "home" %}
+    <div class="container mx-auto px-2">
+
+        <div class="my-16 md:my-32">
+            <h2 class="font-bold text-5xl mb-6 md:mb-16 text-center">What is <span class="text-primary">Náboj</span>?
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 mx-auto md:max-w-4xl gap-8">
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
+                    <div>
+                        <h3 class="font-bold text-xl">About Náboj</h3>
+                        <p class="text-lg">Náboj is a team competition in math and physics, 4 team members. This year the competition
+                            takes
+                            place on 25.10.2022 10:00-12:00</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
+                    <div>
+                        <h3 class="font-bold text-xl">Competing sites</h3>
+                        <p class="text-lg">International competition held in Croatia (online), Czech republic, France (online),
+                            Netherlands (online), Poland and Slovakia.</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
+                    <div>
+                        <h3 class="font-bold text-xl">Problem set</h3>
+                        <p class="text-lg">Teams have 2 hours to solve as many problems as possible. We do not require the participants
+                            to
+                            remember the formulas, they will receive a cheatsheet.</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
+                    <div>
+                        <h3 class="font-bold text-xl">Rewards</h3>
+                        <p class="text-lg">Successful contestants receive fabulous prices and endless fame.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex content-between items-center gap-6 lg:gap-16 my-12 md:my-32 flex-col lg:flex-row text-lg text-gray-800">
+            <img src="{% static "img/junior/home/competition.jpg" %}" class="lg:w-3/5 shrink-0 rounded-md shadow-md">
+            <div class="grow">
+                <h2 class="font-bold text-3xl md:text-4xl mb-6">
+                    <span class="text-primary">Knowledge-based competition</span>
+                    with enormous amount of fun
+                </h2>
+                Naboj Junior is an international math & physics competition designed for teams of four pupils in 4th
+                class that represent their school. The competition lasts 120 minutes during which the teams try to solve
+                as many problems as possible. At the beginning of the competition each team receives six problems. They
+                receive a new one as soon as the team correctly solves any of the problems. The team that solves most
+                problems correctly in the given time limit takes the victory. The best teams in each region receive
+                certificates and material prizes.
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-solid py-12 md:py-32">
+        <div class="container text-lg text-gray-800 mx-auto px-2 flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col-reverse lg:flex-row">
+            <div class="grow">
+                <h2 class="font-bold text-3xl md:text-4xl mb-6">
+                    <span class="text-primary">Various problems</span>
+                    that fit everyone
+                </h2>
+                <p class="mb-2">The difficulty of the problems is adjusted to the knowledge of pupils in fourth class.
+                    The problems are
+                    in ascending order of their perceived difficulty. Thanks to this, the competition is equally
+                    appropriate
+                    for students who are inexperienced in mathematical competitions and also those, who have already
+                    succeeded in Mathematical Olympiad.</p>
+                <p class="mb-2">Problems in Naboj differ considerably from the routine school exercises which usually
+                    require only
+                    direct application of standard methods. We are trying to include problems that require a certain
+                    amount
+                    of inventiveness and ingenuity.</p>
+                <p>Success in the competition depends not only on the individual abilities of the team members but also
+                    on
+                    their efficient cooperation. Apart from enhancing imagination and logical reasoning, our goal is to
+                    attract people to the inexhaustible beauty hidden in mathematics and physics.</p>
+
+            </div>
+            <img src="{% static "img/junior/home/problem-set.jpg" %}" class="md:w-3/5 shrink-0 rounded-md shadow-md">
+        </div>
+
+    </div>
+
+    <div class="container mx-auto px-2">
+
+        <div class="flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col lg:flex-row text-lg text-gray-800">
+            <img src="{% static 'img/junior/home/europe.svg' %}" class="md:w-2/5 shrink-0 rounded-md shadow-md">
+            <div class="grow">
+                <h2 class="font-bold text-3xl md:text-4xl mb-6">
+                    Compare yourself with students
+                    <span class="text-primary">from foreign countries</span>
+                </h2>
+                <p class="mb-2">Naboj Junior will be held in hybrid format for the first time. Some of competing countries will held the
+                competition online, therefore the pupils will be able to compete only via our online system. Other
+                countries will held the competition in the original on-site format, where teams register for the
+                competition in the closest local competing site. These local sites are ensured by high school students
+                (volunteers). The problem set is the same for each competing site.</p>
+
+                <p class="mb-2">Altogether countries participating in Naboj Junior are: Croatia, Czech republic, France, Netherlands,
+                Poland and Slovakia. The competition is evaluated in each country separately, but pupils can compare
+                themselves on international level in final results.</p>
+            </div>
+        </div>
+    </div>
+
+
+    {% if open_competition %}
+        <div class="container mx-auto px-2">
+            <div class="my-10 md:my-24 text-center">
+                <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
+
+                <div class="mx-auto max-w-4xl">
+                    <p>Registration closes in</p>
+                    {# TODO more human readable display & actual countdown in JS #}
+                    <p class="text-xl mb-10">{{ registration_open_for }}</p>
+
+                    {% for category_comp in open_competition.categorycompetition_set.all %}
+                        <a href="{% url 'registration' category=category_comp.category %}" class="hero-btn">Register
+                            ({{ category_comp.get_category_display }})</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    {#    {% trans "dynamic:intro" context branch.label %}#}
+
+{% endblock %}
+
+{% block footer %}
+    <footer class="bg-primary-lighter md:mt-48 mt-32 md:py-24 py-12">
+        <div class="container mx-auto px-2">
+            <h2 class="font-bold text-primary text-2xl mb-8">Our Partners</h2>
+            <div class="grid grid-cols-2 md:grid-cols-8 gap-6">
+                <!-- The first one is representative -->
+                {% for item in partners %}
+                    <a href="{{ item.url }}"
+                       class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
+                        <img src="{{ item.image.url }}" class="max-w-full max-h-full" alt="{{ item.name }}">
+                    </a>
+                {% endfor %}
+            </div>
+
+            <h2 class="font-bold text-primary text-2xl mb-8 md:mt-16 mt-10">Organizers</h2>
+            <div class="grid grid-cols-8 gap-6">
+                {% for item in organizers %}
+                    <a href="{{ item.url }}"
+                       class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
+                        <img src="{{ item.image.url }}" class="max-w-full max-h-full" alt="{{ item.name }}">
+                    </a>
+                {% endfor %}
+            </div>
+
+            <div class="text-gray-700 text-center md:mt-16 mt-10">&copy; Naboj IT Team {% now "Y" %}
+                Timezone: {% now "e (O)" %}</div>
+        </div>
+    </footer>
+{% endblock %}

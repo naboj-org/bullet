@@ -8,7 +8,7 @@ DEBUG = True
 PRODUCTION = False
 
 hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1"]
+# INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1"]
 
 MIDDLEWARE.append(
     "debug_toolbar.middleware.DebugToolbarMiddleware",
