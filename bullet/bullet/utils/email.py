@@ -5,7 +5,7 @@ from django.template.loader import get_template
 
 def send_email(branch, to, subject, template, text_template, context, reply_to=None):
     context["branch"] = branch
-
+    context["base_url"] = settings.PARENT_HOST
     context["subject"] = subject
     html_content = get_template(template).render(context)
     text_content = get_template(text_template).render(context)
