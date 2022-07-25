@@ -1,0 +1,12 @@
+{% extends "mail/base.html" %}
+{% load i18n %}
+
+{% block body %}
+    <p>{% trans 'Hi there,' %}</p>
+    <p>Sometimes you just want to send a simple HTML email with a simple design and
+        clear call to action. This is it.</p>
+    {% include 'mail/btn.html' with text='Aktivuj' href='https://example.com/' %}
+    <p>This is a really simple email template. Its sole purpose is to get the
+        recipient to click the button with no distractions.</p>
+    <p>Good luck! Hope it works.</p>
+{% endblock %}
