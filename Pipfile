@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-dj-database-url = "==0.5.0"
+dj-database-url = "==1.0.0"
 django-address = "==0.2.8"
 django-debug-toolbar = "==3.5.0"
 django-phonenumber-field = "==6.3.0"
