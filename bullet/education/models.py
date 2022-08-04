@@ -1,5 +1,6 @@
 from address.models import AddressField
 from django.db import models
+from django_countries.fields import CountryField
 
 
 class SchoolType(models.Model):
@@ -20,7 +21,9 @@ class Grade(models.Model):
         )
         unique_together = ("school_type", "order")
 
-    school_type = models.ForeignKey(SchoolType, on_delete=models.CASCADE)
+    school_type = models.ForeignKey(
+        SchoolType, on_delete=models.CASCADE, related_name="grades"
+    )
     name = models.CharField(max_length=64)
     order = models.IntegerField()
 
@@ -39,6 +42,7 @@ class Education(models.Model):
 class School(models.Model):
     name = models.CharField(max_length=256)
     types = models.ManyToManyField(SchoolType)
+    country = CountryField()
 
     address = AddressField()
     izo = models.CharField(max_length=128, unique=True)

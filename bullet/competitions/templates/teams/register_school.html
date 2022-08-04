@@ -30,12 +30,25 @@
             {% trans "Venue" %}:
         </div>
 
-        <input type="text" class="input mb-4" placeholder="Search venues..." name="q"
-            hx-get="{% url 'register_venue' %}" hx-swap="outerHTML" hx-target="#js_venue_list" hx-trigger="keyup changed delay:100ms">
+        <div class="text-left px-8 py-4 bg-gray-100 flex items-center rounded-md border">
+            <div class="font-bold text-xl">
+                {{ venue.name }}
+            </div>
+            <a href="{% url 'register_venue' %}" class="ml-auto shrink-0 text-primary hover:underline">
+                {% trans "Change" %}
+            </a>
+        </div>
+
+        <div class="font-bold text-2xl mb-6 mt-6">
+            {% trans "School" %}:
+        </div>
+
+        <input type="text" class="input mb-4" placeholder="Search schools..." name="q"
+            hx-get="{% url 'register_school' %}" hx-swap="outerHTML" hx-target="#js_school_list" hx-trigger="keyup changed delay:100ms">
 
         <form method="POST">
             {% csrf_token %}
-            {% include "teams/_register_venues.html" %}
+            {% include "teams/_register_school.html" %}
         </form>
     </div>
 {% endblock %}

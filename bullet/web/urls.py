@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path
 from web import views
-from web.views import page, registration, teams
+from web.views import page
 
 urlpatterns = [
     path("", CountryDetectView.as_view()),
@@ -12,13 +12,13 @@ urlpatterns = [
 ] + country_patterns(
     path("", views.HomepageView.as_view(), name="homepage"),
     path("", include("competitions.urls")),
-    path(
-        "confirm_registration/<secret_link>/",
-        registration.RegistrationConfirmView.as_view(),
-        name="registration_confirm",
-    ),
-    path("edit_team/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
-    path("teams/", teams.TeamList.as_view(), name="teams"),
+    # path(
+    #     "confirm_registration/<secret_link>/",
+    #     registration.RegistrationConfirmView.as_view(),
+    #     name="registration_confirm",
+    # ),
+    # path("edit_team/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
+    # path("teams/", teams.TeamList.as_view(), name="teams"),
     path("test/", views.test),
     path("<slug>/", page.PageView.as_view(), name="page"),
 )

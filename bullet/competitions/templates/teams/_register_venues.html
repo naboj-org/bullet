@@ -2,9 +2,9 @@
     {% for venue in venues %}
     <button type="submit" name="venue" value="{{ venue.id }}" class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md">
         <div class="font-bold text-xl">
-            {{ venue.name }}
+            {{ venue.venue.name }}
         </div>
-        <div>{{ venue.address }}</div>
+        <div>{{ venue.venue.address }}</div>
     </button>
     {% endfor %}
 </div>

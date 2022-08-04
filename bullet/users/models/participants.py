@@ -1,3 +1,6 @@
+import secrets
+import string
+
 from django.conf import settings
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
@@ -9,7 +12,10 @@ class Team(models.Model):
     contact_phone = PhoneNumberField(null=True, blank=True)
     secret_link = models.CharField(max_length=48, unique=True)
 
-    school = models.ForeignKey("education.School", on_delete=models.CASCADE)
+    school = models.ForeignKey(
+        "education.School", on_delete=models.CASCADE, blank=True, null=True
+    )
+    name = models.CharField(max_length=128, blank=True, null=True)
     language = models.TextField(choices=settings.LANGUAGES)
 
     registered_at = models.DateTimeField(auto_now_add=True)
@@ -20,9 +26,7 @@ class Team(models.Model):
         "competitions.CompetitionVenue", on_delete=models.CASCADE
     )
     number = models.IntegerField(null=True, blank=True)
-    in_school_symbol = models.CharField(max_length=1, null=True, blank=True)
-
-    is_official = models.BooleanField(default=True)
+    in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
     is_reviewed = models.BooleanField(default=False)
 
@@ -35,6 +39,20 @@ class Team(models.Model):
     def __str__(self):
         return f"{self.school} team in {self.competition_venue}"
 
+    @property
+    def display_name(self):
+        if self.name:
+            return self.name
+        return str(self.school)
+
+    def save(self, *args, **kwargs):
+        if not self.secret_link:
+            self.secret_link = "".join(
+                secrets.choice(string.ascii_lowercase + string.digits)
+                for i in range(48)
+            )
+        super().save(*args, **kwargs)
+
 
 class Participant(models.Model):
     team = models.ForeignKey(
@@ -42,8 +60,14 @@ class Participant(models.Model):
     )
 
     full_name = models.CharField(max_length=256)
-    graduation_year = models.IntegerField()
     birth_year = models.PositiveIntegerField()
+    grade = models.ForeignKey(
+        "education.Grade",
+        on_delete=models.CASCADE,
+        related_name="+",
+        blank=True,
+        null=True,
+    )
 
     def __str__(self):
-        return f"{self.full_name} ({self.graduation_year})"
+        return self.full_name
