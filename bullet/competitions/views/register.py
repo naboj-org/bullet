@@ -107,7 +107,7 @@ class RegistrationMixin:
             request.session["register_form"] = {}
 
         try:
-            self.competition = self._load_competition()
+            self.competition = self._load_competition(request)
         except RegistrationError as e:
             messages.add_message(request, messages.ERROR, e.messsage)
             return reverse("homepage")
