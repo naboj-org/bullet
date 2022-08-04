@@ -41,8 +41,8 @@ class RegistrationStep(IntEnum):
 class RegistrationMixin:
     registration_step = RegistrationStep.NONE
 
-    def _load_competition(self) -> Competition:
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
+    def _load_competition(self, request) -> Competition:
+        competition = Competition.objects.get_current_competition(request.BRANCH)
 
         if competition is None:
             # Not translated as this should not happen in production.
@@ -54,12 +54,12 @@ class RegistrationMixin:
 
         return competition
 
-    def _load_category(self) -> CategoryCompetition:
-        if "category_competition" not in self.request.session["register_form"]:
+    def _load_category(self, request) -> CategoryCompetition:
+        if "category_competition" not in request.session["register_form"]:
             raise RegistrationError()
 
         cc = CategoryCompetition.objects.filter(
-            id=self.request.session["register_form"]["category_competition"]
+            id=request.session["register_form"]["category_competition"]
         ).first()
 
         if not cc:
@@ -67,12 +67,12 @@ class RegistrationMixin:
 
         return cc
 
-    def _load_venue(self) -> tuple[CompetitionVenue, Venue]:
-        if "venue" not in self.request.session["register_form"]:
+    def _load_venue(self, request) -> tuple[CompetitionVenue, Venue]:
+        if "venue" not in request.session["register_form"]:
             raise RegistrationError()
 
         competition_venue = CompetitionVenue.objects.filter(
-            id=self.request.session["register_form"]["venue"],
+            id=request.session["register_form"]["venue"],
         ).first()
 
         if not competition_venue:
@@ -82,12 +82,12 @@ class RegistrationMixin:
 
         return competition_venue, competition_venue.venue
 
-    def _load_school(self) -> School:
-        if "school" not in self.request.session["register_form"]:
+    def _load_school(self, request) -> School:
+        if "school" not in request.session["register_form"]:
             raise RegistrationError()
 
         school = School.objects.filter(
-            id=self.request.session["register_form"]["school"],
+            id=request.session["register_form"]["school"],
         ).first()
 
         if school is None:
@@ -95,7 +95,7 @@ class RegistrationMixin:
 
         return school
 
-    def prepare_models(self) -> str | None:
+    def prepare_models(self, request) -> str | None:
         """
         Loads all required model objects.
 
@@ -104,22 +104,22 @@ class RegistrationMixin:
         if hasattr(self, "competition"):
             return None
 
-        if "register_form" not in self.request.session:
-            self.request.session["register_form"] = {}
+        if "register_form" not in request.session:
+            request.session["register_form"] = {}
 
         try:
             self.competition = self._load_competition()
         except RegistrationError as e:
-            messages.add_message(self.request, messages.ERROR, e.messsage)
+            messages.add_message(request, messages.ERROR, e.messsage)
             return reverse("homepage")
 
         try:
             if self.registration_step >= RegistrationStep.CATEGORY:
-                self.category_competition = self._load_category()
+                self.category_competition = self._load_category(request)
             if self.registration_step >= RegistrationStep.VENUE:
-                self.competition_venue, self.venue = self._load_venue()
+                self.competition_venue, self.venue = self._load_venue(request)
             if self.registration_step >= RegistrationStep.SCHOOL:
-                self.school = self._load_school()
+                self.school = self._load_school(request)
         except RegistrationError:
             # We ignore error message here to avoid user confusion.
             return reverse("register")
@@ -146,7 +146,7 @@ class RegistrationMixin:
         return ctx
 
     def dispatch(self, request, *args, **kwargs):
-        red = self.prepare_models()
+        red = self.prepare_models(request)
         if red:
             return HttpResponseRedirect(red)
         return super().dispatch(request, *args, **kwargs)
@@ -157,7 +157,7 @@ class CategorySelectView(RegistrationMixin, FormView):
     form_class = CategorySelectForm
 
     def dispatch(self, request, *args, **kwargs):
-        red = self.prepare_models()
+        red = self.prepare_models(request)
         if red:
             return HttpResponseRedirect(red)
 
@@ -199,7 +199,7 @@ class VenueSelectView(RegistrationMixin, FormView):
     registration_step = RegistrationStep.CATEGORY
 
     def dispatch(self, request, *args, **kwargs):
-        red = self.prepare_models()
+        red = self.prepare_models(request)
         if red:
             return HttpResponseRedirect(red)
 
