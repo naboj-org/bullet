@@ -7,6 +7,7 @@
     --primary-dark: #21a43e;
     --gradient-light: #fafff8;
     --gradient-dark: #d6ffcb;
+    --primary-light: #f0ffee;
 }
 
 .branch-physics {
@@ -14,6 +15,7 @@
     --primary-dark: #b77005;
     --gradient-light: #fffcf8;
     --gradient-dark: #ffeacb;
+    --primary-light: #fff6ee;
 }
 
 .branch-junior {
@@ -21,6 +23,7 @@
     --primary-dark: #9d231c;
     --gradient-light: #FFF8F8;
     --gradient-dark: #FFCBCB;
+    --primary-light: #ffeeee;
 }
 
 .branch-chemistry {
@@ -28,6 +31,7 @@
     --primary-dark: #6529c4;
     --gradient-light: #faf8ff;
     --gradient-dark: #dccbff;
+    --primary-light: #f6eeff;
 }
 
 .bg-hero {
@@ -48,15 +52,11 @@
         background-image: url('/static/img/physics/hero.png');
     }
     .branch-junior .bg-hero-image {
-        background-image: url('/static/img/junior/hero.png');
+        background-image: url('/static/img/junior/home/hall.jpg');
     }
     .branch-chemistry .bg-hero-image {
         background-image: url('/static/img/chemistry/hero.png');
     }
-}
-
-.bg-gradient {
-    background: linear-gradient(180deg, var(--gradient-dark) 0%, #fff 100%);
 }
 
 .input {
