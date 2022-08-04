@@ -9,7 +9,6 @@ from competitions.forms.registration import (
 )
 from competitions.models import (
     CategoryCompetition,
-    CategoryDescription,
     Competition,
     CompetitionVenue,
     Venue,
@@ -130,11 +129,6 @@ class RegistrationMixin:
 
         if self.registration_step >= RegistrationStep.CATEGORY:
             ctx["category_competition"] = self.category_competition
-            ctx["category_description"] = (
-                CategoryDescription.objects.for_request(self.request)
-                .filter(category_id=self.category_competition.category_id)
-                .first()
-            )
 
         if self.registration_step >= RegistrationStep.VENUE:
             ctx["venue"] = self.venue

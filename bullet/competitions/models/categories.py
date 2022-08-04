@@ -1,8 +1,7 @@
 from competitions.branches import Branches
 from django.db import models
 from django.db.models import UniqueConstraint
-from django_countries.fields import CountryField
-from web.fields import BranchField, ChoiceArrayField, LanguageField
+from web.fields import BranchField
 
 
 class Category(models.Model):
@@ -18,27 +17,3 @@ class Category(models.Model):
         constraints = [
             UniqueConstraint("branch", "slug", name="category__branch_slug"),
         ]
-
-
-class CategoryDescriptionQuerySet(models.QuerySet):
-    def for_country(self, country, language):
-        return self.filter(
-            countries__contains=[country],
-            language=language,
-        )
-
-    def for_request(self, request):
-        return self.for_country(request.COUNTRY_CODE.upper(), request.LANGUAGE_CODE)
-
-
-class CategoryDescription(models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    name = models.CharField(max_length=64)
-    description = models.TextField(blank=True)
-    language = LanguageField()
-    countries = ChoiceArrayField(CountryField(blank=True, null=True))
-
-    objects = CategoryDescriptionQuerySet.as_manager()
-
-    def __str__(self):
-        return f"{self.name} ({self.language})"

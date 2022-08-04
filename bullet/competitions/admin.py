@@ -1,7 +1,6 @@
 from competitions.models import (
     Category,
     CategoryCompetition,
-    CategoryDescription,
     Competition,
     CompetitionProblem,
     CompetitionVenue,
@@ -98,9 +97,3 @@ class WildcardAdmin(admin.ModelAdmin):
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_filter = ["branch"]
-
-
-@admin.register(CategoryDescription)
-class CategoryDescriptionAdmin(admin.ModelAdmin):
-    list_filter = ["category__branch"]
-    list_display = ["category", "name", "language", "countries"]
