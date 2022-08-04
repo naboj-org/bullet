@@ -1,7 +1,7 @@
 {% load i18n %}
-<div class="grow w-full flex flex-col gap-3" id="js_school_list">
+<div id="js_school_list">
     {% for school in schools %}
-    <button type="submit" name="school" value="{{ school.id }}" class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md">
+    <button type="submit" name="school" value="{{ school.id }}" class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md w-full mb-3">
         <div class="font-bold text-xl">
             {{ school.name }}
         </div>
