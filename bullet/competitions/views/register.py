@@ -153,7 +153,7 @@ class RegistrationMixin:
 
 
 class CategorySelectView(RegistrationMixin, FormView):
-    template_name = "teams/register_category.html"
+    template_name = "register/category.html"
     form_class = CategorySelectForm
 
     def dispatch(self, request, *args, **kwargs):
@@ -182,21 +182,7 @@ class CategorySelectView(RegistrationMixin, FormView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        descriptions = {
-            d.category_id: d
-            for d in CategoryDescription.objects.for_request(self.request).filter(
-                category_id__in=[c.category_id for c in self.categories]
-            )
-        }
-        ctx["categories"] = [
-            {
-                "category": c,
-                "description": descriptions[c.category_id]
-                if c.category_id in descriptions
-                else None,
-            }
-            for c in self.categories
-        ]
+        ctx["categories"] = self.categories
         return ctx
 
     def form_valid(self, form):
@@ -248,8 +234,8 @@ class VenueSelectView(RegistrationMixin, FormView):
 
     def get_template_names(self):
         if self.request.htmx:
-            return ["teams/_register_venues.html"]
-        return ["teams/register_venue.html"]
+            return ["register/_venue.html"]
+        return ["register/venue.html"]
 
 
 class SchoolSelectView(RegistrationMixin, FormView):
@@ -281,12 +267,12 @@ class SchoolSelectView(RegistrationMixin, FormView):
 
     def get_template_names(self):
         if self.request.htmx:
-            return ["teams/_register_school.html"]
-        return ["teams/register_school.html"]
+            return ["register/_school.html"]
+        return ["register/school.html"]
 
 
 class TeamDetailsView(RegistrationMixin, FormView):
-    template_name = "teams/register_details.html"
+    template_name = "register/details.html"
     form_class = RegistrationForm
     registration_step = RegistrationStep.SCHOOL
 
@@ -347,4 +333,4 @@ class TeamDetailsView(RegistrationMixin, FormView):
 
 
 class ThanksView(RegistrationMixin, TemplateView):
-    template_name = "teams/register_thanks.html"
+    template_name = "register/thanks.html"

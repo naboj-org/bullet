@@ -1,0 +1,17 @@
+{% load i18n %}
+
+<h2 class="font-bold text-2xl my-6">{% trans "School" %}</h2>
+
+<div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
+    <div>
+        <div class="font-bold text-xl">
+            {{ school.name }}
+        </div>
+        <p>
+            {{ school.address }}
+        </p>
+    </div>
+    <a href="{% url 'register_school' %}" class="ml-auto shrink-0 text-primary hover:underline">
+        {% trans "Change" %}
+    </a>
+</div>
