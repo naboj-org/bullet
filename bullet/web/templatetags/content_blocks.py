@@ -15,13 +15,16 @@ def load_blocks(context, *groups):
     req = context.request
     blocks = ContentBlock.objects.filter(
         (Q(branch__isnull=True) | Q(branch=req.BRANCH.id))
-        & (Q(country__isnull=True) | Q(country=req.COUNTRY_CODE))
+        & (Q(country__isnull=True) | Q(country=req.COUNTRY_CODE.upper()))
         & Q(language=req.LANGUAGE_CODE)
         & Q(group__in=groups)
     )
 
     context["__blocks"].update(
-        {(b.group, b.branch, b.country.code, b.reference): b.content for b in blocks}
+        {
+            (b.group, b.branch, b.country.code.lower(), b.reference): b.content
+            for b in blocks
+        }
     )
     context["__blocks_loaded"].update(groups)
     return ""
