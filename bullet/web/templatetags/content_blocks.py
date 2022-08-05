@@ -12,6 +12,12 @@ def load_blocks(context, *groups):
         context["__blocks"] = {}
         context["__blocks_loaded"] = set()
 
+    groups = set(groups)
+    groups.difference_update(context["__blocks_loaded"])
+
+    if not len(groups):
+        return ""
+
     req = context.request
     blocks = ContentBlock.objects.filter(
         (Q(branch__isnull=True) | Q(branch=req.BRANCH.id))
