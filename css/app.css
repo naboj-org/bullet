@@ -90,3 +90,11 @@
 .error {
     @apply branch-junior;
 }
+
+.cb-missing {
+    @apply bg-red-500 text-white;
+}
+
+.cb-edit {
+    @apply bg-yellow-400 bg-opacity-50 hover:bg-opacity-100 transition-colors;
+}
