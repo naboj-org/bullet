@@ -49,8 +49,11 @@ def content_block(context, combined_ref):
 
     for key in keys:
         if key in context["__blocks"]:
-            return mark_safe(context["__blocks"][key])
+            c = context["__blocks"][key]
+            if request.GET.get("showblocks", 0):  # TODO: limit to admin users
+                return mark_safe(
+                    f"<a href='#' class='cb-edit' title='{group}:{ref}'>{c}</a>"
+                )
+            return mark_safe(c)
 
-    return mark_safe(
-        f"<span style='background:red;color:white'>Missing '{group}:{ref}'</span>"
-    )
+    return mark_safe(f"<span class='cb-missing'>Missing '{group}:{ref}'</span>")
