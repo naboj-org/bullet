@@ -48,4 +48,6 @@ def content_block(context, combined_ref):
         if key in context["__blocks"]:
             return mark_safe(context["__blocks"][key])
 
-    return f"!!! MISSING CONTENT BLOCK '{group}:{ref}' !!!"
+    return mark_safe(
+        f"<span style='background:red;color:white'>Missing '{group}:{ref}'</span>"
+    )
