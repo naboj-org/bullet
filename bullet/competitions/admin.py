@@ -1,5 +1,4 @@
 from competitions.models import (
-    Category,
     CategoryCompetition,
     Competition,
     CompetitionProblem,
@@ -40,7 +39,7 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
     inlines = (CompetitionVenueInlineAdmin,)
     list_display = (
         "competition",
-        "category",
+        "identifier",
         "problems_per_team",
         "max_teams_per_school",
         "max_members_per_team",
@@ -92,8 +91,3 @@ class SolutionSubmitLogAdmin(admin.ModelAdmin):
 @admin.register(Wildcard)
 class WildcardAdmin(admin.ModelAdmin):
     pass
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_filter = ["branch"]

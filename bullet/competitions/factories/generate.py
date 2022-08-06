@@ -1,6 +1,5 @@
 import random
 
-from competitions.factories.category import CategoryFactory
 from competitions.factories.competition import (
     CategoryCompetitionFactory,
     CompetitionFactory,
@@ -22,7 +21,6 @@ def create_competition(branch=None) -> Competition:
     Helper function to generate a full competition with everything.
     """
     competition = CompetitionFactory(branch=branch)
-    CategoryFactory.create_batch(3, branch=branch)
     CategoryCompetitionFactory.create_batch(2, competition=competition)
     competition_venues = CompetitionVenueFactory.create_batch(5)
 

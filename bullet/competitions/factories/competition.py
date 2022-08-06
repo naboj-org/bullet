@@ -5,7 +5,7 @@ import datetime
 import factory
 import faker
 from competitions.branches import Branches
-from competitions.models import Category, CategoryCompetition, Competition
+from competitions.models import CategoryCompetition, Competition
 from django.utils import timezone
 from education.models import School
 from factory.django import DjangoModelFactory
@@ -55,10 +55,11 @@ class CompetitionFactory(DjangoModelFactory):
 class CategoryCompetitionFactory(DjangoModelFactory):
     class Meta:
         model = CategoryCompetition
-        django_get_or_create = ["competition", "category"]
+        django_get_or_create = ["competition", "identifier"]
 
     competition = factory.Faker("random_element", elements=Competition.objects.all())
-    category = factory.Faker("random_element", elements=Category.objects.all())
+    identifier = factory.Faker("slug")
+    order = factory.Faker("pyint")
 
     problems_per_team = factory.Faker("pyint", min_value=1, max_value=60)
     max_teams_per_school = factory.Faker("pyint", max_value=100)
