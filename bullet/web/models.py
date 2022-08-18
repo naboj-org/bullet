@@ -56,7 +56,7 @@ class ContentBlock(models.Model):
     class Meta:
         constraints = [
             UniqueConstraint(
-                ["group", "reference", "branch", "country", "language"],
+                fields=("group", "reference", "branch", "country", "language"),
                 name="content_block__reference_unique",
             )
         ]

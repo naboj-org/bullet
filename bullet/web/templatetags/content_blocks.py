@@ -12,16 +12,25 @@ def load_blocks(context, *groups):
         context["__blocks"] = {}
         context["__blocks_loaded"] = set()
 
+    groups = set(groups)
+    groups.difference_update(context["__blocks_loaded"])
+
+    if not len(groups):
+        return ""
+
     req = context.request
     blocks = ContentBlock.objects.filter(
         (Q(branch__isnull=True) | Q(branch=req.BRANCH.id))
-        & (Q(country__isnull=True) | Q(country=req.COUNTRY_CODE))
+        & (Q(country__isnull=True) | Q(country=req.COUNTRY_CODE.upper()))
         & Q(language=req.LANGUAGE_CODE)
         & Q(group__in=groups)
     )
 
     context["__blocks"].update(
-        {(b.group, b.branch, b.country.code, b.reference): b.content for b in blocks}
+        {
+            (b.group, b.branch, b.country.code.lower(), b.reference): b.content
+            for b in blocks
+        }
     )
     context["__blocks_loaded"].update(groups)
     return ""
@@ -46,6 +55,11 @@ def content_block(context, combined_ref):
 
     for key in keys:
         if key in context["__blocks"]:
-            return mark_safe(context["__blocks"][key])
+            c = context["__blocks"][key]
+            if request.GET.get("showblocks", 0):  # TODO: limit to admin users
+                return mark_safe(
+                    f"<a href='#' class='cb-edit' title='{group}:{ref}'>{c}</a>"
+                )
+            return mark_safe(c)
 
-    return f"!!! MISSING CONTENT BLOCK '{group}:{ref}' !!!"
+    return mark_safe(f"<span class='cb-missing'>Missing '{group}:{ref}'</span>")
