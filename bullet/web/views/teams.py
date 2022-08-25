@@ -1,16 +1,19 @@
+from competitions.forms.registration import ParticipantForm
 from competitions.models import CategoryCompetition, Competition, CompetitionVenue
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.forms import formset_factory
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import FormView, TemplateView
 from users.models import Team
-from web.forms import ParticipantsFormSet
 
 
 class TeamEditView(FormView):
     template_name = "web/team_edit.html"
-    form_class = ParticipantsFormSet
+
+    def get_form_class(self):
+        return formset_factory(ParticipantForm, validate_max=True)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

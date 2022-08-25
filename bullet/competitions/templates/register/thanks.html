@@ -1,0 +1,21 @@
+{% extends "web/base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Team registration" %}{% endblock %}
+
+{% block content %}
+    <div class="mx-auto w-full max-w-4xl p-3 mt-10 text-center">
+        <div class="w-28 h-28 flex items-center justify-center rounded-full bg-green-600 text-white mx-auto mb-8 text-5xl" >
+            <i class="fa-solid fa-check" aria-hidden="true"></i>
+        </div>
+
+        <h2 class="font-bold text-4xl mb-6">{% trans "Team successfully registered" %}</h2>
+
+        <p class="prose mx-auto mb-10">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, alias aliquam culpa delectus distinctio eius enim eos et facere fuga ipsum iste itaque officia quas rem repellat sit tempore voluptas?
+        </p>
+
+        <p><a href="{% url "register" %}" class="btn inline-block">{% trans "Register another team" %}</a></p>
+        <p class="mt-4"><a href="{% url "homepage" %}" class="text-primary hover:underline">{% trans "Back to the homepage" %}</a></p>
+    </div>
+{% endblock %}

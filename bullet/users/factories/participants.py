@@ -2,7 +2,7 @@ import factory
 from competitions.models import CompetitionVenue
 from django.conf import settings
 from django.utils import timezone
-from education.models import School
+from education.models import Grade, School
 from factory.django import DjangoModelFactory
 from users.models import Participant, Team
 
@@ -36,7 +36,6 @@ class TeamFactory(DjangoModelFactory):
     number = factory.Sequence(lambda n: n)
     in_school_symbol = factory.Faker("random_letter")
 
-    is_official = factory.Faker("boolean")
     is_reviewed = factory.Faker("boolean")
 
 
@@ -47,5 +46,5 @@ class ParticipantFactory(DjangoModelFactory):
     team = factory.Faker("random_element", elements=Team.objects.all())
 
     full_name = factory.Faker("name")
-    graduation_year = factory.Faker("year")
+    grade = factory.Faker("random_element", elements=Grade.objects.all())
     birth_year = factory.Faker("year")

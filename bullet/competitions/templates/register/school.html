@@ -1,0 +1,17 @@
+{% extends "register/base.html" %}
+{% load i18n %}
+
+{% block register_content %}
+    {% include "register/partials/category.html" %}
+    {% include "register/partials/venue.html" %}
+
+    <div class="font-bold text-2xl my-6">{% trans "School" %}</div>
+
+    <input type="text" class="form-input input mb-4" placeholder="{% trans "Search schools..." %}" name="q"
+        hx-get="{% url 'register_school' %}" hx-swap="outerHTML" hx-target="#js_school_list" hx-trigger="keyup changed delay:100ms">
+
+    <form method="POST" autocomplete="off">
+        {% csrf_token %}
+        {% include "register/_school.html" %}
+    </form>
+{% endblock %}

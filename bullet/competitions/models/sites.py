@@ -2,6 +2,7 @@ from address.models import AddressField
 from django.db import models
 from django.db.models import Count, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
+from django_countries.fields import CountryField
 from users.models import Team
 from web.fields import ChoiceArrayField, LanguageField
 
@@ -10,6 +11,7 @@ class Venue(models.Model):
     name = models.CharField(max_length=256)
     short_name = models.CharField(max_length=256)
     address = AddressField()
+    country = CountryField()
 
     def __str__(self):
         return f"{self.name} at {self.address}"

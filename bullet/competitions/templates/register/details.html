@@ -1,0 +1,51 @@
+{% extends "register/base.html" %}
+{% load bform %}
+{% load i18n %}
+
+{% block register_content %}
+    {% include "register/partials/category.html" %}
+    {% include "register/partials/venue.html" %}
+    {% include "register/partials/school.html" %}
+
+    <hr class="my-6">
+
+    <form method="POST" >
+        {% csrf_token %}
+
+        <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
+        {% bform form %}
+
+        <h2 class="font-bold text-2xl mb-1 mt-6">{% trans "Contestants" %}</h2>
+
+        <div class="mb-6 text-gray-700">{% trans "You can change the list of contestants at any time before the start of the competition." %}</div>
+
+        {{ formset.management_form }}
+
+        <div class="grid grid-cols-1 md:grid-cols-registration gap-2 mb-4">
+            <div class="w-auto md:block hidden"></div>
+            <div class="hidden md:block">{% trans "Full name" %}</div>
+            <div class="hidden md:block">{% trans "Birth year" %}</div>
+            <div class="hidden md:block">{% trans "Grade" %}</div>
+
+            {% for form in formset %}
+            <div class="w-auto whitespace-nowrap text-xl {% if form.field.required %}font-bold{% endif %} mt-4 md:mt-0 md:py-3 md:text-base">{% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}</div>
+            <div>
+                <label class="md:hidden font-bold {% if form.full_name.errors %}text-red-600{% endif %}" for="id_{{ form.full_name.html_name }}">{% trans "Full name" %}:</label>
+                {% bfield form.full_name %}
+            </div>
+            <div>
+                <label class="md:hidden font-bold {% if form.birth_year.errors %}text-red-600{% endif %}" for="id_{{ form.birth_year.html_name }}">{% trans "Birth year" %}:</label>
+                {% bfield form.birth_year %}
+            </div>
+            <div>
+                <label class="md:hidden font-bold {% if form.graduation_year.errors %}text-red-600{% endif %}" for="id_{{ form.graduation_year.html_name }}">{% trans "Grade" %}:</label>
+                {% bfield form.grade %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-red-600 mb-8">* {% trans "Required field" %}</div>
+
+        <button type="submit" class="btn">{% trans "Register" %}</button>
+    </form>
+{% endblock %}
