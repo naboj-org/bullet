@@ -9,8 +9,7 @@ COPY . .
 RUN npm run css-prod
 CMD ["npm", "run", "css-dev"]
 
-FROM python:3.10-slim-bullseye AS basebuild
-
+FROM python:3.10-slim-bullseye
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
@@ -31,7 +30,4 @@ RUN pipenv install --system --dev --deploy
 COPY ./bullet .
 COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
 
-# Heroku
-FROM basebuild AS herokubuild
-
-CMD gunicorn bullet.wsgi --bind 0.0.0.0:$PORT --log-level DEBUG --access-logfile - --log-file -
+CMD ["gunicorn", "bullet.wsgi", "--access-logfile", "-", "--log-file", "-", "--workers", "4"]

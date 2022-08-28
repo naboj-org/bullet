@@ -36,11 +36,11 @@ class BranchRepository:
         self.branches = branches
 
     def get_from_domain(self, domain: str) -> Branch | None:
-        domain = domain.strip().lstrip("www.").lower()
+        domain = domain.strip().removeprefix("www.").lower()
         if not domain.endswith(settings.PARENT_HOST):
             return None
 
-        domain = domain.rstrip(settings.PARENT_HOST).strip(".")
+        domain = domain.removesuffix(settings.PARENT_HOST).strip(".")
         for b in self.branches:
             if b.identifier == domain:
                 return b
