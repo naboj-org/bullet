@@ -8,11 +8,11 @@ class AdminDomainMiddleware:
 
     def __call__(self, request):
         domain = request.get_host()
-        domain = domain.strip().lstrip("www.").lower()
+        domain = domain.strip().removeprefix("www.").lower()
         if not domain.endswith(settings.PARENT_HOST):
             return HttpResponseNotFound("Invalid subdomain.")
 
-        domain = domain.rstrip(settings.PARENT_HOST).strip(".")
+        domain = domain.removesuffix(settings.PARENT_HOST).strip(".")
 
         request._subdomain_resolved = False
 
