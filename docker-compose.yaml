@@ -16,7 +16,6 @@ services:
   web:
     build:
       context: .
-      target: basebuild
     image: bullet
     env_file:
       - .env
