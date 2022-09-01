@@ -1,11 +1,11 @@
 {% for group in menu_items %}
-<div class="p-4 flex flex-col gap-1 border-b border-gray-700">
-    <div class="font-bold uppercase text-gray-400 text-sm mb-1">{{ group.0 }}</div>
+<nav class="p-4 flex flex-col gap-1 border-b border-gray-700">
+    <header class="font-bold uppercase text-gray-400 text-sm mb-1">{{ group.0 }}</header>
 
     {% for item in group.1 %}
     <a href="{{ item.2 }}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded gap-2">
         <i class="fas fa-fw {{ item.0 }}"></i> {{ item.1 }}
     </a>
     {% endfor %}
-</div>
+</nav>
 {% endfor %}
