@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "users",
     "competitions",
     "web",
+    "bullet_admin",
     "education",
     "countries",
     "django_countries",

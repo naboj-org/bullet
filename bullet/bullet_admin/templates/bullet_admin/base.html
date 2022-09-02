@@ -1,0 +1,28 @@
+{% extends "web/root_base.html" %}
+
+{% load badmin %}
+
+{% block root_content %}
+    <main class="flex min-h-screen min-w-screen max-h-screen">
+
+        <aside class="shrink-0 w-64 bg-gray-800 flex-col overflow-y-auto">
+            <header class="p-4 bg-primary flex items-center">
+                <h1 class="font-bold text-white text-sm">Náboj Junior 2022</h1>
+                <div class="ml-auto text-white text-sm"><i class="fas fa-caret-down"></i></div>
+            </header>
+
+            {% admin_sidebar %}
+        </aside>
+
+        <section class="w-full bg-slate-50">
+            <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+                <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                    <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Competition overview</h2>
+                    <a href="#" class="rounded bg-blue-500 text-white py-1 px-2 text-sm font-bold hover:bg-blue-600"><i class="fas fa-cog mr-1"></i> Edit settings</a>
+                </header>
+                <p class="p-4">aaa</p>
+            </article>
+        </section>
+
+    </main>
+{% endblock %}
