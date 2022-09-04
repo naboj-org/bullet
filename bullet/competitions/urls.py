@@ -1,4 +1,4 @@
-from competitions.views import register
+from competitions.views import register, teams
 from django.urls import path
 
 urlpatterns = [
@@ -27,4 +27,5 @@ urlpatterns = [
         register.ThanksView.as_view(),
         name="register_thanks",
     ),
+    path("teams/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
 ]

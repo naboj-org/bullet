@@ -17,7 +17,6 @@ urlpatterns = [
     #     registration.RegistrationConfirmView.as_view(),
     #     name="registration_confirm",
     # ),
-    # path("edit_team/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
     # path("teams/", teams.TeamList.as_view(), name="teams"),
     path("test/", views.test),
     path("admin/", include("bullet_admin.urls")),

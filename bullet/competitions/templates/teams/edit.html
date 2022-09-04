@@ -12,25 +12,28 @@
     <main class="mx-auto w-full max-w-4xl p-3">
 
         <section class="py-5 my-5 border-b">
-            <h2 class="text-3xl mb-3">Team Information</h2>
+            <h2 class="font-bold text-2xl mb-6">{% trans "Team information" %}</h2>
 
             <p>
-                <strong>School:</strong>
+                <strong>{% trans "School" %}:</strong>
                 {{ team.school }}
 
                 {% if team.in_school_symbol %}
                     <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
                 {% endif %}
             </p>
-            <p><strong>Competition site:</strong> {{ team.competition_venue }}</p>
-            <p><strong>Contact name:</strong> {{ team.contact_name }}</p>
-            <p><strong>Contact email:</strong> {{ team.contact_email }}</p>
+            <p><strong>{% trans "Venue" %}:</strong> {{ team.competition_venue }}</p>
+
+            <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
+            <p><strong>{% trans "Full name" %}:</strong> {{ team.contact_name }}</p>
+            <p><strong>{% trans "Email" %}:</strong> {{ team.contact_email }}</p>
             {% if team.contact_phone %}
-                <p><strong>Contact phone:</strong> {{ team.contact_phone }}</p>
+                <p><strong>{% trans "Phone number" %}:</strong> {{ team.contact_phone }}</p>
             {% endif %}
         </section>
         <section>
-            <h2 class="text-3xl mb-4">Participants</h2>
+            <h2 class="font-bold text-2xl mb-1 mt-6">{% trans "Contestants" %}</h2>
+            <div class="mb-6 text-gray-700">{% trans "You can change the list of contestants at any time before the start of the competition." %}</div>
 
             {% if can_be_changed %}
                 <form method="POST">
@@ -39,14 +42,14 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-participants-edit gap-2 mb-8">
                         <div class="w-auto md:block hidden"></div>
-                        <div class="hidden md:block font-bold">Full name</div>
-                        <div class="hidden md:block font-bold">Birth year</div>
-                        <div class="hidden md:block font-bold">Graduation year</div>
-                        <div class="hidden md:block font-bold text-center">Delete?</div>
+                        <div class="hidden md:block">{% trans "Full name" %}</div>
+                        <div class="hidden md:block">{% trans "Birth year" %}</div>
+                        <div class="hidden md:block">{% trans "Grade" %}</div>
+                        <div class="hidden md:block text-center">{% trans "Delete?" %}</div>
 
                         {% for f in form %}
                         <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">
-                            Participant {{ forloop.counter }}
+                            {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
                             {{ f.id }}
                         </div>
                         <div>
@@ -58,8 +61,8 @@
                             {% bfield f.birth_year %}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold {% if f.graduation_year.errors %}text-red-600{% endif %}" for="id_{{ f.graduation_year.html_name }}">Graduation year:</label>
-                            {% bfield f.graduation_year %}
+                            <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">Graduation year:</label>
+                            {% bfield f.grade %}
                         </div>
                         <div class="flex md:justify-center items-center gap-2">
                             {% bcheckbox f.DELETE %}
@@ -75,20 +78,20 @@
                 {% for f in form %}
                     <div>
                         <h3 class="text-xl mt-3 mb-1">
-                            Participant {{ forloop.counter }}
+                            {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
                             {{ f.id }}
                         </h3>
                         <p>
-                            <strong>Name:</strong>
+                            <strong>{% trans "Full name" %}:</strong>
                             {{ f.full_name.value|stringformat:'s' }}
                         </p>
                         <p>
-                            <strong>Birth year:</strong>
+                            <strong>{% trans "Birth year" %}:</strong>
                             {{ f.birth_year.value|stringformat:'s' }}
                         </p>
                         <p>
-                            <strong>Graduation year:</strong>
-                            {{ f.graduation_year.value|stringformat:'s' }}
+                            <strong>{% trans "Grade" %}:</strong>
+                            {{ f.grade.value|stringformat:'s' }}
                         </p>
                     </div>
                 {% endfor %}
