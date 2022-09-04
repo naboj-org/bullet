@@ -49,6 +49,9 @@ class School(models.Model):
     name = models.CharField(max_length=256)
     types = models.ManyToManyField(SchoolType)
     address = models.CharField(max_length=256, blank=True, null=True)
+    search = models.TextField(
+        blank=True, help_text="used to improve search performance"
+    )
     country = CountryField()
 
     importer = models.CharField(max_length=16, blank=True, null=True)
