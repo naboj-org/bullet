@@ -7,6 +7,13 @@ class SchoolType(models.Model):
     note = models.CharField(
         max_length=32, help_text="shown in admin interface", blank=True
     )
+    identifier = models.CharField(
+        max_length=32,
+        help_text="used in school importers",
+        blank=True,
+        null=True,
+        unique=True,
+    )
 
     def __str__(self):
         return f"{self.name} ({self.note})"
