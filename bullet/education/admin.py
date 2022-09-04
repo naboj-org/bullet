@@ -1,5 +1,3 @@
-from address.forms import AddressWidget
-from address.models import AddressField
 from django.contrib import admin
 from django.db.models import ManyToManyField
 from django.forms import CheckboxSelectMultiple
@@ -8,10 +6,7 @@ from education.models import Education, Grade, School, SchoolType
 
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
-    list_display = ("name", "address", "izo")
-    formfield_overrides = {
-        AddressField: {"widget": AddressWidget(attrs={"style": "width: 300px;"})}
-    }
+    list_display = ("name", "address", "country")
 
 
 class GradeInline(admin.TabularInline):

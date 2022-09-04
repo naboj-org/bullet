@@ -1,4 +1,3 @@
-from address.models import AddressField
 from django.db import models
 from django_countries.fields import CountryField
 
@@ -42,10 +41,20 @@ class Education(models.Model):
 class School(models.Model):
     name = models.CharField(max_length=256)
     types = models.ManyToManyField(SchoolType)
+    address = models.CharField(max_length=256, blank=True, null=True)
     country = CountryField()
 
-    address = AddressField()
-    izo = models.CharField(max_length=128, unique=True)
+    importer = models.CharField(max_length=16, blank=True, null=True)
+    importer_identifier = models.CharField(max_length=128, blank=True, null=True)
+
+    class Meta:
+        constraints = (
+            models.UniqueConstraint(
+                "importer",
+                "importer_identifier",
+                name="school__importer_importer_identifier",
+            ),
+        )
 
     def __str__(self):
         return self.name
