@@ -98,3 +98,8 @@
 .cb-edit {
     @apply bg-yellow-400 bg-opacity-50 hover:bg-opacity-100 transition-colors;
 }
+
+.bold-primary b, .bold-primary strong {
+    @apply text-primary;
+    font-weight: inherit;
+}

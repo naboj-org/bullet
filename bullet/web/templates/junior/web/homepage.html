@@ -6,10 +6,13 @@
 {% block title %}Homepage{% endblock %}
 
 {% block hero %}
+    {# TODO: fix #262 #}
+    {% load_blocks "home-junior" %}
     <div class="flex items-center">
         <div class="lg:w-2/5 mt-8 lg:mt-24 mb-4 md:mb-8">
-            <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Compete with
-                <span class="text-primary">pupils</span> across Europe</p>
+            <h1 class="text-4xl md:text-6xl font-bold mb-12 md:mb-16 bold-primary">
+                {% content_block "home-junior:title" %}
+            </h1>
             <a href="#" class="hero-btn">Registration</a>
 
             <p class="font-light mt-12 md:mt-16">Registration ends soon. REGISTER NOW!</p>
@@ -21,11 +24,12 @@
 {% endblock %}
 
 {% block content %}
-    {% load_blocks "home" %}
+    {% load_blocks "home-junior" %}
     <div class="container mx-auto px-2">
 
         <div class="my-16 md:my-32">
-            <h2 class="font-bold text-5xl mb-6 md:mb-16 text-center">What is <span class="text-primary">Náboj</span>?
+            <h2 class="font-bold text-5xl mb-6 md:mb-16 text-center bold-primary">
+                {% content_block "home-junior:icons-title" %}
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 mx-auto md:max-w-4xl gap-12">
@@ -34,10 +38,8 @@
                         <i class="fa-solid fa-question"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl">About Náboj</h3>
-                        <p class="text-lg">Náboj is a team competition in math and physics, 4 team members. This year the competition
-                            takes
-                            place on 25.10.2022 10:00-12:00</p>
+                        <h3 class="font-bold text-xl">{% content_block "home-junior:icon-1-title" %}</h3>
+                        <p class="text-lg">{% content_block "home-junior:icon-1-text" %}</p>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -45,9 +47,8 @@
                         <i class="fa-solid fa-flag"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl">Competing sites</h3>
-                        <p class="text-lg">International competition held in Croatia (online), Czech republic, France (online),
-                            Netherlands (online), Poland and Slovakia.</p>
+                        <h3 class="font-bold text-xl">{% content_block "home-junior:icon-2-title" %}</h3>
+                        <p class="text-lg">{% content_block "home-junior:icon-2-text" %}</p>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -55,10 +56,8 @@
                         <i class="fa-solid fa-pen-ruler"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl">Problem set</h3>
-                        <p class="text-lg">Teams have 2 hours to solve as many problems as possible. We do not require the participants
-                            to
-                            remember the formulas, they will receive a cheatsheet.</p>
+                        <h3 class="font-bold text-xl">{% content_block "home-junior:icon-3-title" %}</h3>
+                        <p class="text-lg">{% content_block "home-junior:icon-3-text" %}</p>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -66,8 +65,8 @@
                         <i class="fa-solid fa-cookie-bite"></i>
                     </div>
                     <div>
-                        <h3 class="font-bold text-xl">Rewards</h3>
-                        <p class="text-lg">Successful contestants receive fabulous prices and endless fame.</p>
+                        <h3 class="font-bold text-xl">{% content_block "home-junior:icon-4-title" %}</h3>
+                        <p class="text-lg">{% content_block "home-junior:icon-4-text" %}</p>
                     </div>
                 </div>
             </div>
@@ -76,16 +75,8 @@
         <div class="flex content-between items-center gap-6 lg:gap-16 my-12 md:my-32 flex-col lg:flex-row text-lg text-gray-800">
             <img src="{% static "img/junior/home/competition.jpg" %}" class="lg:w-3/5 shrink-0 rounded-md shadow-md">
             <div class="grow">
-                <h2 class="font-bold text-3xl md:text-4xl mb-6">
-                    <span class="text-primary">Knowledge-based competition</span>
-                    with a lot of fun
-                </h2>
-                Naboj Junior is an international math & physics competition designed for teams of four pupils in 4th
-                class that represent their school. The competition lasts 120 minutes during which the teams try to solve
-                as many problems as possible. At the beginning of the competition each team receives six problems. They
-                receive a new one as soon as the team correctly solves any of the problems. The team that solves most
-                problems correctly in the given time limit takes the victory. The best teams in each region receive
-                certificates and material prizes.
+                <h2 class="font-bold text-3xl md:text-4xl mb-6 bold-primary">{% content_block "home-junior:image-1-title" %}</h2>
+                {% content_block "home-junior:image-1-text" %}
             </div>
         </div>
     </div>
@@ -93,26 +84,8 @@
     <div class="bg-primary-light py-12 md:py-32">
         <div class="container text-lg text-gray-800 mx-auto px-2 flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col-reverse lg:flex-row">
             <div class="grow">
-                <h2 class="font-bold text-3xl md:text-4xl mb-6">
-                    <span class="text-primary">Various problems</span>
-                    that fit everyone
-                </h2>
-                <p class="mb-2">The difficulty of the problems is adjusted to the knowledge of pupils in fourth class.
-                    The problems are
-                    in ascending order of their perceived difficulty. Thanks to this, the competition is equally
-                    appropriate
-                    for students who are inexperienced in mathematical competitions and also those, who have already
-                    succeeded in Mathematical Olympiad.</p>
-                <p class="mb-2">Problems in Naboj differ considerably from the routine school exercises which usually
-                    require only
-                    direct application of standard methods. We are trying to include problems that require a certain
-                    amount
-                    of inventiveness and ingenuity.</p>
-                <p>Success in the competition depends not only on the individual abilities of the team members but also
-                    on
-                    their efficient cooperation. Apart from enhancing imagination and logical reasoning, our goal is to
-                    attract people to the inexhaustible beauty hidden in mathematics and physics.</p>
-
+                <h2 class="font-bold text-3xl md:text-4xl mb-6 bold-primary">{% content_block "home-junior:image-2-title" %}</h2>
+                {% content_block "home-junior:image-2-text" %}
             </div>
             <img src="{% static "img/junior/home/problem-set.jpg" %}" class="md:w-3/5 shrink-0 rounded-md shadow-md">
         </div>
@@ -124,19 +97,8 @@
         <div class="flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col lg:flex-row text-lg text-gray-800">
             <img src="{% static 'img/junior/home/europe.svg' %}" class="md:w-2/5 shrink-0 rounded-md shadow-md">
             <div class="grow">
-                <h2 class="font-bold text-3xl md:text-4xl mb-6">
-                    Compare yourself with students
-                    <span class="text-primary">from foreign countries</span>
-                </h2>
-                <p class="mb-2">Naboj Junior will be held in hybrid format for the first time. Some of competing countries will held the
-                competition online, therefore the pupils will be able to compete only via our online system. Other
-                countries will held the competition in the original on-site format, where teams register for the
-                competition in the closest local competing site. These local sites are ensured by high school students
-                (volunteers). The problem set is the same for each competing site.</p>
-
-                <p class="mb-2">Altogether countries participating in Naboj Junior are: Croatia, Czech republic, France, Netherlands,
-                Poland and Slovakia. The competition is evaluated in each country separately, but pupils can compare
-                themselves on international level in final results.</p>
+                <h2 class="font-bold text-3xl md:text-4xl mb-6 bold-primary">{% content_block "home-junior:image-3-title" %}</h2>
+                {% content_block "home-junior:image-3-text" %}
             </div>
         </div>
     </div>

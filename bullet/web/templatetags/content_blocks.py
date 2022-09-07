@@ -28,7 +28,12 @@ def load_blocks(context, *groups):
 
     context["__blocks"].update(
         {
-            (b.group, b.branch, b.country.code.lower(), b.reference): b.content
+            (
+                b.group,
+                b.branch,
+                b.country.code.lower() if b.country else None,
+                b.reference,
+            ): b.content
             for b in blocks
         }
     )
