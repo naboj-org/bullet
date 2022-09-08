@@ -49,6 +49,13 @@ services:
       - .env
     volumes:
       -  geiop_data:/usr/share/GeoIP
+
+  meilisearch:
+    image: getmeili/meilisearch:v0.28
+    volumes:
+      - search_data:/meili_data
+
 volumes:
   postgres_data:
   geiop_data:
+  search_data:
