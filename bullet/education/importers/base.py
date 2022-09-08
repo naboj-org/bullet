@@ -66,21 +66,26 @@ class BaseSchoolImporter:
 
         for school in self.get_schools():
             ident = school.get_identifier()
-            obj, new = School.objects.update_or_create(
-                importer=self.name,
-                importer_identifier=ident,
-                defaults={
-                    "name": school.name,
-                    "address": school.address,
-                    "country": school.country,
-                    "search": school.search,
-                },
-            )
 
-            if new:
-                res.created += 1
-            else:
+            try:
+                obj = School.objects.get(
+                    importer=self.name,
+                    importer_identifier=ident,
+                )
                 res.updated += 1
+            except School.DoesNotExist:
+                obj = School(
+                    importer=self.name,
+                    importer_identifier=ident,
+                )
+                res.created += 1
+
+            obj.name = school.name
+            obj.address = school.address
+            obj.country = school.country
+            obj.search = school.search
+            obj.save(send_to_search=False)
+
             if ident in res.lost_identifiers:
                 res.lost_identifiers.remove(ident)
 
