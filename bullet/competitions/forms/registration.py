@@ -54,7 +54,7 @@ class SchoolSelectForm(forms.Form):
 class RegistrationForm(ModelForm):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.fields["contact_phone"].region = get_country()
+        self.fields["contact_phone"].widget.region = get_country().upper()
 
     class Meta:
         model = Team
