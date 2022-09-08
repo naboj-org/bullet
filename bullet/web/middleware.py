@@ -14,12 +14,12 @@ class AdminDomainMiddleware:
 
         domain = domain.removesuffix(settings.PARENT_HOST).strip(".")
 
-        request._subdomain_resolved = False
+        request._is_admin_domain = False
 
         if domain == "admin":
             request.urlconf = "web.urls_admin"
             request.BRANCH = None
-            request._subdomain_resolved = True
+            request._is_admin_domain = True
 
         response = self.get_response(request)
         return response
