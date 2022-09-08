@@ -3,7 +3,6 @@ import random
 import factory
 from education.models import School, SchoolType
 from factory.django import DjangoModelFactory
-from web.factories.addresses import AddressFactory
 
 
 class SchoolTypeFactory(DjangoModelFactory):
@@ -19,9 +18,7 @@ class SchoolFactory(DjangoModelFactory):
         model = School
 
     name = factory.Faker("sentence")
-
-    address = factory.SubFactory(AddressFactory)
-    izo = factory.Faker("lexify", text="???? ???")
+    address = factory.Faker("address")
 
     @factory.post_generation
     def types(self, create, extracted, **kwargs):
