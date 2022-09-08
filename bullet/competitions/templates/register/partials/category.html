@@ -7,10 +7,10 @@
 <div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
     <div>
         <div class="font-bold text-xl">
-            {% content_block "category:name_"|add:category_competition.category.slug %}
+            {% content_block "category:name_"|add:category_competition.identifier %}
         </div>
         <p>
-            {% content_block "category:description_"|add:category_competition.category.slug %}
+            {% content_block "category:description_"|add:category_competition.identifier %}
         </p>
     </div>
     <a href="{% url 'register' %}" class="ml-auto shrink-0 text-primary hover:underline">

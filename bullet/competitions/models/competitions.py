@@ -1,6 +1,6 @@
 from django.contrib.postgres.fields import ArrayField
-from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import UniqueConstraint
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from web.fields import BranchField
@@ -56,9 +56,13 @@ class CategoryCompetition(models.Model):
         TIME = 3, _("Time")
 
     competition = models.ForeignKey(
-        "competitions.Competition", on_delete=models.CASCADE
+        "competitions.Competition",
+        on_delete=models.CASCADE,
     )
-    category = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
+
+    identifier = models.SlugField()
+    order = models.IntegerField(default=0)
+
     educations = models.ManyToManyField("education.Education")
 
     problems_per_team = models.PositiveIntegerField(null=True, blank=True)
@@ -73,17 +77,17 @@ class CategoryCompetition(models.Model):
     objects = CategoryCompetitionQueryset.as_manager()
 
     class Meta:
-        unique_together = ("competition", "category")
-        ordering = ("-category",)
+        constraints = (
+            UniqueConstraint(
+                "competition",
+                "identifier",
+                name="competitions_category_competition_identifier_unique",
+            ),
+        )
+        ordering = ("order",)
 
     def __str__(self):
-        return f"{self.competition.name} - {self.category}"
-
-    def clean(self):
-        super().clean()
-
-        if self.competition.branch != self.category.branch:
-            raise ValidationError("Branch of category and competition must be equal.")
+        return f"{self.identifier} ({self.competition.name})"
 
 
 class Wildcard(models.Model):

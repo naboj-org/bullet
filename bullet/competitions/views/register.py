@@ -162,8 +162,7 @@ class CategorySelectView(RegistrationMixin, FormView):
         categories = set([c.category_competition_id for c in competition_venues])
         self.categories = (
             CategoryCompetition.objects.filter(id__in=categories)
-            .order_by("category__order")
-            .select_related("category")
+            .order_by("order")
             .all()
         )
 
