@@ -24,6 +24,8 @@ from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
 from education.models import School
 
+from bullet import search
+
 
 class RegistrationError(Exception):
     def __init__(self, message=None):
@@ -242,15 +244,15 @@ class SchoolSelectView(RegistrationMixin, FormView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        schools = []
+        ctx["schools"] = []
         query = self.request.GET.get("q")
 
         if query:
-            schools = School.objects.filter(
-                country=self.request.COUNTRY_CODE.upper()
-            ).filter(Q(name__icontains=query) | Q(address__icontains=query))[:25]
+            result = search.client.index("schools").search(
+                query, {"filter": f"country = {self.request.COUNTRY_CODE.upper()}"}
+            )
+            ctx["schools"] = result["hits"]
 
-        ctx["schools"] = schools
         return ctx
 
     def form_valid(self, form):
