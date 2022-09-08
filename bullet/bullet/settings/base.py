@@ -145,3 +145,6 @@ RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/uploads/"
 GEOIP_PATH = "/geoip/"
+
+MEILISEARCH_URL = "http://meilisearch:7700/"
+MEILISEARCH_KEY = None
