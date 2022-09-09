@@ -40,8 +40,9 @@ class CompetitionFactory(DjangoModelFactory):
     registration_second_round_start = factory.LazyAttribute(
         lambda o: make_date_after(o.registration_start)
     )
-    registration_end = factory.LazyAttribute(
-        lambda o: make_date_after(o.registration_start)
+    registration_end = factory.Faker(
+        "future_datetime",
+        tzinfo=timezone.get_current_timezone(),
     )
 
     competition_start = factory.LazyAttribute(
