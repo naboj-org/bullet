@@ -248,7 +248,7 @@ class SchoolSelectView(RegistrationMixin, FormView):
         if query:
             schools = School.objects.filter(
                 country=self.request.COUNTRY_CODE.upper()
-            ).filter(Q(name__icontains=query) | Q(address__raw__icontains=query))[:25]
+            ).filter(Q(name__icontains=query) | Q(address__icontains=query))[:25]
 
         ctx["schools"] = schools
         return ctx

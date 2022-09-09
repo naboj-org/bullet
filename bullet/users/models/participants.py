@@ -16,7 +16,7 @@ class Team(models.Model):
         "education.School", on_delete=models.CASCADE, blank=True, null=True
     )
     name = models.CharField(max_length=128, blank=True, null=True)
-    language = models.TextField(choices=settings.LANGUAGES)
+    language = models.TextField(blank=True, choices=settings.LANGUAGES)
 
     registered_at = models.DateTimeField(auto_now_add=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
