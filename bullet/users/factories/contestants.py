@@ -39,7 +39,7 @@ class TeamFactory(DjangoModelFactory):
     is_reviewed = factory.Faker("boolean")
 
 
-class ParticipantFactory(DjangoModelFactory):
+class ContestantFactory(DjangoModelFactory):
     class Meta:
         model = Contestant
 
