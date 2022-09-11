@@ -1,6 +1,7 @@
 import factory
 from competitions.models import CategoryCompetition, CompetitionVenue, Venue
 from django.conf import settings
+from django_countries import countries
 from factory.django import DjangoModelFactory
 from web.factories.addresses import AddressFactory
 
@@ -12,6 +13,7 @@ class VenueFactory(DjangoModelFactory):
     name = factory.Faker("sentence")
     short_name = factory.Faker("word")
     address = factory.SubFactory(AddressFactory)
+    country = factory.Faker("random_element", elements=[x.code for x in countries])
 
 
 class CompetitionVenueFactory(DjangoModelFactory):

@@ -1,6 +1,7 @@
 import random
 
 import factory
+from django_countries import countries
 from education.models import School, SchoolType
 from factory.django import DjangoModelFactory
 
@@ -19,6 +20,7 @@ class SchoolFactory(DjangoModelFactory):
 
     name = factory.Faker("sentence")
     address = factory.Faker("address")
+    country = factory.Faker("random_element", elements=[x.code for x in countries])
 
     @factory.post_generation
     def types(self, create, extracted, **kwargs):
