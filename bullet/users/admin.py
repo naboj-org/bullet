@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
-from users.models import Participant, Team, User
+from users.models import Contestant, Team, User
 
 
 @admin.register(User)
@@ -9,7 +9,7 @@ class UserAdmin(DefaultUserAdmin):
 
 
 class TeamParticipantAdmin(admin.TabularInline):
-    model = Participant
+    model = Contestant
     extra = 0
 
 
@@ -25,6 +25,6 @@ class TeamAdmin(admin.ModelAdmin):
     )
 
 
-@admin.register(Participant)
+@admin.register(Contestant)
 class ParticipantAdmin(admin.ModelAdmin):
     pass

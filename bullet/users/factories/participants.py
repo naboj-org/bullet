@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils import timezone
 from education.models import Grade, School
 from factory.django import DjangoModelFactory
-from users.models import Participant, Team
+from users.models import Contestant, Team
 
 
 class TeamFactory(DjangoModelFactory):
@@ -41,7 +41,7 @@ class TeamFactory(DjangoModelFactory):
 
 class ParticipantFactory(DjangoModelFactory):
     class Meta:
-        model = Participant
+        model = Contestant
 
     team = factory.Faker("random_element", elements=Team.objects.all())
 

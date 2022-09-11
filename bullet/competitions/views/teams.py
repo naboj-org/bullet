@@ -5,7 +5,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import FormView
-from users.models import Participant, Team
+from users.models import Contestant, Team
 
 
 class TeamEditView(FormView):
@@ -13,7 +13,7 @@ class TeamEditView(FormView):
 
     def get_form_class(self):
         return inlineformset_factory(
-            Team, Participant, form=ParticipantForm, validate_max=True
+            Team, Contestant, form=ParticipantForm, validate_max=True
         )
 
     def get_context_data(self, **kwargs):

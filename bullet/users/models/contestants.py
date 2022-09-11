@@ -54,9 +54,9 @@ class Team(models.Model):
         super().save(*args, **kwargs)
 
 
-class Participant(models.Model):
+class Contestant(models.Model):
     team = models.ForeignKey(
-        "users.Team", on_delete=models.CASCADE, related_name="participants"
+        "users.Team", on_delete=models.CASCADE, related_name="contestants"
     )
 
     full_name = models.CharField(max_length=256)
