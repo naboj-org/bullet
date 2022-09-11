@@ -30,6 +30,7 @@ services:
     depends_on:
       - db
       - geoip
+      - meilisearch
     command: ./entrypoint.sh
 
   tailwind:
