@@ -9,7 +9,7 @@ from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 from django.utils.translation import gettext as _
 from education.models import Grade, School, SchoolType
-from users.models import Participant, Team
+from users.models import Contestant, Team
 
 
 class CategorySelectForm(forms.Form):
@@ -72,11 +72,11 @@ class RegistrationForm(ModelForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
 
-class ParticipantForm(ModelForm):
+class ContestantForm(ModelForm):
     grade = forms.ChoiceField()
 
     class Meta:
-        model = Participant
+        model = Contestant
         fields = [
             "full_name",
             "birth_year",

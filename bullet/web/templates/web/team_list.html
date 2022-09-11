@@ -44,11 +44,9 @@
                 <div id="adress" class="text-sm text-gray-600">{{ team.school.address }}</div>
             </div>
             <div class="w-1/2">
-                <div id="participants">
-                    {% for participant in team.participants.all %}
-                        {{ participant }}{% if forloop.last == False %},{% endif %}
-                    {% endfor %}
-                </div>
+                {% for contestant in team.contestants.all %}
+                    {{ contestant }}{% if forloop.last == False %},{% endif %}
+                {% endfor %}
             </div>
         </div>
         {% endfor %}

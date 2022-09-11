@@ -1,2 +1,2 @@
+from .contestants import *  # noqac
 from .organizers import *  # noqa
-from .participants import *  # noqac

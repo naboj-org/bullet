@@ -6,7 +6,7 @@ from competitions.factories.competition import (
 )
 from competitions.factories.sites import CompetitionVenueFactory, VenueFactory
 from competitions.models import Competition
-from users.factories.participants import ParticipantFactory, TeamFactory
+from users.factories.contestants import ContestantFactory, TeamFactory
 
 
 def create_base():
@@ -26,7 +26,7 @@ def create_competition(branch=None) -> Competition:
 
     for _ in range(200):
         team = TeamFactory(competition_venue=random.choice(competition_venues))
-        ParticipantFactory.create_batch(
+        ContestantFactory.create_batch(
             random.randint(
                 0, team.competition_venue.category_competition.max_members_per_team
             ),

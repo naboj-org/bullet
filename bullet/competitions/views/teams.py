@@ -1,11 +1,11 @@
-from competitions.forms.registration import ParticipantForm
+from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.generic import FormView
-from users.models import Participant, Team
+from users.models import Contestant, Team
 
 
 class TeamEditView(FormView):
@@ -13,7 +13,7 @@ class TeamEditView(FormView):
 
     def get_form_class(self):
         return inlineformset_factory(
-            Team, Participant, form=ParticipantForm, validate_max=True
+            Team, Contestant, form=ContestantForm, validate_max=True
         )
 
     def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class TeamEditView(FormView):
     def dispatch(self, request, *args, **kwargs):
         self.team = (
             Team.objects.select_related("competition_venue__category_competition")
-            .prefetch_related("participants")
+            .prefetch_related("contestants")
             .get(secret_link=kwargs.pop("secret_link"))
         )
         self.category_competition = self.team.competition_venue.category_competition

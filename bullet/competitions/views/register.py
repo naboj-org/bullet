@@ -2,7 +2,7 @@ from enum import IntEnum
 
 from competitions.forms.registration import (
     CategorySelectForm,
-    ParticipantForm,
+    ContestantForm,
     RegistrationForm,
     SchoolSelectForm,
     VenueSelectForm,
@@ -278,7 +278,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
 
     def get_formset(self):
         return formset_factory(
-            ParticipantForm,
+            ContestantForm,
             min_num=0,
             max_num=self.category_competition.max_members_per_team,
             extra=self.category_competition.max_members_per_team,
@@ -315,13 +315,13 @@ class TeamDetailsView(RegistrationMixin, FormView):
         team.competition_venue = self.competition_venue
         team.save()
 
-        for participant_form in formset:
-            if not participant_form.has_changed():
+        for contestant_form in formset:
+            if not contestant_form.has_changed():
                 continue
 
-            participant = participant_form.save(commit=False)
-            participant.team = team
-            participant.save()
+            contestant = contestant_form.save(commit=False)
+            contestant.team = team
+            contestant.save()
 
         del self.request.session["register_form"]
         return HttpResponseRedirect(reverse("register_thanks"))
