@@ -8,14 +8,14 @@ class UserAdmin(DefaultUserAdmin):
     pass
 
 
-class TeamParticipantAdmin(admin.TabularInline):
+class TeamContestantAdmin(admin.TabularInline):
     model = Contestant
     extra = 0
 
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    inlines = (TeamParticipantAdmin,)
+    inlines = (TeamContestantAdmin,)
     list_display = (
         "school",
         "competition_venue",
@@ -26,5 +26,5 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 @admin.register(Contestant)
-class ParticipantAdmin(admin.ModelAdmin):
+class ContestantAdmin(admin.ModelAdmin):
     pass

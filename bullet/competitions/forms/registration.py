@@ -72,7 +72,7 @@ class RegistrationForm(ModelForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
 
 
-class ParticipantForm(ModelForm):
+class ContestantForm(ModelForm):
     grade = forms.ChoiceField()
 
     class Meta:
