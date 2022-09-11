@@ -1,1 +1,12 @@
-Weee
+{% load i18n %}{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
+
+{% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}
+
+{{ root_url }}{% url "team_edit" secret_link=team.secret_link %}
+
+{% blocktranslate %}You can also use that link to modify your team.{% endblocktranslate %}
+
+{% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}
+
+{% trans "Best regards," %}
+{{ branch.name }}

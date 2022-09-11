@@ -2,11 +2,27 @@
 {% load i18n %}
 
 {% block body %}
-    <p>{% trans 'Hi there,' %}</p>
-    <p>Sometimes you just want to send a simple HTML email with a simple design and
-        clear call to action. This is it.</p>
-    {% include 'mail/btn.html' with text='Aktivuj' href='https://example.com/' %}
-    <p>This is a really simple email template. Its sole purpose is to get the
-        recipient to click the button with no distractions.</p>
-    <p>Good luck! Hope it works.</p>
+    <p>{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}</p>
+
+    <p>{% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}</p>
+
+    {% url "team_edit" secret_link=team.secret_link as link %}
+    {% trans "Confirm registration" as link_text %}
+    {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
+
+    <p>{% blocktranslate %}You can also use that link to modify your team.{% endblocktranslate %}</p>
+    <p>{% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}</p>
+    <p>
+        {% trans "Best regards," %}<br>
+        {{ branch.name }}
+    </p>
+
+    <hr>
+
+    <p>
+        <small>
+            {% trans "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}<br>
+            {{ root_url }}{{ link }}
+        </small>
+    </p>
 {% endblock %}
