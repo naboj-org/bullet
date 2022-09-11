@@ -25,6 +25,7 @@ from django.views.generic import FormView, TemplateView
 from education.models import School
 
 from bullet import search
+from bullet.utils.email import send_email
 
 
 class RegistrationError(Exception):
@@ -322,6 +323,15 @@ class TeamDetailsView(RegistrationMixin, FormView):
             contestant = contestant_form.save(commit=False)
             contestant.team = team
             contestant.save()
+
+        send_email(
+            self.request.BRANCH,
+            team.contact_email,
+            _("Confirm your team registration"),
+            "mail/messages/registration.html",
+            "mail/messages/registration.txt",
+            {"team": team},
+        )
 
         del self.request.session["register_form"]
         return HttpResponseRedirect(reverse("register_thanks"))
