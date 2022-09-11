@@ -44,8 +44,45 @@
             {% endfor %}
         </div>
 
-        <div class="text-red-600 mb-8">* {% trans "Required field" %}</div>
+        <div class="text-red-600 mb-4">* {% trans "Required field" %}</div>
+
+        <div class="mb-4 prose prose-sm max-w-none">
+            {% url "page" slug="rules" as link %}
+            {% blocktrans with link=link %}
+                By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to
+                the <a href="{{ link }}">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that
+                the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition.
+            {% endblocktrans %}
+        </div>
+
+        <div class="mb-4">
+            <label>
+                <input type="checkbox" class="checkbox" name="consent_photos">
+                {% blocktrans %}
+                    The registrant agrees to allow Trojsten to make video and/or audio recordings during the Competition, on which the image of
+                    the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
+                    for marketing and promotional purposes of the Competition. <sup>[1]</sup>
+                {% endblocktrans %}
+            </label>
+        </div>
+
+        <div class="mb-8 prose prose-sm max-w-none">
+            {% url "page" slug="privacy" as link %}
+            {% blocktrans with link=link %}
+                More information on the processing of personal data can be found <a href="{{ link }}">on this page</a>.
+            {% endblocktrans %}
+        </div>
 
         <button type="submit" class="btn">{% trans "Register" %}</button>
+
+        <div class="mt-8 prose prose-sm max-w-none">
+            {% blocktrans with link=link %}
+                <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
+                This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
+                Withdrawal of consent does not affect the legality of the processing before its withdrawal.
+                The affected person can request the deletion of personal data only if it is technically possible and the deletion
+                does not affect the rights of other affected persons.
+            {% endblocktrans %}
+        </div>
     </form>
 {% endblock %}
