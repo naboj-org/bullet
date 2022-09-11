@@ -1,6 +1,8 @@
 from django.db import models
 from django_countries.fields import CountryField
 
+from bullet import search
+
 
 class SchoolType(models.Model):
     name = models.CharField(max_length=64)
@@ -68,3 +70,20 @@ class School(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, send_to_search=False, **kwargs):
+        if send_to_search:
+            search.client.index("schools").add_documents(
+                [self.for_search()],
+                "id",
+            )
+        return super().save(**kwargs)
+
+    def for_search(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "address": self.address,
+            "search": self.search,
+            "country": self.country.code,
+        }
