@@ -29,6 +29,7 @@ class Team(models.Model):
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
     is_reviewed = models.BooleanField(default=False)
+    consent_photos = models.BooleanField(default=False)
 
     class Meta:
         unique_together = [

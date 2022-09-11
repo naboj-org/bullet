@@ -313,6 +313,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
         team = form.save(commit=False)
         team.school = self.school
         team.competition_venue = self.competition_venue
+        team.consent_photos = "consent_photos" in self.request.POST
         team.save()
 
         for contestant_form in formset:
