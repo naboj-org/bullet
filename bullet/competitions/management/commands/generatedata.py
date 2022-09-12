@@ -5,6 +5,7 @@ from django.core import management
 from django.core.management import BaseCommand
 from django.db import transaction
 from education.factories.generate import create_education
+from problems.factories.generate import create_problems
 from web.factories.generate import create_pages, create_partners
 
 
@@ -17,6 +18,7 @@ class Command(BaseCommand):
         create_education()
         create_branch_countries(branch=Branches["physics"])
         create_pages(branch=Branches["physics"])
-        create_competition(branch=Branches["physics"])
+        competition = create_competition(branch=Branches["physics"])
+        create_problems(competition)
         create_partners()
         management.call_command("indexschools")
