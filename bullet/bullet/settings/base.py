@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "bullet_admin",
     "education",
     "countries",
+    "problems",
     "django_countries",
     "captcha",
     "django_minify_html",
