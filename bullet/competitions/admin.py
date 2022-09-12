@@ -1,11 +1,7 @@
 from competitions.models import (
     CategoryCompetition,
     Competition,
-    CompetitionProblem,
     CompetitionVenue,
-    LocalizedProblem,
-    Problem,
-    SolutionSubmitLog,
     Venue,
     Wildcard,
 )
@@ -61,31 +57,6 @@ class CompetitionVenueAdmin(admin.ModelAdmin):
         "accepted_languages",
         "local_start",
     )
-
-
-class LocalizedProblemInlineAdmin(admin.TabularInline):
-    model = LocalizedProblem
-    extra = 0
-
-
-@admin.register(Problem)
-class ProblemAdmin(admin.ModelAdmin):
-    inlines = (LocalizedProblemInlineAdmin,)
-
-
-@admin.register(CompetitionProblem)
-class CompetitionProblemAdmin(admin.ModelAdmin):
-    list_display = ("problem", "category_competition", "number")
-
-
-@admin.register(LocalizedProblem)
-class LocalizedProblemAdmin(admin.ModelAdmin):
-    list_display = ("problem", "language")
-
-
-@admin.register(SolutionSubmitLog)
-class SolutionSubmitLogAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(Wildcard)
