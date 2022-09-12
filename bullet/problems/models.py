@@ -10,7 +10,9 @@ class Problem(models.Model):
 
 
 class CategoryProblem(models.Model):
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE)
+    problem = models.ForeignKey(
+        Problem, on_delete=models.CASCADE, related_name="category_problems"
+    )
     category = models.ForeignKey(
         "competitions.CategoryCompetition",
         on_delete=models.CASCADE,
@@ -27,3 +29,11 @@ class CategoryProblem(models.Model):
                 name="categoryproblem__problem_category_number",
             ),
         )
+
+
+class SolvedProblem(models.Model):
+    team = models.ForeignKey(
+        "users.Team", on_delete=models.CASCADE, related_name="solved_problems"
+    )
+    problem = models.ForeignKey(Problem, on_delete=models.RESTRICT, related_name="+")
+    competition_time = models.DurationField()
