@@ -72,7 +72,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
-    def get_role(self, branch: "competitions.branches.Branch") -> BranchRole | None:
+    def get_role(self, branch: "competitions.branches.Branch") -> BranchRole:
         if not hasattr(self, "_bullet_role_cache"):
             self._bullet_role_cache = {r.branch: r for r in self.branchrole_set.all()}
         if branch.id not in self._bullet_role_cache:

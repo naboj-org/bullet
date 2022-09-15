@@ -103,3 +103,11 @@
     @apply text-primary;
     font-weight: inherit;
 }
+
+.btn-admin {
+    @apply rounded text-white py-1 px-2.5 font-bold;
+}
+
+.btn-admin-sm {
+    @apply btn-admin text-sm;
+}
