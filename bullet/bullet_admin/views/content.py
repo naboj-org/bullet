@@ -1,6 +1,7 @@
 from bullet_admin.forms.content import PageForm
 from bullet_admin.mixins import TranslatorRequiredMixin
 from bullet_admin.views import DeleteView
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
@@ -9,12 +10,21 @@ from web.models import Page
 
 class PageQuerySetMixin:
     def get_queryset(self):
-        return Page.objects.filter(branch=self.request.BRANCH).order_by("slug").all()
+        return Page.objects.filter(branch=self.request.BRANCH).order_by("slug")
 
 
 class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
     template_name = "bullet_admin/content/page_list.html"
     paginate_by = 100
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if "q" in self.request.GET:
+            qs = qs.filter(
+                Q(title__icontains=self.request.GET["q"])
+                | Q(slug__icontains=self.request.GET["q"])
+            )
+        return qs
 
 
 class PageEditView(TranslatorRequiredMixin, PageQuerySetMixin, UpdateView):
