@@ -109,5 +109,5 @@
 }
 
 .btn-admin-sm {
-    @apply btn-admin text-sm;
+    @apply rounded-md text-white font-bold text-sm py-1 px-2.5;
 }
