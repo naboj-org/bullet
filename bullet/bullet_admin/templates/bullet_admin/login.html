@@ -1,0 +1,25 @@
+{% extends "web/root_base.html" %}
+{% load static %}
+{% load i18n %}
+{% load bform %}
+
+{% block root_content %}
+    <main class="min-h-screen min-w-screen bg-slate-50">
+
+        <div class="w-full max-w-4xl p-8 mx-auto">
+            <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="w-40 mx-auto mb-4" alt="Naboj logo">
+            <h1 class="font-bold text-3xl text-center mb-6">Administration</h1>
+
+            <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+                <form class="p-8" method="post">
+                    {% csrf_token %}
+                    {% bform form %}
+
+                    <div class="text-center mt-8">
+                        <button type="submit" class="btn">{% trans "Log in" %}</button>
+                    </div>
+                </form>
+            </article>
+        </div>
+    </main>
+{% endblock %}

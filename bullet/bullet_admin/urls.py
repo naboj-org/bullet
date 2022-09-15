@@ -1,11 +1,8 @@
-from django.shortcuts import render
+from bullet_admin.views import auth, home
 from django.urls import path
 
-
-def test(req):
-    return render(req, "bullet_admin/base.html")
-
-
+app_name = "badmin"
 urlpatterns = [
-    path("", test),
+    path("", home.HomeView.as_view(), name="home"),
+    path("login/", auth.LoginView.as_view(), name="login"),
 ]
