@@ -1,3 +1,5 @@
+import competitions.branches
+from bullet_admin.models import BranchRole
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin, UserManager
 from django.contrib.auth.validators import UnicodeUsernameValidator
@@ -69,3 +71,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def email_user(self, subject, message, from_email=None, **kwargs):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
+
+    def get_role(self, branch: "competitions.branches.Branch") -> BranchRole | None:
+        if not hasattr(self, "_bullet_role_cache"):
+            self._bullet_role_cache = {r.branch: r for r in self.branchrole_set.all()}
+        if branch.id not in self._bullet_role_cache:
+            return BranchRole(user=self, branch=branch)
+        return self._bullet_role_cache[branch.id]
