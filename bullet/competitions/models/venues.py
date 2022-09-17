@@ -12,6 +12,7 @@ class Venue(models.Model):
     short_name = models.CharField(max_length=256)
     address = AddressField()
     country = CountryField()
+    is_online = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.name} at {self.address}"

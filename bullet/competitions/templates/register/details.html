@@ -50,6 +50,7 @@
             {% endblocktrans %}
         </div>
 
+        {% if not venue.is_online %}
         <div class="mb-4">
             <label>
                 <input type="checkbox" class="checkbox" name="consent_photos">
@@ -60,6 +61,7 @@
                 {% endblocktrans %}
             </label>
         </div>
+        {% endif %}
 
         <div class="mb-8 prose prose-sm max-w-none">
             {% url "page" slug="privacy" as link %}
@@ -70,6 +72,7 @@
 
         <button type="submit" class="btn">{% trans "Register" %}</button>
 
+        {% if not venue.is_online %}
         <div class="mt-8 prose prose-sm max-w-none">
             {% blocktrans with link=link %}
                 <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
@@ -79,5 +82,6 @@
                 does not affect the rights of other affected persons.
             {% endblocktrans %}
         </div>
+        {% endif %}
     </form>
 {% endblock %}
