@@ -64,9 +64,9 @@ class CzechSchoolImporter(BaseSchoolImporter):
                     row["RED_IZO"],
                 )
 
-            if row['Typ'][0] == "B":
+            if row["Typ"][0] == "B":
                 school.types.append("zs")
-            elif row['Typ'][0] == "C":
+            elif row["Typ"][0] == "C":
                 school.types.extend(["ss", "6gym", "8gym"])
             else:
                 continue
