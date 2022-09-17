@@ -105,7 +105,7 @@
 <footer class="bg-primary-lighter md:mt-48 mt-32 md:py-24 py-12">
     <div class="container mx-auto px-2">
         <h2 class="font-bold text-primary text-2xl mb-8">Our Partners</h2>
-        <div class="grid grid-cols-2 md:grid-cols-8 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
             <!-- The first one is representative -->
             {% for item in partners %}
                 <a href="{{ item.url }}" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
@@ -115,7 +115,7 @@
         </div>
 
         <h2 class="font-bold text-primary text-2xl mb-8 md:mt-16 mt-10">Organizers</h2>
-        <div class="grid grid-cols-8 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
             {% for item in organizers %}
                 <a href="{{ item.url }}" class="bg-white h-24 md:h-32 rounded-md flex items-center justify-center p-4">
                     <img src="{{ item.image.url }}" class="max-w-full max-h-full" alt="{{ item.name }}">
