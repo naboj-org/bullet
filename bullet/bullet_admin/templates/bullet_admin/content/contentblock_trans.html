@@ -1,0 +1,45 @@
+{% extends "bullet_admin/base.html" %}
+{% load i18n %}
+
+{% block title %}Block translation list{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Block translation list</h2>
+        </header>
+        <div class="p-4">
+            <p class="mb-4">The website always shows the most specific block to the user.</p>
+
+            <table class="w-full mb-4">
+                <thead>
+                    <tr class="bg-gray-100 text-left border-b">
+                        <th class="p-3">Branch</th>
+                        <th class="p-3">Language</th>
+                        <th class="p-3">Country</th>
+                        <th class="p-3">Content</th>
+                        <th class="p-3"></th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    {% for block in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">{% if block.branch %}{{ request.BRANCH.name }}{% else %}<span class="text-gray-500">(all)</span>{% endif %}</td>
+                        <td class="p-3">{% if block.language %}{% get_language_info for block.language as lang %}{{ lang.name }}{% else %}<span class="text-gray-500">(all)</span>{% endif %}</td>
+                        <td class="p-3">{% if block.country %}{{ block.country.name }}{% else %}<span class="text-gray-500">(all)</span>{% endif %}</td>
+                        <td class="p-3 text-sm">{{ block.content|safe }}</td>
+                        <td class="p-3 text-right">
+                            {% if block.branch %}
+                            <a href="{% url "badmin:contentblock_edit" pk=block.id %}" class="text-primary underline hover:text-primary-dark">Edit</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{% url "badmin:contentblock_create" %}?group={{ group|iriencode }}&reference={{ reference|iriencode }}" class="btn-admin bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New translation</a>
+        </div>
+    </article>
+{% endblock %}

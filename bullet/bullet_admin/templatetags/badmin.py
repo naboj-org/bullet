@@ -27,7 +27,7 @@ def admin_sidebar(context):
                 "Content",
                 (
                     ("fa-file-text", "Pages", reverse("badmin:page_list")),
-                    ("fa-cube", "Content blocks", "#"),
+                    ("fa-cube", "Blocks", reverse("badmin:contentblock_list")),
                 ),
             )
         )

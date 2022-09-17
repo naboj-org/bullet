@@ -1,0 +1,25 @@
+{% extends "bullet_admin/base.html" %}
+{% load bform %}
+
+{% block title %}{% if not object %}Create{% else %}Edit{% endif %} translation{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">{% if not object %}Create{% else %}Edit{% endif %} translation</h2>
+        </header>
+        <form method="post" class="p-4">
+            {% csrf_token %}
+            {% bformv form %}
+
+            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
+        </form>
+        {% if object %}
+        <hr>
+        <form method="post" class="p-4" action="{% url "badmin:contentblock_delete" pk=object.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete block</button>
+        </form>
+        {% endif %}
+    </article>
+{% endblock %}

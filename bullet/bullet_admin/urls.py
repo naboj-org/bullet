@@ -13,4 +13,29 @@ urlpatterns = [
         content.PageDeleteView.as_view(),
         name="page_delete",
     ),
+    path(
+        "content/blocks/",
+        content.ContentBlockListView.as_view(),
+        name="contentblock_list",
+    ),
+    path(
+        "content/blocks/trans/<group>/<reference>/",
+        content.ContentBlockTranslationListView.as_view(),
+        name="contentblock_trans",
+    ),
+    path(
+        "content/blocks/new/",
+        content.ContentBlockCreateView.as_view(),
+        name="contentblock_create",
+    ),
+    path(
+        "content/blocks/edit/<pk>/",
+        content.ContentBlockEditView.as_view(),
+        name="contentblock_edit",
+    ),
+    path(
+        "content/blocks/delete/<pk>/",
+        content.ContentBlockDeleteView.as_view(),
+        name="contentblock_delete",
+    ),
 ]
