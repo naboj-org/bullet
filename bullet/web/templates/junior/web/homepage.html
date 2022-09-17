@@ -13,7 +13,9 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-12 md:mb-16 bold-primary">
                 {% content_block "home-junior:title" %}
             </h1>
-            <a href="#" class="hero-btn">Registration</a>
+            {% if open_competition %}
+            <a href="{% url "register" %}" class="hero-btn">Registration</a>
+            {% endif %}
 
             <p class="font-light mt-12 md:mt-16">Registration ends soon. REGISTER NOW!</p>
         </div>
