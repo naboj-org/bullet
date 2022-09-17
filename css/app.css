@@ -60,7 +60,7 @@
 }
 
 .input {
-    @apply mt-1 block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0;
+    @apply block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0;
 }
 
 .checkbox {
@@ -102,4 +102,12 @@
 .bold-primary b, .bold-primary strong {
     @apply text-primary;
     font-weight: inherit;
+}
+
+.btn-admin {
+    @apply rounded-md text-white py-2 px-3 font-bold;
+}
+
+.btn-admin-sm {
+    @apply rounded-md text-white font-bold text-sm py-1 px-2.5;
 }

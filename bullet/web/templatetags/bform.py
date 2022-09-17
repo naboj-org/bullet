@@ -16,3 +16,8 @@ def bcheckbox(checkbox):
 @register.inclusion_tag("form/form.html")
 def bform(form):
     return {"form": form}
+
+
+@register.inclusion_tag("form/form_vertical.html")
+def bformv(form):
+    return {"form": form}

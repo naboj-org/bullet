@@ -116,6 +116,8 @@ PASSWORD_HASHERS = [
 
 
 AUTH_USER_MODEL = "users.User"
+LOGIN_URL = "badmin:login"
+LOGIN_REDIRECT_URL = "badmin:home"
 
 LANGUAGE_CODE = "en"
 TIME_ZONE = "UTC"

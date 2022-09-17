@@ -1,11 +1,41 @@
-from django.shortcuts import render
+from bullet_admin.views import auth, content, home
 from django.urls import path
 
-
-def test(req):
-    return render(req, "bullet_admin/base.html")
-
-
+app_name = "badmin"
 urlpatterns = [
-    path("", test),
+    path("", home.HomeView.as_view(), name="home"),
+    path("login/", auth.LoginView.as_view(), name="login"),
+    path("content/pages/", content.PageListView.as_view(), name="page_list"),
+    path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
+    path("content/pages/<pk>/", content.PageEditView.as_view(), name="page_edit"),
+    path(
+        "content/pages/<pk>/delete/",
+        content.PageDeleteView.as_view(),
+        name="page_delete",
+    ),
+    path(
+        "content/blocks/",
+        content.ContentBlockListView.as_view(),
+        name="contentblock_list",
+    ),
+    path(
+        "content/blocks/trans/<group>/<reference>/",
+        content.ContentBlockTranslationListView.as_view(),
+        name="contentblock_trans",
+    ),
+    path(
+        "content/blocks/new/",
+        content.ContentBlockCreateView.as_view(),
+        name="contentblock_create",
+    ),
+    path(
+        "content/blocks/edit/<pk>/",
+        content.ContentBlockEditView.as_view(),
+        name="contentblock_edit",
+    ),
+    path(
+        "content/blocks/delete/<pk>/",
+        content.ContentBlockDeleteView.as_view(),
+        name="contentblock_delete",
+    ),
 ]
