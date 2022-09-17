@@ -38,7 +38,7 @@ class AddressFactory(DjangoModelFactory):
 
     street_number = factory.Faker("building_number")
     route = factory.Faker("street_name")
-    locality = factory.SubFactory(LocalityFactory)
+    # locality = factory.SubFactory(LocalityFactory)
     raw = factory.Faker("address")
     latitude = factory.Faker("latitude")
     longitude = factory.Faker("longitude")
