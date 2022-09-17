@@ -15,9 +15,14 @@
             </h1>
             {% if open_competition %}
             <a href="{% url "register" %}" class="hero-btn">Registration</a>
+
+            <p class="font-light mt-12 md:mt-16">
+                {% blocktrans with end=open_competition.registration_end|timeuntil %}
+                    Registration ends in {{ end }}
+                {% endblocktrans %}
+            </p>
             {% endif %}
 
-            <p class="font-light mt-12 md:mt-16">Registration ends soon. REGISTER NOW!</p>
         </div>
         <div class="w-1/2 ml-auto text-center hidden lg:block">
             <img src="{% static 'img/junior/home/hall.jpg' %}" alt="Pupils competing" class="shadow-md rounded-lg mb-2">
