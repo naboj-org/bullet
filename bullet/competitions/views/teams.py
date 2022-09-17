@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import redirect
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from django.views.generic import FormView
 from users.models import Contestant, Team
 
@@ -53,6 +54,11 @@ class TeamEditView(FormView):
         self.can_be_changed = (
             self.category_competition.competition.competition_start > timezone.now()
         )
+
+        if self.team.confirmed_at is None:
+            self.team.confirmed_at = timezone.now()
+            self.team.save()
+            messages.success(request, _("Registration successfully confirmed."))
 
         return super(TeamEditView, self).dispatch(request, *args, **kwargs)
 
