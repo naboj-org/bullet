@@ -47,4 +47,3 @@ class ContestantFactory(DjangoModelFactory):
 
     full_name = factory.Faker("name")
     grade = factory.Faker("random_element", elements=Grade.objects.all())
-    birth_year = factory.Faker("year")
