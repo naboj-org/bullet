@@ -1,6 +1,5 @@
 from competitions.models import Competition
 from django.http import HttpResponse
-from django.utils import timezone
 from django.views.generic import TemplateView
 from web.models import Organizer, Partner
 
@@ -33,9 +32,6 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
                 "open_competition"
             ] = Competition.objects.currently_running_registration().get(
                 branch=self.branch
-            )
-            context["registration_open_for"] = (
-                context["open_competition"].registration_end - timezone.now()
             )
         except Competition.DoesNotExist:
             pass

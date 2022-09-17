@@ -9,9 +9,14 @@
 <div class="flex">
     <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
         <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
-        <a href="#" class="hero-btn">Registration</a>
-
-        <p class="font-light mt-12 md:mt-16">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio.</p>
+        {% if open_competition %}
+        <a href="{% url "register" %}" class="hero-btn">Registration</a>
+        <p class="font-light mt-12 md:mt-16">
+            {% blocktrans with end=open_competition.registration_end|timeuntil %}
+                Registration ends in {{ end }}
+            {% endblocktrans %}
+        </p>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
