@@ -111,3 +111,53 @@
 .btn-admin-sm {
     @apply rounded-md text-white font-bold text-sm py-1 px-2.5;
 }
+
+/* timeline */
+.timeline {
+    position: relative;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    background-color: rgb(255, 255, 255);
+    border: rgb(218, 218, 218) solid 2px;
+    border-radius: 10px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.timeline .container {
+    padding: 10px 0 10px 40px;
+    position: relative;
+    width: 100%;
+}
+
+.timeline .container::after {
+    content: '';
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    left: -9px;
+    border: solid 4px var(--primary);
+    background-color: white;
+    top: 15px;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.timeline .content {
+    position: relative;
+    text-align: left;
+    left: 0;
+}
+
+.timeline .content::after {
+    left: -3px;
+}
+
+.timeline .container.gray-border::after {
+    border-color: #9ca3af;
+}
