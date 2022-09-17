@@ -26,7 +26,10 @@ class CountryLanguageMiddleware:
 
         if c and not request._is_admin_domain:
             cache = get_country_cache()
-            if request.BRANCH is not None and lang not in cache[request.BRANCH.id][c]:
+            if request.BRANCH is not None and (
+                c not in cache[request.BRANCH.id]
+                or lang not in cache[request.BRANCH.id][c]
+            ):
                 return HttpResponseNotFound(
                     "BranchCountryLanguage combination not found."
                 )

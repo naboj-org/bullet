@@ -8,15 +8,16 @@ from django.utils.translation.trans_real import parse_accept_lang_header
 from geoip2.errors import AddressNotFoundError
 
 
+def _ip_from_request(request: HttpRequest) -> str:
+    if "HTTP_X_FORWARDED_FOR" in request.META:
+        return request.META["HTTP_X_FORWARDED_FOR"].split(",")[-1].strip()
+    return request.META.get("REMOTE_ADDR", "")
+
+
 def _country_from_ip(request: HttpRequest) -> str | None:
-    x_forwarded_for: str = request.META.get("HTTP_X_FORWARDED_FOR", "")
-    if x_forwarded_for:
-        ip: str = x_forwarded_for.split(",")[-1].strip()
-    else:
-        ip: str = request.META.get("REMOTE_ADDR", "")
     try:
         g: GeoIP2 = GeoIP2()
-        return g.country_code(ip).lower()
+        return g.country_code(_ip_from_request(request)).lower()
     except GeoIP2Exception:
         return None
     except AddressNotFoundError:
@@ -38,22 +39,26 @@ def _language_from_header(request: HttpRequest) -> list[str]:
 def get_country_language_from_request(request: HttpRequest) -> tuple[str, str] | None:
     cache: dict[int, dict[str, list[str]]] = get_country_cache()
     country: str | None = None
-    lang: str | None = None
     langs: list[str] = _language_from_header(request)
-    if "bullet_country" in request.COOKIES:
-        country, lang = request.COOKIES["bullet_country"].split("|", 1)
 
+    # Check existing cookies
+    cookie = request.COOKIES.get("bullet_country", "")
+    if "|" in cookie:
+        country, lang = request.COOKIES["bullet_country"].split("|", 1)
+        langs.insert(0, lang)
+
+    # If cookie was absent, try getting country from IP
     if country is None:
         country = _country_from_ip(request)
 
-    if country is None or country not in cache[request.BRANCH.id]:
+    # We failed to detect country or it's not available for this branch
+    if not country or country not in cache[request.BRANCH.id]:
         return None
 
-    if lang:
-        langs.insert(0, lang)
-
+    # We check all languages from Accept-Language header and select the first available
     for language in langs:
         if language in cache[request.BRANCH.id][country]:
             return country, language
 
+    # If everything failed, we fallback to country's first language
     return country, cache[request.BRANCH.id][country][0]
