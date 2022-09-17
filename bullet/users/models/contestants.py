@@ -61,7 +61,6 @@ class Contestant(models.Model):
     )
 
     full_name = models.CharField(max_length=256)
-    birth_year = models.PositiveIntegerField()
     grade = models.ForeignKey(
         "education.Grade",
         on_delete=models.CASCADE,

@@ -43,7 +43,6 @@
                     <div class="grid grid-cols-1 md:grid-cols-contestants-edit gap-2 mb-8">
                         <div class="w-auto md:block hidden"></div>
                         <div class="hidden md:block">{% trans "Full name" %}</div>
-                        <div class="hidden md:block">{% trans "Birth year" %}</div>
                         <div class="hidden md:block">{% trans "Grade" %}</div>
                         <div class="hidden md:block text-center">{% trans "Delete?" %}</div>
 
@@ -55,10 +54,6 @@
                         <div>
                             <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name:</label>
                             {% bfield f.full_name %}
-                        </div>
-                        <div>
-                            <label class="md:hidden font-bold {% if f.birth_year.errors %}text-red-600{% endif %}" for="id_{{ f.birth_year.html_name }}">Birth year:</label>
-                            {% bfield f.birth_year %}
                         </div>
                         <div>
                             <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">Graduation year:</label>

@@ -79,7 +79,6 @@ class ContestantForm(ModelForm):
         model = Contestant
         fields = [
             "full_name",
-            "birth_year",
             "grade",
         ]
 

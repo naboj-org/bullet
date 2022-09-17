@@ -12,8 +12,8 @@ module.exports = {
         "primary-dark": "var(--primary-dark)",
       },
       gridTemplateColumns: {
-        'registration': 'min-content 3fr 2fr 2fr',
-        'contestants-edit': 'min-content 3fr 2fr 2fr min-content',
+        'registration': 'min-content 3fr 2fr',
+        'contestants-edit': 'min-content 3fr 2fr min-content',
       },
       typography: {
         DEFAULT: {
