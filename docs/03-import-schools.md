@@ -12,8 +12,18 @@ located in `bullet` sub-directory.
 ## Slovak school import
 
 - Download latest data form <https://crinfo.iedu.sk/RISPortal/register/ExportCSV?id=1>.
-- Saved it as `bullet/sk.csv`
+- Save it as `bullet/sk.csv`
 - run
 ```shell
-./helper.py cmd importschools sk bullet/sk.csv
+./helper.py cmd importschools sk sk.csv
+```
+
+
+## Czech school import
+
+- Download latest data form <http://stistko.uiv.cz/registr/vybskolrn.asp> -> "Vyhledat" -> "Export do Excelu" -> "Seznam škol".
+- Save it as `bullet/cz.csv`
+- run
+```shell
+./helper.py cmd importschools cz cz.csv
 ```
