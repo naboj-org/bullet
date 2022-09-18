@@ -1,0 +1,13 @@
+from django.contrib import admin
+from problems import models
+
+
+class CategoryProblemAdminInline(admin.TabularInline):
+    model = models.CategoryProblem
+
+
+@admin.register(models.Problem)
+class ProblemAdmin(admin.ModelAdmin):
+    list_filter = ("competition__name", "competition__branch")
+    list_display = ("name", "competition")
+    inlines = (CategoryProblemAdminInline,)
