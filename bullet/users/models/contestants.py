@@ -4,6 +4,7 @@ import string
 from django.conf import settings
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from phonenumbers import PhoneNumberFormat
 
 
 class Team(models.Model):
@@ -45,6 +46,12 @@ class Team(models.Model):
         if self.name:
             return self.name
         return str(self.school)
+
+    @property
+    def contact_phone_pretty(self):
+        if not self.contact_phone:
+            return ""
+        return self.contact_phone.format_as(PhoneNumberFormat.INTERNATIONAL)
 
     def save(self, *args, **kwargs):
         if not self.secret_link:
