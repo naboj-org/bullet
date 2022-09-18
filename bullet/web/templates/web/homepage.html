@@ -12,7 +12,7 @@
         {% if open_competition %}
         <a href="{% url "register" %}" class="hero-btn">Registration</a>
         <p class="font-light mt-12 md:mt-16">
-            {% blocktrans with end=open_competition.registration_end|timeuntil %}
+            {% blocktrans trimmed with end=open_competition.registration_end|timeuntil %}
                 Registration ends in {{ end }}
             {% endblocktrans %}
         </p>
