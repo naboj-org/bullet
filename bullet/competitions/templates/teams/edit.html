@@ -13,6 +13,13 @@
 
         <section class="py-5 my-5 border-b">
             <h2 class="font-bold text-2xl mb-6">{% trans "Team information" %}</h2>
+        
+            {% if team.is_waiting %}
+            <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-4 rounded-md">
+                <i class="fas fa-exclamation-triangle mx-1"></i> <b>{% trans "Your team is in the waiting list." %}</b>
+                {% trans "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes." %}
+            </div>
+            {% endif %}
 
             <p>
                 <strong>{% trans "School" %}:</strong>
