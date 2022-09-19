@@ -28,7 +28,7 @@
             <p><strong>{% trans "Full name" %}:</strong> {{ team.contact_name }}</p>
             <p><strong>{% trans "Email" %}:</strong> {{ team.contact_email }}</p>
             {% if team.contact_phone %}
-                <p><strong>{% trans "Phone number" %}:</strong> {{ team.contact_phone }}</p>
+                <p><strong>{% trans "Phone number" %}:</strong> {{ team.contact_phone_pretty }}</p>
             {% endif %}
         </section>
         <section>
