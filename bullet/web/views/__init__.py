@@ -1,9 +1,6 @@
 from competitions.models import Competition
-from django.http import HttpResponse
 from django.views.generic import TemplateView
 from web.models import Organizer, Partner
-
-from bullet.utils.email import send_email
 
 
 class BranchSpecificTemplateMixin:
@@ -40,15 +37,3 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         context["organizers"] = Organizer.objects.filter(branch=self.branch).all()
 
         return context
-
-
-def test(request):
-    send_email(
-        request.BRANCH,
-        "adam@zahradnik.xyz",
-        "Registrácia tímu",
-        "mail/messages/registration.html",
-        "mail/messages/registration.txt",
-        {},
-    )
-    return HttpResponse("417")

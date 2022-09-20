@@ -20,7 +20,6 @@ urlpatterns = [
     #     name="registration_confirm",
     # ),
     # path("teams/", teams.TeamList.as_view(), name="teams"),
-    path("test/", views.test),
     path("admin/", lambda r: redirect("/admin/")),
     path("<slug>/", page.PageView.as_view(), name="page"),
 )
