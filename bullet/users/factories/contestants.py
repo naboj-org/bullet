@@ -28,7 +28,6 @@ class TeamFactory(DjangoModelFactory):
     confirmed_at = factory.Faker(
         "past_datetime", tzinfo=timezone.get_current_timezone()
     )
-    approved_at = factory.Faker("past_datetime", tzinfo=timezone.get_current_timezone())
 
     competition_venue = factory.Faker(
         "random_element", elements=CompetitionVenue.objects.all()
