@@ -12,7 +12,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.views.generic import FormView, TemplateView, DeleteView
+from django.views.generic import DeleteView, FormView, TemplateView
 from users.logic import add_team_to_competition
 from users.models import Contestant, Team
 
@@ -60,7 +60,7 @@ class TeamEditView(FormView):
         )
         self.category_competition = self.team.competition_venue.category_competition
         self.can_be_changed = (
-                self.category_competition.competition.competition_start > timezone.now()
+            self.category_competition.competition.competition_start > timezone.now()
         )
 
         if self.team.confirmed_at is None:
