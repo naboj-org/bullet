@@ -3,9 +3,9 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}Edit Team{% endblock %}
+{% block title %}{% trans "Edit team" %}{% endblock %}
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">Edit Team</h1>
+<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">{% trans "Edit team" %}</h1>
 {% endblock %}
 
 {% block content %}
@@ -59,22 +59,22 @@
                             {{ f.id }}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name:</label>
+                            <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">{% trans "Full name" %}:</label>
                             {% bfield f.full_name %}
                         </div>
                         <div>
-                            <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">Graduation year:</label>
+                            <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">{% trans "Grade" %}:</label>
                             {% bfield f.grade %}
                         </div>
                         <div class="flex md:justify-center items-center gap-2">
                             {% bcheckbox f.DELETE %}
-                            <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">Delete?</label>
+                            <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">{% trans "Delete?" %}</label>
                         </div>
                         {% endfor %}
                     </div>
 
                     <div class="flex gap-4 items-baseline">
-                        <button type="submit" class="btn">Update</button>
+                        <button type="submit" class="btn">{% trans "Update" %}</button>
                         <a class="underline text-primary hover:text-primary-dark" href="{% url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
                     </div>
                 </form>
