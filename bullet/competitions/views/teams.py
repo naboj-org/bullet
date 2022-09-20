@@ -2,10 +2,12 @@ from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
-from django.shortcuts import redirect
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.views.generic import FormView
+from django.views.generic import DeleteView, FormView
 from users.logic import add_team_to_competition
 from users.models import Contestant, Team
 
@@ -68,3 +70,16 @@ class TeamEditView(FormView):
         if not self.can_be_changed:
             raise PermissionDenied
         return super(TeamEditView, self).post(request, *args, **kwargs)
+
+
+class TeamDeleteView(DeleteView):
+    template_name = "teams/delete.html"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
+
+    def form_valid(self, form):
+        self.object.delete()
+        messages.success(self.request, _("Team was unregistered."))
+        # TODO: notify admins
+        return HttpResponseRedirect(reverse("homepage"))

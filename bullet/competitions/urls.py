@@ -28,4 +28,9 @@ urlpatterns = [
         name="register_thanks",
     ),
     path("teams/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
+    path(
+        "teams/<secret_link>/unregister/",
+        teams.TeamDeleteView.as_view(),
+        name="team_delete",
+    ),
 ]
