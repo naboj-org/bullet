@@ -1,13 +1,18 @@
+from collections import defaultdict
+
 from competitions.forms.registration import ContestantForm
+from competitions.models import Competition, CompetitionVenue
+from countries.models import BranchCountry
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db.models import QuerySet
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.views.generic import DeleteView, FormView
+from django.views.generic import DeleteView, FormView, TemplateView
 from users.logic import add_team_to_competition
 from users.models import Contestant, Team
 
@@ -70,6 +75,48 @@ class TeamEditView(FormView):
         if not self.can_be_changed:
             raise PermissionDenied
         return super(TeamEditView, self).post(request, *args, **kwargs)
+
+
+class TeamListView(TemplateView):
+    template_name = "teams/list.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data()
+        competition: Competition = Competition.objects.get_current_competition(
+            self.request.BRANCH
+        )
+
+        country: str = self.request.GET.get(
+            "country", self.request.COUNTRY_CODE
+        ).upper()
+        venues: QuerySet[CompetitionVenue] = (
+            CompetitionVenue.objects.filter(
+                category_competition__competition=competition, venue__country=country
+            )
+            .order_by("venue__name")
+            .select_related("venue", "category_competition")
+            .all()
+        )
+        teams: QuerySet[Team] = (
+            Team.objects.filter(competition_venue__in=venues)
+            .prefetch_related("contestants", "contestants__grade")
+            .select_related("school")
+            .all()
+        )  # TODO: show only competing teams
+
+        venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
+        for team in teams:
+            venue_teams[team.competition_venue_id].append(team)
+
+        ctx["venues"] = [{"venue": v, "teams": venue_teams[v.id]} for v in venues]
+        ctx["sites"] = venues
+        ctx["country"] = country
+        ctx["countries"] = (
+            BranchCountry.objects.filter(branch=self.request.BRANCH)
+            .order_by("country")
+            .all()
+        )
+        return ctx
 
 
 class TeamDeleteView(DeleteView):

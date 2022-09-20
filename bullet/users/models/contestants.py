@@ -100,4 +100,7 @@ class Contestant(models.Model):
     )
 
     def __str__(self):
-        return self.full_name
+        name = self.full_name
+        if self.grade:
+            name += f" ({self.grade.name})"
+        return name
