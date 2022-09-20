@@ -65,10 +65,10 @@ class CategoryCompetition(models.Model):
 
     educations = models.ManyToManyField("education.Education")
 
-    problems_per_team = models.PositiveIntegerField(null=True, blank=True)
-    max_teams_per_school = models.PositiveIntegerField(null=True, blank=True)
-    max_teams_second_round = models.PositiveIntegerField(null=True, blank=True)
-    max_members_per_team = models.PositiveIntegerField(null=True, blank=True)
+    problems_per_team = models.PositiveIntegerField()
+    max_teams_per_school = models.PositiveIntegerField()
+    max_teams_second_round = models.PositiveIntegerField()
+    max_members_per_team = models.PositiveIntegerField()
 
     ranking = ArrayField(
         base_field=models.PositiveIntegerField(choices=RankingCriteria.choices)

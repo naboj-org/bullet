@@ -3,8 +3,14 @@ import string
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Max
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
+
+
+class TeamQuerySet(models.QuerySet):
+    def competing(self):
+        return self.filter(confirmed_at__isnull=False, is_waiting=False)
 
 
 class Team(models.Model):
@@ -21,7 +27,6 @@ class Team(models.Model):
 
     registered_at = models.DateTimeField(auto_now_add=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
-    approved_at = models.DateTimeField(null=True, blank=True)
 
     competition_venue = models.ForeignKey(
         "competitions.CompetitionVenue", on_delete=models.CASCADE
@@ -29,8 +34,11 @@ class Team(models.Model):
     number = models.IntegerField(null=True, blank=True)
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
+    is_waiting = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
     consent_photos = models.BooleanField(default=False)
+
+    objects = TeamQuerySet.as_manager()
 
     class Meta:
         unique_together = [
@@ -60,6 +68,21 @@ class Team(models.Model):
                 for i in range(48)
             )
         super().save(*args, **kwargs)
+
+    def to_waitlist(self):
+        self.number = None
+        self.is_waiting = True
+
+    def to_competition(self):
+        last_number = Team.objects.filter(
+            competition_venue=self.competition_venue
+        ).aggregate(Max("number"))["number__max"]
+        if not last_number:
+            self.number = 1
+        else:
+            self.number = last_number + 1
+        self.is_waiting = False
+        # TODO: in_school_symbol
 
 
 class Contestant(models.Model):

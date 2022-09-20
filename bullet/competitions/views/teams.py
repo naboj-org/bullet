@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import FormView
+from users.logic import add_team_to_competition
 from users.models import Contestant, Team
 
 
@@ -57,6 +58,7 @@ class TeamEditView(FormView):
 
         if self.team.confirmed_at is None:
             self.team.confirmed_at = timezone.now()
+            add_team_to_competition(self.team)
             self.team.save()
             messages.success(request, _("Registration successfully confirmed."))
 
