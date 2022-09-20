@@ -19,8 +19,10 @@ def school_has_capacity(team: Team) -> bool:
     ):
         school_limit = category.max_teams_second_round
 
-    teams_from_school = Team.objects.competing().filter(
-        competition_venue=venue, school=team.school
+    teams_from_school = (
+        Team.objects.competing()
+        .filter(competition_venue=venue, school=team.school)
+        .count()
     )
     if school_limit == 0:
         return True
