@@ -47,7 +47,7 @@
     {% endblock %}
 
     {% block footer %}
-    <footer class="text-gray-700 text-center md:mt-16 mt-10">&copy; Naboj IT Team {% now "Y" %} Timezone: {% now "e (O)" %}</footer>
+        {% include "web/snippets/copyright.html" %}
     {% endblock %}
 
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>

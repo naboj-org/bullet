@@ -1,0 +1,6 @@
+{% load i18n %}
+<footer class="text-gray-700 text-center md:mt-16 mt-10 mb-12">
+    {% now "e" as tz_name %}{% now "O" as tz_offset %}
+    <p>{% blocktrans with tz_name=tz_name tz_offset=tz_offset %}All times are {{ tz_name }} ({{ tz_offset }}) unless stated otherwise.{% endblocktrans %}</p>
+    <p class="mt-2 text-sm">&copy; Naboj IT Team {% now "Y" %}</p>
+</footer>
