@@ -10,6 +10,7 @@
     {% empty %}
         {% if request.GET.q %}
         <div class="text-red-800">
+            {# Translators: The user attempted to search for a school, but we were unable to find any matching results. #}
             <p class="text-lg font-bold">{% trans "No schools matched your query." %}</p>
             <p>{% trans "If you believe this is an error, contact us." %}</p>
         </div>

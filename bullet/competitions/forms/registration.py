@@ -46,6 +46,8 @@ class SchoolSelectForm(forms.Form):
             id=school,
         ).first()
         if obj is None:
+            # Translators: This is a rare error that occurs when the user selects
+            # a school that we don't have in our database.
             raise ValidationError(_("Selected school is not valid."))
 
         return school
@@ -102,6 +104,8 @@ class ContestantForm(ModelForm):
         grade_obj = Grade.objects.filter(id=grade).first()
 
         if grade_obj is None:
+            # Translators: This is a rare error that occurs when the user selects
+            # a grade that we don't have in our database.
             raise ValidationError(_("Please select a valid grade."))
 
         return grade_obj
