@@ -11,7 +11,7 @@
     <main class="mx-auto w-full max-w-4xl p-3 mt-8">
         <form method="POST">
             {% csrf_token %}
-            <p class="mb-4">Are you certain you want to remove your team from the competition? This action is irreversible.</p>
+            <p class="mb-4">{% trans "Are you certain you want to remove your team from the competition? This action is irreversible." %}</p>
 
             <button type="submit" class="btn">{% trans "Unregister" %}</button>
         </form>
