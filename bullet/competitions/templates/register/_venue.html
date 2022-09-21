@@ -16,6 +16,7 @@
     </button>
     {% empty %}
     <div class="text-red-800">
+        {# Translators: The user attempted to search for a venue, but we were unable to find any matching results. #}
         <p class="text-lg font-bold">{% trans "No venues matched your query." %}</p>
     </div>
     {% endfor %}
