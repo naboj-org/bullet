@@ -6,5 +6,6 @@
 2. [Installing Python and dependencies](01-install.md)
 3. [Setting up your IDE](02-ide.md)
 4. [Import schools](03-import-schools.md)
+5. [Localization](04-translations.md)
 
 TODO: Some information about our database schema and some patterns used?
