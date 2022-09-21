@@ -2,7 +2,6 @@ from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
-from django.utils.translation import gettext_lazy as _
 from web.fields import BranchField
 
 
@@ -51,9 +50,9 @@ class CategoryCompetitionQueryset(models.QuerySet):
 
 class CategoryCompetition(models.Model):
     class RankingCriteria(models.IntegerChoices):
-        SCORE = 1, _("Score")
-        PROBLEMS = 2, _("Problems")
-        TIME = 3, _("Time")
+        SCORE = 1, "Score"
+        PROBLEMS = 2, "Problems"
+        TIME = 3, "Time"
 
     competition = models.ForeignKey(
         "competitions.Competition",

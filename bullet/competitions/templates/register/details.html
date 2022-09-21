@@ -43,7 +43,7 @@
 
         <div class="mb-4 prose prose-sm max-w-none">
             {% url "page" slug="rules" as link %}
-            {% blocktrans with link=link %}
+            {% blocktrans trimmed with link=link %}
                 By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to
                 the <a href="{{ link }}">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that
                 the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition.
@@ -54,7 +54,7 @@
         <div class="mb-4">
             <label>
                 <input type="checkbox" class="checkbox" name="consent_photos">
-                {% blocktrans %}
+                {% blocktrans trimmed %}
                     The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of
                     the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
                     for marketing and promotional purposes of the Competition. <sup>[1]</sup>
@@ -65,7 +65,7 @@
 
         <div class="mb-8 prose prose-sm max-w-none">
             {% url "page" slug="privacy" as link %}
-            {% blocktrans with link=link %}
+            {% blocktrans trimmed with link=link %}
                 More information on the processing of personal data can be found <a href="{{ link }}">on this page</a>.
             {% endblocktrans %}
         </div>
@@ -74,7 +74,7 @@
 
         {% if not venue.is_online %}
         <div class="mt-8 prose prose-sm max-w-none">
-            {% blocktrans with link=link %}
+            {% blocktrans trimmed with link=link %}
                 <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
                 This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
                 Withdrawal of consent does not affect the legality of the processing before its withdrawal.

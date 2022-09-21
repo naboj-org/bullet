@@ -19,7 +19,7 @@ ENV DEBUG 0
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
     && apt -y upgrade \
-    && apt -y install libmaxminddb0 libgdal28 \
+    && apt -y install libmaxminddb0 gettext \
     && apt -y clean \
     && rm -rf /var/lib/apt/lists/*
 
