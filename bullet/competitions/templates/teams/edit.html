@@ -31,6 +31,13 @@
             </p>
             <p><strong>{% trans "Venue" %}:</strong> {{ team.competition_venue }}</p>
 
+            {% if team.competition_venue.local_start %}
+            <p class="text-red-600">
+                <i class="fas fa-exclamation-triangle"></i>
+                {% blocktrans with time=team.competition_venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
+            </p>
+            {% endif %}
+
             <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
             <p><strong>{% trans "Full name" %}:</strong> {{ team.contact_name }}</p>
             <p><strong>{% trans "Email" %}:</strong> {{ team.contact_email }}</p>
