@@ -18,17 +18,15 @@ class SpanishSchoolImporter(BaseSchoolImporter):
 
     def get_schools(self) -> Iterable[ImportedSchool]:
         reader = csv.DictReader(self.file)
-        types = []
 
         for row in reader:
             address = f"{row['Address']}, {row['City/Town']}"
-            types.append("es")
 
             yield ImportedSchool(
                 row["Name of the School"],
                 address.strip(" ,"),
                 "ES",
                 "",
-                types,
+                ["es"],
                 row["School Id."],
             )
