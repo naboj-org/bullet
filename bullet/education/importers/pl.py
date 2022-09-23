@@ -40,6 +40,6 @@ class PolishSchoolImporter(BaseSchoolImporter):
                 address.strip(", "),
                 "PL",
                 "",
-                self.type_mapping[row["Typ"]],
-                row["Numer RSPO"],
+                [self.type_mapping[row["Typ"]]],
+                row[reader.fieldnames[0]],
             )
