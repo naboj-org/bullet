@@ -9,10 +9,6 @@ class PageForm(forms.ModelForm):
         model = Page
         fields = ("title", "slug", "language", "countries", "content")
 
-        help_texts = {
-            "content": "Supports Markdown syntax.",
-        }
-
         widgets = {
             "countries": forms.CheckboxSelectMultiple(),
             "content": forms.Textarea(attrs={"rows": 30}),

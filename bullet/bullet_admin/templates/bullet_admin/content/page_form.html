@@ -4,7 +4,8 @@
 {% block title %}{% if create %}Create{% else %}Edit{% endif %} page{% endblock %}
 {% block extrahead %}
     <link rel="stylesheet" href="{% static 'app.css' %}" type="text/css"/>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js" integrity="sha512-SYfDUYPg5xspsG6OOpXU366G8SZsdHOhqk/icdrYJ2E/WKZxPxze7d2HD3AyXpT7U22PZ5y74xRpqZ6A2bJ+kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script defer src="https://cdn.jsdelivr.net/combine/npm/easymde@2.18.0/dist/easymde.min.js,npm/markdown-it-footnote@3.0.3/dist/markdown-it-footnote.min.js,npm/markdown-it-abbr@1.0.4/dist/markdown-it-abbr.min.js,npm/markdown-it@13.0.1/dist/markdown-it.min.js,npm/markdown-it-admon@1.0.0/dist/markdown-it-admon.min.js,npm/markdown-it-attrs@4.1.4/markdown-it-attrs.browser.min.js"></script>
     <script defer src="{% static 'js/markdown.js' %}"></script>
 {% endblock %}
 {% block content %}
@@ -15,8 +16,7 @@
         <form method="post" class="p-4">
             {% csrf_token %}
             {% bformv form %}
-            <h3>Preview</h3>
-            <section id="markdown-render" class="border border-gray-500 prose max-w-none p-2 mb-4 rounded-md"></section>
+
             <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
         </form>
         {% if object %}
