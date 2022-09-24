@@ -49,7 +49,7 @@ class TeamEditView(FormView):
 
         form.min_num = 0
         form.max_num = self.category_competition.max_members_per_team
-        form.extra = self.category_competition.max_members_per_team - 1
+        form.extra = self.category_competition.max_members_per_team
         return form
 
     def dispatch(self, request, *args, **kwargs):
