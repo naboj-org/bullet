@@ -46,6 +46,7 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
 @admin.register(Venue)
 class VenueAdmin(admin.ModelAdmin):
     list_display = ("name", "short_name", "address")
+    search_fields = ("name",)
 
 
 @admin.register(CompetitionVenue)
@@ -57,6 +58,7 @@ class CompetitionVenueAdmin(admin.ModelAdmin):
         "accepted_languages",
         "local_start",
     )
+    autocomplete_fields = ("venue",)
 
 
 @admin.register(Wildcard)
