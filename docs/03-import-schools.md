@@ -18,6 +18,7 @@ located in `bullet` sub-directory.
 | Spain     | `es`     | [Náboj Junior GDrive](https://drive.google.com/file/d/10ezwc0om1DMWmeO3xV6N6ryV9sdx4sRv/view)                                                              |
 | Poland    | `pl`     | [rspo.gov.pl](https://rspo.gov.pl) -> Wyszukiwarka zaawansowana -> Typ szkoły/placówki -> Add "Szkola podstawowa" -> Szukaj -> Pobierz plik CSV s wynikami |
 | Croatia   | `hr`     | [mzos.hr](http://mzos.hr/dbApp/pregled.aspx?appName=OS) -> press "excel" icon (convert to classic CSV)                                                     |
+| France    | `fr`     | [Náboj Junior GDrive](https://docs.google.com/spreadsheets/d/1p4SW5Bu0XPgffXnlTyzBEe8yklPxWpfg/edit#gid=628139957) (convert to classic CSV)                |
 
 ## Index schools
 
