@@ -4,34 +4,28 @@
 
 {% block root_content %}
     {% block main %}
-        <div class="bg-gray-900 py-4 px-2 border-b-4 border-primary">
-            <div class="container mx-auto text-white flex flex-col md:flex-row md:items-center">
-                <div class="font-medium">
-                    {% for b in branches %}
-                    <a class="{% if branch == b %}bg-primary{% endif %} hover:bg-gray-600 px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.short_name }}</a>
-                    {% endfor %}
-                </div>
+        <nav class="mx-auto text-white flex flex-col gap-1 md:flex-row md:items-center md:align-baseline bg-gray-900 py-4 px-2 border-b-4 border-primary">
+            {% for b in branches %}
+                <a class="{% if branch == b %}bg-primary{% endif %} font-medium hover:bg-gray-600 px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.short_name }}</a>
+            {% endfor %}
 
-                <div class="md:ml-auto md:mt-0 mt-3 flex">
-                    <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300">Change Language</a>
-                </div>
-            </div>
-        </div>
+            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ml-auto">Change Language</a>
+        </nav>
 
-        <div class="bg-hero border-b border-primary">
+        <header class="bg-hero border-b border-primary">
             <div class="container mx-auto py-12 px-2 {% block heroclass %}{% endblock %}">
 
-                <div class="flex items-center gap-x-6 text-lg font-light">
+                <nav class="flex items-center gap-x-6 text-lg font-light" id="default-nav">
                     <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="w-32 mr-2">
 
                     {% include 'web/snippets/main_nav.html' %}
-                </div>
+                </nav>
 
                 {% block hero %}{% endblock %}
             </div>
-        </div>
+        </header>
 
-        <div class="border-b-2 border-primary shadow-lg transition-transform fixed bg-white top-0 transform-gpu -translate-y-full w-full z-10" id="main-nav">
+        <div class="border-b-2 border-primary shadow-lg transition-transform fixed bg-white top-0 transform-gpu -translate-y-full w-full z-10" id="backup-nav">
             <div class="container mx-auto flex items-center px-2 py-4">
                 <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="md:w-24 w-20">
 
