@@ -15,8 +15,8 @@
         <form method="post" class="p-4">
             {% csrf_token %}
             {% bformv form %}
-            <h3>Rendered page (only approximation)</h3>
-            <article id="markdown-render" class="border border-gray-700 prose max-w-none p-2 mb-4"></article>
+            <h3>Preview</h3>
+            <section id="markdown-render" class="border border-gray-500 prose max-w-none p-2 mb-4 rounded-md"></section>
             <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
         </form>
         {% if object %}
