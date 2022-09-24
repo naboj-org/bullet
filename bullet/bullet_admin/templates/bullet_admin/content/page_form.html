@@ -1,8 +1,12 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
-
+{% load static %}
 {% block title %}{% if create %}Create{% else %}Edit{% endif %} page{% endblock %}
-
+{% block extrahead %}
+    <link rel="stylesheet" href="{% static 'app.css' %}" type="text/css"/>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/13.0.1/markdown-it.min.js" integrity="sha512-SYfDUYPg5xspsG6OOpXU366G8SZsdHOhqk/icdrYJ2E/WKZxPxze7d2HD3AyXpT7U22PZ5y74xRpqZ6A2bJ+kQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script defer src="{% static 'js/markdown.js' %}"></script>
+{% endblock %}
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b">
@@ -11,7 +15,8 @@
         <form method="post" class="p-4">
             {% csrf_token %}
             {% bformv form %}
-
+            <h3>Rendered page (only approximation)</h3>
+            <article id="markdown-render" class="border border-gray-700 prose max-w-none p-2 mb-4"></article>
             <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
         </form>
         {% if object %}
