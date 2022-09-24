@@ -1,9 +1,0 @@
-build:
-  config:
-    DJANGO_SETTINGS_MODULE: bullet.settings.heroku
-  docker:
-    web: Dockerfile
-release:
-  image: web
-  command:
-    - bash -c "python manage.py collectstatic --no-input -i debug_toolbar && python manage.py migrate"
