@@ -5,7 +5,7 @@ from education.importers.base import BaseSchoolImporter, ImportedSchool
 
 
 class FrenchSchoolImporter(BaseSchoolImporter):
-    name = "es"
+    name = "fr"
 
     types = (
         (
