@@ -20,3 +20,4 @@ class BranchCountryFactory(DjangoModelFactory):
         unique=True,
     )
     timezone = factory.Faker("timezone")
+    email = factory.Faker("email")

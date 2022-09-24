@@ -10,6 +10,7 @@ class BranchCountry(models.Model):
     country = CountryField()
     languages = ChoiceArrayField(LanguageField())
     timezone = TimeZoneField()
+    email = models.EmailField()
 
     class Meta:
         constraints = [
