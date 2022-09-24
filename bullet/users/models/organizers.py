@@ -1,5 +1,4 @@
-import competitions.branches
-from bullet_admin.models import BranchRole
+from bullet_admin.models import BranchRole, CompetitionRole
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin
@@ -75,9 +74,18 @@ class User(AbstractBaseUser, PermissionsMixin):
         """Return the short name for the user."""
         return self.first_name
 
-    def get_role(self, branch: "competitions.branches.Branch") -> BranchRole:
-        if not hasattr(self, "_bullet_role_cache"):
-            self._bullet_role_cache = {r.branch: r for r in self.branchrole_set.all()}
-        if branch.id not in self._bullet_role_cache:
+    def get_branch_role(self, branch) -> BranchRole:
+        if not hasattr(self, "_branch_role_cache"):
+            self._branch_role_cache = {r.branch: r for r in self.branchrole_set.all()}
+        if branch.id not in self._branch_role_cache:
             return BranchRole(user=self, branch=branch)
-        return self._bullet_role_cache[branch.id]
+        return self._branch_role_cache[branch.id]
+
+    def get_competition_role(self, competition) -> CompetitionRole:
+        if not hasattr(self, "_competition_role_cache"):
+            self._competition_role_cache = {
+                r.competition: r for r in self.competitionrole_set.all()
+            }
+        if competition.id not in self._competition_role_cache:
+            return CompetitionRole(user=self, competition=competition)
+        return self._competition_role_cache[competition.id]
