@@ -1,4 +1,5 @@
 from address.models import AddressField
+from countries.models import BranchCountry
 from django.db import models
 from django.db.models import Count, OuterRef, Subquery, Value
 from django.db.models.functions import Coalesce
@@ -46,7 +47,7 @@ class CompetitionVenue(models.Model):
     local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)
     participants_hidden = models.BooleanField(default=False)
-    email_alias = models.EmailField(null=True, blank=True)
+    email = models.EmailField(blank=True, default="")
 
     objects = CompetitionVenueQuerySet.as_manager()
 
@@ -59,3 +60,12 @@ class CompetitionVenue(models.Model):
     @property
     def remaining_capacity(self):
         return self.capacity - self.team_set.count()
+
+    @property
+    def contact_email(self):
+        if not self.email:
+            return BranchCountry.objects.get(
+                branch=self.category_competition.competition.branch,
+                country=self.venue.country,
+            ).email
+        return self.email

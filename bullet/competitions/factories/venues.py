@@ -32,4 +32,4 @@ class CompetitionVenueFactory(DjangoModelFactory):
     )
     results_announced = factory.Faker("boolean")
     participants_hidden = factory.Faker("boolean")
-    email_alias = factory.Faker("email")
+    email = factory.Faker("email")
