@@ -60,6 +60,7 @@ class CompetitionVenueAdmin(admin.ModelAdmin):
         "local_start",
     )
     autocomplete_fields = ("venue",)
+    search_fields = ("venue",)
 
 
 @admin.register(Wildcard)
