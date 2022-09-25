@@ -1,5 +1,6 @@
 from bullet_admin.models import CompetitionRole
 from bullet_admin.utils import get_active_competition
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseDeleteView
@@ -11,7 +12,7 @@ class DeleteView(BaseDeleteView):
         return HttpResponseNotAllowed(permitted_methods=["POST"])
 
 
-class CompetitionSwitchView(TemplateView):
+class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
     template_name = "bullet_admin/competition_switch.html"
 
     def get_context_data(self, **kwargs):
