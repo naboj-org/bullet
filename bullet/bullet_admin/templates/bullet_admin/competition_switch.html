@@ -1,0 +1,21 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Change competition{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Change competition</h2>
+        </header>
+        <div class="p-4 space-y-2">
+            {% for role in roles %}
+            <div hx-trigger="click" hx-post="{% url "badmin:competition_switch" %}?competition={{ role.competition.id }}" class="cursor-pointer border rounded-md p-3 {% if role.competition == active %} bg-primary-light border-primary-dark{% else %}hover:bg-gray-100{% endif %}">
+                <div class="font-bold">{{ role.competition }}</div>
+
+                {% if role.country %}<div class="text-sm">Country administrator ({{ role.country.name }})</div>{% endif %}
+                {% if role.venue %}<div class="text-sm">Venue administrator ({{ role.venue.name }})</div>{% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </article>
+{% endblock %}

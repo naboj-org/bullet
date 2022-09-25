@@ -21,7 +21,7 @@
 
 </head>
 
-<body class="branch-{{ branch.identifier }}">
+<body class="branch-{{ branch.identifier }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     {% block root_content %}{% endblock %}
     {% block messages %}
         {% if messages %}
@@ -46,5 +46,7 @@
             </ul>
         {% endif %}
     {% endblock messages %}
+
+    <script src="https://unpkg.com/htmx.org@1.8.0" defer></script>
 </body>
 </html>

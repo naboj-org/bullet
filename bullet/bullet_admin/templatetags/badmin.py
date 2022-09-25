@@ -1,3 +1,4 @@
+from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from django import template
 from django.urls import reverse
@@ -21,7 +22,8 @@ def admin_sidebar(context):
         ),
     ]
 
-    if user.get_role(branch).can_translate:
+    branch_role = user.get_branch_role(branch)
+    if branch_role.is_translator:
         menu_items.append(
             (
                 "Content",
@@ -32,4 +34,7 @@ def admin_sidebar(context):
             )
         )
 
-    return {"menu_items": menu_items}
+    return {
+        "menu_items": menu_items,
+        "competition": get_active_competition(context.request),
+    }
