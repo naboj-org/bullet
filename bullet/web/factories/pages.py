@@ -3,7 +3,10 @@ from competitions.branches import Branches
 from django.conf import settings
 from django_countries import countries
 from factory.django import DjangoModelFactory
+from mdgen import MarkdownPostProvider
 from web.models import Page
+
+factory.Faker.add_provider(provider=MarkdownPostProvider)
 
 
 class PageFactory(DjangoModelFactory):
@@ -16,7 +19,7 @@ class PageFactory(DjangoModelFactory):
     )
     branch = factory.Faker("random_element", elements=Branches.choices())
     title = factory.Faker("sentence")
-    content = factory.Faker("text")
+    content = factory.Faker("post", size="large")
     countries = factory.Faker(
         "random_elements",
         elements=[x.code for x in countries],

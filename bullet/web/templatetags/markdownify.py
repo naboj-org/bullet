@@ -28,6 +28,7 @@ def markdownify(content):
                 "md_in_html",
                 "sane_lists",
                 "tables",
+                "smarty",
             ],
         )
     )
