@@ -1,7 +1,7 @@
 <a href="{% url "badmin:competition_switch" %}" class="p-4 bg-primary flex items-center hover:bg-primary-dark">
     <h1 class="font-bold text-white text-sm">{{ competition.name }}</h1>
     <div class="ml-auto text-white text-sm"><i class="fas fa-gear"></i></div>
-    <div class="ml-auto text-white text-sm md:hidden" id="nav-button"><i class="fa-solid fa-bars"></i></div>
+    <div class="ml-auto text-white text-sm md:hidden" onclick="document.getElementById('nav').classList.toggle('hidden')"><i class="fa-solid fa-bars"></i></div>
 </a>
 
 <div id="nav" class="hidden md:block">
