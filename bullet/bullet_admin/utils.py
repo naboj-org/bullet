@@ -9,10 +9,8 @@ def get_active_competition(request: HttpRequest):
                 request.BRANCH
             )
         else:
-            request._badmin_competition = (
-                Competition.objects.filter(branch=request.BRANCH)
-                .filter(id=request.session.get("badmin_competition"))
-                .first()
-            )
+            request._badmin_competition = Competition.objects.filter(
+                branch=request.BRANCH, id=request.session.get("badmin_competition")
+            ).first()
 
     return request._badmin_competition
