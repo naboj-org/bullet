@@ -1,4 +1,4 @@
-<a href="/admin/competitions" class="p-4 bg-primary flex items-center hover:bg-primary-dark">
+<a href="{% url "badmin:competition_switch" %}" class="p-4 bg-primary flex items-center hover:bg-primary-dark">
     <h1 class="font-bold text-white text-sm">{{ competition.name }}</h1>
     <div class="ml-auto text-white text-sm"><i class="fas fa-gear"></i></div>
 </a>
