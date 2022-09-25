@@ -332,7 +332,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
             "mail/messages/registration.html",
             "mail/messages/registration.txt",
             {"team": team},
-            self.competition_venue.contact_email,
+            [self.competition_venue.contact_email],
         )
 
         del self.request.session["register_form"]
