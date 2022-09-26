@@ -7,6 +7,7 @@ from education.models import Education, Grade, School, SchoolType
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
     list_display = ("name", "address", "country")
+    search_fields = ("name", "search", "country")
 
 
 class GradeInline(admin.TabularInline):

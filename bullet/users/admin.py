@@ -1,5 +1,7 @@
+from competitions.models import CompetitionVenue
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
+from education.models import Grade
 from users.models import Contestant, Team, User
 
 
@@ -37,14 +39,19 @@ class UserAdmin(DefaultUserAdmin):
     ordering = ("email",)
 
 
-class TeamContestantAdmin(admin.TabularInline):
+class TeamContestantInlineAdmin(admin.TabularInline):
     model = Contestant
     extra = 0
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "grade":
+            kwargs["queryset"] = Grade.objects.select_related("school_type")
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(Team)
 class TeamAdmin(admin.ModelAdmin):
-    inlines = (TeamContestantAdmin,)
+    inlines = (TeamContestantInlineAdmin,)
     list_display = (
         "school",
         "competition_venue",
@@ -52,8 +59,49 @@ class TeamAdmin(admin.ModelAdmin):
         "language",
         "is_reviewed",
     )
+    search_fields = (
+        "school",
+        "competition_venue",
+        "competition_venue__venue",
+        "competition_venue__category_competition",
+        "competition_venue__category_competition__competition",
+    )
+    list_select_related = (
+        "school",
+        "competition_venue",
+        "competition_venue__venue",
+        "competition_venue__category_competition",
+        "competition_venue__category_competition__competition",
+    )
+    autocomplete_fields = (
+        "competition_venue",
+        "school",
+    )
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "competition_venue":
+            kwargs["queryset"] = CompetitionVenue.objects.select_related(
+                "venue",
+                "category_competition",
+                "category_competition__competition",
+            )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
 
 @admin.register(Contestant)
 class ContestantAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ("team",)
+    list_select_related = ("grade__school_type",)
+
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "grade":
+            kwargs["queryset"] = Grade.objects.select_related("school_type")
+        if db_field.name == "team":
+            kwargs["queryset"] = Team.objects.select_related(
+                "school",
+                "competition_venue",
+                "competition_venue__venue",
+                "competition_venue__category_competition",
+                "competition_venue__category_competition__competition",
+            )
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)

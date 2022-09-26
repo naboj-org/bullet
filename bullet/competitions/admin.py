@@ -28,6 +28,7 @@ class CompetitionAdmin(admin.ModelAdmin):
 class CompetitionVenueInlineAdmin(admin.TabularInline):
     model = CompetitionVenue
     extra = 0
+    autocomplete_fields = ("venue",)
 
 
 @admin.register(CategoryCompetition)
@@ -59,6 +60,7 @@ class CompetitionVenueAdmin(admin.ModelAdmin):
         "local_start",
     )
     autocomplete_fields = ("venue",)
+    search_fields = ("venue",)
 
 
 @admin.register(Wildcard)

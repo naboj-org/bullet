@@ -24,13 +24,21 @@ class PageForm(forms.ModelForm):
             available_languages.update(country.languages)
 
         self.fields["language"].choices = list(
-            filter(
-                lambda x: x[0] in available_languages, self.fields["language"].choices
+            sorted(
+                filter(
+                    lambda x: x[0] in available_languages,
+                    self.fields["language"].choices,
+                ),
+                key=lambda x: x[1],
             )
         )
         self.fields["countries"].choices = list(
-            filter(
-                lambda x: x[0] in available_countries, self.fields["countries"].choices
+            sorted(
+                filter(
+                    lambda x: x[0] in available_countries,
+                    self.fields["countries"].choices,
+                ),
+                key=lambda x: x[1],
             )
         )
 
@@ -50,14 +58,21 @@ class ContentBlockForm(forms.ModelForm):
             available_languages.update(country.languages)
 
         self.fields["language"].choices = list(
-            filter(
-                lambda x: x[0] in available_languages, self.fields["language"].choices
+            sorted(
+                filter(
+                    lambda x: x[0] in available_languages,
+                    self.fields["language"].choices,
+                ),
+                key=lambda x: x[1],
             )
         )
         self.fields["country"].choices = list(
-            filter(
-                lambda x: x[0] == "" or x[0] in available_countries,
-                self.fields["country"].choices,
+            sorted(
+                filter(
+                    lambda x: x[0] in available_countries,
+                    self.fields["country"].choices,
+                ),
+                key=lambda x: x[1],
             )
         )
 
