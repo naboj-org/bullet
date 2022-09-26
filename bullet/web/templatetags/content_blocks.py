@@ -1,5 +1,6 @@
 from django import template
 from django.db.models import Q
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 from web.models import ContentBlock
 
@@ -61,9 +62,13 @@ def content_block(context, combined_ref):
     for key in keys:
         if key in context["__blocks"]:
             c = context["__blocks"][key]
-            if request.GET.get("showblocks", 0):  # TODO: limit to admin users
+            if "showblocks" in request.GET and request.user.is_authenticated:
+                link = reverse(
+                    "badmin:contentblock_trans",
+                    kwargs={"group": group, "reference": ref},
+                )
                 return mark_safe(
-                    f"<a href='#' class='cb-edit' title='{group}:{ref}'>{c}</a>"
+                    f"<a href='{link}' class='cb-edit' title='{group}:{ref}'>{c}</a>"
                 )
             return mark_safe(c)
 
