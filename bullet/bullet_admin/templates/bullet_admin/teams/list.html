@@ -1,0 +1,87 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Team list{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
+{#            <a href="{% url "badmin:page_create" %}" class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New page</a>#}
+        </header>
+        <div class="p-4">
+{#            <form method="get" class="flex items-center gap-2">#}
+{#                <input type="search" name="q" placeholder="Search pages" class="input" value="{{ request.GET.q }}">#}
+{#                <button type="submit" class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">#}
+{#                    <i class="fas fa-search mr-1"></i> Search#}
+{#                </button>#}
+{#            </form>#}
+{#            <hr class="my-4">#}
+
+            <table class="w-full mb-4">
+                <thead>
+                    <tr class="bg-gray-100 text-left border-b">
+                        <th class="p-2">Number</th>
+                        <th class="p-2">School</th>
+                        <th class="p-2">Contact information</th>
+                        <th class="p-2">Contestants</th>
+                        <th class="p-2">Venue / Category</th>
+                        <th class="p-2">Status</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    {% for team in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
+                        <td class="p-2 font-mono tracking-wider">
+                            <span class="text-gray-500">SKBAS</span>{{ team.number|stringformat:"03d" }}
+                        </td>
+                        <td class="p-2">
+                            <div class="font-bold">
+                                {{ team.school }}
+                                {% if team.in_school_symbol %}
+                                    <span class="text-primary">{{ team.in_school_symbol }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="text-sm">{{ team.school.address }}</div>
+                        </td>
+                        <td class="p-2">
+                            <div>{{ team.contact_name }}</div>
+                            <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
+                            {% if team.contact_phone %}
+                            <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                            {% endif %}
+                        </td>
+                        <td class="p-2 text-xs">
+                            <ul>
+                                {% for contestant in team.contestants.all %}<li>{{ contestant.full_name }}</li>{% endfor %}
+                            </ul>
+                        </td>
+                        <td class="p-2">
+                            <div>{{ team.competition_venue.venue.name }}</div>
+                            <div class="text-sm">{{ team.competition_venue.category_competition.identifier|title }}</div>
+                        </td>
+                        <td class="p-2">
+                            {% if not team.confirmed_at %}
+                            <span class="text-white bg-gray-500 px-2 py-1 rounded font-bold tracking-wide text-xs">Unconfirmed</span>
+                            {% elif team.is_waiting %}
+                            <span class="text-white bg-amber-600 px-2 py-1 rounded font-bold tracking-wide text-xs whitespace-nowrap">Waiting list</span>
+                            {% else %}
+                            <span class="text-white bg-green-600 px-2 py-1 rounded font-bold tracking-wide text-xs">Registered</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <div class="flex gap-2">
+            {% if page_obj.has_previous %}
+                <a href="?page={{ page_obj.previous_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
+            {% endif %}
+            </div>
+        </div>
+    </article>
+{% endblock %}
