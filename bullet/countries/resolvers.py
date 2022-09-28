@@ -7,11 +7,53 @@ from django.utils.translation import get_language
 
 def country_patterns(*urls):
     return [
-        URLResolver(
+        CountryURLResolver(
             CountryLanguagePrefixPattern(),
             list(urls),
         )
     ]
+
+
+class CountryURLResolver(URLResolver):
+    """
+    Django caches _reverse_dict by langauges, but we need
+    to cache it by (country,language) pair.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._country_reverse_dict = {}
+        self._country_namespace_dict = {}
+        self._country_app_dict = {}
+
+    def _populate(self):
+        super()._populate()
+        langauge_code = get_language()
+        k = (get_country(), langauge_code)
+        self._country_namespace_dict[k] = self._namespace_dict[langauge_code]
+        self._country_app_dict[k] = self._app_dict[langauge_code]
+        self._country_reverse_dict[k] = self._reverse_dict[langauge_code]
+
+    @property
+    def reverse_dict(self):
+        k = (get_country(), get_language())
+        if k not in self._country_reverse_dict:
+            self._populate()
+        return self._country_reverse_dict[k]
+
+    @property
+    def namespace_dict(self):
+        k = (get_country(), get_language())
+        if k not in self._country_namespace_dict:
+            self._populate()
+        return self._country_namespace_dict[k]
+
+    @property
+    def app_dict(self):
+        k = (get_country(), get_language())
+        if k not in self._country_app_dict:
+            self._populate()
+        return self._country_app_dict[k]
 
 
 class CountryLanguagePrefixPattern:
