@@ -1,0 +1,376 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Naboj Bullet\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-09-28 21:14+0000\n"
+"Language: sk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+
+#: competitions/branches.py:72
+msgid "Náboj Math"
+msgstr "Matematický Náboj"
+
+#: competitions/branches.py:72
+msgctxt "branch name"
+msgid "Math"
+msgstr "Matematika"
+
+#: competitions/branches.py:76
+msgid "Náboj Physics"
+msgstr "Fyzikálny Náboj"
+
+#: competitions/branches.py:77
+msgctxt "branch name"
+msgid "Physics"
+msgstr "Fyzika"
+
+#: competitions/branches.py:83
+msgid "Náboj Junior"
+msgstr "Náboj Junior"
+
+#: competitions/branches.py:84
+msgctxt "branch name"
+msgid "Junior"
+msgstr "Junior"
+
+#: competitions/branches.py:90
+msgid "Náboj Chemistry"
+msgstr "Chemický Náboj"
+
+#: competitions/branches.py:91
+msgctxt "branch name"
+msgid "Chemistry"
+msgstr "Chémia"
+
+#. Translators: This is a rare error that occurs when the user selects
+#. a school that we don't have in our database.
+#: competitions/forms/registration.py:51
+msgid "Selected school is not valid."
+msgstr "Vybraná škola nie je platná."
+
+#: competitions/forms/registration.py:69
+#: competitions/templates/register/details.html:26
+#: competitions/templates/register/details.html:32
+#: competitions/templates/teams/edit.html:42
+#: competitions/templates/teams/edit.html:59
+#: competitions/templates/teams/edit.html:69
+#: competitions/templates/teams/edit.html:97
+msgid "Full name"
+msgstr "Celé meno"
+
+#: competitions/forms/registration.py:70
+#: competitions/templates/teams/edit.html:43
+msgid "Email"
+msgstr "E-mail"
+
+#: competitions/forms/registration.py:71
+#: competitions/templates/teams/edit.html:45
+msgid "Phone number"
+msgstr "Telefónne číslo"
+
+#: competitions/forms/registration.py:92
+msgid "(Please select)"
+msgstr "(Prosím vyberte)"
+
+#. Translators: This is a rare error that occurs when the user selects
+#. a grade that we don't have in our database.
+#: competitions/forms/registration.py:109
+msgid "Please select a valid grade."
+msgstr "Prosím, vyberte platný ročník."
+
+#. Translators: The user attempted to search for a school, but we were unable to find any matching results.
+#: competitions/templates/register/_school.html:14
+msgid "No schools matched your query."
+msgstr "V našej databáze sa nenachádza škola so zadaným názvom."
+
+#: competitions/templates/register/_school.html:15
+msgid "If you believe this is an error, contact us."
+msgstr "Ak veríte, že ide o chybu, kontaktujte nás prosím."
+
+#: competitions/templates/register/_venue.html:13
+#: competitions/templates/register/partials/venue.html:16
+#: competitions/templates/teams/edit.html:37
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "Na tomto súťažnom mieste sa súťaž začína o %(time)s, nie klasicky o 10:00."
+
+#. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
+#: competitions/templates/register/_venue.html:20
+msgid "No venues matched your query."
+msgstr "So zadaným názvom sa nezhoduje žiadne súťažné miesto."
+
+#. Translators: Registration page title
+#: competitions/templates/register/base.html:5
+#: competitions/templates/register/base.html:8
+#: competitions/templates/register/thanks.html:4
+msgid "Team registration"
+msgstr "Registrácia tímu"
+
+#: competitions/templates/register/category.html:9
+#: competitions/templates/register/partials/category.html:5
+msgid "Category"
+msgstr "Kategória"
+
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:41
+msgid "Contact information"
+msgstr "Kontaktné údaje"
+
+#: competitions/templates/register/details.html:18
+#: competitions/templates/teams/edit.html:49
+msgid "Contestants"
+msgstr "Súťažiaci"
+
+#: competitions/templates/register/details.html:20
+#: competitions/templates/teams/edit.html:50
+msgid "You can change the list of contestants at any time before the start of the competition."
+msgstr "Zoznam súťažiacich môžete zmeniť kedykoľvek pred začiatkom súťaže."
+
+#: competitions/templates/register/details.html:27
+#: competitions/templates/register/details.html:36
+#: competitions/templates/teams/edit.html:60
+#: competitions/templates/teams/edit.html:73
+#: competitions/templates/teams/edit.html:101
+msgid "Grade"
+msgstr "Ročník"
+
+#: competitions/templates/register/details.html:30
+#: competitions/templates/teams/edit.html:65
+#: competitions/templates/teams/edit.html:93
+#, python-format
+msgid "Contestant %(number)s"
+msgstr "Súťažiaci %(number)s"
+
+#: competitions/templates/register/details.html:42
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:15
+msgid "Required field"
+msgstr "Povinné"
+
+#: competitions/templates/register/details.html:46
+#, python-format
+msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
+msgstr "Registráciou do Súťaže registrujúce osoby (najmä učitelia alebo zákonní zástupcovia registrovaných žiakov) súhlasia s <a href=\"%(link)s\">pravidlami súťaže</a> a zaväzujú sa nimi riadiť. Súčasne berie registrujúca osoba na vedomie, že osobné údaje uvedené v registračnom formulári sú nevyhnutné pre zabezpečenie riadneho fungovania Súťaže."
+
+#: competitions/templates/register/details.html:57
+msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
+msgstr "Registrujúca osoba udeľuje súhlas lokálnym organizátorom na zhotovenie obrazových a/aj obrazovo-zvukových záznamov počas konania Súťaže, na ktorých je zachytená podoba registrujúcej a/aj registrovanej osoby a ich zverejnením na webovom sídle Súťaže, webových sídlach lokálnych organizátorov, sociálnych sieťach, a to pre marketingové účely propagácie Súťaže. <sup>[1]</sup>"
+
+#: competitions/templates/register/details.html:68
+#, python-format
+msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
+msgstr "Viac informácií o spracúvaní osobných údajov možno nájsť na stránke <a href=\"%(link)s\">znenie o spracovaní osobných údajov</a>."
+
+#: competitions/templates/register/details.html:73
+#: web/templates/web/snippets/home_timeline.html:47
+msgid "Register"
+msgstr "Registrovať"
+
+#: competitions/templates/register/details.html:77
+msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
+msgstr "<sup>[1]</sup> Súhlas sa udeľuje na dobu prevádzkovania webového sídla Trojsten-u a účtu na sociálnych sieťach, ak ich má Trojsten vytvorený. Tento súhlas je možné kedykoľvek odvolať zaslaním e-mailu na adresu <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Odvolanie súhlasu nemá vplyv na zákonnosť spracúvania pred jeho odvolaním. Dotknutá osoba môže požadovať odstránenie osobných údajov, len pokiaľ to bude technicky možné a zmazaním nebudú dotknuté práva iných dotknutých osôb."
+
+#: competitions/templates/register/partials/category.html:17
+#: competitions/templates/register/partials/school.html:15
+#: competitions/templates/register/partials/venue.html:21
+msgid "Change"
+msgstr "Zmeniť"
+
+#: competitions/templates/register/partials/school.html:3
+#: competitions/templates/register/school.html:8
+#: competitions/templates/teams/edit.html:25
+msgid "School"
+msgstr "Škola"
+
+#: competitions/templates/register/partials/venue.html:3
+#: competitions/templates/register/venue.html:7
+#: competitions/templates/teams/edit.html:32
+msgid "Venue"
+msgstr "Súťažné miesto"
+
+#: competitions/templates/register/school.html:10
+msgid "Search schools..."
+msgstr "Hľadať školu..."
+
+#: competitions/templates/register/thanks.html:12
+msgid "Team successfully registered"
+msgstr "Tím bol úspešne zaregistrovaný"
+
+#: competitions/templates/register/thanks.html:15
+msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
+msgstr ""
+"Na vašu emailovú adresu sme zaslali potvrdzovací link. Prosím, skontrolujte svoju mailovú schránku a aj priečinok nevyžiadanej pošty (spam).\n"
+"<b>Registrácia tímu nebude plátna pokiaľ nekliknete na potvrdzovací link.</b>"
+
+#: competitions/templates/register/thanks.html:18
+msgid "Register another team"
+msgstr "Zaregistrovať ďalší tím"
+
+#: competitions/templates/register/thanks.html:19
+msgid "Back to the homepage"
+msgstr "Späť na domovskú stránku"
+
+#: competitions/templates/register/venue.html:9
+msgid "Search venues..."
+msgstr "Hľadať súťažné miesto..."
+
+#: competitions/templates/teams/delete.html:4
+#: competitions/templates/teams/delete.html:7
+#: competitions/templates/teams/edit.html:85
+msgid "Unregister team"
+msgstr "Odregistrovať tím"
+
+#: competitions/templates/teams/delete.html:14
+msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
+msgstr "Ste si istý, že chcete odstrániť tím zo súťaže? Túto akciu nie je možné vrátiť späť."
+
+#: competitions/templates/teams/delete.html:16
+msgid "Unregister"
+msgstr "Zrušiť registráciu"
+
+#: competitions/templates/teams/edit.html:6
+#: competitions/templates/teams/edit.html:8
+msgid "Edit team"
+msgstr "Upraviť tím"
+
+#: competitions/templates/teams/edit.html:15
+msgid "Team information"
+msgstr "Informácie o tíme"
+
+#: competitions/templates/teams/edit.html:19
+msgid "Your team is in the waiting list."
+msgstr "Váš tím je na čakacej listine."
+
+#: competitions/templates/teams/edit.html:20
+msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
+msgstr "Kapacita súťažného miesta bola prekročená alebo vaša škola už priamo do súťaže registrovala povolený počet tímov. Ak sa situácia zmení, ozveme sa vám."
+
+#: competitions/templates/teams/edit.html:61
+#: competitions/templates/teams/edit.html:78
+msgid "Delete?"
+msgstr "Zmazať?"
+
+#: competitions/templates/teams/edit.html:84
+msgid "Update"
+msgstr "Aktualizovať"
+
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:10
+msgid "Team list"
+msgstr "Zoznam tímov"
+
+#: competitions/templates/teams/list.html:33
+#, python-format
+msgid "Teams: %(teams)s / %(capacity)s"
+msgstr "Tímov: %(teams)s / %(capacity)s"
+
+#: competitions/views/register.py:53
+msgid "Registration did not start yet."
+msgstr "Registrácia sa ešte nezačala."
+
+#: competitions/views/register.py:55
+msgid "Registration is over."
+msgstr "Registrácia sa skončila."
+
+#: competitions/views/register.py:331
+msgid "Confirm your team registration"
+msgstr "Potvrdenie registrácie tímu"
+
+#: competitions/views/teams.py:70
+msgid "Registration successfully confirmed."
+msgstr "Registrácia bola potvrdená."
+
+#: competitions/views/teams.py:130
+msgid "Team was unregistered."
+msgstr "Tím bol odregistrovaný."
+
+#: web/templates/junior/web/homepage.html:6 web/templates/web/homepage.html:6
+msgid "Home page"
+msgstr "Domovská stránka"
+
+#: web/templates/junior/web/homepage.html:17 web/templates/web/homepage.html:13
+msgid "Registration"
+msgstr "Zaregistrovať tím"
+
+#: web/templates/junior/web/homepage.html:20 web/templates/web/homepage.html:15
+#, python-format
+msgid "Registration ends in %(end)s"
+msgstr "Registrácia končí o %(end)s"
+
+#: web/templates/mail/base.html:336
+msgid "Competition logo"
+msgstr "Logo súťaže"
+
+#: web/templates/mail/base.html:355
+#, python-format
+msgid "You have received this message because you have registered for the competition %(branch)s."
+msgstr "Tento email ste dostali, lebo ste sa zaregistrovali do súťaže %(branch)s."
+
+#: web/templates/mail/messages/registration.html:5
+#: web/templates/mail/messages/registration.txt:1
+#, python-format
+msgid "Hello, %(name)s!"
+msgstr "Dobrý deň, %(name)s!"
+
+#: web/templates/mail/messages/registration.html:7
+#: web/templates/mail/messages/registration.txt:3
+msgid "Please click on the following link to confirm your registration."
+msgstr "Kliknite, prosím, na nižšie uvedený odkaz pre potvrdenie registrácie."
+
+#: web/templates/mail/messages/registration.html:10
+msgid "Confirm registration"
+msgstr "Potvrdiť registráciu"
+
+#: web/templates/mail/messages/registration.html:13
+#: web/templates/mail/messages/registration.txt:7
+msgid "You can also use that link to modify your team."
+msgstr "Tento odkaz môžete používať aj na úpravu informácií o vašom tíme."
+
+#: web/templates/mail/messages/registration.html:14
+#: web/templates/mail/messages/registration.txt:9
+msgid "If you have any questions, please feel free to reply to this email."
+msgstr "V prípade akýchkoľvek otázok nás kontaktujte odpovedaním na tento email."
+
+#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.txt:11
+msgid "Best regards,"
+msgstr "S pozdravom,"
+
+#: web/templates/mail/messages/registration.html:24
+msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
+msgstr "Ak sa vám nedarí kliknúť na tlačidlo, skopírujte tento odkaz do svojho prehliadača:"
+
+#: web/templates/web/snippets/copyright.html:4
+#, python-format
+msgid "All times are %(tz_name)s (%(tz_offset)s) unless stated otherwise."
+msgstr "Všetky časy sú v %(tz_name)s (%(tz_offset)s), pokiaľ nie je uvedené inak."
+
+#: web/templates/web/snippets/home_footer.html:4
+msgid "Our partners"
+msgstr "Partneri"
+
+#: web/templates/web/snippets/home_footer.html:13
+msgid "Organizers"
+msgstr "Organizátori"
+
+#: web/templates/web/snippets/home_timeline.html:6
+msgid "Important dates"
+msgstr "Dôležité dátumy"
+
+#: web/templates/web/snippets/home_timeline.html:16
+msgid "Registration starts"
+msgstr "Začiatok registrácie"
+
+#: web/templates/web/snippets/home_timeline.html:24
+msgid "Second round of registration"
+msgstr "Druhé kolo registrácie"
+
+#: web/templates/web/snippets/home_timeline.html:32
+msgid "Registration end"
+msgstr "Koniec registrácie"
+
+#: web/templates/web/snippets/home_timeline.html:40
+msgid "Competition day"
+msgstr "Deň súťaže"
