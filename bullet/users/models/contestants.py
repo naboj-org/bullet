@@ -59,7 +59,10 @@ class Team(models.Model):
     def contact_phone_pretty(self):
         if not self.contact_phone:
             return ""
-        return self.contact_phone.format_as(PhoneNumberFormat.INTERNATIONAL)
+        fmt = self.contact_phone.format_as(PhoneNumberFormat.INTERNATIONAL)
+        if not fmt or fmt == "None":
+            return self.contact_phone
+        return fmt
 
     def save(self, *args, **kwargs):
         if not self.secret_link:

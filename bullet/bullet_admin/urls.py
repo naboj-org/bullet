@@ -1,4 +1,4 @@
-from bullet_admin.views import CompetitionSwitchView, auth, content, home
+from bullet_admin.views import CompetitionSwitchView, auth, content, home, teams
 from django.urls import path
 
 app_name = "badmin"
@@ -39,4 +39,5 @@ urlpatterns = [
         content.ContentBlockDeleteView.as_view(),
         name="contentblock_delete",
     ),
+    path("teams/", teams.TeamListView.as_view(), name="team_list"),
 ]
