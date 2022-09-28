@@ -148,5 +148,5 @@ MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/uploads/"
 GEOIP_PATH = "/geoip/"
 
-MEILISEARCH_URL = "http://meilisearch:7700/"
-MEILISEARCH_KEY = None
+MEILISEARCH_URL = os.environ.get("MEILISEARCH_URL", "http://meilisearch:7700/")
+MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
