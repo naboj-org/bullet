@@ -1,6 +1,7 @@
 from countries.logic import country
 from countries.logic.detection import get_country_language_from_request
 from countries.models import BranchCountry
+from countries.utils import country_reverse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import translation
@@ -20,7 +21,7 @@ class CountryDetectView(View):
             c, lang = detection
             country.activate(c)
             translation.activate(lang)
-            url = reverse(self.redirect_to)
+            url = country_reverse(self.redirect_to)
 
         response = HttpResponseRedirect(redirect_to=url)
         response.headers["Vary"] = "Cookie, Accept-Language"

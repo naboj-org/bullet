@@ -13,12 +13,12 @@ from competitions.models import (
     CompetitionVenue,
     Venue,
 )
+from countries.utils import country_reverse
 from django.contrib import messages
 from django.db import transaction
 from django.db.models import Q
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
-from django.urls import reverse
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
@@ -113,7 +113,7 @@ class RegistrationMixin:
             self.competition = self._load_competition(request)
         except RegistrationError as e:
             messages.add_message(request, messages.ERROR, e.messsage)
-            return reverse("homepage")
+            return country_reverse("homepage")
 
         try:
             if self.registration_step >= RegistrationStep.CATEGORY:
@@ -124,7 +124,7 @@ class RegistrationMixin:
                 self.school = self._load_school(request)
         except RegistrationError:
             # We ignore error message here to avoid user confusion.
-            return reverse("register")
+            return country_reverse("register")
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -187,7 +187,7 @@ class CategorySelectView(RegistrationMixin, FormView):
         ] = form.cleaned_data["category_competition"]
         self.request.session.modified = True
 
-        return HttpResponseRedirect(reverse("register_venue"))
+        return HttpResponseRedirect(country_reverse("register_venue"))
 
 
 class VenueSelectView(RegistrationMixin, FormView):
@@ -226,7 +226,7 @@ class VenueSelectView(RegistrationMixin, FormView):
     def form_valid(self, form):
         self.request.session["register_form"]["venue"] = form.cleaned_data["venue"]
         self.request.session.modified = True
-        return HttpResponseRedirect(reverse("register_school"))
+        return HttpResponseRedirect(country_reverse("register_school"))
 
     def get_template_names(self):
         if self.request.htmx:
@@ -259,7 +259,7 @@ class SchoolSelectView(RegistrationMixin, FormView):
     def form_valid(self, form):
         self.request.session["register_form"]["school"] = form.cleaned_data["school"]
         self.request.session.modified = True
-        return HttpResponseRedirect(reverse("register_details"))
+        return HttpResponseRedirect(country_reverse("register_details"))
 
     def get_template_names(self):
         if self.request.htmx:
@@ -336,7 +336,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
         )
 
         del self.request.session["register_form"]
-        return HttpResponseRedirect(reverse("register_thanks"))
+        return HttpResponseRedirect(country_reverse("register_thanks"))
 
 
 class ThanksView(RegistrationMixin, TemplateView):
