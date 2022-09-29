@@ -8,9 +8,7 @@
 {% endblock %}
 
 {% block content %}
-    <main class="px-2 py-4">
-        <article class="prose mx-auto">
-            {{ page.content | markdownify }}
-        </article>
+    <main class="px-2 py-4 prose mx-auto max-w-2xl">
+        {{ page.content | markdownify }}
     </main>
 {% endblock %}
