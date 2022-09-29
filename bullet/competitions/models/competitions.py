@@ -14,8 +14,6 @@ class Competition(models.Model):
     name = models.CharField(max_length=128)
     branch = BranchField()
 
-    graduation_year = models.PositiveIntegerField()
-
     web_start = models.DateTimeField()
 
     registration_start = models.DateTimeField()
