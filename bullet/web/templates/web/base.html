@@ -4,12 +4,12 @@
 
 {% block root_content %}
     {% block main %}
-        <nav class="mx-auto text-white flex flex-col gap-1 md:flex-row md:items-center md:align-baseline bg-gray-900 py-4 px-2 border-b-4 border-primary">
+        <nav class="mx-auto text-white sm:flex sm:flex-row sm:items-center sm:align-baseline bg-gray-900 py-4 px-2 border-b-4 border-primary">
             {% for b in branches %}
-                <a class="{% if branch == b %}bg-primary{% endif %} font-medium hover:bg-gray-600 px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.short_name }}</a>
+                <a class="{% if branch == b %}bg-primary{% endif %} font-medium inline-block sm:inline hover:bg-gray-600 px-2 mx-1 py-1 rounded" href="//{{ b.domain }}">{{ b.short_name }}</a>
             {% endfor %}
 
-            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ml-auto">Change Language</a>
+            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 block sm:inline mt-2 sm:mt-0 ml-auto">Change Language</a>
         </nav>
 
         <header class="bg-hero border-b border-primary">
