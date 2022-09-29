@@ -1,12 +1,13 @@
 {% extends "mail/base.html" %}
 {% load i18n %}
+{% load country_url %}
 
 {% block body %}
     <p>{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}</p>
 
     <p>{% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}</p>
 
-    {% url "team_edit" secret_link=team.secret_link as link %}
+    {% country_url "team_edit" secret_link=team.secret_link as link %}
     {% trans "Confirm registration" as link_text %}
     {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
 

@@ -2,6 +2,7 @@
 {% load content_blocks %}
 {% load static %}
 {% load i18n %}
+{% load country_url %}
 
 {% block title %}{% trans "Home page" %}{% endblock %}
 {% block heroclass %}md:bg-hero-image{% endblock %}
@@ -10,7 +11,7 @@
     <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
         <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
         {% if open_competition %}
-        <a href="{% url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
+        <a href="{% country_url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
         <p class="font-light mt-12 md:mt-16">
             {% blocktrans trimmed with end=open_competition.registration_end|timeuntil %}
                 Registration ends in {{ end }}
@@ -97,7 +98,7 @@
                 {# TODO more human readable display & actual countdown in JS #}
                 <p class="text-xl mb-10">{{ registration_open_for }}</p>
 
-                <a href="{% url 'register' %}" class="hero-btn">Register</a>
+                <a href="{% country_url 'register' %}" class="hero-btn">Register</a>
             </div>
         </div>
     </div>

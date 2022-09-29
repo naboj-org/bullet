@@ -1,6 +1,7 @@
 {% extends "web/base.html" %}
 {% load bform %}
 {% load static %}
+{% load country_url %}
 {% load i18n %}
 
 {% block title %}{% trans "Edit team" %}{% endblock %}
@@ -82,7 +83,7 @@
 
                     <div class="flex gap-4 items-baseline">
                         <button type="submit" class="btn">{% trans "Update" %}</button>
-                        <a class="underline text-primary hover:text-primary-dark" href="{% url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
+                        <a class="underline text-primary hover:text-primary-dark" href="{% country_url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
                     </div>
                 </form>
             {% else %}

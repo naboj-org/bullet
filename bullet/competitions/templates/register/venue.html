@@ -1,5 +1,6 @@
 {% extends "register/base.html" %}
 {% load i18n %}
+{% load country_url %}
 
 {% block register_content %}
     {% include "register/partials/category.html" %}
@@ -7,7 +8,7 @@
     <div class="font-bold text-2xl mb-6 mt-6">{% trans "Venue" %}</div>
 
     <input type="text" class="form-input input mb-4" placeholder="{% trans "Search venues..." %}" name="q"
-        hx-get="{% url 'register_venue' %}" hx-swap="outerHTML" hx-target="#js_venue_list" hx-trigger="keyup changed delay:100ms">
+        hx-get="{% country_url 'register_venue' %}" hx-swap="outerHTML" hx-target="#js_venue_list" hx-trigger="keyup changed delay:100ms">
 
     <form method="POST" autocomplete="off">
         {% csrf_token %}

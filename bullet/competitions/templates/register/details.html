@@ -1,5 +1,6 @@
 {% extends "register/base.html" %}
 {% load bform %}
+{% load country_url %}
 {% load i18n %}
 
 {% block register_content %}
@@ -42,7 +43,7 @@
         <div class="text-red-600 mb-4">* {% trans "Required field" %}</div>
 
         <div class="mb-4 prose prose-sm max-w-none">
-            {% url "page" slug="rules" as link %}
+            {% country_url "page" slug="rules" as link %}
             {% blocktrans trimmed with link=link %}
                 By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to
                 the <a href="{{ link }}">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that
@@ -64,7 +65,7 @@
         {% endif %}
 
         <div class="mb-8 prose prose-sm max-w-none">
-            {% url "page" slug="privacy" as link %}
+            {% country_url "page" slug="privacy" as link %}
             {% blocktrans trimmed with link=link %}
                 More information on the processing of personal data can be found <a href="{{ link }}">on this page</a>.
             {% endblocktrans %}

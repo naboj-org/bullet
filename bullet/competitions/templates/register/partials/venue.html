@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load country_url %}
 
 <h2 class="font-bold text-2xl my-6">{% trans "Venue" %}</h2>
 
@@ -17,7 +18,7 @@
         </span>
         {% endif %}
     </div>
-    <a href="{% url 'register_venue' %}" class="ml-auto shrink-0 text-primary hover:underline">
+    <a href="{% country_url 'register_venue' %}" class="ml-auto shrink-0 text-primary hover:underline">
         {% trans "Change" %}
     </a>
 </div>

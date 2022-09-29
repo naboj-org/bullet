@@ -2,6 +2,7 @@
 {% load content_blocks %}
 {% load static %}
 {% load i18n %}
+{% load country_url %}
 
 {% block title %}{% trans "Home page" %}{% endblock %}
 
@@ -14,7 +15,7 @@
                 {% content_block "home-junior:title" %}
             </h1>
             {% if open_competition %}
-            <a href="{% url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
+            <a href="{% country_url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
 
             <p class="font-light mt-12 md:mt-16">
                 {% blocktrans trimmed with end=open_competition.registration_end|timeuntil %}
