@@ -3,6 +3,7 @@ import re
 from countries.logic import country
 from countries.logic.cache import get_country_cache
 from countries.models import BranchCountry
+from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.utils import timezone, translation
 
@@ -43,6 +44,11 @@ class CountryLanguageMiddleware:
             timezone.activate(branch_country.timezone)
 
             translation.activate(lang)
+            request.LANGUAGE_CODE = translation.get_language()
+        else:
+            # Use default settings if not detected.
+            timezone.activate(settings.TIME_ZONE)
+            translation.activate(settings.LANGUAGE_CODE)
             request.LANGUAGE_CODE = translation.get_language()
 
         response = self.get_response(request)
