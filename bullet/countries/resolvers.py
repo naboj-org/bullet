@@ -31,10 +31,6 @@ class CountryURLResolver(URLResolver):
         super()._populate()
         langauge_code = get_language()
         k = (get_country(), langauge_code)
-        print(
-            self._reverse_dict[langauge_code],
-            type(self._reverse_dict[langauge_code]),
-        )
         self._country_namespace_dict[k] = deepcopy(self._namespace_dict[langauge_code])
         self._country_app_dict[k] = deepcopy(self._app_dict[langauge_code])
         self._country_reverse_dict[k] = deepcopy(self._reverse_dict[langauge_code])
