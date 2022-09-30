@@ -1,4 +1,5 @@
 from competitions.models import CategoryCompetition, Competition, Venue
+from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
 from users.models import Team
 
@@ -51,3 +52,31 @@ def add_team_to_competition(team: Team):
         return
 
     team.to_competition()
+
+
+def _waiting_list(team_filter: Q, inner_filter: Q):
+    return (
+        Team.objects.filter(Q(is_waiting=True) & team_filter)
+        .annotate(
+            from_school=Count(
+                "school__team",
+                filter=Q(
+                    school__team__registered_at__lte=F("registered_at"),
+                    school__team__confirmed_at__isnull=False,
+                )
+                & inner_filter,
+            )
+        )
+        .order_by("from_school", "registered_at")
+    )
+
+
+def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
+    return _waiting_list(Q(venue=venue), Q(school__team__venue=venue))
+
+
+def get_country_waiting_list(competition: Competition, country: str) -> QuerySet[Team]:
+    venues = Venue.objects.filter(
+        category_competition__competition=competition, country=country.upper()
+    )
+    return _waiting_list(Q(venue__in=venues), Q(school__team__venue__in=venues))
