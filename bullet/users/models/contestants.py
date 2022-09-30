@@ -29,7 +29,7 @@ class Team(models.Model):
     confirmed_at = models.DateTimeField(null=True, blank=True)
 
     competition_venue = models.ForeignKey(
-        "competitions.CompetitionVenue", on_delete=models.CASCADE
+        "competitions.Venue", on_delete=models.CASCADE
     )
     number = models.IntegerField(null=True, blank=True)
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)

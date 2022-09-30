@@ -7,12 +7,7 @@ from competitions.forms.registration import (
     SchoolSelectForm,
     VenueSelectForm,
 )
-from competitions.models import (
-    CategoryCompetition,
-    Competition,
-    CompetitionVenue,
-    Venue,
-)
+from competitions.models import CategoryCompetition, Competition, Venue
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.db import transaction
@@ -69,11 +64,11 @@ class RegistrationMixin:
 
         return cc
 
-    def _load_venue(self, request) -> tuple[CompetitionVenue, Venue]:
+    def _load_venue(self, request) -> Venue:
         if "venue" not in request.session["register_form"]:
             raise RegistrationError()
 
-        competition_venue = CompetitionVenue.objects.filter(
+        competition_venue = Venue.objects.filter(
             id=request.session["register_form"]["venue"],
         ).first()
 
@@ -82,7 +77,7 @@ class RegistrationMixin:
         if competition_venue.category_competition.competition_id != self.competition.id:
             raise RegistrationError()
 
-        return competition_venue, competition_venue.venue
+        return competition_venue
 
     def _load_school(self, request) -> School:
         if "school" not in request.session["register_form"]:
@@ -158,7 +153,7 @@ class CategorySelectView(RegistrationMixin, FormView):
         if red:
             return HttpResponseRedirect(red)
 
-        competition_venues = CompetitionVenue.objects.filter(
+        competition_venues = Venue.objects.filter(
             venue__country=self.request.COUNTRY_CODE.upper(),
             category_competition__competition=self.competition,
         )
@@ -199,7 +194,7 @@ class VenueSelectView(RegistrationMixin, FormView):
         if red:
             return HttpResponseRedirect(red)
 
-        self.venues = CompetitionVenue.objects.filter(
+        self.venues = Venue.objects.filter(
             category_competition=self.category_competition,
             venue__country=self.request.COUNTRY_CODE.upper(),
         ).order_by("venue__name")

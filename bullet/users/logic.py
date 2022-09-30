@@ -1,14 +1,14 @@
-from competitions.models import CategoryCompetition, Competition, CompetitionVenue
+from competitions.models import CategoryCompetition, Competition, Venue
 from users.models import Team
 
 
-def venue_has_capacity(venue: CompetitionVenue) -> bool:
+def venue_has_capacity(venue: Venue) -> bool:
     teams = Team.objects.competing().filter(competition_venue=venue).count()
     return venue.capacity > teams
 
 
 def school_has_capacity(team: Team) -> bool:
-    venue: CompetitionVenue = team.competition_venue
+    venue: Venue = team.competition_venue
     category: CategoryCompetition = venue.category_competition
     competition: Competition = category.competition
 
@@ -30,7 +30,7 @@ def school_has_capacity(team: Team) -> bool:
 
 
 def add_team_to_competition(team: Team):
-    venue: CompetitionVenue = team.competition_venue
+    venue: Venue = team.competition_venue
 
     # If venue is over capacity -> waiting list
     if not venue_has_capacity(venue):

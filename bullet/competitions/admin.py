@@ -1,10 +1,4 @@
-from competitions.models import (
-    CategoryCompetition,
-    Competition,
-    CompetitionVenue,
-    Venue,
-    Wildcard,
-)
+from competitions.models import CategoryCompetition, Competition, Venue, Wildcard
 from django.contrib import admin
 
 
@@ -26,9 +20,8 @@ class CompetitionAdmin(admin.ModelAdmin):
 
 
 class CompetitionVenueInlineAdmin(admin.TabularInline):
-    model = CompetitionVenue
+    model = Venue
     extra = 0
-    autocomplete_fields = ("venue",)
 
 
 @admin.register(CategoryCompetition)
@@ -45,22 +38,18 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
 
 
 @admin.register(Venue)
-class VenueAdmin(admin.ModelAdmin):
-    list_display = ("name", "short_name", "address")
-    search_fields = ("name",)
-
-
-@admin.register(CompetitionVenue)
 class CompetitionVenueAdmin(admin.ModelAdmin):
     list_display = (
-        "venue",
+        "name",
         "category_competition",
         "capacity",
         "accepted_languages",
         "local_start",
     )
-    autocomplete_fields = ("venue",)
-    search_fields = ("venue",)
+    search_fields = (
+        "name",
+        "shortcode",
+    )
 
 
 @admin.register(Wildcard)

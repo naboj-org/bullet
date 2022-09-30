@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from competitions.forms.registration import ContestantForm
-from competitions.models import Competition, CompetitionVenue
+from competitions.models import Competition, Venue
 from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
@@ -91,8 +91,8 @@ class TeamListView(TemplateView):
         country: str = self.request.GET.get(
             "country", self.request.COUNTRY_CODE
         ).upper()
-        venues: QuerySet[CompetitionVenue] = (
-            CompetitionVenue.objects.filter(
+        venues: QuerySet[Venue] = (
+            Venue.objects.filter(
                 category_competition__competition=competition, venue__country=country
             )
             .order_by("venue__name")

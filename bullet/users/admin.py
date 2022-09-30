@@ -1,4 +1,4 @@
-from competitions.models import CompetitionVenue
+from competitions.models import Venue
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from education.models import Grade
@@ -80,7 +80,7 @@ class TeamAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "competition_venue":
-            kwargs["queryset"] = CompetitionVenue.objects.select_related(
+            kwargs["queryset"] = Venue.objects.select_related(
                 "venue",
                 "category_competition",
                 "category_competition__competition",
