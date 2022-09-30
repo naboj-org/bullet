@@ -15,14 +15,12 @@ def create_competition(branch=None) -> Competition:
     """
     competition = CompetitionFactory(branch=branch)
     CategoryCompetitionFactory.create_batch(2, competition=competition)
-    competition_venues = VenueFactory.create_batch(2000)
+    venues = VenueFactory.create_batch(2000)
 
     for _ in range(200):
-        team = TeamFactory(competition_venue=random.choice(competition_venues))
+        team = TeamFactory(venue=random.choice(venues))
         ContestantFactory.create_batch(
-            random.randint(
-                0, team.competition_venue.category_competition.max_members_per_team
-            ),
+            random.randint(0, team.venue.category_competition.max_members_per_team),
             team=team,
         )
 

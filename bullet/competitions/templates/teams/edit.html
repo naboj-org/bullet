@@ -30,12 +30,12 @@
                     <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
                 {% endif %}
             </p>
-            <p><strong>{% trans "Venue" %}:</strong> {{ team.competition_venue }}</p>
+            <p><strong>{% trans "Venue" %}:</strong> {{ team.venue }}</p>
 
-            {% if team.competition_venue.local_start %}
+            {% if team.venue.local_start %}
             <p class="text-red-600">
                 <i class="fas fa-exclamation-triangle"></i>
-                {% blocktrans with time=team.competition_venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
+                {% blocktrans with time=team.venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
             </p>
             {% endif %}
 

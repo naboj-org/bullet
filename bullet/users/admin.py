@@ -54,30 +54,30 @@ class TeamAdmin(admin.ModelAdmin):
     inlines = (TeamContestantInlineAdmin,)
     list_display = (
         "school",
-        "competition_venue",
+        "venue",
         "contact_email",
         "language",
         "is_reviewed",
     )
     search_fields = (
         "school",
-        "competition_venue",
-        "competition_venue__category_competition",
-        "competition_venue__category_competition__competition",
+        "venue",
+        "venue__category_competition",
+        "venue__category_competition__competition",
     )
     list_select_related = (
         "school",
-        "competition_venue",
-        "competition_venue__category_competition",
-        "competition_venue__category_competition__competition",
+        "venue",
+        "venue__category_competition",
+        "venue__category_competition__competition",
     )
     autocomplete_fields = (
-        "competition_venue",
+        "venue",
         "school",
     )
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        if db_field.name == "competition_venue":
+        if db_field.name == "venue":
             kwargs["queryset"] = Venue.objects.select_related(
                 "category_competition",
                 "category_competition__competition",
@@ -96,8 +96,8 @@ class ContestantAdmin(admin.ModelAdmin):
         if db_field.name == "team":
             kwargs["queryset"] = Team.objects.select_related(
                 "school",
-                "competition_venue",
-                "competition_venue__category_competition",
-                "competition_venue__category_competition__competition",
+                "venue",
+                "venue__category_competition",
+                "venue__category_competition__competition",
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)

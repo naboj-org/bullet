@@ -3,12 +3,12 @@ from users.models import Team
 
 
 def venue_has_capacity(venue: Venue) -> bool:
-    teams = Team.objects.competing().filter(competition_venue=venue).count()
+    teams = Team.objects.competing().filter(venue=venue).count()
     return venue.capacity > teams
 
 
 def school_has_capacity(team: Team) -> bool:
-    venue: Venue = team.competition_venue
+    venue: Venue = team.venue
     category: CategoryCompetition = venue.category_competition
     competition: Competition = category.competition
 
@@ -20,9 +20,7 @@ def school_has_capacity(team: Team) -> bool:
         school_limit = category.max_teams_second_round
 
     teams_from_school = (
-        Team.objects.competing()
-        .filter(competition_venue=venue, school=team.school)
-        .count()
+        Team.objects.competing().filter(venue=venue, school=team.school).count()
     )
     if school_limit == 0:
         return True
@@ -30,7 +28,7 @@ def school_has_capacity(team: Team) -> bool:
 
 
 def add_team_to_competition(team: Team):
-    venue: Venue = team.competition_venue
+    venue: Venue = team.venue
 
     # If venue is over capacity -> waiting list
     if not venue_has_capacity(venue):

@@ -13,9 +13,9 @@ class CompetitionVenueQuerySet(models.QuerySet):
             occupancy=Coalesce(
                 Subquery(
                     Team.objects.filter(
-                        confirmed_at__isnull=False, competition_venue=OuterRef("pk")
+                        confirmed_at__isnull=False, venue=OuterRef("pk")
                     )
-                    .values("competition_venue")
+                    .values("venue")
                     .annotate(count=Count("pk"))
                     .values("count")
                 ),

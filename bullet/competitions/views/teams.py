@@ -56,11 +56,11 @@ class TeamEditView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.team = (
-            Team.objects.select_related("competition_venue__category_competition")
+            Team.objects.select_related("venue__category_competition")
             .prefetch_related("contestants")
             .get(secret_link=kwargs.pop("secret_link"))
         )
-        self.category_competition = self.team.competition_venue.category_competition
+        self.category_competition = self.team.venue.category_competition
         self.can_be_changed = (
             self.category_competition.competition.competition_start > timezone.now()
         )
@@ -100,7 +100,7 @@ class TeamListView(TemplateView):
             .all()
         )
         teams: QuerySet[Team] = (
-            Team.objects.filter(competition_venue__in=venues)
+            Team.objects.filter(venue__in=venues)
             .prefetch_related("contestants", "contestants__grade")
             .select_related("school")
             .all()
@@ -108,7 +108,7 @@ class TeamListView(TemplateView):
 
         venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
         for team in teams:
-            venue_teams[team.competition_venue_id].append(team)
+            venue_teams[team.venue_id].append(team)
 
         ctx["venues"] = [{"venue": v, "teams": venue_teams[v.id]} for v in venues]
         ctx["sites"] = venues

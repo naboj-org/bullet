@@ -28,9 +28,7 @@ class Team(models.Model):
     registered_at = models.DateTimeField(auto_now_add=True)
     confirmed_at = models.DateTimeField(null=True, blank=True)
 
-    competition_venue = models.ForeignKey(
-        "competitions.Venue", on_delete=models.CASCADE
-    )
+    venue = models.ForeignKey("competitions.Venue", on_delete=models.CASCADE)
     number = models.IntegerField(null=True, blank=True)
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
@@ -42,12 +40,12 @@ class Team(models.Model):
 
     class Meta:
         unique_together = [
-            ("competition_venue", "number"),
+            ("venue", "number"),
             ("school", "in_school_symbol"),
         ]
 
     def __str__(self):
-        return f"{self.school} team in {self.competition_venue}"
+        return f"{self.school} team in {self.venue}"
 
     @property
     def display_name(self):
@@ -77,9 +75,9 @@ class Team(models.Model):
         self.is_waiting = True
 
     def to_competition(self):
-        last_number = Team.objects.filter(
-            competition_venue=self.competition_venue
-        ).aggregate(Max("number"))["number__max"]
+        last_number = Team.objects.filter(venue=self.venue).aggregate(Max("number"))[
+            "number__max"
+        ]
         if not last_number:
             self.number = 1
         else:

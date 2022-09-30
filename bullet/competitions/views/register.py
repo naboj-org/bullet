@@ -68,16 +68,16 @@ class RegistrationMixin:
         if "venue" not in request.session["register_form"]:
             raise RegistrationError()
 
-        competition_venue = Venue.objects.filter(
+        venue = Venue.objects.filter(
             id=request.session["register_form"]["venue"],
         ).first()
 
-        if not competition_venue:
+        if not venue:
             raise RegistrationError()
-        if competition_venue.category_competition.competition_id != self.competition.id:
+        if venue.category_competition.competition_id != self.competition.id:
             raise RegistrationError()
 
-        return competition_venue
+        return venue
 
     def _load_school(self, request) -> School:
         if "school" not in request.session["register_form"]:
@@ -114,7 +114,7 @@ class RegistrationMixin:
             if self.registration_step >= RegistrationStep.CATEGORY:
                 self.category_competition = self._load_category(request)
             if self.registration_step >= RegistrationStep.VENUE:
-                self.competition_venue = self._load_venue(request)
+                self.venue = self._load_venue(request)
             if self.registration_step >= RegistrationStep.SCHOOL:
                 self.school = self._load_school(request)
         except RegistrationError:
@@ -129,7 +129,7 @@ class RegistrationMixin:
             ctx["category_competition"] = self.category_competition
 
         if self.registration_step >= RegistrationStep.VENUE:
-            ctx["competition_venue"] = self.competition_venue
+            ctx["venue"] = self.venue
 
         if self.registration_step >= RegistrationStep.SCHOOL:
             ctx["school"] = self.school
@@ -152,11 +152,11 @@ class CategorySelectView(RegistrationMixin, FormView):
         if red:
             return HttpResponseRedirect(red)
 
-        competition_venues = Venue.objects.filter(
+        venues = Venue.objects.filter(
             country=self.request.COUNTRY_CODE.upper(),
             category_competition__competition=self.competition,
         )
-        categories = set([c.category_competition_id for c in competition_venues])
+        categories = set([c.category_competition_id for c in venues])
         self.categories = (
             CategoryCompetition.objects.filter(id__in=categories)
             .order_by("order")
@@ -306,7 +306,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
     def forms_valid(self, form, formset):
         team = form.save(commit=False)
         team.school = self.school
-        team.competition_venue = self.competition_venue
+        team.venue = self.venue
         team.consent_photos = "consent_photos" in self.request.POST
         team.save()
 
@@ -325,7 +325,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
             "mail/messages/registration.html",
             "mail/messages/registration.txt",
             {"team": team},
-            [self.competition_venue.contact_email],
+            [self.venue.contact_email],
         )
 
         del self.request.session["register_form"]
