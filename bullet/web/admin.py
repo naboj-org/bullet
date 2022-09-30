@@ -1,5 +1,5 @@
 from django.contrib import admin
-from web.models import ContentBlock, Menu, Organizer, Page, Partner
+from web.models import ContentBlock, Logo, Menu, Page
 
 
 @admin.register(Page)
@@ -8,14 +8,10 @@ class PageAdmin(admin.ModelAdmin):
     list_filter = ["branch", "language", "slug"]
 
 
-@admin.register(Partner)
-class PartnerAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Organizer)
-class OrganizerAdmin(admin.ModelAdmin):
-    pass
+@admin.register(Logo)
+class LogoAdmin(admin.ModelAdmin):
+    list_display = ["branch", "type", "name", "countries"]
+    list_filter = ["branch", "type"]
 
 
 @admin.register(Menu)

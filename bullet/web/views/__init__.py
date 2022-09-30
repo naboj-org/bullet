@@ -1,6 +1,6 @@
 from competitions.models import Competition
 from django.views.generic import TemplateView
-from web.models import Organizer, Partner
+from web.models import Logo
 
 
 class BranchSpecificTemplateMixin:
@@ -33,7 +33,15 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         except Competition.DoesNotExist:
             pass
 
-        context["partners"] = Partner.objects.filter(branch=self.branch).all()
-        context["organizers"] = Organizer.objects.filter(branch=self.branch).all()
+        context["partners"] = (
+            Logo.objects.partners()
+            .for_branch_country(self.branch, self.request.COUNTRY_CODE)
+            .all()
+        )
+        context["organizers"] = (
+            Logo.objects.organizers()
+            .for_branch_country(self.branch, self.request.COUNTRY_CODE)
+            .all()
+        )
 
         return context
