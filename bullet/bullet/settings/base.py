@@ -118,6 +118,8 @@ PASSWORD_HASHERS = [
 AUTH_USER_MODEL = "users.User"
 LOGIN_URL = "badmin:login"
 LOGIN_REDIRECT_URL = "badmin:home"
+SESSION_COOKIE_NAME = "bullet_session"
+CSRF_COOKIE_NAME = "bullet_csrf_token"
 
 LANGUAGE_CODE = "en"
 TIME_ZONE = "UTC"
