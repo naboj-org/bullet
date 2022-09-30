@@ -64,6 +64,9 @@ class Logo(models.Model):
 
     objects = LogoQuerySet.as_manager()
 
+    def __str__(self):
+        return f"{self.name} ({Branches[self.branch].name})"
+
 
 class ContentBlock(models.Model):
     group = models.CharField(max_length=256)
