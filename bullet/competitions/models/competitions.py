@@ -40,6 +40,10 @@ class Competition(models.Model):
     def __str__(self):
         return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'
 
+    @property
+    def is_registration_open(self):
+        return self.registration_start <= timezone.now() < self.registration_end
+
 
 class CategoryCompetitionQueryset(models.QuerySet):
     def registration_possible(self):

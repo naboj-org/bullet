@@ -24,14 +24,9 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         self.branch = self.request.BRANCH
 
-        try:
-            context[
-                "open_competition"
-            ] = Competition.objects.currently_running_registration().get(
-                branch=self.branch
-            )
-        except Competition.DoesNotExist:
-            pass
+        context["competition"] = Competition.objects.get_current_competition(
+            self.branch
+        )
 
         context["partners"] = (
             Logo.objects.partners()

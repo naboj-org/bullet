@@ -1,7 +1,7 @@
 {% load i18n %}
 {% load country_url %}
 
-{% if open_competition %}
+{% if competition %}
     <div class="container mx-auto px-2">
         <div class="mb-10 md:mb-40 text-center">
             <h2 class="font-bold text-4xl m-12">{% trans "Important dates" %}</h2>
@@ -10,34 +10,34 @@
                 <div class="timeline w-3/4 md:w-auto " style="box-sizing: border-box;">
                     {% now "Y-m-d" as today %}
 
-                    <div class="container flex justify-center m-0 {% if today > open_competition.registration_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
+                    <div class="container flex justify-center m-0 {% if today > competition.registration_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content w-80 md:w-full">
-                            <p class="text-base md:text-xl">{{ open_competition.registration_start|date }},
-                                {{ open_competition.registration_start|time }}</p>
+                            <p class="text-base md:text-xl">{{ competition.registration_start|date }},
+                                {{ competition.registration_start|time }}</p>
                             <p class="text-lg md:text-2xl">{% trans "Registration starts" %}</p>
                         </div>
                     </div>
 
-                    <div class="container flex items-center m-0 {% if today > open_competition.registration_second_round_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
+                    <div class="container flex items-center m-0 {% if today > competition.registration_second_round_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content w-80 md:w-full">
-                            <p class="text-base md:text-xl">{{ open_competition.registration_second_round_start|date }},
-                                {{ open_competition.registration_second_round_start|time }}</p>
+                            <p class="text-base md:text-xl">{{ competition.registration_second_round_start|date }},
+                                {{ competition.registration_second_round_start|time }}</p>
                             <p class="text-lg md:text-2xl">{% trans "Second round of registration" %}</p>
                         </div>
                     </div>
 
-                    <div class="container flex items-center m-0 {% if today > open_competition.registration_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
+                    <div class="container flex items-center m-0 {% if today > competition.registration_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content">
-                            <p class="text-base md:text-xl">{{ open_competition.registration_end|date }},
-                                {{ open_competition.registration_end|time }}</p>
+                            <p class="text-base md:text-xl">{{ competition.registration_end|date }},
+                                {{ competition.registration_end|time }}</p>
                             <p class="text-lg md:text-2xl">{% trans "Registration end" %}</p>
                         </div>
                     </div>
 
                     <div class="container flex items-center m-0
-                    {% if today > open_competition.competition_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
+                    {% if today > competition.competition_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content">
-                            <p class="text-base md:text-xl">{{ open_competition.competition_start|date}}</p>
+                            <p class="text-base md:text-xl">{{ competition.competition_start|date}}</p>
                             <p class="text-lg md:text-2xl">{% trans "Competition day" %}</p>
                         </div>
                     </div>
@@ -45,7 +45,9 @@
                 </div>
             </div>
 
+            {% if competition.is_registration_open %}
             <a href="{% country_url "register" %}" class="hero-btn">{% trans "Register" %}</a>
+            {% endif %}
         </div>
     </div>
 {% endif %}
