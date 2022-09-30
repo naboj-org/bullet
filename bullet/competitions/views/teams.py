@@ -93,10 +93,10 @@ class TeamListView(TemplateView):
         ).upper()
         venues: QuerySet[Venue] = (
             Venue.objects.filter(
-                category_competition__competition=competition, venue__country=country
+                category_competition__competition=competition, country=country
             )
-            .order_by("venue__name")
-            .select_related("venue", "category_competition")
+            .order_by("name")
+            .select_related("category_competition")
             .all()
         )
         teams: QuerySet[Team] = (

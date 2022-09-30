@@ -114,7 +114,7 @@ class RegistrationMixin:
             if self.registration_step >= RegistrationStep.CATEGORY:
                 self.category_competition = self._load_category(request)
             if self.registration_step >= RegistrationStep.VENUE:
-                self.competition_venue, self.venue = self._load_venue(request)
+                self.competition_venue = self._load_venue(request)
             if self.registration_step >= RegistrationStep.SCHOOL:
                 self.school = self._load_school(request)
         except RegistrationError:
@@ -129,7 +129,6 @@ class RegistrationMixin:
             ctx["category_competition"] = self.category_competition
 
         if self.registration_step >= RegistrationStep.VENUE:
-            ctx["venue"] = self.venue
             ctx["competition_venue"] = self.competition_venue
 
         if self.registration_step >= RegistrationStep.SCHOOL:
@@ -154,7 +153,7 @@ class CategorySelectView(RegistrationMixin, FormView):
             return HttpResponseRedirect(red)
 
         competition_venues = Venue.objects.filter(
-            venue__country=self.request.COUNTRY_CODE.upper(),
+            country=self.request.COUNTRY_CODE.upper(),
             category_competition__competition=self.competition,
         )
         categories = set([c.category_competition_id for c in competition_venues])
@@ -196,14 +195,13 @@ class VenueSelectView(RegistrationMixin, FormView):
 
         self.venues = Venue.objects.filter(
             category_competition=self.category_competition,
-            venue__country=self.request.COUNTRY_CODE.upper(),
-        ).order_by("venue__name")
+            country=self.request.COUNTRY_CODE.upper(),
+        ).order_by("name")
 
         query = self.request.GET.get("q")
         if query:
             self.venues = self.venues.filter(
-                Q(venue__name__icontains=query)
-                | Q(venue__address__raw__icontains=query)
+                Q(name__icontains=query) | Q(address__icontains=query)
             )
 
         return super().dispatch(request, *args, **kwargs)

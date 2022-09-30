@@ -7,7 +7,7 @@ from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, Team
 
@@ -29,7 +29,7 @@ class VenueSelectForm(forms.Form):
     def __init__(self, *args, **kwargs):
         venues: list[Venue] = kwargs.pop("venues")
         super(VenueSelectForm, self).__init__(*args, **kwargs)
-        self.fields["venue"].choices = [(v.id, str(v.venue)) for v in venues]
+        self.fields["venue"].choices = [(v.id, v.name) for v in venues]
 
 
 class SchoolSelectForm(forms.Form):

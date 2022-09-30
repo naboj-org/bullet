@@ -16,13 +16,12 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
 
         crole = self.request.user.get_competition_role(competition)
         if crole.country:
-            qs = qs.filter(competition_venue__venue__country=crole.country)
+            qs = qs.filter(competition_venue__country=crole.country)
         elif crole.venue:
-            qs = qs.filter(competition_venue__venue=crole.venue)
+            qs = qs.filter(competition_venue=crole.venue)
 
         return qs.select_related(
             "school",
             "competition_venue",
             "competition_venue__category_competition",
-            "competition_venue__venue",
         ).prefetch_related("contestants", "contestants__grade")

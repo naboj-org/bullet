@@ -62,14 +62,12 @@ class TeamAdmin(admin.ModelAdmin):
     search_fields = (
         "school",
         "competition_venue",
-        "competition_venue__venue",
         "competition_venue__category_competition",
         "competition_venue__category_competition__competition",
     )
     list_select_related = (
         "school",
         "competition_venue",
-        "competition_venue__venue",
         "competition_venue__category_competition",
         "competition_venue__category_competition__competition",
     )
@@ -81,7 +79,6 @@ class TeamAdmin(admin.ModelAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "competition_venue":
             kwargs["queryset"] = Venue.objects.select_related(
-                "venue",
                 "category_competition",
                 "category_competition__competition",
             )
@@ -100,7 +97,6 @@ class ContestantAdmin(admin.ModelAdmin):
             kwargs["queryset"] = Team.objects.select_related(
                 "school",
                 "competition_venue",
-                "competition_venue__venue",
                 "competition_venue__category_competition",
                 "competition_venue__category_competition__competition",
             )
