@@ -6,14 +6,6 @@ from web.fields import BranchField
 
 
 class CompetitionQuerySet(models.QuerySet):
-    def currently_running_registration(self):
-        now = timezone.now()
-        return self.filter(
-            registration_end__gte=now,
-            registration_start__lte=now,
-            is_cancelled=False,
-        )
-
     def get_current_competition(self, branch):
         return self.filter(branch=branch).order_by("-web_start").first()
 
@@ -45,13 +37,6 @@ class Competition(models.Model):
         return self.registration_start <= timezone.now() < self.registration_end
 
 
-class CategoryCompetitionQueryset(models.QuerySet):
-    def registration_possible(self):
-        return self.filter(
-            competition__in=Competition.objects.currently_running_registration()
-        )
-
-
 class CategoryCompetition(models.Model):
     class RankingCriteria(models.IntegerChoices):
         SCORE = 1, "Score"
@@ -76,8 +61,6 @@ class CategoryCompetition(models.Model):
     ranking = ArrayField(
         base_field=models.PositiveIntegerField(choices=RankingCriteria.choices)
     )
-
-    objects = CategoryCompetitionQueryset.as_manager()
 
     class Meta:
         constraints = (
