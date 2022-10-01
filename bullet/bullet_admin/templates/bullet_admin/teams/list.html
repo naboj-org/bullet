@@ -33,7 +33,11 @@
                     {% for team in object_list %}
                     <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                         <td class="p-2 font-mono tracking-wider">
-                            <span class="text-gray-500">SKBAS</span>{{ team.number|stringformat:"03d" }}
+                            {% if team.number %}
+                            <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                            {% else %}
+                            <span class="text-gray-500">---</span>
+                            {% endif %}
                         </td>
                         <td class="p-2">
                             <div class="font-bold">
