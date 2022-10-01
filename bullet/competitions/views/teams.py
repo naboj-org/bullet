@@ -3,13 +3,13 @@ from collections import defaultdict
 from competitions.forms.registration import ContestantForm
 from competitions.models import Competition, CompetitionVenue
 from countries.models import BranchCountry
+from countries.utils import country_reverse
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
 from django.forms import inlineformset_factory
 from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import DeleteView, FormView, TemplateView
@@ -34,7 +34,9 @@ class TeamEditView(FormView):
     def form_valid(self, form):
         form.save()
         messages.success(self.request, "Team successfully edited.")
-        return redirect("team_edit", secret_link=self.team.secret_link)
+        return HttpResponseRedirect(
+            country_reverse("team_edit", kwargs={"secret_link": self.team.secret_link})
+        )
 
     def get_form_kwargs(self):
         kw = super(TeamEditView, self).get_form_kwargs()
@@ -129,4 +131,4 @@ class TeamDeleteView(DeleteView):
         self.object.delete()
         messages.success(self.request, _("Team was unregistered."))
         # TODO: notify admins
-        return HttpResponseRedirect(reverse("homepage"))
+        return HttpResponseRedirect(country_reverse("homepage"))

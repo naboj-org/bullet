@@ -1,6 +1,6 @@
-from threading import local
+from asgiref.local import Local
 
-_country = local()
+_country = Local()
 
 
 def get_country():

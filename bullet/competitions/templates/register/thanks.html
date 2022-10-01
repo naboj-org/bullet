@@ -1,5 +1,6 @@
 {% extends "web/base.html" %}
 {% load i18n %}
+{% load country_url %}
 
 {% block title %}{% trans "Team registration" %}{% endblock %}
 
@@ -15,7 +16,7 @@
             {% trans "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>" %}
         </p>
 
-        <p><a href="{% url "register" %}" class="btn inline-block">{% trans "Register another team" %}</a></p>
-        <p class="mt-4"><a href="{% url "homepage" %}" class="text-primary hover:underline">{% trans "Back to the homepage" %}</a></p>
+        <p><a href="{% country_url "register" %}" class="btn inline-block">{% trans "Register another team" %}</a></p>
+        <p class="mt-4"><a href="{% country_url "homepage" %}" class="text-primary hover:underline">{% trans "Back to the homepage" %}</a></p>
     </div>
 {% endblock %}

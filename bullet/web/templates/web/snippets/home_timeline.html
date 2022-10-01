@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load country_url %}
 
 {% if open_competition %}
     <div class="container mx-auto px-2">
@@ -44,7 +45,7 @@
                 </div>
             </div>
 
-            <a href="{% url "register" %}" class="hero-btn">{% trans "Register" %}</a>
+            <a href="{% country_url "register" %}" class="hero-btn">{% trans "Register" %}</a>
         </div>
     </div>
 {% endif %}

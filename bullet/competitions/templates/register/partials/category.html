@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load country_url %}
 {% load content_blocks %}
 {% load_blocks "category" %}
 
@@ -13,7 +14,7 @@
             {% content_block "category:description_"|add:category_competition.identifier %}
         </p>
     </div>
-    <a href="{% url 'register' %}" class="ml-auto shrink-0 text-primary hover:underline">
+    <a href="{% country_url 'register' %}" class="ml-auto shrink-0 text-primary hover:underline">
         {% trans "Change" %}
     </a>
 </div>
