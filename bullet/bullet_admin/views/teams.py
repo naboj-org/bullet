@@ -1,7 +1,8 @@
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
+from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
 from users.logic import get_venue_waiting_list
@@ -55,3 +56,21 @@ class WaitingListView(AnyAdminRequiredMixin, VenueMixin, ListView):
 
     def get_queryset(self):
         return get_venue_waiting_list(self.venue)
+
+
+class WaitingAutomoveView(AnyAdminRequiredMixin, VenueMixin, View):
+    def post(self, request, *args, **kwargs):
+        team_count = self.venue.remaining_capacity
+        waiting_list = get_venue_waiting_list(self.venue)[:team_count]
+
+        for team in waiting_list:
+            team.to_competition()
+            team.save()
+
+        return HttpResponseRedirect(self.get_redirect_url())
+
+    def get_redirect_url(self):
+        url = reverse("badmin:waiting_list")
+        if "venue" in self.request.GET:
+            url += f"?venue={self.venue.id}"
+        return url

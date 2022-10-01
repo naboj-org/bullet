@@ -16,9 +16,8 @@
                 <p><b>Remaining capacity:</b> {{ remaining }} / {{ venue.capacity }}</p>
 
                 {% if remaining > 0 %}
-                <form action="" method="post">
+                <form action="{% url "badmin:waiting_automove" %}{% if "venue" in request.GET %}?venue={{ request.GET.venue }}{% endif %}" method="post">
                     {% csrf_token %}
-                    {# TODO: don't forget to send venue with request for non-venue admins #}
 
                     <div class="bg-green-100 text-green-800 border border-green-800 p-4 mt-4 rounded-md">
                         <p>
