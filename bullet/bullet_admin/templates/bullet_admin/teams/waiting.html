@@ -1,0 +1,91 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Waiting list{% endblock %}
+
+{% block content %}
+    {% include "bullet_admin/partials/venue_selector.html" %}
+
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Waiting list</h2>
+        </header>
+        <div class="p-4">
+            <div class="mb-6">
+                <p><b>Venue:</b> {{ venue.name }}</p>
+                {% with remaining=venue.remaining_capacity %}
+                <p><b>Remaining capacity:</b> {{ remaining }} / {{ venue.capacity }}</p>
+
+                {% if remaining > 0 %}
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {# TODO: don't forget to send venue with request for non-venue admins #}
+
+                    <div class="bg-green-100 text-green-800 border border-green-800 p-4 mt-4 rounded-md">
+                        <p>
+                            Your venue has enough capacity for another <b>{{ remaining }}</b> teams. You can automatically move teams from the waiting list to the competition to fill the capacity.
+                        </p>
+
+                        <button type="submit" class="btn-admin bg-green-500 hover:bg-green-600 mt-2">
+                            <i class="fas fa-angles-right"></i> Move automatically
+                        </button>
+                    </div>
+                </form>
+                {% endif %}
+                {% endwith %}
+            </div>
+
+            <table class="w-full">
+                <thead>
+                    <tr class="bg-gray-100 text-left border-b">
+                        <th class="p-2">School</th>
+                        <th class="p-2">Contact information</th>
+                        <th class="p-2">Contestants</th>
+                        <th class="p-2">Registration details</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    {% for team in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
+                        <td class="p-2">
+                            <div class="font-bold">
+                                {{ team.school }}
+                                {% if team.in_school_symbol %}
+                                    <span class="text-primary">{{ team.in_school_symbol }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="text-sm">{{ team.school.address }}</div>
+                        </td>
+                        <td class="p-2">
+                            <div>{{ team.contact_name }}</div>
+                            <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
+                            {% if team.contact_phone %}
+                            <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                            {% endif %}
+                        </td>
+                        <td class="p-2 text-xs">
+                            <ul>
+                                {% for contestant in team.contestants.all %}<li>{{ contestant.full_name }}</li>{% endfor %}
+                            </ul>
+                        </td>
+                        <td class="p-2">
+                            <div>
+                                Teams from school: <b>{{ team.from_school }}</b>
+                            </div>
+                            <div class="text-sm">
+                                {{ team.registered_at|date:"j M Y, H:i" }}
+                            </div>
+                        </td>
+                        <td class="p-2 text-right">
+                            <a href="#" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                <i class="fas fa-angles-right"></i> Move to competition
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+{% endblock %}

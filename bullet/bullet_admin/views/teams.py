@@ -1,6 +1,7 @@
-from bullet_admin.mixins import AnyAdminRequiredMixin
+from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import get_active_competition
 from django.views.generic import ListView
+from users.logic import get_venue_waiting_list
 from users.models import Team
 
 
@@ -33,3 +34,10 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             is not None
         )
         return ctx
+
+
+class WaitingListView(AnyAdminRequiredMixin, VenueMixin, ListView):
+    template_name = "bullet_admin/teams/waiting.html"
+
+    def get_queryset(self):
+        return get_venue_waiting_list(self.venue)

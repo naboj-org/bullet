@@ -72,7 +72,12 @@ def _waiting_list(team_filter: Q, inner_filter: Q):
 
 
 def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
-    return _waiting_list(Q(venue=venue), Q(school__team__venue=venue))
+    # We need all competition venues here to properly count registered
+    # teams across all of them.
+    all_venues = Venue.objects.filter(
+        category_competition__competition=venue.category_competition.competition
+    )
+    return _waiting_list(Q(venue=venue), Q(school__team__venue__in=all_venues))
 
 
 def get_venues_waiting_list(venues: QuerySet[Venue]) -> QuerySet[Team]:
