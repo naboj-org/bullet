@@ -11,10 +11,10 @@
         <p>
             {{ venue.address }}
         </p>
-        {% if competition_venue.local_start %}
+        {% if venue.local_start %}
         <span class="block mt-1 text-red-600 text-lg">
             <i class="fas fa-exclamation-triangle"></i>
-            {% blocktrans with time=competition_venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
+            {% blocktrans with time=venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
         </span>
         {% endif %}
     </div>

@@ -1,5 +1,5 @@
 from competitions.branches import Branches
-from competitions.factories.generate import create_base, create_competition
+from competitions.factories.generate import create_competition
 from countries.factories.generate import create_branch_countries
 from django.core import management
 from django.core.management import BaseCommand
@@ -14,7 +14,6 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args, **options):
-        create_base()
         create_education()
         create_branch_countries(branch=Branches["physics"])
         create_pages(branch=Branches["physics"])

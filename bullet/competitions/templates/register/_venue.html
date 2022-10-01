@@ -4,9 +4,9 @@
     {% for venue in venues %}
     <button type="submit" name="venue" value="{{ venue.id }}" class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md w-full mb-3">
         <span class="block font-bold text-xl">
-            {{ venue.venue.name }}
+            {{ venue.name }}
         </span>
-        <span>{{ venue.venue.address }}</span>
+        <span>{{ venue.address }}</span>
         {% if venue.local_start %}
         <span class="block mt-1 text-red-600 text-lg">
             <i class="fas fa-exclamation-triangle"></i>

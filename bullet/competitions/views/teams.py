@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from competitions.forms.registration import ContestantForm
-from competitions.models import Competition, CompetitionVenue
+from competitions.models import Competition, Venue
 from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
@@ -56,11 +56,11 @@ class TeamEditView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.team = (
-            Team.objects.select_related("competition_venue__category_competition")
+            Team.objects.select_related("venue__category_competition")
             .prefetch_related("contestants")
             .get(secret_link=kwargs.pop("secret_link"))
         )
-        self.category_competition = self.team.competition_venue.category_competition
+        self.category_competition = self.team.venue.category_competition
         self.can_be_changed = (
             self.category_competition.competition.competition_start > timezone.now()
         )
@@ -91,16 +91,16 @@ class TeamListView(TemplateView):
         country: str = self.request.GET.get(
             "country", self.request.COUNTRY_CODE
         ).upper()
-        venues: QuerySet[CompetitionVenue] = (
-            CompetitionVenue.objects.filter(
-                category_competition__competition=competition, venue__country=country
+        venues: QuerySet[Venue] = (
+            Venue.objects.filter(
+                category_competition__competition=competition, country=country
             )
-            .order_by("venue__name")
-            .select_related("venue", "category_competition")
+            .order_by("name")
+            .select_related("category_competition")
             .all()
         )
         teams: QuerySet[Team] = (
-            Team.objects.filter(competition_venue__in=venues)
+            Team.objects.filter(venue__in=venues)
             .prefetch_related("contestants", "contestants__grade")
             .select_related("school")
             .all()
@@ -108,7 +108,7 @@ class TeamListView(TemplateView):
 
         venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
         for team in teams:
-            venue_teams[team.competition_venue_id].append(team)
+            venue_teams[team.venue_id].append(team)
 
         ctx["venues"] = [{"venue": v, "teams": venue_teams[v.id]} for v in venues]
         ctx["sites"] = venues

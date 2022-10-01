@@ -2,12 +2,12 @@ from typing import Iterable
 
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
-from competitions.models import CategoryCompetition, CompetitionVenue
+from competitions.models import CategoryCompetition, Venue
 from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, Team
 
@@ -27,9 +27,9 @@ class VenueSelectForm(forms.Form):
     venue = forms.ChoiceField()
 
     def __init__(self, *args, **kwargs):
-        venues: list[CompetitionVenue] = kwargs.pop("venues")
+        venues: list[Venue] = kwargs.pop("venues")
         super(VenueSelectForm, self).__init__(*args, **kwargs)
-        self.fields["venue"].choices = [(v.id, str(v.venue)) for v in venues]
+        self.fields["venue"].choices = [(v.id, v.name) for v in venues]
 
 
 class SchoolSelectForm(forms.Form):

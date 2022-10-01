@@ -1,30 +1,23 @@
 import factory
-from competitions.models import CategoryCompetition, CompetitionVenue, Venue
+from competitions.models import CategoryCompetition, Venue
 from django.conf import settings
 from django_countries import countries
 from factory.django import DjangoModelFactory
-from web.factories.addresses import AddressFactory
 
 
 class VenueFactory(DjangoModelFactory):
     class Meta:
         model = Venue
+        django_get_or_create = ["category_competition", "shortcode"]
 
     name = factory.Faker("sentence")
-    short_name = factory.Faker("word")
-    address = factory.SubFactory(AddressFactory)
+    shortcode = factory.Faker("hexify", text="^^^^^")
+    address = factory.Faker("address")
     country = factory.Faker("random_element", elements=[x.code for x in countries])
-
-
-class CompetitionVenueFactory(DjangoModelFactory):
-    class Meta:
-        model = CompetitionVenue
-        django_get_or_create = ["category_competition", "venue"]
 
     category_competition = factory.Faker(
         "random_element", elements=CategoryCompetition.objects.all()
     )
-    venue = factory.Faker("random_element", elements=Venue.objects.all())
     capacity = factory.Faker("pyint")
 
     accepted_languages = factory.Faker(

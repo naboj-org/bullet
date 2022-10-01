@@ -1,5 +1,5 @@
 import factory
-from competitions.models import CompetitionVenue
+from competitions.models import Venue
 from django.conf import settings
 from django.utils import timezone
 from education.models import Grade, School
@@ -29,9 +29,7 @@ class TeamFactory(DjangoModelFactory):
         "past_datetime", tzinfo=timezone.get_current_timezone()
     )
 
-    competition_venue = factory.Faker(
-        "random_element", elements=CompetitionVenue.objects.all()
-    )
+    venue = factory.Faker("random_element", elements=Venue.objects.all())
     number = factory.Sequence(lambda n: n)
     in_school_symbol = factory.Faker("random_letter")
 

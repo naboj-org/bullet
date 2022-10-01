@@ -57,8 +57,8 @@
                             </ul>
                         </td>
                         <td class="p-2">
-                            <div>{{ team.competition_venue.venue.name }}</div>
-                            <div class="text-sm">{{ team.competition_venue.category_competition.identifier|title }}</div>
+                            <div>{{ team.venue.name }}</div>
+                            <div class="text-sm">{{ team.venue.category_competition.identifier|title }}</div>
                         </td>
                         <td class="p-2">
                             {% if not team.confirmed_at %}

@@ -10,19 +10,16 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
-        qs = Team.objects.filter(
-            competition_venue__category_competition__competition=competition
-        )
+        qs = Team.objects.filter(venue__category_competition__competition=competition)
 
         crole = self.request.user.get_competition_role(competition)
         if crole.country:
-            qs = qs.filter(competition_venue__venue__country=crole.country)
+            qs = qs.filter(venue__country=crole.country)
         elif crole.venue:
-            qs = qs.filter(competition_venue__venue=crole.venue)
+            qs = qs.filter(venue=crole.venue)
 
         return qs.select_related(
             "school",
-            "competition_venue",
-            "competition_venue__category_competition",
-            "competition_venue__venue",
+            "venue",
+            "venue__category_competition",
         ).prefetch_related("contestants", "contestants__grade")
