@@ -13,7 +13,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import DeleteView, FormView, TemplateView
-from users.logic import add_team_to_competition
+from users.logic import add_team_to_competition, get_venues_waiting_list
 from users.models import Contestant, Team
 
 
@@ -83,6 +83,9 @@ class TeamEditView(FormView):
 class TeamListView(TemplateView):
     template_name = "teams/list.html"
 
+    def get_teams(self, venues) -> QuerySet[Team]:
+        return Team.objects.competing().filter(venue__in=venues)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
         competition: Competition = Competition.objects.get_current_competition(
@@ -101,18 +104,17 @@ class TeamListView(TemplateView):
             .all()
         )
         teams: QuerySet[Team] = (
-            Team.objects.filter(venue__in=venues)
+            self.get_teams(venues)
             .prefetch_related("contestants", "contestants__grade")
             .select_related("school")
             .all()
-        )  # TODO: show only competing teams
+        )
 
         venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
         for team in teams:
             venue_teams[team.venue_id].append(team)
 
         ctx["venues"] = [{"venue": v, "teams": venue_teams[v.id]} for v in venues]
-        ctx["sites"] = venues
         ctx["country"] = country
         ctx["countries"] = (
             BranchCountry.objects.filter(branch=self.request.BRANCH)
@@ -120,6 +122,16 @@ class TeamListView(TemplateView):
             .all()
         )
         return ctx
+
+
+class WaitingListView(TeamListView):
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["is_waitinglist"] = True
+        return ctx
+
+    def get_teams(self, venues) -> QuerySet[Team]:
+        return get_venues_waiting_list(venues)
 
 
 class TeamDeleteView(DeleteView):

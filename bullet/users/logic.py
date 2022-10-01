@@ -75,8 +75,5 @@ def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
     return _waiting_list(Q(venue=venue), Q(school__team__venue=venue))
 
 
-def get_country_waiting_list(competition: Competition, country: str) -> QuerySet[Team]:
-    venues = Venue.objects.filter(
-        category_competition__competition=competition, country=country.upper()
-    )
+def get_venues_waiting_list(venues: QuerySet[Venue]) -> QuerySet[Team]:
     return _waiting_list(Q(venue__in=venues), Q(school__team__venue__in=venues))

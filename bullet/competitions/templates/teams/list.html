@@ -4,10 +4,16 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "Team list" %}{% endblock %}
+{% block title %}{% if is_waitinglist %}{% trans "Waiting list" %}{% else %}{% trans "Team list" %}{% endif %}{% endblock %}
 
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">{% trans "Team list" %}</h1>
+<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
+    {% if is_waitinglist %}
+        {% trans "Waiting list" %}
+    {% else %}
+        {% trans "Team list" %}
+    {% endif %}
+</h1>
 {% endblock %}
 
 {% block content %}
@@ -24,14 +30,16 @@
 
     {% for v in venues %}
     <div class="mb-8">
-        <div class="flex flex-col md:flex-row md:items-center px-4 py-2 rounded">
-            <h2 class="md:w-1/2 font-bold text-2xl">
+        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between px-4 py-2 rounded">
+            <h2 class="font-bold text-2xl">
                 {{ v.venue.name }}
                 <span class="text-lg text-gray-600">({% content_block "category:name_"|add:v.venue.category_competition.identifier %})</span>
             </h2>
-            <div class="md:w-1/2 text-gray-600">
+            {% if not is_waitinglist %}
+            <div class="shrink-0 text-gray-600">
                 {% blocktrans with teams=v.teams|length capacity=v.venue.capacity %}Teams: {{ teams }} / {{ capacity }}{% endblocktrans %}
             </div>
+            {% endif %}
         </div>
 
         {% for team in v.teams %}
