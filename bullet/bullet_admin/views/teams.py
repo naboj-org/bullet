@@ -23,3 +23,13 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             "venue",
             "venue__category_competition",
         ).prefetch_related("contestants", "contestants__grade")
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx["hide_venue"] = (
+            self.request.user.get_competition_role(
+                get_active_competition(self.request)
+            ).venue
+            is not None
+        )
+        return ctx
