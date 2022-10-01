@@ -33,6 +33,7 @@ class Team(models.Model):
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
     is_waiting = models.BooleanField(default=False)
+    is_checked_in = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
     consent_photos = models.BooleanField(default=False)
 

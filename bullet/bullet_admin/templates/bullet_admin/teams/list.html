@@ -68,13 +68,15 @@
                             <div class="text-sm">{{ team.venue.category_competition.identifier|title }}</div>
                         </td>
                         {% endif %}
-                        <td class="p-2">
+                        <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
                             {% if not team.confirmed_at %}
-                            <span class="text-white bg-gray-500 px-2 py-1 rounded font-bold tracking-wide text-xs">Unconfirmed</span>
+                            <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
                             {% elif team.is_waiting %}
-                            <span class="text-white bg-amber-600 px-2 py-1 rounded font-bold tracking-wide text-xs whitespace-nowrap">Waiting list</span>
+                            <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
+                            {% elif team.is_checked_in %}
+                            <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
                             {% else %}
-                            <span class="text-white bg-green-600 px-2 py-1 rounded font-bold tracking-wide text-xs">Registered</span>
+                            <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
                             {% endif %}
                         </td>
                     </tr>
