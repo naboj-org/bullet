@@ -96,6 +96,10 @@
     @apply rounded-md text-white font-bold text-sm py-1 px-2.5;
 }
 
+.link-primary {
+    @apply underline text-primary hover:text-primary-dark;
+}
+
 /* timeline */
 .timeline {
     position: relative;
