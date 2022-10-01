@@ -82,6 +82,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "web.context_processors.menu_context",
                 "web.context_processors.branch_context",
+                "web.context_processors.version_context",
                 "django.template.context_processors.i18n",
             ],
         },

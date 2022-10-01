@@ -2,6 +2,8 @@ from competitions.branches import Branches
 from countries.models import BranchCountry
 from web.models import Menu
 
+from bullet import VERSION
+
 
 def menu_context(request):
     if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
@@ -26,4 +28,10 @@ def branch_context(request):
             Branches[i.branch]
             for i in BranchCountry.objects.filter(country=request.COUNTRY_CODE.upper())
         ],
+    }
+
+
+def version_context(request):
+    return {
+        "bullet_version": VERSION,
     }
