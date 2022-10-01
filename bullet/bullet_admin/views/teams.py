@@ -1,5 +1,8 @@
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
-from bullet_admin.utils import get_active_competition
+from bullet_admin.utils import can_access_venue, get_active_competition
+from django.http import HttpResponse, HttpResponseForbidden
+from django.shortcuts import get_object_or_404
+from django.views import View
 from django.views.generic import ListView
 from users.logic import get_venue_waiting_list
 from users.models import Team
@@ -34,6 +37,17 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             is not None
         )
         return ctx
+
+
+class TeamToCompetitionView(AnyAdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        team = get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
+        if not can_access_venue(request, team.venue):
+            return HttpResponseForbidden()
+
+        team.to_competition()
+        team.save()
+        return HttpResponse("redirect")  # TODO: redirect to team edit page
 
 
 class WaitingListView(AnyAdminRequiredMixin, VenueMixin, ListView):

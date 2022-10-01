@@ -78,9 +78,12 @@
                             </div>
                         </td>
                         <td class="p-2 text-right">
-                            <a href="#" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                <i class="fas fa-angles-right"></i> Move to competition
-                            </a>
+                            <form action="{% url "badmin:team_to_competition" pk=team.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-angles-right"></i> Move to competition
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     {% endfor %}
