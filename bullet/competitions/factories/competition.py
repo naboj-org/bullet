@@ -33,8 +33,6 @@ class CompetitionFactory(DjangoModelFactory):
     name = factory.Faker("sentence")
     branch = factory.Faker("random_element", elements=[b.id for b in Branches])
 
-    graduation_year = factory.Faker("year")
-
     web_start = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
     registration_start = factory.Faker(
         "date_time_between", tzinfo=timezone.get_current_timezone()
