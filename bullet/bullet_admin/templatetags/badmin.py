@@ -12,17 +12,20 @@ def admin_sidebar(context):
     user: User = context.request.user
     branch: Branch = context.request.BRANCH
 
-    menu_items = [
-        (
-            "Competition",
-            (
-                ("fa-users", "Teams", "#"),
-                ("fa-barcode", "Something", "#"),
-            ),
-        ),
-    ]
+    menu_items = []
 
     branch_role = user.get_branch_role(branch)
+    competition_role = user.get_competition_role(
+        get_active_competition(context.request)
+    )
+    if branch_role.is_admin or competition_role.venue or competition_role.country:
+        menu_items.append(
+            (
+                "Competition",
+                (("fa-users", "Teams", reverse("badmin:team_list")),),
+            ),
+        )
+
     if branch_role.is_translator:
         menu_items.append(
             (
