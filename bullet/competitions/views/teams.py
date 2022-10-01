@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
 from django.forms import inlineformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -64,6 +64,7 @@ class TeamEditView(FormView):
         self.category_competition = self.team.venue.category_competition
         self.can_be_changed = (
             self.category_competition.competition.competition_start > timezone.now()
+            and not self.team.is_checked_in
         )
 
         if self.team.confirmed_at is None:
@@ -141,6 +142,13 @@ class TeamDeleteView(DeleteView):
         return get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
 
     def form_valid(self, form):
+        team: Team = self.object
+        if (
+            team.is_checked_in
+            or team.venue.competition.competition_start <= timezone.now()
+        ):
+            return HttpResponseForbidden()
+
         self.object.delete()
         messages.success(self.request, _("Team was unregistered."))
         # TODO: notify admins
