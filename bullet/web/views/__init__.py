@@ -1,5 +1,5 @@
 from competitions.models import Competition
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView, TemplateView
 from web.models import Logo
 
 
@@ -40,3 +40,7 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         )
 
         return context
+
+
+class AdminRedirectView(RedirectView):
+    url = "/admin/"
