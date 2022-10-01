@@ -1,8 +1,9 @@
 import factory
 from competitions.branches import Branches
 from django.core.files.base import ContentFile
+from django_countries import countries
 from factory.django import DjangoModelFactory, ImageField
-from web.models import Organizer, Partner
+from web.models import Logo
 
 
 class RandomImage(ImageField):
@@ -13,30 +14,18 @@ class RandomImage(ImageField):
         return filename, content
 
 
-class PartnerFactory(DjangoModelFactory):
+class LogoFactory(DjangoModelFactory):
     class Meta:
-        model = Partner
+        model = Logo
 
     branch = factory.Faker(
         "random_element", elements=[x[0] for x in Branches.choices()]
     )
-    name = factory.Faker("word")
-    url = factory.Faker("url")
-    image = RandomImage(
-        color=factory.Faker("color"),
-        format=factory.Faker("random_element", elements=["jpeg", "png", "bmp", "gif"]),
-        height=factory.Faker("random_number", digits=3, fix_len=True),
-        width=factory.Faker("random_number", digits=3, fix_len=True),
-        filename=factory.SelfAttribute("..name"),
-    )
-
-
-class OrganizerFactory(DjangoModelFactory):
-    class Meta:
-        model = Organizer
-
-    branch = factory.Faker(
-        "random_element", elements=[x[0] for x in Branches.choices()]
+    type = factory.Faker("random_element", elements=Logo.Type.values)
+    countries = factory.Faker(
+        "random_elements",
+        elements=[x.code for x in countries],
+        unique=True,
     )
     name = factory.Faker("word")
     url = factory.Faker("url")

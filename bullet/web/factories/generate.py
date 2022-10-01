@@ -3,7 +3,7 @@ from countries.models import BranchCountry
 from django.db.models import QuerySet
 from web.factories.menu import MenuFactory
 from web.factories.pages import PageFactory
-from web.factories.partners import OrganizerFactory, PartnerFactory
+from web.factories.partners import LogoFactory
 
 
 def create_pages(branch: Branch):
@@ -42,5 +42,4 @@ def create_pages(branch: Branch):
 
 
 def create_partners():
-    PartnerFactory.create_batch(20)
-    OrganizerFactory.create_batch(20)
+    LogoFactory.create_batch(50)
