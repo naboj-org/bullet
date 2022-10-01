@@ -75,22 +75,6 @@
     @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow hover:bg-white hover:text-primary transition-colors border border-primary;
 }
 
-.info {
-    @apply branch-chemistry;
-}
-
-.success {
-    @apply branch-math;
-}
-
-.warning {
-    @apply branch-physics;
-}
-
-.error {
-    @apply branch-junior;
-}
-
 .cb-missing {
     @apply bg-red-500 text-white;
 }
@@ -110,6 +94,10 @@
 
 .btn-admin-sm {
     @apply rounded-md text-white font-bold text-sm py-1 px-2.5;
+}
+
+.link-primary {
+    @apply underline text-primary hover:text-primary-dark;
 }
 
 /* timeline */
