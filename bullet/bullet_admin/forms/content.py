@@ -69,7 +69,7 @@ class ContentBlockForm(forms.ModelForm):
         self.fields["country"].choices = list(
             sorted(
                 filter(
-                    lambda x: x[0] in available_countries,
+                    lambda x: x[0] == "" or x[0] in available_countries,
                     self.fields["country"].choices,
                 ),
                 key=lambda x: x[1],
