@@ -29,6 +29,7 @@ class Menu(models.Model):
     title = models.CharField(max_length=128)
     order = models.IntegerField(default=1)
     is_external = models.BooleanField(default=False)
+    is_visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
