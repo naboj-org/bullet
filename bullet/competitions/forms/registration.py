@@ -86,9 +86,9 @@ class ContestantForm(ModelForm):
 
     def __init__(self, **kwargs):
         school_types: Iterable[SchoolType] = kwargs.pop("school_types")
+        self.category: CategoryCompetition = kwargs.pop("category")
         super().__init__(**kwargs)
 
-        # TODO: Limit choices to allowed Educations.
         grades = [("", _("(Please select)"))]
         for school_type in school_types:
             options = [
@@ -101,11 +101,11 @@ class ContestantForm(ModelForm):
 
     def clean_grade(self):
         grade = self.cleaned_data["grade"]
-        grade_obj = Grade.objects.filter(id=grade).first()
+        grade_obj = Grade.objects.filter(
+            id=grade, education__categorycompetition=self.category
+        ).first()
 
         if grade_obj is None:
-            # Translators: This is a rare error that occurs when the user selects
-            # a grade that we don't have in our database.
-            raise ValidationError(_("Please select a valid grade."))
+            raise ValidationError(_("This grade can't compete in the chosen category."))
 
         return grade_obj

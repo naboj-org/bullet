@@ -43,6 +43,7 @@ class TeamEditView(FormView):
         kw["instance"] = self.team
         kw["form_kwargs"] = {
             "school_types": self.team.school.types.prefetch_related("grades"),
+            "category": self.category_competition,
         }
         return kw
 
