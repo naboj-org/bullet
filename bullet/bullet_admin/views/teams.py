@@ -1,12 +1,18 @@
+from bullet_admin.forms.teams import TeamForm
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
+from competitions.forms.registration import ContestantForm
+from django.contrib import messages
+from django.forms import inlineformset_factory
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, UpdateView
 from users.logic import get_venue_waiting_list
-from users.models import Team
+from users.models import Contestant, Team
+
+from bullet.views import FormAndFormsetMixin
 
 
 class TeamListView(AnyAdminRequiredMixin, ListView):
@@ -78,3 +84,43 @@ class WaitingAutomoveView(AnyAdminRequiredMixin, VenueMixin, View):
         if "venue" in self.request.GET:
             url += f"?venue={self.venue.id}"
         return url
+
+
+class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
+    template_name = "bullet_admin/teams/edit.html"
+    form_class = TeamForm
+    model = Team
+
+    def get_formset_class(self):
+        return inlineformset_factory(
+            Team, Contestant, form=ContestantForm, validate_max=True
+        )
+
+    def get_formset(self):
+        fs = super().get_formset()
+        team: Team = self.object
+        fs.min_num = 0
+        fs.max_num = team.venue.category_competition.max_members_per_team
+        fs.extra = team.venue.category_competition.max_members_per_team
+        return fs
+
+    def get_formset_kwargs(self):
+        kw = super().get_formset_kwargs()
+        team: Team = self.object
+        kw.update(
+            {
+                "form_kwargs": {
+                    "school_types": team.school.types.prefetch_related("grades"),
+                },
+                "instance": team,
+            }
+        )
+        return kw
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        messages.success(self.request, "Team saved.")
+        return reverse("badmin:team_list")

@@ -1,0 +1,118 @@
+{% extends "bullet_admin/base.html" %}
+{% load bform %}
+
+{% block title %}Edit team{% endblock %}
+
+{% block content %}
+    <form method="post" class="m-8">
+        {% if not team.confirmed_at %}
+        <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
+            <b>Unconfirmed team.</b> This team did not confirm their registration. You can confirm it manually, but it may mean that we are unable to reach the team via email.
+        </div>
+        {% elif team.is_waiting %}
+        <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
+            <b>This team is on the waiting list.</b> You can move it to the competition to override the waiting list.
+        </div>
+        {% elif team.is_checked_in %}
+        <div class="bg-purple-100 text-purple-800 border border-purple-800 p-4 mb-6 rounded-md">
+            <b>Checked in team.</b> This team was marked as checked in. They are at the venue, so please think carefully before editing it.
+        </div>
+        {% endif %}
+
+        {% csrf_token %}
+        <div class="lg:grid lg:grid-cols-2 lg:gap-6">
+            <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+                <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                    <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Contact information</h2>
+                </header>
+                <div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                        <label for="{{ form.contact_name.id_for_label }}">Full name <span class="text-red-600">*</span></label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.contact_name %}
+                        </div>
+                    </div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                        <label for="{{ form.contact_email.id_for_label }}">Email <span class="text-red-600">*</span></label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.contact_email %}
+                        </div>
+                    </div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                        <label for="{{ form.contact_phone.id_for_label }}">Phone number</label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.contact_phone %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="border rounded-md bg-white shadow-lg overflow-hidden mt-6 lg:mt-0">
+                <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                    <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team</h2>
+                </header>
+                <div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                        {# TODO: search #}
+                        <label for="{{ form.school.id_for_label }}">School</label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.school %}
+                        </div>
+                    </div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                        <label for="{{ form.venue.id_for_label }}">Venue <span class="text-red-600">*</span></label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.venue %}
+                        </div>
+                    </div>
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                        <label for="{{ form.is_checked_in.id_for_label }}">Checked in?</label>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.is_checked_in %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden mt-6">
+            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Contestants</h2>
+            </header>
+            <div class="p-4">
+                {{ formset.management_form }}
+                <div class="grid grid-cols-1 md:grid-cols-contestants-edit gap-2 items-baseline">
+                    <div class="w-auto md:block hidden"></div>
+                    <div class="hidden md:block">Full name</div>
+                    <div class="hidden md:block">Grade</div>
+                    <div class="hidden md:block text-center">Delete?</div>
+
+                    {% for f in formset %}
+                    <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">
+                        Contestant {{ forloop.counter }}
+                        {{ f.id }}
+                    </div>
+                    <div>
+                        <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">Full name</label>
+                        {% bfield f.full_name %}
+                    </div>
+                    <div>
+                        <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">Grade</label>
+                        {% bfield f.grade %}
+                    </div>
+                    <div class="flex md:justify-center items-center gap-2">
+                        {% bcheckbox f.DELETE %}
+                        <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">Delete?</label>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </article>
+
+        <div class="mt-8 text-center">
+            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
+                <i class="fas fa-save"></i> Save
+            </button>
+        </div>
+    </form>
+{% endblock %}

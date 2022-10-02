@@ -28,6 +28,7 @@
                         <th class="p-2">Venue / Category</th>
                         {% endif %}
                         <th class="p-2">Status</th>
+                        <th class="p-2"></th>
                     </tr>
                 </thead>
 
@@ -78,6 +79,11 @@
                             {% else %}
                             <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
                             {% endif %}
+                        </td>
+                        <td class="p-2 whitespace-nowrap text-right">
+                            <a href="{% url "badmin:team_edit" pk=team.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

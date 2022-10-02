@@ -40,6 +40,7 @@ urlpatterns = [
         name="contentblock_delete",
     ),
     path("teams/", teams.TeamListView.as_view(), name="team_list"),
+    path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
         "teams/<int:pk>/to_competition/",
         teams.TeamToCompetitionView.as_view(),
