@@ -28,6 +28,8 @@ urlpatterns = [
     ),
 ]
 
+handler404 = "web.views.error_404_view"
+
 if settings.DEBUG:
     import debug_toolbar
 
