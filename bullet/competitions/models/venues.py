@@ -59,6 +59,6 @@ class Venue(models.Model):
         if not self.email:
             return BranchCountry.objects.get(
                 branch=self.category_competition.competition.branch,
-                country=self.venue.country,
+                country=self.country,
             ).email
         return self.email
