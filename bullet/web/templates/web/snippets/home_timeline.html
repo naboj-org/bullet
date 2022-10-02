@@ -18,13 +18,15 @@
                         </div>
                     </div>
 
-                    <div class="container flex items-center m-0 {% if today > competition.registration_second_round_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
+                    {% if competition.registration_second_round_start %}
+                    <div class="container flex items-center m-0 {% if today > competition.registration_second_round_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content w-80 md:w-full">
                             <p class="text-base md:text-xl">{{ competition.registration_second_round_start|date }},
                                 {{ competition.registration_second_round_start|time }}</p>
                             <p class="text-lg md:text-2xl">{% trans "Second round of registration" %}</p>
                         </div>
                     </div>
+                    {% endif %}
 
                     <div class="container flex items-center m-0 {% if today > competition.registration_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content">
