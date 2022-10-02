@@ -24,7 +24,7 @@
 
             <p>
                 <strong>{% trans "School" %}:</strong>
-                {{ team.school }}
+                {{ team.school.name }}, {{ team.school.address }}
 
                 {% if team.in_school_symbol %}
                     <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
