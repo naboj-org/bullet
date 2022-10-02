@@ -139,6 +139,7 @@ LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 EMAIL_BACKEND = os.environ.get(
     "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
 )
+DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM", "devel@naboj.org")
 EMAIL_HOST = os.environ.get("EMAIL_HOST")
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
