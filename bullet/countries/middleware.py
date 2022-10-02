@@ -4,7 +4,8 @@ from countries.logic import country
 from countries.logic.cache import get_country_cache
 from countries.models import BranchCountry
 from django.conf import settings
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 from django.utils import timezone, translation
 
 country_language_re = re.compile(r"^/([a-z]{2})/([^/]+)/")
@@ -31,9 +32,7 @@ class CountryLanguageMiddleware:
                 c not in cache[request.BRANCH.id]
                 or lang not in cache[request.BRANCH.id][c]
             ):
-                return HttpResponseNotFound(
-                    "BranchCountryLanguage combination not found."
-                )
+                return HttpResponseRedirect(reverse("country_selector"))
 
             country.activate(c)
             request.COUNTRY_CODE = c
