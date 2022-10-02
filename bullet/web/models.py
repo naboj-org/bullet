@@ -65,6 +65,9 @@ class Logo(models.Model):
 
     objects = LogoQuerySet.as_manager()
 
+    class Meta:
+        ordering = ("name",)
+
     def __str__(self):
         return f"{self.name} ({Branches[self.branch].name})"
 
