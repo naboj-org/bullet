@@ -27,7 +27,9 @@ def branch_context(request):
         "branch": request.BRANCH,
         "branches": [
             Branches[i.branch]
-            for i in BranchCountry.objects.filter(country=request.COUNTRY_CODE.upper())
+            for i in BranchCountry.objects.filter(
+                country=request.COUNTRY_CODE.upper()
+            ).order_by("branch")
         ],
     }
 
