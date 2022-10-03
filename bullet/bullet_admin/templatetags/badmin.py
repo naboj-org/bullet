@@ -22,7 +22,10 @@ def admin_sidebar(context):
         menu_items.append(
             (
                 "Competition",
-                (("fa-users", "Teams", reverse("badmin:team_list")),),
+                (
+                    ("fa-users", "Teams", reverse("badmin:team_list")),
+                    ("fa-clock", "Waiting list", reverse("badmin:waiting_list")),
+                ),
             ),
         )
 

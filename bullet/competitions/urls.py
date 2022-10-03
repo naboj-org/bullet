@@ -28,6 +28,7 @@ urlpatterns = [
         name="register_thanks",
     ),
     path("teams/", teams.TeamListView.as_view(), name="team_list"),
+    path("teams/waiting/", teams.WaitingListView.as_view(), name="waiting_list"),
     path("teams/<secret_link>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
         "teams/<secret_link>/unregister/",

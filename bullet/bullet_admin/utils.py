@@ -1,4 +1,4 @@
-from competitions.models import Competition
+from competitions.models import Competition, Venue
 from django.http import HttpRequest
 
 
@@ -14,3 +14,20 @@ def get_active_competition(request: HttpRequest):
             ).first()
 
     return request._badmin_competition
+
+
+def can_access_venue(request: HttpRequest, venue: Venue) -> bool:
+    brole = request.user.get_branch_role(request.BRANCH)
+    if brole.is_admin:
+        return True
+
+    competition = get_active_competition(request)
+    if not competition:
+        return False
+    crole = request.user.get_competition_role(competition)
+    if crole.venue:
+        return crole.venue == venue
+    if crole.country:
+        return crole.country == venue.country
+
+    return False
