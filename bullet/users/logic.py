@@ -24,7 +24,8 @@ def school_has_capacity(team: Team) -> bool:
     teams_from_school = (
         Team.objects.competing()
         .filter(
-            venue__category_competition__competition=competition, school=team.school
+            venue__category_competition=category,
+            school=team.school,
         )
         .count()
     )
@@ -74,9 +75,7 @@ def _waiting_list(team_filter: Q, inner_filter: Q):
 def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
     # We need all competition venues here to properly count registered
     # teams across all of them.
-    all_venues = Venue.objects.filter(
-        category_competition__competition=venue.category_competition.competition
-    )
+    all_venues = Venue.objects.filter(category_competition=venue.category_competition)
     return _waiting_list(Q(venue=venue), Q(school__team__venue__in=all_venues))
 
 
