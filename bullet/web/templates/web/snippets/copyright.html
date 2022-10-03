@@ -3,6 +3,8 @@
 <footer class="text-gray-700 text-center md:mt-16 mt-10 mb-12">
     {% now "e" as tz_name %}{% now "O" as tz_offset %}
     <p>{% blocktrans with tz_name=tz_name tz_offset=tz_offset %}All times are {{ tz_name }} ({{ tz_offset }}) unless stated otherwise.{% endblocktrans %}</p>
+    {% if request.COUNTRY_CODE %}
     <p><a href="{% country_url "page" slug="gdpr" %}" class="link-primary">{% trans "Data protection policy" %}</a></p>
+    {% endif %}
     <p class="mt-2 text-sm">&copy; Naboj IT Team {% now "Y" %} <span class="text-xs">(v{{ bullet_version }})</span></p>
 </footer>

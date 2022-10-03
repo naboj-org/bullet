@@ -33,7 +33,7 @@ class TeamEditView(FormView):
 
     def form_valid(self, form):
         form.save()
-        messages.success(self.request, "Team successfully edited.")
+        messages.success(self.request, _("Team successfully edited."))
         return HttpResponseRedirect(
             country_reverse("team_edit", kwargs={"secret_link": self.team.secret_link})
         )

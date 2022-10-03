@@ -1,4 +1,5 @@
 from competitions.models import Competition
+from django.shortcuts import render
 from django.views.generic import RedirectView, TemplateView
 from web.models import Logo
 
@@ -44,3 +45,9 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
 
 class AdminRedirectView(RedirectView):
     url = "/admin/"
+
+
+def error_404_view(request, *args):
+    response = render(request, "web/404.html")
+    response.status_code = 404
+    return response

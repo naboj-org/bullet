@@ -1,4 +1,5 @@
 from competitions.models import CategoryCompetition, Competition, Venue
+from django.utils import timezone
 from users.models import Team
 
 
@@ -20,7 +21,11 @@ def school_has_capacity(team: Team) -> bool:
         school_limit = category.max_teams_second_round
 
     teams_from_school = (
-        Team.objects.competing().filter(venue=venue, school=team.school).count()
+        Team.objects.competing()
+        .filter(
+            venue__category_competition__competition=competition, school=team.school
+        )
+        .count()
     )
     if school_limit == 0:
         return True
@@ -29,6 +34,11 @@ def school_has_capacity(team: Team) -> bool:
 
 def add_team_to_competition(team: Team):
     venue: Venue = team.venue
+
+    # If registration closed -> waiting list
+    if timezone.now() > venue.category_competition.competition.registration_end:
+        team.to_waitlist()
+        return
 
     # If venue is over capacity -> waiting list
     if not venue_has_capacity(venue):

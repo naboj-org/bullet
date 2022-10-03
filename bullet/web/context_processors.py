@@ -13,6 +13,7 @@ def menu_context(request):
             branch=request.BRANCH,
             language=request.LANGUAGE_CODE,
             countries__contains=[request.COUNTRY_CODE.upper()],
+            is_visible=True,
         ).order_by("order")
     }
 

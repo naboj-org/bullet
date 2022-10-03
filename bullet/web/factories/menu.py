@@ -21,6 +21,7 @@ class MenuFactory(DjangoModelFactory):
     title = factory.Faker("word")
     order = factory.Faker("random_number")
     is_external = False
+    is_visible = True
 
     class Params:
         external = factory.Trait(is_external=True, url=factory.Faker("url"))
