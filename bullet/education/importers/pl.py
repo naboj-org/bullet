@@ -14,10 +14,25 @@ class PolishSchoolImporter(BaseSchoolImporter):
             "PL",
             (f"Klasa {i}" for i in range(1, 9)),
         ),
+        (
+            "technikum",
+            "Technikum",
+            "PL",
+            (f"Klasa {i}" for i in range(1, 6)),
+        ),
+        (
+            "liceum",
+            "Liceum",
+            "PL",
+            (f"Klasa {i}" for i in range(1, 5)),
+        ),
     )
 
     type_mapping = {
         "Szkoła podstawowa": "sp",
+        "Technikum": "technikum",
+        "Liceum sztuk plastycznych": "liceum",
+        "Liceum ogólnokształcące": "liceum",
     }
 
     def _parse_eq(self, x: str) -> str:
