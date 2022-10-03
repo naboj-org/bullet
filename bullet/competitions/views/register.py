@@ -283,6 +283,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
         kwargs = {
             "form_kwargs": {
                 "school_types": self.school.types.prefetch_related("grades"),
+                "category": self.category_competition,
             }
         }
         if self.request.method in ("POST", "PUT"):
