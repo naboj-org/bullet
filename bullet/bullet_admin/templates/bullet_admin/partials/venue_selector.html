@@ -8,7 +8,7 @@
         <form method="get" class="flex gap-2">
             <select name="venue" class="input">
                 {% for avenue in available_venues %}
-                    <option value="{{ avenue.id }}" {% if avenue.id == venue.id %}selected{% endif %}>{{ avenue.name }}</option>
+                    <option value="{{ avenue.id }}" {% if avenue.id == venue.id %}selected{% endif %}>{{ avenue.name }} ({{ avenue.competition_category.identifier }})</option>
                 {% endfor %}
             </select>
 
