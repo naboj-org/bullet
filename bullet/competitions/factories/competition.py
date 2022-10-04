@@ -81,10 +81,6 @@ class CategoryCompetitionFactory(DjangoModelFactory):
     max_teams_second_round = factory.Faker("pyint", max_value=100)
     max_members_per_team = factory.Faker("pyint", min_value=1, max_value=10)
 
-    ranking = factory.Faker(
-        "random_elements", elements=CategoryCompetition.RankingCriteria.values
-    )
-
 
 class WildcardFactory(DjangoModelFactory):
     competition = factory.Faker("random_element", elements=Competition.objects.all())

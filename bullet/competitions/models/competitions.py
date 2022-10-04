@@ -1,4 +1,3 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
@@ -36,11 +35,6 @@ class Competition(models.Model):
 
 
 class CategoryCompetition(models.Model):
-    class RankingCriteria(models.IntegerChoices):
-        SCORE = 1, "Score"
-        PROBLEMS = 2, "Problems"
-        TIME = 3, "Time"
-
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
@@ -55,10 +49,6 @@ class CategoryCompetition(models.Model):
     max_teams_per_school = models.PositiveIntegerField()
     max_teams_second_round = models.PositiveIntegerField()
     max_members_per_team = models.PositiveIntegerField()
-
-    ranking = ArrayField(
-        base_field=models.PositiveIntegerField(choices=RankingCriteria.choices)
-    )
 
     class Meta:
         constraints = (
