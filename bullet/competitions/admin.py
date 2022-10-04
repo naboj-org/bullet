@@ -33,7 +33,6 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
         "problems_per_team",
         "max_teams_per_school",
         "max_members_per_team",
-        "ranking",
     )
 
 
