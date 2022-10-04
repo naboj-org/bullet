@@ -10,9 +10,9 @@ class SpanishSchoolImporter(BaseSchoolImporter):
     types = (
         (
             "es",
-            "School",
+            "Educación Secundaria Obligatoria",
             "ES",
-            (f"{i}. grade" for i in range(1, 10)),
+            (f"{i}º E.S.O." for i in range(1, 5)),
         ),
     )
 
