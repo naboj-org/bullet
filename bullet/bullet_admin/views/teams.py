@@ -23,11 +23,15 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
         elif crole.venue:
             qs = qs.filter(venue=crole.venue)
 
-        return qs.select_related(
-            "school",
-            "venue",
-            "venue__category_competition",
-        ).prefetch_related("contestants", "contestants__grade")
+        return (
+            qs.select_related(
+                "school",
+                "venue",
+                "venue__category_competition",
+            )
+            .prefetch_related("contestants", "contestants__grade")
+            .order_by("id")
+        )
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)

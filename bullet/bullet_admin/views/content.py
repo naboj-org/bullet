@@ -14,7 +14,9 @@ from web.models import ContentBlock, Page
 
 class PageQuerySetMixin:
     def get_queryset(self):
-        return Page.objects.filter(branch=self.request.BRANCH).order_by("slug")
+        return Page.objects.filter(branch=self.request.BRANCH).order_by(
+            "slug", "language"
+        )
 
 
 class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
@@ -76,7 +78,9 @@ class PageDeleteView(TranslatorRequiredMixin, PageQuerySetMixin, DeleteView):
 
 class ContentBlockQuerySetMixin:
     def get_queryset(self):
-        return ContentBlock.objects.filter(branch=self.request.BRANCH)
+        return ContentBlock.objects.filter(branch=self.request.BRANCH).order_by(
+            "group", "reference", "language"
+        )
 
 
 class ContentBlockListView(TranslatorRequiredMixin, ListView):
