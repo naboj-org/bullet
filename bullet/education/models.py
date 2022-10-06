@@ -69,7 +69,7 @@ class School(models.Model):
         )
 
     def __str__(self):
-        return self.name
+        return f"{self.name}, {self.address}"
 
     def save(self, send_to_search=False, **kwargs):
         if send_to_search:

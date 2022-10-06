@@ -48,7 +48,7 @@ class Venue(models.Model):
         unique_together = ("category_competition", "shortcode")
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.category_competition.identifier})"
 
     @property
     def remaining_capacity(self):
