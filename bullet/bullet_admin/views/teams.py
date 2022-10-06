@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, UpdateView
 from education.models import School
+from users.emails.teams import send_confirmation_email
 from users.logic import get_venue_waiting_list
 from users.models import Contestant, Team
 
@@ -62,6 +63,17 @@ class TeamToCompetitionView(AnyAdminRequiredMixin, View):
 
         team.to_competition()
         team.save()
+        return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
+
+
+class TeamResendConfirmationView(AnyAdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        team = get_object_or_404(Team, id=self.kwargs["pk"], confirmed_at__isnull=True)
+        if not can_access_venue(request, team.venue):
+            return HttpResponseForbidden()
+
+        send_confirmation_email(team)
+        messages.success(request, "The confirmation email was re-sent.")
         return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
 
 
