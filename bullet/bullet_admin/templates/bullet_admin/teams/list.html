@@ -6,16 +6,15 @@
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
-{#            <a href="{% url "badmin:page_create" %}" class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New page</a>#}
         </header>
         <div class="p-4">
-{#            <form method="get" class="flex items-center gap-2">#}
-{#                <input type="search" name="q" placeholder="Search pages" class="input" value="{{ request.GET.q }}">#}
-{#                <button type="submit" class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">#}
-{#                    <i class="fas fa-search mr-1"></i> Search#}
-{#                </button>#}
-{#            </form>#}
-{#            <hr class="my-4">#}
+            <form method="get" class="flex items-center gap-2">
+                <input type="search" name="q" placeholder="Search pages" class="input" value="{{ request.GET.q }}">
+                <button type="submit" class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">
+                    <i class="fas fa-search mr-1"></i> Search
+                </button>
+            </form>
+            <hr class="my-4">
 
             <table class="w-full mb-4">
                 <thead>

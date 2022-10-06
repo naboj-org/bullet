@@ -7,6 +7,8 @@ from django.db.models import Max
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
 
+from bullet import search
+
 
 class TeamQuerySet(models.QuerySet):
     def competing(self):
@@ -60,16 +62,36 @@ class Team(models.Model):
             return ""
         fmt = self.contact_phone.format_as(PhoneNumberFormat.INTERNATIONAL)
         if not fmt or fmt == "None":
-            return self.contact_phone
+            return str(self.contact_phone)
         return fmt
 
-    def save(self, *args, **kwargs):
+    def for_search(self):
+        return {
+            "id": self.id,
+            "contact_name": self.contact_name,
+            "contact_email": self.contact_email,
+            "contact_phone": self.contact_phone_pretty,
+            "school": self.school.for_search() if self.school else None,
+            "name": self.name,
+        }
+
+    def search_index(self):
+        search.client.index("teams").add_documents(
+            [self.for_search()],
+            "id",
+        )
+
+    def save(self, send_to_search=True, *args, **kwargs):
         if not self.secret_link:
             self.secret_link = "".join(
                 secrets.choice(string.ascii_lowercase + string.digits)
                 for i in range(48)
             )
-        super().save(*args, **kwargs)
+
+        if send_to_search:
+            self.search_index()
+
+        return super().save(**kwargs)
 
     def to_waitlist(self):
         self.number = None
