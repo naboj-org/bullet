@@ -5,7 +5,7 @@ from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse
@@ -62,7 +62,7 @@ class TeamToCompetitionView(AnyAdminRequiredMixin, View):
 
         team.to_competition()
         team.save()
-        return HttpResponse("redirect")  # TODO: redirect to team edit page
+        return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
 
 
 class WaitingListView(AnyAdminRequiredMixin, VenueMixin, ListView):
