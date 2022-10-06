@@ -61,7 +61,7 @@ class Team(models.Model):
             return ""
         fmt = self.contact_phone.format_as(PhoneNumberFormat.INTERNATIONAL)
         if not fmt or fmt == "None":
-            return self.contact_phone
+            return str(self.contact_phone)
         return fmt
 
     def for_search(self):
@@ -71,7 +71,7 @@ class Team(models.Model):
             "contact_phone": self.contact_phone_pretty,
             "school": self.school.for_search() if self.school else None,
             "name": self.name,
-            "contestants": [c.full_name for c in self.contestants],
+            "contestants": [c.full_name for c in self.contestants.all()],
         }
 
     def search_index(self):
