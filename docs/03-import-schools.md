@@ -19,6 +19,7 @@ located in `bullet` sub-directory.
 | Poland   | `pl`     | [rspo.gov.pl](https://rspo.gov.pl) -> Wyszukiwarka zaawansowana -> Typ szkoły/placówki -> Add "Liceum ogólnokształcące, Liceum sztuk plastycznych, Szkoła podstawowa, Technikum" -> Szukaj -> Pobierz plik CSV s wynikami |
 | Croatia  | `hr`     | [mzos.hr](http://mzos.hr/dbApp/pregled.aspx?appName=OS) -> press "excel" icon (convert to classic CSV)                                                                                                                    |
 | France   | `fr`     | [Náboj Junior GDrive](https://docs.google.com/spreadsheets/d/1p4SW5Bu0XPgffXnlTyzBEe8yklPxWpfg/edit#gid=628139957) (convert to classic CSV)                                                                               |
+| Hungary  | `hu`     | [Náboj Physics Drive](https://docs.google.com/spreadsheets/d/1dsOakgJEG4tA68qhpAq1tu1s18NsuBH-EeAMRmr_Cvs/edit?usp=sharing) (save as CSV)                                                                                 |
 
 ## Index schools
 
