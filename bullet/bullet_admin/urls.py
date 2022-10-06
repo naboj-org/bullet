@@ -4,8 +4,13 @@ from django.urls import path
 app_name = "badmin"
 urlpatterns = [
     path("", home.HomeView.as_view(), name="home"),
-    path("login/", auth.LoginView.as_view(), name="login"),
-    path("logout/", auth.LogoutView.as_view(), name="logout"),
+    path("auth/login/", auth.LoginView.as_view(), name="login"),
+    path("auth/logout/", auth.LogoutView.as_view(), name="logout"),
+    path(
+        "auth/password_change/",
+        auth.PasswordChangeView.as_view(),
+        name="password_change",
+    ),
     path("competitions/", CompetitionSwitchView.as_view(), name="competition_switch"),
     path("content/pages/", content.PageListView.as_view(), name="page_list"),
     path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
