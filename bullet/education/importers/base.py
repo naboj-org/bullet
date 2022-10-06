@@ -92,7 +92,9 @@ class BaseSchoolImporter:
             current = set(obj.types.values_list("identifier", flat=True))
             new = set([f"{self.name}-{x}" for x in school.types])
 
-            obj.types.filter(identifier__in=current.difference(new)).delete()
+            obj.types.through.objects.filter(
+                schooltype__identifier__in=current.difference(new)
+            ).delete()
             for school_type in new.difference(current):
                 if school_type not in self.type_objects:
                     raise ValueError(f"School type {school_type} is unknown.")
