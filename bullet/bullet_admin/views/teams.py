@@ -8,6 +8,8 @@ from django.views.generic import ListView
 from users.logic import get_venue_waiting_list
 from users.models import Team
 
+from bullet import search
+
 
 class TeamListView(AnyAdminRequiredMixin, ListView):
     template_name = "bullet_admin/teams/list.html"
@@ -22,6 +24,13 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             qs = qs.filter(venue__country=crole.country)
         elif crole.venue:
             qs = qs.filter(venue=crole.venue)
+
+        if "q" in self.request.GET:
+            ids = search.client.index("teams").search(
+                self.request.GET["q"], {"attributesToRetrieve": ["id"]}
+            )["hits"]
+            ids = [x["id"] for x in ids]
+            qs = qs.filter(id__in=ids)
 
         return (
             qs.select_related(
