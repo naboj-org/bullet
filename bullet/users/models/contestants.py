@@ -72,7 +72,6 @@ class Team(models.Model):
             "contact_phone": self.contact_phone_pretty,
             "school": self.school.for_search() if self.school else None,
             "name": self.name,
-            "contestants": [c.full_name for c in self.contestants.all()],
         }
 
     def search_index(self):
