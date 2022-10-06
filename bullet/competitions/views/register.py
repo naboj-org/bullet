@@ -15,12 +15,13 @@ from django.db.models import Q
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils import timezone
+from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
 from education.models import School
+from users.emails.teams import send_confirmation_email
 
 from bullet import search
-from bullet.utils.email import send_email
 
 
 class RegistrationError(Exception):
@@ -308,6 +309,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
         team = form.save(commit=False)
         team.school = self.school
         team.venue = self.venue
+        team.language = get_language()
         team.consent_photos = "consent_photos" in self.request.POST
         team.save()
 
@@ -319,16 +321,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
             contestant.team = team
             contestant.save()
 
-        send_email(
-            self.request.BRANCH,
-            team.contact_email,
-            _("Confirm your team registration"),
-            "mail/messages/registration.html",
-            "mail/messages/registration.txt",
-            {"team": team},
-            [self.venue.contact_email],
-        )
-
+        send_confirmation_email(team)
         del self.request.session["register_form"]
         return HttpResponseRedirect(country_reverse("register_thanks"))
 

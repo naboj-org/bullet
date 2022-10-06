@@ -46,6 +46,11 @@ urlpatterns = [
         teams.TeamToCompetitionView.as_view(),
         name="team_to_competition",
     ),
+    path(
+        "teams/<int:pk>/resend_confirmation/",
+        teams.TeamResendConfirmationView.as_view(),
+        name="team_resend_confirmation",
+    ),
     path("teams/waiting/", teams.WaitingListView.as_view(), name="waiting_list"),
     path(
         "teams/waiting/automove/",
