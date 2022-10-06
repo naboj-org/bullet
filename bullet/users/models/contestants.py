@@ -68,6 +68,7 @@ class Team(models.Model):
         return {
             "id": self.id,
             "contact_name": self.contact_name,
+            "contact_email": self.contact_email,
             "contact_phone": self.contact_phone_pretty,
             "school": self.school.for_search() if self.school else None,
             "name": self.name,
