@@ -18,11 +18,14 @@ def get_active_competition(request: HttpRequest):
 
 def can_access_venue(request: HttpRequest, venue: Venue) -> bool:
     brole = request.user.get_branch_role(request.BRANCH)
-    if brole.is_admin:
+    if (
+        brole.is_admin
+        and venue.category_competition.competition.branch == request.BRANCH
+    ):
         return True
 
     competition = get_active_competition(request)
-    if not competition:
+    if not competition or venue.category_competition.competition != competition:
         return False
     crole = request.user.get_competition_role(competition)
     if crole.venue:
