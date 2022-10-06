@@ -45,23 +45,27 @@ class CzechSchoolImporter(BaseSchoolImporter):
 
     def get_schools(self) -> Iterable[ImportedSchool]:
         reader = csv.DictReader(self.file)
+        reader = sorted(reader, key=lambda x: x["Kód RÚIAN"])
 
         school = None
+        ruian = None
         for row in reader:
-            if school and school.identifier != row["RED_IZO"]:
+            if school and ruian != row["Kód RÚIAN"]:
                 if school.types:
                     yield school
                 school = None
+                ruian = None
 
             if school is None:
                 address = f"{row['Ulice']}, {row['Místo']}"
+                ruian = row["Kód RÚIAN"]
                 school = ImportedSchool(
                     row["Zkrácený název"],
                     address.strip(" ,"),
                     "CZ",
                     row["Plný název"],
                     [],
-                    row["RED_IZO"],
+                    row["IZO"],
                 )
 
             if row["Typ"][0] == "B":
