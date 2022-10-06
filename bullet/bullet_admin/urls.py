@@ -52,4 +52,5 @@ urlpatterns = [
         teams.WaitingAutomoveView.as_view(),
         name="waiting_automove",
     ),
+    path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
 ]
