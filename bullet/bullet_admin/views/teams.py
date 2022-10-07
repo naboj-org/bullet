@@ -19,8 +19,6 @@ from users.models import Contestant, Team
 from bullet import search
 from bullet.views import FormAndFormsetMixin
 
-from bullet import search
-
 
 class TeamListView(AnyAdminRequiredMixin, ListView):
     template_name = "bullet_admin/teams/list.html"
