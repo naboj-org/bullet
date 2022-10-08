@@ -46,30 +46,23 @@ class CzechSchoolImporter(BaseSchoolImporter):
     def get_schools(self) -> Iterable[ImportedSchool]:
         reader = csv.DictReader(self.file)
 
-        school = None
         for row in reader:
-            if school and school.identifier != row["RED_IZO"]:
-                if school.types:
-                    yield school
-                school = None
+            types = []
+            suffix = ""
+            if row["Typ"][0] == "B":
+                types.append("zs")
+                suffix = "ZŠ"
+            if row["Typ"][0] == "C":
+                types.extend(["ss", "6gym", "8gym"])
+                suffix = "SŠ"
 
-            if school is None:
+            if types:
                 address = f"{row['Ulice']}, {row['Místo']}"
-                school = ImportedSchool(
-                    row["Zkrácený název"],
+                yield ImportedSchool(
+                    f"{row['Zkrácený název']} ({suffix})",
                     address.strip(" ,"),
                     "CZ",
                     row["Plný název"],
-                    [],
-                    row["RED_IZO"],
+                    types,
+                    row["IZO"],
                 )
-
-            if row["Typ"][0] == "B":
-                school.types.append("zs")
-            elif row["Typ"][0] == "C":
-                school.types.extend(["ss", "6gym", "8gym"])
-            else:
-                continue
-
-        if school:
-            yield school
