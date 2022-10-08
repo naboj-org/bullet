@@ -27,7 +27,7 @@ django-htmx = "==1.12.2"
 meilisearch = "==0.22.0"
 
 [dev-packages]
-black = "==22.8.0"
+black = "==22.10.0"
 isort = "==5.10.1"
 pre-commit = "~=2.20.0"
 flake8 = "==5.0.4"
