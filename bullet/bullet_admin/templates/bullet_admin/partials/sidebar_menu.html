@@ -16,4 +16,14 @@
     {% endfor %}
 </nav>
 {% endfor %}
+<form action="{% url "badmin:logout" %}" id="js-logout-form">{% csrf_token %}</form>
+<nav class="p-4 flex flex-col gap-1 border-gray-700">
+    <a href="{% url "badmin:password_change" %}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded gap-2">
+        <i class="fas fa-fw fa-key"></i> Change password
+    </a>
+
+    <a href="#" onclick="document.getElementById('js-logout-form').submit()" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded gap-2">
+        <i class="fas fa-fw fa-sign-out"></i> Log out
+    </a>
+</nav>
 </div>
