@@ -12,6 +12,7 @@ DATABASES = {"default": dj_database_url.config(default="postgres://localhost")}
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 3600
 
+ADMINS = [("Bullet Team", "bullet-notifications.group@trojsten.sk")]
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -19,9 +20,13 @@ LOGGING = {
         "console": {
             "class": "logging.StreamHandler",
         },
+        "mail_admins": {
+            "level": "ERROR",
+            "class": "django.utils.log.AdminEmailHandler",
+        },
     },
     "root": {
-        "handlers": ["console"],
+        "handlers": ["console", "mail_admins"],
         "level": "WARNING",
     },
 }
