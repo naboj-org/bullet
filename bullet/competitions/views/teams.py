@@ -145,7 +145,8 @@ class TeamDeleteView(DeleteView):
         team: Team = self.object
         if (
             team.is_checked_in
-            or team.venue.competition.competition_start <= timezone.now()
+            or team.venue.category_competition.competition.competition_start
+            <= timezone.now()
         ):
             return HttpResponseForbidden()
 
