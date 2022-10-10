@@ -4,16 +4,23 @@
 
 {% block root_content %}
     {% block main %}
-        <nav class="mx-auto text-white sm:flex sm:flex-row sm:items-center sm:align-baseline bg-gray-900 py-4 px-2 border-b-4 border-primary">
-            {% for b in branches %}
-                <a class="{% if branch == b %}bg-primary{% endif %} font-medium inline-block sm:inline hover:bg-gray-600 px-2 mx-1 py-1 rounded" href="//{{ b.domain }}">{{ b.name }}</a>
-            {% endfor %}
+        <div class="flex align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary">
+            <div class="relative">
+                <button type="button" class="font-medium cursor-pointer text-white text-left" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
+                    {{ branch.name }} <i class="fas fa-caret-down"></i>
+                </button>
+                <nav id="js-branch-menu" class="absolute bg-white border shadow-lg rounded-md p-2 space-y-1 w-48 hidden" aria-labelledby="js-branch-button" tabindex="-1">
+                    {% for b in branches %}
+                        <a class="{% if branch == b %}bg-primary text-white{% else %}hover:bg-gray-200{% endif %} block px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.name }}</a>
+                    {% endfor %}
+                </nav>
+            </div>
 
-            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 block sm:inline mt-2 sm:mt-0 ml-auto">
+            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ml-auto text-right">
                 <i class="fas fa-globe"></i>
                 Change language
             </a>
-        </nav>
+        </div>
 
         <header class="bg-hero border-b border-primary">
             <div class="container mx-auto py-12 px-2 {% block heroclass %}{% endblock %}">

@@ -9,3 +9,7 @@ const observer = new IntersectionObserver((entries) => {
     });
 });
 observer.observe(document.getElementById("default-nav"));
+
+document.getElementById("js-branch-button").addEventListener("click", () => {
+    document.getElementById("js-branch-menu").classList.toggle("hidden");
+})
