@@ -36,6 +36,7 @@ def admin_sidebar(context):
                 (
                     ("fa-file-text", "Pages", reverse("badmin:page_list")),
                     ("fa-cube", "Blocks", reverse("badmin:contentblock_list")),
+                    ("fa-handshake", "Logos", reverse("badmin:logo_list")),
                 ),
             )
         )

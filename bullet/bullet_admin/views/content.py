@@ -1,6 +1,7 @@
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
+    LogoForm,
     PageForm,
 )
 from bullet_admin.mixins import TranslatorRequiredMixin
@@ -9,7 +10,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
-from web.models import ContentBlock, Page
+from web.models import ContentBlock, Logo, Page
 
 
 class PageQuerySetMixin:
@@ -177,3 +178,54 @@ class ContentBlockCreateView(
                 },
             )
         )
+
+
+class LogoListView(TranslatorRequiredMixin, ListView):
+    template_name = "bullet_admin/content/logo_list.html"
+
+    def get_queryset(self):
+        return Logo.objects.filter(branch=self.request.BRANCH)
+
+
+class LogoEditView(TranslatorRequiredMixin, UpdateView):
+    template_name = "bullet_admin/content/logo_form.html"
+    form_class = LogoForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def get_queryset(self):
+        return Logo.objects.filter(branch=self.request.BRANCH)
+
+    def get_success_url(self):
+        return reverse("badmin:logo_list")
+
+
+class LogoCreateView(TranslatorRequiredMixin, CreateView):
+    template_name = "bullet_admin/content/logo_form.html"
+    form_class = LogoForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.branch = self.request.BRANCH.id
+        obj.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("badmin:logo_list")
+
+
+class LogoDeleteView(TranslatorRequiredMixin, DeleteView):
+    def get_queryset(self):
+        return Logo.objects.filter(branch=self.request.BRANCH)
+
+    def get_success_url(self):
+        return reverse("badmin:logo_list")
