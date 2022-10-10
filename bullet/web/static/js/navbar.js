@@ -13,3 +13,9 @@ observer.observe(document.getElementById("default-nav"));
 document.getElementById("js-branch-button").addEventListener("click", () => {
     document.getElementById("js-branch-menu").classList.toggle("hidden");
 })
+
+document.querySelectorAll(".js-mainnav-toggle").forEach(e => {
+    e.addEventListener("click", () => {
+        document.querySelector("#"+e.dataset.toggle+"-nav .js-mainnav-dropdown").classList.toggle("hidden")
+    })
+})
