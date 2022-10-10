@@ -52,7 +52,7 @@ class Venue(models.Model):
 
     @property
     def remaining_capacity(self):
-        return self.capacity - self.team_set.count()
+        return self.capacity - Team.objects.competing().filter(venue=self).count()
 
     @property
     def contact_email(self):
