@@ -14,7 +14,7 @@
             </h2>
             {% for language in country.languages %}
                 {% get_language_info for language as lang %}
-                <a href="/{{ country.country.code|lower }}/{{ language|lower }}/" class="block text-primary hover:text-primary-dark">{{ lang.name_local }}</a>
+                <a hreflang="{{ language|lower }}" href="/{{ country.country.code|lower }}/{{ language|lower }}/" class="block text-primary hover:text-primary-dark">{{ lang.name_local }}</a>
             {% endfor %}
         </div>
     {% endfor %}
