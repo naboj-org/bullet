@@ -2,6 +2,7 @@ from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
     LogoForm,
+    MenuItemForm,
     PageForm,
 )
 from bullet_admin.mixins import TranslatorRequiredMixin
@@ -10,7 +11,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
-from web.models import ContentBlock, Logo, Page
+from web.models import ContentBlock, Logo, Menu, Page
 
 
 class PageQuerySetMixin:
@@ -212,15 +213,15 @@ class LogoCreateView(TranslatorRequiredMixin, CreateView):
         kw["branch"] = self.request.BRANCH
         return kw
 
+    def get_success_url(self):
+        return reverse("badmin:logo_list")
+
     def form_valid(self, form):
         obj = form.save(commit=False)
         obj.branch = self.request.BRANCH.id
         obj.save()
 
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_success_url(self):
-        return reverse("badmin:logo_list")
+        return HttpResponseRedirect(reverse("badmin:logo_list"))
 
 
 class LogoDeleteView(TranslatorRequiredMixin, DeleteView):
@@ -229,3 +230,56 @@ class LogoDeleteView(TranslatorRequiredMixin, DeleteView):
 
     def get_success_url(self):
         return reverse("badmin:logo_list")
+
+
+class MenuItemListView(TranslatorRequiredMixin, ListView):
+    template_name = "bullet_admin/content/menu_list.html"
+
+    def get_queryset(self):
+        return Menu.objects.filter(branch=self.request.BRANCH).order_by(
+            "language", "order"
+        )
+
+
+class MenuItemEditView(TranslatorRequiredMixin, UpdateView):
+    template_name = "bullet_admin/content/menu_form.html"
+    form_class = MenuItemForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def get_queryset(self):
+        return Menu.objects.filter(branch=self.request.BRANCH)
+
+    def get_success_url(self):
+        return reverse("badmin:menu_list")
+
+
+class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
+    template_name = "bullet_admin/content/menu_form.html"
+    form_class = MenuItemForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        obj.branch = self.request.BRANCH.id
+        obj.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+    def get_success_url(self):
+        return reverse("badmin:menu_list")
+
+
+class MenuItemDeleteView(TranslatorRequiredMixin, DeleteView):
+    def get_queryset(self):
+        return Menu.objects.filter(branch=self.request.BRANCH)
+
+    def get_success_url(self):
+        return reverse("badmin:menu_list")

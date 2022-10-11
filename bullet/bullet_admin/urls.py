@@ -65,6 +65,26 @@ urlpatterns = [
         content.LogoDeleteView.as_view(),
         name="logo_delete",
     ),
+    path(
+        "content/menu/",
+        content.MenuItemListView.as_view(),
+        name="menu_list",
+    ),
+    path(
+        "content/menu/edit/<pk>/",
+        content.MenuItemEditView.as_view(),
+        name="menu_edit",
+    ),
+    path(
+        "content/menu/delete/<pk>/",
+        content.MenuItemDeleteView.as_view(),
+        name="menu_delete",
+    ),
+    path(
+        "content/menu/create/",
+        content.MenuItemCreateView.as_view(),
+        name="menu_create",
+    ),
     path("teams/", teams.TeamListView.as_view(), name="team_list"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
