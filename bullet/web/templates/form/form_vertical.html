@@ -9,6 +9,10 @@
 {% for field in form.visible_fields %}
 {% if field.widget_type != 'recaptchav2invisible' %}
 <div class="mb-6">
+    {% if field.widget_type != "checkboxselectmultiple" and field.field.widget.input_type == "checkbox" %}
+        {{ field|add_class:"checkbox mr-1" }}
+    {% endif %}
+
     {% if field.label %}
         <label for="{{ field.id_for_label }}">
             {{ field.label }}
@@ -16,7 +20,9 @@
         </label>
     {% endif %}
 
-    {% bfield field %}
+    {% if field.widget_type == "checkboxselectmultiple" or field.field.widget.input_type != "checkbox" %}
+        {% bfield field %}
+    {% endif %}
 </div>
 {% else %}
     {{ field }}
