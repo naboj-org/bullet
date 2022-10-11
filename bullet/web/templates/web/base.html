@@ -4,10 +4,10 @@
 
 {% block root_content %}
     {% block main %}
-        <div class="flex align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary">
+        <div class="flex flex-wrap align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary">
             {% if branches %}
             <div class="relative">
-                <button type="button" class="font-medium cursor-pointer text-white text-left" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
+                <button type="button" class="font-medium cursor-pointer text-white text-left whitespace-nowrap" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
                     {{ branch.name }} <i class="fas fa-caret-down"></i>
                 </button>
                 <nav id="js-branch-menu" class="absolute bg-white border shadow-lg rounded-md p-2 space-y-1 w-48 hidden" aria-labelledby="js-branch-button" tabindex="-1">
@@ -18,7 +18,7 @@
             </div>
             {% endif %}
 
-            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ml-auto text-right">
+            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ml-auto text-right whitespace-nowrap">
                 <i class="fas fa-globe"></i>
                 Change language
             </a>
