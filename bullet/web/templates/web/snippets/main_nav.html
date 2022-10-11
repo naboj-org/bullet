@@ -1,9 +1,30 @@
-{% for item in menu %}
-    {% if item.is_external %}
-        <a href="{{ item.url }}">{{ item.title }}</a>
-    {% else %}
-        <a href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.url }}">{{ item.title }}</a>
-    {% endif %}
-{% endfor %}
+{% load static %}
+<div class="container mx-auto p-4">
+    <div class="flex items-center">
+        <a href="/" class="shrink-0">
+            <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="{% if not primary %}md:w-24 w-20{% else %}w-32{% endif %}">
+        </a>
 
+        <div class="ml-auto font-light space-x-4 text-lg hidden md:block">
+            {% for item in menu %}
+                {% if item.is_external %}
+                    <a href="{{ item.url }}">{{ item.title }}</a>
+                {% else %}
+                    <a href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.url }}">{{ item.title }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
 
+        <button type="button" class="p-2 md:hidden ml-auto js-mainnav-toggle" data-toggle="{{ primary|yesno:"default,backup" }}"><i class="fas fa-bars"></i></button>
+    </div>
+
+    <div class="font-light space-y-4 text-lg mt-6 hidden js-mainnav-dropdown {% if primary %}p-4 bg-white rounded-md border shadow-md{% endif %}">
+        {% for item in menu %}
+            {% if item.is_external %}
+                <a class="block" href="{{ item.url }}">{{ item.title }}</a>
+            {% else %}
+                <a class="block" href="/{{ request.COUNTRY_CODE }}/{{ item.language }}/{{ item.url }}">{{ item.title }}</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
