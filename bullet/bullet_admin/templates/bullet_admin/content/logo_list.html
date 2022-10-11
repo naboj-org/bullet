@@ -1,0 +1,43 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Logo list{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Logo list</h2>
+            <a href="{% url "badmin:logo_create" %}" class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New logo</a>
+        </header>
+        <div class="p-4">
+            <table class="w-full mb-4">
+                <thead>
+                    <tr class="bg-gray-100 text-left border-b">
+                        <th class="p-3">Name</th>
+                        <th class="p-3">URL</th>
+                        <th class="p-3">Image</th>
+                        <th class="p-3">Countries</th>
+                    </tr>
+                </thead>
+
+                <tbody class="divide-y">
+                    {% for logo in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">
+                            <a href="{% url "badmin:logo_edit" pk=logo.id %}" class="link-primary">{{ logo.name }}</a>
+                        </td>
+                        <td class="p-3">
+                            <a href="{{ logo.url }}" target="_blank">{{ logo.url }}</a>
+                        </td>
+                        <td class="p-3">
+                            <img src="{{ logo.image.url }}" class="max-h-16" />
+                        </td>
+                        <td class="p-3">
+                            {{ logo.countries|join:", " }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+{% endblock %}
