@@ -2,28 +2,47 @@ from competitions.branches import Branches
 from countries.logic import country
 from django.utils import translation
 from django.utils.translation import gettext as _
-from users.models import Team
 
 from bullet.utils.email import send_email
 
 
-def send_confirmation_email(team: Team):
-    lang = translation.get_language()
-    translation.activate(team.language)
+class TeamCountry:
+    def __init__(self, team):
+        self.team = team
 
-    c = country.get_country()
-    country.activate(team.venue.country.code.lower())
+    def __enter__(self):
+        self.old_lang = translation.get_language()
+        translation.activate(self.team.language)
 
-    send_email(
-        Branches[team.venue.category_competition.competition.branch],
-        team.contact_email,
-        _("Confirm your team registration"),
-        "mail/messages/registration.html",
-        "mail/messages/registration.txt",
-        {"team": team},
-        [team.venue.contact_email],
-    )
+        self.old_country = country.get_country()
+        country.activate(self.team.venue.country.code.lower())
 
-    # rollback global changes
-    translation.activate(lang)
-    country.activate(c)
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        translation.activate(self.old_lang)
+        country.activate(self.old_country)
+
+
+def send_confirmation_email(team):
+    with TeamCountry(team):
+        send_email(
+            Branches[team.venue.category_competition.competition.branch],
+            team.contact_email,
+            _("Confirm your team registration"),
+            "mail/messages/registration.html",
+            "mail/messages/registration.txt",
+            {"team": team},
+            [team.venue.contact_email],
+        )
+
+
+def send_to_competition_email(team):
+    with TeamCountry(team):
+        send_email(
+            Branches[team.venue.category_competition.competition.branch],
+            team.contact_email,
+            _("Team moved from waiting list"),
+            "mail/messages/to_competition.html",
+            "mail/messages/to_competition.txt",
+            {"team": team},
+            [team.venue.contact_email],
+        )
