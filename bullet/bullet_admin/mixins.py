@@ -7,17 +7,22 @@ from django.urls import reverse
 
 
 class AccessMixin:
+    def can_access(self):
+        raise NotImplementedError()
+
     def handle_fail(self):
         if self.request.user.is_authenticated:
             raise PermissionDenied("You don't have access to this page.")
         return HttpResponseRedirect(reverse("badmin:login"))
 
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_anonymous or not self.can_access():
+            return self.handle_fail()
+        return super().dispatch(request, *args, **kwargs)
+
 
 class AnyAdminRequiredMixin(AccessMixin):
-    def is_admin(self):
-        if self.request.user.is_anonymous:
-            return False
-
+    def can_access(self):
         competition = get_active_competition(self.request)
         if not competition:
             return False
@@ -29,24 +34,25 @@ class AnyAdminRequiredMixin(AccessMixin):
         crole = self.request.user.get_competition_role(competition)
         return crole.venue is not None or crole.country is not None
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.is_admin():
-            return self.handle_fail()
-        return super().dispatch(request, *args, **kwargs)
-
 
 class TranslatorRequiredMixin(AccessMixin):
-    def is_translator(self):
-        if self.request.user.is_anonymous:
-            return False
-
+    def can_access(self):
         role = self.request.user.get_branch_role(self.request.BRANCH)
         return role.is_translator
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.is_translator():
-            return self.handle_fail()
-        return super().dispatch(request, *args, **kwargs)
+
+class DelegateRequiredMixin(AccessMixin):
+    def can_access(self):
+        role = self.request.user.get_branch_role(self.request.BRANCH)
+        if role.is_admin:
+            return True
+
+        competition = get_active_competition(self.request)
+        if not competition:
+            return False
+
+        crole = self.request.user.get_competition_role(competition)
+        return crole.can_delegate
 
 
 class VenueMixin:
