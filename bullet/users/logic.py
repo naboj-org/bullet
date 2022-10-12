@@ -52,7 +52,7 @@ def add_team_to_competition(team: Team):
         team.to_waitlist()
         return
 
-    team.to_competition()
+    team.to_competition(send_email=False)
 
 
 def _waiting_list(team_filter: Q, inner_filter: Q):

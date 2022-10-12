@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import Max
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
+from users.emails.teams import send_to_competition_email
 
 from bullet import search
 
@@ -65,6 +66,10 @@ class Team(models.Model):
             return str(self.contact_phone)
         return fmt
 
+    @property
+    def contestants_names(self):
+        return ", ".join([c.full_name for c in self.contestants.all()])
+
     def for_search(self):
         return {
             "id": self.id,
@@ -97,7 +102,7 @@ class Team(models.Model):
         self.number = None
         self.is_waiting = True
 
-    def to_competition(self):
+    def to_competition(self, send_email=True):
         last_number = Team.objects.filter(venue=self.venue).aggregate(Max("number"))[
             "number__max"
         ]
@@ -107,6 +112,8 @@ class Team(models.Model):
             self.number = last_number + 1
         self.is_waiting = False
         # TODO: in_school_symbol
+        if send_email:
+            send_to_competition_email(self)
 
 
 class Contestant(models.Model):
