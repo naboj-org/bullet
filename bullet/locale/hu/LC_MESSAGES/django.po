@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-04 21:10+0000\n"
+"POT-Creation-Date: 2022-10-12 21:48+0000\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,7 +77,7 @@ msgstr "(Kérjük, válasszon)"
 
 #: competitions/forms/registration.py:109
 msgid "This grade can't compete in the chosen category."
-msgstr ""
+msgstr "A megadott osztály nem versenyezhet a kiválasztott kategóriában."
 
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
@@ -143,7 +143,7 @@ msgid "Contestant %(number)s"
 msgstr "Versenyző %(number)s"
 
 #: competitions/templates/register/details.html:43
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:15
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
 msgid "Required field"
 msgstr "Kötelező mező"
 
@@ -228,6 +228,7 @@ msgstr "Regisztráció visszavonása"
 
 #: competitions/templates/teams/edit.html:7
 #: competitions/templates/teams/edit.html:9
+#: web/templates/mail/messages/to_competition.html:14
 msgid "Edit team"
 msgstr "Csapat adatainak szerkesztése"
 
@@ -255,7 +256,7 @@ msgstr "Frissítés"
 #: competitions/templates/teams/list.html:7
 #: competitions/templates/teams/list.html:12
 msgid "Waiting list"
-msgstr ""
+msgstr "Várólista"
 
 #: competitions/templates/teams/list.html:7
 #: competitions/templates/teams/list.html:14
@@ -267,29 +268,33 @@ msgstr "Csapatok listája"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Csapatok: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:48
+#: competitions/views/register.py:49
 msgid "Registration did not start yet."
 msgstr "A regisztráció még nem kezdődött el."
 
-#: competitions/views/register.py:50
+#: competitions/views/register.py:51
 msgid "Registration is over."
 msgstr "A regisztráció lezárult."
 
-#: competitions/views/register.py:325
-msgid "Confirm your team registration"
-msgstr "Erősítse meg a csapat regisztrációját"
-
 #: competitions/views/teams.py:36
 msgid "Team successfully edited."
-msgstr ""
+msgstr "A csapat adatait sikeresen módosította."
 
-#: competitions/views/teams.py:73
+#: competitions/views/teams.py:74
 msgid "Registration successfully confirmed."
 msgstr "Regisztráció sikeresen megerősítve."
 
-#: competitions/views/teams.py:145
+#: competitions/views/teams.py:154
 msgid "Team was unregistered."
 msgstr "A csapat nem volt regisztrálva."
+
+#: users/emails/teams.py:30
+msgid "Confirm your team registration"
+msgstr "Erősítse meg a csapat regisztrációját"
+
+#: users/emails/teams.py:43
+msgid "Team moved from waiting list"
+msgstr ""
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -311,7 +316,7 @@ msgstr "Regisztráció"
 #: web/templates/web/homepage.html:16
 #, python-format
 msgid "Registration ends in %(end)s"
-msgstr "A regisztráció lezárul %(end)s másodperc múlva"
+msgstr "A regisztráció lezárul %(end)s múlva"
 
 #: web/templates/mail/base.html:336
 msgid "Competition logo"
@@ -324,6 +329,8 @@ msgstr "Azért kapta ezt az üzenetet mert regisztrált a %(branch)s  versenyre.
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/to_competition.html:6
+#: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
 msgstr "Helló %(name)s!"
@@ -349,24 +356,43 @@ msgstr "Ha bármilyen kérdése van, kérjük, válaszoljon erre az e-mailre."
 
 #: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/to_competition.html:18
+#: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
 msgstr "Üdvözlettel,"
 
 #: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Ha nem működik a gomb, beillesztheti ezt a címet a böngészőjébe:"
 
+#: web/templates/mail/messages/to_competition.html:8
+#: web/templates/mail/messages/to_competition.txt:3
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr ""
+
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr ""
+
+#: web/templates/mail/messages/to_competition.html:12
+#: web/templates/mail/messages/to_competition.txt:7
+msgid "You can edit team details by clicking the link below."
+msgstr ""
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
-msgstr ""
+msgstr "Nem található"
 
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
-msgstr ""
+msgstr "Az elérni kívánt oldal nem található."
 
 #: web/templates/web/root_base.html:43
 msgid "Close"
-msgstr ""
+msgstr "Bezár"
 
 #: web/templates/web/snippets/copyright.html:5
 #, python-format
@@ -375,13 +401,13 @@ msgstr "Minden időpont %(tz_name)s (%(tz_offset)s), hacsak nincs másképp mega
 
 #: web/templates/web/snippets/copyright.html:7
 msgid "Data protection policy"
-msgstr ""
+msgstr "Adatvédelmi szabályzat"
 
-#: web/templates/web/snippets/home_footer.html:4
+#: web/templates/web/snippets/home_footer.html:5
 msgid "Our partners"
 msgstr "Partnereink"
 
-#: web/templates/web/snippets/home_footer.html:13
+#: web/templates/web/snippets/home_footer.html:16
 msgid "Organizers"
 msgstr "Szervezők"
 
