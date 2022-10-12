@@ -8,7 +8,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
 from django.forms import inlineformset_factory
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
@@ -59,8 +59,12 @@ class TeamEditView(FormView):
         self.team = (
             Team.objects.select_related("venue__category_competition")
             .prefetch_related("contestants")
-            .get(secret_link=kwargs.pop("secret_link"))
+            .filter(secret_link=kwargs.pop("secret_link"))
+            .first()
         )
+        if not self.team:
+            raise Http404()
+
         self.category_competition = self.team.venue.category_competition
         self.can_be_changed = (
             self.category_competition.competition.competition_start > timezone.now()
