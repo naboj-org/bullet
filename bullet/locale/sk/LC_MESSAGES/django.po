@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-04 21:10+0000\n"
+"POT-Creation-Date: 2022-10-12 21:46+0000\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -143,7 +143,7 @@ msgid "Contestant %(number)s"
 msgstr "Súťažiaci %(number)s"
 
 #: competitions/templates/register/details.html:43
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:15
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
 msgid "Required field"
 msgstr "Povinné"
 
@@ -230,6 +230,7 @@ msgstr "Zrušiť registráciu"
 
 #: competitions/templates/teams/edit.html:7
 #: competitions/templates/teams/edit.html:9
+#: web/templates/mail/messages/to_competition.html:14
 msgid "Edit team"
 msgstr "Upraviť tím"
 
@@ -269,29 +270,33 @@ msgstr "Zoznam tímov"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Tímov: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:48
+#: competitions/views/register.py:49
 msgid "Registration did not start yet."
 msgstr "Registrácia sa ešte nezačala."
 
-#: competitions/views/register.py:50
+#: competitions/views/register.py:51
 msgid "Registration is over."
 msgstr "Registrácia sa skončila."
-
-#: competitions/views/register.py:325
-msgid "Confirm your team registration"
-msgstr "Potvrdenie registrácie tímu"
 
 #: competitions/views/teams.py:36
 msgid "Team successfully edited."
 msgstr "Tím bol úspešne uložený."
 
-#: competitions/views/teams.py:73
+#: competitions/views/teams.py:74
 msgid "Registration successfully confirmed."
 msgstr "Registrácia bola potvrdená."
 
-#: competitions/views/teams.py:145
+#: competitions/views/teams.py:154
 msgid "Team was unregistered."
 msgstr "Tím bol odregistrovaný."
+
+#: users/emails/teams.py:30
+msgid "Confirm your team registration"
+msgstr "Potvrdenie registrácie tímu"
+
+#: users/emails/teams.py:43
+msgid "Team moved from waiting list"
+msgstr "Tím presunutý z čakacej listiny"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -326,6 +331,8 @@ msgstr "Tento email ste dostali, lebo ste sa zaregistrovali do súťaže %(branc
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/to_competition.html:6
+#: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
 msgstr "Dobrý deň, %(name)s!"
@@ -351,12 +358,31 @@ msgstr "V prípade akýchkoľvek otázok nás kontaktujte odpovedaním na tento 
 
 #: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/to_competition.html:18
+#: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
 msgstr "S pozdravom,"
 
 #: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Ak sa vám nedarí kliknúť na tlačidlo, skopírujte tento odkaz do svojho prehliadača:"
+
+#: web/templates/mail/messages/to_competition.html:8
+#: web/templates/mail/messages/to_competition.txt:3
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr "Váš tím bol presunutý z čakacej listiny medzi súťažiace tímy."
+
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Aktuálne zloženie tímu: %(contestants)s"
+
+#: web/templates/mail/messages/to_competition.html:12
+#: web/templates/mail/messages/to_competition.txt:7
+msgid "You can edit team details by clicking the link below."
+msgstr "Svoj tím môžete upraviť kliknutím na odkaz nižšie."
 
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
@@ -379,11 +405,11 @@ msgstr "Všetky časy sú v %(tz_name)s (%(tz_offset)s), pokiaľ nie je uvedené
 msgid "Data protection policy"
 msgstr "Ochrana osobných údajov"
 
-#: web/templates/web/snippets/home_footer.html:4
+#: web/templates/web/snippets/home_footer.html:5
 msgid "Our partners"
 msgstr "Partneri"
 
-#: web/templates/web/snippets/home_footer.html:13
+#: web/templates/web/snippets/home_footer.html:16
 msgid "Organizers"
 msgstr "Organizátori"
 
