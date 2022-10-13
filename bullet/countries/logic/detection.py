@@ -17,7 +17,10 @@ def _ip_from_request(request: HttpRequest) -> str:
 def _country_from_ip(request: HttpRequest) -> str | None:
     try:
         g: GeoIP2 = GeoIP2()
-        return g.country_code(_ip_from_request(request)).lower()
+        country_code = g.country_code(_ip_from_request(request))
+        if not country_code:
+            return None
+        return country_code.lower()
     except GeoIP2Exception:
         return None
     except AddressNotFoundError:
