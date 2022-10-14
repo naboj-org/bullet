@@ -1,3 +1,13 @@
+Hello!
 
-E: {{ user.email }}
-P: {{ password }}
+We have created an account for you to access the Náboj admin interface.
+The interface can be accessed at: {{ root_url }}/admin
+
+Your login credentials:
+Email: {{ user.email }}
+Password: {{ password }}
+
+The password can be changed after logging in.
+
+Best regards,
+Náboj

@@ -2,6 +2,7 @@ from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserFo
 from bullet_admin.mixins import DelegateRequiredMixin
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
+from django.contrib import messages
 from django.db import transaction
 from django.db.models import Exists, OuterRef
 from django.http import HttpResponseRedirect
@@ -48,7 +49,11 @@ class UserCreateView(DelegateRequiredMixin, View):
         competition = get_active_competition(self.request)
         crole = self.request.user.get_competition_role(competition)
         if brole.is_admin or crole.country or crole.venue:
-            cform = CompetitionRoleForm(data=data, competition=competition)
+            cform = CompetitionRoleForm(
+                data=data,
+                competition=competition,
+                allowed_object=crole.country or crole.venue,
+            )
 
         return form, bform, cform
 
@@ -81,18 +86,19 @@ class UserCreateView(DelegateRequiredMixin, View):
         user.set_password(passwd)
         user.save()
 
+        brole = None
         if bform:
             brole = bform.save(commit=False)
             brole.user = user
             brole.branch = request.BRANCH
             brole.save()
 
-        if cform:
+        if cform and (not brole or not brole.is_admin):
             crole = cform.save(commit=False)
             crole.user = user
             crole.competition = get_active_competition(request)
             crole.save()
 
         send_onboarding_email(request.BRANCH, user, passwd)
-
+        messages.success(request, "The user was created.")
         return HttpResponseRedirect(reverse("badmin:user_list"))
