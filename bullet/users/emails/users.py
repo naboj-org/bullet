@@ -6,7 +6,7 @@ def send_onboarding_email(branch, user, password):
         branch,
         user.email,
         "Your new admin account for Náboj",
-        "mail/messages/new_user.txt",
+        "mail/messages/new_user.html",
         "mail/messages/new_user.txt",
         {"user": user, "password": password},
     )

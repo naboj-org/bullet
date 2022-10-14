@@ -54,6 +54,11 @@
                 <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Competition permissions</h2>
             </header>
             <div class="divide-y">
+                {% if cform.non_field_errors %}
+                <div class="p-4 text-red-600 bg-red-100">
+                    {{ cform.non_field_errors|first|escape }}
+                </div>
+                {% endif %}
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <label for="{{ cform.venue.id_for_label }}">Venue administrator in</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">
