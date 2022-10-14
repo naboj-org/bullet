@@ -106,4 +106,5 @@ urlpatterns = [
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),
     path("users/create/", users.UserCreateView.as_view(), name="user_create"),
+    path("users/<int:pk>/", users.UserEditView.as_view(), name="user_edit"),
 ]

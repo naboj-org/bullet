@@ -1,9 +1,15 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
 
-{% block title %}New user{% endblock %}
+{% block title %}{% if object %}Edit{% else %}New{% endif %} user{% endblock %}
 
 {% block content %}
+    {% if object == request.user %}
+    <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 m-8 rounded-md">
+        <b>Be careful!</b> You are currently editing your user account.
+    </div>
+    {% endif %}
+
     <form method="post">
         {% csrf_token %}
         <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
