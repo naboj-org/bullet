@@ -33,8 +33,7 @@
 
 {% block content %}
     {% load_blocks "home-junior" %}
-    <div class="container mx-auto px-2">
-
+    <div class="container mx-auto px-4">
         <div class="my-16 md:my-32">
             <h2 class="font-bold text-5xl mb-6 md:mb-16 text-center bold-primary">
                 {% content_block "home-junior:icons-title" %}
@@ -90,18 +89,16 @@
     </div>
 
     <div class="bg-primary-light py-12 md:py-32">
-        <div class="container text-lg text-gray-800 mx-auto px-2 flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col-reverse lg:flex-row">
+        <div class="container text-lg text-gray-800 mx-auto px-4 flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col-reverse lg:flex-row">
             <div class="grow">
                 <h2 class="font-bold text-3xl md:text-4xl mb-6 bold-primary">{% content_block "home-junior:image-2-title" %}</h2>
                 {% content_block "home-junior:image-2-text" %}
             </div>
             <img src="{% static "img/junior/home/problem-set.jpg" %}" class="md:w-3/5 lg:w-3/5 xl:w-2/5 shrink-0 rounded-md shadow-md">
         </div>
-
     </div>
 
-    <div class="container mx-auto px-2">
-
+    <div class="container mx-auto px-4">
         <div class="flex content-between items-center gap-6 lg:gap-16 my-12 lg:my-32 flex-col lg:flex-row text-lg text-gray-800">
             <img src="{% static 'img/junior/home/europe.svg' %}" class="md:w-2/5 shrink-0 rounded-md shadow-md">
             <div class="grow">
