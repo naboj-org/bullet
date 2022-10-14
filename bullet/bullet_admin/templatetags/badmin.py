@@ -42,6 +42,14 @@ def admin_sidebar(context):
             )
         )
 
+    if branch_role.is_admin or competition_role.can_delegate:
+        menu_items.append(
+            (
+                "Access",
+                (("fa-users", "Users", reverse("badmin:user_list")),),
+            )
+        )
+
     return {
         "menu_items": menu_items,
         "competition": get_active_competition(context.request),
