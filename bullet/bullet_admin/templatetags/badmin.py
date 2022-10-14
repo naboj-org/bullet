@@ -50,7 +50,10 @@ def admin_sidebar(context):
             )
         )
 
-    return {
-        "menu_items": menu_items,
-        "competition": get_active_competition(context.request),
-    }
+    context.update(
+        {
+            "menu_items": menu_items,
+            "competition": get_active_competition(context.request),
+        }
+    )
+    return context
