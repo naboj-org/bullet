@@ -72,12 +72,13 @@ class School(models.Model):
         return f"{self.name}, {self.address}"
 
     def save(self, send_to_search=False, **kwargs):
+        x = super().save(**kwargs)
         if send_to_search:
             search.client.index("schools").add_documents(
                 [self.for_search()],
                 "id",
             )
-        return super().save(**kwargs)
+        return x
 
     def for_search(self):
         return {
