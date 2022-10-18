@@ -94,10 +94,16 @@ class Team(models.Model):
                 for i in range(48)
             )
 
+        x = super().save(**kwargs)
+
         if send_to_search:
             self.search_index()
 
-        return super().save(**kwargs)
+        return x
+
+    def delete(self, using=None, keep_parents=False):
+        search.client.index("teams").delete_document(self.id)
+        return super().delete(using, keep_parents)
 
     def to_waitlist(self):
         self.number = None
