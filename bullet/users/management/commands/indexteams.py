@@ -12,4 +12,9 @@ class Command(BaseCommand):
         for t in Team.objects.all():
             teams.append(t.for_search())
 
+        search.client.index("teams").update_settings(
+            {
+                "filterableAttributes": ["competition"],
+            }
+        )
         search.client.index("teams").add_documents(teams)
