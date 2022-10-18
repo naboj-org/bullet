@@ -12,6 +12,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
+from django_countries.fields import Country
 from users.emails.users import send_onboarding_email
 from users.models import User
 
@@ -73,7 +74,8 @@ class UserFormsMixin:
                 data=data,
                 instance=instance,
                 competition=competition,
-                allowed_objects=crole.countries or crole.venues,
+                allowed_objects=[Country(code) for code in crole.countries]
+                or crole.venues,
             )
 
         return form, bform, cform
