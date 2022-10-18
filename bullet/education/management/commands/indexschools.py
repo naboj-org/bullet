@@ -15,6 +15,17 @@ class Command(BaseCommand):
         search.client.index("schools").update_settings(
             {
                 "filterableAttributes": ["country"],
+                "synonyms": {
+                    "zš": ["základná škola", "základní škola"],
+                    "základná škola": ["zš"],
+                    "základní škola": ["zš"],
+                    "sš": ["stredná škola", "strední škola", "srednja škola"],
+                    "stredná škola": ["sš"],
+                    "strední škola": ["sš"],
+                    "srednja škola": ["sš"],
+                    "oš": ["osnovna škola"],
+                    "osnovna škola": ["oš"],
+                },
             }
         )
 
