@@ -1,7 +1,6 @@
-from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django_countries.fields import CountryField
-from web.fields import BranchField
+from web.fields import BranchField, ChoiceArrayField
 
 
 class BranchRole(models.Model):
@@ -21,7 +20,7 @@ class CompetitionRole(models.Model):
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE
     )
-    countries = ArrayField(CountryField(), blank=True, null=True)
+    countries = ChoiceArrayField(CountryField(), blank=True, null=True)
     venue_objects = models.ManyToManyField(
         "competitions.Venue",
         related_name="+",

@@ -28,9 +28,9 @@ def can_access_venue(request: HttpRequest, venue: Venue) -> bool:
     if not competition or venue.category_competition.competition != competition:
         return False
     crole = request.user.get_competition_role(competition)
-    if crole.venue:
-        return crole.venue == venue
-    if crole.country:
-        return crole.country == venue.country
+    if crole.venues:
+        return venue in crole.venues
+    if crole.countries:
+        return venue.country in crole.countries
 
     return False

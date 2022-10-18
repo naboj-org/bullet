@@ -32,7 +32,7 @@ class AnyAdminRequiredMixin(AccessMixin):
             return True
 
         crole = self.request.user.get_competition_role(competition)
-        return crole.venue is not None or crole.country is not None
+        return crole.venues or crole.countries
 
 
 class TranslatorRequiredMixin(AccessMixin):
@@ -70,11 +70,11 @@ class VenueMixin:
         ).select_related("category_competition")
 
         crole = request.user.get_competition_role(competition)
-        if crole.venue:
-            return venue.filter(id=crole.venue_id)
+        if crole.venues:
+            return venue.filter(id__in=[x.id for x in crole.venues])
 
-        if crole.country:
-            venue = venue.filter(country=crole.country)
+        if crole.countries:
+            venue = venue.filter(country__in=crole.countries)
 
         return venue
 
@@ -97,11 +97,8 @@ class VenueMixin:
         ctx = super().get_context_data(*args, **kwargs)
         ctx["venue"] = self.venue
 
-        if (
-            self.request.user.get_competition_role(
-                get_active_competition(self.request)
-            ).venue
-            is None
-        ):
+        if self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).venues:
             ctx["available_venues"] = self.available_venues
         return ctx
