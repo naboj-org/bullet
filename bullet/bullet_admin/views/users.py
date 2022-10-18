@@ -65,7 +65,7 @@ class UserFormsMixin:
 
         competition = get_active_competition(self.request)
         crole = self.request.user.get_competition_role(competition)
-        if brole.is_admin or crole.country or crole.venue:
+        if brole.is_admin or crole.countries or crole.venues:
             instance = None
             if user:
                 instance = user.get_competition_role(competition)
