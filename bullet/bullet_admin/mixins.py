@@ -97,7 +97,7 @@ class VenueMixin:
         ctx = super().get_context_data(*args, **kwargs)
         ctx["venue"] = self.venue
 
-        if self.request.user.get_competition_role(
+        if not self.request.user.get_competition_role(
             get_active_competition(self.request)
         ).venues:
             ctx["available_venues"] = self.available_venues
