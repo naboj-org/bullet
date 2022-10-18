@@ -1,9 +1,11 @@
 {% extends "register/base.html" %}
+{% load content_blocks %}
 {% load bform %}
 {% load country_url %}
 {% load i18n %}
 
 {% block register_content %}
+    {% load_blocks "register" %}
     {% include "register/partials/category.html" %}
     {% include "register/partials/venue.html" %}
     {% include "register/partials/school.html" %}
@@ -69,6 +71,10 @@
             {% blocktrans trimmed with link=link %}
                 More information on the processing of personal data can be found <a href="{{ link }}">on this page</a>.
             {% endblocktrans %}
+        </div>
+
+        <div class="mb-8 prose max-w-none">
+            {% content_block "register:bottom_text" allow_empty=True %}
         </div>
 
         <button type="submit" class="btn">{% trans "Register" %}</button>
