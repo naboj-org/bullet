@@ -65,9 +65,11 @@ class VenueMixin:
 
     def get_available_venues(self, request) -> QuerySet[Venue]:
         competition = get_active_competition(request)
-        venue = Venue.objects.filter(
-            category_competition__competition=competition
-        ).select_related("category_competition")
+        venue = (
+            Venue.objects.filter(category_competition__competition=competition)
+            .select_related("category_competition")
+            .order_by("name", "category_competition__identifier")
+        )
 
         crole = request.user.get_competition_role(competition)
         if crole.venues:
