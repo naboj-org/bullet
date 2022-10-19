@@ -43,7 +43,7 @@ def load_blocks(context, *groups):
 
 
 @register.simple_tag(name="content_block", takes_context=True)
-def content_block(context, combined_ref):
+def content_block(context, combined_ref, allow_empty=False):
     group, ref = combined_ref.split(":", 1)
 
     if "__blocks" not in context:
@@ -72,4 +72,6 @@ def content_block(context, combined_ref):
                 )
             return mark_safe(c)
 
+    if allow_empty:
+        return ""
     return mark_safe(f"<span class='cb-missing'>Missing '{group}:{ref}'</span>")
