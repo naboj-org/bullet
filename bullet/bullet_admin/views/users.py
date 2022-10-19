@@ -12,6 +12,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView
+from django_countries.fields import Country
 from users.emails.users import send_onboarding_email
 from users.models import User
 
@@ -26,14 +27,14 @@ class UserListView(DelegateRequiredMixin, ListView):
         ).filter(Q(is_admin=True) | Q(is_translator=True))
         competition_role = CompetitionRole.objects.filter(
             competition=get_active_competition(self.request), user=OuterRef("pk")
-        ).filter(Q(venue__isnull=False) | Q(country__isnull=False))
+        ).filter(Q(venue_objects__isnull=False) | Q(countries__len__gt=0))
 
         qs = User.objects.order_by("email").annotate(
             has_branch_role=Exists(branch_role),
             has_competition_role=Exists(competition_role),
         )
 
-        if "q" in self.request.GET:
+        if self.request.GET.get("q"):
             q = self.request.GET["q"]
             qs = qs.filter(
                 Q(first_name__icontains=q)
@@ -65,15 +66,22 @@ class UserFormsMixin:
 
         competition = get_active_competition(self.request)
         crole = self.request.user.get_competition_role(competition)
-        if brole.is_admin or crole.country or crole.venue:
+        if brole.is_admin or crole.countries or crole.venues:
             instance = None
             if user:
                 instance = user.get_competition_role(competition)
+
+            allowed_objects = None
+            if crole.countries:
+                allowed_objects = [Country(code) for code in crole.countries]
+            elif crole.venues:
+                allowed_objects = crole.venues
+
             cform = CompetitionRoleForm(
                 data=data,
                 instance=instance,
                 competition=competition,
-                allowed_object=crole.country or crole.venue,
+                allowed_objects=allowed_objects,
             )
 
         return form, bform, cform
@@ -121,6 +129,7 @@ class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
             crole.user = user
             crole.competition = get_active_competition(request)
             crole.save()
+            cform.save_m2m()
 
         send_onboarding_email(request.BRANCH, user, passwd)
         messages.success(request, "The user was created.")
@@ -145,16 +154,18 @@ class UserEditView(DelegateRequiredMixin, UserFormsMixin, View):
         user_crole = user.get_competition_role(competition)
 
         # Country admin can only be edited by country admin from the same country
-        if target_crole.country:
-            return target_crole.country == user_crole.country
+        if target_crole.countries:
+            return set(target_crole.countries).issubset(set(user_crole.countries))
 
         # Venue admin can only be edited by admin from the same
         # venue or admin from venues' country
-        if target_crole.venue:
-            if user_crole.venue:
-                return target_crole.venue == user_crole.venue
+        if target_crole.venues:
+            if user_crole.venues:
+                return set(target_crole.venues).issubset(set(user_crole.venues))
 
-            return user_crole.country == target_crole.venue.country
+            return all(
+                venue.country in user_crole.countries for venue in target_crole.venues
+            )
 
         return True
 
@@ -208,6 +219,7 @@ class UserEditView(DelegateRequiredMixin, UserFormsMixin, View):
             crole.user = user
             crole.competition = get_active_competition(request)
             crole.save()
+            cform.save_m2m()
 
         messages.success(request, "The user was edited.")
         return HttpResponseRedirect(reverse("badmin:user_list"))

@@ -1,6 +1,6 @@
 from django.db import models
 from django_countries.fields import CountryField
-from web.fields import BranchField
+from web.fields import BranchField, ChoiceArrayField
 
 
 class BranchRole(models.Model):
@@ -20,15 +20,19 @@ class CompetitionRole(models.Model):
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE
     )
-    country = CountryField(blank=True, null=True)
-    venue = models.ForeignKey(
+    countries = ChoiceArrayField(CountryField(), blank=True, null=True)
+    venue_objects = models.ManyToManyField(
         "competitions.Venue",
-        on_delete=models.CASCADE,
-        blank=True,
-        null=True,
         related_name="+",
+        blank=True,
     )
     can_delegate = models.BooleanField(default=False)
+
+    @property
+    def venues(self):
+        if not self.id:
+            return []
+        return self.venue_objects.all()
 
     class Meta:
         constraints = (

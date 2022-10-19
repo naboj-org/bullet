@@ -21,7 +21,8 @@ class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
             CompetitionRole.objects.filter(
                 user=self.request.user, competition__branch=self.request.BRANCH
             )
-            .select_related("competition", "venue")
+            .select_related("competition")
+            .prefetch_related("venue_objects")
             .order_by("-competition__competition_start")
             .all()
         )

@@ -84,7 +84,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     def get_competition_role(self, competition) -> CompetitionRole:
         if not hasattr(self, "_competition_role_cache"):
             self._competition_role_cache = {
-                r.competition_id: r for r in self.competitionrole_set.all()
+                r.competition_id: r
+                for r in self.competitionrole_set.prefetch_related(
+                    "venue_objects"
+                ).all()
             }
         if competition.id not in self._competition_role_cache:
             return CompetitionRole(user=self, competition=competition)

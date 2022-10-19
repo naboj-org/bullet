@@ -66,15 +66,15 @@
                 </div>
                 {% endif %}
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ cform.venue.id_for_label }}">Venue administrator in</label>
+                    <label for="{{ cform.venue_objects.id_for_label }}">Venue administrator in</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield cform.venue %}
+                        {% bfield cform.venue_objects %}
                     </div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ cform.country.id_for_label }}">Country administrator in</label>
+                    <label for="{{ cform.countries.id_for_label }}">Country administrator in</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield cform.country %}
+                        {% bfield cform.countries %}
                     </div>
                 </div>
                 <div class="p-4">

@@ -18,7 +18,7 @@ def admin_sidebar(context):
     competition_role = user.get_competition_role(
         get_active_competition(context.request)
     )
-    if branch_role.is_admin or competition_role.venue or competition_role.country:
+    if branch_role.is_admin or competition_role.venues or competition_role.countries:
         menu_items.append(
             (
                 "Competition",

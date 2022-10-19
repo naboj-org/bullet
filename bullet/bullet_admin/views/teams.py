@@ -29,12 +29,12 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
         qs = Team.objects.filter(venue__category_competition__competition=competition)
 
         crole = self.request.user.get_competition_role(competition)
-        if crole.country:
-            qs = qs.filter(venue__country=crole.country)
-        elif crole.venue:
-            qs = qs.filter(venue=crole.venue)
+        if crole.countries:
+            qs = qs.filter(venue__country__in=crole.countries)
+        elif crole.venues:
+            qs = qs.filter(venue__in=crole.venues)
 
-        if "q" in self.request.GET:
+        if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
                 self.request.GET["q"], {"attributesToRetrieve": ["id"]}
             )["hits"]
@@ -54,10 +54,12 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
         ctx["hide_venue"] = (
-            self.request.user.get_competition_role(
-                get_active_competition(self.request)
-            ).venue
-            is not None
+            len(
+                self.request.user.get_competition_role(
+                    get_active_competition(self.request)
+                ).venues
+            )
+            < 2
         )
         return ctx
 
