@@ -70,12 +70,18 @@ class UserFormsMixin:
             instance = None
             if user:
                 instance = user.get_competition_role(competition)
+
+            allowed_objects = None
+            if crole.countries:
+                allowed_objects = [Country(code) for code in crole.countries]
+            elif crole.venues:
+                allowed_objects = crole.venues
+
             cform = CompetitionRoleForm(
                 data=data,
                 instance=instance,
                 competition=competition,
-                allowed_objects=[Country(code) for code in crole.countries]
-                or crole.venues,
+                allowed_objects=allowed_objects,
             )
 
         return form, bform, cform
