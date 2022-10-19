@@ -41,7 +41,7 @@ class CompetitionRoleForm(forms.ModelForm):
             .select_related("category_competition")
             .order_by("name", "category_competition__identifier")
         )
-        if len(allowed_objects):
+        if allowed_objects:
             if isinstance(allowed_objects[0], Country):
                 venue_qs = venue_qs.filter(country__in=allowed_objects)
             if isinstance(allowed_objects[0], Venue):
@@ -52,7 +52,7 @@ class CompetitionRoleForm(forms.ModelForm):
         if not allowed_objects:
             for c in BranchCountry.objects.filter(branch=competition.branch):
                 countries.add(c.country)
-        elif len(allowed_objects) and isinstance(allowed_objects[0], Country):
+        elif isinstance(allowed_objects[0], Country):
             for country in allowed_objects:
                 countries.add(country.code)
 
