@@ -13,6 +13,7 @@ class TeamForm(forms.ModelForm):
             "school",
             "venue",
             "is_checked_in",
+            "consent_photos",
         ]
 
     def __init__(self, **kwargs):
