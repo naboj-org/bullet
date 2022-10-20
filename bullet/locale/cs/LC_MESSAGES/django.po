@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 21:48+0000\n"
+"POT-Creation-Date: 2022-10-20 08:34+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,8 +52,8 @@ msgid "Selected school is not valid."
 msgstr "Vybraná škola není platná."
 
 #: competitions/forms/registration.py:69
-#: competitions/templates/register/details.html:27
-#: competitions/templates/register/details.html:33
+#: competitions/templates/register/details.html:29
+#: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
@@ -112,61 +112,61 @@ msgstr "Registrace týmů"
 msgid "Category"
 msgstr "Kategorie"
 
-#: competitions/templates/register/details.html:16
+#: competitions/templates/register/details.html:18
 #: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Kontaktní informace"
 
-#: competitions/templates/register/details.html:19
+#: competitions/templates/register/details.html:21
 #: competitions/templates/teams/edit.html:50
 msgid "Contestants"
 msgstr "Soutěžící"
 
-#: competitions/templates/register/details.html:21
+#: competitions/templates/register/details.html:23
 #: competitions/templates/teams/edit.html:51
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Můžete změnit soutěžící kdykolikv před začátkem soutěže."
 
-#: competitions/templates/register/details.html:28
-#: competitions/templates/register/details.html:37
+#: competitions/templates/register/details.html:30
+#: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
 #: competitions/templates/teams/edit.html:102
 msgid "Grade"
 msgstr "Ročník"
 
-#: competitions/templates/register/details.html:31
+#: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:66
 #: competitions/templates/teams/edit.html:94
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Soutěžící %(number)s"
 
-#: competitions/templates/register/details.html:43
+#: competitions/templates/register/details.html:45
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
 msgid "Required field"
 msgstr "Povinné pole"
 
-#: competitions/templates/register/details.html:47
+#: competitions/templates/register/details.html:49
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Registrací do Soutěže registrující osoby (zejména učitelé nebo zákonní zástupci registrovaných žáků) souhlasí s <a href=\"%(link)s\">pravidly soutěže</a> a zavazují se jimi řídit. Současně bere registrující osoba na vědomí, že osobní údaje uvedené v registračním formuláři jsou nezbytné pro zabezpečení řádného fungování Soutěže."
 
-#: competitions/templates/register/details.html:58
+#: competitions/templates/register/details.html:60
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "Registrující osoba uděluje souhlas Trojsten-u se zhotovením obrazových a audiovizuálních záznamů během konání Soutěže, na kterých je zachycena podoba registrující a/i registrované osoby a jejich zveřejněním na webovém sídle Soutěže, webových sídlech lokálních organizátorů, sociální sítích, a to pro marketingové účely propagace Soutěže. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:69
+#: competitions/templates/register/details.html:71
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Více informací o zpracovávání osobních údajů je možné najít na stránce <a href=\"%(link)s\">informace o zpracování osobních údajů</a>."
 
-#: competitions/templates/register/details.html:74
+#: competitions/templates/register/details.html:80
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
 msgstr "Registrovat"
 
-#: competitions/templates/register/details.html:78
+#: competitions/templates/register/details.html:84
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Souhlas se uděluje na dobu provozování webového sídla Trojsten-u a účtu na sociálních sítích, pokud je má Trojsten vytvořené. Tento souhlas je možné kdykoliv odvolat zasláním e-mailu na adresu <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Odvolání souhlasu nemá vliv na zákonnost zpracování před jeho odvoláním. Dotčená osoba může požadovat odstranění osobních údajů, jen pokud to bude technicky možné a výmazem nebudou dotčena práva jiných dotčených osob."
 
@@ -280,11 +280,11 @@ msgstr "Registrace již skončila."
 msgid "Team successfully edited."
 msgstr "Tým byl úspěšně upraven."
 
-#: competitions/views/teams.py:74
+#: competitions/views/teams.py:78
 msgid "Registration successfully confirmed."
 msgstr "Registrace potvrzena."
 
-#: competitions/views/teams.py:154
+#: competitions/views/teams.py:158
 msgid "Team was unregistered."
 msgstr "Týmu byla zrušena registrace"
 
@@ -294,7 +294,7 @@ msgstr "Potvrďte registraci týmu"
 
 #: users/emails/teams.py:43
 msgid "Team moved from waiting list"
-msgstr ""
+msgstr "Tým přesunut z čekací listiny"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -369,18 +369,18 @@ msgstr "Pokud máte problém s kliknutí na tlačítko, můžete zkopírovat tut
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
-msgstr ""
+msgstr "Váš tým byl přesunut z čekací listiny mezi soutěžní týmy."
 
 #: web/templates/mail/messages/to_competition.html:10
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
-msgstr ""
+msgstr "Aktuální členové týmu: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
-msgstr ""
+msgstr "Detaily týmu můžete upravit kliknutím na odkaz níže."
 
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
@@ -394,22 +394,22 @@ msgstr "Stránka, ke které jste se snažili dostat, nebyla nalezena."
 msgid "Close"
 msgstr "Zavřít"
 
-#: web/templates/web/snippets/copyright.html:5
+#: web/templates/web/snippets/copyright.html:6
 #, python-format
-msgid "All times are %(tz_name)s (%(tz_offset)s) unless stated otherwise."
-msgstr "Všechny časy jsou %(tz_name)s (%(tz_offset)s), pokud není uvedeno jinak."
+msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+msgstr ""
 
-#: web/templates/web/snippets/copyright.html:7
+#: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
 msgstr "Zásady ochrany dat"
 
 #: web/templates/web/snippets/home_footer.html:5
-msgid "Our partners"
-msgstr "Naši partneři"
-
-#: web/templates/web/snippets/home_footer.html:16
 msgid "Organizers"
 msgstr "Organizátoři"
+
+#: web/templates/web/snippets/home_footer.html:16
+msgid "Our partners"
+msgstr "Naši partneři"
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 21:48+0000\n"
+"POT-Creation-Date: 2022-10-20 08:34+0000\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,8 +52,8 @@ msgid "Selected school is not valid."
 msgstr "De geselecteerde school is niet geldig."
 
 #: competitions/forms/registration.py:69
-#: competitions/templates/register/details.html:27
-#: competitions/templates/register/details.html:33
+#: competitions/templates/register/details.html:29
+#: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
@@ -112,61 +112,61 @@ msgstr "Teaminschrijving"
 msgid "Category"
 msgstr "Categorie"
 
-#: competitions/templates/register/details.html:16
+#: competitions/templates/register/details.html:18
 #: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Contactgegevens"
 
-#: competitions/templates/register/details.html:19
+#: competitions/templates/register/details.html:21
 #: competitions/templates/teams/edit.html:50
 msgid "Contestants"
 msgstr "Deelnemers"
 
-#: competitions/templates/register/details.html:21
+#: competitions/templates/register/details.html:23
 #: competitions/templates/teams/edit.html:51
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "U kunt op elk moment voor het begin van de wedstrijd de deelnemerslijst aanpassen."
 
-#: competitions/templates/register/details.html:28
-#: competitions/templates/register/details.html:37
+#: competitions/templates/register/details.html:30
+#: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
 #: competitions/templates/teams/edit.html:102
 msgid "Grade"
 msgstr "Klas"
 
-#: competitions/templates/register/details.html:31
+#: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:66
 #: competitions/templates/teams/edit.html:94
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Deelnemer %(number)s"
 
-#: competitions/templates/register/details.html:43
+#: competitions/templates/register/details.html:45
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
 msgid "Required field"
 msgstr "Verplicht veld"
 
-#: competitions/templates/register/details.html:47
+#: competitions/templates/register/details.html:49
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Door zich in te schrijven voor de Wedstrijd stemmen de inschrijvers (met name leraren of wettelijke vertegenwoordigers van ingeschreven leerlingen) in met het <a href=\"%(link)s\">wedstrijdreglement</a> en verbinden zij zich ertoe dit na te leven. Bovendien erkent de inschrijver dat de in het inschrijvingsformulier verstrekte persoonsgegevens noodzakelijk zijn voor een goede loop van de Wedstrijd."
 
-#: competitions/templates/register/details.html:58
+#: competitions/templates/register/details.html:60
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "De inschrijver stemt ermee in dat de organisator tijdens de Wedstrijd video- en/of audio-opnames maakt waarop het beeld van de inschrijver en/of de ingeschrevene wordt vastgelegd en dat deze beelden worden gepubliceerd op de website van de Wedstrijd en sociale netwerken voor marketing- en promotiedoeleinden van de Wedstrijd. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:69
+#: competitions/templates/register/details.html:71
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Meer informatie over het verwerken van privégegevens is te vinden op <a href=\"%(link)s\">deze pagina</a>."
 
-#: competitions/templates/register/details.html:74
+#: competitions/templates/register/details.html:80
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
 msgstr "Inschrijven"
 
-#: competitions/templates/register/details.html:78
+#: competitions/templates/register/details.html:84
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> De toestemming wordt verleend voor de duur van de werking van de website van de Wedstrijd en de accounts op sociale netwerken. Deze toestemming kan te allen tijde worden ingetrokken door een e-mail te sturen naar het adres <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. De intrekking van de toestemming heeft geen invloed op de rechtmatigheid van de verwerking vóór de intrekking. De betrokken persoon kan alleen om de verwijdering van persoonsgegevens verzoeken indien dit technisch mogelijk is en de verwijdering geen gevolgen heeft voor de rechten van andere betrokken personen."
 
@@ -280,11 +280,11 @@ msgstr "De inschrijving is afgesloten."
 msgid "Team successfully edited."
 msgstr "Team succesvol bewerkt."
 
-#: competitions/views/teams.py:74
+#: competitions/views/teams.py:78
 msgid "Registration successfully confirmed."
 msgstr "Inschrijving bevestigd."
 
-#: competitions/views/teams.py:154
+#: competitions/views/teams.py:158
 msgid "Team was unregistered."
 msgstr "Team is uitgeschreven."
 
@@ -294,7 +294,7 @@ msgstr "Bevestig de inschrijving van jouw team"
 
 #: users/emails/teams.py:43
 msgid "Team moved from waiting list"
-msgstr ""
+msgstr "Team verwijderd van wachtlijst"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -369,18 +369,18 @@ msgstr "Als de knop niet werkt, kunt u het volgende adres in een browser openen:
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
-msgstr ""
+msgstr "Uw team is verplaatst van de wachtlijst naar de lijst van deelnemende teams."
 
 #: web/templates/mail/messages/to_competition.html:10
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
-msgstr ""
+msgstr "Huidige teamleden: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
-msgstr ""
+msgstr "U kunt de teamgegevens bewerken via onderstaande link."
 
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
@@ -394,22 +394,22 @@ msgstr "De pagina die u probeerde te openen is niet gevonden."
 msgid "Close"
 msgstr "Sluiten"
 
-#: web/templates/web/snippets/copyright.html:5
+#: web/templates/web/snippets/copyright.html:6
 #, python-format
-msgid "All times are %(tz_name)s (%(tz_offset)s) unless stated otherwise."
-msgstr "Alle tijden zijn %(tz_name)s (%(tz_offset)s) tenzij anders vermeld."
+msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+msgstr "Alle tijden zijn in tijdzone %(tz_name)s tenzij anders vermeld."
 
-#: web/templates/web/snippets/copyright.html:7
+#: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
 msgstr "Beleid inzake gegevensbescherming"
 
 #: web/templates/web/snippets/home_footer.html:5
-msgid "Our partners"
-msgstr "Onze partners"
-
-#: web/templates/web/snippets/home_footer.html:16
 msgid "Organizers"
 msgstr "Organisatoren"
+
+#: web/templates/web/snippets/home_footer.html:16
+msgid "Our partners"
+msgstr "Onze partners"
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
