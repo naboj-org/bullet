@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-12 21:48+0000\n"
+"POT-Creation-Date: 2022-10-20 08:34+0000\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -52,8 +52,8 @@ msgid "Selected school is not valid."
 msgstr "A kiválasztott iskola nem megfelelő."
 
 #: competitions/forms/registration.py:69
-#: competitions/templates/register/details.html:27
-#: competitions/templates/register/details.html:33
+#: competitions/templates/register/details.html:29
+#: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
@@ -112,61 +112,61 @@ msgstr "Csapatok regisztrációja"
 msgid "Category"
 msgstr "Kategória"
 
-#: competitions/templates/register/details.html:16
+#: competitions/templates/register/details.html:18
 #: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Elérhetőségek"
 
-#: competitions/templates/register/details.html:19
+#: competitions/templates/register/details.html:21
 #: competitions/templates/teams/edit.html:50
 msgid "Contestants"
 msgstr "Versenyzők"
 
-#: competitions/templates/register/details.html:21
+#: competitions/templates/register/details.html:23
 #: competitions/templates/teams/edit.html:51
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "A versenyzők névsorát a verseny kezdete előtt bármikor megváltoztathatja."
 
-#: competitions/templates/register/details.html:28
-#: competitions/templates/register/details.html:37
+#: competitions/templates/register/details.html:30
+#: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
 #: competitions/templates/teams/edit.html:102
 msgid "Grade"
 msgstr "Osztály"
 
-#: competitions/templates/register/details.html:31
+#: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:66
 #: competitions/templates/teams/edit.html:94
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Versenyző %(number)s"
 
-#: competitions/templates/register/details.html:43
+#: competitions/templates/register/details.html:45
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
 msgid "Required field"
 msgstr "Kötelező mező"
 
-#: competitions/templates/register/details.html:47
+#: competitions/templates/register/details.html:49
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "A versenyre való regisztrációval a regisztrálók (különösen a regisztrált diákok tanárai vagy törvényes képviselői) elfogadják a <a href=\"%(link)s\">versenyszabályzatot</a>, és vállalják annak betartását. A regisztráló egyúttal tudomásul veszi, hogy a regisztrációs űrlapon megadott személyes adatok szükségesek a Verseny megfelelő működéséhez."
 
-#: competitions/templates/register/details.html:58
+#: competitions/templates/register/details.html:60
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "A regisztráló beleegyezik, hogy a szervező a verseny során olyan videó- és/vagy hangfelvételeket készítsen, amelyeken a regisztráló és/vagy a regisztrált személy látható, valamint ezek közzétételébe a verseny weboldalán, a közösségi médiában, valamint a verseny marketing- és promóciós céljaira. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:69
+#: competitions/templates/register/details.html:71
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "A személyes adatok feldolgozásával kapcsolatos további információk megtalálhatóak a <a href=\"%(link)s\"> oldalon</a> ."
 
-#: competitions/templates/register/details.html:74
+#: competitions/templates/register/details.html:80
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
 msgstr "Regisztráljon"
 
-#: competitions/templates/register/details.html:78
+#: competitions/templates/register/details.html:84
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup>A hozzájárulás a verseny weboldalának és a közösségi hálózatokon létrehozott fiókjainak működési időtartamára szól. A hozzájárulás bármikor visszavonható a <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a> címre küldött e-mailben. A hozzájárulás visszavonása nem érinti a visszavonás előtti feldolgozás jogszerűségét. Az érintett személy csak akkor kérheti a személyes adatok törlését, ha ez technikailag lehetséges, és a törlés nem érinti más érintett személyek jogait."
 
@@ -280,11 +280,11 @@ msgstr "A regisztráció lezárult."
 msgid "Team successfully edited."
 msgstr "A csapat adatait sikeresen módosította."
 
-#: competitions/views/teams.py:74
+#: competitions/views/teams.py:78
 msgid "Registration successfully confirmed."
 msgstr "Regisztráció sikeresen megerősítve."
 
-#: competitions/views/teams.py:154
+#: competitions/views/teams.py:158
 msgid "Team was unregistered."
 msgstr "A csapat nem volt regisztrálva."
 
@@ -394,22 +394,22 @@ msgstr "Az elérni kívánt oldal nem található."
 msgid "Close"
 msgstr "Bezár"
 
-#: web/templates/web/snippets/copyright.html:5
+#: web/templates/web/snippets/copyright.html:6
 #, python-format
-msgid "All times are %(tz_name)s (%(tz_offset)s) unless stated otherwise."
-msgstr "Minden időpont %(tz_name)s (%(tz_offset)s), hacsak nincs másképp megadva."
+msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+msgstr ""
 
-#: web/templates/web/snippets/copyright.html:7
+#: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
 msgstr "Adatvédelmi szabályzat"
 
 #: web/templates/web/snippets/home_footer.html:5
-msgid "Our partners"
-msgstr "Partnereink"
-
-#: web/templates/web/snippets/home_footer.html:16
 msgid "Organizers"
 msgstr "Szervezők"
+
+#: web/templates/web/snippets/home_footer.html:16
+msgid "Our partners"
+msgstr "Partnereink"
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
