@@ -1,0 +1,68 @@
+{% extends "bullet_admin/base.html" %}
+{% load bform %}
+
+{% block title %}{% if object %}Edit{% else %}New{% endif %} email campaign{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team selection</h2>
+            </header>
+            <div class="divide-y">
+                <div class="p-4">Some options can be left blank, which will mean that the option will not apply.</div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.team_countries.id_for_label }}">Country</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.team_countries %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.team_languages.id_for_label }}">Language</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.team_languages %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.team_venues.id_for_label }}">Venue</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.team_venues %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.team_statuses.id_for_label }}">Status</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.team_statuses %}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Message</h2>
+            </header>
+            <div class="divide-y">
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.subject.id_for_label }}">Subject <span class="text-red-600">*</span></label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.subject %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.template.id_for_label }}">Message template</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.template %}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="my-8 text-center">
+            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
+                <i class="fas fa-save"></i> Save
+            </button>
+        </div>
+    </form>
+{% endblock %}
