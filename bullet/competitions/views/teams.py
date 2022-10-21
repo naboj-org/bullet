@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from competitions.forms.registration import ContestantForm
-from competitions.models import Competition, Venue
+from competitions.models import CategoryCompetition, Competition, Venue
 from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
@@ -13,7 +13,11 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import DeleteView, FormView, TemplateView
-from users.logic import add_team_to_competition, get_venues_waiting_list
+from users.logic import (
+    add_team_to_competition,
+    get_venue_waiting_list,
+    get_venues_waiting_list,
+)
 from users.models import Contestant, Team
 
 
@@ -147,14 +151,23 @@ class TeamDeleteView(DeleteView):
 
     def form_valid(self, form):
         team: Team = self.object
-        if (
-            team.is_checked_in
-            or team.venue.category_competition.competition.competition_start
-            <= timezone.now()
-        ):
+        category: CategoryCompetition = team.venue.category_competition
+        competition: Competition = category.competition
+        if team.is_checked_in or competition.competition_start <= timezone.now():
             return HttpResponseForbidden()
 
         self.object.delete()
         messages.success(self.request, _("Team was unregistered."))
+
+        if competition.is_registration_open and not team.is_waiting:
+            waiting_list = get_venue_waiting_list(team.venue).first()
+            if (
+                waiting_list
+                and waiting_list.from_school
+                <= category.max_teams_per_school_at(timezone.now())
+            ):
+                waiting_list.to_competition()
+                waiting_list.save()
+
         # TODO: notify admins
         return HttpResponseRedirect(country_reverse("homepage"))
