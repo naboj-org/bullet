@@ -63,6 +63,15 @@ class CategoryCompetition(models.Model):
     def __str__(self):
         return f"{self.identifier} ({self.competition.name})"
 
+    def max_teams_per_school_at(self, time):
+        competition = self.competition
+        if (
+            competition.registration_second_round_start
+            and competition.registration_second_round_start <= time
+        ):
+            return self.max_teams_second_round
+        return self.max_teams_per_school
+
 
 class Wildcard(models.Model):
     competition = models.ForeignKey(
