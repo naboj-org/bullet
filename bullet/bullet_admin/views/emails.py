@@ -132,3 +132,17 @@ class CampaignSendTestView(AnyAdminRequiredMixin, View):
         return HttpResponseRedirect(
             reverse("badmin:email_detail", kwargs={"pk": campaign.id})
         )
+
+
+class CampaignSendView(AnyAdminRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        campaign = get_object_or_404(
+            EmailCampaign,
+            competition=get_active_competition(self.request),
+            pk=kwargs["pk"],
+        )
+        campaign.send_all()
+        messages.success(request, "The campaign was sent successfully.")
+        return HttpResponseRedirect(
+            reverse("badmin:email_detail", kwargs={"pk": campaign.id})
+        )

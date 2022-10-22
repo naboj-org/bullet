@@ -83,3 +83,7 @@ class EmailCampaign(models.Model):
                 {"content": template.render(context)},
                 team.venue.contact_email,
             )
+
+    def send_all(self):
+        for team in self.get_teams():
+            self.send_single(team)

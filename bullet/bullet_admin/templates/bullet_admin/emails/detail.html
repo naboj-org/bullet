@@ -112,5 +112,27 @@
                 {% endif %}
             </div>
         </article>
+
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Send emails</h2>
+            </header>
+            <div class="p-4">
+                {% if team_count %}
+                <p class="mb-4">You can send the campaign to the teams. Beware, this action is irreversible.</p>
+
+                <form method="post" action="{% url "badmin:email_send" pk=object.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">
+                        <i class="fas fa-paper-plane"></i> Send campaign
+                    </button>
+                </form>
+                {% else %}
+                <div class="bg-red-100 text-red-800 border border-red-800 p-4 rounded-md">
+                    <b>No recipients.</b> You can't send this campaign because it doesn't have any valid recipients.
+                </div>
+                {% endif %}
+            </div>
+        </article>
     </div>
 {% endblock %}

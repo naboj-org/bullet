@@ -137,4 +137,9 @@ urlpatterns = [
         emails.CampaignSendTestView.as_view(),
         name="email_test",
     ),
+    path(
+        "emails/<int:pk>/send/",
+        emails.CampaignSendView.as_view(),
+        name="email_send",
+    ),
 ]
