@@ -126,4 +126,15 @@ urlpatterns = [
     path(
         "emails/<int:pk>/edit/", emails.CampaignUpdateView.as_view(), name="email_edit"
     ),
+    path("emails/<int:pk>/", emails.CampaignDetailView.as_view(), name="email_detail"),
+    path(
+        "emails/<int:pk>/teams/",
+        emails.CampaignTeamListView.as_view(),
+        name="email_teams",
+    ),
+    path(
+        "emails/<int:pk>/test/",
+        emails.CampaignSendTestView.as_view(),
+        name="email_test",
+    ),
 ]

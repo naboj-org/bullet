@@ -70,6 +70,10 @@ class Team(models.Model):
     def contestants_names(self):
         return ", ".join([c.full_name for c in self.contestants.all()])
 
+    @property
+    def id_display(self):
+        return f"#{self.id:06d}"
+
     def for_search(self):
         return {
             "id": self.id,

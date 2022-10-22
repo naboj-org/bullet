@@ -28,8 +28,8 @@
                             {{ campaign.last_sent }}
                         </td>
                         <td class="p-3 text-right">
-                            <a href="{% url "badmin:email_edit" pk=campaign.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                <i class="fas fa-edit"></i> Edit
+                            <a href="{% url "badmin:email_detail" pk=campaign.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                <i class="fas fa-eye"></i> View
                             </a>
                         </td>
                     </tr>

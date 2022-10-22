@@ -1,8 +1,13 @@
+from competitions.branches import Branches
 from django.db import models
 from django.db.models import Q
+from django.template import Context, Template
 from django_countries.fields import CountryField
+from users.emails.teams import TeamCountry
 from users.models import Team
 from web.fields import ChoiceArrayField, LanguageField
+
+from bullet.utils.email import send_email
 
 
 class EmailCampaign(models.Model):
@@ -28,11 +33,15 @@ class EmailCampaign(models.Model):
         models.CharField(max_length=1, choices=StatusChoices.choices), blank=True
     )
 
-    @property
-    def teams(self):
+    excluded_teams = models.ManyToManyField("users.Team", blank=True, related_name="+")
+
+    def get_teams(self, ignore_excluded=False):
         qs = Team.objects.filter(
-            venue__category_competition__competition=self.competition
+            venue__category_competition__competition=self.competition,
         )
+        if not ignore_excluded:
+            qs = qs.exclude(id__in=self.excluded_teams.all())
+
         if self.team_countries:
             qs = qs.filter(venue__country__in=self.team_countries)
         if self.team_languages:
@@ -59,3 +68,18 @@ class EmailCampaign(models.Model):
             qs = qs.filter(q)
 
         return qs
+
+    def send_single(self, team: Team, override_email=None):
+        template = Template(self.template)
+        context = Context({"team": team})
+
+        with TeamCountry(team):
+            send_email(
+                Branches[team.venue.category_competition.competition.branch],
+                override_email if override_email else team.contact_email,
+                self.subject,
+                "mail/messages/campaign.html",
+                "mail/messages/campaign.txt",
+                {"content": template.render(context)},
+                team.venue.contact_email,
+            )
