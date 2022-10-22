@@ -21,7 +21,10 @@ from bullet import search
 from bullet.views import FormAndFormsetMixin
 
 
-class TeamQuerySetMixin:
+class TeamListView(AnyAdminRequiredMixin, ListView):
+    template_name = "bullet_admin/teams/list.html"
+    paginate_by = 50
+
     def get_queryset(self):
         competition = get_active_competition(self.request)
         qs = Team.objects.filter(venue__category_competition__competition=competition)
@@ -48,11 +51,6 @@ class TeamQuerySetMixin:
             .prefetch_related("contestants", "contestants__grade")
             .order_by("id")
         )
-
-
-class TeamListView(AnyAdminRequiredMixin, TeamQuerySetMixin, ListView):
-    template_name = "bullet_admin/teams/list.html"
-    paginate_by = 50
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
@@ -166,7 +164,14 @@ class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
         return reverse("badmin:team_list")
 
 
-class TeamDeleteView(AnyAdminRequiredMixin, TeamQuerySetMixin, DeleteView):
+class TeamDeleteView(AnyAdminRequiredMixin, DeleteView):
+    model = Team
+
+    def post(self, request, *args, **kwargs):
+        if not can_access_venue(request, self.get_object().venue):
+            return HttpResponseForbidden()
+        return super().post(request, *args, **kwargs)
+
     def get_success_url(self):
         messages.success(self.request, "Team deleted.")
         return reverse("badmin:team_list")
