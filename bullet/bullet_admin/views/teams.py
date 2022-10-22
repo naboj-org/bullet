@@ -20,10 +20,7 @@ from bullet import search
 from bullet.views import FormAndFormsetMixin
 
 
-class TeamListView(AnyAdminRequiredMixin, ListView):
-    template_name = "bullet_admin/teams/list.html"
-    paginate_by = 50
-
+class TeamQuerySetMixin:
     def get_queryset(self):
         competition = get_active_competition(self.request)
         qs = Team.objects.filter(venue__category_competition__competition=competition)
@@ -50,6 +47,11 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             .prefetch_related("contestants", "contestants__grade")
             .order_by("id")
         )
+
+
+class TeamListView(AnyAdminRequiredMixin, TeamQuerySetMixin, ListView):
+    template_name = "bullet_admin/teams/list.html"
+    paginate_by = 50
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
