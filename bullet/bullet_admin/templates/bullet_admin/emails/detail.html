@@ -14,11 +14,13 @@
                 <div class="p-4">
                     <pre>{{ object.template }}</pre>
                 </div>
+                {% if can_edit %}
                 <div class="p-4">
                     <a href="{% url "badmin:email_edit" pk=object.pk %}" class="btn-admin bg-primary hover:bg-primary-dark">
                         <i class="fas fa-edit"></i> Edit
                     </a>
                 </div>
+                {% endif %}
             </div>
         </article>
 
@@ -71,7 +73,9 @@
                     <div>Excluded teams:</div>
                     <div class="mt-1 sm:mt-0 sm:col-span-2 flex">
                         {{ excluded_count }}
+                        {% if can_edit %}
                         <a class="ml-auto link-primary" href="{% url "badmin:email_teams" pk=object.pk %}">Edit</a>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
@@ -80,6 +84,7 @@
                         {{ team_count }}
                     </div>
                 </div>
+                {% if can_edit %}
                 <div class="p-4 flex gap-2">
                     <a href="{% url "badmin:email_edit" pk=object.pk %}" class="btn-admin bg-primary hover:bg-primary-dark">
                         <i class="fas fa-edit"></i> Edit
@@ -88,9 +93,11 @@
                         <i class="fas fa-list"></i> List teams
                     </a>
                 </div>
+                {% endif %}
             </div>
         </article>
 
+        {% if can_edit %}
         <article class="border rounded-md bg-white shadow-lg overflow-hidden">
             <header class="px-4 py-3 bg-slate-100 border-b">
                 <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Testing email</h2>
@@ -134,5 +141,6 @@
                 {% endif %}
             </div>
         </article>
+        {% endif %}
     </div>
 {% endblock %}

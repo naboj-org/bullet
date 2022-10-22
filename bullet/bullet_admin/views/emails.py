@@ -1,7 +1,9 @@
 from bullet_admin.forms.emails import EmailCampaignForm
 from bullet_admin.mixins import AnyAdminRequiredMixin
 from bullet_admin.utils import get_active_competition
+from competitions.branches import Branch
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -13,7 +15,37 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
-from users.models import EmailCampaign
+from users.models import EmailCampaign, User
+
+
+def can_edit_campaign(request, campaign: EmailCampaign):
+    user: User = request.user
+    branch: Branch = request.BRANCH
+    if user.get_branch_role(branch).is_admin:
+        return True
+
+    competition = get_active_competition(request)
+    crole = user.get_competition_role(competition)
+
+    # Country admin can only edit campaigns from his countries
+    if crole.countries:
+        if not set(crole.countries).issuperset(set(campaign.team_countries)):
+            return False
+
+        if not set(crole.countries).issuperset(
+            set(campaign.team_venues.values_list("country", flat=True))
+        ):
+            return False
+
+    # Venue admin can only edit campaigns targeting his venues
+    venues = crole.venues
+    if venues:
+        if campaign.team_countries:
+            return False
+        if not set(venues).issuperset(set(campaign.team_venues.all())):
+            return False
+
+    return True
 
 
 class CampaignListView(AnyAdminRequiredMixin, ListView):
@@ -52,6 +84,12 @@ class CampaignUpdateView(AnyAdminRequiredMixin, UpdateView):
             competition=get_active_competition(self.request)
         )
 
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset)
+        if not can_edit_campaign(self.request, obj):
+            raise PermissionDenied()
+        return obj
+
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
         kw["competition"] = get_active_competition(self.request)
@@ -82,6 +120,7 @@ class CampaignDetailView(AnyAdminRequiredMixin, DetailView):
         ]
         ctx["team_count"] = self.object.get_teams().count()
         ctx["excluded_count"] = self.object.excluded_teams.count()
+        ctx["can_edit"] = can_edit_campaign(self.request, self.object)
         return ctx
 
 
@@ -94,6 +133,8 @@ class CampaignTeamListView(AnyAdminRequiredMixin, TemplateView):
             competition=get_active_competition(self.request),
             pk=kwargs["pk"],
         )
+        if not can_edit_campaign(self.request, self.campaign):
+            raise PermissionDenied()
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -125,6 +166,8 @@ class CampaignSendTestView(AnyAdminRequiredMixin, View):
             competition=get_active_competition(self.request),
             pk=kwargs["pk"],
         )
+        if not can_edit_campaign(self.request, campaign):
+            raise PermissionDenied()
         team = campaign.get_teams().first()
         campaign.send_single(team, request.user.email)
 
@@ -141,6 +184,8 @@ class CampaignSendView(AnyAdminRequiredMixin, View):
             competition=get_active_competition(self.request),
             pk=kwargs["pk"],
         )
+        if not can_edit_campaign(self.request, campaign):
+            raise PermissionDenied()
         campaign.send_all()
         messages.success(request, "The campaign was sent successfully.")
         return HttpResponseRedirect(
