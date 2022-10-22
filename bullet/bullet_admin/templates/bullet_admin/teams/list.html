@@ -78,6 +78,12 @@
                             {% else %}
                             <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
                             {% endif %}
+
+                            {% if not team.venue.is_online %}
+                            <span class="{% if team.consent_photos %}bg-green-500{% else %}bg-red-600{% endif %} px-2 py-1 rounded">
+                                <i class="fas fa-camera"></i>
+                            </span>
+                            {% endif %}
                         </td>
                         <td class="p-2 whitespace-nowrap text-right">
                             <a href="{% url "badmin:team_edit" pk=team.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
