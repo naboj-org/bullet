@@ -33,7 +33,7 @@
         </div>
         {% endif %}
 
-        <form method="post">
+        <form method="post" id="editform">
             {% csrf_token %}
             <div class="lg:grid lg:grid-cols-2 lg:gap-6">
                 <article class="border rounded-md bg-white shadow-lg overflow-hidden">
@@ -123,11 +123,18 @@
                 </div>
             </article>
 
-            <div class="mt-8 text-center">
-                <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
-                    <i class="fas fa-save"></i> Save
-                </button>
-            </div>
+
     </form>
+    <div class="mt-8 text-center flex flex-row gap-4 justify-center">
+        <button type="submit" form="editform" class="btn-admin bg-primary hover:bg-primary-dark">
+            <i class="fas fa-save"></i> Save
+        </button>
+        {% if object %}
+        <form method="post" action="{% url "badmin:team_delete" pk=object.id %}">
+            {% csrf_token %}
+            <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete team</button>
+        </form>
+        {% endif %}
+    </div>
     </div>
 {% endblock %}

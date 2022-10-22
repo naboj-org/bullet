@@ -97,6 +97,11 @@ urlpatterns = [
         teams.TeamResendConfirmationView.as_view(),
         name="team_resend_confirmation",
     ),
+    path(
+        "teams/<int:pk>/delete",
+        teams.TeamDeleteView.as_view(),
+        name="team_delete",
+    ),
     path("teams/waiting/", teams.WaitingListView.as_view(), name="waiting_list"),
     path(
         "teams/waiting/automove/",
