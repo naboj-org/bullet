@@ -36,7 +36,11 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
 
         if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
-                self.request.GET["q"], {"attributesToRetrieve": ["id"]}
+                self.request.GET["q"],
+                {
+                    "attributesToRetrieve": ["id"],
+                    "filter": f"competition = {competition.id}",
+                },
             )["hits"]
             ids = [x["id"] for x in ids]
             qs = qs.filter(id__in=ids)
