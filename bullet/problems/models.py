@@ -37,3 +37,18 @@ class SolvedProblem(models.Model):
     )
     problem = models.ForeignKey(Problem, on_delete=models.RESTRICT, related_name="+")
     competition_time = models.DurationField()
+
+
+class ScannerLog(models.Model):
+    class Result(models.IntegerChoices):
+        OK = 0
+        SCAN_ERR = 1
+        INTEGRITY_ERR = 2
+
+    user = models.ForeignKey(
+        "users.User", on_delete=models.SET_NULL, blank=True, null=True
+    )
+    barcode = models.CharField(max_length=32)
+    result = models.IntegerField(choices=Result.choices)
+    message = models.CharField(max_length=128, blank=True)
+    timestamp = models.DateTimeField()

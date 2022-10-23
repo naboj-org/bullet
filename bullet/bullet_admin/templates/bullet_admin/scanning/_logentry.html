@@ -1,0 +1,14 @@
+<tr class="{% if log.result == log.Result.OK %}bg-green-100{% elif log.result == log.Result.SCAN_ERR %}bg-amber-100{% elif log.result == log.Result.INTEGRITY_ERR %}bg-red-100{% endif %}">
+    <td class="p-2">
+        {% if log.result == log.Result.OK %}
+            <i class="fas fa-check text-green-600"></i>
+        {% elif log.result == log.Result.SCAN_ERR %}
+            <i class="fas fa-exclamation-triangle text-amber-600"></i>
+        {% elif log.result == log.Result.INTEGRITY_ERR %}
+            <i class="fas fa-times-circle text-red-600"></i>
+        {% endif %}
+    </td>
+    <td class="p-2 font-mono">{{ log.barcode }}</td>
+    <td class="p-2 w-full whitespace-nowrap">{{ log.message }}</td>
+    <td class="p-2 text-right whitespace-nowrap">{{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}</td>
+</tr>
