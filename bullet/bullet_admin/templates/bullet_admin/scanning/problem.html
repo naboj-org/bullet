@@ -1,5 +1,5 @@
 {% extends "bullet_admin/base.html" %}
-{% load bform %}
+{% load static %}
 
 {% block title %}Problem scanning{% endblock %}
 
@@ -7,17 +7,22 @@
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Scan problem</h2>
+            <button id="js-open-reader" class="btn-admin-sm bg-blue-500 hover:bg-blue-600">
+                <i class="fas fa-mobile mr-1"></i> Mobile scanner
+            </button>
         </header>
         <div>
             <form hx-post="{% url "badmin:scanning_problems" %}" hx-target="#js-scanlog" hx-swap="afterbegin"
                   class="flex p-4 gap-2" id="js-scanform">
                 {% csrf_token %}
-                <input type="text" name="barcode" class="form-input input" placeholder="Barcode" autofocus>
+                <input type="text" name="barcode" id="js-scanfield" class="form-input input" placeholder="Barcode" autofocus>
 
                 <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark shrink-0">
                     Scan
                 </button>
             </form>
+
+            <div id="js-reader" class="hidden"></div>
         </div>
     </article>
 
@@ -45,10 +50,35 @@
         </div>
     </article>
 
+    <script src="{% static "js/html5-qrcode.min.js" %}"></script>
     <script>
         document.body.addEventListener("htmx:afterSwap", (evt) => {
             document.getElementById("js-scanform").reset()
-            document.getElementById("js-scanform").querySelector("input").focus()
+            document.getElementById("js-scanfield").focus()
+        })
+
+        document.getElementById("js-open-reader").addEventListener("click", () => {
+            document.getElementById("js-reader").classList.remove("hidden")
+            document.getElementById("js-open-reader").style.display = "none"
+            document.getElementById("js-scanform").classList.add("hidden")
+
+            let lastCode = ""
+            let codeScanner = new Html5QrcodeScanner("js-reader", {
+                fps: 10,
+                experimentalFeatures: {
+                    useBarCodeDetectorIfSupported: true
+                },
+                rememberLastUsedCamera: true,
+                supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
+                formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE, Html5QrcodeSupportedFormats.CODE_128],
+            }, false)
+            codeScanner.render((text, result) => {
+                if (text !== lastCode) {
+                    lastCode = text
+                    document.getElementById("js-scanfield").value = text
+                    htmx.trigger("#js-scanform", "submit")
+                }
+            })
         })
     </script>
 {% endblock %}
