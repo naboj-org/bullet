@@ -4,8 +4,8 @@ from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.views import View
+from problems.logic.scanner import parse_barcode, save_scan
 from problems.models import ScannerLog
-from problems.scanner import parse_barcode, save_scan
 
 
 class ProblemScanView(AnyAdminRequiredMixin, View):

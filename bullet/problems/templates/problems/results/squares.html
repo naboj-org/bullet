@@ -1,0 +1,5 @@
+<div class="flex flex-wrap gap-0.5">
+{% for sq in squares %}
+    <div class="border-2 border-primary rounded w-3 h-3 {% if forloop.counter|divisibleby:5 %}mr-1{% endif %} {% if sq == 2 %}bg-primary{% elif sq == 1 %}bg-white{% else %}bg-gray-200{% endif %}"></div>
+{% endfor %}
+</div>

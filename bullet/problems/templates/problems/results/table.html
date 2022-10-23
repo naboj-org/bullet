@@ -1,0 +1,67 @@
+{% load i18n %}
+{% load results %}
+{% if not results_time.has_started %}
+<div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
+    {% trans "The competition did not start yet." %}
+</div>
+{% elif results_time.is_frozen %}
+<div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
+    <b>{% trans "Results are frozen." %}</b> {% trans "These are not the final results yet." %}
+</div>
+{% elif results_time.is_final %}
+<div class="bg-green-100 text-green-800 border border-green-800 p-4 mb-6 rounded-md">
+    <b>{% trans "Final results." %}</b> {% trans "Showing official results." %}
+</div>
+{% endif %}
+
+<table class="w-full">
+    <tbody class="divide-y">
+        {% for row in object_list %}
+        <tr class="px-4 py-2 rounded-md hover:bg-gray-50">
+            <td class="p-2 text-lg">{{ forloop.counter0|add:page_obj.start_index }}.</td>
+            <td class="p-2">
+                {% if row.team.school %}
+                <img src="https://flagcdn.com/{{ row.team.school.country.code|lower }}.svg" alt="{{ row.team.school.country.name }}" class="h-4">
+                {% endif %}
+            </td>
+            <td class="p-2">
+                {% if row.team.school %}
+                <div class="text-primary font-bold">
+                    {{ row.team.school.name }}
+
+                    {% if row.team.in_school_symbol %}
+                    <span class="text-white bg-primary rounded px-1.5 py-0.5 text-sm">{{ row.team.in_school_symbol }}</span>
+                    {% endif %}
+                </div>
+                <div class="text-sm text-gray-600">{{ row.team.school.address }}</div>
+                {% else %}
+                <div class="text-primary font-bold">{{ row.team.name }}</div>
+                {% endif %}
+            </td>
+            <td class="p-2 text-xs">
+                {% squares row problem_count team_problem_count %}
+
+                <div class="mt-1">
+                    {{ row.team.contestants.all|join:", " }}
+                </div>
+            </td>
+            <td class="p-2">
+                {{ row.solved_count }}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td class="p-2 text-center text-gray-700" colspan="5">{% trans "(No team has solved any problem yet)" %}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="flex gap-2 mt-4">
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}" class="btn-admin bg-primary hover:bg-primary-dark">{% trans "Previous" %}</a>
+{% endif %}
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}" class="btn-admin bg-primary hover:bg-primary-dark">{% trans "Next" %}</a>
+{% endif %}
+</div>
