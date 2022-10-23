@@ -81,10 +81,35 @@
                         {% endfor %}
                     </div>
 
+                    {% if not venue.is_online and not team.consent_photos %}
+                    <div class="mb-4">
+                        <label>
+                            <input type="checkbox" class="checkbox" name="consent_photos">
+                            {% blocktrans trimmed %}
+                                The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of
+                                the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
+                                for marketing and promotional purposes of the Competition. <sup>[1]</sup>
+                            {% endblocktrans %}
+                        </label>
+                    </div>
+                    {% endif %}
+
                     <div class="flex gap-4 items-baseline">
                         <button type="submit" class="btn">{% trans "Update" %}</button>
                         <a class="underline text-primary hover:text-primary-dark" href="{% country_url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
                     </div>
+
+                    {% if not venue.is_online and not team.consent_photos %}
+                    <div class="mt-8 prose prose-sm max-w-none">
+                        {% blocktrans trimmed with link=link %}
+                            <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
+                            This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
+                            Withdrawal of consent does not affect the legality of the processing before its withdrawal.
+                            The affected person can request the deletion of personal data only if it is technically possible and the deletion
+                            does not affect the rights of other affected persons.
+                        {% endblocktrans %}
+                    </div>
+                    {% endif %}
                 </form>
             {% else %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
