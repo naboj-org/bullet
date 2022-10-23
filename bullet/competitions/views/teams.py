@@ -37,6 +37,9 @@ class TeamEditView(FormView):
 
     def form_valid(self, form):
         form.save()
+        if "consent_photos" in self.request.POST:
+            self.team.consent_photos = True
+            self.team.save()
         messages.success(self.request, _("Team successfully edited."))
         return HttpResponseRedirect(
             country_reverse("team_edit", kwargs={"secret_link": self.team.secret_link})
