@@ -1,0 +1,8 @@
+{% load i18n %}{% load country_url %}{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
+
+{% blocktranslate %}Your team was unregistered from the competition.{% endblocktranslate %}
+
+{% blocktranslate with contestants=team.contestants_names %}Team members: {{ contestants }}{% endblocktranslate %}
+
+{% trans "Best regards," %}
+{{ branch.name }}
