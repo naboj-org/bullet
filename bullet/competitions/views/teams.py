@@ -108,7 +108,7 @@ class TeamListView(TemplateView):
             Venue.objects.filter(
                 category_competition__competition=competition, country=country
             )
-            .order_by("name")
+            .order_by("name", "category_competition__identifier")
             .select_related("category_competition")
             .all()
         )
