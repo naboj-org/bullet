@@ -44,6 +44,8 @@ class ProblemScanView(AnyAdminRequiredMixin, View):
             log.save()
             return log
 
+        # TODO: Check competition start + review end
+
         try:
             save_scan(scanned_barcode, ts)
         except ValueError as e:
