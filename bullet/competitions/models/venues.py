@@ -62,3 +62,9 @@ class Venue(models.Model):
                 country=self.country,
             ).email
         return self.email
+
+    @property
+    def start_time(self):
+        if self.local_start:
+            return self.local_start
+        return self.category_competition.competition.competition_start

@@ -1,4 +1,12 @@
-from bullet_admin.views import CompetitionSwitchView, auth, content, home, teams, users
+from bullet_admin.views import (
+    CompetitionSwitchView,
+    auth,
+    content,
+    home,
+    scanning,
+    teams,
+    users,
+)
 from django.urls import path
 
 app_name = "badmin"
@@ -107,4 +115,9 @@ urlpatterns = [
     path("users/", users.UserListView.as_view(), name="user_list"),
     path("users/create/", users.UserCreateView.as_view(), name="user_create"),
     path("users/<int:pk>/", users.UserEditView.as_view(), name="user_edit"),
+    path(
+        "scanning/problems/",
+        scanning.ProblemScanView.as_view(),
+        name="scanning_problems",
+    ),
 ]
