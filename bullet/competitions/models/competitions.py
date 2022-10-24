@@ -25,7 +25,7 @@ class Competition(models.Model):
     competition_duration = models.DurationField()
     results_freeze = models.DurationField(
         default=timedelta(),
-        help_text="How long before the competition should we freeze the results.",
+        help_text="How long before the competition end should we freeze the results.",
     )
     results_public = models.BooleanField(default=False)
 

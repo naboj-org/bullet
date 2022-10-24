@@ -17,7 +17,7 @@ class Migration(migrations.Migration):
             name="results_freeze",
             field=models.DurationField(
                 default=datetime.timedelta(0),
-                help_text="How long before the competition should "
+                help_text="How long before the competition end should "
                 "we freeze the results.",
             ),
         ),
