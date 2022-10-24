@@ -22,7 +22,7 @@ def get_results(
 
     return (
         ResultRow.objects.filter(id__in=rows)
-        .order_by("-solved_count", "-solved_problems", "last_solved")
+        .order_by("-solved_count", "-solved_problems", "competition_time")
         .select_related("team", "team__school")
     )
 

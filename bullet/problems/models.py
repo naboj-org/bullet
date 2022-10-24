@@ -59,7 +59,6 @@ class ResultRow(models.Model):
     competition_time = models.DurationField()
     solved_problems = models.BinaryField()
     solved_count = models.IntegerField()
-    last_solved = models.DateTimeField()
 
     def get_squares(self, problem_count, team_problem_count):
         squares = []

@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.utils import timezone
-from problems.models import Problem, SolvedProblem
+from problems.models import CategoryProblem, Problem, ResultRow, SolvedProblem
 from users.models import Team
 
 
@@ -18,3 +18,22 @@ def mark_problem_solved(team: Team, problem: Problem, timestamp: datetime = None
     sp = SolvedProblem(team=team, problem=problem)
     sp.competition_time = timestamp - team.venue.start_time
     sp.save()
+
+    problems = SolvedProblem.objects.filter(team=team)
+    solved_problems = set(
+        CategoryProblem.objects.filter(
+            problem__in=problems, category=team.venue.category_competition
+        ).values_list("number")
+    )
+
+    result_row = ResultRow()
+    result_row.team = team
+    result_row.solved_count = len(solved_problems)
+
+    solved_bin = 0
+    for p in solved_problems:
+        solved_bin |= 1 << p
+
+    result_row.solved_problems = solved_bin
+    result_row.competition_time = sp.competition_time
+    result_row.save()
