@@ -7,6 +7,7 @@ from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils import timezone
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -188,7 +189,11 @@ class CampaignSendView(AnyAdminRequiredMixin, View):
         )
         if not can_edit_campaign(self.request, campaign):
             raise PermissionDenied()
+
         campaign.send_all()
+        campaign.last_sent = timezone.now()
+        campaign.save()
+
         messages.success(request, "The campaign was sent successfully.")
         return HttpResponseRedirect(
             reverse("badmin:email_detail", kwargs={"pk": campaign.id})
