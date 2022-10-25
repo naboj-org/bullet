@@ -1,7 +1,8 @@
 from competitions.branches import Branches
 from countries.utils import country_reverse
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.template import Context, Template
 from django_countries.fields import CountryField
 from users.emails.teams import TeamCountry
@@ -33,6 +34,7 @@ class EmailCampaign(models.Model):
     team_statuses = ChoiceArrayField(
         models.CharField(max_length=1, choices=StatusChoices.choices), blank=True
     )
+    team_contestants = ArrayField(models.IntegerField(), blank=True)
 
     excluded_teams = models.ManyToManyField("users.Team", blank=True, related_name="+")
 
@@ -67,6 +69,10 @@ class EmailCampaign(models.Model):
             if EmailCampaign.StatusChoices.CHECKEDIN in self.team_statuses:
                 q.add(Q(is_checked_in=True), Q.OR)
             qs = qs.filter(q)
+        if self.team_contestants:
+            qs = qs.annotate(contestant_count=Count("contestants")).filter(
+                contestant_count__in=self.team_contestants
+            )
 
         return qs
 

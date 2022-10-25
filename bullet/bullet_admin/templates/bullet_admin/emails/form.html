@@ -36,6 +36,12 @@
                         {% bfield form.team_statuses %}
                     </div>
                 </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.team_contestants.id_for_label }}">Number of contestants</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.team_contestants %}
+                    </div>
+                </div>
             </div>
         </article>
 

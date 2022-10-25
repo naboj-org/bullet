@@ -70,6 +70,16 @@
                     </div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Number of contestants:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if object.team_contestants %}
+                            {{ object.team_contestants|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <div>Excluded teams:</div>
                     <div class="mt-1 sm:mt-0 sm:col-span-2 flex">
                         {{ excluded_count }}

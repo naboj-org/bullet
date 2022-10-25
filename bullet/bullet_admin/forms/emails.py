@@ -15,6 +15,7 @@ class EmailCampaignForm(forms.ModelForm):
             "team_languages",
             "team_venues",
             "team_statuses",
+            "team_contestants",
         )
 
         widgets = {
@@ -23,6 +24,10 @@ class EmailCampaignForm(forms.ModelForm):
             "team_venues": forms.CheckboxSelectMultiple(),
             "team_statuses": forms.CheckboxSelectMultiple(),
             "template": forms.Textarea(attrs={"rows": 30}),
+        }
+
+        help_texts = {
+            "team_contestants": "Comma separated list of numbers.",
         }
 
     def __init__(self, competition: Competition, user: User, **kwargs):
