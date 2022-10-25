@@ -2,7 +2,6 @@ from bullet_admin.forms.teams import TeamForm
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from bullet_admin.views import DeleteView
-from competitions.branches import Branches
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -11,16 +10,14 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse
-from django.utils.translation import gettext as _
 from django.views import View
 from django.views.generic import ListView, UpdateView
 from education.models import School
-from users.emails.teams import send_confirmation_email
+from users.emails.teams import send_confirmation_email, send_deletion_email
 from users.logic import get_venue_waiting_list
 from users.models import Contestant, Team
 
 from bullet import search
-from bullet.utils.email import send_email
 from bullet.views import FormAndFormsetMixin
 
 
@@ -173,15 +170,8 @@ class TeamDeleteView(AnyAdminRequiredMixin, DeleteView):
     def post(self, request, *args, **kwargs):
         if not can_access_venue(request, self.get_object().venue):
             return HttpResponseForbidden()
-        send_email(
-            Branches[self.get_object().venue.category_competition.competition.branch],
-            self.get_object().contact_email,
-            _("Your team has been deleted."),
-            "mail/messages/team_delete.html",
-            "mail/messages/team_delete.txt",
-            {"team": self.get_object()},
-            [self.get_object().venue.contact_email],
-        )
+
+        send_deletion_email(self.get_object())
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
