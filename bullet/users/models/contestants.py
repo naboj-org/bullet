@@ -55,7 +55,7 @@ class Team(models.Model):
     def display_name(self):
         if self.name:
             return self.name
-        return str(self.school)
+        return f"{self.school} {self.in_school_symbol}".strip()
 
     @property
     def contact_phone_pretty(self):
