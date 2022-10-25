@@ -52,3 +52,25 @@ class ScannerLog(models.Model):
     result = models.IntegerField(choices=Result.choices)
     message = models.CharField(max_length=128, blank=True)
     timestamp = models.DateTimeField()
+
+
+class ResultRow(models.Model):
+    team = models.ForeignKey("users.Team", on_delete=models.CASCADE, related_name="+")
+    competition_time = models.DurationField()
+    solved_problems = models.BinaryField()
+    solved_count = models.IntegerField()
+
+    def get_squares(self, problem_count, team_problem_count):
+        squares = []
+        solved = int.from_bytes(self.solved_problems, "big")
+
+        for i in range(problem_count):
+            st = 0
+            if solved & (1 << i):
+                st = 2
+            elif i < self.solved_count + team_problem_count:
+                st = 1
+
+            squares.append(st)
+
+        return squares

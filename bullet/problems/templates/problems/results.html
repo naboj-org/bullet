@@ -1,0 +1,34 @@
+{% extends "web/base.html" %}
+{% load country_url %}
+{% load content_blocks %}
+{% load i18n %}
+
+{% block title %}{% trans "Results" %}{% endblock %}
+
+{% block hero %}
+{% load_blocks "category" %}
+<div class="mt-8 md:mt-24 mb-4 md:mb-16">
+    <h1 class="text-4xl md:text-6xl font-bold">
+        {% trans "Results" %}
+    </h1>
+    <h2 class="text-2xl md:text-4xl mt-4 font-bold">{% content_block "category:name_"|add:category.identifier %}, {{ country_name }}</h2>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-2 mt-8">
+    <div class="flex flex-wrap justify-center gap-1 mb-12">
+        <a href="{% country_url "results_category" category=category.identifier %}" class="{% if not country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
+            {% trans "International" %}
+        </a>
+        {% for c in countries %}
+            <a href="{% country_url "results_category" category=category.identifier country=c.country.code|lower %}" class="{% if c.country == country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
+                <img src="https://flagcdn.com/{{ c.country.code|lower }}.svg" class="h-3 inline-block" aria-hidden="true">
+                {{ c.country.name }}
+            </a>
+        {% endfor %}
+    </div>
+
+    {% include "problems/results/table.html" %}
+</div>
+{% endblock %}

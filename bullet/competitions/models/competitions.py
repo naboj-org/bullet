@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
@@ -21,6 +23,11 @@ class Competition(models.Model):
 
     competition_start = models.DateTimeField()
     competition_duration = models.DurationField()
+    results_freeze = models.DurationField(
+        default=timedelta(),
+        help_text="How long before the competition end should we freeze the results.",
+    )
+    results_public = models.BooleanField(default=False)
 
     is_cancelled = models.BooleanField(default=False)
 

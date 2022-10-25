@@ -15,12 +15,7 @@ urlpatterns = [
             [
                 path("", views.HomepageView.as_view(), name="homepage"),
                 path("", include("competitions.urls")),
-                # path(
-                #     "confirm_registration/<secret_link>/",
-                #     registration.RegistrationConfirmView.as_view(),
-                #     name="registration_confirm",
-                # ),
-                # path("teams/", teams.TeamList.as_view(), name="teams"),
+                path("", include("problems.urls")),
                 path("admin/", views.AdminRedirectView.as_view()),
                 path("<slug>/", page.PageView.as_view(), name="page"),
             ]
