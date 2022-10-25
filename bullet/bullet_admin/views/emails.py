@@ -63,6 +63,7 @@ class CampaignCreateView(AnyAdminRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
         kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
         return kw
 
     def form_valid(self, form):
@@ -93,6 +94,7 @@ class CampaignUpdateView(AnyAdminRequiredMixin, UpdateView):
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
         kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
         return kw
 
     def get_success_url(self):

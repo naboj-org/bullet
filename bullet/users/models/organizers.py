@@ -1,4 +1,5 @@
 from bullet_admin.models import BranchRole, CompetitionRole
+from competitions.branches import Branches
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import PermissionsMixin
@@ -75,6 +76,9 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
     def get_branch_role(self, branch) -> BranchRole:
+        if isinstance(branch, int):
+            branch = Branches[branch]
+
         if not hasattr(self, "_branch_role_cache"):
             self._branch_role_cache = {r.branch: r for r in self.branchrole_set.all()}
         if branch.id not in self._branch_role_cache:
