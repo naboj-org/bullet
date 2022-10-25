@@ -95,7 +95,7 @@ class EmailCampaign(models.Model):
                 "mail/messages/campaign.html",
                 "mail/messages/campaign.txt",
                 {"content": template.render(context)},
-                team.venue.contact_email,
+                [team.venue.contact_email],
             )
 
     def send_all(self):
