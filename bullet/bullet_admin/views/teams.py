@@ -1,6 +1,7 @@
 from bullet_admin.forms.teams import TeamForm
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
+from bullet_admin.views import DeleteView
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -12,7 +13,7 @@ from django.urls import reverse
 from django.views import View
 from django.views.generic import ListView, UpdateView
 from education.models import School
-from users.emails.teams import send_confirmation_email
+from users.emails.teams import send_confirmation_email, send_deletion_email
 from users.logic import get_venue_waiting_list
 from users.models import Contestant, Team
 
@@ -164,6 +165,21 @@ class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
 
     def get_success_url(self):
         messages.success(self.request, "Team saved.")
+        return reverse("badmin:team_list")
+
+
+class TeamDeleteView(AnyAdminRequiredMixin, DeleteView):
+    model = Team
+
+    def post(self, request, *args, **kwargs):
+        if not can_access_venue(request, self.get_object().venue):
+            return HttpResponseForbidden()
+
+        send_deletion_email(self.get_object())
+        return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        messages.success(self.request, "Team deleted.")
         return reverse("badmin:team_list")
 
 

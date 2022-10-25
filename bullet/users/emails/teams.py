@@ -46,3 +46,16 @@ def send_to_competition_email(team):
             {"team": team},
             [team.venue.contact_email],
         )
+
+
+def send_deletion_email(team):
+    with TeamCountry(team):
+        send_email(
+            Branches[team.venue.category_competition.competition.branch],
+            team.contact_email,
+            _("Your team has been deleted"),
+            "mail/messages/team_delete.html",
+            "mail/messages/team_delete.txt",
+            {"team": team},
+            [team.venue.contact_email],
+        )
