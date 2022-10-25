@@ -19,7 +19,7 @@ def mark_problem_solved(team: Team, problem: Problem, timestamp: datetime = None
     sp.competition_time = timestamp - team.venue.start_time
     sp.save()
 
-    problems = SolvedProblem.objects.filter(team=team)
+    problems = SolvedProblem.objects.filter(team=team).values_list("problem")
     solved_problems = set(
         CategoryProblem.objects.filter(
             problem__in=problems, category=team.venue.category_competition
@@ -34,6 +34,6 @@ def mark_problem_solved(team: Team, problem: Problem, timestamp: datetime = None
     for p in solved_problems:
         solved_bin |= 1 << (p - 1)
 
-    result_row.solved_problems = solved_bin
+    result_row.solved_problems = solved_bin.to_bytes(16, "big")
     result_row.competition_time = sp.competition_time
     result_row.save()
