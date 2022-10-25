@@ -1,4 +1,5 @@
 from competitions.branches import Branches
+from countries.utils import country_reverse
 from django.db import models
 from django.db.models import Q
 from django.template import Context, Template
@@ -71,11 +72,18 @@ class EmailCampaign(models.Model):
 
     def send_single(self, team: Team, override_email=None):
         template = Template(self.template)
-        context = Context({"team": team})
 
         with TeamCountry(team):
+            branch = Branches[team.venue.category_competition.competition.branch]
+            link = country_reverse(
+                "team_edit", kwargs={"secret_link": team.secret_link}
+            )
+            context = Context(
+                {"team": team, "edit_link": f"https://{branch.domain}{link}"}
+            )
+
             send_email(
-                Branches[team.venue.category_competition.competition.branch],
+                branch,
                 override_email if override_email else team.contact_email,
                 self.subject,
                 "mail/messages/campaign.html",
