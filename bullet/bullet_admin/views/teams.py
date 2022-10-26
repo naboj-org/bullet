@@ -46,7 +46,7 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             ids = [x["id"] for x in ids]
             qs = qs.filter(id__in=ids)
 
-        return (
+        qs = (
             qs.select_related(
                 "school",
                 "venue",
@@ -55,6 +55,12 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
             .prefetch_related("contestants", "contestants__grade")
             .order_by("id")
         )
+
+        if self.request.GET.get("q"):
+            qs = list(qs)
+            qs.sort(key=lambda x: ids.index(x.id))
+
+        return qs
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
