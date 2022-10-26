@@ -2,6 +2,7 @@ from bullet_admin.views import (
     CompetitionSwitchView,
     auth,
     content,
+    emails,
     home,
     scanning,
     teams,
@@ -124,5 +125,26 @@ urlpatterns = [
         "scanning/problems/",
         scanning.ProblemScanView.as_view(),
         name="scanning_problems",
+    ),
+    path("emails/", emails.CampaignListView.as_view(), name="email_list"),
+    path("emails/create/", emails.CampaignCreateView.as_view(), name="email_create"),
+    path(
+        "emails/<int:pk>/edit/", emails.CampaignUpdateView.as_view(), name="email_edit"
+    ),
+    path("emails/<int:pk>/", emails.CampaignDetailView.as_view(), name="email_detail"),
+    path(
+        "emails/<int:pk>/teams/",
+        emails.CampaignTeamListView.as_view(),
+        name="email_teams",
+    ),
+    path(
+        "emails/<int:pk>/test/",
+        emails.CampaignSendTestView.as_view(),
+        name="email_test",
+    ),
+    path(
+        "emails/<int:pk>/send/",
+        emails.CampaignSendView.as_view(),
+        name="email_send",
     ),
 ]

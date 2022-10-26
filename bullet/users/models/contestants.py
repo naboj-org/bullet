@@ -55,7 +55,7 @@ class Team(models.Model):
     def display_name(self):
         if self.name:
             return self.name
-        return str(self.school)
+        return f"{self.school} {self.in_school_symbol}".strip()
 
     @property
     def contact_phone_pretty(self):
@@ -69,6 +69,10 @@ class Team(models.Model):
     @property
     def contestants_names(self):
         return ", ".join([c.full_name for c in self.contestants.all()])
+
+    @property
+    def id_display(self):
+        return f"#{self.id:06d}"
 
     def for_search(self):
         return {

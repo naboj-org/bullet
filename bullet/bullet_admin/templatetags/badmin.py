@@ -25,6 +25,7 @@ def admin_sidebar(context):
                 (
                     ("fa-users", "Teams", reverse("badmin:team_list")),
                     ("fa-clock", "Waiting list", reverse("badmin:waiting_list")),
+                    ("fa-envelope", "Emails", reverse("badmin:email_list")),
                     (
                         "fa-barcode",
                         "Problem scanning",

@@ -1,0 +1,156 @@
+{% extends "bullet_admin/base.html" %}
+{% load bform %}
+
+{% block title %}Campaign detail{% endblock %}
+
+{% block content %}
+    <div class="grid grid-cols-1 md:grid-cols-2 m-8 gap-8">
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Message</h2>
+            </header>
+            <div class="divide-y">
+                <div class="p-4"><b>Subject:</b> {{ object.subject }}</div>
+                <div class="p-4">
+                    <pre>{{ object.template }}</pre>
+                </div>
+                {% if can_edit %}
+                <div class="p-4">
+                    <a href="{% url "badmin:email_edit" pk=object.pk %}" class="btn-admin bg-primary hover:bg-primary-dark">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Recipients</h2>
+            </header>
+            <div class="divide-y">
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Countries:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if object.team_countries %}
+                            {{ object.team_countries|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Languages:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if object.team_languages %}
+                            {{ object.team_languages|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Venues:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if venues_display %}
+                            {{ venues_display|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Statuses:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if statuses_display %}
+                            {{ statuses_display|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Number of contestants:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if object.team_contestants %}
+                            {{ object.team_contestants|join:", " }}
+                        {% else %}
+                            <span class="text-gray-700">(all)</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Excluded teams:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2 flex">
+                        {{ excluded_count }}
+                        {% if can_edit %}
+                        <a class="ml-auto link-primary" href="{% url "badmin:email_teams" pk=object.pk %}">Edit</a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Total recipients:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {{ team_count }}
+                    </div>
+                </div>
+                {% if can_edit %}
+                <div class="p-4 flex gap-2">
+                    <a href="{% url "badmin:email_edit" pk=object.pk %}" class="btn-admin bg-primary hover:bg-primary-dark">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <a href="{% url "badmin:email_teams" pk=object.pk %}" class="btn-admin bg-blue-500 hover:bg-blue-600">
+                        <i class="fas fa-list"></i> List teams
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </article>
+
+        {% if can_edit %}
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Testing email</h2>
+            </header>
+            <div class="p-4">
+                {% if team_count %}
+                <p class="mb-4">You can test the campaign by clicking on the button below. We will send an testing email to {{ user.email }}.</p>
+
+                <form method="post" action="{% url "badmin:email_test" pk=object.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
+                        <i class="fas fa-flask"></i> Send testing email
+                    </button>
+                </form>
+                {% else %}
+                <div class="bg-red-100 text-red-800 border border-red-800 p-4 rounded-md">
+                    <b>No recipients.</b> Email testing is not available because this campaign doesn't have any valid recipients.
+                </div>
+                {% endif %}
+            </div>
+        </article>
+
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Send emails</h2>
+            </header>
+            <div class="p-4">
+                {% if team_count %}
+                <p class="mb-4">You can send the campaign to the teams. Beware, this action is irreversible.</p>
+
+                <form method="post" action="{% url "badmin:email_send" pk=object.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">
+                        <i class="fas fa-paper-plane"></i> Send campaign
+                    </button>
+                </form>
+                {% else %}
+                <div class="bg-red-100 text-red-800 border border-red-800 p-4 rounded-md">
+                    <b>No recipients.</b> You can't send this campaign because it doesn't have any valid recipients.
+                </div>
+                {% endif %}
+            </div>
+        </article>
+        {% endif %}
+    </div>
+{% endblock %}
