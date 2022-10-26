@@ -96,7 +96,12 @@ class TeamListView(TemplateView):
     template_name = "teams/list.html"
 
     def get_teams(self, venues) -> QuerySet[Team]:
-        return Team.objects.competing().filter(venue__in=venues)
+        return (
+            Team.objects.competing()
+            .filter(venue__in=venues)
+            .prefetch_related("contestants", "contestants__grade")
+            .select_related("school")
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
@@ -115,12 +120,7 @@ class TeamListView(TemplateView):
             .select_related("category_competition")
             .all()
         )
-        teams: QuerySet[Team] = (
-            self.get_teams(venues)
-            .prefetch_related("contestants", "contestants__grade")
-            .select_related("school")
-            .all()
-        )
+        teams: QuerySet[Team] = self.get_teams(venues).all()
 
         venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
         for team in teams:
@@ -143,7 +143,23 @@ class WaitingListView(TeamListView):
         return ctx
 
     def get_teams(self, venues) -> QuerySet[Team]:
-        return get_venues_waiting_list(venues)
+        category_venues = {}
+        for venue in venues:
+            if venue.category_competition_id not in category_venues:
+                category_venues[venue.category_competition_id] = [venue]
+            else:
+                category_venues[venue.category_competition_id].append(venue)
+
+        qs = Team.objects.none()
+        for venue_groups in category_venues.values():
+            wl = (
+                get_venues_waiting_list(venue_groups)
+                .prefetch_related("contestants", "contestants__grade")
+                .select_related("school")
+            )
+            qs = qs.union(wl)
+
+        return qs
 
 
 class TeamDeleteView(DeleteView):
