@@ -193,7 +193,9 @@ class SchoolInputView(AnyAdminRequiredMixin, View):
             )["hits"]
 
         return TemplateResponse(
-            request, "bullet_admin/partials/_school_input.html", {"schools": schools}
+            request,
+            "bullet_admin/partials/_school_input.html",
+            {"schools": schools, "default": request.GET.get("default")},
         )
 
     def post(self, request, *args, **kwargs):

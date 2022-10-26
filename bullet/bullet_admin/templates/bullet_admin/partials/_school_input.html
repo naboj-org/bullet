@@ -1,5 +1,13 @@
 <div id="js-school-input">
-    <input type="text" class="input form-input" name="q" hx-get="{% url "badmin:school_input" %}" hx-trigger="keyup changed delay:100ms" hx-swap="outerHTML" hx-select="#js-school-list" hx-target="#js-school-list">
+    <div class="flex gap-2 items-center">
+        <input type="text" class="input form-input" name="q" hx-get="{% url "badmin:school_input" %}{% if default %}?default={{ default }}{% endif %}" hx-trigger="keyup changed delay:100ms" hx-swap="outerHTML" hx-select="#js-school-list" hx-target="#js-school-list">
+
+        {% if default %}
+        <a href="#" class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0" hx-post="{% url "badmin:school_input" %}"  hx-vals='{"school": {{ default }}}' hx-target="#js-school-input" hx-swap="outerHTML" hx-params="school">
+            <i class="fas fa-times"></i>
+        </a>
+        {% endif %}
+    </div>
 
     <div id="js-school-list" class="space-y-1 mt-1" hx-params="school" hx-target="#js-school-input" hx-swap="outerHTML">
         {% for school in schools %}
