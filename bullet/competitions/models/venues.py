@@ -40,7 +40,9 @@ class Venue(models.Model):
     local_start = models.DateTimeField(null=True, blank=True)
     results_announced = models.BooleanField(default=False)
     participants_hidden = models.BooleanField(default=False)
+
     is_online = models.BooleanField(default=False)
+    is_reviewed = models.BooleanField(default=False)
 
     objects = CompetitionVenueQuerySet.as_manager()
 
