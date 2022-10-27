@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-20 08:34+0000\n"
+"POT-Creation-Date: 2022-10-27 22:04+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr "L'établissement choisi est invalide"
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:98
+#: competitions/templates/teams/edit.html:123
 msgid "Full name"
 msgstr "Nom complet"
 
@@ -131,13 +131,13 @@ msgstr "Vous pouvez modifier les membres de l'équipe jusqu'au début de la comp
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:102
+#: competitions/templates/teams/edit.html:127
 msgid "Grade"
 msgstr "Classe"
 
 #: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:94
+#: competitions/templates/teams/edit.html:119
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Participant %(number)s"
@@ -153,6 +153,7 @@ msgid "By registering for the Competition, the registrants (especially teachers 
 msgstr "En s'inscrivant à la Compétition, les inscrivants (notamment les enseignants ou les représentants légaux des élèves inscrits) acceptent les  <a href=\"%(link)s\">règles de la compétition</a> et s'engagent à les respecter. En même temps, l'inscrivant reconnaît que les données personnelles fournies dans le formulaire d'inscription sont nécessaires pour assurer le bon fonctionnement de la Compétition."
 
 #: competitions/templates/register/details.html:60
+#: competitions/templates/teams/edit.html:88
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "L'inscrivant accepte que l'organisation fasse des enregistrements vidéo et/ou audio-vidéo pendant le Concours, sur lesquels l’image de l'inscrivant et/ou de la personne inscrite est capturée et de les publier sur le site web du Concours, les réseaux sociaux à des fins de promotion du Concours.<sup>[1]</sup>"
 
@@ -167,6 +168,7 @@ msgid "Register"
 msgstr "S'inscrire"
 
 #: competitions/templates/register/details.html:84
+#: competitions/templates/teams/edit.html:104
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Vous consentez à ce que vos données personnelles soient traitées pendant toute la durée du fonctionnement du site web de la Compétition ainsi que sur les comptes associées sur les réseaux sociaux. Ce consentement peut être révoqué à tout moment en envoyant un e-mail à l'adresse <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. La rétractation du consentement n'a pas d'effet sur la légalité du traitement effectué avant cette rétractation. La personne concernée ne peut demander la suppression de ses données personnelles que si cela est techniquement possible et que cette suppression n'affecte pas les droits d'autres personnes concernées."
 
@@ -214,7 +216,7 @@ msgstr "Chercher un lieu de compétition..."
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:86
+#: competitions/templates/teams/edit.html:99
 msgid "Unregister team"
 msgstr "Désincrire l'équipe"
 
@@ -249,7 +251,7 @@ msgstr "La capacité de la salle a été atteinte, ou votre établissement a dé
 msgid "Delete?"
 msgstr "Supprimer"
 
-#: competitions/templates/teams/edit.html:85
+#: competitions/templates/teams/edit.html:98
 msgid "Update"
 msgstr "Actualiser"
 
@@ -276,17 +278,60 @@ msgstr "Les inscriptions n'ont pas encore commencé."
 msgid "Registration is over."
 msgstr "Les inscriptions sont terminées."
 
-#: competitions/views/teams.py:36
+#: competitions/views/teams.py:43
 msgid "Team successfully edited."
 msgstr "L'équipe a été modifiée avec succès."
 
-#: competitions/views/teams.py:78
+#: competitions/views/teams.py:85
 msgid "Registration successfully confirmed."
 msgstr "L'inscription est confirmée."
 
-#: competitions/views/teams.py:158
+#: competitions/views/teams.py:179
 msgid "Team was unregistered."
 msgstr "L'équipe a été désinscrite."
+
+#: problems/templates/problems/results.html:6
+#: problems/templates/problems/results.html:12
+#: problems/templates/problems/results/venue.html:5
+#: problems/templates/problems/results/venue.html:11
+msgid "Results"
+msgstr "Classement"
+
+#: problems/templates/problems/results.html:22 problems/views.py:55
+msgid "International"
+msgstr "International"
+
+#: problems/templates/problems/results/table.html:5
+msgid "The competition did not start yet."
+msgstr "Le concours n'a pas encore commencé."
+
+#: problems/templates/problems/results/table.html:9
+msgid "Results are frozen."
+msgstr "Les résultats sont figés."
+
+#: problems/templates/problems/results/table.html:9
+msgid "These are not the final results yet."
+msgstr "Ceci n'est pas le classement définitif."
+
+#: problems/templates/problems/results/table.html:13
+msgid "Final results."
+msgstr "Classement final."
+
+#: problems/templates/problems/results/table.html:13
+msgid "Showing official results."
+msgstr "Affichage du classement final."
+
+#: problems/templates/problems/results/table.html:54
+msgid "(No team has solved any problem yet)"
+msgstr "(Aucune équipe n'a résolu aucun problème pour l'instant)"
+
+#: problems/templates/problems/results/table.html:62
+msgid "Previous"
+msgstr "Précédent"
+
+#: problems/templates/problems/results/table.html:65
+msgid "Next"
+msgstr "Suivant"
 
 #: users/emails/teams.py:30
 msgid "Confirm your team registration"
@@ -295,6 +340,10 @@ msgstr "Confirmer l'inscription de votre équipe"
 #: users/emails/teams.py:43
 msgid "Team moved from waiting list"
 msgstr "Équipe déplacée de la liste d'attente"
+
+#: users/emails/teams.py:56
+msgid "Your team has been deleted"
+msgstr "Votre équipe a été supprimée"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -329,6 +378,8 @@ msgstr "Vous avez reçu ce message parce que vous vous êtes inscrits à la comp
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/team_delete.html:5
+#: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:6
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
@@ -356,6 +407,8 @@ msgstr "Pour toutes vos questions, n'hésitez pas à nous contacter en répondan
 
 #: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/team_delete.html:12
+#: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
@@ -365,6 +418,17 @@ msgstr "Cordialement,"
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Si vous avez des difficultés à clicker sur le bouton, vous pouvez copier-coller ce lien dans votre navigateur:"
+
+#: web/templates/mail/messages/team_delete.html:7
+#: web/templates/mail/messages/team_delete.txt:3
+msgid "Your team was unregistered from the competition."
+msgstr "Votre équipe a été désinscrite du concours."
+
+#: web/templates/mail/messages/team_delete.html:9
+#: web/templates/mail/messages/team_delete.txt:5
+#, python-format
+msgid "Team members: %(contestants)s"
+msgstr "Membres de l'équipe: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
@@ -395,10 +459,9 @@ msgid "Close"
 msgstr "Fermé"
 
 #: web/templates/web/snippets/copyright.html:6
-#, fuzzy, python-format
-#| msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+#, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
-msgstr "Tous les horaires sont dans le fuseau horaire %(tz_names)s sauf si indication contraire."
+msgstr "Tous les horaires sont dans le fuseau horaire %(tz_name)s sauf si indication contraire."
 
 #: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"

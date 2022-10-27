@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-20 08:34+0000\n"
+"POT-Creation-Date: 2022-10-27 22:04+0000\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -57,7 +57,7 @@ msgstr "Odabrana škola nije u bazi podataka."
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:98
+#: competitions/templates/teams/edit.html:123
 msgid "Full name"
 msgstr "Puno ime"
 
@@ -131,13 +131,13 @@ msgstr "Možete promijeniti listu natjecatelja u bilo kojem trenutku prije natje
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:102
+#: competitions/templates/teams/edit.html:127
 msgid "Grade"
 msgstr "Razred"
 
 #: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:94
+#: competitions/templates/teams/edit.html:119
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Natjecatelj %(number)s"
@@ -153,6 +153,7 @@ msgid "By registering for the Competition, the registrants (especially teachers 
 msgstr "Registracijom na Natjecanje, osobe koje provode registraciju (osobito nastavnici ili zakonski zastupnici registriranih učenika) potvrđuju kako su suglasne s <a href=\"%(link)s\"> pravilima natjecanja </a> te izjavljuju kako će se istih pridržavati. Istovremeno, osoba koja provodi registraciju potvrđuje kako je upoznata s činjenicom da su osobni podaci navedeni u obrascu za registraciju nužni za ispravnu provedbu Natjecanja."
 
 #: competitions/templates/register/details.html:60
+#: competitions/templates/teams/edit.html:88
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "Osoba koja provodi registraciju suglasna je da organizator snima video i/ili audio snimke tijekom Natjecanja na kojima se nalazi osoba koja je provela registraciju i/ili registrirana osoba, da te snimke objavi na web stranici Natjecanja i društvenim mrežama te da ih koristi u svrhu promocije Natjecanja. <sup>[1]</sup>"
 
@@ -167,6 +168,7 @@ msgid "Register"
 msgstr "Registracija"
 
 #: competitions/templates/register/details.html:84
+#: competitions/templates/teams/edit.html:104
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Privola se daje za razdoblje postojanja web stranice Natjecanja i računa na društvenim mrežama. Privola se može povući u bilo kojem trenutku slanjem poruke e-pošte na adresu <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Povlačenje privole ne utječe na zakonitost obrade osobnih podataka do tog trenutka. Brisanje osobnih podataka moguće je zatražiti isključivo ako je to tehnički izvedivo te ako brisanje osobnih podataka ne utječe na prava drugih osoba."
 
@@ -214,7 +216,7 @@ msgstr "Pretraži lokacije..."
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:86
+#: competitions/templates/teams/edit.html:99
 msgid "Unregister team"
 msgstr "Poništi registraciju tima"
 
@@ -249,7 +251,7 @@ msgstr "Kapacitet lokacije je premašen ili vaša škola ima previše registrira
 msgid "Delete?"
 msgstr "Obriši?"
 
-#: competitions/templates/teams/edit.html:85
+#: competitions/templates/teams/edit.html:98
 msgid "Update"
 msgstr "Osvježi"
 
@@ -276,17 +278,60 @@ msgstr "Prijave još nisu započele."
 msgid "Registration is over."
 msgstr "Registracija je završena."
 
-#: competitions/views/teams.py:36
+#: competitions/views/teams.py:43
 msgid "Team successfully edited."
 msgstr "Podaci o timu su uspješno promijenjeni."
 
-#: competitions/views/teams.py:78
+#: competitions/views/teams.py:85
 msgid "Registration successfully confirmed."
 msgstr "Registracija uspješno potvrđena."
 
-#: competitions/views/teams.py:158
+#: competitions/views/teams.py:179
 msgid "Team was unregistered."
 msgstr "Poništena je registracija tima."
+
+#: problems/templates/problems/results.html:6
+#: problems/templates/problems/results.html:12
+#: problems/templates/problems/results/venue.html:5
+#: problems/templates/problems/results/venue.html:11
+msgid "Results"
+msgstr ""
+
+#: problems/templates/problems/results.html:22 problems/views.py:55
+msgid "International"
+msgstr ""
+
+#: problems/templates/problems/results/table.html:5
+msgid "The competition did not start yet."
+msgstr ""
+
+#: problems/templates/problems/results/table.html:9
+msgid "Results are frozen."
+msgstr ""
+
+#: problems/templates/problems/results/table.html:9
+msgid "These are not the final results yet."
+msgstr ""
+
+#: problems/templates/problems/results/table.html:13
+msgid "Final results."
+msgstr ""
+
+#: problems/templates/problems/results/table.html:13
+msgid "Showing official results."
+msgstr ""
+
+#: problems/templates/problems/results/table.html:54
+msgid "(No team has solved any problem yet)"
+msgstr ""
+
+#: problems/templates/problems/results/table.html:62
+msgid "Previous"
+msgstr ""
+
+#: problems/templates/problems/results/table.html:65
+msgid "Next"
+msgstr ""
 
 #: users/emails/teams.py:30
 msgid "Confirm your team registration"
@@ -295,6 +340,10 @@ msgstr "Potvrdi registraciju tima"
 #: users/emails/teams.py:43
 msgid "Team moved from waiting list"
 msgstr "Tim je maknut s liste čekanja"
+
+#: users/emails/teams.py:56
+msgid "Your team has been deleted"
+msgstr ""
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
@@ -329,6 +378,8 @@ msgstr "Primili ste ovu poruku jer ste se registrirali za natjecanje %(branch)s.
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/team_delete.html:5
+#: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:6
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
@@ -356,6 +407,8 @@ msgstr "Ukoliko imate bilo kakvih pitanja, slobodno možete odgovoriti na ovaj e
 
 #: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/team_delete.html:12
+#: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
@@ -365,6 +418,17 @@ msgstr "Srdačno,"
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Ukoliko imate problema s gumbom, možete zalijepiti ovu adresu u preglednik:"
+
+#: web/templates/mail/messages/team_delete.html:7
+#: web/templates/mail/messages/team_delete.txt:3
+msgid "Your team was unregistered from the competition."
+msgstr ""
+
+#: web/templates/mail/messages/team_delete.html:9
+#: web/templates/mail/messages/team_delete.txt:5
+#, python-format
+msgid "Team members: %(contestants)s"
+msgstr ""
 
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
@@ -397,7 +461,7 @@ msgstr "Zatvori"
 #: web/templates/web/snippets/copyright.html:6
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
-msgstr ""
+msgstr "Sva vremena su prikazana u vremenskoj zoni %(tz_name)s osim ako je naglašeno drugačije."
 
 #: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
