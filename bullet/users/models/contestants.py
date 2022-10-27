@@ -52,6 +52,10 @@ class Team(models.Model):
         return f"{self.school} team in {self.venue}"
 
     @property
+    def code(self):
+        return f"{self.venue.shortcode}{self.number:03d}"
+
+    @property
     def display_name(self):
         if self.name:
             return self.name

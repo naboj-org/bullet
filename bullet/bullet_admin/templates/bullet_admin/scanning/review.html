@@ -1,9 +1,11 @@
 {% extends "bullet_admin/base.html" %}
 {% load static %}
 
-{% block title %}Problem scanning{% endblock %}
+{% block title %}Venue review{% endblock %}
 
 {% block content %}
+    {% include "bullet_admin/partials/venue_selector.html" %}
+
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Scan problem</h2>
@@ -12,7 +14,11 @@
             </button>
         </header>
         <div>
-            <form hx-post="{% url "badmin:scanning_problems" %}" hx-target="#js-scanlog" hx-swap="afterbegin"
+            <p class="p-4 border-b">
+                For every team, scan the first problem that the team didn't receive.
+            </p>
+
+            <form hx-post="{% url "badmin:scanning_review" %}{% if request.GET.venue %}?venue={{ request.GET.venue }}{% endif %}" hx-target="#js-review-teams"
                   class="flex p-4 gap-2" id="js-scanform">
                 {% csrf_token %}
                 <input type="text" name="barcode" id="js-scanfield" class="form-input input" placeholder="Barcode" autofocus>
@@ -23,30 +29,16 @@
             </form>
 
             <div id="js-reader" class="hidden"></div>
+            <div id="js-reader-status"></div>
         </div>
     </article>
 
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Scanning history</h2>
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team review</h2>
         </header>
-        <div class="p-4 overflow-x-auto">
-            <table class="w-full">
-                <thead>
-                <tr class="bg-gray-100 text-left border-b">
-                    <th></th>
-                    <th class="p-2">Barcode</th>
-                    <th class="p-2">Message</th>
-                    <th class="p-2 text-right">Timestamp</th>
-                </tr>
-                </thead>
-
-                <tbody class="divide-y" id="js-scanlog">
-                {% for log in logs %}
-                    {% include "bullet_admin/scanning/_logentry.html" %}
-                {% endfor %}
-                </tbody>
-            </table>
+        <div class="p-4" id="js-review-teams">
+            {% include "bullet_admin/scanning/_review_teams.html" %}
         </div>
     </article>
 
