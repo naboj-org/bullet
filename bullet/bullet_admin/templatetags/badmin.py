@@ -31,6 +31,11 @@ def admin_sidebar(context):
                         "Problem scanning",
                         reverse("badmin:scanning_problems"),
                     ),
+                    (
+                        "fa-magnifying-glass",
+                        "Review",
+                        reverse("badmin:scanning_review"),
+                    ),
                 ),
             ),
         )
