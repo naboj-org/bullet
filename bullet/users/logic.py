@@ -1,3 +1,5 @@
+import string
+
 from competitions.models import CategoryCompetition, Competition, Venue
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
@@ -81,3 +83,18 @@ def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
 
 def get_venues_waiting_list(venues: QuerySet[Venue]) -> QuerySet[Team]:
     return _waiting_list(Q(venue__in=venues), Q(school__team__venue__in=venues))
+
+
+def get_school_symbol(n: int) -> str:
+    symbol = []
+    while n > 0:
+        rem = n % 26
+
+        if rem == 0:
+            symbol.append("Z")
+            n = (n // 26) - 1
+        else:
+            symbol.append(string.ascii_uppercase[rem - 1])
+            n //= 26
+
+    return "".join(symbol[::-1])

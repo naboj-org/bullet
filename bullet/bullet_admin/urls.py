@@ -95,6 +95,11 @@ urlpatterns = [
         name="menu_create",
     ),
     path("teams/", teams.TeamListView.as_view(), name="team_list"),
+    path(
+        "teams/assign_numbers/",
+        teams.AssignTeamNumbersView.as_view(),
+        name="team_assign_numbers",
+    ),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
         "teams/<int:pk>/to_competition/",
