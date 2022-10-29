@@ -44,7 +44,7 @@ class Team(models.Model):
     class Meta:
         unique_together = [
             ("venue", "number"),
-            ("school", "in_school_symbol"),
+            ("venue", "school", "in_school_symbol"),
         ]
 
     def __str__(self):

@@ -226,9 +226,13 @@ class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
         if not last_number:
             last_number = 0
 
-        teams = Team.objects.filter(venue=self.venue)
+        teams = Team.objects.competing().filter(venue=self.venue)
         if "force" not in request.POST:
             teams = teams.filter(number__isnull=True)
+        else:
+            Team.objects.filter(venue=self.venue).update(
+                number=None, in_school_symbol=None
+            )
 
         # Assign team numbers
         for team in teams:
@@ -236,14 +240,16 @@ class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
             team.number = last_number
             team.save()
 
-        venue_teams = Team.objects.filter(venue=self.venue).order_by("number")
+        venue_teams = (
+            Team.objects.competing().filter(venue=self.venue).order_by("number")
+        )
         school_counts = defaultdict(lambda: 0)
         for team in venue_teams:
             school_counts[team.school_id] += 1
 
         symbol_counts = defaultdict(lambda: 0)
         for team in venue_teams:
-            if school_counts[team.school_id] == 0:
+            if school_counts[team.school_id] <= 1:
                 if team.in_school_symbol:
                     team.in_school_symbol = None
                     team.save()
