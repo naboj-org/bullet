@@ -47,7 +47,17 @@ class ProblemScanView(AnyAdminRequiredMixin, View):
             log.save()
             return log
 
-        # TODO: Check competition start + review end
+        if scanned_barcode.venue.start_time > timezone.now():
+            log.result = ScannerLog.Result.INTEGRITY_ERR
+            log.message = "The competition did not start yet."
+            log.save()
+            return log
+
+        if scanned_barcode.venue.is_reviewed:
+            log.result = ScannerLog.Result.INTEGRITY_ERR
+            log.message = "The venue was already marked as reviewed."
+            log.save()
+            return log
 
         try:
             save_scan(scanned_barcode, ts)
