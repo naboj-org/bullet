@@ -49,7 +49,7 @@ class Team(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.school} team in {self.venue}"
+        return self.display_name
 
     @property
     def code(self):
@@ -59,7 +59,9 @@ class Team(models.Model):
     def display_name(self):
         if self.name:
             return self.name
-        return f"{self.school} {self.in_school_symbol}".strip()
+        if self.in_school_symbol:
+            return f"{self.school} {self.in_school_symbol}"
+        return f"{self.school}"
 
     @property
     def contact_phone_pretty(self):
