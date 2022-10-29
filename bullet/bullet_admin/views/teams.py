@@ -249,7 +249,7 @@ class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
 
         symbol_counts = defaultdict(lambda: 0)
         for team in venue_teams:
-            if school_counts[team.school_id] == 0:
+            if school_counts[team.school_id] <= 1:
                 if team.in_school_symbol:
                     team.in_school_symbol = None
                     team.save()
