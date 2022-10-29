@@ -3,7 +3,6 @@ import string
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Max
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
 from users.emails.teams import send_to_competition_email
@@ -115,18 +114,11 @@ class Team(models.Model):
 
     def to_waitlist(self):
         self.number = None
+        self.in_school_symbol = None
         self.is_waiting = True
 
     def to_competition(self, send_email=True):
-        last_number = Team.objects.filter(venue=self.venue).aggregate(Max("number"))[
-            "number__max"
-        ]
-        if not last_number:
-            self.number = 1
-        else:
-            self.number = last_number + 1
         self.is_waiting = False
-        # TODO: in_school_symbol
         if send_email:
             send_to_competition_email(self)
 

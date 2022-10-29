@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from bullet_admin.forms.teams import TeamForm
 from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
@@ -5,16 +7,17 @@ from bullet_admin.views import DeleteView
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db.models import Max
 from django.forms import inlineformset_factory
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, UpdateView
+from django.views.generic import ListView, TemplateView, UpdateView
 from education.models import School
 from users.emails.teams import send_confirmation_email, send_deletion_email
-from users.logic import get_venue_waiting_list
+from users.logic import get_school_symbol, get_venue_waiting_list
 from users.models import Contestant, Team
 
 from bullet import search
@@ -211,3 +214,43 @@ class SchoolInputView(AnyAdminRequiredMixin, View):
             "bullet_admin/partials/_school_input_filled.html",
             {"school": school},
         )
+
+
+class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
+    template_name = "bullet_admin/teams/assign_numbers.html"
+
+    def post(self, request, *args, **kwargs):
+        last_number = Team.objects.filter(venue=self.venue).aggregate(Max("number"))[
+            "number__max"
+        ]
+        if not last_number:
+            last_number = 0
+
+        teams = Team.objects.filter(venue=self.venue)
+        if "force" not in request.POST:
+            teams = teams.filter(number__isnull=True)
+
+        # Assign team numbers
+        for team in teams:
+            last_number += 1
+            team.number = last_number
+            team.save()
+
+        venue_teams = Team.objects.filter(venue=self.venue).order_by("number")
+        school_counts = defaultdict(lambda: 0)
+        for team in venue_teams:
+            school_counts[team.school_id] += 1
+
+        symbol_counts = defaultdict(lambda: 0)
+        for team in venue_teams:
+            if school_counts[team.school_id] == 0:
+                if team.in_school_symbol:
+                    team.in_school_symbol = None
+                    team.save()
+            else:
+                symbol_counts[team.school_id] += 1
+                team.in_school_symbol = get_school_symbol(symbol_counts[team.school_id])
+                team.save()
+
+        messages.success(request, "Numbers assigned successfully.")
+        return HttpResponseRedirect(reverse("badmin:team_assign_numbers"))
