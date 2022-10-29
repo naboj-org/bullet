@@ -229,6 +229,10 @@ class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
         teams = Team.objects.competing().filter(venue=self.venue)
         if "force" not in request.POST:
             teams = teams.filter(number__isnull=True)
+        else:
+            Team.objects.filter(venue=self.venue).update(
+                number=None, in_school_symbol=None
+            )
 
         # Assign team numbers
         for team in teams:
