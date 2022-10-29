@@ -23,3 +23,4 @@ class TeamForm(forms.ModelForm):
         self.fields["venue"].queryset = Venue.objects.filter(
             category_competition__competition=competition
         ).select_related("category_competition")
+        self.fields["school"].required = True
