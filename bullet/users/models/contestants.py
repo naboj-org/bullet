@@ -52,6 +52,8 @@ class Team(models.Model):
 
     @property
     def code(self):
+        if not self.number:
+            return "---"
         return f"{self.venue.shortcode}{self.number:03d}"
 
     @property
