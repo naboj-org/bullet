@@ -67,13 +67,12 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
 
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data(*args, **kwargs)
+        brole = self.request.user.get_branch_role(self.request.BRANCH)
+        crole = self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        )
         ctx["hide_venue"] = (
-            len(
-                self.request.user.get_competition_role(
-                    get_active_competition(self.request)
-                ).venues
-            )
-            < 2
+            not brole.is_admin and not crole.countries and len(crole.venues) < 2
         )
         return ctx
 
