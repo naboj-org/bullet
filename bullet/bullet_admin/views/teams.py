@@ -171,6 +171,16 @@ class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
         self.object = self.get_object()
         return super().post(request, *args, **kwargs)
 
+    def save_forms(self, form, formset):
+        obj = form.save(commit=False)
+        if "venue" in form.changed_data:
+            obj.number = None
+            obj.in_school_symbol = None
+        if "school" in form.changed_data:
+            obj.in_school_symbol = None
+        obj.save()
+        formset.save()
+
     def get_success_url(self):
         messages.success(self.request, "Team saved.")
         return reverse("badmin:team_list")
