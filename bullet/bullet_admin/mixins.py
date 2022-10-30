@@ -99,8 +99,14 @@ class VenueMixin:
         ctx = super().get_context_data(*args, **kwargs)
         ctx["venue"] = self.venue
 
-        if not self.request.user.get_competition_role(
-            get_active_competition(self.request)
-        ).venues:
+        # 0 -> higher admin, 1 -> one venue admin, 2+ -> multiple venue admin
+        if (
+            len(
+                self.request.user.get_competition_role(
+                    get_active_competition(self.request)
+                ).venues
+            )
+            != 1
+        ):
             ctx["available_venues"] = self.available_venues
         return ctx
