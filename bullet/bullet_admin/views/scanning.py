@@ -88,7 +88,7 @@ class VenueReviewView(VenueMixin, TemplateView):
     def get_teams(self):
         return (
             Team.objects.competing()
-            .filter(venue=self.venue)
+            .filter(venue=self.venue, number__isnull=False)
             .order_by("is_reviewed", "number")
         )
 
