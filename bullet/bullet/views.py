@@ -35,9 +35,7 @@ class FormAndFormsetMixin:
 
     def save_forms(self, form, formset):
         form.save()
-        for f in formset:
-            if f.has_changed():
-                f.save()
+        formset.save()
 
     def forms_valid(self, form, formset):
         self.save_forms(form, formset)
