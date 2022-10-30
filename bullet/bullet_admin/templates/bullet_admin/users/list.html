@@ -17,41 +17,43 @@
             </form>
             <hr class="my-4">
 
-            <table class="w-full mb-4">
-                <thead>
-                    <tr class="bg-gray-100 text-left border-b">
-                        <th class="p-3">Full name</th>
-                        <th class="p-3">Email</th>
-                        <th class="p-3">Admin access</th>
-                        <th></th>
-                    </tr>
-                </thead>
+            <div class="overflow-x-auto">
+                <table class="w-full mb-4">
+                    <thead>
+                        <tr class="bg-gray-100 text-left border-b">
+                            <th class="p-3">Full name</th>
+                            <th class="p-3">Email</th>
+                            <th class="p-3">Admin access</th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
-                <tbody class="divide-y">
-                    {% for user in object_list %}
-                    <tr class="{% cycle "" "bg-gray-50" %}">
-                        <td class="p-3">
-                            {{ user.get_full_name }}
-                        </td>
-                        <td class="p-3">
-                            {{ user.email }}
-                        </td>
-                        <td class="p-3">
-                            {% if user.has_branch_role or user.has_competition_role %}
-                                <i class="fas fa-check-circle text-green-600"></i>
-                            {% else %}
-                                <i class="fas fa-times-circle text-red-600"></i>
-                            {% endif %}
-                        </td>
-                        <td class="p-3 text-right">
-                            <a href="{% url "badmin:user_edit" pk=user.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    <tbody class="divide-y">
+                        {% for user in object_list %}
+                        <tr class="{% cycle "" "bg-gray-50" %}">
+                            <td class="p-3">
+                                {{ user.get_full_name }}
+                            </td>
+                            <td class="p-3">
+                                {{ user.email }}
+                            </td>
+                            <td class="p-3">
+                                {% if user.has_branch_role or user.has_competition_role %}
+                                    <i class="fas fa-check-circle text-green-600"></i>
+                                {% else %}
+                                    <i class="fas fa-times-circle text-red-600"></i>
+                                {% endif %}
+                            </td>
+                            <td class="p-3 text-right">
+                                <a href="{% url "badmin:user_edit" pk=user.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <div class="flex gap-2">
             {% if page_obj.has_previous %}

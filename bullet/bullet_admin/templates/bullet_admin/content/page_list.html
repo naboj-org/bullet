@@ -17,35 +17,37 @@
             </form>
             <hr class="my-4">
 
-            <table class="w-full mb-4">
-                <thead>
-                    <tr class="bg-gray-100 text-left border-b">
-                        <th class="p-3">Title</th>
-                        <th class="p-3">Slug</th>
-                        <th class="p-3">Language</th>
-                        <th class="p-3">Countries</th>
-                    </tr>
-                </thead>
+            <div class="overflow-x-auto">
+                <table class="w-full mb-4">
+                    <thead>
+                        <tr class="bg-gray-100 text-left border-b">
+                            <th class="p-3">Title</th>
+                            <th class="p-3">Slug</th>
+                            <th class="p-3">Language</th>
+                            <th class="p-3">Countries</th>
+                        </tr>
+                    </thead>
 
-                <tbody class="divide-y">
-                    {% for page in object_list %}
-                    <tr class="{% cycle "" "bg-gray-50" %}">
-                        <td class="p-3">
-                            <a href="{% url "badmin:page_edit" pk=page.id %}" class="text-primary underline hover:text-primary-dark">{{ page.title }}</a>
-                        </td>
-                        <td class="p-3 text-sm">
-                            {{ page.slug }}
-                        </td>
-                        <td class="p-3 text-sm">
-                            {{ page.language }}
-                        </td>
-                        <td class="p-3 text-sm">
-                            {{ page.countries|join:", " }}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                    <tbody class="divide-y">
+                        {% for page in object_list %}
+                        <tr class="{% cycle "" "bg-gray-50" %}">
+                            <td class="p-3">
+                                <a href="{% url "badmin:page_edit" pk=page.id %}" class="text-primary underline hover:text-primary-dark">{{ page.title }}</a>
+                            </td>
+                            <td class="p-3 text-sm">
+                                {{ page.slug }}
+                            </td>
+                            <td class="p-3 text-sm">
+                                {{ page.language }}
+                            </td>
+                            <td class="p-3 text-sm">
+                                {{ page.countries|join:", " }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <div class="flex gap-2">
             {% if page_obj.has_previous %}

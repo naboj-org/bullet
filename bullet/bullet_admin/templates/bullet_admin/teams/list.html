@@ -16,85 +16,87 @@
             </form>
             <hr class="my-4">
 
-            <table class="w-full mb-4">
-                <thead>
-                    <tr class="bg-gray-100 text-left border-b">
-                        <th class="p-2">Number</th>
-                        <th class="p-2">School</th>
-                        <th class="p-2">Contact information</th>
-                        <th class="p-2">Contestants</th>
-                        {% if not hide_venue %}
-                        <th class="p-2">Venue / Category</th>
-                        {% endif %}
-                        <th class="p-2">Status</th>
-                        <th class="p-2"></th>
-                    </tr>
-                </thead>
-
-                <tbody class="divide-y">
-                    {% for team in object_list %}
-                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
-                        <td class="p-2 font-mono tracking-wider">
-                            {% if team.number %}
-                            <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
-                            {% else %}
-                            <span class="text-gray-500">---</span>
+            <div class="overflow-x-auto">
+                <table class="w-full mb-4">
+                    <thead>
+                        <tr class="bg-gray-100 text-left border-b">
+                            <th class="p-2">Number</th>
+                            <th class="p-2">School</th>
+                            <th class="p-2">Contact information</th>
+                            <th class="p-2">Contestants</th>
+                            {% if not hide_venue %}
+                            <th class="p-2">Venue / Category</th>
                             {% endif %}
-                            <div class="text-gray-500 text-xs">{{ team.id_display }}</div>
-                        </td>
-                        <td class="p-2">
-                            <div class="font-bold">
-                                {{ team.school.name }}
-                                {% if team.in_school_symbol %}
-                                    <span class="text-primary">{{ team.in_school_symbol }}</span>
+                            <th class="p-2">Status</th>
+                            <th class="p-2"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y">
+                        {% for team in object_list %}
+                        <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
+                            <td class="p-2 font-mono tracking-wider">
+                                {% if team.number %}
+                                <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                                {% else %}
+                                <span class="text-gray-500">---</span>
                                 {% endif %}
-                            </div>
-                            <div class="text-sm">{{ team.school.address }}</div>
-                        </td>
-                        <td class="p-2">
-                            <div>{{ team.contact_name }}</div>
-                            <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
-                            {% if team.contact_phone %}
-                            <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                                <div class="text-gray-500 text-xs">{{ team.id_display }}</div>
+                            </td>
+                            <td class="p-2">
+                                <div class="font-bold">
+                                    {{ team.school.name }}
+                                    {% if team.in_school_symbol %}
+                                        <span class="text-primary">{{ team.in_school_symbol }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="text-sm">{{ team.school.address }}</div>
+                            </td>
+                            <td class="p-2">
+                                <div>{{ team.contact_name }}</div>
+                                <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
+                                {% if team.contact_phone %}
+                                <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                                {% endif %}
+                            </td>
+                            <td class="p-2 text-xs">
+                                <ul>
+                                    {% for contestant in team.contestants.all %}<li>{{ contestant.full_name }}</li>{% endfor %}
+                                </ul>
+                            </td>
+                            {% if not hide_venue %}
+                            <td class="p-2">
+                                <div>{{ team.venue.name }}</div>
+                                <div class="text-sm">{{ team.venue.category_competition.identifier|title }}</div>
+                            </td>
                             {% endif %}
-                        </td>
-                        <td class="p-2 text-xs">
-                            <ul>
-                                {% for contestant in team.contestants.all %}<li>{{ contestant.full_name }}</li>{% endfor %}
-                            </ul>
-                        </td>
-                        {% if not hide_venue %}
-                        <td class="p-2">
-                            <div>{{ team.venue.name }}</div>
-                            <div class="text-sm">{{ team.venue.category_competition.identifier|title }}</div>
-                        </td>
-                        {% endif %}
-                        <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
-                            {% if not team.confirmed_at %}
-                            <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
-                            {% elif team.is_waiting %}
-                            <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
-                            {% elif team.is_checked_in %}
-                            <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
-                            {% else %}
-                            <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
-                            {% endif %}
+                            <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
+                                {% if not team.confirmed_at %}
+                                <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
+                                {% elif team.is_waiting %}
+                                <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
+                                {% elif team.is_checked_in %}
+                                <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
+                                {% else %}
+                                <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
+                                {% endif %}
 
-                            {% if not team.venue.is_online %}
-                            <span class="{% if team.consent_photos %}bg-green-500{% else %}bg-red-600{% endif %} px-2 py-1 rounded">
-                                <i class="fas fa-camera"></i>
-                            </span>
-                            {% endif %}
-                        </td>
-                        <td class="p-2 whitespace-nowrap text-right">
-                            <a href="{% url "badmin:team_edit" pk=team.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                <i class="fas fa-edit"></i> Edit
-                            </a>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+                                {% if not team.venue.is_online %}
+                                <span class="{% if team.consent_photos %}bg-green-500{% else %}bg-red-600{% endif %} px-2 py-1 rounded">
+                                    <i class="fas fa-camera"></i>
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td class="p-2 whitespace-nowrap text-right">
+                                <a href="{% url "badmin:team_edit" pk=team.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
 
             <div class="flex gap-2">
             {% if page_obj.has_previous %}
