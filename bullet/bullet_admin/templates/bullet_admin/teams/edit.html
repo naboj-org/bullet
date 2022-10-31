@@ -84,6 +84,17 @@
                             </div>
                         </div>
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <div>Team number</div>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                {% if team.number %}
+                                <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                                {% else %}
+                                <span class="text-gray-500">---</span>
+                                {% endif %}
+                                <div class="text-gray-500 text-xs">{{ team.id_display }}</div>
+                            </div>
+                        </div>
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <label for="{{ form.is_checked_in.id_for_label }}">Checked in?</label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 {% bfield form.is_checked_in %}
