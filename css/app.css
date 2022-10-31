@@ -89,11 +89,11 @@
 }
 
 .btn-admin {
-    @apply rounded-md inline-block text-white py-2 px-3 font-bold;
+    @apply rounded-md inline-block text-white py-2 px-3 font-bold whitespace-nowrap;
 }
 
 .btn-admin-sm {
-    @apply rounded-md inline-block text-white font-bold text-sm py-1 px-2.5;
+    @apply rounded-md inline-block text-white font-bold text-sm py-1 px-2.5 whitespace-nowrap;
 }
 
 .link-primary {

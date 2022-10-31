@@ -1,4 +1,4 @@
-<div class="grid grid-cols-4 gap-2">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-2">
     {% for team in teams %}
         <div class="{{ team.is_reviewed|yesno:"bg-green-100,bg-red-100" }} py-2 px-3 rounded-md">
             <div class="text-lg">

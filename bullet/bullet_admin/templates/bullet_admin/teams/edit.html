@@ -143,19 +143,18 @@
                     </div>
                 </div>
             </article>
-
-
-    </form>
-    <div class="mt-8 text-center flex flex-row gap-4 justify-center">
-        <button type="submit" form="editform" class="btn-admin bg-primary hover:bg-primary-dark">
-            <i class="fas fa-save"></i> Save
-        </button>
-        {% if object %}
-        <form method="post" action="{% url "badmin:team_delete" pk=object.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete team</button>
         </form>
-        {% endif %}
-    </div>
+
+        <div class="my-8 text-center flex flex-row gap-4 justify-center">
+            <button type="submit" form="editform" class="btn-admin bg-primary hover:bg-primary-dark">
+                <i class="fas fa-save"></i> Save
+            </button>
+            {% if object %}
+            <form method="post" action="{% url "badmin:team_delete" pk=object.id %}">
+                {% csrf_token %}
+                <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete team</button>
+            </form>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
