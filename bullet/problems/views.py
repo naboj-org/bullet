@@ -25,9 +25,20 @@ class ResultsSelectView(TemplateView):
         return ctx
 
 
-class CategoryResultsView(ListView):
+class ResultsViewMixin:
+    def get_paginate_by(self, queryset):
+        if "embed" in self.request.GET:
+            return 0
+        return 100
+
+    def get_template_names(self):
+        if "embed" in self.request.GET:
+            return ["problems/results/embed.html"]
+        return [self.template_name]
+
+
+class CategoryResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results.html"
-    paginate_by = 100
 
     def get_competition(self):
         return Competition.objects.get_current_competition(self.request.BRANCH)
@@ -61,6 +72,7 @@ class CategoryResultsView(ListView):
         ctx["team_problem_count"] = self.category.problems_per_team
         ctx["problem_count"] = self.category.problems.count()
         ctx["category"] = self.category
+        ctx["competition"] = self.competition
         ctx["results_time"] = self.results_time
 
         ctx["country_name"] = (
@@ -75,9 +87,8 @@ class CategoryResultsView(ListView):
         return ctx
 
 
-class VenueResultsView(ListView):
+class VenueResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results/venue.html"
-    paginate_by = 100
 
     def get_competition(self):
         return Competition.objects.get_current_competition(self.request.BRANCH)
@@ -101,6 +112,7 @@ class VenueResultsView(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["team_problem_count"] = self.venue.category_competition.problems_per_team
+        ctx["competition"] = self.competition
         ctx["problem_count"] = self.venue.category_competition.problems.count()
         ctx["venue"] = self.venue
         ctx["results_time"] = self.results_time
