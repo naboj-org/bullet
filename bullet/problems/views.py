@@ -2,7 +2,9 @@ from competitions.models import CategoryCompetition, Competition, Venue
 from countries.models import BranchCountry
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import ListView, TemplateView
 from django_countries.fields import Country
 from problems.logic.results import (
@@ -37,6 +39,7 @@ class ResultsViewMixin:
         return [self.template_name]
 
 
+@method_decorator(xframe_options_exempt, name="get")
 class CategoryResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results.html"
 
@@ -87,6 +90,7 @@ class CategoryResultsView(ResultsViewMixin, ListView):
         return ctx
 
 
+@method_decorator(xframe_options_exempt, name="get")
 class VenueResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results/venue.html"
 

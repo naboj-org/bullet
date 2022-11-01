@@ -14,7 +14,7 @@
 
             let seconds = diff % 60
             let minutes = Math.floor(diff / 60) % 60
-            let hours = Math.floor(diff / 3600) % 60
+            let hours = Math.floor(diff / 3600)
 
             elem.innerText = (currentTime < startTime ? "-" : "") + hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0")
         })
