@@ -170,10 +170,10 @@
                 <i class="fas fa-save"></i> Save
             </button>
             {% if object and not is_operator %}
-            <form method="post" action="{% url "badmin:team_delete" pk=object.id %}">
-                {% csrf_token %}
-                <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete team</button>
-            </form>
+                <a href="{% url "badmin:team_delete" pk=object.id %}" class="btn-admin bg-red-500 hover:bg-red-600">
+                    <i class="fas fa-trash"></i>
+                    Delete team
+                </a>
             {% endif %}
         </div>
     </div>

@@ -8,7 +8,6 @@ from bullet_admin.mixins import (
     VenueMixin,
 )
 from bullet_admin.utils import can_access_venue, get_active_competition
-from bullet_admin.views import DeleteView
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -19,7 +18,7 @@ from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView, TemplateView, UpdateView
+from django.views.generic import DeleteView, ListView, TemplateView, UpdateView
 from education.models import School
 from users.emails.teams import send_confirmation_email, send_deletion_email
 from users.logic import get_school_symbol, get_venue_waiting_list
@@ -201,6 +200,7 @@ class TeamEditView(
 
 class TeamDeleteView(AdminRequiredMixin, DeleteView):
     model = Team
+    template_name = "bullet_admin/teams/delete.html"
 
     def post(self, request, *args, **kwargs):
         if not can_access_venue(request, self.get_object().venue):
