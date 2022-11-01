@@ -19,26 +19,32 @@ def admin_sidebar(context):
         get_active_competition(context.request)
     )
     if branch_role.is_admin or competition_role.venues or competition_role.countries:
-        menu_items.append(
-            (
-                "Competition",
-                (
-                    ("fa-users", "Teams", reverse("badmin:team_list")),
+        items = [("fa-users", "Teams", reverse("badmin:team_list"))]
+
+        if not competition_role.is_operator:
+            items.extend(
+                [
                     ("fa-clock", "Waiting list", reverse("badmin:waiting_list")),
                     ("fa-envelope", "Emails", reverse("badmin:email_list")),
-                    (
-                        "fa-barcode",
-                        "Problem scanning",
-                        reverse("badmin:scanning_problems"),
-                    ),
-                    (
-                        "fa-magnifying-glass",
-                        "Review",
-                        reverse("badmin:scanning_review"),
-                    ),
+                ]
+            )
+
+        items.extend(
+            [
+                (
+                    "fa-barcode",
+                    "Problem scanning",
+                    reverse("badmin:scanning_problems"),
                 ),
-            ),
+                (
+                    "fa-magnifying-glass",
+                    "Review",
+                    reverse("badmin:scanning_review"),
+                ),
+            ]
         )
+
+        menu_items.append(("Competition", items))
 
     if branch_role.is_translator:
         menu_items.append(

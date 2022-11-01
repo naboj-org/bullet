@@ -22,7 +22,7 @@ class BranchRoleForm(forms.ModelForm):
 class CompetitionRoleForm(forms.ModelForm):
     class Meta:
         model = CompetitionRole
-        fields = ("venue_objects", "countries", "can_delegate")
+        fields = ("venue_objects", "countries", "can_delegate", "is_operator")
         widgets = {
             "countries": forms.CheckboxSelectMultiple(),
             "venue_objects": forms.CheckboxSelectMultiple(),
@@ -74,3 +74,6 @@ class CompetitionRoleForm(forms.ModelForm):
             raise ValidationError(
                 "The user cannot be both a venue and a country administrator."
             )
+
+        if self.cleaned_data["can_delegate"] and self.cleaned_data["is_operator"]:
+            raise ValidationError("Operator cannot have delegate permission.")

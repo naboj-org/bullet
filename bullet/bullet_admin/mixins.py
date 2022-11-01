@@ -21,7 +21,21 @@ class AccessMixin:
         return super().dispatch(request, *args, **kwargs)
 
 
-class AnyAdminRequiredMixin(AccessMixin):
+class AdminRequiredMixin(AccessMixin):
+    def can_access(self):
+        competition = get_active_competition(self.request)
+        if not competition:
+            return False
+
+        brole = self.request.user.get_branch_role(self.request.BRANCH)
+        if brole.is_admin:
+            return True
+
+        crole = self.request.user.get_competition_role(competition)
+        return (crole.venues or crole.countries) and not crole.is_operator
+
+
+class OperatorRequiredMixin(AccessMixin):
     def can_access(self):
         competition = get_active_competition(self.request)
         if not competition:
@@ -52,7 +66,7 @@ class DelegateRequiredMixin(AccessMixin):
             return False
 
         crole = self.request.user.get_competition_role(competition)
-        return crole.can_delegate
+        return crole.can_delegate and not crole.is_operator
 
 
 class VenueMixin:

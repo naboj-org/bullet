@@ -27,6 +27,7 @@ class CompetitionRole(models.Model):
         blank=True,
     )
     can_delegate = models.BooleanField(default=False)
+    is_operator = models.BooleanField(default=False)
 
     @property
     def venues(self):

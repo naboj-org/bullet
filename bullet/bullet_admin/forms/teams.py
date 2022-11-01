@@ -24,3 +24,10 @@ class TeamForm(forms.ModelForm):
             category_competition__competition=competition
         ).select_related("category_competition")
         self.fields["school"].required = True
+
+
+class OperatorTeamForm(TeamForm):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fields.pop("school")
+        self.fields.pop("venue")
