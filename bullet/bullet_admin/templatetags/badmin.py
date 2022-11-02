@@ -18,7 +18,11 @@ def admin_sidebar(context):
     competition_role = user.get_competition_role(
         get_active_competition(context.request)
     )
-    if branch_role.is_admin or competition_role.venues or competition_role.countries:
+    any_admin = (
+        branch_role.is_admin or competition_role.venues or competition_role.countries
+    )
+
+    if any_admin:
         items = [("fa-users", "Teams", reverse("badmin:team_list"))]
 
         if not competition_role.is_operator:
@@ -64,6 +68,20 @@ def admin_sidebar(context):
             (
                 "Access",
                 (("fa-users", "Users", reverse("badmin:user_list")),),
+            )
+        )
+
+    if any_admin and not competition_role.is_operator:
+        menu_items.append(
+            (
+                "Documents",
+                (
+                    (
+                        "fa-certificate",
+                        "Certificates",
+                        reverse("badmin:docs_certificates"),
+                    ),
+                ),
             )
         )
 

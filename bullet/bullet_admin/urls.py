@@ -158,5 +158,9 @@ urlpatterns = [
         emails.CampaignSendView.as_view(),
         name="email_send",
     ),
-    path("documents/certificates/", documents.CertificateView.as_view()),
+    path(
+        "documents/certificates/",
+        documents.CertificateView.as_view(),
+        name="docs_certificates",
+    ),
 ]
