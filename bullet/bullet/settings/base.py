@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     "education",
     "countries",
     "problems",
+    "documents",
     "django_countries",
     "captcha",
     "django_minify_html",
