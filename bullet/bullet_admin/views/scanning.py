@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import TemplateView
 from problems.logic import get_last_problem_for_team
 from problems.logic.scanner import parse_barcode, save_scan
-from problems.models import ScannerLog
+from problems.models import CategoryProblem, ScannerLog
 from users.models import Team
 
 
@@ -111,7 +111,9 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
             raise ValueError("The competition did not end yet.")
 
         scanned_barcode = parse_barcode(
-            get_active_competition(request), request.POST.get("barcode")
+            get_active_competition(request),
+            request.POST.get("barcode"),
+            allow_endmark=True,
         )
 
         if scanned_barcode.venue != self.venue:
@@ -120,12 +122,22 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         if scanned_barcode.team.is_reviewed:
             raise ValueError("The team was already reviewed.")
 
+        problem_count = CategoryProblem.objects.filter(
+            category=scanned_barcode.team.venue.category_competition
+        ).count()
         last = get_last_problem_for_team(scanned_barcode.team)
-        if scanned_barcode.problem_number != last + 1:
-            raise ValueError(
-                f"Expected problem number {last + 1}, got "
-                f"{scanned_barcode.problem_number}."
-            )
+        if last < problem_count:
+            if scanned_barcode.problem_number != last + 1:
+                raise ValueError(
+                    f"Expected problem number {last + 1}, got "
+                    f"{scanned_barcode.problem_number}."
+                )
+        else:
+            if scanned_barcode.problem_number != 0:
+                raise ValueError(
+                    f"Expected no more problems card, "
+                    f"got {scanned_barcode.problem_number}."
+                )
 
         scanned_barcode.team.is_reviewed = True
         scanned_barcode.team.save()
