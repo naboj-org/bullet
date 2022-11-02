@@ -4,4 +4,5 @@ from documents import models
 
 @admin.register(models.CertificateTemplate)
 class CertificateTemplateAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("name", "branch")
+    list_filter = ("branch",)

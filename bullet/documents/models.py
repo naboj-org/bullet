@@ -30,3 +30,6 @@ class CertificateTemplate(models.Model):
             env=env,
         )
         return data
+
+    def __str__(self):
+        return self.name

@@ -1,0 +1,35 @@
+{% extends "bullet_admin/base.html" %}
+{% load bform %}
+
+{% block title %}Generate certificates{% endblock %}
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <article class="border rounded-md bg-white shadow-lg overflow-hidden m-8">
+            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Generate certificates</h2>
+            </header>
+            <div class="divide-y">
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.template.id_for_label }}">Template</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.template %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <label for="{{ form.venue.id_for_label }}">Venue</label>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.venue %}
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <div class="my-8 text-center flex flex-row gap-4 justify-center">
+            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
+                <i class="fas fa-download"></i> Generate
+            </button>
+        </div>
+    </form>
+{% endblock %}

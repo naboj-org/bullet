@@ -1,5 +1,5 @@
 from competitions.branches import Branch
-from competitions.models import Competition
+from competitions.models import Competition, Venue
 from countries.models import BranchCountry
 from django.utils.translation import get_language_info
 from django_countries.fields import Country
@@ -42,3 +42,20 @@ def get_language_choices(branch: Branch, allow_empty=False):
         choices.insert(0, ("", "--------"))
 
     return choices
+
+
+def get_venue_queryset(competition: Competition, user: User, allow_empty=False):
+    venue_qs = (
+        Venue.objects.filter(category_competition__competition=competition)
+        .select_related("category_competition")
+        .order_by("name", "category_competition__identifier")
+    )
+
+    if not user.get_branch_role(competition.branch).is_admin:
+        crole = user.get_competition_role(competition)
+        if crole.countries:
+            venue_qs = venue_qs.filter(country__in=crole.countries)
+        if crole.venues:
+            venue_qs = venue_qs.filter(id__in=crole.venues)
+
+    return venue_qs
