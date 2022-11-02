@@ -5,29 +5,33 @@
 
 {% block content %}
     <div class="m-8">
-        {% if not team.confirmed_at %}
-        <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
-            <b>Unconfirmed team.</b> This team did not confirm their registration. You can send another confirmation email to the team.
+        {% if not is_operator %}
+            {% if not team.confirmed_at %}
+            <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
+                <b>Unconfirmed team.</b> This team did not confirm their registration. You can send another confirmation email to the team.
 
-            <form action="{% url "badmin:team_resend_confirmation" pk=team.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="mt-2 btn-admin-sm bg-red-500 hover:bg-red-600">
-                    <i class="fas fa-envelope"></i> Re-send confirmation email
-                </button>
-            </form>
-        </div>
-        {% elif team.is_waiting %}
-        <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
-            <b>This team is on the waiting list.</b> You can move it to the competition to override the waiting list.
+                <form action="{% url "badmin:team_resend_confirmation" pk=team.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="mt-2 btn-admin-sm bg-red-500 hover:bg-red-600">
+                        <i class="fas fa-envelope"></i> Re-send confirmation email
+                    </button>
+                </form>
+            </div>
+            {% elif team.is_waiting %}
+            <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
+                <b>This team is on the waiting list.</b> You can move it to the competition to override the waiting list.
 
-            <form action="{% url "badmin:team_to_competition" pk=team.id %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark">
-                    <i class="fas fa-angles-right"></i> Move to competition
-                </button>
-            </form>
-        </div>
-        {% elif team.is_checked_in %}
+                <form action="{% url "badmin:team_to_competition" pk=team.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark">
+                        <i class="fas fa-angles-right"></i> Move to competition
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+        {% endif %}
+
+        {% if team.is_checked_in %}
         <div class="bg-purple-100 text-purple-800 border border-purple-800 p-4 mb-6 rounded-md">
             <b>Checked in team.</b> This team was marked as checked in. They are at the venue, so please think carefully before editing it.
         </div>
@@ -44,21 +48,29 @@
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                             <label for="{{ form.contact_name.id_for_label }}">Full name <span class="text-red-600">*</span></label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                {% bfield form.contact_name %}
+                                {% if form.contact_name %}
+                                    {% bfield form.contact_name %}
+                                {% else %}
+                                    {{ team.contact_name }}
+                                {% endif %}
                             </div>
                         </div>
+                        {% if form.contact_email %}
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <label for="{{ form.contact_email.id_for_label }}">Email <span class="text-red-600">*</span></label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 {% bfield form.contact_email %}
                             </div>
                         </div>
+                        {% endif %}
+                        {% if form.contact_phone %}
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <label for="{{ form.contact_phone.id_for_label }}">Phone number</label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 {% bfield form.contact_phone %}
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </article>
 
@@ -70,17 +82,25 @@
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                             <label for="{{ form.school.id_for_label }}">School</label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                {% include "bullet_admin/partials/_school_input_filled.html" with school=team.school %}
+                                {% if form.school %}
+                                    {% include "bullet_admin/partials/_school_input_filled.html" with school=team.school %}
 
-                                {% if form.school.errors %}
-                                <span class="text-red-600">{{ form.school.errors|first }}</span>
+                                    {% if form.school.errors %}
+                                    <span class="text-red-600">{{ form.school.errors|first }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    {{ team.school }}
                                 {% endif %}
                             </div>
                         </div>
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <label for="{{ form.venue.id_for_label }}">Venue <span class="text-red-600">*</span></label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                {% bfield form.venue %}
+                                {% if form.venue %}
+                                    {% bfield form.venue %}
+                                {% else %}
+                                    {{ team.venue }}
+                                {% endif %}
                             </div>
                         </div>
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
@@ -149,7 +169,7 @@
             <button type="submit" form="editform" class="btn-admin bg-primary hover:bg-primary-dark">
                 <i class="fas fa-save"></i> Save
             </button>
-            {% if object %}
+            {% if object and not is_operator %}
             <form method="post" action="{% url "badmin:team_delete" pk=object.id %}">
                 {% csrf_token %}
                 <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete team</button>

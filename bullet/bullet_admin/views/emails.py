@@ -1,5 +1,5 @@
 from bullet_admin.forms.emails import EmailCampaignForm
-from bullet_admin.mixins import AnyAdminRequiredMixin
+from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from django.contrib import messages
@@ -49,7 +49,7 @@ def can_edit_campaign(request, campaign: EmailCampaign):
     return True
 
 
-class CampaignListView(AnyAdminRequiredMixin, ListView):
+class CampaignListView(AdminRequiredMixin, ListView):
     template_name = "bullet_admin/emails/list.html"
 
     def get_queryset(self):
@@ -57,7 +57,7 @@ class CampaignListView(AnyAdminRequiredMixin, ListView):
         return EmailCampaign.objects.filter(competition=competition)
 
 
-class CampaignCreateView(AnyAdminRequiredMixin, CreateView):
+class CampaignCreateView(AdminRequiredMixin, CreateView):
     form_class = EmailCampaignForm
     template_name = "bullet_admin/emails/form.html"
 
@@ -77,7 +77,7 @@ class CampaignCreateView(AnyAdminRequiredMixin, CreateView):
         )
 
 
-class CampaignUpdateView(AnyAdminRequiredMixin, UpdateView):
+class CampaignUpdateView(AdminRequiredMixin, UpdateView):
     form_class = EmailCampaignForm
     template_name = "bullet_admin/emails/form.html"
 
@@ -102,7 +102,7 @@ class CampaignUpdateView(AnyAdminRequiredMixin, UpdateView):
         return reverse("badmin:email_detail", kwargs={"pk": self.object.id})
 
 
-class CampaignDetailView(AnyAdminRequiredMixin, DetailView):
+class CampaignDetailView(AdminRequiredMixin, DetailView):
     template_name = "bullet_admin/emails/detail.html"
 
     def get_queryset(self):
@@ -127,7 +127,7 @@ class CampaignDetailView(AnyAdminRequiredMixin, DetailView):
         return ctx
 
 
-class CampaignTeamListView(AnyAdminRequiredMixin, TemplateView):
+class CampaignTeamListView(AdminRequiredMixin, TemplateView):
     template_name = "bullet_admin/emails/teams.html"
 
     def dispatch(self, request, *args, **kwargs):
@@ -162,7 +162,7 @@ class CampaignTeamListView(AnyAdminRequiredMixin, TemplateView):
         )
 
 
-class CampaignSendTestView(AnyAdminRequiredMixin, View):
+class CampaignSendTestView(AdminRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         campaign = get_object_or_404(
             EmailCampaign,
@@ -180,7 +180,7 @@ class CampaignSendTestView(AnyAdminRequiredMixin, View):
         )
 
 
-class CampaignSendView(AnyAdminRequiredMixin, View):
+class CampaignSendView(AdminRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         campaign = get_object_or_404(
             EmailCampaign,

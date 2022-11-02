@@ -1,7 +1,12 @@
 from collections import defaultdict
 
-from bullet_admin.forms.teams import TeamForm
-from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
+from bullet_admin.forms.teams import OperatorTeamForm, TeamForm
+from bullet_admin.mixins import (
+    AdminRequiredMixin,
+    IsOperatorContext,
+    OperatorRequiredMixin,
+    VenueMixin,
+)
 from bullet_admin.utils import can_access_venue, get_active_competition
 from bullet_admin.views import DeleteView
 from competitions.forms.registration import ContestantForm
@@ -24,7 +29,7 @@ from bullet import search
 from bullet.views import FormAndFormsetMixin
 
 
-class TeamListView(AnyAdminRequiredMixin, ListView):
+class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
     template_name = "bullet_admin/teams/list.html"
     paginate_by = 50
 
@@ -77,7 +82,7 @@ class TeamListView(AnyAdminRequiredMixin, ListView):
         return ctx
 
 
-class TeamToCompetitionView(AnyAdminRequiredMixin, View):
+class TeamToCompetitionView(AdminRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         team = get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
         if not can_access_venue(request, team.venue):
@@ -88,7 +93,7 @@ class TeamToCompetitionView(AnyAdminRequiredMixin, View):
         return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
 
 
-class TeamResendConfirmationView(AnyAdminRequiredMixin, View):
+class TeamResendConfirmationView(AdminRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         team = get_object_or_404(Team, id=self.kwargs["pk"], confirmed_at__isnull=True)
         if not can_access_venue(request, team.venue):
@@ -99,14 +104,14 @@ class TeamResendConfirmationView(AnyAdminRequiredMixin, View):
         return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
 
 
-class WaitingListView(AnyAdminRequiredMixin, VenueMixin, ListView):
+class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
     template_name = "bullet_admin/teams/waiting.html"
 
     def get_queryset(self):
         return get_venue_waiting_list(self.venue)
 
 
-class WaitingAutomoveView(AnyAdminRequiredMixin, VenueMixin, View):
+class WaitingAutomoveView(AdminRequiredMixin, VenueMixin, View):
     def post(self, request, *args, **kwargs):
         team_count = self.venue.remaining_capacity
         waiting_list = get_venue_waiting_list(self.venue)[:team_count]
@@ -124,9 +129,10 @@ class WaitingAutomoveView(AnyAdminRequiredMixin, VenueMixin, View):
         return url
 
 
-class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
+class TeamEditView(
+    OperatorRequiredMixin, IsOperatorContext, FormAndFormsetMixin, UpdateView
+):
     template_name = "bullet_admin/teams/edit.html"
-    form_class = TeamForm
     model = Team
 
     def get_object(self, queryset=None):
@@ -134,6 +140,13 @@ class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
         if not can_access_venue(self.request, obj.venue):
             raise PermissionDenied()
         return obj
+
+    def get_form_class(self):
+        competition = get_active_competition(self.request)
+        crole = self.request.user.get_competition_role(competition)
+        if crole.is_operator:
+            return OperatorTeamForm
+        return TeamForm
 
     def get_formset_class(self):
         return inlineformset_factory(
@@ -186,7 +199,7 @@ class TeamEditView(AnyAdminRequiredMixin, FormAndFormsetMixin, UpdateView):
         return reverse("badmin:team_list")
 
 
-class TeamDeleteView(AnyAdminRequiredMixin, DeleteView):
+class TeamDeleteView(AdminRequiredMixin, DeleteView):
     model = Team
 
     def post(self, request, *args, **kwargs):
@@ -201,7 +214,7 @@ class TeamDeleteView(AnyAdminRequiredMixin, DeleteView):
         return reverse("badmin:team_list")
 
 
-class SchoolInputView(AnyAdminRequiredMixin, View):
+class SchoolInputView(AdminRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         schools = []
         if "q" in request.GET:
@@ -225,7 +238,7 @@ class SchoolInputView(AnyAdminRequiredMixin, View):
         )
 
 
-class AssignTeamNumbersView(AnyAdminRequiredMixin, VenueMixin, TemplateView):
+class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
     template_name = "bullet_admin/teams/assign_numbers.html"
 
     def post(self, request, *args, **kwargs):

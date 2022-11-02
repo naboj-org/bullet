@@ -54,9 +54,11 @@
                             </td>
                             <td class="p-2">
                                 <div>{{ team.contact_name }}</div>
-                                <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
-                                {% if team.contact_phone %}
-                                <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                                {% if not is_operator %}
+                                    <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
+                                    {% if team.contact_phone %}
+                                    <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                                    {% endif %}
                                 {% endif %}
                             </td>
                             <td class="p-2 text-xs">

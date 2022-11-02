@@ -1,4 +1,4 @@
-from bullet_admin.mixins import AnyAdminRequiredMixin, VenueMixin
+from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
@@ -11,7 +11,7 @@ from problems.models import ScannerLog
 from users.models import Team
 
 
-class ProblemScanView(AnyAdminRequiredMixin, View):
+class ProblemScanView(OperatorRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
         self.competition = get_active_competition(request)
         return super().dispatch(request, *args, **kwargs)
@@ -82,7 +82,7 @@ class ProblemScanView(AnyAdminRequiredMixin, View):
         )
 
 
-class VenueReviewView(VenueMixin, TemplateView):
+class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
     template_name = "bullet_admin/scanning/review.html"
 
     def get_teams(self):
