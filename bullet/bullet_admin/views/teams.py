@@ -30,7 +30,7 @@ from bullet.views import FormAndFormsetMixin
 
 class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
     template_name = "bullet_admin/teams/list.html"
-    paginate_by = 50
+    paginate_by = 100
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
@@ -60,7 +60,9 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
                 "venue__category_competition",
             )
             .prefetch_related("contestants", "contestants__grade")
-            .order_by("id")
+            .order_by(
+                "venue__name", "venue__category_competition__identifier", "number", "id"
+            )
         )
 
         if self.request.GET.get("q"):
