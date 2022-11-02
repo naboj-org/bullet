@@ -43,7 +43,9 @@ class ScannedBarcode:
     problem: Problem
 
 
-def parse_barcode(competition: Competition, barcode: str) -> ScannedBarcode:
+def parse_barcode(
+    competition: Competition, barcode: str, allow_endmark=False
+) -> ScannedBarcode:
     match = barcode_re.match(barcode)
     if not match:
         raise ValueError("Barcode format is invalid.")
@@ -63,13 +65,16 @@ def parse_barcode(competition: Competition, barcode: str) -> ScannedBarcode:
             f"Could not find team {match.group('team')} in {venue.shortcode}."
         )
 
-    problem = Problem.objects.filter(
-        competition=competition,
-        category_problems__category=venue.category_competition,
-        category_problems__number=match.group("problem"),
-    ).first()
-    if not problem:
-        raise ValueError(f"Could not find problem {match.group('problem')}.")
+    if allow_endmark and int(match.group("problem")) == 0:
+        problem = None
+    else:
+        problem = Problem.objects.filter(
+            competition=competition,
+            category_problems__category=venue.category_competition,
+            category_problems__number=match.group("problem"),
+        ).first()
+        if not problem:
+            raise ValueError(f"Could not find problem {match.group('problem')}.")
 
     return ScannedBarcode(venue, team, int(match.group("problem")), problem)
 
