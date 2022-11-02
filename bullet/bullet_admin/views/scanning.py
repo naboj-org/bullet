@@ -59,6 +59,12 @@ class ProblemScanView(OperatorRequiredMixin, View):
             log.save()
             return log
 
+        if scanned_barcode.team.is_reviewed:
+            log.result = ScannerLog.Result.INTEGRITY_ERR
+            log.message = "The team was already marked as reviewed."
+            log.save()
+            return log
+
         try:
             save_scan(scanned_barcode, ts)
         except ValueError as e:
