@@ -1,7 +1,12 @@
 from collections import defaultdict
 
 from bullet_admin.forms.teams import OperatorTeamForm, TeamForm
-from bullet_admin.mixins import AdminRequiredMixin, OperatorRequiredMixin, VenueMixin
+from bullet_admin.mixins import (
+    AdminRequiredMixin,
+    IsOperatorContext,
+    OperatorRequiredMixin,
+    VenueMixin,
+)
 from bullet_admin.utils import can_access_venue, get_active_competition
 from bullet_admin.views import DeleteView
 from competitions.forms.registration import ContestantForm
@@ -24,7 +29,7 @@ from bullet import search
 from bullet.views import FormAndFormsetMixin
 
 
-class TeamListView(OperatorRequiredMixin, ListView):
+class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
     template_name = "bullet_admin/teams/list.html"
     paginate_by = 50
 
@@ -124,7 +129,9 @@ class WaitingAutomoveView(AdminRequiredMixin, VenueMixin, View):
         return url
 
 
-class TeamEditView(OperatorRequiredMixin, FormAndFormsetMixin, UpdateView):
+class TeamEditView(
+    OperatorRequiredMixin, IsOperatorContext, FormAndFormsetMixin, UpdateView
+):
     template_name = "bullet_admin/teams/edit.html"
     model = Team
 
@@ -190,13 +197,6 @@ class TeamEditView(OperatorRequiredMixin, FormAndFormsetMixin, UpdateView):
     def get_success_url(self):
         messages.success(self.request, "Team saved.")
         return reverse("badmin:team_list")
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        competition = get_active_competition(self.request)
-        crole = self.request.user.get_competition_role(competition)
-        ctx["is_operator"] = crole.is_operator
-        return ctx
 
 
 class TeamDeleteView(AdminRequiredMixin, DeleteView):

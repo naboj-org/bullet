@@ -31,3 +31,6 @@ class OperatorTeamForm(TeamForm):
         super().__init__(**kwargs)
         self.fields.pop("school")
         self.fields.pop("venue")
+        self.fields.pop("contact_name")
+        self.fields.pop("contact_email")
+        self.fields.pop("contact_phone")

@@ -124,3 +124,12 @@ class VenueMixin:
         ):
             ctx["available_venues"] = self.available_venues
         return ctx
+
+
+class IsOperatorContext:
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        competition = get_active_competition(self.request)
+        crole = self.request.user.get_competition_role(competition)
+        ctx["is_operator"] = crole.is_operator
+        return ctx
