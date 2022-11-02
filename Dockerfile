@@ -30,4 +30,4 @@ RUN pipenv install --system --dev --deploy
 COPY ./bullet .
 COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
 
-CMD ["gunicorn", "bullet.wsgi", "--access-logfile", "-", "--log-file", "-", "--workers", "4"]
+CMD ["gunicorn", "bullet.wsgi", "--access-logfile", "-", "--log-file", "-", "--workers", "4", "--timeout", "300"]
