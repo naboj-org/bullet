@@ -25,6 +25,10 @@ def can_edit_campaign(request, campaign: EmailCampaign):
     if user.get_branch_role(branch).is_admin:
         return True
 
+    # Only branch admin can edit global emails
+    if not campaign.team_countries and not campaign.team_venues.exists():
+        return False
+
     competition = get_active_competition(request)
     crole = user.get_competition_role(competition)
 
