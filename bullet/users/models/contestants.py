@@ -84,6 +84,7 @@ class Team(models.Model):
     def for_search(self):
         return {
             "id": self.id,
+            "code": self.code,
             "competition": self.venue.category_competition.competition_id,
             "contact_name": self.contact_name,
             "contact_email": self.contact_email,
