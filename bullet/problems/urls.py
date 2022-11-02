@@ -3,6 +3,11 @@ from problems import views
 
 urlpatterns = [
     path(
+        "results/",
+        views.ResultsSelectView.as_view(),
+        name="results",
+    ),
+    path(
         "results/category/<category>/",
         views.CategoryResultsView.as_view(),
         name="results_category",

@@ -3,7 +3,7 @@ from countries.models import BranchCountry
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django_countries.fields import Country
 from problems.logic.results import (
     get_category_results,
@@ -11,6 +11,18 @@ from problems.logic.results import (
     get_venue_results,
     results_time,
 )
+
+
+class ResultsSelectView(TemplateView):
+    template_name = "problems/results/select.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        competition = Competition.objects.get_current_competition(self.request.BRANCH)
+        ctx["categories"] = CategoryCompetition.objects.filter(
+            competition=competition, venue__country=self.request.COUNTRY_CODE.upper()
+        ).distinct()
+        return ctx
 
 
 class CategoryResultsView(ListView):

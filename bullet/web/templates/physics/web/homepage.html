@@ -14,15 +14,7 @@
             <h1 class="text-4xl md:text-6xl font-bold mb-12 md:mb-16 bold-primary">
                 {% content_block "home-physics:title" %}
             </h1>
-            {% if competition.is_registration_open %}
-            <a href="{% country_url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
-
-            <p class="font-light mt-12 md:mt-16">
-                {% blocktrans trimmed with end=competition.registration_end|timeuntil %}
-                    Registration ends in {{ end }}
-                {% endblocktrans %}
-            </p>
-            {% endif %}
+            {% include "web/snippets/home_hero_buttons.html" %}
         </div>
 
         <div class="w-1/2 ml-auto text-center hidden lg:block">
