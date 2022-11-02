@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-27 22:04+0000\n"
+"POT-Creation-Date: 2022-11-02 19:45+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,6 +79,10 @@ msgstr "(Prosím vyberte)"
 msgid "This grade can't compete in the chosen category."
 msgstr "Tento ročník nemůže soutěžit ve zvolené kategorii."
 
+#: competitions/templates/live.html:7
+msgid "Live signage"
+msgstr ""
+
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
 msgid "No schools matched your query."
@@ -109,6 +113,7 @@ msgstr "Registrace týmů"
 
 #: competitions/templates/register/category.html:9
 #: competitions/templates/register/partials/category.html:6
+#: problems/templates/problems/results/select.html:15
 msgid "Category"
 msgstr "Kategorie"
 
@@ -292,12 +297,17 @@ msgstr "Týmu byla zrušena registrace"
 
 #: problems/templates/problems/results.html:6
 #: problems/templates/problems/results.html:12
+#: problems/templates/problems/results/embed.html:7
+#: problems/templates/problems/results/embed.html:13
+#: problems/templates/problems/results/select.html:6
+#: problems/templates/problems/results/select.html:9
 #: problems/templates/problems/results/venue.html:5
 #: problems/templates/problems/results/venue.html:11
+#: web/templates/web/snippets/home_hero_buttons.html:13
 msgid "Results"
 msgstr "Výsledky"
 
-#: problems/templates/problems/results.html:22 problems/views.py:55
+#: problems/templates/problems/results.html:22 problems/views.py:82
 msgid "International"
 msgstr "Mezinárodní"
 
@@ -321,15 +331,23 @@ msgstr "Finální výsledky."
 msgid "Showing official results."
 msgstr "Zveřejnění oficiálních výsledků."
 
-#: problems/templates/problems/results/table.html:54
+#: problems/templates/problems/results/table.html:17
+msgid "Interim results."
+msgstr "Průběžné výsledky."
+
+#: problems/templates/problems/results/table.html:17
+msgid "The competition is ongoing, the results may change."
+msgstr "Soutěž právě probíhá, výsledky se mohou měnit."
+
+#: problems/templates/problems/results/table.html:58
 msgid "(No team has solved any problem yet)"
 msgstr "(Žádný tým zatím nevyřešil žádnou úlohu)"
 
-#: problems/templates/problems/results/table.html:62
+#: problems/templates/problems/results/table.html:66
 msgid "Previous"
 msgstr "Předcházející"
 
-#: problems/templates/problems/results/table.html:65
+#: problems/templates/problems/results/table.html:69
 msgid "Next"
 msgstr "Následující"
 
@@ -351,21 +369,6 @@ msgstr "Váš tým byl odstraněn"
 #: web/templates/web/404.html:18 web/templates/web/homepage.html:7
 msgid "Home page"
 msgstr "Domovská stránka"
-
-#: web/templates/chemistry/web/homepage.html:18
-#: web/templates/junior/web/homepage.html:18
-#: web/templates/physics/web/homepage.html:18
-#: web/templates/web/homepage.html:14
-msgid "Registration"
-msgstr "Registrace"
-
-#: web/templates/chemistry/web/homepage.html:21
-#: web/templates/junior/web/homepage.html:21
-#: web/templates/physics/web/homepage.html:21
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "Registrace končí za %(end)s"
 
 #: web/templates/mail/base.html:336
 msgid "Competition logo"
@@ -453,6 +456,17 @@ msgstr "Nenalezeno"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "Stránka, ke které jste se snažili dostat, nebyla nalezena."
+
+#: web/templates/web/homepage.html:14
+#: web/templates/web/snippets/home_hero_buttons.html:5
+msgid "Registration"
+msgstr "Registrace"
+
+#: web/templates/web/homepage.html:16
+#: web/templates/web/snippets/home_hero_buttons.html:8
+#, python-format
+msgid "Registration ends in %(end)s"
+msgstr "Registrace končí za %(end)s"
 
 #: web/templates/web/root_base.html:43
 msgid "Close"
