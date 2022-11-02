@@ -1,0 +1,35 @@
+{% extends "web/root_base.html" %}
+{% load content_blocks %}
+{% load results %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Results" %}{% endblock %}
+
+{% block root_content %}
+    {% load_blocks "category" %}
+    <div class="top-0 sticky bg-primary-lighter p-4 border-b shadow-md flex items-center justify-between">
+        <h1 class="text-2xl font-bold">
+            {% trans "Results" %}
+            {% if category %}
+            <span class="text-xl font-normal">{% content_block "category:name_"|add:category.identifier %}, {{ country_name }}</span>
+            {% elif venue %}
+            <span class="text-xl font-normal">{{ venue.name }} ({% content_block "category:name_"|add:venue.category_competition.identifier %})</span>
+            {% endif %}
+        </h1>
+
+        {% if "venue_timer" in request.GET %}
+        <div class="font-mono text-3xl mt-1">
+            {% venue_timer venue=request.GET.venue_timer competition=competition %}
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="p-4">
+        {% include "problems/results/table.html" %}
+    </div>
+
+    {% if "venue_timer" in request.GET %}
+        <script src="{% static "js/venue-timer.js" %}"></script>
+    {% endif %}
+{% endblock %}

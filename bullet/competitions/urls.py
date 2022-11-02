@@ -1,4 +1,4 @@
-from competitions.views import register, teams
+from competitions.views import live, register, teams
 from django.urls import path
 
 urlpatterns = [
@@ -35,4 +35,5 @@ urlpatterns = [
         teams.TeamDeleteView.as_view(),
         name="team_delete",
     ),
+    path("live/", live.LiveView.as_view(), name="live"),
 ]

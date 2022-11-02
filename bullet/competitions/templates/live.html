@@ -1,0 +1,21 @@
+{% extends "web/root_base.html" %}
+{% load results %}
+{% load country_url %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Live signage" %}{% endblock %}
+
+{% block root_content %}
+    <div class="min-w-screen min-h-screen w-full h-full bg-primary-lighter flex items-center justify-center flex-col" id="js-countdown">
+        <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="w-70">
+
+        <div class="font-mono text-8xl mt-16">{% venue_timer venue=request.GET.venue_timer competition=competition %}</div>
+    </div>
+
+    <iframe src="" class="min-w-screen min-h-screen w-full h-full hidden" frameborder="0" id="js-results"></iframe>
+
+    {{ screens|json_script:"js-screens" }}
+    <script src="{% static "js/venue-timer.js" %}"></script>
+    <script src="{% static "js/live.js" %}"></script>
+{% endblock %}
