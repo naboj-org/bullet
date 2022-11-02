@@ -40,6 +40,10 @@ class Competition(models.Model):
     def is_registration_open(self):
         return self.registration_start <= timezone.now() < self.registration_end
 
+    @property
+    def has_started(self):
+        return self.competition_start <= timezone.now()
+
 
 class CategoryCompetition(models.Model):
     competition = models.ForeignKey(
