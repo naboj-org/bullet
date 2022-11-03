@@ -1,0 +1,40 @@
+{% extends "web/root_base.html" %}
+
+{% block title %}Results announcement{% endblock %}
+
+{% block root_content %}
+<div class="w-screen h-screen flex items-center justify-center p-16" id="js-screen" hx-select="#js-screen" hx-target="#js-screen" hx-swap="outerHTML">
+    {% if not hidden %}
+    <div class="text-center">
+        <div class="text-9xl font-bold mb-6 text-gray-600">{{ position }}.</div>
+        {% if team %}
+            {% if team.school %}
+                <div class="text-7xl font-bold mb-4">
+                    {{ team.school.name }}
+                    {% if team.in_school_symbol %}
+                    <span class="text-primary">{{ team.in_school_symbol }}</span>
+                    {% endif %}
+                </div>
+                <div class="text-5xl font-bold mb-6">{{ team.school.address }}</div>
+            {% else %}
+                <div class="text-5xl font-bold mb-6">{{ team.name }}</div>
+            {% endif %}
+            <div class="text-3xl">{{ team.contestants_names }}</div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="p-2 fixed bottom-0 right-0 space-x-1">
+        <span>{{ position }}.</span>
+        <button class="btn-admin-sm bg-primary hover:bg-primary-dark" hx-get="{{ links.prev }}" hx-trigger="click, keyup[key=='ArrowDown'||key=='Backspace'] from:body">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+        <button class="btn-admin-sm bg-primary hover:bg-primary-dark" hx-get="{{ links.hide }}" hx-trigger="click, keyup[key=='h'] from:body">
+            <i class="fas fa-eye-slash"></i>
+        </button>
+        <button class="btn-admin-sm bg-primary hover:bg-primary-dark" hx-get="{{ links.next }}" hx-trigger="click, keyup[key=='ArrowUp'||key==' '] from:body">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+</div>
+{% endblock %}
