@@ -38,6 +38,14 @@ class ResultsViewMixin:
             return ["problems/results/embed.html"]
         return [self.template_name]
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        if "embed" in self.request.GET:
+            ctx["start_index"] = 1
+        else:
+            ctx["start_index"] = ctx["page_obj"].start_index
+        return ctx
+
 
 @method_decorator(xframe_options_exempt, name="get")
 class CategoryResultsView(ResultsViewMixin, ListView):
