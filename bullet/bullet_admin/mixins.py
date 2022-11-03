@@ -1,4 +1,4 @@
-from bullet_admin.utils import get_active_competition
+from bullet_admin.utils import get_active_competition, is_admin
 from competitions.models import Venue
 from django.core.exceptions import PermissionDenied
 from django.db.models import QuerySet
@@ -27,12 +27,7 @@ class AdminRequiredMixin(AccessMixin):
         if not competition:
             return False
 
-        brole = self.request.user.get_branch_role(self.request.BRANCH)
-        if brole.is_admin:
-            return True
-
-        crole = self.request.user.get_competition_role(competition)
-        return (crole.venues or crole.countries) and not crole.is_operator
+        return is_admin(self.request.user, competition)
 
 
 class OperatorRequiredMixin(AccessMixin):

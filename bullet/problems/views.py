@@ -1,3 +1,4 @@
+from bullet_admin.utils import is_admin
 from competitions.models import CategoryCompetition, Competition, Venue
 from countries.models import BranchCountry
 from django.shortcuts import get_object_or_404
@@ -67,7 +68,13 @@ class CategoryResultsView(ResultsViewMixin, ListView):
             competition=self.competition,
             identifier=self.kwargs["category"],
         )
-        self.results_time = results_time(self.competition, timezone.now())
+
+        admin = False
+        if request.GET.get("admin") == "1":
+            admin = is_admin(self.request.user, self.competition)
+        self.results_time = results_time(
+            self.competition, timezone.now(), is_admin=admin
+        )
 
         return super().dispatch(request, *args, **kwargs)
 
@@ -112,8 +119,15 @@ class VenueResultsView(ResultsViewMixin, ListView):
             category_competition__competition=self.competition,
             shortcode=self.kwargs["venue"].upper(),
         )
+
+        admin = False
+        if request.GET.get("admin") == "1":
+            admin = is_admin(self.request.user, self.competition)
         self.results_time = results_time(
-            self.competition, timezone.now(), start_time=self.venue.local_start
+            self.competition,
+            timezone.now(),
+            start_time=self.venue.local_start,
+            is_admin=admin,
         )
 
         return super().dispatch(request, *args, **kwargs)
