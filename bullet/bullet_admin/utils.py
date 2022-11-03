@@ -1,5 +1,6 @@
 from competitions.models import Competition, Venue
 from django.http import HttpRequest
+from users.models import User
 
 
 def get_active_competition(request: HttpRequest):
@@ -34,3 +35,15 @@ def can_access_venue(request: HttpRequest, venue: Venue) -> bool:
         return venue.country in crole.countries
 
     return False
+
+
+def is_admin(user: User, competition: Competition):
+    if not user.is_authenticated:
+        return False
+
+    brole = user.get_branch_role(competition.branch)
+    if brole.is_admin:
+        return True
+
+    crole = user.get_competition_role(competition)
+    return (crole.venues or crole.countries) and not crole.is_operator
