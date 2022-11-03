@@ -42,7 +42,9 @@
                         <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}?admin=1" class="link-primary">Admin results</a>
                     </td>
                     <td class="p-4">
+                        {% if v in my_venues %}
                         <a href="{% url "badmin:results_announce" venue=v.id %}" class="link-primary">Results announcement</a>
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}

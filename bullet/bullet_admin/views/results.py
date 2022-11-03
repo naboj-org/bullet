@@ -1,3 +1,4 @@
+from bullet_admin.forms.utils import get_venue_queryset
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from competitions.models import CategoryCompetition, Venue
@@ -26,6 +27,7 @@ class ResultsHomeView(AdminRequiredMixin, TemplateView):
             .order_by("name", "category_competition__identifier")
             .select_related("category_competition")
         )
+        ctx["my_venues"] = get_venue_queryset(competition, self.request.user).all()
         ctx["categories"] = CategoryCompetition.objects.filter(competition=competition)
         return ctx
 

@@ -44,7 +44,7 @@ def get_language_choices(branch: Branch, allow_empty=False):
     return choices
 
 
-def get_venue_queryset(competition: Competition, user: User, allow_empty=False):
+def get_venue_queryset(competition: Competition, user: User):
     venue_qs = (
         Venue.objects.filter(category_competition__competition=competition)
         .select_related("category_competition")
