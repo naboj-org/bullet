@@ -1,4 +1,4 @@
-from bullet_admin.forms.utils import get_country_choices
+from bullet_admin.forms.utils import get_country_choices, get_venue_queryset
 from competitions.models import Competition, Venue
 from django import forms
 from django.db.models import Q
@@ -55,7 +55,7 @@ class TeamFilterForm(forms.Form):
     def __init__(self, competition: Competition, user: User, **kwargs):
         super().__init__(**kwargs)
         self.fields["countries"].choices = get_country_choices(competition, user)
-        self.fields["venues"].queryset = Venue.objects.all()
+        self.fields["venues"].queryset = get_venue_queryset(competition, user)
 
     def apply_filter(self, qs):
         if not self.is_valid():
