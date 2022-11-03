@@ -25,7 +25,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
             ),
             reviewed=Count(
                 "team",
-                filter=Q(team__is_reviewed=False),
+                filter=Q(team__is_reviewed=True),
             ),
         )
 
