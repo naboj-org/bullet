@@ -5,6 +5,7 @@ from bullet_admin.views import (
     documents,
     emails,
     home,
+    results,
     scanning,
     teams,
     users,
@@ -163,4 +164,5 @@ urlpatterns = [
         documents.CertificateView.as_view(),
         name="docs_certificates",
     ),
+    path("results/", results.ResultsHomeView.as_view(), name="results"),
 ]
