@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from bullet_admin.forms.teams import OperatorTeamForm, TeamForm
+from bullet_admin.forms.teams import OperatorTeamForm, TeamFilterForm, TeamForm
 from bullet_admin.mixins import (
     AdminRequiredMixin,
     IsOperatorContext,
@@ -31,6 +31,13 @@ from bullet.views import FormAndFormsetMixin
 class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
     template_name = "bullet_admin/teams/list.html"
     paginate_by = 100
+
+    def get_form(self):
+        return TeamFilterForm(
+            get_active_competition(self.request),
+            self.request.user,
+            data=self.request.GET,
+        )
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
@@ -65,6 +72,8 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
             )
         )
 
+        qs = self.get_form().apply_filter(qs)
+
         if self.request.GET.get("q"):
             qs = list(qs)
             qs.sort(key=lambda x: ids.index(x.id))
@@ -80,6 +89,7 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
         ctx["hide_venue"] = (
             not brole.is_admin and not crole.countries and len(crole.venues) < 2
         )
+        ctx["search_form"] = self.get_form()
         return ctx
 
 
