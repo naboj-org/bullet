@@ -1,4 +1,5 @@
 {% extends "bullet_admin/base.html" %}
+{% load bform %}
 
 {% block title %}Team list{% endblock %}
 
@@ -7,14 +8,35 @@
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
         </header>
-        <div class="p-4">
+        <div class="p-4 border-b">
             <form method="get" class="flex items-center gap-2">
                 <input type="search" name="q" placeholder="Search teams" class="input" value="{{ request.GET.q }}">
                 <button type="submit" class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">
                     <i class="fas fa-search mr-1"></i> Search
                 </button>
+                <a href="#" class="shrink-0 btn-admin bg-green-500 hover:bg-green-600" id="js-filter-button">
+                    <i class="fas fa-filter mr-1"></i> Filter
+                </a>
             </form>
-            <hr class="my-4">
+        </div>
+        <form method="get" class="p-4 border-b grid grid-cols-1 md:grid-cols-3 gap-2 hidden" id="js-filter">
+            <div>
+                <b>Countries:</b>
+                {% bfield search_form.countries %}
+            </div>
+            <div>
+                <b>Venues:</b>
+                {% bfield search_form.venues %}
+            </div>
+            <div>
+                <b>Statuses:</b>
+                {% bfield search_form.statuses %}
+            </div>
+            <div>
+                <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Apply filter</button>
+            </div>
+        </form>
+        <div class="p-4">
 
             <div class="overflow-x-auto">
                 <table class="w-full mb-4">
@@ -110,4 +132,10 @@
             </div>
         </div>
     </article>
+
+    <script>
+        document.getElementById("js-filter-button").addEventListener("click", () => {
+            document.getElementById("js-filter").classList.toggle("hidden")
+        })
+    </script>
 {% endblock %}
