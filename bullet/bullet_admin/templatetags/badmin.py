@@ -48,6 +48,13 @@ def admin_sidebar(context):
             ]
         )
 
+        if not competition_role.is_operator:
+            items.extend(
+                [
+                    ("fa-trophy", "Results", reverse("badmin:results")),
+                ]
+            )
+
         menu_items.append(("Competition", items))
 
     if branch_role.is_translator:
