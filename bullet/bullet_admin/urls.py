@@ -2,6 +2,7 @@ from bullet_admin.views import (
     CompetitionSwitchView,
     auth,
     content,
+    documents,
     emails,
     home,
     scanning,
@@ -156,5 +157,10 @@ urlpatterns = [
         "emails/<int:pk>/send/",
         emails.CampaignSendView.as_view(),
         name="email_send",
+    ),
+    path(
+        "documents/certificates/",
+        documents.CertificateView.as_view(),
+        name="docs_certificates",
     ),
 ]
