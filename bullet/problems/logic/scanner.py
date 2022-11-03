@@ -101,4 +101,9 @@ def save_scan(
             f"Team already solved problem {scanned_barcode.problem_number}."
         )
 
+    # Mark the team as checked in if not already
+    if not scanned_barcode.team.is_checked_in:
+        scanned_barcode.team.is_checked_in = True
+        scanned_barcode.team.save()
+
     mark_problem_solved(scanned_barcode.team, scanned_barcode.problem, timestamp)
