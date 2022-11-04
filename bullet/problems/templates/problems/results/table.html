@@ -23,7 +23,7 @@
         {% for row in object_list %}
         <tr class="px-4 py-2 rounded-md hover:bg-gray-50">
             <td class="p-2 text-lg">{{ forloop.counter0|add:start_index }}.</td>
-            <td class="p-2">
+            <td class="p-2 w-20">
                 {% if row.team.school %}
                 <img src="https://flagcdn.com/{{ row.team.school.country.code|lower }}.svg" alt="{{ row.team.school.country.name }}" class="h-4">
                 {% endif %}
