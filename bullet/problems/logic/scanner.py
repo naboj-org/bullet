@@ -10,7 +10,7 @@ from problems.models import Problem, SolvedProblem
 from users.models import Team
 
 barcode_re = re.compile(
-    r"^(?P<venue>[A-Z]+)(?P<team>[0-9]+)(?P<problem>[0-9]{2})(?P<checksum>[0-9])$"
+    r"^(?P<venue>[A-Z]+)(?P<team>[0-9]{3})(?P<problem>[0-9]{2})(?P<checksum>[0-9])$"
 )
 
 
