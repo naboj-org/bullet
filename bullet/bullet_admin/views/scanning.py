@@ -78,7 +78,7 @@ class ProblemScanView(OperatorRequiredMixin, View):
         return log
 
     def post(self, request, *args, **kwargs):
-        barcode = self.request.POST.get("barcode", "").strip()
+        barcode = self.request.POST.get("barcode", "").strip()[:32]
         if not barcode:
             return HttpResponse()
 
