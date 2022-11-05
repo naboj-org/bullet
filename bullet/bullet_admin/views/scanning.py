@@ -142,7 +142,11 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         scanned_barcode.team.is_reviewed = True
         scanned_barcode.team.save()
 
-        if not Team.objects.filter(venue=self.venue, is_reviewed=False).exists():
+        if (
+            not Team.objects.competing()
+            .filter(venue=self.venue, is_reviewed=False)
+            .exists()
+        ):
             self.venue.is_reviewed = True
             self.venue.save()
 
