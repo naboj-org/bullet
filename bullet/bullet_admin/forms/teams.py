@@ -1,9 +1,8 @@
 from bullet_admin.forms.utils import get_country_choices, get_venue_queryset
 from competitions.models import Competition, Venue
 from django import forms
-from django.db.models import Q
 from django_countries.fields import CountryField
-from users.models import EmailCampaign, Team, User
+from users.models import Team, TeamStatus, User
 
 
 class TeamForm(forms.ModelForm):
@@ -47,7 +46,7 @@ class TeamFilterForm(forms.Form):
         Venue.objects.none(), required=False, widget=forms.CheckboxSelectMultiple
     )
     statuses = forms.MultipleChoiceField(
-        choices=EmailCampaign.StatusChoices.choices,
+        choices=TeamStatus.choices,
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
@@ -67,22 +66,5 @@ class TeamFilterForm(forms.Form):
             qs = qs.filter(venue__in=self.cleaned_data["venues"])
         if self.cleaned_data["statuses"]:
             statuses = self.cleaned_data["statuses"]
-            q = Q()
-
-            if EmailCampaign.StatusChoices.UNCONFIRMED in statuses:
-                q.add(Q(confirmed_at__isnull=True), Q.OR)
-            if EmailCampaign.StatusChoices.REGISTERED in statuses:
-                q.add(
-                    Q(
-                        confirmed_at__isnull=False,
-                        is_waiting=False,
-                        is_checked_in=False,
-                    ),
-                    Q.OR,
-                )
-            if EmailCampaign.StatusChoices.WAITINGLIST in statuses:
-                q.add(Q(is_waiting=True), Q.OR)
-            if EmailCampaign.StatusChoices.CHECKEDIN in statuses:
-                q.add(Q(is_checked_in=True), Q.OR)
-            qs = qs.filter(q)
+            qs = qs.has_status(statuses)
         return qs
