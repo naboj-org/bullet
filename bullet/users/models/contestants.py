@@ -1,8 +1,10 @@
 import secrets
 import string
+from typing import Iterable
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
 from users.emails.teams import send_to_competition_email
@@ -10,9 +12,44 @@ from users.emails.teams import send_to_competition_email
 from bullet import search
 
 
+class TeamStatus(models.TextChoices):
+    UNCONFIRMED = "U", "Unconfirmed"
+    REGISTERED = "R", "Registered"
+    WAITINGLIST = "W", "Waiting list"
+    CHECKEDIN = "C", "Checked in"
+    REVIEWED = "K", "Reviewed"
+
+
 class TeamQuerySet(models.QuerySet):
     def competing(self):
         return self.filter(confirmed_at__isnull=False, is_waiting=False)
+
+    def has_status(self, status: str | Iterable[str]):
+        if isinstance(status, str):
+            status = [status]
+        status = set(status)
+
+        q = Q()
+        if TeamStatus.UNCONFIRMED in status:
+            q.add(Q(confirmed_at__isnull=True), Q.OR)
+        if TeamStatus.REGISTERED in status:
+            q.add(
+                Q(
+                    confirmed_at__isnull=False,
+                    is_waiting=False,
+                    is_checked_in=False,
+                    is_reviewed=False,
+                ),
+                Q.OR,
+            )
+        if TeamStatus.WAITINGLIST in status:
+            q.add(Q(is_waiting=True), Q.OR)
+        if TeamStatus.CHECKEDIN in status:
+            q.add(Q(is_checked_in=True, is_reviewed=False), Q.OR)
+        if TeamStatus.REVIEWED in status:
+            q.add(Q(is_reviewed=True), Q.OR)
+
+        return self.filter(q)
 
 
 class Team(models.Model):
@@ -80,6 +117,18 @@ class Team(models.Model):
     @property
     def id_display(self):
         return f"#{self.id:06d}"
+
+    @property
+    def status(self) -> TeamStatus:
+        if not self.confirmed_at:
+            return TeamStatus.UNCONFIRMED
+        if self.is_waiting:
+            return TeamStatus.WAITINGLIST
+        if self.is_checked_in:
+            return TeamStatus.CHECKEDIN
+        if self.is_reviewed:
+            return TeamStatus.REVIEWED
+        return TeamStatus.REGISTERED
 
     def for_search(self):
         return {
