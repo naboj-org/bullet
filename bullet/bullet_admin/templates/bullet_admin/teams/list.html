@@ -96,13 +96,15 @@
                             </td>
                             {% endif %}
                             <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
-                                {% if not team.confirmed_at %}
+                                {% if team.status == team.status.UNCONFIRMED %}
                                 <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
-                                {% elif team.is_waiting %}
+                                {% elif team.status == team.status.WAITINGLIST %}
                                 <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
-                                {% elif team.is_checked_in %}
+                                {% elif team.status == team.status.CHECKEDIN %}
                                 <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
-                                {% else %}
+                                {% elif team.status == team.status.REVIEWED %}
+                                <span class="bg-blue-600 px-2 py-1 rounded">Reviewed</span>
+                                {% elif team.status == team.status.REGISTERED %}
                                 <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
                                 {% endif %}
 
