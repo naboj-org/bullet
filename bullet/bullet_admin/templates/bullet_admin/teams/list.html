@@ -1,4 +1,5 @@
 {% extends "bullet_admin/base.html" %}
+{% load utils %}
 {% load bform %}
 
 {% block title %}Team list{% endblock %}
@@ -124,18 +125,19 @@
 
             <div class="flex gap-2">
             {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
+                <a href="{% query_transform page=page_obj.previous_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
             {% endif %}
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
+                <a href="{% query_transform page=page_obj.next_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
             {% endif %}
             </div>
         </div>
     </article>
 
     <script>
-        document.getElementById("js-filter-button").addEventListener("click", () => {
+        document.getElementById("js-filter-button").addEventListener("click", (e) => {
             document.getElementById("js-filter").classList.toggle("hidden")
+            e.preventDefault()
         })
     </script>
 {% endblock %}
