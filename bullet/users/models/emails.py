@@ -2,23 +2,17 @@ from competitions.branches import Branches
 from countries.utils import country_reverse
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Count, Q
+from django.db.models import Count
 from django.template import Context, Template
 from django_countries.fields import CountryField
 from users.emails.teams import TeamCountry
-from users.models import Team
+from users.models import Team, TeamStatus
 from web.fields import ChoiceArrayField, LanguageField
 
 from bullet.utils.email import send_email
 
 
 class EmailCampaign(models.Model):
-    class StatusChoices(models.TextChoices):
-        UNCONFIRMED = "U", "Unconfirmed"
-        REGISTERED = "R", "Registered"
-        WAITINGLIST = "W", "Waiting list"
-        CHECKEDIN = "C", "Checked in"
-
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE
     )
@@ -32,7 +26,7 @@ class EmailCampaign(models.Model):
         "competitions.Venue", blank=True, related_name="+"
     )
     team_statuses = ChoiceArrayField(
-        models.CharField(max_length=1, choices=StatusChoices.choices), blank=True
+        models.CharField(max_length=1, choices=TeamStatus.choices), blank=True
     )
     team_contestants = ArrayField(models.IntegerField(), blank=True)
 
@@ -52,23 +46,7 @@ class EmailCampaign(models.Model):
         if self.team_venues.exists():
             qs = qs.filter(venue__in=self.team_venues.all())
         if self.team_statuses:
-            q = Q()
-            if EmailCampaign.StatusChoices.UNCONFIRMED in self.team_statuses:
-                q.add(Q(confirmed_at__isnull=True), Q.OR)
-            if EmailCampaign.StatusChoices.REGISTERED in self.team_statuses:
-                q.add(
-                    Q(
-                        confirmed_at__isnull=False,
-                        is_waiting=False,
-                        is_checked_in=False,
-                    ),
-                    Q.OR,
-                )
-            if EmailCampaign.StatusChoices.WAITINGLIST in self.team_statuses:
-                q.add(Q(is_waiting=True), Q.OR)
-            if EmailCampaign.StatusChoices.CHECKEDIN in self.team_statuses:
-                q.add(Q(is_checked_in=True), Q.OR)
-            qs = qs.filter(q)
+            qs = qs.has_status(self.team_statuses)
         if self.team_contestants:
             qs = qs.annotate(contestant_count=Count("contestants")).filter(
                 contestant_count__in=self.team_contestants
