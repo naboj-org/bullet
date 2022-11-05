@@ -2,6 +2,7 @@ import io
 import zipfile
 
 from competitions.models import Venue
+from django.db.models import Q
 from documents.models import CertificateTemplate
 from problems.logic.results import get_venue_results
 from users.models import Team
@@ -15,13 +16,16 @@ def certificates_for_venue(venue: Venue, template: CertificateTemplate) -> io.By
     with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         for rank, row in enumerate(results):
             team: Team = row.team
-            category = ContentBlock.objects.filter(
-                group="category",
-                branch=venue.category_competition.competition.branch,
-                country=venue.country,
-                language=team.language,
-                reference=f"name_{venue.category_competition.identifier}",
-            ).first()
+            category = (
+                ContentBlock.objects.filter(
+                    group="category",
+                    branch=venue.category_competition.competition.branch,
+                    language=team.language,
+                    reference=f"name_{venue.category_competition.identifier}",
+                )
+                .filter(Q(country__isnull=True) | Q(country=venue.country))
+                .first()
+            )
             for x, contestant in enumerate(team.contestants.all()):
                 context = {
                     "team": team,
