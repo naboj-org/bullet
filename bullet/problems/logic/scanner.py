@@ -1,3 +1,4 @@
+import itertools
 import re
 from dataclasses import dataclass
 from datetime import datetime
@@ -15,18 +16,12 @@ barcode_re = re.compile(
 
 
 def get_check_digit(data: str) -> int:
-    weights = [7, 3, 1]
-    checksum = []
+    try:
+        digits = map(lambda x: int(x, 36), data)
+    except ValueError:
+        raise ValueError("Found invalid character in barcode")
 
-    for i, char in enumerate(data.upper()):
-        w = weights[i % 3]
-        if char.isalpha():
-            checksum.append(w * (10 + ord(char) - ord("A")))
-        elif char.isnumeric():
-            checksum.append(w * int(char))
-        else:
-            raise ValueError(f"Found invalid character '{char}' in barcode")
-
+    checksum = [d * w for d, w in zip(digits, itertools.cycle([7, 3, 1]))]
     return sum(checksum) % 10
 
 
