@@ -6,6 +6,7 @@ from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db import transaction
 from django.db.models import QuerySet
 from django.forms import inlineformset_factory
 from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
@@ -13,6 +14,7 @@ from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from django.views.generic import DeleteView, FormView, TemplateView
+from users.emails.admin import UnregisteredTeam, send_team_unregistered
 from users.logic import (
     add_team_to_competition,
     get_venue_waiting_list,
@@ -168,6 +170,7 @@ class TeamDeleteView(DeleteView):
     def get_object(self, queryset=None):
         return get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
 
+    @transaction.atomic
     def form_valid(self, form):
         team: Team = self.object
         category: CategoryCompetition = team.venue.category_competition
@@ -175,8 +178,14 @@ class TeamDeleteView(DeleteView):
         if team.is_checked_in or competition.competition_start <= timezone.now():
             return HttpResponseForbidden()
 
+        unregistered_team = UnregisteredTeam(
+            team.id_display,
+            team.code,
+            team.venue,
+            team.display_name,
+            team.contestants_names,
+        )
         self.object.delete()
-        messages.success(self.request, _("Team was unregistered."))
 
         if competition.is_registration_open and not team.is_waiting:
             waiting_list = get_venue_waiting_list(team.venue).first()
@@ -188,5 +197,8 @@ class TeamDeleteView(DeleteView):
                 waiting_list.to_competition()
                 waiting_list.save()
 
-        # TODO: notify admins
+        if competition.registration_end <= timezone.now():
+            send_team_unregistered(unregistered_team)
+
+        messages.success(self.request, _("Team was unregistered."))
         return HttpResponseRedirect(country_reverse("homepage"))
