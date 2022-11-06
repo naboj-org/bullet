@@ -12,7 +12,7 @@ from bullet_admin.utils import can_access_venue, get_active_competition
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
-from django.db.models import Max
+from django.db import transaction
 from django.forms import inlineformset_factory
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -261,44 +261,65 @@ class SchoolInputView(AdminRequiredMixin, View):
 class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
     template_name = "bullet_admin/teams/assign_numbers.html"
 
-    def post(self, request, *args, **kwargs):
-        last_number = Team.objects.filter(venue=self.venue).aggregate(Max("number"))[
-            "number__max"
-        ]
-        if not last_number:
-            last_number = 0
+    @transaction.atomic
+    def assign_numbers(self, force):
+        teams = Team.objects.competing().filter(venue=self.venue).order_by("id")
+        ideal_numbers = set(range(1, teams.count() + 1))
+        if not force:
+            used_numbers = set(teams.values_list("number", flat=True))
+            ideal_numbers.difference_update(used_numbers)
+        ideal_numbers = sorted(list(ideal_numbers), reverse=True)
 
-        teams = Team.objects.competing().filter(venue=self.venue)
-        if "force" not in request.POST:
-            teams = teams.filter(number__isnull=True)
-        else:
-            Team.objects.filter(venue=self.venue).update(
-                number=None, in_school_symbol=None
-            )
+        if force:
+            teams.update(number=None)
 
-        # Assign team numbers
         for team in teams:
-            last_number += 1
-            team.number = last_number
-            team.save()
-
-        venue_teams = (
-            Team.objects.competing().filter(venue=self.venue).order_by("number")
-        )
-        school_counts = defaultdict(lambda: 0)
-        for team in venue_teams:
-            school_counts[team.school_id] += 1
-
-        symbol_counts = defaultdict(lambda: 0)
-        for team in venue_teams:
-            if school_counts[team.school_id] <= 1:
-                if team.in_school_symbol:
-                    team.in_school_symbol = None
-                    team.save()
-            else:
-                symbol_counts[team.school_id] += 1
-                team.in_school_symbol = get_school_symbol(symbol_counts[team.school_id])
+            if team.number is None:
+                team.number = ideal_numbers.pop()
                 team.save()
 
+    @transaction.atomic
+    def assign_symbols(self, force):
+        teams = Team.objects.competing().filter(venue=self.venue).order_by("id")
+        school_symbols = defaultdict(lambda: set())  # sets of used symbols
+        school_counts = defaultdict(lambda: 0)  # counts of teams from school
+
+        for team in teams:
+            if team.in_school_symbol:
+                school_symbols[team.school_id].add(team.in_school_symbol)
+            school_counts[team.school_id] += 1
+
+        school_unused_symbols = {}
+        for school in school_counts.keys():
+            if school_counts[school] == 1:
+                break
+
+            symbols = set(
+                [get_school_symbol(i) for i in range(1, school_counts[school] + 1)]
+            )
+            if not force:
+                symbols.difference_update(school_symbols)
+            school_unused_symbols[school] = sorted(list(symbols), reverse=True)
+
+        if force:
+            teams.update(in_school_symbol=None)
+
+        for team in teams:
+            # the team should not have a symbol
+            if school_counts[team.school_id] == 1 and team.in_school_symbol:
+                team.in_school_symbol = None
+                team.save()
+
+            # the team should have a symbol
+            if school_counts[team.school_id] > 1 and not team.in_school_symbol:
+                team.in_school_symbol = school_unused_symbols[team.school_id].pop()
+                team.save()
+
+    def post(self, request, *args, **kwargs):
+        force = "force" in request.POST
+        self.assign_numbers(force)
+        self.assign_symbols(force)
+
         messages.success(request, "Numbers assigned successfully.")
-        return HttpResponseRedirect(reverse("badmin:team_assign_numbers"))
+        u = reverse("badmin:team_assign_numbers")
+        return HttpResponseRedirect(f"{u}?venue={self.venue.id}")
