@@ -94,7 +94,10 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
         return ctx
 
 
-class TeamToCompetitionView(AdminRequiredMixin, View):
+class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, View):
+    def get_default_success_url(self):
+        return reverse("badmin:team_edit", kwargs={"pk": self.kwargs["pk"]})
+
     def post(self, request, *args, **kwargs):
         team = get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
         if not can_access_venue(request, team.venue):
@@ -102,7 +105,7 @@ class TeamToCompetitionView(AdminRequiredMixin, View):
 
         team.to_competition()
         team.save()
-        return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class TeamResendConfirmationView(AdminRequiredMixin, View):
