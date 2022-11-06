@@ -5,6 +5,7 @@ from bullet_admin.mixins import (
     AdminRequiredMixin,
     IsOperatorContext,
     OperatorRequiredMixin,
+    RedirectBackMixin,
     VenueMixin,
 )
 from bullet_admin.utils import can_access_venue, get_active_competition
@@ -141,7 +142,11 @@ class WaitingAutomoveView(AdminRequiredMixin, VenueMixin, View):
 
 
 class TeamEditView(
-    OperatorRequiredMixin, IsOperatorContext, FormAndFormsetMixin, UpdateView
+    OperatorRequiredMixin,
+    IsOperatorContext,
+    RedirectBackMixin,
+    FormAndFormsetMixin,
+    UpdateView,
 ):
     template_name = "bullet_admin/teams/edit.html"
     model = Team
@@ -204,9 +209,9 @@ class TeamEditView(
             obj.in_school_symbol = None
         obj.save()
         formset.save()
-
-    def get_success_url(self):
         messages.success(self.request, "Team saved.")
+
+    def get_default_success_url(self):
         return reverse("badmin:team_list")
 
 
