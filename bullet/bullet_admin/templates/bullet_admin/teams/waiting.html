@@ -77,12 +77,15 @@
                                     {{ team.registered_at|date:"j M Y, H:i" }}
                                 </div>
                             </td>
-                            <td class="p-2 text-right">
-                                <form action="{% url "badmin:team_to_competition" pk=team.id %}" method="post">
+                            <td class="p-2 text-right whitespace-nowrap">
+                                <form action="{% url "badmin:team_to_competition" pk=team.id %}?back={{ request.get_full_path|urlencode }}" method="post">
                                     {% csrf_token %}
-                                    <button type="submit" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <button type="submit" class="btn-admin-sm bg-primary hover:bg-primary-dark mr-1">
                                         <i class="fas fa-angles-right"></i> Move to competition
                                     </button>
+                                    <a href="{% url "badmin:team_edit" pk=team.id %}?back={{ request.get_full_path|urlencode }}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
                                 </form>
                             </td>
                         </tr>
