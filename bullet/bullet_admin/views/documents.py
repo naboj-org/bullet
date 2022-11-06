@@ -2,7 +2,7 @@ from bullet_admin.forms.documents import CertificateForm
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from django.core.exceptions import PermissionDenied
-from django.http import HttpResponse
+from django.http import FileResponse
 from django.views.generic import FormView
 from documents.generators.certificate import certificates_for_venue
 
@@ -25,4 +25,4 @@ class CertificateView(AdminRequiredMixin, FormView):
 
         template = form.cleaned_data["template"]
         data = certificates_for_venue(venue, template)
-        return HttpResponse(data, content_type="application/zip")
+        return FileResponse(data, as_attachment=True, filename="certificates.pdf")
