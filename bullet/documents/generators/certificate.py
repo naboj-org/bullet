@@ -1,9 +1,9 @@
 import io
-import zipfile
 
 from competitions.models import Venue
 from django.db.models import Q
 from documents.models import CertificateTemplate
+from pikepdf import Pdf
 from problems.logic.results import get_venue_results
 from users.models import Team
 from web.models import ContentBlock
@@ -13,7 +13,7 @@ def certificates_for_venue(venue: Venue, template: CertificateTemplate) -> io.By
     buffer = io.BytesIO()
     results = get_venue_results(venue).prefetch_related("team__contestants")[:3]
 
-    with zipfile.ZipFile(buffer, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+    with Pdf.new() as pdf:
         for rank, row in enumerate(results):
             team: Team = row.team
             category = (
@@ -35,7 +35,9 @@ def certificates_for_venue(venue: Venue, template: CertificateTemplate) -> io.By
                     "venue": venue.name,
                 }
                 data = template.render(context)
-                zf.writestr(f"{rank + 1}_{x + 1}.pdf", data)
+                with Pdf.open(io.BytesIO(data)) as cert:
+                    pdf.pages.append(cert.pages[0])
 
+        pdf.save(buffer)
     buffer.seek(0)
     return buffer
