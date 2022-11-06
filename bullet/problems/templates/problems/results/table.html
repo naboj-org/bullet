@@ -18,48 +18,62 @@
 </div>
 {% endif %}
 
-<table class="w-full">
-    <tbody class="divide-y">
-        {% for row in object_list %}
-        <tr class="px-4 py-2 rounded-md hover:bg-gray-50">
-            <td class="p-2 text-lg">{{ forloop.counter0|add:start_index }}.</td>
-            <td class="p-2 w-20">
-                {% if row.team.school %}
-                <img src="https://flagcdn.com/{{ row.team.school.country.code|lower }}.svg" alt="{{ row.team.school.country.name }}" class="h-4">
-                {% endif %}
-            </td>
-            <td class="p-2">
-                {% if row.team.school %}
-                <div class="text-primary font-bold">
-                    {{ row.team.school.name }}
-
-                    {% if row.team.in_school_symbol %}
-                    <span class="text-white bg-primary rounded px-1.5 py-0.5 text-sm">{{ row.team.in_school_symbol }}</span>
+<div class="overflow-x-auto">
+    <table class="w-full">
+        <tbody class="divide-y">
+            {% for row in object_list %}
+            <tr class="flex flex-col md:table-row px-4 py-2 rounded-md hover:bg-gray-50">
+                <td class="p-2 text-lg hidden md:table-cell">{{ forloop.counter0|add:start_index }}.</td>
+                <td class="p-2 w-20 hidden md:table-cell">
+                    {% if row.team.school %}
+                    <img src="https://flagcdn.com/{{ row.team.school.country.code|lower }}.svg" alt="{{ row.team.school.country.name }}" class="h-4">
                     {% endif %}
-                </div>
-                <div class="text-sm text-gray-600">{{ row.team.school.address }}</div>
-                {% else %}
-                <div class="text-primary font-bold">{{ row.team.name }}</div>
-                {% endif %}
-            </td>
-            <td class="p-2 text-xs">
-                {% squares row problem_count team_problem_count %}
+                </td>
+                <td class="p-2 flex items-center gap-3 md:table-cell">
+                    <div class="text-lg md:hidden">
+                        {{ forloop.counter0|add:start_index }}.
+                    </div>
+                    <div class="shrink-0 md:hidden">
+                        <img src="https://flagcdn.com/{{ row.team.school.country.code|lower }}.svg" alt="{{ row.team.school.country.name }}" class="h-4">
+                    </div>
+                    <div>
+                        {% if row.team.school %}
+                        <div class="text-primary font-bold">
+                            {{ row.team.school.name }}
 
-                <div class="mt-1">
-                    {{ row.team.contestants.all|join:", " }}
-                </div>
-            </td>
-            <td class="p-2">
-                {{ row.solved_count }}
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td class="p-2 text-center text-gray-700" colspan="5">{% trans "(No team has solved any problem yet)" %}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+                            {% if row.team.in_school_symbol %}
+                            <span class="text-white bg-primary rounded px-1.5 py-0.5 text-sm">{{ row.team.in_school_symbol }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="text-sm text-gray-600">{{ row.team.school.address }}</div>
+                        {% else %}
+                        <div class="text-primary font-bold">{{ row.team.name }}</div>
+                        {% endif %}
+                    </div>
+                </td>
+                <td class="p-2 text-xs">
+                    <div class="flex justify-between gap-3 items-center">
+                        {% squares row problem_count team_problem_count %}
+
+                        <div class="text-base md:hidden">{{ row.solved_count }}</div>
+                    </div>
+
+                    <div class="mt-1">
+                        {{ row.team.contestants.all|join:", " }}
+                    </div>
+                </td>
+                <td class="p-2 hidden md:table-cell">
+                    {{ row.solved_count }}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td class="p-2 text-center text-gray-700" colspan="5">{% trans "(No team has solved any problem yet)" %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 
 <div class="flex gap-2 mt-4">
 {% if page_obj.has_previous %}
