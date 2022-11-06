@@ -6,7 +6,7 @@
     <div class="p-4">
         <p class="mb-2">There is no venue assigned to your account because you are not a venue administrator. Please select a venue from the dropdown below:</p>
 
-        <form method="get" class="flex gap-2">
+        <form method="get" class="flex gap-2" id="js-venue-selector">
             <select name="venue" class="input">
                 {% for avenue in available_venues %}
                     <option value="{{ avenue.id }}" {% if avenue.id == venue.id %}selected{% endif %}>{{ avenue.name }} ({{ avenue.category_competition.identifier }})</option>
@@ -17,4 +17,10 @@
         </form>
     </div>
 </article>
+
+<script>
+document.querySelector("#js-venue-selector select").addEventListener("change", () => {
+    document.getElementById("js-venue-selector").submit()
+})
+</script>
 {% endif %}
