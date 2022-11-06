@@ -1,0 +1,11 @@
+Hello!
+
+One of your teams has cancelled registration.
+
+Venue: {{ team.venue }}
+Number: {{ team.code }} / {{ team.id }}
+Team: {{ team.name }}
+Contestants: {{ team.contestants }}
+
+Best regards,
+Náboj

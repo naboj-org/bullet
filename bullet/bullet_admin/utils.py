@@ -1,4 +1,6 @@
+from bullet_admin.models import CompetitionRole
 from competitions.models import Competition, Venue
+from django.db.models import Q
 from django.http import HttpRequest
 from users.models import User
 
@@ -47,3 +49,11 @@ def is_admin(user: User, competition: Competition):
 
     crole = user.get_competition_role(competition)
     return (crole.venues or crole.countries) and not crole.is_operator
+
+
+def get_venue_admin_emails(venue: Venue):
+    return list(
+        CompetitionRole.objects.filter(is_operator=False)
+        .filter(Q(venue_objects=venue) | Q(countries__contains=[venue.country.code]))
+        .values_list("user__email", flat=True)
+    )
