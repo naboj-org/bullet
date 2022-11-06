@@ -1,10 +1,10 @@
 <div>
-    {% for key, name in widget.choices %}
+    {% for choice in field %}
         <label class="block">
-            <input type="checkbox" name="{{ field.html_name }}"
-                   value="{{ key }}" class="checkbox"
-                   {% if key in field.value %}checked{% endif %}>
-            {{ name }}
+            <input type="checkbox" name="{{ choice.data.name }}"
+                   value="{{ choice.data.value }}" class="checkbox"
+                   {% if choice.data.selected %}checked{% endif %}>
+            {{ choice.data.label }}
         </label>
     {% endfor %}
 </div>

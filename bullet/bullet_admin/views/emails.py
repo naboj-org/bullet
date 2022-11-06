@@ -16,7 +16,7 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
-from users.models import EmailCampaign, User
+from users.models import EmailCampaign, TeamStatus, User
 
 
 def can_edit_campaign(request, campaign: EmailCampaign):
@@ -117,7 +117,7 @@ class CampaignDetailView(AdminRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["statuses_display"] = [
-            EmailCampaign.StatusChoices(x).label for x in self.object.team_statuses
+            TeamStatus(x).label for x in self.object.team_statuses
         ]
         ctx["venues_display"] = [
             str(x)
