@@ -1,9 +1,10 @@
 from bullet_admin.utils import get_active_competition, is_admin
 from competitions.models import Venue
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import QuerySet
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
+from django.utils.http import url_has_allowed_host_and_scheme
 
 
 class AccessMixin:
@@ -128,3 +129,23 @@ class IsOperatorContext:
         crole = self.request.user.get_competition_role(competition)
         ctx["is_operator"] = crole.is_operator
         return ctx
+
+
+class RedirectBackMixin:
+    def get_default_success_url(self):
+        raise ImproperlyConfigured(
+            "No URL to redirect to. Provide a get_default_success_url."
+        )
+
+    def get_success_url(self):
+        if "back" in self.request.GET:
+            back_url = self.request.GET["back"]
+            is_valid_url = url_has_allowed_host_and_scheme(
+                url=back_url,
+                allowed_hosts={self.request.get_host()},
+                require_https=self.request.is_secure(),
+            )
+            if is_valid_url:
+                return back_url
+
+        return self.get_default_success_url()
