@@ -292,7 +292,7 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
         school_unused_symbols = {}
         for school in school_counts.keys():
             if school_counts[school] == 1:
-                break
+                continue
 
             symbols = set(
                 [get_school_symbol(i) for i in range(1, school_counts[school] + 1)]
