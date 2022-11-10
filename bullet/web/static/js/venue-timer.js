@@ -1,25 +1,45 @@
-(() => {
-    const tick = () => {
-        document.querySelectorAll(".js-venue-timer").forEach((elem) => {
-            let startTime = parseInt(elem.dataset.start)
-            let currentTime = Math.floor((new Date()).getTime() / 1000)
-            let duration = parseInt(elem.dataset.duration)
+function animationInterval(ms, signal, callback) {
+    const start = document.timeline ? document.timeline.currentTime : performance.now();
 
-            let diff
-            if (currentTime > startTime) {
-                diff = (startTime + duration) - currentTime
-            } else {
-                diff = startTime - currentTime
-            }
-
-            let seconds = Math.max(0, diff % 60)
-            let minutes = Math.max(0, Math.floor(diff / 60) % 60)
-            let hours = Math.max(0, Math.floor(diff / 3600))
-
-            elem.innerText = (currentTime < startTime ? "-" : "") + hours.toString().padStart(2, "0") + ":" + minutes.toString().padStart(2, "0") + ":" + seconds.toString().padStart(2, "0")
-        })
+    function frame(time) {
+        if (signal.aborted) return;
+        callback(time);
+        scheduleFrame(time);
     }
 
-    tick()
-    setInterval(tick, 100)
-})()
+    function scheduleFrame(time) {
+        const elapsed = time - start;
+        const roundedElapsed = Math.round(elapsed / ms) * ms;
+        const targetNext = start + roundedElapsed + ms;
+        const delay = targetNext - performance.now();
+        setTimeout(() => requestAnimationFrame(frame), delay);
+    }
+
+    scheduleFrame(start);
+}
+
+const controller = new AbortController();
+
+const DTF = new Intl.DateTimeFormat(document.documentElement.lang, {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hourCycle: "h23",
+    timeZone: 'UTC'
+});
+
+// Create an animation callback every second:
+document.querySelectorAll(".js-venue-timer").forEach(el => {
+    let duration = parseInt(el.dataset.duration)*1000;
+    let timeToStart = parseInt(el.dataset.start)*1000 - new Date();
+
+    animationInterval(1000, controller.signal, time => {
+        let diff = timeToStart - time;
+        if (diff > 0) {
+            el.innerText = DTF.format(diff);
+        } else {
+            el.innerText = DTF.format(diff + duration);
+        }
+    });
+});
+
