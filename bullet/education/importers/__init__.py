@@ -1,3 +1,4 @@
+from education.importers.be import BelgianSchoolImporter
 from education.importers.cz import CzechSchoolImporter
 from education.importers.es import (
     SpanishBachilleratoSchoolImporter,
@@ -20,4 +21,5 @@ IMPORTERS = {
     "fr": FrenchSchoolImporter,
     "hu": HungarianSchoolImporter,
     "nl": DutchSchoolImporter,
+    "be": BelgianSchoolImporter,
 }
