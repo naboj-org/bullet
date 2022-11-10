@@ -23,7 +23,7 @@
         const remainingHeight = idoc.offsetHeight - (idoc.scrollTop + iframe.offsetHeight)
 
         if (remainingHeight > 0) {
-            setTimeout(scrollMore, 25)
+            setTimeout(scrollMore, 35)
         } else {
             setTimeout(nextScreen, 1000)
         }
@@ -47,7 +47,7 @@
         if (!iframe.contentDocument) {
             setTimeout(nextScreen, 100)
         } else {
-            setTimeout(scrollMore, 1000)
+            setTimeout(scrollMore, 5000)
         }
     })
 })()
