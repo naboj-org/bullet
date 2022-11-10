@@ -43,7 +43,7 @@
                     </td>
                     <td class="p-4">
                         {% if v in my_venues %}
-                        <a href="{% url "badmin:results_announce" venue=v.id %}" class="link-primary">Results announcement</a>
+                        <a href="{% url "badmin:results_announce" venue=v.id %}?hidden" class="link-primary">Results announcement</a>
                         {% endif %}
                     </td>
                 </tr>
