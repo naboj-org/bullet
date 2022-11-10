@@ -26,5 +26,5 @@ class BelgianSchoolImporter(BaseSchoolImporter):
                 "BE",
                 "",
                 ["so"],
-                None,
+                f"{row[reader.fieldnames[0]]}/{row['intern_vplnummer']}",
             )
