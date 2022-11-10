@@ -22,6 +22,7 @@ located in `bullet` sub-directory.
 | France               | `fr`      | [Náboj Junior GDrive](https://docs.google.com/spreadsheets/d/1p4SW5Bu0XPgffXnlTyzBEe8yklPxWpfg/edit#gid=628139957) (convert to classic CSV)                                                                               |
 | Hungary              | `hu`      | [Náboj Physics Drive](https://docs.google.com/spreadsheets/d/1dsOakgJEG4tA68qhpAq1tu1s18NsuBH-EeAMRmr_Cvs/edit?usp=sharing) (save as CSV)                                                                                 |
 | Netherlands          | `nl`      | [Náboj Junior Drive](https://drive.google.com/file/d/10HunSLr3lEQG0SELNH1OmRtBqx66TNBc/view)                                                                                                                              |
+| Belgium              | `be`      | [data-onderwijs.vlaanderen.be](https://data-onderwijs.vlaanderen.be/onderwijsaanbod/lijst?n=2) -> download                                                                                                                |
 
 ## Index schools
 
