@@ -17,7 +17,7 @@ class BelgianSchoolImporter(BaseSchoolImporter):
     )
 
     def get_schools(self) -> Iterable[ImportedSchool]:
-        reader = csv.DictReader(self.file)
+        reader = csv.DictReader(self.file, delimiter=";")
 
         for row in reader:
             yield ImportedSchool(
