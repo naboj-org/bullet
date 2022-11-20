@@ -57,6 +57,7 @@ class Team(models.Model):
     contact_email = models.EmailField()
     contact_phone = PhoneNumberField(null=True, blank=True)
     secret_link = models.CharField(max_length=48, unique=True)
+    online_password = models.CharField(max_length=10, blank=True)
 
     school = models.ForeignKey(
         "education.School", on_delete=models.CASCADE, blank=True, null=True
@@ -175,6 +176,14 @@ class Team(models.Model):
         self.is_waiting = False
         if send_email:
             send_to_competition_email(self)
+
+    def generate_online_password(self):
+        if self.online_password:
+            return
+        # characters that look similar were removed
+        self.online_password = "".join(
+            secrets.choice("346789ABCDEFGHJKLMNPQRTUVWXY") for i in range(10)
+        )
 
 
 class Contestant(models.Model):
