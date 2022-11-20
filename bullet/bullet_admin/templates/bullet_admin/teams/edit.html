@@ -71,6 +71,14 @@
                             </div>
                         </div>
                         {% endif %}
+                        {% if team.online_password and not is_operator %}
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <div>Online password</div>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2 font-mono">
+                                {{ team.online_password }}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </article>
 
