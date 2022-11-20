@@ -315,10 +315,21 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
                 team.in_school_symbol = school_unused_symbols[team.school_id].pop()
                 team.save()
 
+    @transaction.atomic
+    def assign_passwords(self):
+        teams = Team.objects.competing().filter(venue=self.venue).order_by("id")
+        for team in teams:
+            if not team.online_password:
+                team.generate_online_password()
+                team.save()
+
     def post(self, request, *args, **kwargs):
         force = "force" in request.POST
         self.assign_numbers(force)
         self.assign_symbols(force)
+
+        if self.venue.is_online:
+            self.assign_passwords()
 
         messages.success(request, "Numbers assigned successfully.")
         u = reverse("badmin:team_assign_numbers")
