@@ -26,17 +26,29 @@ def certificates_for_venue(venue: Venue, template: CertificateTemplate) -> io.By
                 .filter(Q(country__isnull=True) | Q(country=venue.country))
                 .first()
             )
-            for x, contestant in enumerate(team.contestants.all()):
+
+            if template.for_team:
                 context = {
                     "team": team,
                     "rank": rank + 1,
-                    "name": contestant.full_name,
                     "category": category.content if category else "???",
                     "venue": venue.name,
                 }
                 data = template.render(context)
                 with Pdf.open(io.BytesIO(data)) as cert:
                     pdf.pages.append(cert.pages[0])
+            else:
+                for x, contestant in enumerate(team.contestants.all()):
+                    context = {
+                        "team": team,
+                        "rank": rank + 1,
+                        "name": contestant.full_name,
+                        "category": category.content if category else "???",
+                        "venue": venue.name,
+                    }
+                    data = template.render(context)
+                    with Pdf.open(io.BytesIO(data)) as cert:
+                        pdf.pages.append(cert.pages[0])
 
         pdf.save(buffer)
     buffer.seek(0)
