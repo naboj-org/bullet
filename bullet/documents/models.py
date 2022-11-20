@@ -8,6 +8,7 @@ from web.fields import BranchField
 
 class CertificateTemplate(models.Model):
     name = models.CharField(max_length=128)
+    for_team = models.BooleanField(default=False)
     branch = BranchField()
     template = models.TextField()
 

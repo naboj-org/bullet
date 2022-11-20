@@ -8,6 +8,7 @@ from users.models import User
 class CertificateForm(forms.Form):
     template = forms.ModelChoiceField(queryset=CertificateTemplate.objects.none())
     venue = forms.ModelChoiceField(queryset=Venue.objects.none())
+    empty = forms.BooleanField()
 
     def __init__(self, competition: Competition, user: User, **kwargs):
         super().__init__(**kwargs)
