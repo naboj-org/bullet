@@ -8,6 +8,11 @@ from users.models import User
 class CertificateForm(forms.Form):
     template = forms.ModelChoiceField(queryset=CertificateTemplate.objects.none())
     venue = forms.ModelChoiceField(queryset=Venue.objects.none())
+    count = forms.IntegerField(
+        initial=3,
+        help_text="Enter 0 to generate certificates for all teams.",
+        min_value=0,
+    )
     empty = forms.BooleanField()
 
     def __init__(self, competition: Competition, user: User, **kwargs):
