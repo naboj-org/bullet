@@ -23,7 +23,7 @@ tzdata = "==2022.6"
 pillow = "==9.3.0"
 django-minify-html = "==1.4.0"
 fontawesomefree = "==6.2.1"
-django-htmx = "==1.12.2"
+django-htmx = "==1.13.0"
 meilisearch = "==0.22.2"
 pikepdf = "==6.2.4"
 
