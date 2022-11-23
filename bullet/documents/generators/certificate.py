@@ -9,14 +9,18 @@ from web.models import ContentBlock
 
 
 def certificates_for_venue(
-    venue: Venue, template: CertificateTemplate, empty: bool = False
+    venue: Venue, template: CertificateTemplate, count: int = 3, empty: bool = False
 ) -> io.BytesIO:
     buffer = io.BytesIO()
 
     if not empty:
-        results = get_venue_results(venue).prefetch_related("team__contestants")[:3]
+        results = get_venue_results(venue).prefetch_related("team__contestants")
+        if count:
+            results = results[:count]
+        else:
+            results = results.all()
     else:
-        results = range(3)
+        results = range(count)
 
     category = (
         ContentBlock.objects.filter(

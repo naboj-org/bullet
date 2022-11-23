@@ -24,5 +24,7 @@ class CertificateView(AdminRequiredMixin, FormView):
             raise PermissionDenied()
 
         template = form.cleaned_data["template"]
-        data = certificates_for_venue(venue, template, form.cleaned_data["empty"])
+        data = certificates_for_venue(
+            venue, template, form.cleaned_data["count"], form.cleaned_data["empty"]
+        )
         return FileResponse(data, as_attachment=True, filename="certificates.pdf")
