@@ -298,7 +298,7 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
                 [get_school_symbol(i) for i in range(1, school_counts[school] + 1)]
             )
             if not force:
-                symbols.difference_update(school_symbols)
+                symbols.difference_update(school_symbols[school])
             school_unused_symbols[school] = sorted(list(symbols), reverse=True)
 
         if force:
