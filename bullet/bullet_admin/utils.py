@@ -54,6 +54,12 @@ def is_admin(user: User, competition: Competition):
 def get_venue_admin_emails(venue: Venue):
     return list(
         CompetitionRole.objects.filter(is_operator=False)
-        .filter(Q(venue_objects=venue) | Q(countries__contains=[venue.country.code]))
+        .filter(
+            Q(venue_objects=venue)
+            | Q(
+                countries__contains=[venue.country.code],
+                competition=venue.category_competition.competition,
+            )
+        )
         .values_list("user__email", flat=True)
     )
