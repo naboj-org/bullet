@@ -3,13 +3,17 @@ document.body.addEventListener("htmx:afterSwap", (evt) => {
     document.getElementById("js-scanfield").focus()
 })
 
+let audio = new Audio('/static/sound/barcode_scanner.mp3');
+
 document.getElementById("js-open-reader").addEventListener("click", () => {
-    document.getElementById("js-reader").classList.remove("hidden")
+    document.getElementById("reader-wrapper").classList.remove("hidden")
     document.getElementById("js-open-reader").style.display = "none"
     document.getElementById("js-scanform").classList.add("hidden")
+    let successElement = document.getElementById("success-indicator")
 
     let lastCode = ""
-    let codeScanner = new Html5QrcodeScanner("js-reader", {
+    let codeScanner = new Html5Qrcode("js-reader")
+    let config = {
         fps: 10,
         experimentalFeatures: {
             useBarCodeDetectorIfSupported: true
@@ -17,12 +21,15 @@ document.getElementById("js-open-reader").addEventListener("click", () => {
         rememberLastUsedCamera: true,
         supportedScanTypes: [Html5QrcodeScanType.SCAN_TYPE_CAMERA],
         formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE, Html5QrcodeSupportedFormats.CODE_128],
-    }, false)
-    codeScanner.render((text, result) => {
+    }
+    codeScanner.start({ facingMode: "environment" }, config, (text, result) => {
         if (text !== lastCode) {
             lastCode = text
             document.getElementById("js-scanfield").value = text
             htmx.trigger("#js-scanform", "submit")
+            navigator.vibrate(200)
+            audio.play()
+            successElement.animate({boxShadow: "inset 0 0 0 8px rgb(34 197 94 / 100)"}, {duration: 500, iterations: 1})
         }
     })
 })
