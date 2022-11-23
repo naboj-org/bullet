@@ -25,7 +25,7 @@ django-minify-html = "==1.4.0"
 fontawesomefree = "==6.2.1"
 django-htmx = "==1.12.2"
 meilisearch = "==0.22.1"
-pikepdf = "==6.2.2"
+pikepdf = "==6.2.4"
 
 [dev-packages]
 black = "==22.10.0"
