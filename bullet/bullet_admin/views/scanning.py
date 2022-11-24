@@ -1,13 +1,21 @@
+import json
+from datetime import datetime
+
 from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
+from django.conf import settings
+from django.core.exceptions import PermissionDenied
+from django.db import transaction
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.utils import timezone
+from django.utils.decorators import method_decorator
 from django.views import View
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
-from problems.logic import get_last_problem_for_team
+from problems.logic import get_last_problem_for_team, mark_problem_solved
 from problems.logic.scanner import parse_barcode, save_scan
-from problems.models import CategoryProblem, ScannerLog
+from problems.models import CategoryProblem, Problem, ScannerLog
 from users.models import Team
 
 
@@ -165,3 +173,24 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
                 "error": error,
             },
         )
+
+
+@method_decorator(csrf_exempt, name="dispatch")
+class ApiProblemSolveView(View):
+    @transaction.atomic
+    def post(self, request, *args, **kwargs):
+        if request.headers.get("X-API-KEY", "") != settings.PROBLEM_SOLVE_KEY:
+            raise PermissionDenied()
+
+        data = json.loads(request.body)
+
+        for solve in data:
+            team = Team.objects.get(id=solve["team"])
+            problem = Problem.objects.get(
+                competition=team.venue.category_competition.competition,
+                category_problems__category=team.venue.category_competition,
+                category_problems__number=solve["problem"],
+            )
+            timestamp = timezone.make_aware(datetime.fromtimestamp(solve["timestamp"]))
+
+            mark_problem_solved(team, problem, timestamp)
