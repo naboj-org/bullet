@@ -194,3 +194,5 @@ class ApiProblemSolveView(View):
             timestamp = timezone.make_aware(datetime.fromtimestamp(solve["timestamp"]))
 
             mark_problem_solved(team, problem, timestamp)
+
+        return HttpResponse("ok")
