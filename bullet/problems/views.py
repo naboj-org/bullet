@@ -72,8 +72,17 @@ class CategoryResultsView(ResultsViewMixin, ListView):
         admin = False
         if request.GET.get("admin") == "1":
             admin = is_admin(self.request.user, self.competition)
+
+        start_time = None
+        if "venue_timer" in request.GET:
+            start_time = get_object_or_404(
+                Venue,
+                category_competition__competition=self.competition,
+                shortcode=request.GET["venue_timer"],
+            ).start_time
+
         self.results_time = results_time(
-            self.competition, timezone.now(), is_admin=admin
+            self.competition, timezone.now(), is_admin=admin, start_time=start_time
         )
 
         return super().dispatch(request, *args, **kwargs)
