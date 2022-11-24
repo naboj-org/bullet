@@ -155,3 +155,5 @@ GEOIP_PATH = "/geoip/"
 
 MEILISEARCH_URL = os.environ.get("MEILISEARCH_URL", "http://meilisearch:7700/")
 MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
+
+PROBLEM_SOLVE_KEY = os.environ.get("PROBLEM_SOLVE_KEY", "")

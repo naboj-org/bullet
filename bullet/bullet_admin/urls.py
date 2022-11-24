@@ -138,6 +138,7 @@ urlpatterns = [
         scanning.VenueReviewView.as_view(),
         name="scanning_review",
     ),
+    path("scanning/problems/api/", scanning.ApiProblemSolveView.as_view()),
     path("emails/", emails.CampaignListView.as_view(), name="email_list"),
     path("emails/create/", emails.CampaignCreateView.as_view(), name="email_create"),
     path(
