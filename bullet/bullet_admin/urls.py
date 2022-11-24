@@ -22,6 +22,16 @@ urlpatterns = [
         auth.PasswordChangeView.as_view(),
         name="password_change",
     ),
+    path(
+        "auth/password_reset/",
+        auth.PasswordResetView.as_view(),
+        name="password_reset",
+    ),
+    path(
+        "auth/password_reset/<uidb64>/<token>/",
+        auth.PasswordResetConfirmView.as_view(),
+        name="password_reset_confirm",
+    ),
     path("competitions/", CompetitionSwitchView.as_view(), name="competition_switch"),
     path("content/pages/", content.PageListView.as_view(), name="page_list"),
     path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
