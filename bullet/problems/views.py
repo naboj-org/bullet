@@ -75,11 +75,12 @@ class CategoryResultsView(ResultsViewMixin, ListView):
 
         start_time = None
         if "venue_timer" in request.GET:
-            start_time = get_object_or_404(
-                Venue,
+            start_time = Venue.objects.filter(
                 category_competition__competition=self.competition,
                 shortcode=request.GET["venue_timer"],
-            ).start_time
+            ).first()
+            if start_time:
+                start_time = start_time.start_time
 
         self.results_time = results_time(
             self.competition, timezone.now(), is_admin=admin, start_time=start_time
