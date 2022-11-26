@@ -75,6 +75,7 @@ class Team(models.Model):
     is_waiting = models.BooleanField(default=False)
     is_checked_in = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
+    is_disqualified = models.BooleanField(default=False)
     consent_photos = models.BooleanField(default=False)
 
     objects = TeamQuerySet.as_manager()

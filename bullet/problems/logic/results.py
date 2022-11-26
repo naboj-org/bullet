@@ -11,7 +11,7 @@ def get_results(
     team_filter: Q,
     time: timedelta = None,
 ) -> QuerySet[ResultRow]:
-    rows = ResultRow.objects.get_queryset()
+    rows = ResultRow.objects.filter(team__is_disqualified=False)
 
     if team_filter:
         rows = rows.filter(team_filter)
