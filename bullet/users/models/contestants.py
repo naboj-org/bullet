@@ -18,6 +18,7 @@ class TeamStatus(models.TextChoices):
     WAITINGLIST = "W", "Waiting list"
     CHECKEDIN = "C", "Checked in"
     REVIEWED = "K", "Reviewed"
+    DISQUALIFIED = "D", "Disqualified"
 
 
 class TeamQuerySet(models.QuerySet):
@@ -39,15 +40,18 @@ class TeamQuerySet(models.QuerySet):
                     is_waiting=False,
                     is_checked_in=False,
                     is_reviewed=False,
+                    is_disqualified=False,
                 ),
                 Q.OR,
             )
         if TeamStatus.WAITINGLIST in status:
             q.add(Q(is_waiting=True), Q.OR)
         if TeamStatus.CHECKEDIN in status:
-            q.add(Q(is_checked_in=True, is_reviewed=False), Q.OR)
+            q.add(Q(is_checked_in=True, is_reviewed=False, is_disqualified=False), Q.OR)
         if TeamStatus.REVIEWED in status:
-            q.add(Q(is_reviewed=True), Q.OR)
+            q.add(Q(is_reviewed=True, is_disqualified=False), Q.OR)
+        if TeamStatus.DISQUALIFIED in status:
+            q.add(Q(is_disqualified=True), Q.OR)
 
         return self.filter(q)
 
@@ -126,6 +130,8 @@ class Team(models.Model):
             return TeamStatus.UNCONFIRMED
         if self.is_waiting:
             return TeamStatus.WAITINGLIST
+        if self.is_disqualified:
+            return TeamStatus.DISQUALIFIED
         if self.is_checked_in:
             return TeamStatus.CHECKEDIN
         if self.is_reviewed:

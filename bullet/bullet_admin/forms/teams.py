@@ -16,6 +16,7 @@ class TeamForm(forms.ModelForm):
             "venue",
             "is_checked_in",
             "consent_photos",
+            "is_disqualified",
         ]
 
     def __init__(self, **kwargs):
@@ -36,6 +37,7 @@ class OperatorTeamForm(TeamForm):
         self.fields.pop("contact_name")
         self.fields.pop("contact_email")
         self.fields.pop("contact_phone")
+        self.fields.pop("is_disqualified")
 
 
 class TeamFilterForm(forms.Form):

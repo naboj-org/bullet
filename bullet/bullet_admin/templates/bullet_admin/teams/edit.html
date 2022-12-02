@@ -134,6 +134,14 @@
                                 {% bfield form.consent_photos %}
                             </div>
                         </div>
+                        {% if form.is_disqualified %}
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <label for="{{ form.is_disqualified.id_for_label }}">Disqualified?</label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                {% bfield form.is_disqualified %}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </article>
             </div>
