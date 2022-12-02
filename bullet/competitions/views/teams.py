@@ -9,11 +9,19 @@ from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import QuerySet
 from django.forms import inlineformset_factory
-from django.http import Http404, HttpResponseForbidden, HttpResponseRedirect
+from django.http import (
+    FileResponse,
+    Http404,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+)
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from django.views import View
 from django.views.generic import DeleteView, FormView, TemplateView
+from documents.generators.certificate import certificate_for_team
+from documents.models import SelfServeCertificate
 from users.emails.admin import UnregisteredTeam, send_team_unregistered
 from users.logic import (
     add_team_to_competition,
@@ -202,3 +210,20 @@ class TeamDeleteView(DeleteView):
 
         messages.success(self.request, _("Team was unregistered."))
         return HttpResponseRedirect(country_reverse("homepage"))
+
+
+class TeamCertificateView(View):
+    def dispatch(self, request, *args, **kwargs):
+        self.team = get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
+        self_serve = SelfServeCertificate.objects.filter(venue=self.team.venue).first()
+        if not self_serve:
+            raise Http404()
+        self.template = self_serve.template
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = certificate_for_team(self.template, self.team)
+        return FileResponse(
+            data, as_attachment=True, filename=f"certificate-{self.team.code}.pdf"
+        )
