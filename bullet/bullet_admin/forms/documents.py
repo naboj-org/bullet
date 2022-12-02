@@ -13,7 +13,7 @@ class CertificateForm(forms.Form):
         help_text="Enter 0 to generate certificates for all teams.",
         min_value=0,
     )
-    empty = forms.BooleanField()
+    empty = forms.BooleanField(required=False)
 
     def __init__(self, competition: Competition, user: User, **kwargs):
         super().__init__(**kwargs)
