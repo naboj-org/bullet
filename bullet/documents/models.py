@@ -6,11 +6,20 @@ from documents.generators import prepare_rsvg
 from web.fields import BranchField
 
 
+class SelfServeCertificate(models.Model):
+    template = models.ForeignKey("CertificateTemplate", on_delete=models.CASCADE)
+    venue = models.OneToOneField("competitions.Venue", on_delete=models.CASCADE)
+    # TODO: Languages
+
+
 class CertificateTemplate(models.Model):
     name = models.CharField(max_length=128)
     for_team = models.BooleanField(default=False)
     branch = BranchField()
     template = models.TextField()
+    self_serve = models.ManyToManyField(
+        "competitions.Venue", blank=True, through=SelfServeCertificate
+    )
 
     def render(self, context: dict, output_format="pdf") -> bytes:
         template = Template(self.template)
