@@ -43,6 +43,10 @@ class TeamEditView(FormView):
         ctx = super().get_context_data(**kwargs)
         ctx["team"] = self.team
         ctx["can_be_changed"] = self.can_be_changed
+        ctx["show_certificate"] = (
+            self.category_competition.competition.results_public
+            and SelfServeCertificate.objects.filter(venue=self.team.venue).exists()
+        )
         return ctx
 
     def form_valid(self, form):
@@ -215,6 +219,9 @@ class TeamDeleteView(DeleteView):
 class TeamCertificateView(View):
     def dispatch(self, request, *args, **kwargs):
         self.team = get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
+        if not self.team.venue.category_competition.competition.results_public:
+            raise PermissionDenied()
+
         self_serve = SelfServeCertificate.objects.filter(venue=self.team.venue).first()
         if not self_serve:
             raise Http404()
