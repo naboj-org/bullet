@@ -5,7 +5,44 @@ from django.db.models import Q
 from documents.models import CertificateTemplate
 from pikepdf import Pdf
 from problems.logic.results import get_venue_results
+from users.models import Team
 from web.models import ContentBlock
+
+
+def _get_category_name(venue: Venue) -> str:
+    category = (
+        ContentBlock.objects.filter(
+            group="category",
+            branch=venue.category_competition.competition.branch,
+            language=venue.accepted_languages[0],  # TODO: Default venue language
+            reference=f"name_{venue.category_competition.identifier}",
+        )
+        .filter(Q(country__isnull=True) | Q(country=venue.country))
+        .first()
+    )
+    if category:
+        return category.content
+    else:
+        return "???"
+
+
+def _one_certificate(
+    template: CertificateTemplate,
+    team: Team,
+    rank: int,
+    category: str,
+    venue: Venue,
+    contestant: str,
+) -> bytes:
+    context = {
+        "team": team,
+        "rank": rank,
+        "category": category,
+        "venue": venue.name,
+        "name": contestant,
+    }
+
+    return template.render(context)
 
 
 def certificates_for_venue(
@@ -22,20 +59,7 @@ def certificates_for_venue(
     else:
         results = range(count)
 
-    category = (
-        ContentBlock.objects.filter(
-            group="category",
-            branch=venue.category_competition.competition.branch,
-            language=venue.accepted_languages[0],  # TODO: Default venue language
-            reference=f"name_{venue.category_competition.identifier}",
-        )
-        .filter(Q(country__isnull=True) | Q(country=venue.country))
-        .first()
-    )
-    if category:
-        category = category.content
-    else:
-        category = "???"
+    category = _get_category_name(venue)
 
     with Pdf.new() as pdf:
         for rank, row in enumerate(results):
@@ -46,24 +70,51 @@ def certificates_for_venue(
                 team = row.team
                 contestants = team.contestants.all()
 
-            context = {
-                "team": team,
-                "rank": rank + 1,
-                "category": category,
-                "venue": venue.name,
-            }
-
             if template.for_team:
-                data = template.render(context)
+                data = _one_certificate(template, team, rank + 1, category, venue, "")
                 with Pdf.open(io.BytesIO(data)) as cert:
                     pdf.pages.append(cert.pages[0])
             else:
                 for contestant in contestants:
-                    context["name"] = contestant.full_name if not empty else ""
-                    data = template.render(context)
+                    data = _one_certificate(
+                        template,
+                        team,
+                        rank + 1,
+                        category,
+                        venue,
+                        contestant.full_name if not empty else "",
+                    )
                     with Pdf.open(io.BytesIO(data)) as cert:
                         pdf.pages.append(cert.pages[0])
 
+        pdf.save(buffer)
+    buffer.seek(0)
+    return buffer
+
+
+def certificate_for_team(template: CertificateTemplate, team: Team) -> io.BytesIO:
+    results = get_venue_results(team.venue)
+    rank = "???"
+    for i, t in enumerate(results):
+        if t == team:
+            rank = i + 1
+            break
+
+    category = _get_category_name(team.venue)
+
+    buffer = io.BytesIO()
+    with Pdf.new() as pdf:
+        if template.for_team:
+            data = _one_certificate(template, team, rank, category, team.venue, "")
+            with Pdf.open(io.BytesIO(data)) as cert:
+                pdf.pages.append(cert.pages[0])
+        else:
+            for contestant in team.contestants.all():
+                data = _one_certificate(
+                    template, team, rank, category, team.venue, contestant.full_name
+                )
+                with Pdf.open(io.BytesIO(data)) as cert:
+                    pdf.pages.append(cert.pages[0])
         pdf.save(buffer)
     buffer.seek(0)
     return buffer

@@ -35,5 +35,10 @@ urlpatterns = [
         teams.TeamDeleteView.as_view(),
         name="team_delete",
     ),
+    path(
+        "teams/<secret_link>/certificate/",
+        teams.TeamCertificateView.as_view(),
+        name="team_certificate",
+    ),
     path("live/", live.LiveView.as_view(), name="live"),
 ]
