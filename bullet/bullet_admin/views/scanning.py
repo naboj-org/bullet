@@ -15,7 +15,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import TemplateView
 from problems.logic import get_last_problem_for_team, mark_problem_solved
 from problems.logic.scanner import parse_barcode, save_scan
-from problems.models import CategoryProblem, Problem, ScannerLog
+from problems.models import CategoryProblem, Problem, ScannerLog, SolvedProblem
 from users.models import Team
 
 
@@ -185,13 +185,20 @@ class ApiProblemSolveView(View):
         data = json.loads(request.body)
 
         for solve in data:
-            team = Team.objects.get(id=solve["team"])
-            problem = Problem.objects.get(
+            team = Team.objects.filter(id=solve["team"]).first()
+            if not team:
+                continue
+            problem = Problem.objects.filter(
                 competition=team.venue.category_competition.competition,
                 category_problems__category=team.venue.category_competition,
                 category_problems__number=solve["problem"],
-            )
+            ).first()
+            if not problem:
+                continue
             timestamp = timezone.make_aware(datetime.fromtimestamp(solve["timestamp"]))
+
+            if SolvedProblem.objects.filter(team=team, problem=problem).exists():
+                continue
 
             mark_problem_solved(team, problem, timestamp)
 
