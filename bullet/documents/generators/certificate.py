@@ -32,7 +32,7 @@ def _one_certificate(
     rank: int,
     category: str,
     venue: Venue,
-    contestant: str | None,
+    contestant: str,
 ) -> bytes:
     context = {
         "team": team,
@@ -71,7 +71,7 @@ def certificates_for_venue(
                 contestants = team.contestants.all()
 
             if template.for_team:
-                data = _one_certificate(template, team, rank + 1, category, venue, None)
+                data = _one_certificate(template, team, rank + 1, category, venue, "")
                 with Pdf.open(io.BytesIO(data)) as cert:
                     pdf.pages.append(cert.pages[0])
             else:
@@ -105,7 +105,7 @@ def certificate_for_team(template: CertificateTemplate, team: Team) -> io.BytesI
     buffer = io.BytesIO()
     with Pdf.new() as pdf:
         if template.for_team:
-            data = _one_certificate(template, team, rank, category, team.venue, None)
+            data = _one_certificate(template, team, rank, category, team.venue, "")
             with Pdf.open(io.BytesIO(data)) as cert:
                 pdf.pages.append(cert.pages[0])
         else:
