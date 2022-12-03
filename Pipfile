@@ -34,7 +34,7 @@ pre-commit = "~=2.20.0"
 flake8 = "==5.0.4"
 factory-boy = "==3.2.1"
 mdgen = "==0.1.10"
-bumpver = "==2022.1119"
+bumpver = "==2022.1120"
 
 [requires]
 python_version = "3.10"
