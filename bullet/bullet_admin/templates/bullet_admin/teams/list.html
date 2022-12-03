@@ -106,6 +106,8 @@
                                 <span class="bg-blue-600 px-2 py-1 rounded">Reviewed</span>
                                 {% elif team.status == team.status.REGISTERED %}
                                 <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
+                                {% elif team.status == team.status.DISQUALIFIED %}
+                                <span class="bg-red-600 px-2 py-1 rounded">Disqualified</span>
                                 {% endif %}
 
                                 {% if not team.venue.is_online %}
