@@ -8,8 +8,8 @@ register = template.Library()
 
 @register.filter()
 def svg_wordwrap(text: str, args: str):
-    chars, x = map(int, args.split(","))
-    lines = textwrap.wrap(text, chars)
+    chars, x = args.split(",")
+    lines = textwrap.wrap(text, int(chars))
     svg = []
     for i, line in enumerate(lines):
         if i == 0:
