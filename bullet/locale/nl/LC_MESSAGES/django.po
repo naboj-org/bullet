@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-10-27 22:04+0000\n"
+"POT-Creation-Date: 2022-12-05 10:17+0000\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,6 +79,10 @@ msgstr "(Selecteer aub)"
 msgid "This grade can't compete in the chosen category."
 msgstr "Deze klas kan niet concurreren in de gekozen categorie."
 
+#: competitions/templates/live.html:7
+msgid "Live signage"
+msgstr "Live bewegwijzering"
+
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
 msgid "No schools matched your query."
@@ -109,6 +113,7 @@ msgstr "Teaminschrijving"
 
 #: competitions/templates/register/category.html:9
 #: competitions/templates/register/partials/category.html:6
+#: problems/templates/problems/results/select.html:15
 msgid "Category"
 msgstr "Categorie"
 
@@ -255,6 +260,18 @@ msgstr "Verwijderen?"
 msgid "Update"
 msgstr "Update"
 
+#: competitions/templates/teams/edit.html:138
+msgid "Certificate"
+msgstr "Certificaat"
+
+#: competitions/templates/teams/edit.html:139
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "U kunt het certificaat voor uw team downloaden door op onderstaande knop te klikken."
+
+#: competitions/templates/teams/edit.html:140
+msgid "Download certificate"
+msgstr "Certificaat downloaden"
+
 #: competitions/templates/teams/list.html:7
 #: competitions/templates/teams/list.html:12
 msgid "Waiting list"
@@ -278,26 +295,31 @@ msgstr "De inschrijving is nog niet begonnen."
 msgid "Registration is over."
 msgstr "De inschrijving is afgesloten."
 
-#: competitions/views/teams.py:43
+#: competitions/views/teams.py:57
 msgid "Team successfully edited."
 msgstr "Team succesvol bewerkt."
 
-#: competitions/views/teams.py:85
+#: competitions/views/teams.py:99
 msgid "Registration successfully confirmed."
 msgstr "Inschrijving bevestigd."
 
-#: competitions/views/teams.py:179
+#: competitions/views/teams.py:215
 msgid "Team was unregistered."
 msgstr "Team is uitgeschreven."
 
 #: problems/templates/problems/results.html:6
 #: problems/templates/problems/results.html:12
+#: problems/templates/problems/results/embed.html:7
+#: problems/templates/problems/results/embed.html:13
+#: problems/templates/problems/results/select.html:6
+#: problems/templates/problems/results/select.html:9
 #: problems/templates/problems/results/venue.html:5
 #: problems/templates/problems/results/venue.html:11
+#: web/templates/web/snippets/home_hero_buttons.html:13
 msgid "Results"
 msgstr "Resultaten"
 
-#: problems/templates/problems/results.html:22 problems/views.py:55
+#: problems/templates/problems/results.html:22 problems/views.py:107
 msgid "International"
 msgstr "Internationale"
 
@@ -321,15 +343,23 @@ msgstr "Eindresultaten"
 msgid "Showing official results."
 msgstr "Toont officiële resultaten."
 
-#: problems/templates/problems/results/table.html:54
+#: problems/templates/problems/results/table.html:17
+msgid "Interim results."
+msgstr "Tussenresultaten."
+
+#: problems/templates/problems/results/table.html:17
+msgid "The competition is ongoing, the results may change."
+msgstr "De wedstrijd is aan de gang, de resultaten kunnen nog veranderen."
+
+#: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "Geen enkel team heeft al een probleem opgelost"
 
-#: problems/templates/problems/results/table.html:62
+#: problems/templates/problems/results/table.html:80
 msgid "Previous"
 msgstr "Vorige"
 
-#: problems/templates/problems/results/table.html:65
+#: problems/templates/problems/results/table.html:83
 msgid "Next"
 msgstr "Volgende"
 
@@ -351,21 +381,6 @@ msgstr "Uw team is verwijderd"
 #: web/templates/web/404.html:18 web/templates/web/homepage.html:7
 msgid "Home page"
 msgstr "Homepagina"
-
-#: web/templates/chemistry/web/homepage.html:18
-#: web/templates/junior/web/homepage.html:18
-#: web/templates/physics/web/homepage.html:18
-#: web/templates/web/homepage.html:14
-msgid "Registration"
-msgstr "Inschrijving"
-
-#: web/templates/chemistry/web/homepage.html:21
-#: web/templates/junior/web/homepage.html:21
-#: web/templates/physics/web/homepage.html:21
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "Inschrijving wordt over %(end)s beëindigd"
 
 #: web/templates/mail/base.html:336
 msgid "Competition logo"
@@ -453,6 +468,17 @@ msgstr "Niet gevonden"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "De pagina die u probeerde te openen is niet gevonden."
+
+#: web/templates/web/homepage.html:14
+#: web/templates/web/snippets/home_hero_buttons.html:5
+msgid "Registration"
+msgstr "Inschrijving"
+
+#: web/templates/web/homepage.html:16
+#: web/templates/web/snippets/home_hero_buttons.html:8
+#, python-format
+msgid "Registration ends in %(end)s"
+msgstr "Inschrijving wordt over %(end)s beëindigd"
 
 #: web/templates/web/root_base.html:43
 msgid "Close"

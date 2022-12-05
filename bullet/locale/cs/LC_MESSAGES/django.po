@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-02 19:45+0000\n"
+"POT-Creation-Date: 2022-12-05 10:17+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -260,6 +260,20 @@ msgstr "Opravdu smazat?"
 msgid "Update"
 msgstr "Aktualizovat"
 
+#: competitions/templates/teams/edit.html:138
+msgid "Certificate"
+msgstr ""
+
+#: competitions/templates/teams/edit.html:139
+#, fuzzy
+#| msgid "You can edit team details by clicking the link below."
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "Detaily týmu můžete upravit kliknutím na odkaz níže."
+
+#: competitions/templates/teams/edit.html:140
+msgid "Download certificate"
+msgstr ""
+
 #: competitions/templates/teams/list.html:7
 #: competitions/templates/teams/list.html:12
 msgid "Waiting list"
@@ -283,15 +297,15 @@ msgstr "Registrace ještě nezačala."
 msgid "Registration is over."
 msgstr "Registrace již skončila."
 
-#: competitions/views/teams.py:43
+#: competitions/views/teams.py:57
 msgid "Team successfully edited."
 msgstr "Tým byl úspěšně upraven."
 
-#: competitions/views/teams.py:85
+#: competitions/views/teams.py:99
 msgid "Registration successfully confirmed."
 msgstr "Registrace potvrzena."
 
-#: competitions/views/teams.py:179
+#: competitions/views/teams.py:215
 msgid "Team was unregistered."
 msgstr "Týmu byla zrušena registrace"
 
@@ -307,7 +321,7 @@ msgstr "Týmu byla zrušena registrace"
 msgid "Results"
 msgstr "Výsledky"
 
-#: problems/templates/problems/results.html:22 problems/views.py:82
+#: problems/templates/problems/results.html:22 problems/views.py:107
 msgid "International"
 msgstr "Mezinárodní"
 
@@ -339,15 +353,15 @@ msgstr "Průběžné výsledky."
 msgid "The competition is ongoing, the results may change."
 msgstr "Soutěž právě probíhá, výsledky se mohou měnit."
 
-#: problems/templates/problems/results/table.html:58
+#: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "(Žádný tým zatím nevyřešil žádnou úlohu)"
 
-#: problems/templates/problems/results/table.html:66
+#: problems/templates/problems/results/table.html:80
 msgid "Previous"
 msgstr "Předcházející"
 
-#: problems/templates/problems/results/table.html:69
+#: problems/templates/problems/results/table.html:83
 msgid "Next"
 msgstr "Následující"
 
