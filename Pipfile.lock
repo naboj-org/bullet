@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "24ea28cd7bf2e7454484d4636c76a68456c04b233fe0151320d3fadb2d941800"
+            "sha256": "321a73ff6e7601529a9c0c41ec8ee81474d67e32114a41ced677324d4e44b87a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -149,7 +149,7 @@
                 "sha256:4b01725c8ccf918752436a8aab595fa153c5123c147225434bf1f40041acb3c7",
                 "sha256:7f200e1d1067245f39ae2df6c547dc3de8619060012679702f6471187280e6eb"
             ],
-            "markers": "python_version >= '3.7' and python_version < '4'",
+            "markers": "python_version >= '3.7' and python_version < '4.0'",
             "version": "==3.0.0"
         },
         "certifi": {
@@ -473,11 +473,11 @@
         },
         "meilisearch": {
             "hashes": [
-                "sha256:f887a3f0bffed7b7ed13ccd7ee786309a2de8fad729575072f5e311a367ecaa4",
-                "sha256:fb8f0749651a95c9c898eba98f971825e8d10900b546ec33a7d6f3b4b7a90ba5"
+                "sha256:2b649540b533eeb02b47f1d354c868004652886f6279ecf4d270b64290fa46c2",
+                "sha256:7fd7238bf5ad079a398092725e2d38f22ac3517916fe262014507bfd9b181d6a"
             ],
             "index": "pypi",
-            "version": "==0.22.2"
+            "version": "==0.23.0"
         },
         "minify-html": {
             "hashes": [
@@ -836,7 +836,7 @@
                 "sha256:7c5599b102feddaa661c826c56ab4fee28bfd17f5abca1ebbe3e7f19d7c97983",
                 "sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349"
             ],
-            "markers": "python_version >= '3.7' and python_version < '4'",
+            "markers": "python_version >= '3.7' and python_version < '4.0'",
             "version": "==2.28.1"
         },
         "setuptools": {
