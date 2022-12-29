@@ -96,7 +96,7 @@ def certificate_for_team(template: CertificateTemplate, team: Team) -> io.BytesI
     results = get_venue_results(team.venue)
     rank = "???"
     for i, t in enumerate(results):
-        if t == team:
+        if t.team == team:
             rank = i + 1
             break
 
