@@ -28,7 +28,7 @@ meilisearch = "==0.23.0"
 pikepdf = "==6.2.6"
 
 [dev-packages]
-black = "==22.10.0"
+black = "==22.12.0"
 isort = "==5.10.1"
 pre-commit = "~=2.20.0"
 flake8 = "==6.0.0"
