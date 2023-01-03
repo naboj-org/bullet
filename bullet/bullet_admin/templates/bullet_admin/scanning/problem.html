@@ -13,7 +13,7 @@
         </header>
         <div>
             <form hx-post="{% url "badmin:scanning_problems" %}" hx-target="#js-scanlog" hx-swap="afterbegin"
-                  class="flex p-4 gap-2" id="js-scanform">
+                  class="flex p-4 gap-2" id="js-scanform" autocomplete="off">
                 {% csrf_token %}
                 <input type="text" name="barcode" id="js-scanfield" class="form-input input" placeholder="Barcode" autofocus>
 
