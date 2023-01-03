@@ -135,13 +135,17 @@ class CampaignTeamListView(AdminRequiredMixin, TemplateView):
     template_name = "bullet_admin/emails/teams.html"
 
     def dispatch(self, request, *args, **kwargs):
+        if not self.can_access():
+            return self.handle_fail()
+
         self.campaign = get_object_or_404(
             EmailCampaign,
             competition=get_active_competition(self.request),
             pk=kwargs["pk"],
         )
         if not can_edit_campaign(self.request, self.campaign):
-            raise PermissionDenied()
+            return self.handle_fail()
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
