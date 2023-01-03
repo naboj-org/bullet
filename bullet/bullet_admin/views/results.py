@@ -3,7 +3,6 @@ from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from competitions.models import CategoryCompetition, Venue
 from countries.models import BranchCountry
-from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
@@ -36,9 +35,12 @@ class ResultsAnnouncementView(AdminRequiredMixin, TemplateView):
     template_name = "bullet_admin/results/announce.html"
 
     def dispatch(self, request, *args, **kwargs):
+        if not self.can_access():
+            return self.handle_fail()
+
         self.venue = get_object_or_404(Venue, id=kwargs["venue"])
         if not can_access_venue(request, self.venue):
-            raise PermissionDenied()
+            return self.handle_fail()
 
         return super().dispatch(request, *args, **kwargs)
 
