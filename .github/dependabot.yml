@@ -5,15 +5,23 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    rebase-strategy: "disabled"
+    labels: ["dependencies"]
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
       interval: "daily"
+    rebase-strategy: "disabled"
+    labels: ["dependencies"]
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "daily"
+    rebase-strategy: "disabled"
+    labels: ["dependencies"]
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "daily"
+    rebase-strategy: "disabled"
+    labels: ["dependencies"]
