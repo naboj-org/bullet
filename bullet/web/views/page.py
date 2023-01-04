@@ -14,6 +14,7 @@ class PageView(TemplateView):
             Page,
             branch=self.request.BRANCH,
             language=translation.get_language(),
+            countries__contains=[self.request.COUNTRY_CODE.upper()],
             slug=kwargs["slug"],
         )
 
