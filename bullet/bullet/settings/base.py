@@ -160,5 +160,11 @@ MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
 
 PROBLEM_SOLVE_KEY = os.environ.get("PROBLEM_SOLVE_KEY", "")
 
+
+def silky_intercept(request):
+    return not request.path.startswith("/silk/")
+
+
 SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
+SILKY_INTERCEPT_FUNC = silky_intercept
