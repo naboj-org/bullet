@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
+    path("silk/", include("silk.urls", namespace="silk")),
     path("", admin.site.urls),
 ]
 

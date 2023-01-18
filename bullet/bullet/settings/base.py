@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_minify_html",
     "fontawesomefree",
     "django_htmx",
+    "silk",
 ]
 
 DATABASES = {
@@ -61,6 +62,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "silk.middleware.SilkyMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
     "django_minify_html.middleware.MinifyHtmlMiddleware",
@@ -157,3 +159,6 @@ MEILISEARCH_URL = os.environ.get("MEILISEARCH_URL", "http://meilisearch:7700/")
 MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
 
 PROBLEM_SOLVE_KEY = os.environ.get("PROBLEM_SOLVE_KEY", "")
+
+SILKY_AUTHENTICATION = True
+SILKY_AUTHORISATION = True
