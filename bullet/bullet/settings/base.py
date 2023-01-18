@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_minify_html",
     "fontawesomefree",
     "django_htmx",
+    "silk",
 ]
 
 DATABASES = {
@@ -61,9 +62,10 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "silk.middleware.SilkyMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
-    "django_minify_html.middleware.MinifyHtmlMiddleware",
+    "web.middleware.BulletMinifyHtmlMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
 
@@ -157,3 +159,12 @@ MEILISEARCH_URL = os.environ.get("MEILISEARCH_URL", "http://meilisearch:7700/")
 MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
 
 PROBLEM_SOLVE_KEY = os.environ.get("PROBLEM_SOLVE_KEY", "")
+
+
+def silky_intercept(request):
+    return not request.path.startswith("/silk/")
+
+
+SILKY_AUTHENTICATION = True
+SILKY_AUTHORISATION = True
+SILKY_INTERCEPT_FUNC = silky_intercept

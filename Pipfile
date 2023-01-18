@@ -25,6 +25,7 @@ fontawesomefree = "==6.2.1"
 django-htmx = "==1.13.0"
 meilisearch = "==0.23.0"
 pikepdf = "==6.2.7"
+django-silk = "==5.0.3"
 
 [dev-packages]
 black = "==22.12.0"
