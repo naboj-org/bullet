@@ -65,7 +65,7 @@ MIDDLEWARE = [
     "silk.middleware.SilkyMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
-    "django_minify_html.middleware.MinifyHtmlMiddleware",
+    "web.middleware.BulletMinifyHtmlMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
 

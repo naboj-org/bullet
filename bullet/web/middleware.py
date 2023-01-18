@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.http import HttpResponseNotFound
+from django_minify_html.middleware import MinifyHtmlMiddleware
 
 
 class AdminDomainMiddleware:
@@ -23,3 +24,9 @@ class AdminDomainMiddleware:
 
         response = self.get_response(request)
         return response
+
+
+class BulletMinifyHtmlMiddleware(MinifyHtmlMiddleware):
+    def should_minify(self, request, response) -> bool:
+        is_admin = hasattr(request, "_is_admin_domain") and request._is_admin_domain
+        return super().should_minify(request, response) and not is_admin
