@@ -24,6 +24,7 @@ def get_results(
         ResultRow.objects.filter(id__in=rows)
         .order_by("-solved_count", "-solved_problems", "competition_time")
         .select_related("team", "team__school")
+        .prefetch_related("team__contestants", "team__contestants__grade")
     )
 
 
