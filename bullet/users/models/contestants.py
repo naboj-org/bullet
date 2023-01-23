@@ -7,6 +7,7 @@ from django.db import models
 from django.db.models import Q
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
+from simple_history.models import HistoricalRecords
 from users.emails.teams import send_to_competition_email
 
 from bullet import search
@@ -83,6 +84,7 @@ class Team(models.Model):
     consent_photos = models.BooleanField(default=False)
 
     objects = TeamQuerySet.as_manager()
+    history = HistoricalRecords()
 
     class Meta:
         unique_together = [
@@ -207,6 +209,8 @@ class Contestant(models.Model):
         blank=True,
         null=True,
     )
+
+    history = HistoricalRecords()
 
     def __str__(self):
         name = self.full_name
