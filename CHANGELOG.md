@@ -5,6 +5,10 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+### Fixed
+
+- Grade display in readonly team edit form
+
 ## 2023.1 - 2023-01-18
 
 ### Added
