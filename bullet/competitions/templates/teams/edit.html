@@ -113,19 +113,18 @@
                 </form>
             {% else %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {% for f in form %}
+                {% for contestant in team.contestants.all %}
                     <div>
                         <h3 class="text-xl mt-3 mb-1">
                             {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
-                            {{ f.id }}
                         </h3>
                         <p>
                             <strong>{% trans "Full name" %}:</strong>
-                            {{ f.full_name.value|stringformat:'s' }}
+                            {{ contestant.full_name }}
                         </p>
                         <p>
                             <strong>{% trans "Grade" %}:</strong>
-                            {{ f.grade.value|stringformat:'s' }}
+                            {{ contestant.grade.name }}
                         </p>
                     </div>
                 {% endfor %}
