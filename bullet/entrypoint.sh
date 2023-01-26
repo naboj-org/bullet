@@ -10,6 +10,5 @@ do
     sleep 1
 done
 
-python manage.py collectstatic --no-input
 python manage.py migrate
-python manage.py runserver 0.0.0.0:8000
+exec python manage.py runserver 0.0.0.0:8000
