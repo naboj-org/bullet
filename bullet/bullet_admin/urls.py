@@ -175,6 +175,11 @@ urlpatterns = [
         documents.CertificateView.as_view(),
         name="docs_certificates",
     ),
+    path(
+        "documents/team_lists/",
+        documents.TeamListView.as_view(),
+        name="docs_teamlists",
+    ),
     path("results/", results.ResultsHomeView.as_view(), name="results"),
     path(
         "results/announce/<venue>/",
