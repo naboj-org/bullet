@@ -79,7 +79,7 @@ class TeamEditView(FormView):
     def dispatch(self, request, *args, **kwargs):
         self.team = (
             Team.objects.select_related("venue__category_competition")
-            .prefetch_related("contestants")
+            .prefetch_related("contestants", "contestants__grade")
             .filter(secret_link=kwargs.pop("secret_link"))
             .first()
         )
