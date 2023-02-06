@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cc1d100033157a8589688cbfb8b4c12208a728437645d67792534da0a1fe2f96"
+            "sha256": "a4896f137edf56821ddd5c386f7e3ec013402b003ff0fbf60f4d76b11065ab73"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -157,7 +157,7 @@
                 "sha256:4b01725c8ccf918752436a8aab595fa153c5123c147225434bf1f40041acb3c7",
                 "sha256:7f200e1d1067245f39ae2df6c547dc3de8619060012679702f6471187280e6eb"
             ],
-            "markers": "python_version >= '3.7' and python_version < '4'",
+            "markers": "python_version >= '3.7' and python_version < '4.0'",
             "version": "==3.0.0"
         },
         "certifi": {
@@ -497,11 +497,11 @@
         },
         "meilisearch": {
             "hashes": [
-                "sha256:2b649540b533eeb02b47f1d354c868004652886f6279ecf4d270b64290fa46c2",
-                "sha256:7fd7238bf5ad079a398092725e2d38f22ac3517916fe262014507bfd9b181d6a"
+                "sha256:18994f7d9a13792e2211e7f043d39ef09c6e9e332fb7c92cd6f354313d01b525",
+                "sha256:af0a466adab7e4eecf315c4866678b7fa319a68ab310260cf3ebb37e3bc87a82"
             ],
             "index": "pypi",
-            "version": "==0.23.0"
+            "version": "==0.24.0"
         },
         "minify-html": {
             "hashes": [
@@ -887,7 +887,7 @@
                 "sha256:64299f4909223da747622c030b781c0d7811e359c37124b4bd368fb8c6518baa",
                 "sha256:98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"
             ],
-            "markers": "python_version >= '3.7' and python_version < '4'",
+            "markers": "python_version >= '3.7' and python_version < '4.0'",
             "version": "==2.28.2"
         },
         "setuptools": {
@@ -1151,10 +1151,11 @@
         },
         "mypy-extensions": {
             "hashes": [
-                "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d",
-                "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"
+                "sha256:4392f6c0eb8a5668a69e23d168ffa70f0be9ccfd32b5cc2d26a34ae5b844552d",
+                "sha256:75dbf8955dc00442a438fc4d0666508a9a97b6bd41aa2f0ffe9d2f2725af0782"
             ],
-            "version": "==0.4.3"
+            "markers": "python_version >= '3.5'",
+            "version": "==1.0.0"
         },
         "nodeenv": {
             "hashes": [
