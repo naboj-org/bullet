@@ -1,15 +1,20 @@
 import io
-from typing import Iterable
 
+from django.db.models import QuerySet
 from documents.generators.reportlab_utils import prepare_pdf, render_table
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.platypus import Paragraph
-from users.models import Team
 
 
-def team_list(teams: Iterable[Team], title: str) -> io.BytesIO:
+def team_list(teams: QuerySet, title: str) -> io.BytesIO:
+    teams = (
+        teams.order_by("number")
+        .prefetch_related("contestants")
+        .select_related("school", "venue")
+    )
+
     buf, doc = prepare_pdf(
         "This document contains personal information, "
         "please discard it properly after the competition."
