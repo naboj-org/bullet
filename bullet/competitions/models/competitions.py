@@ -14,6 +14,7 @@ class CompetitionQuerySet(models.QuerySet):
 class Competition(models.Model):
     name = models.CharField(max_length=128)
     branch = BranchField()
+    number = models.IntegerField()
 
     web_start = models.DateTimeField()
 
@@ -32,6 +33,15 @@ class Competition(models.Model):
     is_cancelled = models.BooleanField(default=False)
 
     objects = CompetitionQuerySet.as_manager()
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                "branch",
+                "number",
+                name="competition_branch_number_unique",
+            )
+        ]
 
     def __str__(self):
         return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'

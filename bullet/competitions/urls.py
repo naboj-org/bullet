@@ -1,4 +1,4 @@
-from competitions.views import live, register, teams
+from competitions.views import archive, live, register, teams
 from django.urls import path
 
 urlpatterns = [
@@ -48,4 +48,5 @@ urlpatterns = [
         live.LiveFirstProblemView.as_view(),
         name="live_first_problem",
     ),
+    path("archive/", archive.ArchiveListView.as_view(), name="archive"),
 ]
