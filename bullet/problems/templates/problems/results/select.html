@@ -5,8 +5,18 @@
 
 {% block title %}{% trans "Results" %}{% endblock %}
 
+{% block extrahead %}
+    {{ block.super }}
+    <link rel="canonical" href="{% country_url "archive_results" competition_number=competition.number %}">
+{% endblock %}
+
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-16 mb-4 md:mb-12">{% trans "Results" %}</h1>
+<div class="mt-8 md:mt-24 mb-4 md:mb-16">
+    <h1 class="text-4xl md:text-6xl font-bold">
+        {% trans "Results" %}
+    </h1>
+    <h2 class="text-2xl md:text-4xl mt-4 font-bold">{{ competition.name }}</h2>
+</div>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +26,7 @@
 
         {% for category in categories %}
         <a class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
-           href="{% country_url "results_category" category=category.identifier %}">
+           href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}">
             <span class="block font-bold text-xl">
                 {% content_block "category:name_"|add:category.identifier %}
             </span>
