@@ -4,24 +4,24 @@ updates:
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     rebase-strategy: "disabled"
     labels: ["dependencies"]
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     rebase-strategy: "disabled"
     labels: ["dependencies"]
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     rebase-strategy: "disabled"
     labels: ["dependencies"]
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "monthly"
     rebase-strategy: "disabled"
     labels: ["dependencies"]
