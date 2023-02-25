@@ -5,9 +5,20 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.2 - 2023-02-25
+
+### Added
+
+- Persian translations
+
+### Changed
+
+- Django admin titles
+
 ### Fixed
 
 - Grade display in readonly team edit form
+- Results view executing many SQL queries
 
 ## 2023.1 - 2023-01-18
 
