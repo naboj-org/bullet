@@ -23,7 +23,7 @@ pillow = "==9.4.0"
 django-minify-html = "==1.4.0"
 fontawesomefree = "==6.3.0"
 django-htmx = "==1.13.0"
-meilisearch = "==0.23.0"
+meilisearch = "==0.25.0"
 pikepdf = "==6.2.9"
 django-silk = "==5.0.3"
 
