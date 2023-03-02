@@ -42,6 +42,20 @@ def load_blocks(context, *groups):
     return ""
 
 
+def _render_block(request, group, ref, content, logged_content=None):
+    if "showblocks" in request.GET and request.user.is_authenticated:
+        link = reverse(
+            "badmin:contentblock_trans",
+            kwargs={"group": group, "reference": ref},
+        )
+        if logged_content:
+            content = logged_content
+        return mark_safe(
+            f"<a href='{link}' class='cb-edit' title='{group}:{ref}'>{content}</a>"
+        )
+    return mark_safe(content)
+
+
 @register.simple_tag(name="content_block", takes_context=True)
 def content_block(context, combined_ref, allow_empty=False):
     group, ref = combined_ref.split(":", 1)
@@ -61,17 +75,14 @@ def content_block(context, combined_ref, allow_empty=False):
 
     for key in keys:
         if key in context["__blocks"]:
-            c = context["__blocks"][key]
-            if "showblocks" in request.GET and request.user.is_authenticated:
-                link = reverse(
-                    "badmin:contentblock_trans",
-                    kwargs={"group": group, "reference": ref},
-                )
-                return mark_safe(
-                    f"<a href='{link}' class='cb-edit' title='{group}:{ref}'>{c}</a>"
-                )
-            return mark_safe(c)
+            return _render_block(request, group, ref, context["__blocks"][key])
 
     if allow_empty:
-        return ""
-    return mark_safe(f"<span class='cb-missing'>Missing '{group}:{ref}'</span>")
+        return _render_block(request, group, ref, "", f"({group}:{ref})")
+    return _render_block(
+        request,
+        group,
+        ref,
+        f"<span class='cb-missing'>Missing '{group}:{ref}'</span>",
+        f"Missing {group}:{ref}",
+    )
