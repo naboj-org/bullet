@@ -5,6 +5,15 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+### Added
+
+- German translations
+- Estonian translations
+
+### Changed
+
+- Polish translations
+
 ## 2023.2 - 2023-02-25
 
 ### Added
