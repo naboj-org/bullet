@@ -10,7 +10,7 @@
 {% if field.widget_type != 'recaptchav2invisible' %}
 <div class="mb-6">
     {% if field.widget_type != "checkboxselectmultiple" and field.field.widget.input_type == "checkbox" %}
-        {{ field|add_class:"checkbox mr-1" }}
+        {{ field|add_class:"checkbox me-1" }}
     {% endif %}
 
     {% if field.label %}
