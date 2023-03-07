@@ -1,7 +1,7 @@
 {% load static %}
 {% load i18n %}
-<!doctype html>
-<html lang="{{ request.LANGUAGE_CODE }}">
+<!doctype html>{% get_current_language_bidi as lang_bidi %}
+<html lang="{{ request.LANGUAGE_CODE }}" {% if lang_bidi %}dir="rtl"{% endif %}>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
