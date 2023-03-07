@@ -7,6 +7,7 @@ from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
+from django.utils.translation import get_language, get_language_info
 from django.utils.translation import gettext_lazy as _
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, Team
@@ -54,9 +55,18 @@ class SchoolSelectForm(forms.Form):
 
 
 class RegistrationForm(ModelForm):
-    def __init__(self, **kwargs):
+    def __init__(self, languages, **kwargs):
         super().__init__(**kwargs)
         self.fields["contact_phone"].widget.region = get_country().upper()
+
+        choices = []
+        for lang in languages:
+            choices.append((lang, get_language_info(lang)["name_local"]))
+        self.fields["language"].choices = choices
+        self.fields["language"].initial = get_language()
+
+        if len(choices) == 1:
+            self.fields["language"].widget = forms.HiddenInput()
 
     class Meta:
         model = Team
@@ -64,11 +74,18 @@ class RegistrationForm(ModelForm):
             "contact_name",
             "contact_email",
             "contact_phone",
+            "language",
         ]
         labels = {
             "contact_name": _("Full name"),
             "contact_email": _("Email"),
             "contact_phone": _("Phone number"),
+            "language": _("Language"),
+        }
+        help_texts = {
+            "language": _(
+                "You will receive problem statements in the language you chose."
+            ),
         }
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Invisible)
