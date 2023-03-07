@@ -1,5 +1,6 @@
 from typing import Iterable
 
+from bullet_admin.forms.utils import get_language_choices_for_venue
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
 from competitions.models import CategoryCompetition, Venue
@@ -7,7 +8,7 @@ from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import ModelForm
-from django.utils.translation import get_language, get_language_info
+from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, Team
@@ -55,13 +56,11 @@ class SchoolSelectForm(forms.Form):
 
 
 class RegistrationForm(ModelForm):
-    def __init__(self, languages, **kwargs):
+    def __init__(self, venue, **kwargs):
         super().__init__(**kwargs)
         self.fields["contact_phone"].widget.region = get_country().upper()
 
-        choices = []
-        for lang in languages:
-            choices.append((lang, get_language_info(lang)["name_local"]))
+        choices = get_language_choices_for_venue(venue)
         self.fields["language"].choices = choices
         self.fields["language"].initial = get_language()
 

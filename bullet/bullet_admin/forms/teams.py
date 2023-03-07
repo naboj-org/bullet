@@ -1,4 +1,9 @@
-from bullet_admin.forms.utils import get_country_choices, get_venue_queryset
+from bullet_admin.forms.utils import (
+    get_country_choices,
+    get_language_choices,
+    get_language_choices_for_venue,
+    get_venue_queryset,
+)
 from competitions.models import Competition, Venue
 from django import forms
 from django_countries.fields import CountryField
@@ -12,6 +17,7 @@ class TeamForm(forms.ModelForm):
             "contact_name",
             "contact_email",
             "contact_phone",
+            "language",
             "school",
             "venue",
             "is_checked_in",
@@ -26,6 +32,13 @@ class TeamForm(forms.ModelForm):
         self.fields["venue"].queryset = Venue.objects.filter(
             category_competition__competition=competition
         ).select_related("category_competition")
+        if self.instance:
+            self.fields["language"].choices = get_language_choices_for_venue(
+                self.instance.venue
+            )
+        else:
+            self.fields["language"].choices = get_language_choices(competition.branch)
+
         self.fields["school"].required = True
 
 

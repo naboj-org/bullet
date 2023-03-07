@@ -273,7 +273,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["languages"] = self.venue.accepted_languages
+        kw["venue"] = self.venue
         return kw
 
     def get_formset(self):
