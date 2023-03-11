@@ -14,6 +14,12 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 - Polish translations
 
+## 2023.3 - 2023-03-02
+
+### Changed
+
+- ?showblocks now also shows links for missing blocks
+
 ## 2023.2 - 2023-02-25
 
 ### Added
