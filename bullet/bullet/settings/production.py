@@ -2,6 +2,8 @@ import os
 
 import dj_database_url
 
+import bullet
+
 from .base import *  # noqa
 
 SECRET_KEY = os.environ.get("SECRET_KEY")
@@ -31,3 +33,17 @@ LOGGING = {
         "level": "WARNING",
     },
 }
+
+dsn = os.environ.get("SENTRY_DSN", None)
+if dsn:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=dsn,
+        integrations=[DjangoIntegration()],
+        auto_session_tracking=False,
+        traces_sample_rate=0,
+        send_default_pii=True,
+        release=bullet.VERSION,
+    )
