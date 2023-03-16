@@ -1,5 +1,6 @@
 from enum import IntEnum
 
+from bullet_admin.utils import is_admin
 from competitions.forms.registration import (
     CategorySelectForm,
     ContestantForm,
@@ -45,11 +46,15 @@ class RegistrationMixin:
         if competition is None:
             # Not translated as this should not happen in production.
             raise RegistrationError("No competitions in database.")
+
+        # Admin can register at any time
+        if request.user.is_authenticated and is_admin(request.user, competition):
+            return competition
+
         if competition.registration_start > timezone.now():
             raise RegistrationError(_("Registration did not start yet."))
         if competition.registration_end < timezone.now():
             raise RegistrationError(_("Registration is over."))
-
         return competition
 
     def _load_category(self, request) -> CategoryCompetition:
