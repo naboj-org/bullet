@@ -2,8 +2,12 @@
 {% load widget_tweaks %}
 {% load i18n %}
 
-{% if errors %}
-{{ errors }}
+{% if form.non_field_errors %}
+    <ul class="text-red-600 mb-4">
+        {% for err in form.non_field_errors %}
+            <li>{{ err }}</li>
+        {% endfor %}
+    </ul>
 {% endif %}
 
 {% for field in form.visible_fields %}

@@ -1,6 +1,7 @@
 from competitions.branches import Branch
 from countries.models import BranchCountry
 from django import forms
+from django.core.exceptions import ValidationError
 from web.models import ContentBlock, Logo, Menu, Page
 
 
@@ -50,6 +51,7 @@ class ContentBlockForm(forms.ModelForm):
 
     def __init__(self, branch: Branch, **kwargs):
         super().__init__(**kwargs)
+        self._branch = branch
         available_countries = set()
         available_languages = set()
 
@@ -80,6 +82,24 @@ class ContentBlockForm(forms.ModelForm):
 class ContentBlockWithRefForm(ContentBlockForm):
     class Meta(ContentBlockForm.Meta):
         fields = ("group", "reference", "language", "country", "content")
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        qs = ContentBlock.objects
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+
+        if qs.filter(
+            group=cleaned_data.get("group"),
+            reference=cleaned_data.get("reference"),
+            branch=self._branch,
+            country=cleaned_data.get("country"),
+            language=cleaned_data.get("language"),
+        ).exists():
+            raise ValidationError("This content block already exists.")
+
+        return cleaned_data
 
 
 class LogoForm(forms.ModelForm):
