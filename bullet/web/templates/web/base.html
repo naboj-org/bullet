@@ -48,4 +48,7 @@
     {% endblock %}
 
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    {% if not debug %}
+    <script defer data-domain="{{ branch.domain }}" src="https://analytics.trojsten.sk/js/script.js"></script>
+    {% endif %}
 {% endblock %}
