@@ -21,3 +21,11 @@ class CertificateForm(forms.Form):
             branch=competition.branch
         ).order_by("name")
         self.fields["venue"].queryset = get_venue_queryset(competition, user)
+
+
+class TeamListForm(forms.Form):
+    venue = forms.ModelChoiceField(queryset=Venue.objects.none())
+
+    def __init__(self, competition: Competition, user: User, **kwargs):
+        super().__init__(**kwargs)
+        self.fields["venue"].queryset = get_venue_queryset(competition, user)

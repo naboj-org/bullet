@@ -88,6 +88,11 @@ def admin_sidebar(context):
                         "Certificates",
                         reverse("badmin:docs_certificates"),
                     ),
+                    (
+                        "fa-list",
+                        "Team lists",
+                        reverse("badmin:docs_teamlists"),
+                    ),
                 ),
             )
         )
