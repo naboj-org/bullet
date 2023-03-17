@@ -8,6 +8,7 @@ from education.importers.fr import FrenchSchoolImporter
 from education.importers.hr import CroatianSchoolImporter
 from education.importers.hu import HungarianSchoolImporter
 from education.importers.nl import DutchSchoolImporter
+from education.importers.old import OldSchoolImporter
 from education.importers.pl import PolishSchoolImporter
 from education.importers.sk import SlovakSchoolImporter
 
@@ -22,4 +23,5 @@ IMPORTERS = {
     "hu": HungarianSchoolImporter,
     "nl": DutchSchoolImporter,
     "be": BelgianSchoolImporter,
+    "old": OldSchoolImporter,
 }
