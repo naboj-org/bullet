@@ -89,6 +89,7 @@ class Team(models.Model):
             ("venue", "number"),
             ("venue", "school", "in_school_symbol"),
         ]
+        ordering = ["number", "id"]
 
     def __str__(self):
         return self.display_name
