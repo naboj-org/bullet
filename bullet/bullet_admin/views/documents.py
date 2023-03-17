@@ -52,4 +52,4 @@ class TeamListView(AdminRequiredMixin, FormView):
             Team.objects.competing().filter(venue=venue),
             f"Team list: {venue.name}",
         )
-        return FileResponse(data, as_attachment=True, filename="certificates.pdf")
+        return FileResponse(data, as_attachment=True, filename="team_list.pdf")
