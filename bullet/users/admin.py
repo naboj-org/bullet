@@ -2,6 +2,7 @@ from competitions.models import Venue
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from education.models import Grade
+from simple_history.admin import SimpleHistoryAdmin
 from users.models import Contestant, Team, User
 
 
@@ -50,7 +51,7 @@ class TeamContestantInlineAdmin(admin.TabularInline):
 
 
 @admin.register(Team)
-class TeamAdmin(admin.ModelAdmin):
+class TeamAdmin(SimpleHistoryAdmin):
     inlines = (TeamContestantInlineAdmin,)
     list_display = (
         "school",
@@ -86,7 +87,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 @admin.register(Contestant)
-class ContestantAdmin(admin.ModelAdmin):
+class ContestantAdmin(SimpleHistoryAdmin):
     autocomplete_fields = ("team",)
     list_select_related = ("grade__school_type",)
 

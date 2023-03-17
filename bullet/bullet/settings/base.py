@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "fontawesomefree",
     "django_htmx",
     "silk",
+    "simple_history",
 ]
 
 DATABASES = {
@@ -67,6 +68,7 @@ MIDDLEWARE = [
     "countries.middleware.CountryLanguageMiddleware",
     "web.middleware.BulletMinifyHtmlMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
+    "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
 PARENT_HOST = os.environ.get("PARENT_HOST")
