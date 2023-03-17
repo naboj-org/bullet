@@ -111,6 +111,14 @@
                                 {% endif %}
                             </div>
                         </div>
+                        {% if form.language %}
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <label for="{{ form.language.id_for_label }}">Language <span class="text-red-600">*</span></label>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                {% bfield form.language %}
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <div>Team number</div>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">

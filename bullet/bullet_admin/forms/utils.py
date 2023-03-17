@@ -59,3 +59,10 @@ def get_venue_queryset(competition: Competition, user: User):
             venue_qs = venue_qs.filter(id__in=crole.venues)
 
     return venue_qs
+
+
+def get_language_choices_for_venue(venue: Venue):
+    languages = venue.accepted_languages
+    choices = [(lang, get_language_info(lang)["name_translated"]) for lang in languages]
+    choices.sort(key=lambda x: x[1])
+    return choices

@@ -276,6 +276,11 @@ class TeamDetailsView(RegistrationMixin, FormView):
         ctx["formset"] = self.get_formset()
         return ctx
 
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["venue"] = self.venue
+        return kw
+
     def get_formset(self):
         return formset_factory(
             ContestantForm,
