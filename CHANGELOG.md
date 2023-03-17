@@ -5,14 +5,29 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.3.1 - 2023-03-18
+
 ### Added
 
 - German translations
 - Estonian translations
+- Default team ordering
+- Website analytics
+- Team change history
+- Generation of PDF team lists
+- Support for RTL
+- Language select field in team registration
+- Import some schools from old website
 
 ### Changed
 
 - Polish translations
+- Wording of some texts in the admin interface
+
+### Fixed
+
+- Admin can now register teams at any time
+- IntegrityError when creating content blocks
 
 ## 2023.3 - 2023-03-02
 
