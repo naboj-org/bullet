@@ -17,7 +17,7 @@ class ImportedSchool:
     def get_identifier(self):
         if self.identifier:
             return self.identifier
-        key = f"{self.name},{self.address}".encode("utf-8")
+        key = f"{self.name.strip()},{self.address.strip()}".encode("utf-8")
         return hashlib.sha1(key).hexdigest()
 
 
@@ -80,8 +80,8 @@ class BaseSchoolImporter:
                 )
                 res.created += 1
 
-            obj.name = school.name
-            obj.address = school.address
+            obj.name = school.name.strip()
+            obj.address = school.address.strip()
             obj.country = school.country
             obj.search = school.search
             obj.save(send_to_search=False)
