@@ -9,6 +9,7 @@ from bullet_admin.views import (
     scanning,
     teams,
     users,
+    venues,
 )
 from django.urls import path
 
@@ -186,4 +187,7 @@ urlpatterns = [
         results.ResultsAnnouncementView.as_view(),
         name="results_announce",
     ),
+    path("venues/", venues.VenueListView.as_view(), name="venue_list"),
+    path("venues/<int:pk>/", venues.VenueUpdateView.as_view(), name="venue_update"),
+    path("venues/create/", venues.VenueCreateView.as_view(), name="venue_create"),
 ]
