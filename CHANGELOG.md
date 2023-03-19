@@ -5,6 +5,19 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.3.2 - 2023-03-19
+
+### Added
+
+- Venue management interface in admin
+- Cache busting for the CSS file
+
+### Changed
+
+- Estonian translations
+- Math homepage map
+- Schools are now indexed implicitly
+
 ## 2023.3.1 - 2023-03-18
 
 ### Added
