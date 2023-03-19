@@ -16,7 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
     {% block extrahead %}
-        <link rel="stylesheet" href="{% static 'app.css' %}" type="text/css"/>
+        <link rel="stylesheet" href="{% static 'app.css' %}?v={{ bullet_version }}" type="text/css"/>
     {% endblock %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 </head>
