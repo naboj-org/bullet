@@ -71,7 +71,7 @@ class School(models.Model):
     def __str__(self):
         return f"{self.name}, {self.address}"
 
-    def save(self, send_to_search=False, **kwargs):
+    def save(self, send_to_search=True, **kwargs):
         x = super().save(**kwargs)
         if send_to_search:
             search.client.index("schools").add_documents(
