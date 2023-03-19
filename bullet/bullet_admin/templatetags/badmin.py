@@ -70,11 +70,23 @@ def admin_sidebar(context):
             )
         )
 
-    if branch_role.is_admin or competition_role.can_delegate:
+    if (
+        branch_role.is_admin
+        or competition_role.can_delegate
+        or competition_role.countries
+        and not competition_role.is_operator
+    ):
+        items = []
+
+        if competition_role.can_delegate or branch_role.is_admin:
+            items.append(("fa-users", "Users", reverse("badmin:user_list")))
+        if branch_role.is_admin or competition_role.countries:
+            items.append(("fa-location-pin", "Venues", reverse("badmin:venue_list")))
+
         menu_items.append(
             (
-                "Access",
-                (("fa-users", "Users", reverse("badmin:user_list")),),
+                "Settings",
+                items,
             )
         )
 
@@ -104,3 +116,8 @@ def admin_sidebar(context):
         }
     )
     return context
+
+
+@register.inclusion_tag("bullet_admin/form.html")
+def admin_form(form):
+    return {"form": form}

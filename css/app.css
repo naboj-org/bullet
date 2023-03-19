@@ -100,6 +100,10 @@
     @apply underline text-primary hover:text-primary-dark;
 }
 
+.link {
+    @apply underline text-blue-600 hover:text-blue-700;
+}
+
 /* timeline */
 .timeline {
     position: relative;
