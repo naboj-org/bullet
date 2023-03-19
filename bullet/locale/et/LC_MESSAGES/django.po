@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-02-25 14:58+0000\n"
-"PO-Revision-Date: 2023-03-06 17:05+0200\n"
+"POT-Creation-Date: 2023-03-19 21:55+0000\n"
+"PO-Revision-Date: 2023-03-17 19:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: et_EE\n"
@@ -56,11 +56,11 @@ msgstr "Keemia"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:51
+#: competitions/forms/registration.py:53
 msgid "Selected school is not valid."
 msgstr "Valitud kooli ei leidu."
 
-#: competitions/forms/registration.py:69
+#: competitions/forms/registration.py:79
 #: competitions/templates/register/details.html:29
 #: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
@@ -70,21 +70,29 @@ msgstr "Valitud kooli ei leidu."
 msgid "Full name"
 msgstr "Ees- ja perekonnanimi"
 
-#: competitions/forms/registration.py:70
+#: competitions/forms/registration.py:80
 #: competitions/templates/teams/edit.html:44
 msgid "Email"
 msgstr "Meiliaadress"
 
-#: competitions/forms/registration.py:71
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:46
 msgid "Phone number"
 msgstr "Telefoninumber"
 
-#: competitions/forms/registration.py:92
+#: competitions/forms/registration.py:82
+msgid "Language"
+msgstr ""
+
+#: competitions/forms/registration.py:86
+msgid "You will receive problem statements in the language you chose."
+msgstr ""
+
+#: competitions/forms/registration.py:108
 msgid "(Please select)"
 msgstr "(Palun valige)"
 
-#: competitions/forms/registration.py:109
+#: competitions/forms/registration.py:125
 msgid "This grade can't compete in the chosen category."
 msgstr "See klass ei saa osaleda valitud vanuserühmas."
 
@@ -106,12 +114,8 @@ msgstr "Kui usute, et tegemist on veaga, võtke meiega ühendust."
 #: competitions/templates/register/partials/venue.html:17
 #: competitions/templates/teams/edit.html:38
 #, python-format
-msgid ""
-"At this venue, the competition will begin at %(time)s instead of the usual "
-"start time."
-msgstr ""
-"Selles võistluskeskuses algab võistlus tavapärase algusaja asemel kell "
-"%(time)s."
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja asemel kell %(time)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -143,9 +147,7 @@ msgstr "Võistlejad"
 
 #: competitions/templates/register/details.html:23
 #: competitions/templates/teams/edit.html:51
-msgid ""
-"You can change the list of contestants at any time before the start of the "
-"competition."
+msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Võistlejate nimekirja saab muuta igal ajal enne võistluse algust."
 
 #: competitions/templates/register/details.html:30
@@ -164,48 +166,24 @@ msgid "Contestant %(number)s"
 msgstr "Võistleja %(number)s"
 
 #: competitions/templates/register/details.html:45
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
 msgstr "Kohustuslik väli"
 
 #: competitions/templates/register/details.html:49
 #, python-format
-msgid ""
-"By registering for the Competition, the registrants (especially teachers or "
-"legal representatives of registered students) agree to the <a "
-"href=\"%(link)s\">competition rules</a> and undertake to follow them. At the "
-"same time, the registrant acknowledges that the personal data provided in "
-"the registration form are necessary to ensure the proper functioning of the "
-"Competition."
-msgstr ""
-"Võistlusele registreerudes nõustuvad registreerijad (eriti õpetajad või "
-"registreeritud õpilaste seaduslikud esindajad) <a "
-"href=\"%(link)s\">võistlusreeglitega</a> ja kohustuvad neid järgima. Samal "
-"ajal teadvustab registreerija, et registreerimisvormil esitatud isikuandmed "
-"on vajalikud võistluse nõuetekohase toimimise tagamiseks."
+msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
+msgstr "Võistlusele registreerudes nõustuvad registreerijad (eriti õpetajad või registreeritud õpilaste seaduslikud esindajad) <a href=\"%(link)s\">võistlusreeglitega</a> ja kohustuvad neid järgima. Samal ajal teadvustab registreerija, et registreerimisvormil esitatud isikuandmed on vajalikud võistluse nõuetekohase toimimise tagamiseks."
 
 #: competitions/templates/register/details.html:60
 #: competitions/templates/teams/edit.html:88
-msgid ""
-"The registrant agrees to allow the organizer to make video and/or audio "
-"recordings during the Competition, on which the image of the registrant and/"
-"or the registered person is captured and their publication on the "
-"Competition's website, social networks for marketing and promotional "
-"purposes of the Competition. <sup>[1]</sup>"
-msgstr ""
-"Registreerija nõustub lubama korraldajal teha võistluse ajal video- ja/või "
-"helisalvestusi, millel jäädvustatakse registreerija ja/või registreeritava "
-"isiku pilt, ning avaldada neid võistluse veebilehel ja sotsiaalvõrgustikes "
-"võistluse turunduse ja reklaami eesmärgil. <sup>[1]</sup>"
+msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
+msgstr "Registreerija nõustub lubama korraldajal teha võistluse ajal video- ja/või helisalvestusi, millel jäädvustatakse registreerija ja/või registreeritava isiku pilt, ning avaldada neid võistluse veebilehel ja sotsiaalvõrgustikes võistluse turunduse ja reklaami eesmärgil. <sup>[1]</sup>"
 
 #: competitions/templates/register/details.html:71
 #, python-format
-msgid ""
-"More information on the processing of personal data can be found <a "
-"href=\"%(link)s\">on this page</a>."
-msgstr ""
-"Lisateavet isikuandmete töötlemise kohta leiate <a href=\"%(link)s\">sellel "
-"leheküljel</a>."
+msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
+msgstr "Lisateavet isikuandmete töötlemise kohta leiate <a href=\"%(link)s\">sellel leheküljel</a>."
 
 #: competitions/templates/register/details.html:80
 #: web/templates/web/snippets/home_timeline.html:51
@@ -214,23 +192,8 @@ msgstr "Registreeru"
 
 #: competitions/templates/register/details.html:84
 #: competitions/templates/teams/edit.html:104
-msgid ""
-"<sup>[1]</sup> Consent is granted for the duration of the operation of the "
-"Competition's website and it's accounts on social networks. This consent can "
-"be revoked at any time by sending an e-mail to the address <a href=\"mailto:"
-"gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not "
-"affect the legality of the processing before its withdrawal. The affected "
-"person can request the deletion of personal data only if it is technically "
-"possible and the deletion does not affect the rights of other affected "
-"persons."
-msgstr ""
-"<sup>[1]</sup> Nõusolek antakse võistluse veebilehe ja sotsiaalvõrgustike "
-"kontode toimimise ajaks. Selle nõusoleku võib igal ajal tühistada, "
-"kirjutades inglise keeles meiliaadressile <a href=\"mailto:gdpr@trojsten."
-"sk\">gdpr@trojsten.sk</a>. Nõusoleku tagasivõtmine ei mõjuta töötlemise "
-"seaduslikkust enne selle tagasivõtmist. Mõjutatud isik võib nõuda "
-"isikuandmete kustutamist ainult siis, kui see on tehniliselt võimalik ja "
-"kustutamine ei mõjuta teiste mõjutatud isikute õigusi."
+msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
+msgstr "<sup>[1]</sup> Nõusolek antakse võistluse veebilehe ja sotsiaalvõrgustike kontode toimimise ajaks. Selle nõusoleku võib igal ajal tühistada, kirjutades inglise keeles meiliaadressile <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Nõusoleku tagasivõtmine ei mõjuta töötlemise seaduslikkust enne selle tagasivõtmist. Mõjutatud isik võib nõuda isikuandmete kustutamist ainult siis, kui see on tehniliselt võimalik ja kustutamine ei mõjuta teiste mõjutatud isikute õigusi."
 
 #: competitions/templates/register/partials/category.html:18
 #: competitions/templates/register/partials/school.html:16
@@ -259,14 +222,8 @@ msgid "Team successfully registered"
 msgstr "Võistkond on edukalt registreeritud"
 
 #: competitions/templates/register/thanks.html:16
-msgid ""
-"We've sent you a confirmation link. Please check your inbox and junk mail "
-"folder. <b>The team's registration won't be complete until you click on the "
-"confirmation link.</b>"
-msgstr ""
-"Saatsime teile kinnituslingi. Palun kontrollige oma postkasti ja rämpsposti "
-"kausta. <b>Võistkonna registreerimine ei ole lõpetatud enne, kui klõpsate "
-"kinnituslingile.</b>"
+msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
+msgstr "Saatsime teile kinnituslingi. Palun kontrollige oma postkasti ja rämpsposti kausta. <b>Võistkonna registreerimine ei ole lõpetatud enne, kui klõpsate kinnituslingile.</b>"
 
 #: competitions/templates/register/thanks.html:19
 msgid "Register another team"
@@ -287,12 +244,8 @@ msgid "Unregister team"
 msgstr "Tühista registreering"
 
 #: competitions/templates/teams/delete.html:14
-msgid ""
-"Are you certain you want to remove your team from the competition? This "
-"action is irreversible."
-msgstr ""
-"Kas olete kindel, et soovite tühistada oma võistkonna registreeringu? Seda "
-"tegevust ei saa tagasi pöörata."
+msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
+msgstr "Kas olete kindel, et soovite tühistada oma võistkonna registreeringu? Seda tegevust ei saa tagasi pöörata."
 
 #: competitions/templates/teams/delete.html:16
 msgid "Unregister"
@@ -313,12 +266,8 @@ msgid "Your team is in the waiting list."
 msgstr "Teie võistkond on ootenimekirjas."
 
 #: competitions/templates/teams/edit.html:21
-msgid ""
-"The capacity of the venue was exceeded, or your school has already enough "
-"teams registered. We will reach out to you if this situation changes."
-msgstr ""
-"Võistluskeskuse mahutavus on ületatud või on teie koolist juba piisavalt "
-"võistkondi registreeritud. Kui olukord muutub, võtame teiega ühendust."
+msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
+msgstr "Võistluskeskuse mahutavus on ületatud või on teie koolist juba piisavalt võistkondi registreeritud. Kui olukord muutub, võtame teiega ühendust."
 
 #: competitions/templates/teams/edit.html:62
 #: competitions/templates/teams/edit.html:79
@@ -334,10 +283,8 @@ msgid "Certificate"
 msgstr "Sertifikaat"
 
 #: competitions/templates/teams/edit.html:138
-msgid ""
-"You can download certificate for your team by clicking on the button below."
-msgstr ""
-"Saate oma võistkonna sertifikaadi alla laadida, klõpsates alloleval nupul."
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "Saate oma võistkonna sertifikaadi alla laadida, klõpsates alloleval nupul."
 
 #: competitions/templates/teams/edit.html:139
 msgid "Download certificate"
@@ -358,11 +305,11 @@ msgstr "Võistkondade nimekiri"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Võistkondi: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:49
+#: competitions/views/register.py:55
 msgid "Registration did not start yet."
 msgstr "Registreerumine pole veel alanud."
 
-#: competitions/views/register.py:51
+#: competitions/views/register.py:57
 msgid "Registration is over."
 msgstr "Registreerumine on lõppenud."
 
@@ -460,12 +407,8 @@ msgstr "Võistluse logo"
 
 #: web/templates/mail/base.html:355
 #, python-format
-msgid ""
-"You have received this message because you have registered for the "
-"competition %(branch)s."
-msgstr ""
-"Te olete saanud selle teate, sest olete registreerunud võistlusele "
-"%(branch)s."
+msgid "You have received this message because you have registered for the competition %(branch)s."
+msgstr "Te olete saanud selle teate, sest olete registreerunud võistlusele %(branch)s."
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
@@ -507,12 +450,8 @@ msgstr "Parimate soovidega,"
 
 #: web/templates/mail/messages/registration.html:25
 #: web/templates/mail/messages/to_competition.html:26
-msgid ""
-"If you are having difficulty clicking on the button, you can paste this "
-"address into your browser:"
-msgstr ""
-"Kui teil on raskusi nupule vajutamisega, võite kopeerida selle aadressi oma "
-"brauserisse:"
+msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
+msgstr "Kui teil on raskusi nupule vajutamisega, võite kopeerida selle aadressi oma brauserisse:"
 
 #: web/templates/mail/messages/team_delete.html:7
 #: web/templates/mail/messages/team_delete.txt:3
@@ -527,11 +466,8 @@ msgstr "Võistkonna liikmed: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
-msgid ""
-"Your team was moved from the waiting list to the list of competing teams."
-msgstr ""
-"Teie võistkond on eemaldatud ootenimekirjast ja lisatud osalevate "
-"võistkondade nimekirja."
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr "Teie võistkond on eemaldatud ootenimekirjast ja lisatud osalevate võistkondade nimekirja."
 
 #: web/templates/mail/messages/to_competition.html:10
 #: web/templates/mail/messages/to_competition.txt:5
@@ -561,7 +497,7 @@ msgstr "Registreerumine"
 #: web/templates/web/snippets/home_hero_buttons.html:8
 #, python-format
 msgid "Registration ends in %(end)s"
-msgstr "Registreerumine lõpeb %(end)s pärast"
+msgstr "Registreerumise lõpuni on jäänud %(end)s"
 
 #: web/templates/web/root_base.html:43
 msgid "Close"
@@ -570,7 +506,7 @@ msgstr "Sulge"
 #: web/templates/web/snippets/copyright.html:6
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
-msgstr "Kõik kellaajad on ajavööndis %(tz_name)s, kui ei ole märgitud teisiti."
+msgstr "Kõik kellaajad on ajavööndis %(tz_name)s, kui ei ole öeldud teisiti."
 
 #: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
@@ -590,7 +526,7 @@ msgstr "Olulised kuupäevad"
 
 #: web/templates/web/snippets/home_timeline.html:17
 msgid "Registration starts"
-msgstr "Registreerumine algab"
+msgstr "Registreerumine algus"
 
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
@@ -602,4 +538,4 @@ msgstr "Registreerumise lõpp"
 
 #: web/templates/web/snippets/home_timeline.html:43
 msgid "Competition day"
-msgstr "Võistluspäev"
+msgstr "Võistluse kuupäev"
