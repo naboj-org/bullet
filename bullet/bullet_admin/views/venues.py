@@ -18,15 +18,6 @@ class VenueObjectMixin:
 class VenueListView(AdminRequiredMixin, VenueObjectMixin, ListView):
     template_name = "bullet_admin/venues/list.html"
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        ctx = super().get_context_data(object_list=object_list, **kwargs)
-        ctx["my_venues"] = set(
-            get_venue_queryset(
-                get_active_competition(self.request), self.request.user
-            ).values_list("id", flat=True)
-        )
-        return ctx
-
 
 class VenueUpdateView(AdminRequiredMixin, VenueObjectMixin, UpdateView):
     template_name = "bullet_admin/venues/form.html"
