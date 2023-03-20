@@ -25,7 +25,13 @@ class VenueForm(ModelForm):
             "local_start",
         ]
         labels = {"shortcode": "Barcode prefix", "category_competition": "Category"}
-        help_texts = {"local_start": "YYYY-MM-DD HH:MM:SS"}
+        help_texts = {
+            "local_start": "YYYY-MM-DD HH:MM:SS",
+            "email": "Responses to automatic emails from this venue will be "
+            "sent there.",
+            "accepted_languages": "These languages can be selected when teams "
+            "register.",
+        }
 
         widgets = {
             "accepted_languages": forms.CheckboxSelectMultiple(),

@@ -6,7 +6,9 @@
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Venue list</h2>
+            {% if show_new %}
             <a href="{% url "badmin:venue_create" %}" class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New venue</a>
+            {% endif %}
         </header>
         <div class="overflow-x-auto whitespace-nowrap">
             <table class="w-full">
@@ -23,17 +25,10 @@
                     {% for v in object_list %}
                         <tr class="{% cycle "bg-gray-50" "" %}">
                             <td class="p-4">
-                                <div>
-                                    {% if v.id in my_venues %}
-                                    <a href="{% url 'badmin:venue_update' pk=v.id %}" class="link">
-                                        <span class="font-mono font-bold">{{ v.shortcode }}</span>
-                                        {{ v.name }}
-                                    </a>
-                                    {% else %}
+                                <a href="{% url 'badmin:venue_update' pk=v.id %}" class="link">
                                     <span class="font-mono font-bold">{{ v.shortcode }}</span>
                                     {{ v.name }}
-                                    {% endif %}
-                                </div>
+                                </a>
                                 <div class="text-sm text-gray-600">{{ v.address }}</div>
                             </td>
                             <td class="p-4">{{ v.country.name }}</td>

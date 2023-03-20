@@ -20,11 +20,9 @@ class VenueListView(AdminRequiredMixin, VenueObjectMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
-        ctx["my_venues"] = set(
-            get_venue_queryset(
-                get_active_competition(self.request), self.request.user
-            ).values_list("id", flat=True)
-        )
+        ctx["show_new"] = not self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).venues
         return ctx
 
 
