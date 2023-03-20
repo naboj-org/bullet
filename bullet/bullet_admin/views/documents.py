@@ -49,7 +49,7 @@ class TeamListView(AdminRequiredMixin, FormView):
             raise PermissionDenied()
 
         data = team_list(
-            Team.objects.competing().filter(venue=venue),
+            Team.objects.competing().filter(venue=venue, number__isnull=False),
             f"Team list: {venue.name}",
         )
         return FileResponse(data, as_attachment=True, filename="team_list.pdf")
