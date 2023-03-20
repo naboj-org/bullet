@@ -61,10 +61,9 @@ class TeamAdmin(SimpleHistoryAdmin):
         "is_reviewed",
     )
     search_fields = (
-        "school",
-        "venue",
-        "venue__category_competition",
-        "venue__category_competition__competition",
+        "school__name",
+        "school__address",
+        "venue__name",
     )
     list_select_related = (
         "school",
