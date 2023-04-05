@@ -63,9 +63,15 @@ def _waiting_list(team_filter: Q, inner_filter: Q):
         .annotate(
             from_school=Count(
                 "school__team",
-                filter=Q(
-                    school__team__registered_at__lte=F("registered_at"),
-                    school__team__confirmed_at__isnull=False,
+                filter=(
+                    Q(  # teams that were confirmed earlier than this team
+                        school__team__confirmed_at__lte=F("confirmed_at"),
+                        school__team__confirmed_at__isnull=False,
+                    )
+                    | Q(  # already competing teams
+                        school__team__is_waiting=False,
+                        school__team__confirmed_at__isnull=False,
+                    )
                 )
                 & inner_filter,
             )
