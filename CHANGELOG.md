@@ -5,6 +5,21 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4 - 2023-04-06
+
+### Added
+
+- Importer for Wales schools
+
+### Changed
+
+- Images on math homepage
+- Table column names on admin homepage
+
+### Fixed
+
+- "Teams from school" number in waiting list
+
 ## 2023.3.2 - 2023-03-19
 
 ### Added
