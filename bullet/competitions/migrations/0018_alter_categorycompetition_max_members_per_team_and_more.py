@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0017_alter_localizedproblem_unique_together_and_more"),
     ]

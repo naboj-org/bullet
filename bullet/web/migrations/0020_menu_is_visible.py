@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("web", "0019_logo_delete_organizer_delete_partner"),
     ]

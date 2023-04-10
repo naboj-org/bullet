@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("education", "0004_remove_school_izo_school_importer_and_more"),
     ]

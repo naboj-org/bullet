@@ -6,7 +6,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("web", "0010_remove_menu_url_remove_page_url_menu_countries_and_more"),
     ]

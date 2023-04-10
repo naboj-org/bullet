@@ -8,7 +8,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0009_alter_competitionsite_accepted_languages_and_more"),
     ]

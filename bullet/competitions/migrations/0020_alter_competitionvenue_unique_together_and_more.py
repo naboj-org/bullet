@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("bullet_admin", "0003_alter_competitionrole_venue"),
         ("competitions", "0019_remove_competitionvenue_email_alias_and_more"),

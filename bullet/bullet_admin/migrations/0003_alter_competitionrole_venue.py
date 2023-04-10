@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0019_remove_competitionvenue_email_alias_and_more"),
         ("bullet_admin", "0002_rename_can_translate_branchrole_is_translator_and_more"),

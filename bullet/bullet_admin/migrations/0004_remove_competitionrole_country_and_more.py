@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0023_remove_categorycompetition_ranking"),
         ("bullet_admin", "0003_alter_competitionrole_venue"),

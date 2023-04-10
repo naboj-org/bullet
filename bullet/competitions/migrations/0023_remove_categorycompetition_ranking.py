@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0022_remove_competition_graduation_year"),
     ]

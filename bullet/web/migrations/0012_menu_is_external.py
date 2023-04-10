@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("web", "0011_alter_menu_countries_alter_page_countries"),
     ]

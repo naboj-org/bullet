@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("bullet_admin", "0004_remove_competitionrole_country_and_more"),
     ]

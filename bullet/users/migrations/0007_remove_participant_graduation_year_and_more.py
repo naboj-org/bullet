@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("education", "0003_school_country_alter_grade_school_type"),
         ("users", "0006_rename_competition_site_team_competition_venue_and_more"),

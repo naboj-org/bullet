@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("users", "0005_alter_team_language"),
         ("address", "0003_auto_20200830_1851"),

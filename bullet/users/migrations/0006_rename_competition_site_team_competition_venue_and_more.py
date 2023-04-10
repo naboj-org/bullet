@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("education", "0002_auto_20211121_1405"),
         ("competitions", "0013_rename_competitionsite_competitionvenue_and_more"),

@@ -5,7 +5,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("users", "0017_team_is_checked_in"),
         ("problems", "0002_scannerlog"),

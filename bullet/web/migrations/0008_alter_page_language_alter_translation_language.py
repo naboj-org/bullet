@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("web", "0007_alter_menu_branch_alter_organizer_branch_and_more"),
     ]

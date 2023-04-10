@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ("competitions", "0021_rename_competitionvenue_venue"),
     ]
