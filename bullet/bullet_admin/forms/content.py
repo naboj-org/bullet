@@ -46,6 +46,8 @@ class PageForm(forms.ModelForm):
 
     def clean(self):
         data = self.cleaned_data
+        if self.errors:
+            return data
 
         qs = Page.objects
         if self.instance:
