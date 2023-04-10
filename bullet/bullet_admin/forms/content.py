@@ -17,6 +17,7 @@ class PageForm(forms.ModelForm):
 
     def __init__(self, branch: Branch, **kwargs):
         super().__init__(**kwargs)
+        self._branch = branch
         available_countries = set()
         available_languages = set()
 
@@ -42,6 +43,25 @@ class PageForm(forms.ModelForm):
                 key=lambda x: x[1],
             )
         )
+
+    def clean(self):
+        data = self.cleaned_data
+        if self.errors:
+            return data
+
+        qs = Page.objects
+        if self.instance:
+            qs = qs.exclude(id=self.instance.id)
+
+        if qs.filter(
+            slug=data.get("slug"),
+            branch=self._branch,
+            countries__overlap=data.get("countries"),
+            language=data.get("language"),
+        ).exists():
+            raise ValidationError("Page with the same slug already exists.")
+
+        return data
 
 
 class ContentBlockForm(forms.ModelForm):
