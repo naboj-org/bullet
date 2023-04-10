@@ -5,6 +5,16 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4.1 - 2023-04-11
+
+### Added
+
+- Importer for legacy Romanian schools
+
+### Fixed
+
+- Admin can no longer create multiple pages with the same slug in the same country/langauge.
+
 ## 2023.4 - 2023-04-06
 
 ### Added
