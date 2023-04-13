@@ -8,6 +8,12 @@
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
+            {% if not is_operator %}
+            <div class="flex gap-1">
+                <a href="{% url "badmin:team_assign_numbers" %}" class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Assign numbers</a>
+                <a href="{% url "badmin:team_export" %}" class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Export</a>
+            </div>
+            {% endif %}
         </header>
         <form method="get">
             <div class="p-4 border-b flex items-center gap-2">
