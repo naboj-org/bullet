@@ -75,6 +75,7 @@ class CampaignCreateView(AdminRequiredMixin, CreateView):
         obj = form.save(commit=False)
         obj.competition = get_active_competition(self.request)
         obj.save()
+        form.save_m2m()
 
         return HttpResponseRedirect(
             reverse("badmin:email_detail", kwargs={"pk": obj.id})
