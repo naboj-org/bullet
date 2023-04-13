@@ -122,10 +122,17 @@
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
                             <div>Team number</div>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
-                                {% if team.number %}
-                                <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                                {% if form.school %}
+                                    <div class="flex items-center gap-1">
+                                        <span class="text-gray-500">{{ team.venue.shortcode }}</span>
+                                        {% bfield form.number %}
+                                    </div>
                                 {% else %}
-                                <span class="text-gray-500">---</span>
+                                    {% if team.number %}
+                                    <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                                    {% else %}
+                                    <span class="text-gray-500">---</span>
+                                    {% endif %}
                                 {% endif %}
                                 <div class="text-gray-500 text-xs">{{ team.id_display }}</div>
                             </div>
