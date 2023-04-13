@@ -1,6 +1,14 @@
+import csv
+import json
 from collections import defaultdict
 
-from bullet_admin.forms.teams import OperatorTeamForm, TeamFilterForm, TeamForm
+import yaml
+from bullet_admin.forms.teams import (
+    OperatorTeamForm,
+    TeamExportForm,
+    TeamFilterForm,
+    TeamForm,
+)
 from bullet_admin.mixins import (
     AdminRequiredMixin,
     IsOperatorContext,
@@ -14,12 +22,18 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.forms import inlineformset_factory
-from django.http import HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
-from django.views.generic import DeleteView, ListView, TemplateView, UpdateView
+from django.views.generic import (
+    DeleteView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 from education.models import School
 from users.emails.teams import send_confirmation_email, send_deletion_email
 from users.logic import get_school_symbol, get_venue_waiting_list
@@ -81,17 +95,49 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
 
         return qs
 
-    def get_context_data(self, *args, **kwargs):
-        ctx = super().get_context_data(*args, **kwargs)
-        brole = self.request.user.get_branch_role(self.request.BRANCH)
-        crole = self.request.user.get_competition_role(
-            get_active_competition(self.request)
+
+class TeamExportView(AdminRequiredMixin, FormView):
+    template_name = "bullet_admin/teams/export.html"
+    form_class = TeamExportForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
+        return kw
+
+    def form_valid(self, form):
+        competition = get_active_competition(self.request)
+        qs = (
+            Team.objects.filter(venue__category_competition__competition=competition)
+            .select_related(
+                "school",
+                "venue",
+                "venue__category_competition",
+            )
+            .prefetch_related("contestants", "contestants__grade")
+            .order_by(
+                "venue__name", "venue__category_competition__identifier", "number", "id"
+            )
         )
-        ctx["hide_venue"] = (
-            not brole.is_admin and not crole.countries and len(crole.venues) < 2
-        )
-        ctx["search_form"] = self.get_form()
-        return ctx
+        qs = form.apply_filter(qs)
+
+        data = [team.to_export() for team in qs]
+
+        response = None
+        if form.cleaned_data["format"] == TeamExportForm.Format.JSON:
+            response = HttpResponse(content_type="application/json")
+            json.dump(data, response)
+        elif form.cleaned_data["format"] == TeamExportForm.Format.CSV:
+            response = HttpResponse(content_type="text/csv")
+            w = csv.DictWriter(response, data[0].keys() if len(data) > 0 else [])
+            w.writeheader()
+            w.writerows(data)
+        elif form.cleaned_data["format"] == TeamExportForm.Format.YAML:
+            response = HttpResponse(content_type="text/yaml")
+            yaml.dump(data, response)
+
+        return response
 
 
 class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, View):
