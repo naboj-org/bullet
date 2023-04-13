@@ -120,7 +120,7 @@ class TeamExportView(AdminRequiredMixin, FormView):
                 "venue__name", "venue__category_competition__identifier", "number", "id"
             )
         )
-        qs = form.apply_filter(qs)
+        qs = form.apply_filter(qs, force_permissions=True)
 
         data = [team.to_export() for team in qs]
 

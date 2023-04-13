@@ -71,12 +71,21 @@ class TeamFilterForm(forms.Form):
 
     def __init__(self, competition: Competition, user: User, **kwargs):
         super().__init__(**kwargs)
+        self._competition = competition
+        self._user = user
         self.fields["countries"].choices = get_country_choices(competition, user)
         self.fields["venues"].queryset = get_venue_queryset(competition, user)
 
-    def apply_filter(self, qs):
+    def apply_filter(self, qs, force_permissions=False):
         if not self.is_valid():
             return qs
+
+        if force_permissions:
+            crole = self._user.get_competition_role(self._competition)
+            if crole.countries:
+                qs = qs.filter(venue__country__in=crole.countries)
+            elif crole.venues:
+                qs = qs.filter(venue__in=crole.venues)
 
         if self.cleaned_data["countries"]:
             qs = qs.filter(venue__country__in=self.cleaned_data["countries"])
