@@ -5,6 +5,19 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4.2 - 2023-04-13
+
+### Added
+
+- Ability for admins to edit team numbers
+- Link to number assignment page from team list
+- Team export in admin
+
+### Fixed
+
+- Count of registered teams on admin dashboard
+- Email campaign creation did not save selected venues
+
 ## 2023.4.1 - 2023-04-11
 
 ### Added
