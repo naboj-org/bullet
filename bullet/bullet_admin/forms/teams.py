@@ -23,6 +23,7 @@ class TeamForm(forms.ModelForm):
             "is_checked_in",
             "consent_photos",
             "is_disqualified",
+            "number",
         ]
 
     def __init__(self, **kwargs):
@@ -50,6 +51,7 @@ class OperatorTeamForm(TeamForm):
         self.fields.pop("contact_name")
         self.fields.pop("contact_email")
         self.fields.pop("contact_phone")
+        self.fields.pop("number")
         self.fields.pop("is_disqualified")
 
 
