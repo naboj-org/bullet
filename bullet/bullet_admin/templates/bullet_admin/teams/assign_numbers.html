@@ -12,9 +12,11 @@
         <form action="{% url "badmin:team_assign_numbers" %}{% if "venue" in request.GET %}?venue={{ request.GET.venue }}{% endif %}" method="post" class="p-4">
             {% csrf_token %}
 
-            <label class="items-baseline block mb-4">
+            <p>This will automatically assign numbers to all registered teams that do not currently have a number. The system will try to fill in the gaps in the numbers.</p>
+
+            <label class="items-baseline block my-4">
                 <input type="checkbox" class="checkbox" name="force">
-                Force team number reassignment for <b>all</b> teams
+                Force team number reassignment for <b>all</b> teams (including teams that do currently have a number).
             </label>
 
             <button type="submit" class="btn-admin bg-green-500 hover:bg-green-600 mt-2">
