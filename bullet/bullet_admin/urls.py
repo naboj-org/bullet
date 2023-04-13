@@ -113,6 +113,7 @@ urlpatterns = [
         teams.AssignTeamNumbersView.as_view(),
         name="team_assign_numbers",
     ),
+    path("teams/export/", teams.TeamExportView.as_view(), name="team_export"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
         "teams/<int:pk>/to_competition/",

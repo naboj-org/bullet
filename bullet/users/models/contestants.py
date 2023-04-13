@@ -195,6 +195,27 @@ class Team(models.Model):
             secrets.choice("346789ABCDEFGHJKLMNPQRTUVWXY") for i in range(10)
         )
 
+    def to_export(self):
+        return {
+            "id": self.id,
+            "contact_name": self.contact_name,
+            "contact_email": self.contact_email,
+            "contact_phone": self.contact_phone_pretty,
+            "school_id": self.school_id,
+            "school": str(self.school),
+            "in_school_symbol": self.in_school_symbol,
+            "venue_id": self.venue_id,
+            "venue": str(self.venue),
+            "venue_code": self.venue.shortcode,
+            "number": self.number,
+            "code": self.code,
+            "name": self.name,
+            "display_name": self.display_name,
+            "language": self.language,
+            "status": self.status.value,
+            "contestants": self.contestants_names,
+        }
+
 
 class Contestant(models.Model):
     team = models.ForeignKey(

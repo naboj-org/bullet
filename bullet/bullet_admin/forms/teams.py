@@ -6,6 +6,7 @@ from bullet_admin.forms.utils import (
 )
 from competitions.models import Competition, Venue
 from django import forms
+from django.db import models
 from django_countries.fields import CountryField
 from users.models import Team, TeamStatus, User
 
@@ -85,3 +86,12 @@ class TeamFilterForm(forms.Form):
             statuses = self.cleaned_data["statuses"]
             qs = qs.has_status(statuses)
         return qs
+
+
+class TeamExportForm(TeamFilterForm):
+    class Format(models.TextChoices):
+        JSON = "json", "JSON"
+        CSV = "csv", "CSV"
+        YAML = "yaml", "YAML"
+
+    format = forms.ChoiceField(label="Export format", choices=Format.choices)
