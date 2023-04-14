@@ -309,7 +309,7 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
 
     @transaction.atomic
     def assign_numbers(self, force):
-        teams = Team.objects.competing().filter(venue=self.venue).order_by("id")
+        teams = Team.objects.competing().filter(venue=self.venue).order_by("?")
         ideal_numbers = set(range(1, teams.count() + 1))
         if not force:
             used_numbers = set(teams.values_list("number", flat=True))
@@ -326,7 +326,7 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
 
     @transaction.atomic
     def assign_symbols(self, force):
-        teams = Team.objects.competing().filter(venue=self.venue).order_by("id")
+        teams = Team.objects.competing().filter(venue=self.venue).order_by("?")
         school_symbols = defaultdict(lambda: set())  # sets of used symbols
         school_counts = defaultdict(lambda: 0)  # counts of teams from school
 
