@@ -58,12 +58,6 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
         competition = get_active_competition(self.request)
         qs = Team.objects.filter(venue__category_competition__competition=competition)
 
-        crole = self.request.user.get_competition_role(competition)
-        if crole.countries:
-            qs = qs.filter(venue__country__in=crole.countries)
-        elif crole.venues:
-            qs = qs.filter(venue__in=crole.venues)
-
         if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
                 self.request.GET["q"],
@@ -132,7 +126,7 @@ class TeamExportView(AdminRequiredMixin, FormView):
                 "venue__name", "venue__category_competition__identifier", "number", "id"
             )
         )
-        qs = form.apply_filter(qs, force_permissions=True)
+        qs = form.apply_filter(qs)
 
         data = [team.to_export() for team in qs]
 
