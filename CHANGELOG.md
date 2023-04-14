@@ -5,6 +5,22 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4.3 - 2023-04-14
+
+### Added
+
+- Link to admin dashboard
+- Preparations for editing the result rows
+
+### Changed
+
+- Email sending now preloads some data to speed up the process
+- Team numbers are assigned in random order
+
+### Fixed
+
+- Team list filtering
+
 ## 2023.4.2 - 2023-04-13
 
 ### Added
