@@ -58,12 +58,6 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
         competition = get_active_competition(self.request)
         qs = Team.objects.filter(venue__category_competition__competition=competition)
 
-        crole = self.request.user.get_competition_role(competition)
-        if crole.countries:
-            qs = qs.filter(venue__country__in=crole.countries)
-        elif crole.venues:
-            qs = qs.filter(venue__in=crole.venues)
-
         if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
                 self.request.GET["q"],
@@ -95,6 +89,18 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
 
         return qs
 
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        brole = self.request.user.get_branch_role(self.request.BRANCH)
+        crole = self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        )
+        ctx["hide_venue"] = (
+            not brole.is_admin and not crole.countries and len(crole.venues) < 2
+        )
+        ctx["search_form"] = self.get_form()
+        return ctx
+
 
 class TeamExportView(AdminRequiredMixin, FormView):
     template_name = "bullet_admin/teams/export.html"
@@ -120,7 +126,7 @@ class TeamExportView(AdminRequiredMixin, FormView):
                 "venue__name", "venue__category_competition__identifier", "number", "id"
             )
         )
-        qs = form.apply_filter(qs, force_permissions=True)
+        qs = form.apply_filter(qs)
 
         data = [team.to_export() for team in qs]
 
