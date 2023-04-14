@@ -33,8 +33,12 @@ class EmailCampaign(models.Model):
     excluded_teams = models.ManyToManyField("users.Team", blank=True, related_name="+")
 
     def get_teams(self, ignore_excluded=False):
-        qs = Team.objects.filter(
-            venue__category_competition__competition=self.competition,
+        qs = (
+            Team.objects.filter(
+                venue__category_competition__competition=self.competition,
+            )
+            .select_related("venue", "venue__category_competition", "school")
+            .prefetch_related("contestants")
         )
         if not ignore_excluded:
             qs = qs.exclude(id__in=self.excluded_teams.all())
