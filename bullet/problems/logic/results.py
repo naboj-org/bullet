@@ -2,9 +2,11 @@ from dataclasses import dataclass
 from datetime import datetime, timedelta
 
 from competitions.models import CategoryCompetition, Competition, Venue
+from django.db import transaction
 from django.db.models import Q, QuerySet
 from django_countries.fields import Country
-from problems.models import ResultRow
+from problems.models import CategoryProblem, ResultRow, SolvedProblem
+from users.models import Team
 
 
 def get_results(
@@ -82,3 +84,39 @@ def results_time(
             False,
         )
     return ResultsTime(realtime - start_time, True, False, False)
+
+
+def _set_solved_problems(rr: ResultRow):
+    problems = (
+        SolvedProblem.objects.select_for_update()
+        .filter(team=rr.team, competition_time__lte=rr.competition_time)
+        .values_list("problem")
+    )
+    solved_problems = set(
+        CategoryProblem.objects.filter(
+            problem__in=problems, category=rr.team.venue.category_competition
+        ).values_list("number", flat=True)
+    )
+
+    rr.solved_count = len(solved_problems)
+
+    solved_bin = 0
+    for p in solved_problems:
+        solved_bin |= 1 << (p - 1)
+
+    rr.solved_problems = solved_bin.to_bytes(16, "big")
+
+
+@transaction.atomic
+def add_result_row(team: Team, competition_time: timedelta):
+    result_row = ResultRow()
+    result_row.team = team
+    result_row.competition_time = competition_time
+    _set_solved_problems(result_row)
+    result_row.save()
+
+
+@transaction.atomic
+def fix_result_row(result_row: ResultRow):
+    _set_solved_problems(result_row)
+    result_row.save()

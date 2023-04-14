@@ -1,7 +1,8 @@
 from datetime import datetime
 
 from django.utils import timezone
-from problems.models import CategoryProblem, Problem, ResultRow, SolvedProblem
+from problems.logic.results import add_result_row, fix_result_row
+from problems.models import Problem, ResultRow, SolvedProblem
 from users.models import Team
 
 
@@ -19,21 +20,17 @@ def mark_problem_solved(team: Team, problem: Problem, timestamp: datetime = None
     sp.competition_time = timestamp - team.venue.start_time
     sp.save()
 
-    problems = SolvedProblem.objects.filter(team=team).values_list("problem")
-    solved_problems = set(
-        CategoryProblem.objects.filter(
-            problem__in=problems, category=team.venue.category_competition
-        ).values_list("number", flat=True)
+    add_result_row(team, sp.competition_time)
+
+
+def mark_problem_unsolved(team: Team, problem: Problem):
+    sp = SolvedProblem.objects.filter(team=team, problem=problem).first()
+    if sp is None:
+        return
+
+    sp.delete()
+    rows = ResultRow.objects.filter(
+        team=team, competition_time__gte=sp.competition_time
     )
-
-    result_row = ResultRow()
-    result_row.team = team
-    result_row.solved_count = len(solved_problems)
-
-    solved_bin = 0
-    for p in solved_problems:
-        solved_bin |= 1 << (p - 1)
-
-    result_row.solved_problems = solved_bin.to_bytes(16, "big")
-    result_row.competition_time = sp.competition_time
-    result_row.save()
+    for rr in rows:
+        fix_result_row(rr)
