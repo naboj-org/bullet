@@ -79,6 +79,20 @@
                             </div>
                         </div>
                         {% endif %}
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <div>Registration date</div>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                {{ team.registered_at }}
+                            </div>
+                        </div>
+                        {% if team.confirmed_at %}
+                        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                            <div>Confirmation date</div>
+                            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                                {{ team.confirmed_at }}
+                            </div>
+                        </div>
+                        {% endif %}
                     </div>
                 </article>
 
