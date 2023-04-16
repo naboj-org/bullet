@@ -150,6 +150,16 @@ urlpatterns = [
         scanning.VenueReviewView.as_view(),
         name="scanning_review",
     ),
+    path(
+        "scanning/review/<int:pk>/",
+        scanning.TeamReviewView.as_view(),
+        name="scanning_review_team",
+    ),
+    path(
+        "scanning/review/<int:pk>/toggle/",
+        scanning.TeamToggleReviewedView.as_view(),
+        name="scanning_review_toggle_team",
+    ),
     path("scanning/problems/api/", scanning.ApiProblemSolveView.as_view()),
     path("emails/", emails.CampaignListView.as_view(), name="email_list"),
     path("emails/create/", emails.CampaignCreateView.as_view(), name="email_create"),

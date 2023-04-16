@@ -40,7 +40,7 @@
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team review</h2>
         </header>
-        <div class="p-4" id="js-review-teams">
+        <div class="p-4" id="js-review-teams" hx-target="#js-review-teams">
             {% include "bullet_admin/scanning/_review_teams.html" %}
         </div>
     </article>
