@@ -232,6 +232,9 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
         if not can_access_venue(request, self.team.venue):
             raise PermissionDenied()
 
+        if self.team.is_reviewed:
+            raise PermissionDenied()
+
         return super().dispatch(request, *args, **kwargs)
 
     def get_form_class(self):
