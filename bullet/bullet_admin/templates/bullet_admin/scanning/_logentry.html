@@ -10,5 +10,10 @@
     </td>
     <td class="p-2 font-mono">{{ log.barcode }}</td>
     <td class="p-2 w-full whitespace-nowrap">{{ log.message }}</td>
-    <td class="p-2 text-right whitespace-nowrap">{{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}</td>
+    <td class="p-2 text-right whitespace-nowrap">
+        {% if log.result == log.Result.OK %}
+            <a href="{% url 'badmin:scanning_problems_undo' %}?barcode={{ log.barcode|urlencode }}" class="link text-sm">Undo</a> &middot;
+        {% endif %}
+        {{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}
+    </td>
 </tr>

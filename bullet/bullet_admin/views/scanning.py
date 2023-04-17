@@ -8,9 +8,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
@@ -183,6 +184,46 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
                 "error": error,
             },
         )
+
+
+class UndoScanView(OperatorRequiredMixin, TemplateView):
+    template_name = "bullet_admin/scanning/undo.html"
+
+    def redirect(self, team: Team | None = None):
+        if not team:
+            return HttpResponseRedirect(reverse("badmin:scanning_problems"))
+        return HttpResponseRedirect(
+            f"{reverse('badmin:scanning_problems')}?venue={team.venue_id}"
+        )
+
+    def post(self, request, *args, **kwargs):
+        try:
+            scanned_barcode = parse_barcode(
+                get_active_competition(request),
+                request.GET.get("barcode", ""),
+            )
+        except ValueError as e:
+            messages.error(request, str(e))
+            return self.redirect()
+
+        if not can_access_venue(request, scanned_barcode.venue):
+            raise PermissionDenied()
+
+        if scanned_barcode.team.is_reviewed:
+            messages.error(request, "The team was already reviewed.")
+            return self.redirect(scanned_barcode.team)
+
+        mark_problem_unsolved(scanned_barcode.team, scanned_barcode.problem)
+
+        ScannerLog.objects.create(
+            user=request.user,
+            barcode=f"*{request.GET.get('barcode')}",
+            result=ScannerLog.Result.OK,
+            message="Scan undone.",
+            timestamp=timezone.now(),
+        )
+        messages.success(request, "The barcode scan was undone.")
+        return self.redirect(scanned_barcode.team)
 
 
 class TeamToggleReviewedView(OperatorRequiredMixin, VenueMixin, View):
