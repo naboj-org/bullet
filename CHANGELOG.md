@@ -5,6 +5,15 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4.4 - 2023-04-17
+
+### Added
+
+- Registration and confirmation date in admin
+- Export school names and addresses separately
+- Admin interface for manual team review
+- Option for undoing a scan
+
 ## 2023.4.3 - 2023-04-14
 
 ### Added
