@@ -146,6 +146,11 @@ urlpatterns = [
         name="scanning_problems",
     ),
     path(
+        "scanning/problems/undo/",
+        scanning.UndoScanView.as_view(),
+        name="scanning_problems_undo",
+    ),
+    path(
         "scanning/review/",
         scanning.VenueReviewView.as_view(),
         name="scanning_review",
