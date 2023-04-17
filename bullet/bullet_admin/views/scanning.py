@@ -1,19 +1,27 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
+from bullet_admin.forms.review import get_review_formset
 from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
 from django.conf import settings
+from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import TemplateView
-from problems.logic import get_last_problem_for_team, mark_problem_solved
+from django.views.generic import FormView, TemplateView
+from problems.logic import (
+    fix_results,
+    get_last_problem_for_team,
+    mark_problem_solved,
+    mark_problem_unsolved,
+)
 from problems.logic.scanner import parse_barcode, save_scan
 from problems.models import CategoryProblem, Problem, ScannerLog, SolvedProblem
 from users.models import Team
@@ -165,14 +173,151 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         except ValueError as e:
             error = e
 
+        # TODO: Replace with self.render_to_response()
         return TemplateResponse(
             request,
             "bullet_admin/scanning/_review_teams_status.html",
             {
                 "teams": self.get_teams(),
+                "venue": self.venue,
                 "error": error,
             },
         )
+
+
+class TeamToggleReviewedView(OperatorRequiredMixin, VenueMixin, View):
+    def post(self, request, *args, **kwargs):
+        team: Team = get_object_or_404(Team, id=kwargs["pk"])
+
+        if team.venue.is_reviewed:
+            raise PermissionDenied()
+
+        if not can_access_venue(request, team.venue):
+            raise PermissionDenied()
+
+        team.is_reviewed = not team.is_reviewed
+        team._change_reason = "Manual review"
+        team.save()
+
+        if (
+            not Team.objects.competing()
+            .filter(venue=team.venue, is_reviewed=False)
+            .exists()
+        ):
+            team.venue.is_reviewed = True
+            team.venue.save()
+
+        return TemplateResponse(
+            request,
+            "bullet_admin/scanning/_review_teams.html",
+            {
+                "teams": Team.objects.competing()
+                .filter(venue=team.venue, number__isnull=False)
+                .order_by("is_reviewed", "number"),
+                "venue": team.venue,
+            },
+        )
+
+
+class TeamReviewView(OperatorRequiredMixin, FormView):
+    model = Team
+    template_name = "bullet_admin/scanning/review_team.html"
+
+    def dispatch(self, request, *args, **kwargs):
+        self.team: Team = (
+            Team.objects.select_related("venue", "venue__category_competition")
+            .prefetch_related("solved_problems")
+            .get(pk=kwargs["pk"])
+        )
+        if not can_access_venue(request, self.team.venue):
+            raise PermissionDenied()
+
+        if self.team.is_reviewed:
+            raise PermissionDenied()
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_form_class(self):
+        return get_review_formset(self.team)
+
+    def get_initial(self):
+        category_problems = {
+            cp.number: cp.problem_id
+            for cp in CategoryProblem.objects.filter(
+                category=self.team.venue.category_competition
+            ).order_by("number")
+        }
+        solved_timestamps = {
+            sp.problem_id: sp.competition_time for sp in self.team.solved_problems.all()
+        }
+        initial = []
+
+        for num, id in category_problems.items():
+            row = {"number": num}
+            if id in solved_timestamps:
+                row["is_solved"] = True
+                row["competition_time"] = solved_timestamps[id]
+
+            initial.append(row)
+
+        return initial
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["team"] = self.team
+        return ctx
+
+    def form_valid(self, form):
+        category_problems: dict[int, Problem] = {
+            cp.number: cp.problem
+            for cp in CategoryProblem.objects.filter(
+                category=self.team.venue.category_competition
+            )
+            .order_by("number")
+            .select_related("problem")
+        }
+        solved: dict[int, SolvedProblem] = {
+            sp.problem_id: sp for sp in self.team.solved_problems.all()
+        }
+
+        changed = False
+        for row in form:
+            num = row.cleaned_data.get("number")
+            if num not in category_problems:
+                continue
+            problem: Problem = category_problems[num]
+            is_solved: bool = row.cleaned_data.get("is_solved")
+            competition_time: timedelta = row.cleaned_data.get("competition_time")
+
+            if problem.id in solved:
+                old_solved = solved[problem.id]
+                if not is_solved:
+                    # Solved -> unsolved
+                    mark_problem_unsolved(self.team, old_solved, repair_results=False)
+                    changed = True
+                else:
+                    # Solved -> solved (changed time)
+                    if competition_time != old_solved.competition_time:
+                        mark_problem_unsolved(
+                            self.team, old_solved, repair_results=False
+                        )
+                        mark_problem_solved(
+                            self.team, problem, competition_time, repair_results=False
+                        )
+                        changed = True
+            else:
+                if is_solved:
+                    # Unsolved -> solved
+                    mark_problem_solved(
+                        self.team, problem, competition_time, repair_results=False
+                    )
+                    changed = True
+
+        if changed:
+            fix_results(self.team)
+
+        messages.success(self.request, "Team problems were updated.")
+        return redirect("badmin:scanning_review_team", pk=self.team.id)
 
 
 @method_decorator(csrf_exempt, name="dispatch")

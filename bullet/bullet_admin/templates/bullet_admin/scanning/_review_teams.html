@@ -1,6 +1,6 @@
-<div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
     {% for team in teams %}
-        <div class="{{ team.is_reviewed|yesno:"bg-green-100,bg-red-100" }} py-2 px-3 rounded-md">
+        <div class="border {% if team.is_reviewed %}bg-green-100 border-green-700{% else %}bg-red-100 border-red-700{% endif %} py-2 px-3 rounded-md">
             <div class="text-lg">
                 {% if team.is_reviewed %}
                     <i class="fas fa-check-circle text-green-600 mr-2"></i>
@@ -12,6 +12,16 @@
             <div class="text-xs">
                 {{ team.display_name }}
             </div>
+            {% if not venue.is_reviewed %}
+            <div class="mt-1 flex flex-wrap gap-1">
+                {% if not team.is_reviewed %}
+                <a href="{% url "badmin:scanning_review_team" pk=team.id %}" class="btn-admin-sm bg-blue-500 hover:bg-blue-600"><i class="fas fa-edit"></i> Edit problems</a>
+                {% endif %}
+                <button hx-post="{% url "badmin:scanning_review_toggle_team" pk=team.id %}" class="btn-admin-sm {% if team.is_reviewed %}bg-red-500 hover:bg-red-600{% else %}bg-green-500 hover:bg-green-600{% endif %}">
+                    <i class="fas {% if team.is_reviewed %}fa-times{% else %}fa-check{% endif %}"></i> Mark as {% if team.is_reviewed %}un{% endif %}reviewed
+                </button>
+            </div>
+            {% endif %}
         </div>
     {% endfor %}
 </div>
