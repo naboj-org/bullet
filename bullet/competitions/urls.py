@@ -41,4 +41,5 @@ urlpatterns = [
         name="team_certificate",
     ),
     path("live/", live.LiveView.as_view(), name="live"),
+    path("live/countdown/", live.LiveCountdownView.as_view(), name="live_countdown"),
 ]

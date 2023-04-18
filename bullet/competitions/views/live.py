@@ -54,3 +54,14 @@ class LiveView(TemplateView):
         ctx["competition"] = self.competition
         ctx["screens"] = self.get_screens()
         return ctx
+
+
+class LiveCountdownView(TemplateView):
+    template_name = "live/countdown.html"
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["competition"] = Competition.objects.get_current_competition(
+            self.request.BRANCH
+        )
+        return ctx
