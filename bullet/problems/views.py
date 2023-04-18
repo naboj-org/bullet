@@ -29,10 +29,7 @@ class ResultsSelectView(TemplateView):
 
 
 class ResultsViewMixin:
-    def get_paginate_by(self, queryset):
-        if "embed" in self.request.GET:
-            return 0
-        return 100
+    paginate_by = 100
 
     def get_template_names(self):
         if "embed" in self.request.GET:
@@ -41,10 +38,7 @@ class ResultsViewMixin:
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
-        if "embed" in self.request.GET:
-            ctx["start_index"] = 1
-        else:
-            ctx["start_index"] = ctx["page_obj"].start_index
+        ctx["start_index"] = ctx["page_obj"].start_index
         return ctx
 
 
