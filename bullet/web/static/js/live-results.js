@@ -1,7 +1,7 @@
 (() => {
     const SCREENS = JSON.parse(document.getElementById("js-screens").textContent)
     let CURRENT_SCREEN = 0
-    let lastChange = null
+    let lastChange = new Date()
 
     const loadScreens = () => {
         document.scrollingElement.scrollTop = 0
