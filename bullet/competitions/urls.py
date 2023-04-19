@@ -41,4 +41,11 @@ urlpatterns = [
         name="team_certificate",
     ),
     path("live/", live.LiveView.as_view(), name="live"),
+    path("live/countdown/", live.LiveCountdownView.as_view(), name="live_countdown"),
+    path("live/results/", live.LiveResultsView.as_view(), name="live_results"),
+    path(
+        "live/first_problem/",
+        live.LiveFirstProblemView.as_view(),
+        name="live_first_problem",
+    ),
 ]

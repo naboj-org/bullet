@@ -1,0 +1,26 @@
+{% extends "web/root_base.html" %}
+{% load results %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Live signage" %}{% endblock %}
+
+{% block root_content %}
+    <div class="top-0 sticky border-b shadow-md">
+        <div class="font-mono text-5xl text-white bg-primary text-center p-4">{% venue_timer venue=request.GET.venue_timer competition=competition %}</div>
+
+        <div class="grid grid-cols-2 divide-x bg-primary-light font-bold text-2xl">
+            <div class="p-4" id="js-title-0"></div>
+            <div class="p-4" id="js-title-1"></div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 divide-x" id="js-scroll">
+        <div class="p-4" id="js-screen-0"></div>
+        <div class="p-4" id="js-screen-1"></div>
+    </div>
+
+    {{ screens|json_script:"js-screens" }}
+    <script src="{% static "js/venue-timer.js" %}"></script>
+    <script src="{% static "js/live-results.js" %}"></script>
+{% endblock %}

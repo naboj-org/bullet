@@ -1,0 +1,17 @@
+{% extends "web/root_base.html" %}
+{% load results %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Live signage" %}{% endblock %}
+
+{% block root_content %}
+    <div class="min-w-screen min-h-screen w-full h-full bg-primary-lighter flex items-center justify-center flex-col">
+        <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="w-64">
+
+        <div class="font-mono text-9xl mt-10">{% venue_timer venue=request.GET.venue_timer competition=competition %}</div>
+        <div class="text-4xl mt-6 hidden js-venue-timer-before">{% trans "Do not open the problems until the competition starts." %}</div>
+    </div>
+
+    <script src="{% static "js/venue-timer.js" %}"></script>
+{% endblock %}
