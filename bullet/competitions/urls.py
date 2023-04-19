@@ -42,4 +42,5 @@ urlpatterns = [
     ),
     path("live/", live.LiveView.as_view(), name="live"),
     path("live/countdown/", live.LiveCountdownView.as_view(), name="live_countdown"),
+    path("live/results/", live.LiveResultsView.as_view(), name="live_results"),
 ]
