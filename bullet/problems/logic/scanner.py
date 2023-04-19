@@ -60,18 +60,23 @@ def parse_barcode(
             f"Could not find team {match.group('team')} in {venue.shortcode}."
         )
 
+    problem_number = int(match.group("problem"))
     if allow_endmark and int(match.group("problem")) == 0:
         problem = None
     else:
+        # Math 2023 FIX, TODO: Remove!
+        if venue.category_competition.identifier == "senior":
+            problem_number -= 10
+
         problem = Problem.objects.filter(
             competition=competition,
             category_problems__category=venue.category_competition,
-            category_problems__number=match.group("problem"),
+            category_problems__number=problem_number,
         ).first()
         if not problem:
-            raise ValueError(f"Could not find problem {match.group('problem')}.")
+            raise ValueError(f"Could not find problem {problem_number}.")
 
-    return ScannedBarcode(venue, team, int(match.group("problem")), problem)
+    return ScannedBarcode(venue, team, problem_number, problem)
 
 
 @transaction.atomic
