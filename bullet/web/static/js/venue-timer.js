@@ -38,10 +38,10 @@
             let diff = timeToStart - time
             if (diff > 0) {
                 el.innerText = DTF.format(diff)
-                document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.add("hidden"))
+                document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.remove("hidden"))
             } else {
                 el.innerText = DTF.format(diff + duration)
-                document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.remove("hidden"))
+                document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.add("hidden"))
             }
         })
     })
