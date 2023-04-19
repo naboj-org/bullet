@@ -1,5 +1,4 @@
 {% extends "web/root_base.html" %}
-{% load content_blocks %}
 {% load results %}
 {% load static %}
 {% load i18n %}
@@ -7,8 +6,6 @@
 {% block title %}{% trans "Live signage" %}{% endblock %}
 
 {% block root_content %}
-    {% load_blocks "category" %}
-
     <div class="top-0 sticky border-b shadow-md">
         <div class="font-mono text-5xl text-white bg-primary text-center p-4">{% venue_timer venue=request.GET.venue_timer competition=competition %}</div>
 
