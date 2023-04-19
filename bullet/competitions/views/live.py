@@ -1,7 +1,9 @@
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Competition, Venue
 from countries.utils import country_reverse
 from django.http import HttpResponseBadRequest
+from django.utils.decorators import method_decorator
 from django.utils.translation import gettext as _
+from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import TemplateView
 from django_countries.fields import Country
 from problems.models import SolvedProblem
@@ -11,65 +13,50 @@ from web import content_blocks
 class LiveView(TemplateView):
     template_name = "live.html"
 
-    def dispatch(self, request, *args, **kwargs):
+    def get(self, request, *args, **kwargs):
         self.competition = Competition.objects.get_current_competition(
             self.request.BRANCH
         )
-        return super().dispatch(request, *args, **kwargs)
 
-    def get_screens(self):
-        screens = []
-        categories = (
-            CategoryCompetition.objects.filter(competition=self.competition)
-            .order_by("order")
-            .values_list("identifier", flat=True)
-        )
+        venue_timer = request.GET.get("venue_timer", "").upper()
+        self.start_time = self.competition.competition_start
 
-        if self.request.GET.get("international", "0") == "1":
-            screens.extend(
-                [
-                    country_reverse("results_category", kwargs={"category": c})
-                    for c in categories
-                ]
-            )
+        if venue_timer:
+            venue = Venue.objects.filter(
+                category_competition__competition=self.competition,
+                shortcode=venue_timer,
+            ).first()
+            self.start_time = venue.start_time
 
-        if "countries" in self.request.GET:
-            for country in self.request.GET["countries"].split(","):
-                screens.extend(
-                    [
-                        country_reverse(
-                            "results_category",
-                            kwargs={"category": c, "country": country.lower()},
-                        )
-                        for c in categories
-                    ]
-                )
-
-        if "venues" in self.request.GET:
-            screens.extend(
-                [
-                    country_reverse("results_venue", kwargs={"venue": v.lower()})
-                    for v in self.request.GET["venues"].split(",")
-                ]
-            )
-        return screens
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["competition"] = self.competition
-        ctx["screens"] = self.get_screens()
+        query = ctx["query"] = f"?{self.request.GET.urlencode()}"
+        ctx["data"] = {
+            "countdown": country_reverse("live_countdown") + query,
+            "results": country_reverse("live_results") + query,
+            "first_problem": country_reverse("live_first_problem") + query,
+            "start": self.start_time,
+            "duration": self.competition.competition_duration.total_seconds(),
+        }
         return ctx
 
 
+@method_decorator(xframe_options_exempt, name="get")
 class LiveCountdownView(TemplateView):
     template_name = "live/countdown.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["competition"] = self.competition
+        ctx["competition"] = Competition.objects.get_current_competition(
+            self.request.BRANCH
+        )
         return ctx
 
 
+@method_decorator(xframe_options_exempt, name="get")
 class LiveResultsView(TemplateView):
     template_name = "live/results.html"
 
@@ -155,6 +142,7 @@ class LiveResultsView(TemplateView):
         return ctx
 
 
+@method_decorator(xframe_options_exempt, name="get")
 class LiveFirstProblemView(TemplateView):
     template_name = "live/first_problem.html"
 
