@@ -39,9 +39,12 @@
             if (diff > 0) {
                 el.innerText = DTF.format(diff)
                 document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.remove("hidden"))
-            } else {
+            } else if (diff + duration > 0){
                 el.innerText = DTF.format(diff + duration)
                 document.querySelectorAll(".js-venue-timer-before").forEach(e => e.classList.add("hidden"))
+            } else {
+                el.innerText = DTF.format(0)
+                controller.abort()
             }
         })
     })
