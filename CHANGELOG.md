@@ -5,6 +5,16 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.4.5 - 2023-04-20
+
+### Added
+
+- Math 2023 senior barcode fix
+
+### Changed
+
+- Redesigned live view
+
 ## 2023.4.4 - 2023-04-17
 
 ### Added
