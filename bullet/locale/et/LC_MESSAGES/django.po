@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-19 21:55+0000\n"
+"POT-Creation-Date: 2023-04-20 11:35+0000\n"
 "PO-Revision-Date: 2023-03-17 19:49+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -85,7 +85,7 @@ msgid "Language"
 msgstr ""
 
 #: competitions/forms/registration.py:86
-msgid "You will receive problem statements in the language you chose."
+msgid "You will receive problem statements in the language you choose."
 msgstr ""
 
 #: competitions/forms/registration.py:108
@@ -97,9 +97,19 @@ msgid "This grade can't compete in the chosen category."
 msgstr "See klass ei saa osaleda valitud vanuserühmas."
 
 #: competitions/templates/live.html:7
-#, fuzzy
+#: competitions/templates/live/countdown.html:6
+#: competitions/templates/live/first_problem.html:6
+#: competitions/templates/live/results.html:6
 msgid "Live signage"
-msgstr "Live signage"
+msgstr ""
+
+#: competitions/templates/live/countdown.html:13
+msgid "Do not open the problems until the competition starts."
+msgstr "Ärge avage ülesannete ümbrikut enne võistluse algust."
+
+#: competitions/templates/live/first_problem.html:14
+msgid "First solved problem"
+msgstr "Lahendas ülesande esimesena ära"
 
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
@@ -327,8 +337,7 @@ msgstr "Võistkonna registreering tühistati."
 
 #: problems/templates/problems/results.html:6
 #: problems/templates/problems/results.html:12
-#: problems/templates/problems/results/embed.html:7
-#: problems/templates/problems/results/embed.html:13
+#: problems/templates/problems/results/embed.html:4
 #: problems/templates/problems/results/select.html:6
 #: problems/templates/problems/results/select.html:9
 #: problems/templates/problems/results/venue.html:5
@@ -337,35 +346,35 @@ msgstr "Võistkonna registreering tühistati."
 msgid "Results"
 msgstr "Tulemused"
 
-#: problems/templates/problems/results.html:22 problems/views.py:107
+#: problems/templates/problems/results.html:22 problems/views.py:101
 msgid "International"
 msgstr "Rahvusvahelised"
 
-#: problems/templates/problems/results/table.html:5
+#: problems/templates/problems/results/table.html:6
 msgid "The competition did not start yet."
 msgstr "Võistlus pole veel alanud."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "Results are frozen."
 msgstr "Tulemused on külmutatud."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "These are not the final results yet."
 msgstr "Need tulemused pole veel lõplikud."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Final results."
 msgstr "Lõplikud tulemused."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Showing official results."
 msgstr "Näidatakse ametlikke tulemusi."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "Interim results."
 msgstr "Vahepealsed tulemused."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "The competition is ongoing, the results may change."
 msgstr "Võistlus on käimas, tulemused võivad muutuda."
 
@@ -373,11 +382,11 @@ msgstr "Võistlus on käimas, tulemused võivad muutuda."
 msgid "(No team has solved any problem yet)"
 msgstr "(Ükski võistkond ei ole veel ühtegi ülesannet ära lahendanud)"
 
-#: problems/templates/problems/results/table.html:80
+#: problems/templates/problems/results/table.html:81
 msgid "Previous"
 msgstr "Eelmine"
 
-#: problems/templates/problems/results/table.html:83
+#: problems/templates/problems/results/table.html:84
 msgid "Next"
 msgstr "Järgmine"
 
