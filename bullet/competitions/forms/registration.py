@@ -83,7 +83,7 @@ class RegistrationForm(ModelForm):
         }
         help_texts = {
             "language": _(
-                "You will receive problem statements in the language you chose."
+                "You will receive problem statements in the language you choose."
             ),
         }
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 10:17+0000\n"
+"POT-Creation-Date: 2023-04-20 11:35+0000\n"
 "Language: sk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,41 +47,60 @@ msgstr "Chémia"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:51
+#: competitions/forms/registration.py:53
 msgid "Selected school is not valid."
 msgstr "Vybraná škola nie je platná."
 
-#: competitions/forms/registration.py:69
+#: competitions/forms/registration.py:79
 #: competitions/templates/register/details.html:29
 #: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:123
+#: competitions/templates/teams/edit.html:122
 msgid "Full name"
 msgstr "Celé meno"
 
-#: competitions/forms/registration.py:70
+#: competitions/forms/registration.py:80
 #: competitions/templates/teams/edit.html:44
 msgid "Email"
 msgstr "E-mail"
 
-#: competitions/forms/registration.py:71
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:46
 msgid "Phone number"
 msgstr "Telefónne číslo"
 
-#: competitions/forms/registration.py:92
+#: competitions/forms/registration.py:82
+msgid "Language"
+msgstr "Jazyk"
+
+#: competitions/forms/registration.py:86
+msgid "You will receive problem statements in the language you choose."
+msgstr "Zadania úloh dostanete v zvolenom jazyku."
+
+#: competitions/forms/registration.py:108
 msgid "(Please select)"
 msgstr "(Prosím vyberte)"
 
-#: competitions/forms/registration.py:109
+#: competitions/forms/registration.py:125
 msgid "This grade can't compete in the chosen category."
 msgstr "Zvolený ročník nemôže súťažiť v danej kategórii."
 
 #: competitions/templates/live.html:7
+#: competitions/templates/live/countdown.html:6
+#: competitions/templates/live/first_problem.html:6
+#: competitions/templates/live/results.html:6
 msgid "Live signage"
 msgstr "Živý priebeh"
+
+#: competitions/templates/live/countdown.html:13
+msgid "Do not open the problems until the competition starts."
+msgstr "Neotvárajte obálky pred začiatkom súťaže."
+
+#: competitions/templates/live/first_problem.html:14
+msgid "First solved problem"
+msgstr "Prvá vyriešená úloha"
 
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
@@ -136,7 +155,7 @@ msgstr "Zoznam súťažiacich môžete zmeniť kedykoľvek pred začiatkom súť
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:127
+#: competitions/templates/teams/edit.html:126
 msgid "Grade"
 msgstr "Ročník"
 
@@ -148,7 +167,7 @@ msgid "Contestant %(number)s"
 msgstr "Súťažiaci %(number)s"
 
 #: competitions/templates/register/details.html:45
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
 msgstr "Povinné"
 
@@ -262,15 +281,15 @@ msgstr "Zmazať?"
 msgid "Update"
 msgstr "Aktualizovať"
 
-#: competitions/templates/teams/edit.html:138
+#: competitions/templates/teams/edit.html:137
 msgid "Certificate"
 msgstr "Diplom"
 
-#: competitions/templates/teams/edit.html:139
+#: competitions/templates/teams/edit.html:138
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Diplom si môžete stiahnuť stlačením tlačidla nižšie."
 
-#: competitions/templates/teams/edit.html:140
+#: competitions/templates/teams/edit.html:139
 msgid "Download certificate"
 msgstr "Stiahnuť diplom"
 
@@ -289,11 +308,11 @@ msgstr "Zoznam tímov"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Tímov: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:49
+#: competitions/views/register.py:55
 msgid "Registration did not start yet."
 msgstr "Registrácia sa ešte nezačala."
 
-#: competitions/views/register.py:51
+#: competitions/views/register.py:57
 msgid "Registration is over."
 msgstr "Registrácia sa skončila."
 
@@ -311,8 +330,7 @@ msgstr "Tím bol odregistrovaný."
 
 #: problems/templates/problems/results.html:6
 #: problems/templates/problems/results.html:12
-#: problems/templates/problems/results/embed.html:7
-#: problems/templates/problems/results/embed.html:13
+#: problems/templates/problems/results/embed.html:4
 #: problems/templates/problems/results/select.html:6
 #: problems/templates/problems/results/select.html:9
 #: problems/templates/problems/results/venue.html:5
@@ -321,35 +339,35 @@ msgstr "Tím bol odregistrovaný."
 msgid "Results"
 msgstr "Výsledky"
 
-#: problems/templates/problems/results.html:22 problems/views.py:107
+#: problems/templates/problems/results.html:22 problems/views.py:101
 msgid "International"
 msgstr "Medzinárodné"
 
-#: problems/templates/problems/results/table.html:5
+#: problems/templates/problems/results/table.html:6
 msgid "The competition did not start yet."
 msgstr "Súťaž ešte nezačala."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "Results are frozen."
 msgstr "Výsledková listina je zmrazená."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "These are not the final results yet."
 msgstr "Zatiaľ sa nezobrazujú finálne výsledky."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Final results."
 msgstr "Finálne výsledky."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Showing official results."
 msgstr "Zobrazujú sa oficiálne výsledky súťaže."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "Interim results."
 msgstr "Priebežné výsledky."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "The competition is ongoing, the results may change."
 msgstr "Súťaž prebieha, výsledky sa môžu meniť."
 
@@ -357,11 +375,11 @@ msgstr "Súťaž prebieha, výsledky sa môžu meniť."
 msgid "(No team has solved any problem yet)"
 msgstr "(Zatiaľ žiaden tím nevyriešil žiadnu úlohu)"
 
-#: problems/templates/problems/results/table.html:80
+#: problems/templates/problems/results/table.html:81
 msgid "Previous"
 msgstr "Predchádzajúce"
 
-#: problems/templates/problems/results/table.html:83
+#: problems/templates/problems/results/table.html:84
 msgid "Next"
 msgstr "Ďalšie"
 
@@ -379,6 +397,7 @@ msgstr "Tím bol odstránený"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7
 #: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
 #: web/templates/web/404.html:18 web/templates/web/homepage.html:7
 msgid "Home page"
