@@ -18,8 +18,9 @@
             <h2 class="font-bold text-2xl">{{ competition.name }}</h2>
             <span class="text-gray-800 shrink-0">{{ competition.competition_start|date }}</span>
         </div>
-        <div class="flex items-baseline justify-between mt-1 text-lg flex-wrap">
+        <div class="flex items-baseline gap-4 mt-2 text-lg flex-wrap">
             <a href="{% country_url "archive_results" competition_number=competition.number %}" class="link-primary">{% trans "Results" %}</a>
+            <a href="{% country_url "archive_problems" competition_number=competition.number %}" class="link-primary">{% trans "Problem statements" %}</a>
         </div>
     </div>
     {% endfor %}
