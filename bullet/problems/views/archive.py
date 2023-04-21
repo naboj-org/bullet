@@ -8,7 +8,8 @@ from problems.views.results import (
 
 
 class ArchiveCompetitionMixin:
-    def get_competition(self):
+    @property
+    def competition(self):
         if not hasattr(self, "_competition"):
             self._competition = get_object_or_404(
                 Competition,
@@ -19,7 +20,7 @@ class ArchiveCompetitionMixin:
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["competition_number"] = self.get_competition().number
+        ctx["competition_number"] = self.competition.number
         return ctx
 
 
