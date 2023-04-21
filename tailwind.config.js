@@ -3,7 +3,8 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
-    './bullet/**/*.{html,js}',
+    './bullet/*/templates/**/*.html',
+    './bullet/*/static/**/*.js',
   ],
   theme: {
     extend: {
@@ -20,6 +21,7 @@ module.exports = {
       typography: {
         DEFAULT: {
           css: {
+            maxWidth: '75ch',
             a: {
               color: 'var(--primary)',
               '&:hover': {

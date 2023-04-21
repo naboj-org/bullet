@@ -11,3 +11,8 @@ class ProblemAdmin(admin.ModelAdmin):
     list_filter = ("competition__name", "competition__branch")
     list_display = ("name", "competition")
     inlines = (CategoryProblemAdminInline,)
+
+
+@admin.register(models.ProblemStatement)
+class ProblemStatementAdmin(admin.ModelAdmin):
+    list_display = ("problem", "language")

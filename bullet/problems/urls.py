@@ -43,4 +43,9 @@ urlpatterns = [
         archive.ArchiveVenueResultsView.as_view(),
         name="archive_results_venue",
     ),
+    path(
+        "archive/<int:competition_number>/problems/",
+        archive.ProblemStatementView.as_view(),
+        name="archive_problems",
+    ),
 ]
