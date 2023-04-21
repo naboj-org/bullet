@@ -112,6 +112,10 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         return (
             Team.objects.competing()
             .filter(venue=self.venue, number__isnull=False)
+            .select_related(
+                "school",
+                "venue",
+            )
             .order_by("is_reviewed", "number")
         )
 
