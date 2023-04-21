@@ -73,7 +73,7 @@ class School(models.Model):
 
     def save(self, send_to_search=True, **kwargs):
         x = super().save(**kwargs)
-        if send_to_search:
+        if send_to_search and search.enabled:
             search.client.index("schools").add_documents(
                 [self.for_search()],
                 "id",

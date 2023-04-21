@@ -154,6 +154,8 @@ class Team(models.Model):
         }
 
     def search_index(self):
+        if not search.enabled:
+            return
         search.client.index("teams").add_documents(
             [self.for_search()],
             "id",
@@ -174,7 +176,8 @@ class Team(models.Model):
         return x
 
     def delete(self, using=None, keep_parents=False):
-        search.client.index("teams").delete_document(self.id)
+        if search.enabled:
+            search.client.index("teams").delete_document(self.id)
         return super().delete(using, keep_parents)
 
     def to_waitlist(self):
