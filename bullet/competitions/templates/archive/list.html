@@ -14,9 +14,9 @@
 <div class="max-w-2xl mx-auto px-2 mt-8 space-y-4">
     {% for competition in object_list %}
     <div class="rounded-md p-4 border shadow">
-        <div class="flex items-baseline justify-between">
+        <div class="flex items-baseline justify-between gap-2">
             <h2 class="font-bold text-2xl">{{ competition.name }}</h2>
-            <span class="text-gray-800">{{ competition.competition_start|date }}</span>
+            <span class="text-gray-800 shrink-0">{{ competition.competition_start|date }}</span>
         </div>
         <div class="flex items-baseline justify-between mt-1 text-lg flex-wrap">
             <a href="{% country_url "archive_results" competition_number=competition.number %}" class="link-primary">{% trans "Results" %}</a>
