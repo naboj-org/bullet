@@ -1,4 +1,4 @@
-FROM node:19.8.1-alpine AS cssbuild
+FROM node:20.0.0-alpine AS cssbuild
 
 WORKDIR /app
 
@@ -9,7 +9,7 @@ COPY . .
 RUN npm run css-prod
 CMD ["npm", "run", "css-dev"]
 
-FROM python:3.10-slim-bullseye
+FROM python:3.11-slim-bullseye
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE 1
