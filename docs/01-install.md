@@ -3,14 +3,14 @@
 ## Windows
 
 System requirements:
-- [Python 3.10](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
+- [Python 3.11](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
 - [Pipenv](https://pypi.org/project/pipenv/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Linux
 
 System requirements:
-- Python 3.10 or newer
+- Python 3.11 or newer
 - [Pipenv](https://pypi.org/project/pipenv/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [docker-compose](https://docs.docker.com/compose/install/)
