@@ -15,7 +15,7 @@ def create_competition(branch=None) -> Competition:
     """
     competition = CompetitionFactory(branch=branch)
     CategoryCompetitionFactory.create_batch(2, competition=competition)
-    venues = VenueFactory.create_batch(2000)
+    venues = VenueFactory.create_batch(50)
 
     for _ in range(200):
         team = TeamFactory(venue=random.choice(venues))
