@@ -1,5 +1,8 @@
 from competitions.branches import Branches
-from competitions.factories.generate import create_registration_in_progress_competition
+from competitions.factories.generate import (
+    create_ended_competition,
+    create_registration_in_progress_competition,
+)
 from countries.factories.generate import create_branch_countries
 from django.core import management
 from django.core.management import BaseCommand
@@ -26,9 +29,7 @@ class Command(BaseCommand):
         create_problems(competition_physics)
         create_branch_countries(branch=Branches["chemistry"])
         create_pages(branch=Branches["chemistry"])
-        competition_chemistry = create_registration_in_progress_competition(
-            branch=Branches["chemistry"]
-        )
+        competition_chemistry = create_ended_competition(branch=Branches["chemistry"])
         create_problems(competition_chemistry)
         create_partners()
         management.call_command("indexschools")
