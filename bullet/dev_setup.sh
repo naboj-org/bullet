@@ -12,4 +12,4 @@ done
 
 python manage.py migrate
 DJANGO_SUPERUSER_PASSWORD=admin python manage.py createsuperuser --email=admin@naboj.org --no-input
-python manage.py loaddata branchcountry
+#python manage.py loaddata branchcountry
