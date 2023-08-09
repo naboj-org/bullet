@@ -8,12 +8,15 @@ from education.factories.generate import create_education
 from problems.factories.generate import create_problems
 from web.factories.generate import create_pages, create_partners
 
+from bullet import search
+
 
 class Command(BaseCommand):
     help = "Generates some testing data"
 
     @transaction.atomic
     def handle(self, *args, **options):
+        search.enabled = False
         create_education()
         create_branch_countries(branch=Branches["physics"])
         create_pages(branch=Branches["physics"])
