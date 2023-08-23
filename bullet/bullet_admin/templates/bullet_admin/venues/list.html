@@ -5,63 +5,51 @@
 
 {% block content %}
     <div class="p-8">
-        <div class="flex items-baseline justify-between flex-col sm:flex-row">
-            <h2 class="text-3xl font-semibold">
-                Venues
-                <span class="text-gray-400">{{ venue_count|floatformat:"g" }}</span>
-            </h2>
+        {% aheader title="Venues" title_muted=venue_count|floatformat:"g" %}
+            {% slot buttons %}
+                {% url "badmin:venue_create" as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New venue" url=create_url %}
+            {% endslot %}
+        {% endaheader %}
 
-            <div class="flex items-center flex-wrap gap-2 mt-4 sm:mt-0 sm:ml-4">
-                <a href="{% url "badmin:venue_create" %}"
-                        class="rounded-md bg-green-600 px-2.5 py-1.5 text-sm font-semibold text-white
-                        shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600
-                        inline-flex items-center gap-1">
-                    <span class="iconify w-5 h-5 shrink-0" data-icon="mdi:plus"></span>
-                    New venue
-                </a>
-            </div>
-        </div>
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Venue</th>
+                    <th class="p-3">Category</th>
+                    <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Registered teams</th>
+                    <th class="p-3 text-right hidden md:table-cell">Capacity</th>
+                    <th class="p-3 hidden md:table-cell whitespace-nowrap">Local start</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
 
-        <div class="mt-8">
-            <table class="w-full">
-                <thead class="text-left bg-gray-100 border-t border-b">
-                    <tr>
-                        <th class="p-3">Venue</th>
-                        <th class="p-3">Category</th>
-                        <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Registered teams</th>
-                        <th class="p-3 text-right hidden md:table-cell">Capacity</th>
-                        <th class="p-3 hidden md:table-cell whitespace-nowrap">Local start</th>
-                        <th class="p-3"></th>
+            <tbody class="divide-y">
+                {% for v in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">
+                            <div class="flex gap-2 items-center flex-wrap">
+                                <span class="iconify shrink-0" data-icon="flag:{{ v.country.code|lower }}-4x3"></span>
+                                <span class="font-bold">{{ v.shortcode }}</span>
+                                {{ v.name }}
+                            </div>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">{{ v.category_competition.identifier|title }}</td>
+                        <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.team_count|floatformat:"g" }}</td>
+                        <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.capacity|floatformat:"g" }}</td>
+                        <td class="p-3 hidden md:table-cell">{{ v.local_start|default:"" }}</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url 'badmin:venue_update' pk=v.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                </a>
+                            </div>
+                        </td>
                     </tr>
-                </thead>
+                {% endfor %}
+            </tbody>
+        </table>
 
-                <tbody class="divide-y">
-                    {% for v in object_list %}
-                        <tr class="{% cycle "" "bg-gray-50" %}">
-                            <td class="p-3">
-                                <div class="flex gap-2 items-center flex-wrap">
-                                    <span class="iconify shrink-0" data-icon="flag:{{ v.country.code|lower }}-4x3"></span>
-                                    <span class="font-bold">{{ v.shortcode }}</span>
-                                    {{ v.name }}
-                                </div>
-                            </td>
-                            <td class="p-3 whitespace-nowrap">{{ v.category_competition.identifier|title }}</td>
-                            <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.team_count|floatformat:"g" }}</td>
-                            <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.capacity|floatformat:"g" }}</td>
-                            <td class="p-3 hidden md:table-cell">{{ v.local_start|default:"" }}</td>
-                            <td class="p-3 whitespace-nowrap">
-                                <div class="flex items-center justify-end gap-2">
-                                    <a href="{% url 'badmin:venue_update' pk=v.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
-                                        <span class="iconify" data-icon="mdi:edit"></span>
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-
-            {% admin_paginator page_obj %}
-        </div>
+        {% admin_paginator page_obj %}
     </div>
 {% endblock %}
