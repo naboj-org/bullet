@@ -121,3 +121,11 @@ def admin_sidebar(context):
 @register.inclusion_tag("bullet_admin/form.html")
 def admin_form(form):
     return {"form": form}
+
+
+@register.inclusion_tag("bullet_admin/paginator.html", takes_context=True)
+def admin_paginator(context, page):
+    context["paginator"] = page.paginator
+    context["pages"] = page.paginator.get_elided_page_range(page.number)
+    context["page"] = page
+    return context

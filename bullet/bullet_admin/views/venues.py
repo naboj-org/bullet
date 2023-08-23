@@ -12,14 +12,23 @@ class VenueObjectMixin:
         return Venue.objects.for_request(self.request)
 
 
-class VenueListView(AdminRequiredMixin, VenueObjectMixin, ListView):
+class VenueListView(AdminRequiredMixin, ListView):
     template_name = "bullet_admin/venues/list.html"
+    paginate_by = 100
+
+    def get_queryset(self):
+        # For whatever reason, when you annotate the queryset, it loses
+        # the default ordering...
+        return (
+            Venue.objects.for_request(self.request).annotate_teamcount().natural_order()
+        )
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["show_new"] = not self.request.user.get_competition_role(
             get_active_competition(self.request)
         ).venues
+        ctx["venue_count"] = Venue.objects.for_request(self.request).count()
         return ctx
 
 

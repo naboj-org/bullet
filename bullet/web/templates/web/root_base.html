@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="{% static 'app.css' %}?v={{ bullet_version }}" type="text/css"/>
     {% block extrahead %}{% endblock %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+    <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
 </head>
 
 <body class="branch-{{ branch.identifier }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>

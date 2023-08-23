@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING
 from bullet_admin.utils import get_active_competition
 from countries.models import BranchCountry
 from django.db import models
-from django.db.models import Count, OuterRef, Subquery, Value
+from django.db.models import Count, OuterRef, Q, Subquery, Value
 from django.db.models.functions import Coalesce
 from django_countries.fields import CountryField
 from users.models import Team
@@ -29,6 +29,14 @@ class VenueQuerySet(models.QuerySet):
                 Value(0),
             )
         )
+
+    def annotate_teamcount(self):
+        return self.annotate(
+            team_count=Count("team", filter=Q(team__confirmed_at__isnull=False))
+        )
+
+    def natural_order(self):
+        return self.order_by("name", "category_competition__identifier")
 
     def for_competition(self, competition):
         return self.filter(category_competition__competition=competition)
