@@ -2,7 +2,6 @@ from bullet_admin.forms.utils import (
     get_country_choices,
     get_language_choices,
     get_language_choices_for_venue,
-    get_venue_queryset,
 )
 from competitions.models import Competition, Venue
 from django import forms
@@ -31,9 +30,7 @@ class TeamForm(forms.ModelForm):
         competition: Competition = kwargs.pop("competition")
         super().__init__(**kwargs)
 
-        self.fields["venue"].queryset = Venue.objects.filter(
-            category_competition__competition=competition
-        ).select_related("category_competition")
+        self.fields["venue"].queryset = Venue.objects.for_competition(competition)
         if self.instance:
             self.fields["language"].choices = get_language_choices_for_venue(
                 self.instance.venue
@@ -74,7 +71,7 @@ class TeamFilterForm(forms.Form):
         self._competition = competition
         self._user = user
         self.fields["countries"].choices = get_country_choices(competition, user)
-        self.fields["venues"].queryset = get_venue_queryset(competition, user)
+        self.fields["venues"].queryset = Venue.objects.for_user(competition, user)
 
     def apply_filter(self, qs):
         crole = self._user.get_competition_role(self._competition)

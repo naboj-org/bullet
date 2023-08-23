@@ -1,8 +1,13 @@
+from typing import TYPE_CHECKING
+
 from bullet_admin.models import CompetitionRole
-from competitions.models import Competition, Venue
+from competitions.models import Competition
 from django.db.models import Q
 from django.http import HttpRequest
 from users.models import User
+
+if TYPE_CHECKING:
+    from competitions.models import Venue
 
 
 def get_active_competition(request: HttpRequest):
@@ -19,7 +24,7 @@ def get_active_competition(request: HttpRequest):
     return request._badmin_competition
 
 
-def can_access_venue(request: HttpRequest, venue: Venue) -> bool:
+def can_access_venue(request: HttpRequest, venue: "Venue") -> bool:
     brole = request.user.get_branch_role(request.BRANCH)
     if (
         brole.is_admin
@@ -51,7 +56,7 @@ def is_admin(user: User, competition: Competition):
     return (crole.venues or crole.countries) and not crole.is_operator
 
 
-def get_venue_admin_emails(venue: Venue):
+def get_venue_admin_emails(venue: "Venue"):
     return list(
         CompetitionRole.objects.filter(is_operator=False)
         .filter(

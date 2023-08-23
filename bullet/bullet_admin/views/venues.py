@@ -1,7 +1,7 @@
-from bullet_admin.forms.utils import get_venue_queryset
 from bullet_admin.forms.venues import VenueForm
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
+from competitions.models import Venue
 from django.contrib import messages
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
@@ -9,10 +9,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 
 class VenueObjectMixin:
     def get_queryset(self):
-        return get_venue_queryset(
-            get_active_competition(self.request),
-            self.request.user,
-        )
+        return Venue.objects.for_request(self.request)
 
 
 class VenueListView(AdminRequiredMixin, VenueObjectMixin, ListView):

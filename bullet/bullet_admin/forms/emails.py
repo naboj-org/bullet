@@ -1,9 +1,5 @@
-from bullet_admin.forms.utils import (
-    get_country_choices,
-    get_language_choices,
-    get_venue_queryset,
-)
-from competitions.models import Competition
+from bullet_admin.forms.utils import get_country_choices, get_language_choices
+from competitions.models import Competition, Venue
 from django import forms
 from users.models import EmailCampaign, User
 
@@ -39,4 +35,4 @@ class EmailCampaignForm(forms.ModelForm):
 
         self.fields["team_countries"].choices = get_country_choices(competition, user)
         self.fields["team_languages"].choices = get_language_choices(competition.branch)
-        self.fields["team_venues"].queryset = get_venue_queryset(competition, user)
+        self.fields["team_venues"].queryset = Venue.objects.for_user(competition, user)

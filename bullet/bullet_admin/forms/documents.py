@@ -1,4 +1,3 @@
-from bullet_admin.forms.utils import get_venue_queryset
 from competitions.models import Competition, Venue
 from django import forms
 from documents.models import CertificateTemplate
@@ -20,7 +19,7 @@ class CertificateForm(forms.Form):
         self.fields["template"].queryset = CertificateTemplate.objects.filter(
             branch=competition.branch
         ).order_by("name")
-        self.fields["venue"].queryset = get_venue_queryset(competition, user)
+        self.fields["venue"].queryset = Venue.objects.for_user(competition, user)
 
 
 class TeamListForm(forms.Form):
@@ -28,4 +27,4 @@ class TeamListForm(forms.Form):
 
     def __init__(self, competition: Competition, user: User, **kwargs):
         super().__init__(**kwargs)
-        self.fields["venue"].queryset = get_venue_queryset(competition, user)
+        self.fields["venue"].queryset = Venue.objects.for_user(competition, user)
