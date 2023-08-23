@@ -1,5 +1,6 @@
 from bullet_admin.models import CompetitionRole
 from bullet_admin.utils import get_active_competition
+from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.views.generic import TemplateView
@@ -17,6 +18,12 @@ class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
+
+        if self.request.user.get_branch_role(self.request.BRANCH).is_admin:
+            ctx["competitions"] = Competition.objects.filter(
+                branch=self.request.BRANCH
+            ).order_by("-competition_start")
+
         ctx["roles"] = (
             CompetitionRole.objects.filter(
                 user=self.request.user, competition__branch=self.request.BRANCH
