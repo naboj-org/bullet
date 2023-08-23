@@ -13,9 +13,9 @@ def squares(obj: ResultRow, problem_count: int, team_problem_count: int):
 @register.inclusion_tag("problems/results/timer.html")
 def venue_timer(venue: Venue | str, competition: Competition):
     if isinstance(venue, str):
-        venue = Venue.objects.filter(
-            category_competition__competition=competition, shortcode=venue
-        ).first()
+        venue = (
+            Venue.objects.for_competition(competition).filter(shortcode=venue).first()
+        )
 
     return {
         "start_time": venue.start_time if venue else competition.competition_start,

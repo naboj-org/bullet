@@ -48,9 +48,11 @@ def parse_barcode(
     if not verify_check_digit(barcode):
         raise ValueError("Check digit on the scanned barcode is not correct.")
 
-    venue = Venue.objects.filter(
-        shortcode=match.group("venue"), category_competition__competition=competition
-    ).first()
+    venue = (
+        Venue.objects.for_competition(competition)
+        .filter(shortcode=match.group("venue"))
+        .first()
+    )
     if not venue:
         raise ValueError(f"Could not find venue {match.group('venue')}.")
 

@@ -1,5 +1,4 @@
 from bullet_admin.models import BranchRole, CompetitionRole
-from competitions.models import Venue
 from django.contrib import admin
 
 
@@ -21,8 +20,3 @@ class CompetitionRoleAdmin(admin.ModelAdmin):
 
     def country_list(self, obj):
         return ", ".join(obj.countries) if obj.countries else ""
-
-    def formfield_for_manytomany(self, db_field, request, **kwargs):
-        if db_field.name == "venue_objects":
-            kwargs["queryset"] = Venue.objects.select_related("category_competition")
-        return super().formfield_for_manytomany(db_field, request, **kwargs)

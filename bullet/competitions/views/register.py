@@ -74,13 +74,13 @@ class RegistrationMixin:
         if "venue" not in request.session["register_form"]:
             raise RegistrationError()
 
-        venue = Venue.objects.filter(
-            id=request.session["register_form"]["venue"],
-        ).first()
+        venue = (
+            Venue.objects.for_competition(self.competition)
+            .filter(id=request.session["register_form"]["venue"])
+            .first()
+        )
 
         if not venue:
-            raise RegistrationError()
-        if venue.category_competition.competition_id != self.competition.id:
             raise RegistrationError()
 
         return venue
@@ -158,9 +158,8 @@ class CategorySelectView(RegistrationMixin, FormView):
         if red:
             return HttpResponseRedirect(red)
 
-        venues = Venue.objects.filter(
-            country=self.request.COUNTRY_CODE.upper(),
-            category_competition__competition=self.competition,
+        venues = Venue.objects.for_competition(self.competition).filter(
+            country=self.request.COUNTRY_CODE.upper()
         )
         categories = set([c.category_competition_id for c in venues])
         self.categories = (
@@ -199,10 +198,9 @@ class VenueSelectView(RegistrationMixin, FormView):
         if red:
             return HttpResponseRedirect(red)
 
-        self.venues = Venue.objects.filter(
-            category_competition=self.category_competition,
-            country=self.request.COUNTRY_CODE.upper(),
-        ).order_by("name")
+        self.venues = Venue.objects.for_competition(self.competition).filter(
+            country=self.request.COUNTRY_CODE.upper()
+        )
 
         query = self.request.GET.get("q")
         if query:

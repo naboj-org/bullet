@@ -22,10 +22,11 @@ class LiveView(TemplateView):
         self.start_time = self.competition.competition_start
 
         if venue_timer:
-            venue = Venue.objects.filter(
-                category_competition__competition=self.competition,
-                shortcode=venue_timer,
-            ).first()
+            venue = (
+                Venue.objects.for_competition(self.competition)
+                .filter(shortcode=venue_timer)
+                .first()
+            )
             self.start_time = venue.start_time
 
         return super().get(request, *args, **kwargs)
@@ -68,12 +69,9 @@ class LiveResultsView(TemplateView):
         venue_codes = request.GET.get("venues", "").upper().split(",")
         venues = {
             v.shortcode: v
-            for v in Venue.objects.filter(
-                shortcode__in=venue_codes,
-                category_competition__competition=self.competition,
+            for v in Venue.objects.for_competition(self.competition).filter(
+                shortcode__in=venue_codes
             )
-            .select_related("category_competition")
-            .all()
         }
         categories = []
 
@@ -154,10 +152,8 @@ class LiveFirstProblemView(TemplateView):
         venue_codes = self.request.GET.get("venues", "").upper().split(",")
         venues = {
             v.shortcode: v
-            for v in Venue.objects.filter(
-                shortcode__in=venue_codes,
-                category_competition__competition=self.competition,
-            )
+            for v in Venue.objects.for_competition(self.competition)
+            .filter(shortcode__in=venue_codes)
             .select_related("category_competition")
             .all()
         }

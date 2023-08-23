@@ -127,12 +127,7 @@ class TeamListView(TemplateView):
             "country", self.request.COUNTRY_CODE
         ).upper()
         venues: QuerySet[Venue] = (
-            Venue.objects.filter(
-                category_competition__competition=competition, country=country
-            )
-            .order_by("name", "category_competition__identifier")
-            .select_related("category_competition")
-            .all()
+            Venue.objects.for_competition(competition).filter(country=country).all()
         )
         teams: QuerySet[Team] = self.get_teams(venues).all()
 
