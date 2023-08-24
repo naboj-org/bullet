@@ -5,7 +5,11 @@
 
 {% block content %}
     <div class="p-8">
-        {% aheader title="Venues" title_muted=venue_count|floatformat:"g" %}
+        {% aheader %}
+            {% slot title %}
+                Venues
+                <span class="text-gray-400 font-normal">{{ venue_count|floatformat:"g" }}</span>
+            {% endslot %}
             {% slot buttons %}
                 {% url "badmin:venue_create" as create_url %}
                 {% #abtn color="green" icon="mdi:plus" label="New venue" url=create_url %}

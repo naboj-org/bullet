@@ -123,6 +123,11 @@ def admin_form(form):
     return {"form": form}
 
 
+@register.inclusion_tag("bullet_admin/new_form.html")
+def admin_form2(form):
+    return {"form": form}
+
+
 @register.inclusion_tag("bullet_admin/paginator.html", takes_context=True)
 def admin_paginator(context, page):
     context["paginator"] = page.paginator

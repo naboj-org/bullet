@@ -1,15 +1,12 @@
 <div class="flex items-center justify-between flex-col sm:flex-row mb-8">
     <div>
-        <h2 class="text-3xl font-semibold">
-            {{ attributes.title }}
-            {% if attributes.title_muted %}
-                <span class="text-gray-400 font-normal">{{ attributes.title_muted }}</span>
-            {% endif %}
+        <h2 class="text-3xl font-bold">
+            {% render_slot slots.title %}
         </h2>
 
         {% if attributes.show_subtitle %}
         <div class="text-gray-600 leading-4 mt-1">
-            {% render_slot slots.inner_block %}!
+            {% render_slot slots.inner_block %}
         </div>
         {% endif %}
     </div>
