@@ -20,4 +20,4 @@ def create_education():
 
         EducationFactory(grades=grades)
 
-    SchoolFactory.create_batch(1000)
+    SchoolFactory.create_batch(10000)
