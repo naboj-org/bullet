@@ -16,19 +16,34 @@ from problems.logic.results import (
 )
 
 
-class ResultsSelectView(TemplateView):
+class CompetitionMixin:
+    @property
+    def competition(self) -> Competition:
+        if not hasattr(self, "_competition"):
+            self._competition = Competition.objects.get_current_competition(
+                self.request.BRANCH
+            )
+        return self._competition
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["competition"] = self.competition
+        return ctx
+
+
+class ResultsSelectView(CompetitionMixin, TemplateView):
     template_name = "problems/results/select.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
+        competition = self.competition
         ctx["categories"] = CategoryCompetition.objects.filter(
             competition=competition, venue__country=self.request.COUNTRY_CODE.upper()
         ).distinct()
         return ctx
 
 
-class ResultsViewMixin:
+class ResultsViewMixin(CompetitionMixin):
     paginate_by = 100
 
     def get_template_names(self):
@@ -46,9 +61,6 @@ class ResultsViewMixin:
 class CategoryResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results.html"
 
-    def get_competition(self):
-        return Competition.objects.get_current_competition(self.request.BRANCH)
-
     def dispatch(self, request, *args, **kwargs):
         self.country: str = kwargs.get("country")
         if self.country:
@@ -56,7 +68,6 @@ class CategoryResultsView(ResultsViewMixin, ListView):
                 BranchCountry, branch=request.BRANCH, country=self.country.upper()
             )
 
-        self.competition = self.get_competition()
         self.category = get_object_or_404(
             CategoryCompetition,
             competition=self.competition,
@@ -94,7 +105,6 @@ class CategoryResultsView(ResultsViewMixin, ListView):
         ctx["team_problem_count"] = self.category.problems_per_team
         ctx["problem_count"] = self.category.problems.count()
         ctx["category"] = self.category
-        ctx["competition"] = self.competition
         ctx["results_time"] = self.results_time
 
         ctx["country_name"] = (
@@ -113,11 +123,7 @@ class CategoryResultsView(ResultsViewMixin, ListView):
 class VenueResultsView(ResultsViewMixin, ListView):
     template_name = "problems/results/venue.html"
 
-    def get_competition(self):
-        return Competition.objects.get_current_competition(self.request.BRANCH)
-
     def dispatch(self, request, *args, **kwargs):
-        self.competition = self.get_competition()
         self.venue = get_object_or_404(
             Venue,
             category_competition__competition=self.competition,
@@ -142,7 +148,6 @@ class VenueResultsView(ResultsViewMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["team_problem_count"] = self.venue.category_competition.problems_per_team
-        ctx["competition"] = self.competition
         ctx["problem_count"] = self.venue.category_competition.problems.count()
         ctx["venue"] = self.venue
         ctx["results_time"] = self.results_time

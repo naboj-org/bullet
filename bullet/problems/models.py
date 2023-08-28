@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import UniqueConstraint
+from web.fields import LanguageField
 
 
 class Problem(models.Model):
@@ -74,3 +75,20 @@ class ResultRow(models.Model):
             squares.append(st)
 
         return squares
+
+
+class ProblemStatement(models.Model):
+    problem = models.ForeignKey(
+        Problem, on_delete=models.CASCADE, related_name="statements"
+    )
+    language = LanguageField()
+    statement = models.TextField(blank=True)
+    answer = models.TextField(blank=True)
+    solution = models.TextField(blank=True)
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                "problem", "language", name="problemstatement__problem_language"
+            )
+        ]

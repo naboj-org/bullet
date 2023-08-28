@@ -1,8 +1,11 @@
 from datetime import timedelta
 
+from bullet_admin.models import CompetitionRole
+from competitions.branches import Branch
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
+from users.models import User
 from web.fields import BranchField
 
 
@@ -10,10 +13,38 @@ class CompetitionQuerySet(models.QuerySet):
     def get_current_competition(self, branch):
         return self.filter(branch=branch).order_by("-web_start").first()
 
+    def for_request(self, request):
+        """
+        Filters competitions that should be visible for a given request.
+        """
+        return self.for_user(
+            request.user,
+            request.BRANCH,
+        )
+
+    def for_user(self, user: "User", branch: "Branch"):
+        """
+        Filters competitions that should be visible for a given user.
+        """
+        qs = self.filter(branch=branch).order_by("-web_start")
+
+        if not user.is_authenticated:
+            return qs.filter(results_public=True)
+
+        # Branch admin can see all competitions
+        if user.get_branch_role(branch).is_admin:
+            return qs
+
+        roles = CompetitionRole.objects.filter(
+            user=user, competition__branch=branch
+        ).values("competition")
+        return qs.filter(id__in=roles)
+
 
 class Competition(models.Model):
     name = models.CharField(max_length=128)
     branch = BranchField()
+    number = models.IntegerField()
 
     web_start = models.DateTimeField()
 
@@ -32,6 +63,15 @@ class Competition(models.Model):
     is_cancelled = models.BooleanField(default=False)
 
     objects = CompetitionQuerySet.as_manager()
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                "branch",
+                "number",
+                name="competition_branch_number_unique",
+            )
+        ]
 
     def __str__(self):
         return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'

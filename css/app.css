@@ -153,3 +153,12 @@
 .timeline .container.gray-border::after {
     border-color: #9ca3af;
 }
+
+/* TeX equations */
+img.math.inline {
+    margin: 0;
+}
+
+img.math.display {
+    @apply mx-auto my-4;
+}

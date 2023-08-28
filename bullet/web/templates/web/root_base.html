@@ -15,9 +15,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-    {% block extrahead %}
-        <link rel="stylesheet" href="{% static 'app.css' %}?v={{ bullet_version }}" type="text/css"/>
-    {% endblock %}
+    <link rel="stylesheet" href="{% static 'app.css' %}?v={{ bullet_version }}" type="text/css"/>
+    {% block extrahead %}{% endblock %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
 </head>
 
@@ -49,6 +48,7 @@
         {% endif %}
     {% endblock messages %}
 
+    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.8.0" defer></script>
 </body>
 </html>

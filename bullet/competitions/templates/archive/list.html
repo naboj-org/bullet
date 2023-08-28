@@ -1,0 +1,28 @@
+{% extends "web/base.html" %}
+{% load i18n %}
+{% load country_url %}
+
+{% block title %}{% trans "Archive" %}{% endblock %}
+
+{% block hero %}
+<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
+    {% trans "Archive" %}
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto px-2 mt-8 space-y-4">
+    {% for competition in object_list %}
+    <div class="rounded-md p-4 border shadow">
+        <div class="flex items-baseline justify-between gap-2">
+            <h2 class="font-bold text-2xl">{{ competition.name }}</h2>
+            <span class="text-gray-800 shrink-0">{{ competition.competition_start|date }}</span>
+        </div>
+        <div class="flex items-baseline gap-4 mt-2 text-lg flex-wrap">
+            <a href="{% country_url "archive_results" competition_number=competition.number %}" class="link-primary">{% trans "Results" %}</a>
+            <a href="{% country_url "archive_problems" competition_number=competition.number %}" class="link-primary">{% trans "Problem statements" %}</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
