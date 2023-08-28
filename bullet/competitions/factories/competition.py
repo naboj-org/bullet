@@ -69,6 +69,7 @@ class EndedCompetitionFactory(DjangoModelFactory):
 
     name = factory.Faker("sentence")
     branch = factory.Faker("random_element", elements=[b.id for b in Branches])
+    number = factory.Faker("pyint")
 
     web_start = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
     registration_start = factory.Faker(
