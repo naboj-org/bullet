@@ -1,9 +1,11 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
+{% load access %}
 
 {% block title %}Venues{% endblock %}
 
 {% block content %}
+    {% get_active_competition as competition %}
     <div class="p-8">
         {% aheader %}
             {% slot title %}
@@ -11,8 +13,11 @@
                 <span class="text-gray-400 font-normal">{{ venue_count|floatformat:"g" }}</span>
             {% endslot %}
             {% slot buttons %}
-                {% url "badmin:venue_create" as create_url %}
-                {% #abtn color="green" icon="mdi:plus" label="New venue" url=create_url %}
+                {% is_country_admin as can_create %}
+                {% if not competition.results_public and can_create %}
+                    {% url "badmin:venue_create" as create_url %}
+                    {% #abtn color="green" icon="mdi:plus" label="New venue" url=create_url %}
+                {% endif %}
             {% endslot %}
         {% endaheader %}
 
