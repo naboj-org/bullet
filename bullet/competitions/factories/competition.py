@@ -22,11 +22,19 @@ def make_date_after(date):
     )
 
 
+def make_date_before(date):
+    return fake.date_time_between(
+        start_date=date - datetime.timedelta(days=30),
+        end_date=date,
+        tzinfo=timezone.get_current_timezone(),
+    )
+
+
 def make_duration():
     return datetime.timedelta(minutes=fake.random.randint(15, 240))
 
 
-class CompetitionFactory(DjangoModelFactory):
+class RegistrationInProgressCompetitionFactory(DjangoModelFactory):
     class Meta:
         model = Competition
 
@@ -49,6 +57,36 @@ class CompetitionFactory(DjangoModelFactory):
 
     competition_start = factory.LazyAttribute(
         lambda o: make_date_after(o.registration_end)
+    )
+    competition_duration = factory.LazyAttribute(lambda o: make_duration())
+
+    is_cancelled = factory.Faker("boolean", chance_of_getting_true=10)
+
+
+class EndedCompetitionFactory(DjangoModelFactory):
+    class Meta:
+        model = Competition
+
+    name = factory.Faker("sentence")
+    branch = factory.Faker("random_element", elements=[b.id for b in Branches])
+    number = factory.Faker("pyint")
+
+    web_start = factory.Faker("date_time", tzinfo=timezone.get_current_timezone())
+    registration_start = factory.Faker(
+        "date_time_between", tzinfo=timezone.get_current_timezone()
+    )
+    # TODO: maybe allow this to be None
+    registration_second_round_start = factory.LazyAttribute(
+        lambda o: make_date_after(o.registration_start)
+    )
+
+    competition_start = factory.Faker(
+        "past_datetime",
+        tzinfo=timezone.get_current_timezone(),
+    )
+
+    registration_end = factory.LazyAttribute(
+        lambda o: make_date_before(o.competition_start)
     )
     competition_duration = factory.LazyAttribute(lambda o: make_duration())
 
