@@ -6,6 +6,4 @@ class ArchiveListView(ListView):
     template_name = "archive/list.html"
 
     def get_queryset(self):
-        return Competition.objects.filter(branch=self.request.BRANCH).order_by(
-            "-web_start"
-        )
+        return Competition.objects.for_user(self.request.user, self.request.BRANCH)
