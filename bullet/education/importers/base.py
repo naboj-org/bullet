@@ -80,6 +80,10 @@ class BaseSchoolImporter:
                 )
                 res.created += 1
 
+            # Skip importing schools that were manually edited.
+            if obj.importer_ignored:
+                continue
+
             obj.name = school.name.strip()
             obj.address = school.address.strip()
             obj.country = school.country

@@ -3,6 +3,7 @@ from bullet_admin.views import (
     auth,
     content,
     documents,
+    education,
     emails,
     home,
     results,
@@ -206,4 +207,15 @@ urlpatterns = [
     path("venues/", venues.VenueListView.as_view(), name="venue_list"),
     path("venues/<int:pk>/", venues.VenueUpdateView.as_view(), name="venue_update"),
     path("venues/create/", venues.VenueCreateView.as_view(), name="venue_create"),
+    path("education/schools/", education.SchoolListView.as_view(), name="school_list"),
+    path(
+        "education/schools/<int:pk>/",
+        education.SchoolUpdateView.as_view(),
+        name="school_update",
+    ),
+    path(
+        "education/schools/create/",
+        education.SchoolCreateView.as_view(),
+        name="school_create",
+    ),
 ]

@@ -72,15 +72,24 @@ def admin_sidebar(context):
 
     if (
         branch_role.is_admin
+        or branch_role.is_school_editor
         or competition_role.can_delegate
         or competition_role.countries
+        or competition_role.venues
         and not competition_role.is_operator
     ):
         items = []
 
         if competition_role.can_delegate or branch_role.is_admin:
             items.append(("fa-users", "Users", reverse("badmin:user_list")))
-        if branch_role.is_admin or competition_role.countries:
+        if user.is_superuser or branch_role.is_school_editor:
+            items.append(("fa-building", "Schools", reverse("badmin:school_list")))
+        if (
+            user.is_superuser
+            or branch_role.is_admin
+            or competition_role.countries
+            or competition_role.venues
+        ):
             items.append(("fa-location-pin", "Venues", reverse("badmin:venue_list")))
 
         menu_items.append(
