@@ -68,7 +68,7 @@ def is_any_admin(
         return False
 
     # Country admin and venue admins are admins, too
-    return len(crole.venues) != 0 or len(crole.countries) != 0
+    return bool(crole.venues) or bool(crole.countries)
 
 
 def is_country_admin(
@@ -93,7 +93,7 @@ def is_country_admin(
         return False
 
     # Country admin and venue admins are admins, too
-    return len(crole.countries) != 0
+    return bool(crole.countries)
 
 
 class VenueAccess(AccessMixin):
