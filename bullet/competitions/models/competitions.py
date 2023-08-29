@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import datetime, timedelta
 
 from bullet_admin.models import CompetitionRole
 from competitions.branches import Branch
@@ -11,7 +11,11 @@ from web.fields import BranchField
 
 class CompetitionQuerySet(models.QuerySet):
     def get_current_competition(self, branch):
-        return self.filter(branch=branch).order_by("-web_start").first()
+        return (
+            self.filter(branch=branch, web_start__lt=datetime.now())
+            .order_by("-web_start")
+            .first()
+        )
 
     def for_request(self, request):
         """
