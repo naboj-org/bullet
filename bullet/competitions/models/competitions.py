@@ -96,7 +96,8 @@ class Competition(models.Model):
         REGISTRATION = (3, "Registration")
         AFTER_REGISTRATION = (4, "After registration")
         COMPETITION = (5, "Competition")
-        LOCKED = (6, "Locked")
+        AFTER_COMPETITION = (6, "After competition")
+        LOCKED = (7, "Locked")
 
         def __lt__(self, other):
             if not isinstance(other, Competition.State):
@@ -119,9 +120,11 @@ class Competition(models.Model):
             return Competition.State.REGISTRATION
         if self.competition_start > now:
             return Competition.State.AFTER_REGISTRATION
+        if self.competition_start + self.competition_duration > now:
+            return Competition.State.COMPETITION
         if self.results_public:
             return Competition.State.LOCKED
-        return Competition.State.COMPETITION
+        return Competition.State.AFTER_COMPETITION
 
 
 class CategoryCompetition(models.Model):
