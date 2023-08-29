@@ -1,3 +1,4 @@
+import functools
 from datetime import datetime, timedelta
 
 from bullet_admin.models import CompetitionRole
@@ -87,6 +88,43 @@ class Competition(models.Model):
     @property
     def has_started(self):
         return self.competition_start <= timezone.now()
+
+    @functools.total_ordering
+    class State(models.IntegerChoices):
+        BEFORE_WEB_START = (1, "Before web start")
+        BEFORE_REGISTRATION = (2, "Before registration")
+        REGISTRATION = (3, "Registration")
+        AFTER_REGISTRATION = (4, "After registration")
+        COMPETITION = (5, "Competition")
+        AFTER_COMPETITION = (6, "After competition")
+        LOCKED = (7, "Locked")
+
+        def __lt__(self, other):
+            if not isinstance(other, Competition.State):
+                return NotImplemented
+            return self.value < other.value
+
+        def __eq__(self, other):
+            if not isinstance(other, Competition.State):
+                return NotImplemented
+            return self.value == other.value
+
+    @property
+    def state(self) -> State:
+        now = timezone.now()
+        if self.web_start > now:
+            return Competition.State.BEFORE_WEB_START
+        if self.registration_start > now:
+            return Competition.State.BEFORE_REGISTRATION
+        if self.registration_end > now:
+            return Competition.State.REGISTRATION
+        if self.competition_start > now:
+            return Competition.State.AFTER_REGISTRATION
+        if self.competition_start + self.competition_duration > now:
+            return Competition.State.COMPETITION
+        if self.results_public:
+            return Competition.State.LOCKED
+        return Competition.State.AFTER_COMPETITION
 
 
 class CategoryCompetition(models.Model):
