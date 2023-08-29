@@ -1,5 +1,5 @@
 from competitions.models import Competition
-from users.factories.user import CompetitionRoleFactory, UserFactory, BranchRoleFactory
+from users.factories.user import BranchRoleFactory, CompetitionRoleFactory, UserFactory
 
 
 def create_users(competition: "Competition"):

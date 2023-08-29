@@ -1,12 +1,11 @@
 import random
 
 import factory
-from bullet_admin.models import CompetitionRole, BranchRole
-from django_countries import countries
-from factory.django import DjangoModelFactory
-
+from bullet_admin.models import BranchRole, CompetitionRole
 from competitions.branches import Branches
 from competitions.models import Competition, Venue
+from django_countries import countries
+from factory.django import DjangoModelFactory
 from users.models import User
 
 
