@@ -12,11 +12,7 @@ from web.fields import BranchField
 class CompetitionQuerySet(models.QuerySet):
     def get_current_competition(self, branch):
         return (
-            self.filter(
-                branch=branch,
-                web_start__lt=datetime.now(),
-                competition_start__gt=datetime.now(),
-            )
+            self.filter(branch=branch, web_start__lt=datetime.now())
             .order_by("-web_start")
             .first()
         )
