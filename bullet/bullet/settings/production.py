@@ -14,6 +14,9 @@ DATABASES = {"default": dj_database_url.config(default="postgres://localhost")}
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 SECURE_HSTS_SECONDS = 3600
 
+SESSION_COOKIE_DOMAIN = os.environ.get("PARENT_HOST")
+SESSION_COOKIE_SECURE = True
+
 SERVER_EMAIL = "server@naboj.online"
 
 dsn = os.environ.get("SENTRY_DSN", None)
