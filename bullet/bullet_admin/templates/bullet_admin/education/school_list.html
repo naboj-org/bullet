@@ -1,0 +1,58 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+{% load access %}
+
+{% block title %}Schools{% endblock %}
+
+{% block content %}
+    {% get_active_competition as competition %}
+    <div class="p-8">
+        {% aheader %}
+            {% slot title %}
+                Schools
+                <span class="text-gray-400 font-normal">{{ school_count|floatformat:"g" }}</span>
+            {% endslot %}
+            {% slot buttons %}
+                {% url "badmin:school_create" as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New school" url=create_url %}
+            {% endslot %}
+        {% endaheader %}
+
+        <form class="flex mb-4 items-center gap-2">
+            <input type="search" name="q" placeholder="Search schools" class="input" value="{{ request.GET.q }}">
+        </form>
+
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Address</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for sch in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">
+                            <div class="flex gap-2 items-center flex-wrap">
+                                <span class="iconify shrink-0" data-icon="flag:{{ sch.country.code|lower }}-4x3"></span>
+                                {{ sch.name }}
+                            </div>
+                        </td>
+                        <td class="p-3">{{ sch.address }}</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url 'badmin:school_update' pk=sch.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% admin_paginator page_obj %}
+    </div>
+{% endblock %}
