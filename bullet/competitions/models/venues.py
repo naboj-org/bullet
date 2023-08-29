@@ -1,13 +1,20 @@
+from typing import TYPE_CHECKING
+
+from bullet_admin.utils import get_active_competition
 from countries.models import BranchCountry
 from django.db import models
-from django.db.models import Count, OuterRef, Subquery, Value
+from django.db.models import Count, OuterRef, Q, Subquery, Value
 from django.db.models.functions import Coalesce
 from django_countries.fields import CountryField
 from users.models import Team
 from web.fields import ChoiceArrayField, LanguageField
 
+if TYPE_CHECKING:
+    from competitions.models import Competition
+    from users.models import User
 
-class CompetitionVenueQuerySet(models.QuerySet):
+
+class VenueQuerySet(models.QuerySet):
     def with_occupancy(self):
         return self.annotate(
             occupancy=Coalesce(
@@ -21,6 +28,60 @@ class CompetitionVenueQuerySet(models.QuerySet):
                 ),
                 Value(0),
             )
+        )
+
+    def annotate_teamcount(self):
+        return self.annotate(
+            team_count=Count("team", filter=Q(team__confirmed_at__isnull=False))
+        )
+
+    def natural_order(self):
+        return self.order_by("name", "category_competition__identifier")
+
+    def for_competition(self, competition):
+        return self.filter(category_competition__competition=competition)
+
+    def for_request(self, request):
+        """
+        Filters venues that should be visible for a given request.
+        """
+        return self.for_user(
+            get_active_competition(request),
+            request.user,
+        )
+
+    def for_user(self, competition: "Competition", user: "User"):
+        """
+        Filters venues that should be visible for a given user.
+        """
+        qs = self.for_competition(competition)
+
+        if not user.is_authenticated:
+            return self.none()
+
+        # Branch admin can see all venues
+        if user.get_branch_role(competition.branch).is_admin:
+            return qs
+
+        # Competition admin can see all venues of his country
+        # or just his venues
+        crole = user.get_competition_role(competition)
+        if crole.countries:
+            qs = qs.filter(country__in=crole.countries)
+        if crole.venues:
+            qs = qs.filter(id__in=crole.venues)
+
+        # Non-admins cannot see anything
+        if not crole.venues and not crole.countries:
+            return self.none()
+
+        return qs
+
+
+class VenueManager(models.Manager):
+    def get_queryset(self):
+        return VenueQuerySet(self.model, using=self._db).select_related(
+            "category_competition"
         )
 
 
@@ -44,10 +105,11 @@ class Venue(models.Model):
     is_online = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
 
-    objects = CompetitionVenueQuerySet.as_manager()
+    objects = VenueManager.from_queryset(VenueQuerySet)()
 
     class Meta:
         unique_together = ("category_competition", "shortcode")
+        ordering = ("name", "category_competition__identifier")
 
     def __str__(self):
         return f"{self.name} ({self.category_competition.identifier})"

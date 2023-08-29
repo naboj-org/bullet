@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "django_htmx",
     "silk",
     "simple_history",
+    "django_web_components",
 ]
 
 DATABASES = {
@@ -89,6 +90,9 @@ TEMPLATES = [
                 "web.context_processors.branch_context",
                 "web.context_processors.version_context",
                 "django.template.context_processors.i18n",
+            ],
+            "builtins": [
+                "django_web_components.templatetags.components",
             ],
         },
     },

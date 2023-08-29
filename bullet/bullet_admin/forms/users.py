@@ -36,11 +36,7 @@ class CompetitionRoleForm(forms.ModelForm):
     ):
         super().__init__(**kwargs)
 
-        venue_qs = (
-            Venue.objects.filter(category_competition__competition=competition)
-            .select_related("category_competition")
-            .order_by("name", "category_competition__identifier")
-        )
+        venue_qs = Venue.objects.for_competition(competition)
         if allowed_objects:
             if isinstance(allowed_objects[0], Country):
                 venue_qs = venue_qs.filter(country__in=allowed_objects)

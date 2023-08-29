@@ -1,0 +1,19 @@
+<div class="flex items-center justify-between flex-col sm:flex-row mb-8">
+    <div>
+        <h2 class="text-3xl font-bold">
+            {% render_slot slots.title %}
+        </h2>
+
+        {% if attributes.show_subtitle %}
+        <div class="text-gray-600 leading-4 mt-1">
+            {% render_slot slots.inner_block %}
+        </div>
+        {% endif %}
+    </div>
+
+    {% if slots.buttons %}
+    <div class="flex shrink-0 items-center flex-wrap gap-2 mt-4 sm:mt-0 sm:ml-4">
+        {% render_slot slots.buttons %}
+    </div>
+    {% endif %}
+</div>

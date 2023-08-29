@@ -1,5 +1,5 @@
-from bullet_admin.forms.utils import get_venue_queryset
-from competitions.models import Competition
+from bullet_admin.utils import get_active_competition
+from competitions.models import Venue
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q
 from django.views.generic import TemplateView
@@ -11,9 +11,8 @@ class HomeView(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
-        ctx["competition"] = competition
-        ctx["venues"] = get_venue_queryset(competition, self.request.user).annotate(
+        ctx["competition"] = get_active_competition(self.request)
+        ctx["venues"] = Venue.objects.for_request(self.request).annotate(
             registered=Count("team", filter=Q(team__confirmed_at__isnull=False)),
             competing=Count(
                 "team",

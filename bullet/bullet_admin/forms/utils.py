@@ -44,23 +44,6 @@ def get_language_choices(branch: Branch, allow_empty=False):
     return choices
 
 
-def get_venue_queryset(competition: Competition, user: User):
-    venue_qs = (
-        Venue.objects.filter(category_competition__competition=competition)
-        .select_related("category_competition")
-        .order_by("name", "category_competition__identifier")
-    )
-
-    if not user.get_branch_role(competition.branch).is_admin:
-        crole = user.get_competition_role(competition)
-        if crole.countries:
-            venue_qs = venue_qs.filter(country__in=crole.countries)
-        if crole.venues:
-            venue_qs = venue_qs.filter(id__in=crole.venues)
-
-    return venue_qs
-
-
 def get_language_choices_for_venue(venue: Venue):
     languages = venue.accepted_languages
     choices = [(lang, get_language_info(lang)["name_translated"]) for lang in languages]

@@ -1,7 +1,6 @@
 from bullet_admin.forms.documents import CertificateForm, TeamListForm
 from bullet_admin.mixins import AdminRequiredMixin
-from bullet_admin.utils import can_access_venue, get_active_competition
-from django.core.exceptions import PermissionDenied
+from bullet_admin.utils import get_active_competition
 from django.http import FileResponse
 from django.views.generic import FormView
 from documents.generators.certificate import certificates_for_venue
@@ -20,14 +19,11 @@ class CertificateView(AdminRequiredMixin, FormView):
         return kw
 
     def form_valid(self, form):
-        venue = form.cleaned_data["venue"]
-
-        if not can_access_venue(self.request, venue):
-            raise PermissionDenied()
-
-        template = form.cleaned_data["template"]
         data = certificates_for_venue(
-            venue, template, form.cleaned_data["count"], form.cleaned_data["empty"]
+            form.cleaned_data["venue"],
+            form.cleaned_data["template"],
+            form.cleaned_data["count"],
+            form.cleaned_data["empty"],
         )
         return FileResponse(data, as_attachment=True, filename="certificates.pdf")
 
@@ -44,10 +40,6 @@ class TeamListView(AdminRequiredMixin, FormView):
 
     def form_valid(self, form):
         venue = form.cleaned_data["venue"]
-
-        if not can_access_venue(self.request, venue):
-            raise PermissionDenied()
-
         data = team_list(
             Team.objects.competing().filter(venue=venue, number__isnull=False),
             f"Team list: {venue.name}",

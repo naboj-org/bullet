@@ -80,10 +80,11 @@ class CategoryResultsView(ResultsViewMixin, ListView):
 
         start_time = None
         if "venue_timer" in request.GET:
-            start_time = Venue.objects.filter(
-                category_competition__competition=self.competition,
-                shortcode=request.GET["venue_timer"],
-            ).first()
+            start_time = (
+                Venue.objects.for_competition(self.competition)
+                .filter(shortcode=request.GET["venue_timer"])
+                .first()
+            )
             if start_time:
                 start_time = start_time.start_time
 
@@ -125,8 +126,7 @@ class VenueResultsView(ResultsViewMixin, ListView):
 
     def dispatch(self, request, *args, **kwargs):
         self.venue = get_object_or_404(
-            Venue,
-            category_competition__competition=self.competition,
+            Venue.objects.for_competition(self.competition),
             shortcode=self.kwargs["venue"].upper(),
         )
 
