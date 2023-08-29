@@ -1,7 +1,7 @@
 import factory
 from competitions.models import CategoryCompetition, Venue
+from countries.models import BranchCountry
 from django.conf import settings
-from django_countries import countries
 from factory.django import DjangoModelFactory
 
 
@@ -13,8 +13,10 @@ class VenueFactory(DjangoModelFactory):
     name = factory.Faker("sentence")
     shortcode = factory.Faker("hexify", text="^^^^^")
     address = factory.Faker("address")
-    country = factory.Faker("random_element", elements=[x.code for x in countries])
-
+    country = factory.Faker(
+        "random_element",
+        elements=BranchCountry.objects.values_list("country", flat=True),
+    )
     category_competition = factory.Faker(
         "random_element", elements=CategoryCompetition.objects.all()
     )

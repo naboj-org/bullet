@@ -3,7 +3,7 @@ from competitions.factories.generate import (
     create_ended_competition,
     create_registration_in_progress_competition,
 )
-from countries.factories.generate import create_branch_countries
+from countries.factories.branchcountry import BranchCountryFactory
 from django.core import management
 from django.core.management import BaseCommand
 from django.db import transaction
@@ -21,15 +21,18 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         search.enabled = False
         create_education()
-        create_branch_countries(branch=Branches["physics"])
+        BranchCountryFactory.create_batch(20)
+        create_pages(branch=Branches["math"])
         create_pages(branch=Branches["physics"])
+        create_pages(branch=Branches["junior"])
+        create_pages(branch=Branches["chemistry"])
+        for _ in range(5):
+            ended_competition = create_ended_competition()
+            create_problems(ended_competition)
         competition_physics = create_registration_in_progress_competition(
             branch=Branches["physics"]
         )
         create_problems(competition_physics)
-        create_branch_countries(branch=Branches["chemistry"])
-        create_pages(branch=Branches["chemistry"])
-        competition_chemistry = create_ended_competition(branch=Branches["chemistry"])
-        create_problems(competition_chemistry)
+
         create_partners()
         management.call_command("indexschools")

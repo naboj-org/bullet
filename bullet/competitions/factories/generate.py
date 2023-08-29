@@ -10,15 +10,15 @@ from competitions.models import Competition
 from users.factories.contestants import ContestantFactory, TeamFactory
 
 
-def feed_competition(competition=None) -> None:
+def feed_competition(
+    competition=None,
+) -> None:
     """
     Helper function that feeds competition with data.
     """
     for _ in range(2):
         category_competition = CategoryCompetitionFactory(competition=competition)
-        venues = VenueFactory.create_batch(
-            50, category_competition=category_competition
-        )
+        venues = VenueFactory.create_batch(5, category_competition=category_competition)
 
         for _ in range(200):
             team = TeamFactory(venue=random.choice(venues))
@@ -42,7 +42,11 @@ def create_ended_competition(branch=None) -> Competition:
     """
     Helper function to generate a full competition which has ended with everything.
     """
-    competition = EndedCompetitionFactory(branch=branch)
+    competition = (
+        EndedCompetitionFactory()
+        if not branch
+        else EndedCompetitionFactory(branch=branch)
+    )
     feed_competition(competition)
 
     return competition
