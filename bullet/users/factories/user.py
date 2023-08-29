@@ -4,7 +4,7 @@ import factory
 from bullet_admin.models import BranchRole, CompetitionRole
 from competitions.branches import Branches
 from competitions.models import Competition, Venue
-from django_countries import countries
+from django_countries import countries as django_countries
 from factory.django import DjangoModelFactory
 from users.models import User
 
@@ -26,15 +26,26 @@ class CompetitionRoleFactory(DjangoModelFactory):
         django_get_or_create = ["competition", "user"]
 
     competition = factory.Faker("random_element", elements=Competition.objects.all())
-    countries = factory.Faker("random_elements", elements=countries)
-    can_delegate = factory.Faker("boolean")
-    is_operator = factory.Faker("boolean")
     user = factory.Faker("random_element", elements=User.objects.all())
 
     @factory.post_generation
     def post(self, create, extracted, **kwargs):
         venues = list(Venue.objects.all())
-        self.venue_objects.set(random.sample(venues, random.randint(0, len(venues))))
+        seed = ord(self.user.email[0].upper()) - ord("A")
+        random.seed(seed)
+        self.can_delegate = random.random() > 0.5
+        self.is_operator = not self.can_delegate
+        if random.random() > 0.5:
+            self.venue_objects.set(
+                random.sample(venues, random.randint(0, len(venues)))
+            )
+        else:
+            self.countries = list(
+                random.sample(
+                    [x[0] for x in django_countries],
+                    random.randint(0, len(django_countries)),
+                )
+            )
 
 
 class BranchRoleFactory(DjangoModelFactory):
