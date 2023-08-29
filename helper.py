@@ -91,7 +91,6 @@ def create_superuser(*args):
 
 def generatedata(*args):
     logging.info("Remove uploads folder")
-    shutil.rmtree("bullet/uploads", ignore_errors=True)
     os.makedirs("bullet/uploads")
     logging.info("generate new data")
     run("docker-compose run --rm web python manage.py generatedata")
