@@ -9,6 +9,12 @@
         </header>
         <div class="divide-y">
             <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                <div>System state</div>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">
+                    {{ competition.state.label }}
+                </div>
+            </div>
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                 <div>Registration start</div>
                 <div class="mt-1 sm:mt-0 sm:col-span-2">
                     {{ competition.registration_start }}
