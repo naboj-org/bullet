@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from bullet_admin.models import CompetitionRole
 from competitions.branches import Branch
