@@ -9,6 +9,7 @@ from django.core.management import BaseCommand
 from django.db import transaction
 from education.factories.generate import create_education
 from problems.factories.generate import create_problems
+from users.factories.generate import create_users
 from web.factories.generate import create_pages, create_partners
 
 from bullet import search
@@ -35,4 +36,5 @@ class Command(BaseCommand):
         create_problems(competition_physics)
 
         create_partners()
+        create_users(competition_physics)
         management.call_command("indexschools")
