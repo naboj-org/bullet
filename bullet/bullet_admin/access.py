@@ -165,3 +165,19 @@ class CountryAdminAccess(AdminAccess):
             return False
 
         return is_country_admin(self.request.user, competition, self.allow_operator)
+
+
+class SchoolEditorAccess(AccessMixin):
+    """
+    Allows access only to school editor.
+    """
+
+    def can_access(self):
+        if not self.request.user.is_authenticated:
+            return False
+
+        if self.request.user.is_superuser:
+            return True
+
+        brole = self.request.user.get_branch_role(self.request.BRANCH)
+        return brole.is_school_editor

@@ -7,6 +7,7 @@ class BranchRole(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     branch = BranchField()
     is_translator = models.BooleanField(default=False)
+    is_school_editor = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
     class Meta:
