@@ -58,6 +58,7 @@ class School(models.Model):
 
     importer = models.CharField(max_length=16, blank=True, null=True)
     importer_identifier = models.CharField(max_length=128, blank=True, null=True)
+    importer_ignored = models.BooleanField(default=False)
 
     class Meta:
         constraints = (
