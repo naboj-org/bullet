@@ -2,6 +2,7 @@ from competitions.branches import Branch
 from countries.models import BranchCountry
 from django import forms
 from django.core.exceptions import ValidationError
+from django_countries import countries
 from web.models import ContentBlock, Logo, Menu, Page
 
 
@@ -45,9 +46,7 @@ class PageForm(forms.ModelForm):
         )
 
     def clean(self):
-        data = self.cleaned_data
-        if self.errors:
-            return data
+        data = super().clean()
 
         qs = Page.objects
         if self.instance:
@@ -60,6 +59,16 @@ class PageForm(forms.ModelForm):
             language=data.get("language"),
         ).exists():
             raise ValidationError("Page with the same slug already exists.")
+
+        for country in data.get("countries"):
+            if not BranchCountry.objects.filter(
+                branch=self._branch,
+                country=country,
+                languages__contains=[data.get("language")],
+            ).exists():
+                raise ValidationError(
+                    f"This language cannot be used in {countries.name(country)}."
+                )
 
         return data
 
@@ -97,6 +106,21 @@ class ContentBlockForm(forms.ModelForm):
                 key=lambda x: x[1],
             )
         )
+
+    def clean(self):
+        data = super().clean()
+
+        if (
+            data.get("country")
+            and not BranchCountry.objects.filter(
+                branch=self._branch,
+                country=data.get("country"),
+                languages__contains=[data.get("language")],
+            ).exists()
+        ):
+            raise ValidationError("This language cannot be used in this country.")
+
+        return data
 
 
 class ContentBlockWithRefForm(ContentBlockForm):
@@ -168,6 +192,7 @@ class MenuItemForm(forms.ModelForm):
 
     def __init__(self, branch: Branch, **kwargs):
         super().__init__(**kwargs)
+        self._branch = branch
         available_countries = set()
         available_languages = set()
 
@@ -194,3 +219,18 @@ class MenuItemForm(forms.ModelForm):
                 key=lambda x: x[1],
             )
         )
+
+    def clean(self):
+        data = super().clean()
+
+        for country in data.get("countries"):
+            if not BranchCountry.objects.filter(
+                branch=self._branch,
+                country=country,
+                languages__contains=[data.get("language")],
+            ).exists():
+                raise ValidationError(
+                    f"This language cannot be used in {countries.name(country)}."
+                )
+
+        return data
