@@ -40,6 +40,14 @@ class SolvedProblem(models.Model):
     competition_time = models.DurationField()
 
 
+class ProblemStat(models.Model):
+    team = models.ForeignKey("users.Team", on_delete=models.CASCADE, related_name="+")
+    problem = models.ForeignKey(Problem, on_delete=models.RESTRICT, related_name="+")
+    received_time = models.DurationField()
+    solved_time = models.DurationField(blank=True, null=True)
+    solve_duration = models.DurationField(blank=True, null=True)
+
+
 class ScannerLog(models.Model):
     class Result(models.IntegerChoices):
         OK = 0

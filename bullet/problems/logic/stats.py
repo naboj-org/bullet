@@ -1,0 +1,62 @@
+from collections import defaultdict
+from datetime import timedelta
+
+from competitions.models import CategoryCompetition, Competition
+from problems.models import ProblemStat, SolvedProblem
+from users.models import Team
+
+
+def generate_stats(competition: Competition):
+    for category in competition.categorycompetition_set.all():
+        ProblemStat.objects.filter(team__venue__category_competition=category).delete()
+        generate_stats_category(category)
+
+
+def generate_stats_category(category: CategoryCompetition):
+    category_problems = category.problems.all()
+    problem_number_map: dict[int, int] = {
+        p.problem.id: p.number for p in category_problems
+    }
+    problem_id_map: dict[int, int] = {p.number: p.problem.id for p in category_problems}
+
+    solves = SolvedProblem.objects.filter(
+        team__venue__category_competition=category
+    ).order_by("competition_time")
+    teams = Team.objects.filter(id__in=solves.values("team"))
+
+    # dict[team_id][problem_number] = receive/solve time
+    receive_times: dict[int, dict[int, timedelta]] = defaultdict(lambda: {})
+    solve_times: dict[int, dict[int, timedelta]] = defaultdict(lambda: {})
+
+    # Populate receive times with first problems
+    for team in teams:
+        receive_times[team.id] = {
+            i + 1: timedelta(seconds=0) for i in range(category.problems_per_team)
+        }
+
+    for solve in solves:
+        solve_times[solve.team_id][
+            problem_number_map[solve.problem_id]
+        ] = solve.competition_time
+
+        # The team just received their next problem
+        received_problem = len(receive_times[solve.team_id]) + 1
+        receive_times[solve.team_id][received_problem] = solve.competition_time
+
+    stats = []
+    for team in teams:
+        for number, received in receive_times[team.id].items():
+            solved = None
+            if number in solve_times[team.id]:
+                solved = solve_times[team.id][number]
+
+            stat = ProblemStat(
+                team=team,
+                problem_id=problem_id_map[number],
+                received_time=received,
+                solved_time=solved,
+                solve_duration=solved - received if solved else None,
+            )
+            stats.append(stat)
+
+    ProblemStat.objects.bulk_create(stats)
