@@ -13,9 +13,9 @@
                 <thead>
                     <tr class="bg-gray-100 text-left border-b">
                         <th class="p-3">Name</th>
-                        <th class="p-3">URL</th>
                         <th class="p-3">Image</th>
                         <th class="p-3">Countries</th>
+                        <th class="p-3"></th>
                     </tr>
                 </thead>
 
@@ -23,16 +23,21 @@
                     {% for logo in object_list %}
                     <tr class="{% cycle "" "bg-gray-50" %}">
                         <td class="p-3">
-                            <a href="{% url "badmin:logo_edit" pk=logo.id %}" class="link-primary">{{ logo.name }}</a>
+                            <div class="flex flex-col items-baseline justify-between h-full">
+                                <p class="text-left font-bold">{{ logo.name }}</p>
+                                <a href="{{ logo.url }}" target="_blank" class="text-xs opacity-80">{{ logo.url }}</a>
+                            </div>
                         </td>
                         <td class="p-3">
-                            <a href="{{ logo.url }}" target="_blank">{{ logo.url }}</a>
-                        </td>
-                        <td class="p-3">
-                            <img src="{{ logo.image.url }}" class="max-h-16" />
+                            <img src="{{ logo.image.url }}" class="max-h-16 max-w-16" />
                         </td>
                         <td class="p-3">
                             {{ logo.countries|join:", " }}
+                        </td>
+                        <td>
+                            <a href="{% url "badmin:logo_edit" pk=logo.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
                         </td>
                     </tr>
                     {% endfor %}

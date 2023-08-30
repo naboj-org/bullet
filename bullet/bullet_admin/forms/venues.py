@@ -4,7 +4,7 @@ from bullet_admin.forms.utils import get_country_choices, get_language_choices
 from competitions.models import Competition, Venue
 from django import forms
 from django.core.exceptions import ValidationError
-from django.forms import ModelForm
+from django.forms import DateTimeInput, ModelForm
 from users.models import User
 
 prefix_re = re.compile("^[A-Z]+$")
@@ -35,6 +35,7 @@ class VenueForm(ModelForm):
 
         widgets = {
             "accepted_languages": forms.CheckboxSelectMultiple(),
+            "local_start": DateTimeInput(attrs={"type": "datetime"}),
         }
 
     def __init__(self, competition: Competition, user: User, **kwargs):

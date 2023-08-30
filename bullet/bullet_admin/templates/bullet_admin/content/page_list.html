@@ -25,6 +25,7 @@
                             <th class="p-3">Slug</th>
                             <th class="p-3">Language</th>
                             <th class="p-3">Countries</th>
+                            <th class="p-3"></th>
                         </tr>
                     </thead>
 
@@ -32,7 +33,7 @@
                         {% for page in object_list %}
                         <tr class="{% cycle "" "bg-gray-50" %}">
                             <td class="p-3">
-                                <a href="{% url "badmin:page_edit" pk=page.id %}" class="text-primary underline hover:text-primary-dark">{{ page.title }}</a>
+                                {{ page.title }}
                             </td>
                             <td class="p-3 text-sm">
                                 {{ page.slug }}
@@ -42,6 +43,11 @@
                             </td>
                             <td class="p-3 text-sm">
                                 {{ page.countries|join:", " }}
+                            </td>
+                            <td>
+                                <a href="{% url "badmin:page_edit" pk=page.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
