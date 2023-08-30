@@ -1,18 +1,21 @@
 import re
+from re import Match, Pattern
 
 from countries.logic import country
 from countries.logic.cache import get_country_cache
 from countries.models import BranchCountry
 from django.conf import settings
-from django.http import HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone, translation
 
-country_language_re = re.compile(r"^/([a-z]{2})/([^/]+)/")
+country_language_re: Pattern[str] = re.compile(r"^/([a-z]{2})/([^/]+)/")
 
 
-def country_language_from_request(request):
-    match = country_language_re.match(request.path_info)
+def country_language_from_request(
+    request: HttpRequest,
+) -> tuple[str, str] | tuple[None, None]:
+    match: Match[str] | None = country_language_re.match(request.path_info)
     if not match:
         return None, None
 
@@ -23,14 +26,17 @@ class CountryLanguageMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-    def __call__(self, request):
+    def __call__(self, request: HttpRequest):
         c, lang = country_language_from_request(request)
 
         if c and not request._is_admin_domain:
-            cache = get_country_cache()
+            cache: dict[int, dict[str, list[tuple[str, bool]]]] = get_country_cache()
             if request.BRANCH is not None and (
                 c not in cache[request.BRANCH.id]
-                or lang not in cache[request.BRANCH.id][c]
+                or (
+                    (lang, True) not in cache[request.BRANCH.id][c]
+                    and (lang, False) not in cache[request.BRANCH.id][c]
+                )
             ):
                 return HttpResponseRedirect(reverse("country_selector"))
 
