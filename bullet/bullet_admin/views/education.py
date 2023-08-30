@@ -20,6 +20,8 @@ class SchoolListView(SchoolEditorAccess, ListView):
             ids = [x["id"] for x in ids]
             qs = qs.filter(id__in=ids).all()
             qs = sorted(qs, key=lambda s: ids.index(s.id))
+        else:
+            qs = qs.order_by("country", "name", "address")
         return qs
 
     def get_context_data(self, *, object_list=None, **kwargs):
