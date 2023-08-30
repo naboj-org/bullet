@@ -19,6 +19,10 @@
     {% block extrahead %}{% endblock %}
     <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
     <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 </head>
 
 <body class="branch-{{ branch.identifier }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
@@ -51,5 +55,17 @@
 
     <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.8.0" defer></script>
+    <script>
+        flatpickr(".datetime-picker", {
+            enableTime: true,
+            time_24hr: true,
+        });
+
+        flatpickr(".time-picker", {
+            enableTime: true,
+            noCalendar: true,
+            time_24hr: true,
+        });
+    </script>
 </body>
 </html>

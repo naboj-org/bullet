@@ -4,14 +4,17 @@
 
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline flex items-center">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Change competition</h2>
+            {% if branch_admin %}
+            {% url "badmin:competition_create" as create_url %}
+            {% #abtn color="green" icon="mdi:plus" label="New competition" url=create_url %}
+            {% endif %}
         </header>
         <div class="p-4 space-y-2">
             {% for competition in competitions %}
             <div hx-trigger="click" hx-post="{% url "badmin:competition_switch" %}?competition={{ competition.id }}" class="cursor-pointer border rounded-md p-3 {% if competition == active %} bg-primary-light border-primary-dark{% else %}hover:bg-gray-100{% endif %}">
                 <div class="font-bold">{{ competition }}</div>
-
                 <div class="text-sm">Branch administrator</div>
             </div>
             {% endfor %}
@@ -23,6 +26,7 @@
                 {% if role.venues %}<div class="text-sm">Venue administrator ({{ role.venues|join:", " }})</div>{% endif %}
             </div>
             {% endfor %}
+
         </div>
     </article>
 {% endblock %}

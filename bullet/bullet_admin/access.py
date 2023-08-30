@@ -4,6 +4,8 @@ from bullet_admin.mixins import AccessMixin
 from bullet_admin.utils import get_active_competition
 from django.core.exceptions import ImproperlyConfigured
 
+from competitions.branches import Branch
+
 if TYPE_CHECKING:
     from competitions.models import Competition, Venue
     from users.models import User
@@ -96,6 +98,21 @@ def is_country_admin(
     return bool(crole.countries)
 
 
+def is_branch_admin(user: "User", branch: "Branch") -> bool:
+    """
+    Checks whether the user is country admin (or better) in the competition.
+    """
+    if not user.is_authenticated:
+        return False
+
+    # Superuser has all permissions
+    if user.is_superuser:
+        return True
+
+    # Branch admin is, obviously an admin
+    return user.get_branch_role(branch).is_admin
+
+
 class VenueAccess(AccessMixin):
     """
     Permission check mixin, uses `get_permission_venue` to check users' access to the
@@ -165,6 +182,16 @@ class CountryAdminAccess(AdminAccess):
             return False
 
         return is_country_admin(self.request.user, competition, self.allow_operator)
+
+
+class BranchAdminAccess(AdminAccess):
+    """
+    Permission check mixin, uses `get_permission_competition` to check users'
+    access to the competition. Allows branch admin to access the view.
+    """
+
+    def can_access(self):
+        return is_branch_admin(self.request.user, self.request.BRANCH)
 
 
 class SchoolEditorAccess(AccessMixin):

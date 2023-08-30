@@ -5,6 +5,10 @@
     {{ field|add_class:"input form-input" }}
 {% elif field.field.widget.input_type == "checkbox" %}
     {{ field|add_class:"checkbox" }}
+{% elif field.field.widget.input_type == "datetime" %}
+    {{ field|add_class:"datetime-picker input form-input" }}
+{% elif field.field.widget.input_type == "time" %}
+    {{ field|add_class:"time-picker input form-input" }}
 {% else %}
     {{ field|add_class:"input" }}
 {% endif %}
