@@ -55,6 +55,14 @@ def admin_sidebar(context):
                 ]
             )
 
+        if user.is_superuser or branch_role.is_admin:
+            items.append(
+                ("fa-gear", "Edit Competition", reverse("badmin:competition_edit"))
+            )
+            items.append(
+                ("fa-people-group", "Categories", reverse("badmin:category_list"))
+            )
+
         menu_items.append(("Competition", items))
 
     if branch_role.is_translator:

@@ -1,0 +1,60 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+{% load access %}
+
+{% block title %}Venues{% endblock %}
+
+{% block content %}
+    {% get_active_competition as competition %}
+    <div class="p-8 max-w-7xl mx-auto">
+        {% aheader %}
+            {% slot title %}
+                Categories
+                <span class="text-gray-400 font-normal">{{ category_count|floatformat:"g" }}</span>
+            {% endslot %}
+            {% slot buttons %}
+                {% if not competition.results_public and is_branch_admin %}
+                    {% url "badmin:category_create" as create_url %}
+                    {% #abtn color="green" icon="mdi:plus" label="New category" url=create_url %}
+                {% endif %}
+            {% endslot %}
+        {% endaheader %}
+
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Category</th>
+                    <th class="p-3 text-left hidden md:table-cell">Order</th>
+                    <th class="p-3 text-center hidden md:table-cell">Teams per school</th>
+                    <th class="p-3 text-center hidden md:table-cell">Teams second round</th>
+                    <th class="p-3 text-center hidden md:table-cell">Members per team</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y tabular-nums">
+                {% for v in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">{{ v.identifier }}</td>
+                        <td class="p-3 text-left">{{ v.order }}</td>
+                        <td class="p-3 text-center">{{ v.max_teams_per_school|floatformat:"g" }}</td>
+                        <td class="p-3 text-center">{{ v.max_teams_second_round|floatformat:"g" }}</td>
+                        <td class="p-3 text-center">{{ v.max_members_per_team|floatformat:"g" }}</td>
+                        <td class="p-3">
+                            <div class="flex items-center justify-end gap-2">
+                                {% if is_branch_admin %}
+                                <a href="{% url 'badmin:category_edit' pk=v.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+        {% admin_paginator page_obj %}
+        {% endif %}
+    </div>
+{% endblock %}

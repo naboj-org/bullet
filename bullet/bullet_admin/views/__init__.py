@@ -33,6 +33,9 @@ class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
             ctx["competitions"] = Competition.objects.filter(
                 branch=self.request.BRANCH
             ).order_by("-competition_start")
+            ctx["branch_admin"] = True
+        else:
+            ctx["branch_admin"] = False
 
         ctx["roles"] = (
             CompetitionRole.objects.filter(

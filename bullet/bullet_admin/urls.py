@@ -11,6 +11,8 @@ from bullet_admin.views import (
     teams,
     users,
     venues,
+    competition,
+    category,
 )
 from django.urls import path
 
@@ -35,6 +37,23 @@ urlpatterns = [
         name="password_reset_confirm",
     ),
     path("competitions/", CompetitionSwitchView.as_view(), name="competition_switch"),
+    path(
+        "competitions/edit/",
+        competition.CompetitionUpdateView.as_view(),
+        name="competition_edit",
+    ),
+    path(
+        "competitions/new/",
+        competition.CompetitionCreateView.as_view(),
+        name="competition_create",
+    ),
+    path("categories/", category.CategoryListView.as_view(), name="category_list"),
+    path(
+        "categories/new", category.CategoryCreateView.as_view(), name="category_create"
+    ),
+    path(
+        "categories/<pk>", category.CategoryUpdateView.as_view(), name="category_edit"
+    ),
     path("content/pages/", content.PageListView.as_view(), name="page_list"),
     path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
     path("content/pages/<pk>/", content.PageEditView.as_view(), name="page_edit"),
