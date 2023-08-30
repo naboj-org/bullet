@@ -38,6 +38,33 @@
                 </div>
             </details>
         </div>
+
+        {% if problem.stats %}
+        <details class="border px-4 py-2 rounded mt-4">
+            <summary class="text-primary cursor-pointer">{% trans "Statistics" %}</summary>
+
+            <div class="mt-2">
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats.received }}</div>
+                        <div class="text-sm">{% trans "teams received this problem" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats|problem_solve_percentage }}<span class="text-2xl text-gray-600">%</span></div>
+                        <div class="text-sm">{% trans "teams solved this problem" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats.avg_time|timedelta_format }}</div>
+                        <div class="text-sm">{% trans "average solving time" %}</div>
+                    </div>
+                </div>
+
+{#                <p class="mt-2">#}
+{#                    <a href="#" class="link-primary">{% trans "More stats" %}</a>#}
+{#                </p>#}
+            </div>
+        </details>
+        {% endif %}
     </article>
     {% endfor %}
 {% endblock %}
