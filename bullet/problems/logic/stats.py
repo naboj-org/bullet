@@ -1,27 +1,27 @@
 from collections import defaultdict
 from datetime import timedelta
 
-from competitions.models import CategoryCompetition, Competition
+from competitions.models import Category, Competition
 from problems.models import ProblemStat, SolvedProblem
 from users.models import Team
 
 
 def generate_stats(competition: Competition):
-    for category in competition.categorycompetition_set.all():
-        ProblemStat.objects.filter(team__venue__category_competition=category).delete()
+    for category in competition.category_set.all():
+        ProblemStat.objects.filter(team__venue__category=category).delete()
         generate_stats_category(category)
 
 
-def generate_stats_category(category: CategoryCompetition):
+def generate_stats_category(category: Category):
     category_problems = category.problems.all()
     problem_number_map: dict[int, int] = {
         p.problem.id: p.number for p in category_problems
     }
     problem_id_map: dict[int, int] = {p.number: p.problem.id for p in category_problems}
 
-    solves = SolvedProblem.objects.filter(
-        team__venue__category_competition=category
-    ).order_by("competition_time")
+    solves = SolvedProblem.objects.filter(team__venue__category=category).order_by(
+        "competition_time"
+    )
     teams = Team.objects.filter(id__in=solves.values("team"))
 
     # dict[team_id][problem_number] = receive/solve time

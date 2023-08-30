@@ -1,6 +1,6 @@
 import string
 
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Category, Competition, Venue
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
 from users.models import Team
@@ -13,7 +13,7 @@ def venue_has_capacity(venue: Venue) -> bool:
 
 def school_has_capacity(team: Team) -> bool:
     venue: Venue = team.venue
-    category: CategoryCompetition = venue.category_competition
+    category: Category = venue.category
     competition: Competition = category.competition
 
     school_limit = category.max_teams_per_school
@@ -26,7 +26,7 @@ def school_has_capacity(team: Team) -> bool:
     teams_from_school = (
         Team.objects.competing()
         .filter(
-            venue__category_competition=category,
+            venue__category=category,
             school=team.school,
         )
         .count()
@@ -40,7 +40,7 @@ def add_team_to_competition(team: Team):
     venue: Venue = team.venue
 
     # If registration closed -> waiting list
-    if timezone.now() > venue.category_competition.competition.registration_end:
+    if timezone.now() > venue.category.competition.registration_end:
         team.to_waitlist()
         return
 
@@ -83,7 +83,7 @@ def _waiting_list(team_filter: Q, inner_filter: Q):
 def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
     # We need all competition venues here to properly count registered
     # teams across all of them.
-    all_venues = Venue.objects.filter(category_competition=venue.category_competition)
+    all_venues = Venue.objects.filter(category=venue.category)
     return _waiting_list(Q(venue=venue), Q(school__team__venue__in=all_venues))
 
 

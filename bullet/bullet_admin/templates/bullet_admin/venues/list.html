@@ -43,7 +43,7 @@
                                 {{ v.name }}
                             </div>
                         </td>
-                        <td class="p-3 whitespace-nowrap">{{ v.category_competition.identifier|title }}</td>
+                        <td class="p-3 whitespace-nowrap">{{ v.category.identifier|title }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.team_count|floatformat:"g" }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.capacity|floatformat:"g" }}</td>
                         <td class="p-3 text-right hidden md:table-cell">{{ v.local_start|default:"" }}</td>

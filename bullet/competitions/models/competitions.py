@@ -127,7 +127,7 @@ class Competition(models.Model):
         return Competition.State.AFTER_COMPETITION
 
 
-class CategoryCompetition(models.Model):
+class Category(models.Model):
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
@@ -148,7 +148,7 @@ class CategoryCompetition(models.Model):
             UniqueConstraint(
                 "competition",
                 "identifier",
-                name="competitions_category_competition_identifier_unique",
+                name="competitions_category_identifier_unique",
             ),
         )
         ordering = ("order",)
@@ -167,8 +167,6 @@ class CategoryCompetition(models.Model):
 
 
 class Wildcard(models.Model):
-    competition = models.ForeignKey(
-        "competitions.CategoryCompetition", on_delete=models.CASCADE
-    )
+    competition = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
     school = models.ForeignKey("education.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)

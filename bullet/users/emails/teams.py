@@ -25,7 +25,7 @@ class TeamCountry:
 def send_confirmation_email(team):
     with TeamCountry(team):
         send_email(
-            Branches[team.venue.category_competition.competition.branch],
+            Branches[team.venue.category.competition.branch],
             team.contact_email,
             _("Confirm your team registration"),
             "mail/messages/registration.html",
@@ -38,7 +38,7 @@ def send_confirmation_email(team):
 def send_to_competition_email(team):
     with TeamCountry(team):
         send_email(
-            Branches[team.venue.category_competition.competition.branch],
+            Branches[team.venue.category.competition.branch],
             team.contact_email,
             _("Team moved from waiting list"),
             "mail/messages/to_competition.html",
@@ -51,7 +51,7 @@ def send_to_competition_email(team):
 def send_deletion_email(team):
     with TeamCountry(team):
         send_email(
-            Branches[team.venue.category_competition.competition.branch],
+            Branches[team.venue.category.competition.branch],
             team.contact_email,
             _("Your team has been deleted"),
             "mail/messages/team_delete.html",

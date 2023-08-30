@@ -15,7 +15,7 @@ class CategoryProblem(models.Model):
         Problem, on_delete=models.CASCADE, related_name="category_problems"
     )
     category = models.ForeignKey(
-        "competitions.CategoryCompetition",
+        "competitions.Category",
         on_delete=models.CASCADE,
         related_name="problems",
     )

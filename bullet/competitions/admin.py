@@ -1,15 +1,15 @@
-from competitions.models import CategoryCompetition, Competition, Venue, Wildcard
+from competitions.models import Category, Competition, Venue, Wildcard
 from django.contrib import admin
 
 
-class CategoryCompetitionInlineAdmin(admin.TabularInline):
+class CategoryInlineAdmin(admin.TabularInline):
     extra = 0
-    model = CategoryCompetition
+    model = Category
 
 
 @admin.register(Competition)
 class CompetitionAdmin(admin.ModelAdmin):
-    inlines = (CategoryCompetitionInlineAdmin,)
+    inlines = (CategoryInlineAdmin,)
     list_display = (
         "name",
         "branch",
@@ -24,8 +24,8 @@ class CompetitionVenueInlineAdmin(admin.TabularInline):
     extra = 0
 
 
-@admin.register(CategoryCompetition)
-class CategoryCompetitionAdmin(admin.ModelAdmin):
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
     inlines = (CompetitionVenueInlineAdmin,)
     list_display = (
         "competition",
@@ -40,7 +40,7 @@ class CategoryCompetitionAdmin(admin.ModelAdmin):
 class CompetitionVenueAdmin(admin.ModelAdmin):
     list_display = (
         "name",
-        "category_competition",
+        "category",
         "capacity",
         "accepted_languages",
         "local_start",

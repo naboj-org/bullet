@@ -68,8 +68,8 @@ class TeamAdmin(SimpleHistoryAdmin):
     list_select_related = (
         "school",
         "venue",
-        "venue__category_competition",
-        "venue__category_competition__competition",
+        "venue__category",
+        "venue__category__competition",
     )
     autocomplete_fields = (
         "venue",
@@ -79,8 +79,8 @@ class TeamAdmin(SimpleHistoryAdmin):
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == "venue":
             kwargs["queryset"] = Venue.objects.select_related(
-                "category_competition",
-                "category_competition__competition",
+                "category",
+                "category__competition",
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
@@ -97,7 +97,7 @@ class ContestantAdmin(SimpleHistoryAdmin):
             kwargs["queryset"] = Team.objects.select_related(
                 "school",
                 "venue",
-                "venue__category_competition",
-                "venue__category_competition__competition",
+                "venue__category",
+                "venue__category__competition",
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)

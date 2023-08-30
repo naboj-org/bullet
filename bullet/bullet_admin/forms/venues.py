@@ -18,13 +18,13 @@ class VenueForm(ModelForm):
             "name",
             "address",
             "capacity",
-            "category_competition",
+            "category",
             "email",
             "country",
             "accepted_languages",
             "local_start",
         ]
-        labels = {"shortcode": "Barcode prefix", "category_competition": "Category"}
+        labels = {"shortcode": "Barcode prefix", "category": "Category"}
         help_texts = {
             "local_start": "YYYY-MM-DD HH:MM:SS",
             "email": "Responses to automatic emails from this venue will be "
@@ -42,9 +42,9 @@ class VenueForm(ModelForm):
         super().__init__(**kwargs)
 
         categories = []
-        for c in competition.categorycompetition_set.order_by("identifier"):
+        for c in competition.category_set.order_by("identifier"):
             categories.append((c.id, c.identifier.title()))
-        self.fields["category_competition"].choices = categories
+        self.fields["category"].choices = categories
         self.fields["country"].choices = get_country_choices(competition, user)
         self.fields["accepted_languages"].choices = get_language_choices(
             competition.branch

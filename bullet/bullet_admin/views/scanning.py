@@ -126,7 +126,7 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
 
     def scan(self, request):
         start = self.venue.start_time
-        end = start + self.venue.category_competition.competition.competition_duration
+        end = start + self.venue.category.competition.competition_duration
 
         if timezone.now() < end:
             raise ValueError("The competition did not end yet.")
@@ -144,7 +144,7 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
             raise ValueError("The team was already reviewed.")
 
         problem_count = CategoryProblem.objects.filter(
-            category=scanned_barcode.team.venue.category_competition
+            category=scanned_barcode.team.venue.category
         ).count()
         last = get_last_problem_for_team(scanned_barcode.team)
         if last < problem_count:
@@ -270,7 +270,7 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.team: Team = (
-            Team.objects.select_related("venue", "venue__category_competition")
+            Team.objects.select_related("venue", "venue__category")
             .prefetch_related("solved_problems")
             .get(pk=kwargs["pk"])
         )
@@ -289,7 +289,7 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
         category_problems = {
             cp.number: cp.problem_id
             for cp in CategoryProblem.objects.filter(
-                category=self.team.venue.category_competition
+                category=self.team.venue.category
             ).order_by("number")
         }
         solved_timestamps = {
@@ -315,9 +315,7 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
     def form_valid(self, form):
         category_problems: dict[int, Problem] = {
             cp.number: cp.problem
-            for cp in CategoryProblem.objects.filter(
-                category=self.team.venue.category_competition
-            )
+            for cp in CategoryProblem.objects.filter(category=self.team.venue.category)
             .order_by("number")
             .select_related("problem")
         }
@@ -379,8 +377,8 @@ class ApiProblemSolveView(View):
             if not team:
                 continue
             problem = Problem.objects.filter(
-                competition=team.venue.category_competition.competition,
-                category_problems__category=team.venue.category_competition,
+                competition=team.venue.category.competition,
+                category_problems__category=team.venue.category,
                 category_problems__number=solve["problem"],
             ).first()
             if not problem:

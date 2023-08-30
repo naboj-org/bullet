@@ -1,5 +1,5 @@
 import factory
-from competitions.models import CategoryCompetition, Competition
+from competitions.models import Category, Competition
 from factory.django import DjangoModelFactory
 from problems.models import CategoryProblem, Problem
 
@@ -18,7 +18,5 @@ class CategoryProblemFactory(DjangoModelFactory):
         django_get_or_create = ("problem", "category", "number")
 
     problem = factory.Faker("random_element", elements=Problem.objects.all())
-    category = factory.Faker(
-        "random_element", elements=CategoryCompetition.objects.all()
-    )
+    category = factory.Faker("random_element", elements=Category.objects.all())
     number = factory.Faker("random_int")

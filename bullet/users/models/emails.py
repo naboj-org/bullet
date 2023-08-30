@@ -35,9 +35,9 @@ class EmailCampaign(models.Model):
     def get_teams(self, ignore_excluded=False):
         qs = (
             Team.objects.filter(
-                venue__category_competition__competition=self.competition,
+                venue__category__competition=self.competition,
             )
-            .select_related("venue", "venue__category_competition", "school")
+            .select_related("venue", "venue__category", "school")
             .prefetch_related("contestants")
         )
         if not ignore_excluded:
@@ -62,7 +62,7 @@ class EmailCampaign(models.Model):
         template = Template(self.template)
 
         with TeamCountry(team):
-            branch = Branches[team.venue.category_competition.competition.branch]
+            branch = Branches[team.venue.category.competition.branch]
             link = country_reverse(
                 "team_edit", kwargs={"secret_link": team.secret_link}
             )

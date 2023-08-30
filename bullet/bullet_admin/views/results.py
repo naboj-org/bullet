@@ -1,6 +1,6 @@
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import can_access_venue, get_active_competition
-from competitions.models import CategoryCompetition, Venue
+from competitions.models import Category, Venue
 from countries.models import BranchCountry
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -22,7 +22,7 @@ class ResultsHomeView(AdminRequiredMixin, TemplateView):
 
         ctx["venues"] = Venue.objects.for_competition(competition)
         ctx["my_venues"] = Venue.objects.for_request(self.request)
-        ctx["categories"] = CategoryCompetition.objects.filter(competition=competition)
+        ctx["categories"] = Category.objects.filter(competition=competition)
         return ctx
 
 

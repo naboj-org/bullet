@@ -121,10 +121,7 @@ class CampaignDetailView(AdminRequiredMixin, DetailView):
             TeamStatus(x).label for x in self.object.team_statuses
         ]
         ctx["venues_display"] = [
-            str(x)
-            for x in self.object.team_venues.select_related(
-                "category_competition"
-            ).all()
+            str(x) for x in self.object.team_venues.select_related("category").all()
         ]
         ctx["team_count"] = self.object.get_teams().count()
         ctx["excluded_count"] = self.object.excluded_teams.count()
@@ -153,7 +150,7 @@ class CampaignTeamListView(AdminRequiredMixin, TemplateView):
         ctx = super().get_context_data(**kwargs)
         ctx["teams"] = (
             self.campaign.get_teams(ignore_excluded=True)
-            .select_related("school", "venue", "venue__category_competition")
+            .select_related("school", "venue", "venue__category")
             .prefetch_related("contestants")
             .all()
         )

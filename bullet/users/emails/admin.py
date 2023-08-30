@@ -18,7 +18,7 @@ class UnregisteredTeam:
 
 def send_team_unregistered(team: UnregisteredTeam):
     send_email(
-        Branches[team.venue.category_competition.competition.branch],
+        Branches[team.venue.category.competition.branch],
         get_venue_admin_emails(team.venue),
         "A team has been unregistered",
         "mail/messages/team_unregister.html",
