@@ -4,7 +4,7 @@
 
 {% block root_content %}
     {% block main %}
-        <div class="flex flex-wrap align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary">
+        <div class="flex flex-wrap align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary justify-between">
             {% if branches %}
             <div class="relative">
                 <button type="button" class="font-medium cursor-pointer text-white text-left whitespace-nowrap" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
@@ -17,11 +17,15 @@
                 </nav>
             </div>
             {% endif %}
-
-            <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap">
-                <i class="fas fa-globe"></i>
-                Change language
-            </a>
+            <div>
+                {% if user != None %}
+                <a href="{% url "badmin:home" %}" class="text-gray-500 hover:text-gray-300 mr-4 text-lg">Admin</a>
+                {% endif %}
+                <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap">
+                    <i class="fas fa-globe"></i>
+                    Change language
+                </a>
+            </div>
         </div>
 
         <header class="bg-hero border-b border-primary">
