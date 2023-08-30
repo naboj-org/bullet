@@ -1,5 +1,5 @@
 import functools
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 from bullet_admin.models import CompetitionRole
 from competitions.branches import Branch
