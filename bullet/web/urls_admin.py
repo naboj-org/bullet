@@ -5,6 +5,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("silk/", include("silk.urls", namespace="silk")),
+    path("django-rq/", include("django_rq.urls")),
     path("", admin.site.urls),
 ]
 
