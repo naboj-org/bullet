@@ -76,7 +76,10 @@ class RegistrationMixin:
 
         venue = (
             Venue.objects.for_competition(self.competition)
-            .filter(id=request.session["register_form"]["venue"])
+            .filter(
+                id=request.session["register_form"]["venue"],
+                country=request.COUNTRY_CODE.upper(),
+            )
             .first()
         )
 
@@ -91,6 +94,8 @@ class RegistrationMixin:
 
         school = School.objects.filter(
             id=request.session["register_form"]["school"],
+            is_hidden=False,
+            country=request.COUNTRY_CODE.upper(),
         ).first()
 
         if school is None:
