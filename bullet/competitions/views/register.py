@@ -247,7 +247,11 @@ class SchoolSelectView(RegistrationMixin, FormView):
 
         if query:
             result = search.client.index("schools").search(
-                query, {"filter": f"country = {self.request.COUNTRY_CODE.upper()}"}
+                query,
+                {
+                    "filter": f"country = '{self.request.COUNTRY_CODE.upper()}' "
+                    f"AND is_hidden = false"
+                },
             )
             ctx["schools"] = result["hits"]
 
