@@ -1,6 +1,5 @@
-from django.forms import ModelForm
-
 from competitions.models import CategoryCompetition
+from django.forms import ModelForm
 
 
 class CategoryForm(ModelForm):

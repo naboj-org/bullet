@@ -1,10 +1,9 @@
-from django.shortcuts import redirect
-from django.views.generic import UpdateView, CreateView, ListView
-
 from bullet_admin.access import BranchAdminAccess, is_branch_admin
 from bullet_admin.forms.category import CategoryForm
 from bullet_admin.views import GenericForm
 from competitions.models import CategoryCompetition, Competition
+from django.shortcuts import redirect
+from django.views.generic import CreateView, ListView, UpdateView
 
 
 class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):

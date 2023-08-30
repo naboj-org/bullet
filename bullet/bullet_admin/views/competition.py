@@ -1,12 +1,9 @@
-from django.shortcuts import redirect
-from django.views.generic import UpdateView, CreateView
-
 from bullet_admin.access import BranchAdminAccess
 from bullet_admin.forms.competition import CompetitionForm
 from bullet_admin.views import GenericForm
 from competitions.models import Competition
-from django.contrib import messages
-from django.urls import reverse
+from django.shortcuts import redirect
+from django.views.generic import CreateView, UpdateView
 
 
 class CompetitionFormMixin(GenericForm):

@@ -1,6 +1,8 @@
 from bullet_admin.views import (
     CompetitionSwitchView,
     auth,
+    category,
+    competition,
     content,
     documents,
     education,
@@ -11,8 +13,6 @@ from bullet_admin.views import (
     teams,
     users,
     venues,
-    competition,
-    category,
 )
 from django.urls import path
 

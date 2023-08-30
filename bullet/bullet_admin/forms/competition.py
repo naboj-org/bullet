@@ -1,6 +1,5 @@
-from django.forms import ModelForm, DateTimeInput, TimeInput
-
 from competitions.models import Competition
+from django.forms import DateTimeInput, ModelForm
 from users.models import User
 
 
@@ -23,7 +22,8 @@ class CompetitionForm(ModelForm):
         help_texts = {
             "name": "Name of the competition",
             "web_start": "Date from when the competition will be shown on homepage",
-            "results_freeze": "How long before the competition end the result table freezes",
+            "results_freeze": "How long before the competition "
+            "end the result table freezes",
         }
 
         labels = {"is_cancelled": "Cancel the competition?", "number": "Year"}
