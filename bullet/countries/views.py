@@ -34,9 +34,16 @@ class CountrySelectView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["countries"] = (
-            BranchCountry.objects.filter(branch=self.request.BRANCH)
-            .order_by("country")
-            .all()
-        )
+        Countries = []
+        for bc in BranchCountry.objects.filter(branch=self.request.BRANCH):
+            languages = set(bc.languages) - set(bc.hidden_languages)
+            if languages:
+                Countries.append(
+                    {
+                        "country": bc.country,
+                        "languages": languages,
+                    }
+                )
+
+        ctx["countries"] = Countries
         return ctx
