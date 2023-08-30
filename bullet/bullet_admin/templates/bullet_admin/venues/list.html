@@ -28,7 +28,7 @@
                     <th class="p-3">Category</th>
                     <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Registered teams</th>
                     <th class="p-3 text-right hidden md:table-cell">Capacity</th>
-                    <th class="p-3 hidden md:table-cell whitespace-nowrap">Local start</th>
+                    <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Local start</th>
                     <th class="p-3"></th>
                 </tr>
             </thead>
@@ -46,11 +46,11 @@
                         <td class="p-3 whitespace-nowrap">{{ v.category_competition.identifier|title }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.team_count|floatformat:"g" }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.capacity|floatformat:"g" }}</td>
-                        <td class="p-3 hidden md:table-cell">{{ v.local_start|default:"" }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">{{ v.local_start|default:"" }}</td>
                         <td class="p-3 whitespace-nowrap">
                             <div class="flex items-center justify-end gap-2">
-                                <a href="{% url 'badmin:venue_update' pk=v.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
-                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                 <a href="{% url "badmin:venue_update" pk=v.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-edit"></i> Edit
                                 </a>
                             </div>
                         </td>
@@ -58,7 +58,8 @@
                 {% endfor %}
             </tbody>
         </table>
-
+        {% if is_paginated %}
         {% admin_paginator page_obj %}
+        {% endif %}
     </div>
 {% endblock %}
