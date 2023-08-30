@@ -54,7 +54,7 @@ def add_team_to_competition(team: Team):
         team.to_waitlist()
         return
 
-    team.to_competition(send_email=False)
+    team.to_competition()
 
 
 def _waiting_list(team_filter: Q, inner_filter: Q):

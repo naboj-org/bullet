@@ -8,7 +8,6 @@ from django.db.models import Q
 from phonenumber_field.modelfields import PhoneNumberField
 from phonenumbers import PhoneNumberFormat
 from simple_history.models import HistoricalRecords
-from users.emails.teams import send_to_competition_email
 
 from bullet import search
 
@@ -185,10 +184,8 @@ class Team(models.Model):
         self.in_school_symbol = None
         self.is_waiting = True
 
-    def to_competition(self, send_email=True):
+    def to_competition(self):
         self.is_waiting = False
-        if send_email:
-            send_to_competition_email(self)
 
     def generate_online_password(self):
         if self.online_password:

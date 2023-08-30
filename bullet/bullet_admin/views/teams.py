@@ -35,7 +35,11 @@ from django.views.generic import (
     UpdateView,
 )
 from education.models import School
-from users.emails.teams import send_confirmation_email, send_deletion_email
+from users.emails.teams import (
+    send_confirmation_email,
+    send_deletion_email,
+    send_to_competition_email,
+)
 from users.logic import get_school_symbol, get_venue_waiting_list
 from users.models import Contestant, Team
 
@@ -153,6 +157,8 @@ class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, View):
 
         team.to_competition()
         team.save()
+
+        send_to_competition_email.delay(team.id)
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -162,7 +168,7 @@ class TeamResendConfirmationView(AdminRequiredMixin, View):
         if not can_access_venue(request, team.venue):
             return HttpResponseForbidden()
 
-        send_confirmation_email(team)
+        send_confirmation_email.delay(team.id)
         messages.success(request, "The confirmation email was re-sent.")
         return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
 
@@ -182,6 +188,8 @@ class WaitingAutomoveView(AdminRequiredMixin, VenueMixin, View):
         for team in waiting_list:
             team.to_competition()
             team.save()
+
+            send_to_competition_email.delay(team.id)
 
         return HttpResponseRedirect(self.get_redirect_url())
 
@@ -271,10 +279,11 @@ class TeamDeleteView(AdminRequiredMixin, DeleteView):
     template_name = "bullet_admin/teams/delete.html"
 
     def post(self, request, *args, **kwargs):
-        if not can_access_venue(request, self.get_object().venue):
+        obj = self.get_object()
+        if not can_access_venue(request, obj.venue):
             return HttpResponseForbidden()
 
-        send_deletion_email(self.get_object())
+        send_deletion_email.delay(obj.id)
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):

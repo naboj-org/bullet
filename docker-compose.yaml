@@ -56,6 +56,9 @@ services:
     volumes:
       - search_data:/meili_data
 
+  redis:
+    image: redis:7.2.0
+
 volumes:
   postgres_data:
   geiop_data:

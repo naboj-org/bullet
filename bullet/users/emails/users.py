@@ -1,7 +1,12 @@
+from django_rq import job
+from users.models import User
+
 from bullet.utils.email import send_email
 
 
-def send_onboarding_email(branch, user, password):
+@job
+def send_onboarding_email(branch, user_id: int, password):
+    user = User.objects.get(id=user_id)
     send_email(
         branch,
         user.email,

@@ -2,6 +2,8 @@ from competitions.branches import Branches
 from countries.logic import country
 from django.utils import translation
 from django.utils.translation import gettext as _
+from django_rq import job
+from users.models import Team
 
 from bullet.utils.email import send_email
 
@@ -22,7 +24,9 @@ class TeamCountry:
         country.activate(self.old_country)
 
 
-def send_confirmation_email(team):
+@job
+def send_confirmation_email(team_id: int):
+    team = Team.objects.get(id=team_id)
     with TeamCountry(team):
         send_email(
             Branches[team.venue.category.competition.branch],
@@ -35,7 +39,9 @@ def send_confirmation_email(team):
         )
 
 
-def send_to_competition_email(team):
+@job
+def send_to_competition_email(team_id: int):
+    team = Team.objects.get(id=team_id)
     with TeamCountry(team):
         send_email(
             Branches[team.venue.category.competition.branch],
@@ -48,7 +54,9 @@ def send_to_competition_email(team):
         )
 
 
-def send_deletion_email(team):
+@job
+def send_deletion_email(team_id: int):
+    team = Team.objects.get(id=team_id)
     with TeamCountry(team):
         send_email(
             Branches[team.venue.category.competition.branch],

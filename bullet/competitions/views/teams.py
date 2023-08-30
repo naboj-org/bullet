@@ -205,7 +205,7 @@ class TeamDeleteView(DeleteView):
                 waiting_list.save()
 
         if competition.registration_end <= timezone.now():
-            send_team_unregistered(unregistered_team)
+            send_team_unregistered.delay(unregistered_team)
 
         messages.success(self.request, _("Team was unregistered."))
         return HttpResponseRedirect(country_reverse("homepage"))

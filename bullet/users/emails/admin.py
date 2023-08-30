@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from bullet_admin.utils import get_venue_admin_emails
 from competitions.branches import Branches
 from competitions.models import Venue
+from django_rq import job
 
 from bullet.utils.email import send_email
 
@@ -16,6 +17,7 @@ class UnregisteredTeam:
     contestants: str
 
 
+@job
 def send_team_unregistered(team: UnregisteredTeam):
     send_email(
         Branches[team.venue.category.competition.branch],
