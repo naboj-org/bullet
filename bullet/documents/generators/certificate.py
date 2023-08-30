@@ -13,9 +13,9 @@ def _get_category_name(venue: Venue) -> str:
     category = (
         ContentBlock.objects.filter(
             group="category",
-            branch=venue.category_competition.competition.branch,
+            branch=venue.category.competition.branch,
             language=venue.accepted_languages[0],  # TODO: Default venue language
-            reference=f"name_{venue.category_competition.identifier}",
+            reference=f"name_{venue.category.identifier}",
         )
         .filter(Q(country__isnull=True) | Q(country=venue.country))
         .first()
@@ -65,7 +65,7 @@ def certificates_for_venue(
         for rank, row in enumerate(results):
             if empty:
                 team = {}
-                contestants = range(venue.category_competition.max_members_per_team)
+                contestants = range(venue.category.max_members_per_team)
             else:
                 team = row.team
                 contestants = team.contestants.all()

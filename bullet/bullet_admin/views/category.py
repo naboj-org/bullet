@@ -1,7 +1,7 @@
 from bullet_admin.access import BranchAdminAccess, is_branch_admin
 from bullet_admin.forms.category import CategoryForm
 from bullet_admin.views import GenericForm
-from competitions.models import CategoryCompetition, Competition
+from competitions.models import Category, Competition
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, UpdateView
 
@@ -11,10 +11,10 @@ class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):
     form_class = CategoryForm
 
     def get_object(self, queryset=None):
-        return CategoryCompetition.objects.filter(id=self.kwargs["pk"]).first()
+        return Category.objects.filter(id=self.kwargs["pk"]).first()
 
     def form_valid(self, form):
-        category: CategoryCompetition = form.save(commit=False)
+        category: Category = form.save(commit=False)
         category.save()
 
         return redirect("badmin:category_list")
@@ -25,7 +25,7 @@ class CategoryCreateView(BranchAdminAccess, GenericForm, CreateView):
     form_class = CategoryForm
 
     def form_valid(self, form):
-        category: CategoryCompetition = form.save(commit=False)
+        category: Category = form.save(commit=False)
         category.competition = Competition.objects.get_current_competition(
             self.request.BRANCH
         )
@@ -40,13 +40,11 @@ class CategoryListView(ListView):
 
     def get_queryset(self):
         competition = Competition.objects.get_current_competition(self.request.BRANCH)
-        return CategoryCompetition.objects.filter(competition=competition)
+        return Category.objects.filter(competition=competition)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         competition = Competition.objects.get_current_competition(self.request.BRANCH)
-        ctx["category_count"] = CategoryCompetition.objects.filter(
-            competition=competition
-        ).count()
+        ctx["category_count"] = Category.objects.filter(competition=competition).count()
         ctx["is_branch_admin"] = is_branch_admin(self.request.user, self.request.BRANCH)
         return ctx

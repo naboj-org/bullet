@@ -9,7 +9,7 @@
         <h2 class="font-bold text-2xl mb-6">{% trans "Category" %}</h2>
 
         {% for category in categories %}
-        <button type="submit" name="category_competition" value="{{ category.id }}" class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 w-full">
+        <button type="submit" name="category" value="{{ category.id }}" class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 w-full">
             <span class="block font-bold text-xl">
                 {% content_block "category:name_"|add:category.identifier %}
             </span>

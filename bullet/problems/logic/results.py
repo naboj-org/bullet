@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Category, Competition, Venue
 from django.db import transaction
 from django.db.models import Q, QuerySet
 from django_countries.fields import Country
@@ -35,19 +35,19 @@ def get_venue_results(venue: Venue, time: timedelta = None) -> QuerySet[ResultRo
 
 
 def get_country_results(
-    country: str | Country, category: CategoryCompetition, time: timedelta = None
+    country: str | Country, category: Category, time: timedelta = None
 ) -> QuerySet[ResultRow]:
     return get_results(
-        Q(team__venue__category_competition=category, team__school__country=country),
+        Q(team__venue__category=category, team__school__country=country),
         time,
     )
 
 
 def get_category_results(
-    category: CategoryCompetition, time: timedelta = None
+    category: Category, time: timedelta = None
 ) -> QuerySet[ResultRow]:
     return get_results(
-        Q(team__venue__category_competition=category),
+        Q(team__venue__category=category),
         time,
     )
 
@@ -94,7 +94,7 @@ def _set_solved_problems(rr: ResultRow):
     )
     solved_problems = set(
         CategoryProblem.objects.filter(
-            problem__in=problems, category=rr.team.venue.category_competition
+            problem__in=problems, category=rr.team.venue.category
         ).values_list("number", flat=True)
     )
 

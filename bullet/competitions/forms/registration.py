@@ -3,7 +3,7 @@ from typing import Iterable
 from bullet_admin.forms.utils import get_language_choices_for_venue
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
-from competitions.models import CategoryCompetition, Venue
+from competitions.models import Category, Venue
 from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
@@ -15,14 +15,12 @@ from users.models import Contestant, Team
 
 
 class CategorySelectForm(forms.Form):
-    category_competition = forms.ChoiceField()
+    category = forms.ChoiceField()
 
     def __init__(self, *args, **kwargs):
-        categories: list[CategoryCompetition] = kwargs.pop("categories")
+        categories: list[Category] = kwargs.pop("categories")
         super().__init__(*args, **kwargs)
-        self.fields["category_competition"].choices = [
-            (c.id, str(c)) for c in categories
-        ]
+        self.fields["category"].choices = [(c.id, str(c)) for c in categories]
 
 
 class VenueSelectForm(forms.Form):
@@ -102,7 +100,7 @@ class ContestantForm(ModelForm):
 
     def __init__(self, **kwargs):
         school_types: Iterable[SchoolType] = kwargs.pop("school_types")
-        self.category: CategoryCompetition = kwargs.pop("category")
+        self.category: Category = kwargs.pop("category")
         super().__init__(**kwargs)
 
         grades = [("", _("(Please select)"))]
@@ -118,7 +116,7 @@ class ContestantForm(ModelForm):
     def clean_grade(self):
         grade = self.cleaned_data["grade"]
         grade_obj = Grade.objects.filter(
-            id=grade, education__categorycompetition=self.category
+            id=grade, education__category=self.category
         ).first()
 
         if grade_obj is None:

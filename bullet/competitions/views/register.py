@@ -8,7 +8,7 @@ from competitions.forms.registration import (
     SchoolSelectForm,
     VenueSelectForm,
 )
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Category, Competition, Venue
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.db import transaction
@@ -57,12 +57,12 @@ class RegistrationMixin:
             raise RegistrationError(_("Registration is over."))
         return competition
 
-    def _load_category(self, request) -> CategoryCompetition:
-        if "category_competition" not in request.session["register_form"]:
+    def _load_category(self, request) -> Category:
+        if "category" not in request.session["register_form"]:
             raise RegistrationError()
 
-        cc = CategoryCompetition.objects.filter(
-            id=request.session["register_form"]["category_competition"]
+        cc = Category.objects.filter(
+            id=request.session["register_form"]["category"]
         ).first()
 
         if not cc:
@@ -123,7 +123,7 @@ class RegistrationMixin:
 
         try:
             if self.registration_step >= RegistrationStep.CATEGORY:
-                self.category_competition = self._load_category(request)
+                self.category = self._load_category(request)
             if self.registration_step >= RegistrationStep.VENUE:
                 self.venue = self._load_venue(request)
             if self.registration_step >= RegistrationStep.SCHOOL:
@@ -137,7 +137,7 @@ class RegistrationMixin:
         ctx["competition"] = self.competition
 
         if self.registration_step >= RegistrationStep.CATEGORY:
-            ctx["category_competition"] = self.category_competition
+            ctx["category"] = self.category
 
         if self.registration_step >= RegistrationStep.VENUE:
             ctx["venue"] = self.venue
@@ -166,11 +166,9 @@ class CategorySelectView(RegistrationMixin, FormView):
         venues = Venue.objects.for_competition(self.competition).filter(
             country=self.request.COUNTRY_CODE.upper()
         )
-        categories = set([c.category_competition_id for c in venues])
+        categories = set([c.category_id for c in venues])
         self.categories = (
-            CategoryCompetition.objects.filter(id__in=categories)
-            .order_by("order")
-            .all()
+            Category.objects.filter(id__in=categories).order_by("order").all()
         )
 
         return super().dispatch(request, *args, **kwargs)
@@ -186,9 +184,9 @@ class CategorySelectView(RegistrationMixin, FormView):
         return ctx
 
     def form_valid(self, form):
-        self.request.session["register_form"][
-            "category_competition"
-        ] = form.cleaned_data["category_competition"]
+        self.request.session["register_form"]["category"] = form.cleaned_data[
+            "category"
+        ]
         self.request.session.modified = True
 
         return HttpResponseRedirect(country_reverse("register_venue"))
@@ -292,8 +290,8 @@ class TeamDetailsView(RegistrationMixin, FormView):
         return formset_factory(
             ContestantForm,
             min_num=0,
-            max_num=self.category_competition.max_members_per_team,
-            extra=self.category_competition.max_members_per_team,
+            max_num=self.category.max_members_per_team,
+            extra=self.category.max_members_per_team,
             validate_max=True,
         )(**self.get_formset_kwargs())
 
@@ -301,7 +299,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
         kwargs = {
             "form_kwargs": {
                 "school_types": self.school.types.prefetch_related("grades"),
-                "category": self.category_competition,
+                "category": self.category,
             }
         }
         if self.request.method in ("POST", "PUT"):

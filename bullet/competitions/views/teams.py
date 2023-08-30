@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 from competitions.forms.registration import ContestantForm
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Category, Competition, Venue
 from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
@@ -44,7 +44,7 @@ class TeamEditView(FormView):
         ctx["team"] = self.team
         ctx["can_be_changed"] = self.can_be_changed
         ctx["show_certificate"] = (
-            self.category_competition.competition.results_public
+            self.category.competition.results_public
             and SelfServeCertificate.objects.filter(venue=self.team.venue).exists()
         )
         return ctx
@@ -64,7 +64,7 @@ class TeamEditView(FormView):
         kw["instance"] = self.team
         kw["form_kwargs"] = {
             "school_types": self.team.school.types.prefetch_related("grades"),
-            "category": self.category_competition,
+            "category": self.category,
         }
         return kw
 
@@ -72,13 +72,13 @@ class TeamEditView(FormView):
         form = super().get_form(form_class)
 
         form.min_num = 0
-        form.max_num = self.category_competition.max_members_per_team
-        form.extra = self.category_competition.max_members_per_team
+        form.max_num = self.category.max_members_per_team
+        form.extra = self.category.max_members_per_team
         return form
 
     def dispatch(self, request, *args, **kwargs):
         self.team = (
-            Team.objects.select_related("venue__category_competition")
+            Team.objects.select_related("venue__category")
             .prefetch_related("contestants", "contestants__grade")
             .filter(secret_link=kwargs.pop("secret_link"))
             .first()
@@ -86,9 +86,9 @@ class TeamEditView(FormView):
         if not self.team:
             raise Http404()
 
-        self.category_competition = self.team.venue.category_competition
+        self.category = self.team.venue.category
         self.can_be_changed = (
-            self.category_competition.competition.competition_start > timezone.now()
+            self.category.competition.competition_start > timezone.now()
             and not self.team.is_checked_in
         )
 
@@ -154,10 +154,10 @@ class WaitingListView(TeamListView):
     def get_teams(self, venues) -> QuerySet[Team]:
         category_venues = {}
         for venue in venues:
-            if venue.category_competition_id not in category_venues:
-                category_venues[venue.category_competition_id] = [venue]
+            if venue.category_id not in category_venues:
+                category_venues[venue.category_id] = [venue]
             else:
-                category_venues[venue.category_competition_id].append(venue)
+                category_venues[venue.category_id].append(venue)
 
         qs = Team.objects.none()
         for venue_groups in category_venues.values():
@@ -180,7 +180,7 @@ class TeamDeleteView(DeleteView):
     @transaction.atomic
     def form_valid(self, form):
         team: Team = self.object
-        category: CategoryCompetition = team.venue.category_competition
+        category: Category = team.venue.category
         competition: Competition = category.competition
         if team.is_checked_in or competition.competition_start <= timezone.now():
             return HttpResponseForbidden()
@@ -214,7 +214,7 @@ class TeamDeleteView(DeleteView):
 class TeamCertificateView(View):
     def dispatch(self, request, *args, **kwargs):
         self.team = get_object_or_404(Team, secret_link=self.kwargs["secret_link"])
-        if not self.team.venue.category_competition.competition.results_public:
+        if not self.team.venue.category.competition.results_public:
             raise PermissionDenied()
 
         self_serve = SelfServeCertificate.objects.filter(venue=self.team.venue).first()

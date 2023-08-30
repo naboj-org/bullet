@@ -1,10 +1,10 @@
-from competitions.models import CategoryCompetition
+from competitions.models import Category
 from django.forms import ModelForm
 
 
 class CategoryForm(ModelForm):
     class Meta:
-        model = CategoryCompetition
+        model = Category
 
         fields = [
             "identifier",

@@ -36,10 +36,10 @@ class VenueQuerySet(models.QuerySet):
         )
 
     def natural_order(self):
-        return self.order_by("name", "category_competition__identifier")
+        return self.order_by("name", "category__identifier")
 
     def for_competition(self, competition):
-        return self.filter(category_competition__competition=competition)
+        return self.filter(category__competition=competition)
 
     def for_request(self, request):
         """
@@ -80,9 +80,7 @@ class VenueQuerySet(models.QuerySet):
 
 class VenueManager(models.Manager):
     def get_queryset(self):
-        return VenueQuerySet(self.model, using=self._db).select_related(
-            "category_competition"
-        )
+        return VenueQuerySet(self.model, using=self._db).select_related("category")
 
 
 class Venue(models.Model):
@@ -92,9 +90,7 @@ class Venue(models.Model):
     address = models.CharField(max_length=256, blank=True)
     country = CountryField()
 
-    category_competition = models.ForeignKey(
-        "competitions.CategoryCompetition", on_delete=models.CASCADE
-    )
+    category = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
     capacity = models.PositiveIntegerField(default=0)
 
     accepted_languages = ChoiceArrayField(LanguageField())
@@ -108,11 +104,11 @@ class Venue(models.Model):
     objects = VenueManager.from_queryset(VenueQuerySet)()
 
     class Meta:
-        unique_together = ("category_competition", "shortcode")
-        ordering = ("name", "category_competition__identifier")
+        unique_together = ("category", "shortcode")
+        ordering = ("name", "category__identifier")
 
     def __str__(self):
-        return f"{self.name} ({self.category_competition.identifier})"
+        return f"{self.name} ({self.category.identifier})"
 
     @property
     def remaining_capacity(self):
@@ -122,7 +118,7 @@ class Venue(models.Model):
     def contact_email(self):
         if not self.email:
             return BranchCountry.objects.get(
-                branch=self.category_competition.competition.branch,
+                branch=self.category.competition.branch,
                 country=self.country,
             ).email
         return self.email
@@ -131,4 +127,4 @@ class Venue(models.Model):
     def start_time(self):
         if self.local_start:
             return self.local_start
-        return self.category_competition.competition.competition_start
+        return self.category.competition.competition_start

@@ -6,7 +6,7 @@ import random
 import factory
 import faker
 from competitions.branches import Branches
-from competitions.models import CategoryCompetition, Competition
+from competitions.models import Category, Competition
 from django.utils import timezone
 from education.models import Education, School
 from factory.django import DjangoModelFactory
@@ -96,9 +96,9 @@ class EndedCompetitionFactory(DjangoModelFactory):
     is_cancelled = factory.Faker("boolean", chance_of_getting_true=10)
 
 
-class CategoryCompetitionFactory(DjangoModelFactory):
+class CategoryFactory(DjangoModelFactory):
     class Meta:
-        model = CategoryCompetition
+        model = Category
         django_get_or_create = ["competition", "identifier"]
 
     competition = factory.Faker("random_element", elements=Competition.objects.all())

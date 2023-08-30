@@ -67,7 +67,7 @@ def parse_barcode(
     else:
         problem = Problem.objects.filter(
             competition=competition,
-            category_problems__category=venue.category_competition,
+            category_problems__category=venue.category,
             category_problems__number=match.group("problem"),
         ).first()
         if not problem:

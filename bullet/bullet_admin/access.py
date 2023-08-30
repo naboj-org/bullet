@@ -24,7 +24,7 @@ def can_access_venue(
     if user.is_superuser:
         return True
 
-    competition = venue.category_competition.competition
+    competition = venue.category.competition
     branch = competition.branch
 
     # Branch admin can access any venue
@@ -134,7 +134,7 @@ class VenueAccess(AccessMixin):
         venue = self.get_permission_venue()
         if (
             self.require_unlocked_competition
-            and venue.category_competition.competition.results_public
+            and venue.category.competition.results_public
         ):
             return False
 

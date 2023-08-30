@@ -77,7 +77,7 @@
     }
   },
   {
-    "model": "competitions.categorycompetition",
+    "model": "competitions.category",
     "pk": 1,
     "fields": {
       "competition": 1,
@@ -90,7 +90,7 @@
     }
   },
   {
-    "model": "competitions.categorycompetition",
+    "model": "competitions.category",
     "pk": 2,
     "fields": {
       "competition": 1,
@@ -124,7 +124,7 @@
     "model": "competitions.competitionproblem",
     "pk": 1,
     "fields": {
-      "category_competition": 1,
+      "category": 1,
       "problem": 1,
       "number": 1
     }
@@ -142,7 +142,7 @@
     "model": "competitions.competitionsite",
     "pk": 1,
     "fields": {
-      "category_competition": 1,
+      "category": 1,
       "site": 1,
       "capacity": 200,
       "accepted_languages": "[\"sk\"]",

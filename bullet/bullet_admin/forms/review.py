@@ -17,5 +17,5 @@ class ReviewForm(forms.Form):
 
 
 def get_review_formset(team: Team):
-    problems = team.venue.category_competition.problems.count()
+    problems = team.venue.category.problems.count()
     return formset_factory(ReviewForm, min_num=problems, max_num=problems)

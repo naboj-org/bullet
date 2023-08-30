@@ -56,7 +56,7 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
-        qs = Team.objects.filter(venue__category_competition__competition=competition)
+        qs = Team.objects.filter(venue__category__competition=competition)
 
         if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
@@ -73,12 +73,10 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
             qs.select_related(
                 "school",
                 "venue",
-                "venue__category_competition",
+                "venue__category",
             )
             .prefetch_related("contestants", "contestants__grade")
-            .order_by(
-                "venue__name", "venue__category_competition__identifier", "number", "id"
-            )
+            .order_by("venue__name", "venue__category__identifier", "number", "id")
         )
 
         qs = self.get_form().apply_filter(qs)
@@ -115,16 +113,14 @@ class TeamExportView(AdminRequiredMixin, FormView):
     def form_valid(self, form):
         competition = get_active_competition(self.request)
         qs = (
-            Team.objects.filter(venue__category_competition__competition=competition)
+            Team.objects.filter(venue__category__competition=competition)
             .select_related(
                 "school",
                 "venue",
-                "venue__category_competition",
+                "venue__category",
             )
             .prefetch_related("contestants", "contestants__grade")
-            .order_by(
-                "venue__name", "venue__category_competition__identifier", "number", "id"
-            )
+            .order_by("venue__name", "venue__category__identifier", "number", "id")
         )
         qs = form.apply_filter(qs)
 
@@ -233,8 +229,8 @@ class TeamEditView(
         fs = super().get_formset()
         team: Team = self.object
         fs.min_num = 0
-        fs.max_num = team.venue.category_competition.max_members_per_team
-        fs.extra = team.venue.category_competition.max_members_per_team
+        fs.max_num = team.venue.category.max_members_per_team
+        fs.extra = team.venue.category.max_members_per_team
         return fs
 
     def get_formset_kwargs(self):
@@ -244,7 +240,7 @@ class TeamEditView(
             {
                 "form_kwargs": {
                     "school_types": team.school.types.prefetch_related("grades"),
-                    "category": team.venue.category_competition,
+                    "category": team.venue.category,
                 },
                 "instance": team,
             }

@@ -26,14 +26,11 @@ def get_active_competition(request: HttpRequest):
 
 def can_access_venue(request: HttpRequest, venue: "Venue") -> bool:
     brole = request.user.get_branch_role(request.BRANCH)
-    if (
-        brole.is_admin
-        and venue.category_competition.competition.branch == request.BRANCH
-    ):
+    if brole.is_admin and venue.category.competition.branch == request.BRANCH:
         return True
 
     competition = get_active_competition(request)
-    if not competition or venue.category_competition.competition != competition:
+    if not competition or venue.category.competition != competition:
         return False
     crole = request.user.get_competition_role(competition)
     if crole.venues:
@@ -63,7 +60,7 @@ def get_venue_admin_emails(venue: "Venue"):
             Q(venue_objects=venue)
             | Q(
                 countries__contains=[venue.country.code],
-                competition=venue.category_competition.competition,
+                competition=venue.category.competition,
             )
         )
         .values_list("user__email", flat=True)

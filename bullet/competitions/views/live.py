@@ -81,11 +81,11 @@ class LiveResultsView(TemplateView):
             if code not in venues:
                 return HttpResponseBadRequest(f"Invalid venue {code}.")
             venue: Venue = venues[code]
-            if venue.category_competition.identifier not in categories:
-                categories.append(venue.category_competition.identifier)
+            if venue.category.identifier not in categories:
+                categories.append(venue.category.identifier)
 
             category_name = content_blocks.get_block(
-                request, f"category:name_{venue.category_competition.identifier}"
+                request, f"category:name_{venue.category.identifier}"
             )
             url = country_reverse("results_venue", kwargs={"venue": venue.shortcode})
             self.screens.append(
@@ -154,7 +154,7 @@ class LiveFirstProblemView(TemplateView):
             v.shortcode: v
             for v in Venue.objects.for_competition(self.competition)
             .filter(shortcode__in=venue_codes)
-            .select_related("category_competition")
+            .select_related("category")
             .all()
         }
 
@@ -166,7 +166,7 @@ class LiveFirstProblemView(TemplateView):
             venue: Venue = venues[code]
             self.screens.append(
                 {
-                    "category": venue.category_competition.identifier,
+                    "category": venue.category.identifier,
                     "problem": SolvedProblem.objects.filter(team__venue=venue)
                     .select_related("team__school")
                     .order_by("competition_time")

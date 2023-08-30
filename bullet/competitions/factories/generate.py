@@ -1,7 +1,7 @@
 import random
 
 from competitions.factories.competition import (
-    CategoryCompetitionFactory,
+    CategoryFactory,
     EndedCompetitionFactory,
     RegistrationInProgressCompetitionFactory,
 )
@@ -17,13 +17,13 @@ def feed_competition(
     Helper function that feeds competition with data.
     """
     for _ in range(2):
-        category_competition = CategoryCompetitionFactory(competition=competition)
-        venues = VenueFactory.create_batch(5, category_competition=category_competition)
+        category = CategoryFactory(competition=competition)
+        venues = VenueFactory.create_batch(5, category=category)
 
         for _ in range(200):
             team = TeamFactory(venue=random.choice(venues))
             ContestantFactory.create_batch(
-                random.randint(0, team.venue.category_competition.max_members_per_team),
+                random.randint(0, team.venue.category.max_members_per_team),
                 team=team,
             )
 

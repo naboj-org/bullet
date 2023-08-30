@@ -1,5 +1,5 @@
 from bullet_admin.utils import is_admin
-from competitions.models import CategoryCompetition, Competition, Venue
+from competitions.models import Category, Competition, Venue
 from countries.models import BranchCountry
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -37,7 +37,7 @@ class ResultsSelectView(CompetitionMixin, TemplateView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         competition = self.competition
-        ctx["categories"] = CategoryCompetition.objects.filter(
+        ctx["categories"] = Category.objects.filter(
             competition=competition, venue__country=self.request.COUNTRY_CODE.upper()
         ).distinct()
         return ctx
@@ -69,7 +69,7 @@ class CategoryResultsView(ResultsViewMixin, ListView):
             )
 
         self.category = get_object_or_404(
-            CategoryCompetition,
+            Category,
             competition=self.competition,
             identifier=self.kwargs["category"],
         )
@@ -147,8 +147,8 @@ class VenueResultsView(ResultsViewMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
-        ctx["team_problem_count"] = self.venue.category_competition.problems_per_team
-        ctx["problem_count"] = self.venue.category_competition.problems.count()
+        ctx["team_problem_count"] = self.venue.category.problems_per_team
+        ctx["problem_count"] = self.venue.category.problems.count()
         ctx["venue"] = self.venue
         ctx["results_time"] = self.results_time
         return ctx
