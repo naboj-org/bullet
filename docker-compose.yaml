@@ -22,6 +22,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=bullet.settings.development
       - PARENT_HOST=localhost:8000
+      - REDIS_RQ_ASYNC=0
     ports:
       - "8000:8000"
     volumes:
