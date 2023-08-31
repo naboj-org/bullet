@@ -2,7 +2,7 @@ from competitions.models import Category, Competition
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import Form
-from problems.models import Problem
+from problems.models import CategoryProblem, Problem
 
 
 class CategoryProblemForm(Form):
@@ -10,16 +10,28 @@ class CategoryProblemForm(Form):
 
     def __init__(self, *args, **kwargs):
         self.BRANCH = kwargs.pop("branch", None)
-        self.problem_count = kwargs.pop("problem_count", None)
-        self.offsets = kwargs.pop("offsets", None)
         super().__init__(*args, **kwargs)
-        self.fields["problem_count"].initial = self.problem_count
         self.competition = Competition.objects.get_current_competition(self.BRANCH)
+        self.fields["problem_count"].initial = Problem.objects.filter(
+            competition=self.competition
+        ).count()
+        self.fields["problem_count"].disabled = Problem.objects.filter(
+            competition=self.competition
+        ).exists()
         self.categories = Category.objects.filter(competition=self.competition)
+        has_problems = Problem.objects.filter(competition=self.competition).count() > 0
         for category in self.categories:
+            categoryOffset = (
+                CategoryProblem.objects.filter(category=category)
+                .order_by("number")
+                .first()
+            )
+            initial = 0
+            if categoryOffset is not None:
+                initial = categoryOffset.number - 1
             self.fields[
                 "offset_{id}".format(id=category.identifier)
-            ] = forms.IntegerField(initial=0, min_value=0)
+            ] = forms.IntegerField(initial=initial, min_value=0, disabled=has_problems)
 
     def clean(self):
         data = super().clean()

@@ -18,6 +18,7 @@ class CategoryProblemFormMixin(GenericForm):
 
 class CategoryProblemEdit(BranchAdminAccess, CategoryProblemFormMixin, FormView):
     form_class = CategoryProblemForm
+    form_title = "Problem Generation"
 
     def get_object(self, queryset=None):
         competition = Competition.objects.get_current_competition(self.request.BRANCH)
@@ -36,16 +37,6 @@ class CategoryProblemEdit(BranchAdminAccess, CategoryProblemFormMixin, FormView)
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
         kw["branch"] = self.request.BRANCH
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
-        categories = Category.objects.filter(competition=competition)
-        competitionProblems = CategoryProblem.objects.filter(
-            category__competition=competition
-        )
-        kw["problem_count"] = competitionProblems.count()
-        kw["offsets"] = [
-            competitionProblems.filter(category=category).order_by("number").first()
-            for category in categories
-        ]
         return kw
 
     def form_valid(self, form):
@@ -61,12 +52,13 @@ class CategoryProblemEdit(BranchAdminAccess, CategoryProblemFormMixin, FormView)
             if not offset.startswith("offset_"):
                 continue
             starting_problem = form.cleaned_data[offset]
+            category = Category.objects.filter(identifier=offset[7:]).first()
             for i in range(starting_problem, problem_count):
                 CategoryProblem(
                     problem=Problem.objects.filter(
                         name="Problem {number}".format(number=i)
                     ).first(),
-                    category=Category.objects.filter(identifier=offset[7:]).first(),
+                    category=category,
                     number=i + 1,
                 ).save()
 
