@@ -1,12 +1,14 @@
+from bullet_admin.access import BranchAdminAccess
 from bullet_admin.forms.archive import ProblemImportForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
-from django.http import HttpResponse
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.views.generic import FormView
+from problems.logic.upload import ProblemImportError
 
 
-# TODO: permissions
-class ProblemImportView(GenericForm, FormView):
+class ProblemImportView(BranchAdminAccess, GenericForm, FormView):
     form_class = ProblemImportForm
     template_name = "bullet_admin/archive/import.html"
 
@@ -16,5 +18,9 @@ class ProblemImportView(GenericForm, FormView):
         return kw
 
     def form_valid(self, form):
-        form.save()
-        return HttpResponse("ok")
+        try:
+            form.save()
+            messages.success(self.request, "Successfully imported problems.")
+        except ProblemImportError as e:
+            messages.error(self.request, e)
+        return redirect("badmin:archive_import")
