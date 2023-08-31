@@ -55,16 +55,6 @@ def admin_sidebar(context):
                 ]
             )
 
-        if user.is_superuser or branch_role.is_admin:
-            items.append(
-                ("fa-gear", "Edit Competition", reverse("badmin:competition_edit"))
-            )
-            items.append(
-                ("fa-people-group", "Categories", reverse("badmin:category_list"))
-            )
-            items.append(
-                ("fa-book", "Generate problems", reverse("badmin:problems_generate"))
-            )
 
         menu_items.append(("Competition", items))
 
@@ -110,6 +100,19 @@ def admin_sidebar(context):
             or competition_role.venues
         ):
             items.append(("fa-location-pin", "Venues", reverse("badmin:venue_list")))
+        if branch_role.is_admin:
+            items.append(
+                ("fa-gear", "Edit Competition", reverse("badmin:competition_edit"))
+            )
+            items.append(
+                ("fa-people-group", "Categories", reverse("badmin:category_list"))
+            )
+            items.append(
+                ("fa-upload", "Import archive", reverse("badmin:archive_import"))
+            )
+            items.append(
+                ("fa-book", "Generate problems", reverse("badmin:problems_generate"))
+            )
 
         menu_items.append(
             (
