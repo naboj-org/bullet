@@ -10,6 +10,7 @@
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
             {% if not is_operator %}
             <div class="flex gap-1">
+                <a href="{% url "badmin:waiting_list" %}" class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Waiting list</a>
                 <a href="{% url "badmin:team_assign_numbers" %}" class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Assign numbers</a>
                 <a href="{% url "badmin:team_export" %}" class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Export</a>
             </div>
