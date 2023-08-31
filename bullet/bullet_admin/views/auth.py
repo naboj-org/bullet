@@ -9,6 +9,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView as DjPasswordResetConfirmView,
 )
 from django.contrib.auth.views import PasswordResetView as DjPasswordResetView
+from django_rq import job
 
 from bullet.utils.email import send_email
 
@@ -24,6 +25,18 @@ class LogoutView(DjLogoutView):
 class PasswordChangeView(DjPasswordChangeView):
     template_name = "bullet_admin/password_change.html"
     success_url = "/admin/"
+
+
+@job
+def _send_reset(branch, to_email, context):
+    send_email(
+        branch,
+        to_email,
+        "Password reset for your Náboj account",
+        "mail/messages/password_reset.html",
+        "mail/messages/password_reset.txt",
+        context,
+    )
 
 
 class PasswordResetForm(DjPasswordResetForm):
@@ -42,14 +55,7 @@ class PasswordResetForm(DjPasswordResetForm):
         to_email,
         html_email_template_name=None,
     ):
-        send_email(
-            self.branch,
-            to_email,
-            "Password reset for your Náboj account",
-            "mail/messages/password_reset.html",
-            "mail/messages/password_reset.txt",
-            context,
-        )
+        _send_reset.delay(self.branch, to_email, context)
 
 
 class PasswordResetView(DjPasswordResetView):

@@ -5,11 +5,34 @@ from django.db import models
 from django.db.models import Count
 from django.template import Context, Template
 from django_countries.fields import CountryField
+from django_rq import job
 from users.emails.teams import TeamCountry
 from users.models import Team, TeamStatus
 from web.fields import ChoiceArrayField, LanguageField
 
 from bullet.utils.email import send_email
+
+
+@job
+def _send_campaign(campaign_id: int, team_id: int, override_email=None):
+    campaign = EmailCampaign.objects.get(id=campaign_id)
+    team = Team.objects.get(id=team_id)
+    template = Template(campaign.template)
+
+    with TeamCountry(team):
+        branch = Branches[team.venue.category.competition.branch]
+        link = country_reverse("team_edit", kwargs={"secret_link": team.secret_link})
+        context = Context({"team": team, "edit_link": f"https://{branch.domain}{link}"})
+
+        send_email(
+            branch,
+            override_email if override_email else team.contact_email,
+            campaign.subject,
+            "mail/messages/campaign.html",
+            "mail/messages/campaign.txt",
+            {"content": template.render(context)},
+            [team.venue.contact_email],
+        )
 
 
 class EmailCampaign(models.Model):
@@ -59,26 +82,7 @@ class EmailCampaign(models.Model):
         return qs
 
     def send_single(self, team: Team, override_email=None):
-        template = Template(self.template)
-
-        with TeamCountry(team):
-            branch = Branches[team.venue.category.competition.branch]
-            link = country_reverse(
-                "team_edit", kwargs={"secret_link": team.secret_link}
-            )
-            context = Context(
-                {"team": team, "edit_link": f"https://{branch.domain}{link}"}
-            )
-
-            send_email(
-                branch,
-                override_email if override_email else team.contact_email,
-                self.subject,
-                "mail/messages/campaign.html",
-                "mail/messages/campaign.txt",
-                {"content": template.render(context)},
-                [team.venue.contact_email],
-            )
+        _send_campaign.delay(self.id, team.id, override_email=override_email)
 
     def send_all(self):
         for team in self.get_teams():

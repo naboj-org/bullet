@@ -22,6 +22,7 @@ services:
     environment:
       - DJANGO_SETTINGS_MODULE=bullet.settings.development
       - PARENT_HOST=localhost:8000
+      - REDIS_RQ_ASYNC=False
     ports:
       - "8000:8000"
     volumes:
@@ -55,6 +56,9 @@ services:
     image: getmeili/meilisearch:v0.28
     volumes:
       - search_data:/meili_data
+
+  redis:
+    image: redis:7.2.0
 
 volumes:
   postgres_data:

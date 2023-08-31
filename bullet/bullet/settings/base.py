@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "silk",
     "simple_history",
     "django_web_components",
+    "django_rq",
 ]
 
 DATABASES = {
@@ -175,3 +176,12 @@ SILKY_AUTHENTICATION = True
 SILKY_AUTHORISATION = True
 SILKY_INTERCEPT_FUNC = silky_intercept
 SILKY_MAX_RECORDED_REQUESTS_CHECK_PERCENT = 0
+
+RQ_QUEUES = {
+    "default": {
+        "HOST": os.environ.get("REDIS_HOST", default="redis"),
+        "PORT": os.environ.get("REDIS_PORT", default=6379),
+        "DB": os.environ.get("REDIS_DB", default=0),
+        "ASYNC": os.environ.get("REDIS_RQ_ASYNC", default="True") == "True",
+    },
+}

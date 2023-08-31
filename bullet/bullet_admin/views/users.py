@@ -131,7 +131,7 @@ class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
             crole.save()
             cform.save_m2m()
 
-        send_onboarding_email(request.BRANCH, user, passwd)
+        send_onboarding_email.delay(request.BRANCH, user.id, passwd)
         messages.success(request, "The user was created.")
         return HttpResponseRedirect(reverse("badmin:user_list"))
 
