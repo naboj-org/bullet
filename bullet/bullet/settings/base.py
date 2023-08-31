@@ -182,6 +182,6 @@ RQ_QUEUES = {
         "HOST": os.environ.get("REDIS_HOST", default="redis"),
         "PORT": os.environ.get("REDIS_PORT", default=6379),
         "DB": os.environ.get("REDIS_DB", default=0),
-        "ASYNC": os.environ.get("REDIS_RQ_ASYNC", default=True),
+        "ASYNC": os.environ.get("REDIS_RQ_ASYNC", default="True") == "True",
     },
 }
