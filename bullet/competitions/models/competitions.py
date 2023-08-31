@@ -1,6 +1,7 @@
 import functools
 import secrets
 from datetime import timedelta
+from pathlib import Path
 
 from bullet_admin.models import CompetitionRole
 from competitions.branches import Branch
@@ -115,6 +116,10 @@ class Competition(models.Model):
     @property
     def has_started(self):
         return self.competition_start <= timezone.now()
+
+    @property
+    def secret_dir(self) -> Path:
+        return Path("competitions") / f"{self.id}-{self.secret_key}"
 
     @functools.total_ordering
     class State(models.IntegerChoices):
