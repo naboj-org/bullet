@@ -47,6 +47,11 @@ urlpatterns = [
         competition.CompetitionCreateView.as_view(),
         name="competition_create",
     ),
+    path(
+        "competitions/edit/confirm/",
+        competition.CompetitionFinalizeConfirmView.as_view(),
+        name="competition_confirm",
+    ),
     path("categories/", category.CategoryListView.as_view(), name="category_list"),
     path(
         "categories/new", category.CategoryCreateView.as_view(), name="category_create"
