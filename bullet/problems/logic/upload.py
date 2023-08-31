@@ -106,6 +106,6 @@ def _handle_assets(competition: "Competition", path: Path):
         else:
             _, file_normalized = str(file).split("/assets/", 1)
             with file.open("rb") as f:
-                default_storage.save(
-                    competition.secret_dir / "assets" / file_normalized, f
-                )
+                upload_path = competition.secret_dir / "assets" / file_normalized
+                default_storage.delete(upload_path)
+                default_storage.save(upload_path, f)
