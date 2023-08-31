@@ -1,0 +1,23 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+
+{% block title %}Import problems{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-3xl">
+        {% aheader %}
+            {% slot title %}
+                Import problems
+            {% endslot %}
+        {% endaheader %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% admin_form2 form %}
+
+            <div class="mt-6">
+                {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

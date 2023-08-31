@@ -1,6 +1,7 @@
 from bullet_admin.views import (
     CompetitionSwitchView,
     albums,
+    archive,
     auth,
     category,
     categoryproblems,
@@ -253,5 +254,10 @@ urlpatterns = [
     path("gallery/albums/new/", albums.AlbumCreateView.as_view(), name="album_create"),
     path(
         "gallery/albums/<int:pk>/", albums.AlbumUpdateView.as_view(), name="album_edit"
+    ),
+    path(
+        "archive/import/",
+        archive.ProblemImportView.as_view(),
+        name="archive_import",
     ),
 ]
