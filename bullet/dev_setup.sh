@@ -1,15 +1,6 @@
 #!/bin/bash
 
-# Wait for postgres
-while :
-do
-    (echo -n > /dev/tcp/db/5432) >/dev/null 2>&1
-    if [[ $? -eq 0 ]]; then
-        break
-    fi
-    sleep 1
-done
-
+python manage.py wait_for_database
 python manage.py migrate
 rm -rf uploads/
 DJANGO_SUPERUSER_PASSWORD=admin python manage.py createsuperuser --email=admin@naboj.org --no-input
