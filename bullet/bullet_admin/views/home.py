@@ -14,7 +14,10 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         ctx["competition"] = get_active_competition(self.request)
         ctx["venues"] = Venue.objects.for_request(self.request).annotate(
-            registered=Count("team", filter=Q(team__confirmed_at__isnull=False)),
+            waiting=Count(
+                "team",
+                filter=Q(team__confirmed_at__isnull=False, team__is_waiting=True),
+            ),
             competing=Count(
                 "team",
                 filter=Q(team__confirmed_at__isnull=False, team__is_waiting=False),
