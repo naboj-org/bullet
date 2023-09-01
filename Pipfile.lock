@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "e469ebb86d23158d20455b2ba753abd0ac30e243286fd3034ee1107ccb680f82"
+            "sha256": "9ea6d488a9add642b1ba4ace2cebab49101447366d1c1d1ea94cdf6920333c0c"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -165,7 +165,7 @@
                 "sha256:3b3d076e824ae979b271b4d497c90514c2b218811f76b0c368fb69da2556fe07",
                 "sha256:88e5d91be5b2dff9c0748ba515774c3421088922d9e77c39f8742eb41cb7db88"
             ],
-            "markers": "python_version >= '3.8' and python_version < '4.0'",
+            "markers": "python_version >= '3.8' and python_version < '4'",
             "version": "==3.0.2"
         },
         "certifi": {
@@ -254,7 +254,7 @@
                 "sha256:f779d3ad205f108d14e99bb3859aa7dd8e9c68874617c72354d7ecaec2a054ac",
                 "sha256:f87f746ee241d30d6ed93969de31e5ffd09a2961a051e60ae6bddde9ec3583aa"
             ],
-            "markers": "python_full_version >= '3.7.0'",
+            "markers": "python_version >= '3.7'",
             "version": "==3.2.0"
         },
         "click": {
@@ -393,10 +393,10 @@
         },
         "fontawesomefree": {
             "hashes": [
-                "sha256:e12edad71b6cf6993fc7c6aea6367e131f2f247b6435faca99b12329bacd2b27"
+                "sha256:ceaff7efc4fc39dadff3c3ff7298a7a1095403110d373f22456bb1c34ab6db02"
             ],
             "index": "pypi",
-            "version": "==6.4.0"
+            "version": "==6.4.2"
         },
         "frozenlist": {
             "hashes": [
