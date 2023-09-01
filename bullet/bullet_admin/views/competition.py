@@ -4,6 +4,7 @@ from bullet_admin.views import GenericForm
 from competitions.models import Competition
 from django.forms import Form
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from problems.logic.stats import generate_stats
 
@@ -24,16 +25,8 @@ class CompetitionUpdateView(BranchAdminAccess, CompetitionFormMixin, UpdateView)
     def get_object(self, queryset=None):
         return Competition.objects.get_current_competition(self.request.BRANCH)
 
-    def form_valid(self, form):
-        competition: Competition = form.save(commit=False)
-        competition.branch = self.request.BRANCH
-
-        if "finalize" in self.request.POST:
-            return redirect("badmin:competition_confirm")
-
-        competition.save()
-
-        return redirect("badmin:competition_switch")
+    def get_success_url(self):
+        return reverse("badmin:competition_switch")
 
 
 class CompetitionCreateView(BranchAdminAccess, CompetitionFormMixin, CreateView):

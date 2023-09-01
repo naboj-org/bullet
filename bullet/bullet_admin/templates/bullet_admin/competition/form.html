@@ -15,12 +15,13 @@
             {% csrf_token %}
             {% admin_form2 form %}
 
-            <div class="mt-6">
+            <div class="mt-6 space-x-2">
                 {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
-               <button type="submit" class="rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-sm inline-flex items-center gap-x-1.5 bg-green-600 hover:bg-green-500 text-white" name="finalize">
-                    <span class="iconify -ml-0.5 w-5 h-5 shrink-0" data-icon="mdi:check"></span>
-                    Finalize
-                </button>
+
+                {% if not object.results_public %}
+                    {% url "badmin:competition_finalize" as finalize_url %}
+                    {% #abtn label="Finalize" icon="mdi:check" url=finalize_url %}
+                {% endif %}
             </div>
         </form>
     </div>

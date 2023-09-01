@@ -48,9 +48,9 @@ urlpatterns = [
         name="competition_create",
     ),
     path(
-        "competitions/edit/confirm/",
-        competition.CompetitionFinalizeConfirmView.as_view(),
-        name="competition_confirm",
+        "competitions/finalize/",
+        competition.CompetitionFinalizeView.as_view(),
+        name="competition_finalize",
     ),
     path("categories/", category.CategoryListView.as_view(), name="category_list"),
     path(
