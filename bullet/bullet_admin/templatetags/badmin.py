@@ -62,7 +62,9 @@ def admin_sidebar(context):
             items.append(
                 ("fa-people-group", "Categories", reverse("badmin:category_list"))
             )
-            items.append(("fa-book", "Problems", reverse("badmin:problem_edit")))
+            items.append(
+                ("fa-book", "Generate problems", reverse("badmin:problems_generate"))
+            )
 
         menu_items.append(("Competition", items))
 

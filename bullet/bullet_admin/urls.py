@@ -239,8 +239,8 @@ urlpatterns = [
         name="school_create",
     ),
     path(
-        "problem_edit/",
-        categoryproblems.CategoryProblemEdit.as_view(),
-        name="problem_edit",
+        "problems/generate/",
+        categoryproblems.ProblemsGenerateView.as_view(),
+        name="problems_generate",
     ),
 ]
