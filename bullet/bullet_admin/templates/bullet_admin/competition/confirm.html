@@ -1,0 +1,20 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-3xl">
+        {% aheader show_subtitle=True %}
+            {% slot title %}
+                Are you sure?
+            {% endslot %}
+            Finalizing the competition will prevent any additional modifications from being made. You cannot undo this action.
+        {% endaheader %}
+
+        <form method="post">
+            {% csrf_token %}
+            {% #abtn button label="Finalize" icon="mdi:check" color="red" %}
+        </form>
+    </div>
+{% endblock %}
