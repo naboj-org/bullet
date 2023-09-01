@@ -90,7 +90,7 @@ MIDDLEWARE = [
     "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
-PARENT_HOST = env("PARENT_HOST")
+PARENT_HOST = env("PARENT_HOST", default="naboj.org")
 ROOT_URLCONF = "web.urls"
 
 TEMPLATES = [
@@ -157,8 +157,13 @@ DEFAULT_FROM_EMAIL = env("EMAIL_FROM", default="devel@naboj.org")
 EMAIL_CONFIG = env.email("EMAIL_URL", default="consolemail://")
 vars().update(EMAIL_CONFIG)
 
-RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
+# These are Google's testing keys
+RECAPTCHA_PUBLIC_KEY = env(
+    "RECAPTCHA_PUBLIC_KEY", default="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+)
+RECAPTCHA_PRIVATE_KEY = env(
+    "RECAPTCHA_PRIVATE_KEY", default="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+)
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/uploads/"
 GEOIP_PATH = "/geoip/"
@@ -206,7 +211,7 @@ if DEBUG:
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ips + ["127.0.0.1"]
     SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
 else:
-    SESSION_COOKIE_DOMAIN = env("PARENT_HOST")
+    SESSION_COOKIE_DOMAIN = env("PARENT_HOST", default="naboj.org")
     SESSION_COOKIE_SECURE = True
 
 PICTURES = {
