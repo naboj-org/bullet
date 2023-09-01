@@ -1,7 +1,9 @@
 from bullet_admin.access import BranchAdminAccess
 from bullet_admin.forms.competition import CompetitionForm
+from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 from competitions.models import Competition
+from django.contrib import messages
 from django.forms import Form
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -23,7 +25,7 @@ class CompetitionUpdateView(BranchAdminAccess, CompetitionFormMixin, UpdateView)
     template_name = "bullet_admin/competition/form.html"
 
     def get_object(self, queryset=None):
-        return Competition.objects.get_current_competition(self.request.BRANCH)
+        return get_active_competition(self.request)
 
     def get_success_url(self):
         return reverse("badmin:competition_switch")
@@ -40,16 +42,22 @@ class CompetitionCreateView(BranchAdminAccess, CompetitionFormMixin, CreateView)
         return redirect("badmin:competition_switch")
 
 
-class CompetitionFinalizeConfirmView(BranchAdminAccess, FormView):
-    form_title = "Really finalize current competition?"
+class CompetitionFinalizeView(BranchAdminAccess, FormView):
     form_class = Form
     template_name = "bullet_admin/competition/confirm.html"
 
-    def form_valid(self, form):
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
-        if "finalize" in self.request.POST:
-            self.finalize(competition)
+    def can_access(self):
+        can = super().can_access()
+        if not can:
+            return False
 
+        competition = get_active_competition(self.request)
+        return not competition.results_public
+
+    def form_valid(self, form):
+        competition = get_active_competition(self.request)
+        self.finalize(competition)
+        messages.success(self.request, "The competition was finalized.")
         return redirect("badmin:competition_switch")
 
     @staticmethod

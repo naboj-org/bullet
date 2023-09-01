@@ -5,24 +5,16 @@
 
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
-        {% aheader %}
+        {% aheader show_subtitle=True %}
             {% slot title %}
-                Really finalize the competition?
-                <p class="font-normal text-sm">This cannot be undone</p>
+                Are you sure?
             {% endslot %}
+            Finalizing the competition will prevent any additional modifications from being made. You cannot undo this action.
         {% endaheader %}
 
         <form method="post">
             {% csrf_token %}
-            {% admin_form2 form %}
-
-            <div class="mt-6 flex justify-between">
-                {% #abtn button label="Cancel" icon="mdi:content-save" color="blue" %}
-               <button type="submit" class="rounded-md px-2.5 py-1.5 text-sm font-semibold shadow-sm inline-flex items-center gap-x-1.5 bg-green-600 hover:bg-green-500 text-white" name="finalize">
-                    <span class="iconify -ml-0.5 w-5 h-5 shrink-0" data-icon="mdi:check"></span>
-                    Finalize
-                </button>
-            </div>
+            {% #abtn button label="Finalize" icon="mdi:check" color="red" %}
         </form>
     </div>
 {% endblock %}
