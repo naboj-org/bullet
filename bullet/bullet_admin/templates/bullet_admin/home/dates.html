@@ -1,0 +1,55 @@
+{% load access %}
+
+<div class="border-b border-gray-200 pb-4">
+    <h2 class="text-base font-semibold text-gray-900">
+        Important dates
+        <span class="text-gray-700 text-sm font-normal">(UTC)</span>
+    </h2>
+</div>
+
+<dl class="divide-y divide-gray-100">
+    <div class="px-3 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium text-gray-900">Web start</dt>
+        <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
+            {{ competition.web_start|date:"d.m.Y H:i" }}
+            {% if competition.state > competition.state.BEFORE_WEB_START %}
+                <span class="iconify text-green-600 w-4 h-4 ml-1" data-icon="mdi:check"></span>
+            {% endif %}
+        </dd>
+    </div>
+    <div class="px-3 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium text-gray-900">Registration start</dt>
+        <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
+            {{ competition.registration_start|date:"d.m.Y H:i" }}
+            {% if competition.state > competition.state.BEFORE_REGISTRATION %}
+                <span class="iconify text-green-600 w-4 h-4 ml-1" data-icon="mdi:check"></span>
+            {% endif %}
+        </dd>
+    </div>
+    <div class="px-3 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium text-gray-900">Registration end</dt>
+        <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
+            {{ competition.registration_end|date:"d.m.Y H:i" }}
+            {% if competition.state > competition.state.REGISTRATION %}
+                <span class="iconify text-green-600 w-4 h-4 ml-1" data-icon="mdi:check"></span>
+            {% endif %}
+        </dd>
+    </div>
+    <div class="px-3 py-4 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium text-gray-900">Competition start</dt>
+        <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
+            {{ competition.competition_start|date:"d.m.Y H:i" }}
+            {% if competition.state >= competition.state.COMPETITION %}
+                <span class="iconify text-green-600 w-4 h-4 ml-1" data-icon="mdi:check"></span>
+            {% endif %}
+        </dd>
+    </div>
+</dl>
+
+{% is_branch_admin as can_edit %}
+{% if can_edit %}
+    <div class="mt-2">
+        {% url "badmin:competition_edit" as edit_url %}
+        {% #abtn url=edit_url label="Competition settings" icon="mdi:cog" %}
+    </div>
+{% endif %}

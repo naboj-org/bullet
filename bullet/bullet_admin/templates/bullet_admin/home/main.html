@@ -1,0 +1,58 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <div class="p-8">
+        {% aheader show_subtitle=True %}
+            {% slot title %}
+                👋 Hi, {{ user.first_name }}!
+            {% endslot %}
+            Welcome to the Náboj administration system. This is your dashboard, where you can easily find information and access common actions.
+        {% endaheader %}
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div>
+                {% include "./state.html" %}
+            </div>
+            <div>
+                {% include "./dates.html" %}
+            </div>
+            <div>
+                {% include "./help.html" %}
+            </div>
+        </div>
+    </div>
+
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Venue stats</h2>
+        </header>
+        <div class="overflow-x-auto whitespace-nowrap">
+            <table class="w-full">
+                <thead class="border-b text-left">
+                    <tr>
+                        <th class="p-4">Venue</th>
+                        <th class="p-4">Capacity</th>
+                        <th class="p-4">All teams</th>
+                        <th class="p-4">Registered</th>
+                        <th class="p-4">Checked in</th>
+                        <th class="p-4">Reviewed</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y">
+                    {% for v in venues %}
+                        <tr class="{% if v.is_reviewed %}bg-green-100{% endif %}">
+                            <td class="p-4">{{ v }}</td>
+                            <td class="p-4">{{ v.capacity }}</td>
+                            <td class="p-4">{{ v.registered }}</td>
+                            <td class="p-4">{{ v.competing }}</td>
+                            <td class="p-4">{{ v.checked_in }}</td>
+                            <td class="p-4">{{ v.reviewed }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </article>
+{% endblock %}

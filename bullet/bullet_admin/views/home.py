@@ -6,7 +6,7 @@ from django.views.generic import TemplateView
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = "bullet_admin/home.html"
+    template_name = "bullet_admin/home/main.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
