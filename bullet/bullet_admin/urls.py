@@ -2,6 +2,7 @@ from bullet_admin.views import (
     CompetitionSwitchView,
     auth,
     category,
+    categoryproblems,
     competition,
     content,
     documents,
@@ -241,5 +242,10 @@ urlpatterns = [
         "education/schools/create/",
         education.SchoolCreateView.as_view(),
         name="school_create",
+    ),
+    path(
+        "problems/generate/",
+        categoryproblems.ProblemsGenerateView.as_view(),
+        name="problems_generate",
     ),
 ]
