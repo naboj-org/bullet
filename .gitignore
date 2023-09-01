@@ -5,3 +5,4 @@ __pycache__/
 node_modules/
 bullet/uploads/
 *.csv
+bullet/CHANGELOG.md
