@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 from django_countries.fields import CountryField
 from pictures.models import PictureField
 
@@ -14,6 +15,13 @@ class Album(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        constraints = [
+            UniqueConstraint(
+                "title", "competition", "country", name="title_competition_country"
+            )
+        ]
 
 
 class Photo(models.Model):

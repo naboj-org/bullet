@@ -1,0 +1,64 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+{% load access %}
+{% load country_url %}
+
+{% block title %}Albums{% endblock %}
+
+{% block content %}
+    {% get_active_competition as competition %}
+    <div class="p-8">
+        {% aheader %}
+            {% slot title %}
+                Albums
+                <span class="text-gray-400 font-normal">{{ album_count|floatformat:"g" }}</span>
+            {% endslot %}
+            {% slot buttons %}
+                {% is_country_admin as can_create %}
+                {% if not competition.results_public and can_create %}
+                    {% url "badmin:album_create" as create_url %}
+                    {% #abtn color="green" icon="mdi:plus" label="New album" url=create_url %}
+                {% endif %}
+            {% endslot %}
+        {% endaheader %}
+
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Album Name</th>
+                    <th class="p-3">Country</th>
+                    <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Competition</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for v in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3 whitespace-nowrap">{{ v.title }}</td>
+                        <td class="p-3">
+                            <div class="flex gap-2 items-center flex-wrap">
+                                <span class="iconify shrink-0 shadow-lg" data-icon="flag:{{ v.country.code|lower }}-4x3"></span>
+                                <span>{{ v.country.name }}</span>
+                            </div>
+                        </td>
+                        <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.competition.name }}</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                 <a href="{% url "badmin:album_edit" pk=v.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                    <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <a href="{% url "archive_album" b_country=country b_language=language competition_number=v.competition.number country=v.country.code|lower title=v.title %}" class="btn-admin-sm bg-blue-500 hover:bg-blue-600">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i> View
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% if is_paginated %}
+        {% admin_paginator page_obj %}
+        {% endif %}
+    </div>
+{% endblock %}

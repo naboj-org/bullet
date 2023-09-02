@@ -8,6 +8,7 @@ class BranchRole(models.Model):
     branch = BranchField()
     is_translator = models.BooleanField(default=False)
     is_school_editor = models.BooleanField(default=False)
+    is_photograph = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
     class Meta:

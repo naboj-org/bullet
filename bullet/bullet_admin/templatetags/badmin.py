@@ -81,6 +81,14 @@ def admin_sidebar(context):
             )
         )
 
+    if branch_role.is_photograph:
+        menu_items.append(
+            (
+                "Photos",
+                (("fa-book-open", "Albums", reverse("badmin:album_list")),),
+            )
+        )
+
     if (
         branch_role.is_admin
         or branch_role.is_school_editor
