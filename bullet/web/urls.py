@@ -16,6 +16,7 @@ urlpatterns = [
                 path("", views.HomepageView.as_view(), name="homepage"),
                 path("", include("competitions.urls")),
                 path("", include("problems.urls")),
+                path("", include("gallery.urls")),
                 path("admin/", views.AdminRedirectView.as_view()),
                 path("<slug>/", page.PageView.as_view(), name="page"),
             ]
