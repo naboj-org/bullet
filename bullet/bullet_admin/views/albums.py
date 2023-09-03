@@ -4,7 +4,6 @@ from bullet_admin.views import GenericForm
 from countries.models import BranchCountry
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
 
@@ -52,9 +51,6 @@ class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
     def get_queryset(self):
         return Album.objects.filter(competition__branch=self.request.BRANCH)
 
-    def get_success_url(self):
-        return reverse("badmin:album_list")
-
 
 class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
     form_title = "New album"
@@ -67,8 +63,4 @@ class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
             Photo(album=album, image=photo).save()
 
         messages.success(self.request, "Album created successfully.")
-
         return redirect("badmin:album_list")
-
-    def get_success_url(self):
-        return reverse("badmin:album_list")
