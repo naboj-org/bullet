@@ -45,7 +45,7 @@ class CompetitionQuerySet(models.QuerySet):
         ).values("competition")
         return qs.filter(id__in=roles)
 
-    def for_photograph(self, user: "User", branch: "Branch"):
+    def for_photos(self, user: "User", branch: "Branch"):
         """
         Filters competitions that should be visible for a given user.
         """

@@ -1,22 +1,18 @@
 from competitions.models import Competition
 from countries.models import BranchCountry
 from django.shortcuts import get_object_or_404
+from django.utils.functional import cached_property
 from django.views.generic import ListView
 from gallery.models import Album, Photo
 
 
 class GalleryCompetitionMixin:
-    @property
+    @cached_property
     def competition(self):
-        if not hasattr(self, "_competition"):
-            self._competition = get_object_or_404(
-                Competition.objects.for_photograph(
-                    self.request.user, self.request.BRANCH
-                ),
-                branch=self.request.BRANCH,
-                number=self.kwargs["competition_number"],
-            )
-        return self._competition
+        return get_object_or_404(
+            Competition.objects.for_photos(self.request.user, self.request.BRANCH),
+            number=self.kwargs["competition_number"],
+        )
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
