@@ -6,6 +6,7 @@ from pictures.models import PictureField
 
 class Album(models.Model):
     title = models.CharField(max_length=256)
+    slug = models.SlugField(max_length=256)
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
@@ -17,9 +18,10 @@ class Album(models.Model):
         return self.title
 
     class Meta:
+        ordering = ["country", "title"]
         constraints = [
             UniqueConstraint(
-                "title", "competition", "country", name="title_competition_country"
+                "slug", "competition", "country", name="slug_competition_country"
             )
         ]
 

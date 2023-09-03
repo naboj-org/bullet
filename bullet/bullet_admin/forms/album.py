@@ -30,7 +30,7 @@ class AlbumForm(ModelForm):
         model = Album
 
         labels = {"photo_files": "Photos"}
-        fields = ("competition", "title", "country")
+        fields = ("competition", "title", "slug", "country")
 
     def __init__(self, **kwargs):
         branch = kwargs.pop("branch", None)

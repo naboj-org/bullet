@@ -20,7 +20,6 @@ class ArchiveCompetitionMixin:
         if not hasattr(self, "_competition"):
             self._competition = get_object_or_404(
                 Competition.objects.for_user(self.request.user, self.request.BRANCH),
-                branch=self.request.BRANCH,
                 number=self.kwargs["competition_number"],
             )
         return self._competition
