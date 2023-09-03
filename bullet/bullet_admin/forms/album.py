@@ -24,12 +24,12 @@ class MultipleFileField(forms.FileField):
 
 
 class AlbumForm(ModelForm):
-    photoFiles = MultipleFileField(required=False)
+    photo_files = MultipleFileField(required=False)
 
     class Meta:
         model = Album
 
-        labels = {"photoFiles": "Photos"}
+        labels = {"photo_files": "Photos"}
         fields = ("competition", "title", "country")
 
     def __init__(self, **kwargs):

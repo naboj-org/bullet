@@ -43,7 +43,7 @@ class AlbumUpdateView(PhotoUploadAccess, Photoformmixin, UpdateView):
 
     def form_valid(self, form):
         album: Album = form.save(commit=False)
-        for photo in form.cleaned_data["photoFiles"]:
+        for photo in form.cleaned_data["photo_files"]:
             Photo(album=album, image=photo).save()
         album.save()
         messages.success(self.request, "Album edited successfully.")
@@ -63,7 +63,7 @@ class AlbumCreateView(PhotoUploadAccess, Photoformmixin, CreateView):
         album: Album = form.save(commit=False)
         album.save()
 
-        for photo in form.cleaned_data["photoFiles"]:
+        for photo in form.cleaned_data["photo_files"]:
             Photo(album=album, image=photo).save()
 
         messages.success(self.request, "Album created successfully.")
