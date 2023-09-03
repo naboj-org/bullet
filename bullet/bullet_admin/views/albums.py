@@ -29,7 +29,7 @@ class AlbumListView(AdminAccess, ListView):
         return ctx
 
 
-class Photoformmixin(GenericForm):
+class AlbumFormMixin(GenericForm):
     form_class = AlbumForm
 
     def get_form_kwargs(self):
@@ -38,7 +38,7 @@ class Photoformmixin(GenericForm):
         return kw
 
 
-class AlbumUpdateView(PhotoUploadAccess, Photoformmixin, UpdateView):
+class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
     form_title = "Edit album"
 
     def form_valid(self, form):
@@ -56,7 +56,7 @@ class AlbumUpdateView(PhotoUploadAccess, Photoformmixin, UpdateView):
         return reverse("badmin:album_list")
 
 
-class AlbumCreateView(PhotoUploadAccess, Photoformmixin, CreateView):
+class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
     form_title = "New album"
 
     def form_valid(self, form):
