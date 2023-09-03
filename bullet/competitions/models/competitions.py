@@ -55,7 +55,7 @@ class CompetitionQuerySet(models.QuerySet):
             return qs.filter(results_public=True)
 
         branch_role = user.get_branch_role(branch)
-        if branch_role.is_admin or branch_role.is_photograph:
+        if branch_role.is_admin or branch_role.is_photographer:
             print(qs)
             return qs
 

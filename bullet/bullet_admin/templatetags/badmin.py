@@ -81,7 +81,7 @@ def admin_sidebar(context):
             )
         )
 
-    if branch_role.is_photograph:
+    if branch_role.is_photographer:
         menu_items.append(
             (
                 "Photos",
