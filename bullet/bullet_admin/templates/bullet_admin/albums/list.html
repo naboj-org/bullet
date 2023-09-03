@@ -14,11 +14,8 @@
                 <span class="text-gray-400 font-normal">{{ album_count|floatformat:"g" }}</span>
             {% endslot %}
             {% slot buttons %}
-                {% is_country_admin as can_create %}
-                {% if not competition.results_public and can_create %}
-                    {% url "badmin:album_create" as create_url %}
-                    {% #abtn color="green" icon="mdi:plus" label="New album" url=create_url %}
-                {% endif %}
+                {% url "badmin:album_create" as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New album" url=create_url %}
             {% endslot %}
         {% endaheader %}
 
