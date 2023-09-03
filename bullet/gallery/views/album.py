@@ -25,7 +25,6 @@ class AlbumView(GalleryCompetitionMixin, ListView):
         self.album = get_object_or_404(
             Album,
             competition=self.competition,
-            country=kwargs.get("country").upper(),
             slug=kwargs.get("slug"),
         )
 
@@ -35,3 +34,14 @@ class AlbumView(GalleryCompetitionMixin, ListView):
         ctx = super().get_context_data(**kwargs)
         ctx["album"] = self.album
         return ctx
+
+
+class AlbumListView(GalleryCompetitionMixin, ListView):
+    template_name = "gallery/list.html"
+
+    def get_queryset(self):
+        qs = Album.objects.filter(competition=self.competition)
+        country = self.request.COUNTRY_CODE.upper()
+        local = qs.filter(country=country)
+        other = qs.exclude(country=country)
+        return local.union(other)

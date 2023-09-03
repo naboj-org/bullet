@@ -20,9 +20,7 @@ class Album(models.Model):
     class Meta:
         ordering = ["country", "title"]
         constraints = [
-            UniqueConstraint(
-                "slug", "competition", "country", name="slug_competition_country"
-            )
+            UniqueConstraint("slug", "competition", name="album__slug_competition")
         ]
 
 
