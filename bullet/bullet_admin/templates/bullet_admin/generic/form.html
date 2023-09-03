@@ -11,7 +11,7 @@
             {% endslot %}
         {% endaheader %}
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" {% if form_multipart %}enctype="multipart/form-data"{% endif %}>
             {% csrf_token %}
             {% admin_form2 form %}
 

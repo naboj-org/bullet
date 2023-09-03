@@ -30,6 +30,7 @@ class AlbumListView(AdminAccess, ListView):
 
 class AlbumFormMixin(GenericForm):
     form_class = AlbumForm
+    form_multipart = True
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
