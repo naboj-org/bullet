@@ -45,6 +45,25 @@ class CompetitionQuerySet(models.QuerySet):
         ).values("competition")
         return qs.filter(id__in=roles)
 
+    def for_photos(self, user: "User", branch: "Branch"):
+        """
+        Filters competitions that should be visible for a given user.
+        """
+        qs = self.filter(branch=branch).order_by("-web_start")
+
+        if not user.is_authenticated:
+            return qs.filter(results_public=True)
+
+        branch_role = user.get_branch_role(branch)
+        if branch_role.is_admin or branch_role.is_photographer:
+            print(qs)
+            return qs
+
+        roles = CompetitionRole.objects.filter(
+            user=user, competition__branch=branch
+        ).values("competition")
+        return qs.filter(id__in=roles)
+
 
 class Competition(models.Model):
     name = models.CharField(max_length=128)

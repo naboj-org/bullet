@@ -15,11 +15,13 @@ class DeleteView(BaseDeleteView):
 
 class GenericForm:
     form_title = None
+    form_multipart = False
     template_name = "bullet_admin/generic/form.html"
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["form_title"] = self.form_title
+        ctx["form_multipart"] = self.form_multipart
         return ctx
 
 

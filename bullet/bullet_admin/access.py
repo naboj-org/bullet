@@ -207,3 +207,19 @@ class SchoolEditorAccess(AccessMixin):
 
         brole = self.request.user.get_branch_role(self.request.BRANCH)
         return brole.is_school_editor
+
+
+class PhotoUploadAccess(AccessMixin):
+    """
+    Allows access only to Album & Gallery editing
+    """
+
+    def can_access(self):
+        if not self.request.user.is_authenticated:
+            return False
+
+        if self.request.user.is_superuser:
+            return True
+
+        brole = self.request.user.get_branch_role(self.request.BRANCH)
+        return brole.is_photographer

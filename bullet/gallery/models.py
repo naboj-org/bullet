@@ -1,10 +1,12 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 from django_countries.fields import CountryField
 from pictures.models import PictureField
 
 
 class Album(models.Model):
     title = models.CharField(max_length=256)
+    slug = models.SlugField(max_length=256)
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
@@ -14,6 +16,12 @@ class Album(models.Model):
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        ordering = ["country", "title"]
+        constraints = [
+            UniqueConstraint("slug", "competition", name="album__slug_competition")
+        ]
 
 
 class Photo(models.Model):
