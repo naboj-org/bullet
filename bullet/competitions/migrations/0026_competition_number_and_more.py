@@ -12,8 +12,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name="competition",
             name="number",
-            field=models.IntegerField(default=1),
-            preserve_default=False,
+            field=models.IntegerField(blank=True, null=True),
         ),
         migrations.AddConstraint(
             model_name="competition",

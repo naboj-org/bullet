@@ -68,7 +68,9 @@ class CompetitionQuerySet(models.QuerySet):
 class Competition(models.Model):
     name = models.CharField(max_length=128)
     branch = BranchField()
-    number = models.IntegerField()
+    number = models.IntegerField(
+        null=True, blank=True
+    )  # TODO: remove null when migrated on production
 
     web_start = models.DateTimeField()
 
