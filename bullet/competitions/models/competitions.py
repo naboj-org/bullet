@@ -1,5 +1,7 @@
 import functools
+import secrets
 from datetime import timedelta
+from pathlib import Path
 
 from bullet_admin.models import CompetitionRole
 from competitions.branches import Branch
@@ -8,6 +10,10 @@ from django.db.models import UniqueConstraint
 from django.utils import timezone
 from users.models import User
 from web.fields import BranchField
+
+
+def get_random_string():
+    return secrets.token_hex(32)
 
 
 class CompetitionQuerySet(models.QuerySet):
@@ -71,6 +77,7 @@ class Competition(models.Model):
     number = models.IntegerField(
         null=True, blank=True
     )  # TODO: remove null when migrated on production
+    secret_key = models.CharField(max_length=64, default=get_random_string)
 
     web_start = models.DateTimeField()
 
@@ -109,6 +116,10 @@ class Competition(models.Model):
     @property
     def has_started(self):
         return self.competition_start <= timezone.now()
+
+    @property
+    def secret_dir(self) -> Path:
+        return Path("competitions") / f"{self.id}-{self.secret_key}"
 
     @functools.total_ordering
     class State(models.IntegerChoices):
