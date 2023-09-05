@@ -1,6 +1,6 @@
 import os.path
 
-from competitions.models import Competition
+from competitions.models import Category, Competition
 from django.core.files.storage import default_storage
 from django.db.models import Avg, Count
 from django.shortcuts import get_object_or_404
@@ -72,9 +72,24 @@ class ProblemStatementView(ArchiveCompetitionMixin, ListView):
 
         return new_list
 
+    def order_problems(self, problem_list: list[ProblemStatement]):
+        reference_category = (
+            Category.objects.filter(competition=self.competition)
+            .annotate(problem_count=Count("problems"))
+            .order_by("-problem_count")
+            .first()
+        )
+        problems = reference_category.problems.all()
+        problem_order = {p.problem_id: p.number for p in problems}
+        problem_list.sort(
+            key=lambda p: problem_order[p.id] if p.id in problem_order else 99999
+        )
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["object_list"] = self.inject_stats(ctx["object_list"])
+        self.order_problems(ctx["object_list"])
+
         pdf_file = os.path.join(
             "statements",
             self.request.BRANCH.identifier,
