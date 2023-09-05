@@ -169,7 +169,7 @@ MEDIA_URL = "/uploads/"
 GEOIP_PATH = "/geoip/"
 
 MEILISEARCH_URL = env("MEILISEARCH_URL", default="http://meilisearch:7700/")
-MEILISEARCH_KEY = env("MEILISEARCH_KEY", default="")
+MEILISEARCH_KEY = env("MEILISEARCH_KEY", default=None)
 
 PROBLEM_SOLVE_KEY = env("PROBLEM_SOLVE_KEY", default="")
 
