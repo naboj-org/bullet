@@ -24,4 +24,6 @@ jobs:
         python -m pip install --upgrade pipenv
         pipenv install
     - name: Tests for missing migrations
+      env:
+        DEBUG: True
       run: pipenv run bullet/manage.py makemigrations --check
