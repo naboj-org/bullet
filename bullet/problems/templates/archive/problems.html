@@ -14,7 +14,7 @@
 
 {% block content %}
     {% if pdf %}
-    <div class="max-w-prose mt-16 mx-auto text-right">
+    <div class="max-w-prose mt-16 mx-auto text-right px-2">
         <a href="{{ pdf }}" class="btn">
             <iconify-icon inline icon="mdi:download"></iconify-icon>
             {% trans "Download as PDF" %}
@@ -23,7 +23,7 @@
     {% endif %}
 
     {% for problem in object_list %}
-    <article class="my-8 max-w-prose mx-auto">
+    <article class="my-8 max-w-prose mx-auto px-2">
         <h2 class="font-bold text-lg">{% blocktrans with n=problem|problem_number %}Problem {{ n }}{% endblocktrans %}</h2>
         <div class="prose">
             {{ problem.statement|safe }}
