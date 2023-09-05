@@ -55,7 +55,6 @@ def admin_sidebar(context):
                 ]
             )
 
-
         menu_items.append(("Competition", items))
 
     if branch_role.is_translator:
