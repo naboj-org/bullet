@@ -22,6 +22,7 @@ from django.urls import path
 app_name = "badmin"
 urlpatterns = [
     path("", home.HomeView.as_view(), name="home"),
+    path("release_notes/", home.ReleaseNotesView.as_view(), name="release_notes"),
     path("auth/login/", auth.LoginView.as_view(), name="login"),
     path("auth/logout/", auth.LogoutView.as_view(), name="logout"),
     path(

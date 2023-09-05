@@ -28,6 +28,7 @@ COPY Pipfile Pipfile.lock ./
 RUN pipenv install --system --dev --deploy
 
 COPY ./bullet .
+COPY ./CHANGELOG.md .
 COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
 
 CMD ["gunicorn", "bullet.wsgi", "--access-logfile", "-", "--log-file", "-", "--timeout", "300"]

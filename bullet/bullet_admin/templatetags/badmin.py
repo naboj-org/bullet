@@ -164,3 +164,10 @@ def admin_paginator(context, page):
     context["pages"] = page.paginator.get_elided_page_range(page.number)
     context["page"] = page
     return context
+
+
+@register.simple_tag()
+def percent(value, max_value):
+    if max_value == 0:
+        return "0"
+    return f"{float(value) / float(max_value) * 100:0.2f}"

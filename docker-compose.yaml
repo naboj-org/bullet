@@ -28,6 +28,7 @@ services:
     volumes:
       - ./bullet/:/app/
       - geiop_data:/geoip/
+      - ./CHANGELOG.md:/app/CHANGELOG.md:ro
     depends_on:
       - db
       - geoip
