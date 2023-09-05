@@ -5,6 +5,34 @@ and this project uses the `YYYY.MM[.PATCH]` version format.
 
 ## Unreleased
 
+## 2023.9 - 2023-09-04
+
+### Added
+
+- Public archive with results, problems, stats and photos
+- Current competition state
+- School editing
+- Option to hide school from public selector
+- Option to hide language from country selector
+- Competition and category editing
+- Link to admin pages from frontpage when logged in
+- Option to finalize competition - mark results as public, generate stats and prevent further changes
+- Problem number generation
+
+### Changed
+
+- Venue editing interface
+- Login session to the admin system is now shared between branches
+- All emails are now sent asynchronously in the background
+- Admin sidebar now scrolls only the menu part
+- New and improved admin dashboard
+
+### Fixed
+
+- `web_start` is now honored when selecting current competition on the frontpage
+- Admin now disallows you to create pages and blocks with invalid country-language combinations
+- 
+
 ## 2023.4.6 - 2023-04-20
 
 ### Changed
