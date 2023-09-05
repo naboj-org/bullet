@@ -1,15 +1,36 @@
 import os
+import socket
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+import environ
+
+import bullet
+
+env = environ.Env()
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # This will be overwritten by prod ENV
-SECRET_KEY = "3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^"
-ALLOWED_HOSTS = os.environ.get(
+SECRET_KEY = env(
+    "SECRET_KEY",
+    default="django-insecure-3qj^lv&gv&rq&6ef5f1xuvu(s-7++e)b0x0#&qq0uy&dx^!d7^",
+)
+DEBUG = env("DEBUG", default=False)
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+SECURE_HSTS_SECONDS = 3600
+
+ALLOWED_HOSTS = env(
     "DJANGO_ALLOWED_HOSTS",
-    "localhost math.localhost physics.localhost junior.localhost "
-    "chemistry.localhost admin.localhost",
-).split(" ")
+    default=[
+        "localhost",
+        "math.localhost",
+        "physics.localhost",
+        "junior.localhost",
+        "chemistry.localhost",
+        "admin.localhost",
+    ],
+)
 
 INSTALLED_APPS = [
     "address",
@@ -21,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "widget_tweaks",
+    #
     "users",
     "competitions",
     "web",
@@ -29,6 +51,7 @@ INSTALLED_APPS = [
     "countries",
     "problems",
     "documents",
+    #
     "django_countries",
     "captcha",
     "django_minify_html",
@@ -38,26 +61,18 @@ INSTALLED_APPS = [
     "simple_history",
     "django_web_components",
     "django_rq",
+    "django_probes",
+    "debug_toolbar",
     "pictures",
     "gallery",
 ]
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.environ.get("POSTGRES_DB", "bullet"),
-        "USER": os.environ.get("POSTGRES_USER", "bullet"),
-        "PASSWORD": os.environ.get("POSTGRES_PASSWORD", "bullet"),
-        "HOST": os.environ.get("POSTGRES_HOST", "db"),
-        "PORT": os.environ.get("POSTGRES_PORT", 5432),
-    }
+    "default": env.db(default="postgres://bullet:bullet@db/bullet"),
 }
 
-INTERNAL_IPS = [
-    "127.0.0.1",
-]
-
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "web.middleware.AdminDomainMiddleware",
@@ -75,7 +90,7 @@ MIDDLEWARE = [
     "simple_history.middleware.HistoryRequestMiddleware",
 ]
 
-PARENT_HOST = os.environ.get("PARENT_HOST")
+PARENT_HOST = env("PARENT_HOST", default="naboj.org")
 ROOT_URLCONF = "web.urls"
 
 TEMPLATES = [
@@ -120,14 +135,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-PASSWORD_HASHERS = [
-    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
-    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-    "django.contrib.auth.hashers.Argon2PasswordHasher",
-    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
-]
-
-
 AUTH_USER_MODEL = "users.User"
 LOGIN_URL = "badmin:login"
 LOGIN_REDIRECT_URL = "badmin:home"
@@ -144,30 +151,27 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 DEFAULT_AUTO_FIELD = "django.db.models.AutoField"
 
-GOOGLE_API_KEY = os.environ.get("GOOGLE_API_KEY")
-
 LOCALE_PATHS = (os.path.join(BASE_DIR, "locale"),)
 
-EMAIL_BACKEND = os.environ.get(
-    "EMAIL_BACKEND", "django.core.mail.backends.smtp.EmailBackend"
-)
-DEFAULT_FROM_EMAIL = os.environ.get("EMAIL_FROM", "devel@naboj.org")
-EMAIL_HOST = os.environ.get("EMAIL_HOST")
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ.get("EMAIL_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+DEFAULT_FROM_EMAIL = env("EMAIL_FROM", default="devel@naboj.org")
+EMAIL_CONFIG = env.email("EMAIL_URL", default="consolemail://")
+vars().update(EMAIL_CONFIG)
 
-RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+# These are Google's testing keys
+RECAPTCHA_PUBLIC_KEY = env(
+    "RECAPTCHA_PUBLIC_KEY", default="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+)
+RECAPTCHA_PRIVATE_KEY = env(
+    "RECAPTCHA_PRIVATE_KEY", default="6LeIxAcTAAAAAGG-vFI1TnRWxMZNFuojJ4WifJWe"
+)
 MEDIA_ROOT = BASE_DIR / "uploads"
 MEDIA_URL = "/uploads/"
 GEOIP_PATH = "/geoip/"
 
-MEILISEARCH_URL = os.environ.get("MEILISEARCH_URL", "http://meilisearch:7700/")
-MEILISEARCH_KEY = os.environ.get("MEILISEARCH_KEY", None)
+MEILISEARCH_URL = env("MEILISEARCH_URL", default="http://meilisearch:7700/")
+MEILISEARCH_KEY = env("MEILISEARCH_KEY", default=None)
 
-PROBLEM_SOLVE_KEY = os.environ.get("PROBLEM_SOLVE_KEY", "")
+PROBLEM_SOLVE_KEY = env("PROBLEM_SOLVE_KEY", default="")
 
 
 def silky_intercept(request):
@@ -181,12 +185,34 @@ SILKY_MAX_RECORDED_REQUESTS_CHECK_PERCENT = 0
 
 RQ_QUEUES = {
     "default": {
-        "HOST": os.environ.get("REDIS_HOST", default="redis"),
-        "PORT": os.environ.get("REDIS_PORT", default=6379),
-        "DB": os.environ.get("REDIS_DB", default=0),
-        "ASYNC": os.environ.get("REDIS_RQ_ASYNC", default="True") == "True",
+        "HOST": env("REDIS_HOST", default="redis"),
+        "PORT": env("REDIS_PORT", default=6379),
+        "DB": env("REDIS_DB", default=0),
+        "ASYNC": env("REDIS_RQ_ASYNC", default=True),
     },
 }
+
+dsn = env("SENTRY_DSN", default="")
+if dsn:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
+
+    sentry_sdk.init(
+        dsn=dsn,
+        integrations=[DjangoIntegration()],
+        auto_session_tracking=False,
+        traces_sample_rate=0,
+        send_default_pii=True,
+        release=bullet.VERSION,
+    )
+
+if DEBUG:
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ips + ["127.0.0.1"]
+    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+else:
+    SESSION_COOKIE_DOMAIN = env("PARENT_HOST", default="naboj.org")
+    SESSION_COOKIE_SECURE = True
 
 PICTURES = {
     "BREAKPOINTS": {

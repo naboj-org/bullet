@@ -20,7 +20,7 @@ services:
     env_file:
       - .env
     environment:
-      - DJANGO_SETTINGS_MODULE=bullet.settings.development
+      - DEBUG=True
       - PARENT_HOST=localhost:8000
       - REDIS_RQ_ASYNC=False
     ports:
@@ -33,7 +33,7 @@ services:
       - db
       - geoip
       - meilisearch
-    command: ./entrypoint.sh
+    command: "./entrypoint.sh dev"
 
   tailwind:
     build:
