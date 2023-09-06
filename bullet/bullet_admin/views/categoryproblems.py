@@ -22,7 +22,6 @@ class ProblemsGenerateView(BranchAdminAccess, GenericForm, FormView):
     def form_valid(self, form):
         problem_count = form.cleaned_data["problem_count"]
         competition = get_active_competition(self.request)
-        print(form.cleaned_data)
         for i in range(problem_count):
             Problem(competition=competition, name=f"{i+1:02d}").save()
 

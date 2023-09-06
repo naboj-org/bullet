@@ -2,6 +2,7 @@ from competitions.models import Category, Competition
 from django import forms
 from django.core.exceptions import ValidationError
 from django.forms import Form
+from problems.models import Problem
 
 
 class ProblemsGenerateForm(Form):
@@ -20,6 +21,9 @@ class ProblemsGenerateForm(Form):
             )
 
     def clean(self):
+        if Problem.objects.filter(competition=self.competition).exists():
+            raise ValidationError("The competition already has problems.")
+
         data = super().clean()
         problem_count = data.get("problem_count")
         for category in self.categories:
