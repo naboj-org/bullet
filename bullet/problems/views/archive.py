@@ -81,9 +81,7 @@ class ProblemStatementView(ArchiveCompetitionMixin, ListView):
         )
         problems = reference_category.problems.all()
         problem_order = {p.problem_id: p.number for p in problems}
-        problem_list.sort(
-            key=lambda p: problem_order[p.id] if p.id in problem_order else 99999
-        )
+        problem_list.sort(key=lambda p: problem_order.get(p.problem_id, 99999))
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
