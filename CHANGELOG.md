@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.9.2 - 2023-09-06
+
+### Fixed
+
+- Problem ordering in archive, finally
+- Problem generation when problems already exist
+
 ## 2023.9.1 - 2023-09-05
 
 ### Fixed
