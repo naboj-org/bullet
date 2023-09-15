@@ -17,6 +17,7 @@ from users.models import Team
 
 
 class VenueListView(AdminAccess, ListView):
+    require_unlocked_competition = False
     template_name = "bullet_admin/venues/list.html"
     paginate_by = 100
 
@@ -115,6 +116,7 @@ class CertificateView(VenueMixin, GenericForm, FormView):
 
 
 class TeamListView(VenueMixin, GenericForm, FormView):
+    require_unlocked_competition = False
     form_class = Form
 
     def form_valid(self, form):
