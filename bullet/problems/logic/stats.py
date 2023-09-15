@@ -2,11 +2,16 @@ from collections import defaultdict
 from datetime import timedelta
 
 from competitions.models import Category, Competition
+from django_rq import job
 from problems.models import ProblemStat, SolvedProblem
 from users.models import Team
 
 
-def generate_stats(competition: Competition):
+@job
+def generate_stats(competition: Competition | int):
+    if isinstance(competition, int):
+        competition = Competition.objects.get(id=competition)
+
     for category in competition.category_set.all():
         ProblemStat.objects.filter(team__venue__category=category).delete()
         generate_stats_category(category)
