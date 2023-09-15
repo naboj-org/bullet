@@ -9,7 +9,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         schools = []
-        for s in School.objects.all():
+        for s in School.objects.filter(is_legacy=False).all():
             schools.append(s.for_search())
 
         search.client.index("schools").update_settings(
