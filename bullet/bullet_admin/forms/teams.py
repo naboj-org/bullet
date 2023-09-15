@@ -26,6 +26,12 @@ class TeamForm(forms.ModelForm):
             "number",
         ]
 
+        help_texts = {
+            "consent_photos": "It is important that you have at least a verbal consent "
+            "to take photos of this team. Consult your local laws for more "
+            "information.",
+        }
+
     def __init__(self, **kwargs):
         competition: Competition = kwargs.pop("competition")
         super().__init__(**kwargs)

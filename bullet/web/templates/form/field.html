@@ -13,8 +13,8 @@
     {{ field|add_class:"input" }}
 {% endif %}
 {% if field.errors %}
-    <span class="text-red-600">{{ field.errors|first }}</span>
+    <div class="text-red-600">{{ field.errors|first }}</div>
 {% endif %}
 {% if field.help_text %}
-    <span class="text-sm text-gray-500">{{ field.help_text }}</span>
+    <div class="text-sm text-gray-500">{{ field.help_text }}</div>
 {% endif %}
