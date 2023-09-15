@@ -1,6 +1,6 @@
 from bullet_admin.utils import is_admin
 from competitions.models import Category, Competition, Venue
-from countries.models import BranchCountry
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.decorators import method_decorator
@@ -64,9 +64,10 @@ class CategoryResultsView(ResultsViewMixin, ListView):
     def dispatch(self, request, *args, **kwargs):
         self.country: str = kwargs.get("country")
         if self.country:
-            get_object_or_404(
-                BranchCountry, branch=request.BRANCH, country=self.country.upper()
-            )
+            if not Venue.objects.filter(
+                category__competition=self.competition, country=self.country.upper()
+            ).exists():
+                raise Http404()
 
         self.category = get_object_or_404(
             Category,
@@ -112,11 +113,13 @@ class CategoryResultsView(ResultsViewMixin, ListView):
             Country(self.country).name if self.country else _("International")
         )
         ctx["country"] = self.country.upper() if self.country else None
-        ctx["countries"] = (
-            BranchCountry.objects.filter(branch=self.request.BRANCH)
+        ctx["countries"] = [
+            Country(c)
+            for c in Venue.objects.filter(category__competition=self.competition)
             .order_by("country")
-            .all()
-        )
+            .distinct("country")
+            .values_list("country", flat=True)
+        ]
         return ctx
 
 
