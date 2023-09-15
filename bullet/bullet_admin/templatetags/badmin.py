@@ -1,5 +1,6 @@
 from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
+from competitions.models import Competition
 from django import template
 from django.urls import reverse
 from users.models import User
@@ -11,13 +12,12 @@ register = template.Library()
 def admin_sidebar(context):
     user: User = context.request.user
     branch: Branch = context.request.BRANCH
+    competiton: Competition = get_active_competition(context.request)
 
     menu_items = []
 
     branch_role = user.get_branch_role(branch)
-    competition_role = user.get_competition_role(
-        get_active_competition(context.request)
-    )
+    competition_role = user.get_competition_role(competiton)
     any_admin = (
         branch_role.is_admin or competition_role.venues or competition_role.countries
     )
@@ -117,25 +117,6 @@ def admin_sidebar(context):
             (
                 "Settings",
                 items,
-            )
-        )
-
-    if any_admin and not competition_role.is_operator:
-        menu_items.append(
-            (
-                "Documents",
-                (
-                    (
-                        "fa-certificate",
-                        "Certificates",
-                        reverse("badmin:docs_certificates"),
-                    ),
-                    (
-                        "fa-list",
-                        "Team lists",
-                        reverse("badmin:docs_teamlists"),
-                    ),
-                ),
             )
         )
 
