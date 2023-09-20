@@ -4,7 +4,10 @@
 {% if competition.state == competition.State.BEFORE_REGISTRATION %}
 <p class="font-light mt-12 md:mt-16">
     {% blocktrans trimmed with start=competition.registration_start|date %}
-        Registration starts on {{ start }}
+        Registration starts on {{ start }}.
+    {% endblocktrans %}
+    {% blocktrans trimmed with start=competition.competition_start|date %}
+        The competition will take place on {{ start }}.
     {% endblocktrans %}
 </p>
 {% elif competition.is_registration_open %}
@@ -12,7 +15,10 @@
 
 <p class="font-light mt-12 md:mt-16">
     {% blocktrans trimmed with end=competition.registration_end|date %}
-        Registration ends on {{ end }}
+        Registration ends on {{ end }}.
+    {% endblocktrans %}
+    {% blocktrans trimmed with start=competition.competition_start|date %}
+        The competition will take place on {{ start }}.
     {% endblocktrans %}
 </p>
 {% elif competition.has_started %}
