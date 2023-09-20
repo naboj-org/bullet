@@ -101,9 +101,7 @@
 
     {% include "web/snippets/home_timeline.html" %}
 
-    {% if request.COUNTRY_CODE == "cz" %}
-    <p class="text-center text-gray-700">Realizace projektu byla podpořena Ministerstvem školství, mládeže a tělovýchovy.</p>
-    {% endif %}
+    <p class="text-center text-gray-700">{% content_block "home-junior:pre-footer" allow_empty=True %}</p>
 {% endblock %}
 
 {% block footer %}
