@@ -31,7 +31,7 @@
                         <td class="p-3 text-sm">{{ block.content|safe }}</td>
                         <td class="p-3 text-right">
                             {% if block.branch %}
-                                 <a href="{% url "badmin:contentblock_edit" pk=user.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
+                                 <a href="{% url "badmin:contentblock_edit" pk=block.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
                                     <i class="fas fa-edit"></i> Edit
                                 </a>
                             {% endif %}
