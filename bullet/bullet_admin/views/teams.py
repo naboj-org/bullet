@@ -40,7 +40,7 @@ from users.emails.teams import (
     send_deletion_email,
     send_to_competition_email,
 )
-from users.logic import get_school_symbol, get_venue_waiting_list
+from users.logic import get_school_symbol
 from users.models import Contestant, Team
 
 from bullet import search
@@ -171,33 +171,6 @@ class TeamResendConfirmationView(AdminRequiredMixin, View):
         send_confirmation_email.delay(team.id)
         messages.success(request, "The confirmation email was re-sent.")
         return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
-
-
-class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
-    template_name = "bullet_admin/teams/waiting.html"
-
-    def get_queryset(self):
-        return get_venue_waiting_list(self.venue)
-
-
-class WaitingAutomoveView(AdminRequiredMixin, VenueMixin, View):
-    def post(self, request, *args, **kwargs):
-        team_count = self.venue.remaining_capacity
-        waiting_list = get_venue_waiting_list(self.venue)[:team_count]
-
-        for team in waiting_list:
-            team.to_competition()
-            team.save()
-
-            send_to_competition_email.delay(team.id)
-
-        return HttpResponseRedirect(self.get_redirect_url())
-
-    def get_redirect_url(self):
-        url = reverse("badmin:waiting_list")
-        if "venue" in self.request.GET:
-            url += f"?venue={self.venue.id}"
-        return url
 
 
 class TeamEditView(

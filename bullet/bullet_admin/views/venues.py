@@ -1,18 +1,22 @@
 from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
 from bullet_admin.forms.documents import CertificateForm
 from bullet_admin.forms.venues import VenueForm
+from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 from competitions.models import Venue
 from django.contrib import messages
 from django.forms import Form
-from django.http import FileResponse
+from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.utils.functional import cached_property
+from django.views import View
 from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
+from users.emails.teams import send_to_competition_email
+from users.logic import get_venue_waiting_list
 from users.models import Team
 
 
@@ -126,3 +130,28 @@ class TeamListView(VenueMixin, GenericForm, FormView):
             f"Team list: {venue.name}",
         )
         return FileResponse(data, as_attachment=True, filename="team_list.pdf")
+
+
+class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
+    require_unlocked_competition = False
+    template_name = "bullet_admin/venues/waiting_list.html"
+
+    def get_queryset(self):
+        return get_venue_waiting_list(self.venue)
+
+
+class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, View):
+    def post(self, request, *args, **kwargs):
+        team_count = self.venue.remaining_capacity
+        waiting_list = get_venue_waiting_list(self.venue)[:team_count]
+
+        for team in waiting_list:
+            team.to_competition()
+            team.save()
+
+            send_to_competition_email.delay(team.id)
+
+        return HttpResponseRedirect(self.get_redirect_url())
+
+    def get_redirect_url(self):
+        return reverse("badmin:waiting_list", kwargs={"pk": self.venue.id})

@@ -1,0 +1,97 @@
+{% extends "bullet_admin/venues/_layout.html" %}
+{% load access %}
+
+{% block title %}Waiting list{% endblock %}
+
+{% block venue_width %}max-w-7xl{% endblock %}
+
+{% block venue_content %}
+    {% get_active_competition as competition %}
+    <div class="mb-6">
+        {% with remaining=venue.remaining_capacity %}
+        <p><b>{{ remaining }}</b> unoccupied team slot{{ remaining|pluralize }} remaining out of {{ venue.capacity }}.</p>
+
+        {% if remaining > 0 and object_list and not competition.results_public %}
+        <form action="{% url "badmin:waiting_list_automove" pk=venue.id %}" method="post">
+            {% csrf_token %}
+
+            <div class="bg-green-100 text-green-800 text-sm p-4 mt-4 rounded-md space-y-4">
+                <p>
+                    Your venue has enough capacity for another <b>{{ remaining }}</b> teams. You can automatically move teams from the waiting list to the competition to fill the capacity.
+                </p>
+
+                {% #abtn button color="green" icon="mdi:fast-forward" label="Move automatically" %}
+            </div>
+        </form>
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">School</th>
+                    <th class="p-3">Contact</th>
+                    <th class="p-3">Contestants</th>
+                    <th class="p-3">Registration details</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for team in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">
+                            <div class="font-bold">
+                                {{ team.school }}
+                                {% if team.in_school_symbol %}
+                                    <span class="text-primary">{{ team.in_school_symbol }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="text-xs">{{ team.school.address }}</div>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div>{{ team.contact_name }}</div>
+                            <div class="text-xs"><a href="mailto:{{ team.contact_email }}" class="link">{{ team.contact_email }}</a></div>
+                            {% if team.contact_phone %}
+                            <div class="text-xs"><a href="tel:{{ team.contact_phone }}" class="link">{{ team.contact_phone_pretty }}</a></div>
+                            {% endif %}
+                        </td>
+                        <td class="p-3 text-xs whitespace-nowrap">
+                            <ul>
+                                {% for contestant in team.contestants.all %}<li>{{ contestant.full_name }}</li>{% endfor %}
+                            </ul>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div>
+                                Teams from school: <b>{{ team.from_school }}</b>
+                            </div>
+                            <div class="text-xs text-gray-600">
+                                {{ team.registered_at|date:"j M Y, H:i" }}
+                            </div>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex flex-col items-end gap-2">
+                                <a href="{% url 'badmin:team_edit' pk=team.id %}" class="text-gray-400 hover:text-gray-600 flex items-center gap-2">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                    Edit
+                                </a>
+
+                                {% if not competition.results_public %}
+                                <form action="{% url "badmin:team_to_competition" pk=team.id %}?back={{ request.get_full_path|urlencode }}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2">
+                                        <span class="iconify" data-icon="mdi:play"></span>
+                                        Move
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

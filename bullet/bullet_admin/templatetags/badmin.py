@@ -28,7 +28,6 @@ def admin_sidebar(context):
         if not competition_role.is_operator:
             items.extend(
                 [
-                    ("fa-clock", "Waiting list", reverse("badmin:waiting_list")),
                     ("fa-envelope", "Emails", reverse("badmin:email_list")),
                 ]
             )

@@ -157,12 +157,6 @@ urlpatterns = [
         teams.TeamDeleteView.as_view(),
         name="team_delete",
     ),
-    path("teams/waiting/", teams.WaitingListView.as_view(), name="waiting_list"),
-    path(
-        "teams/waiting/automove/",
-        teams.WaitingAutomoveView.as_view(),
-        name="waiting_automove",
-    ),
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),
     path("users/create/", users.UserCreateView.as_view(), name="user_create"),
