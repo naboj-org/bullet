@@ -60,6 +60,7 @@ class School(models.Model):
     importer_identifier = models.CharField(max_length=128, blank=True, null=True)
     importer_ignored = models.BooleanField(default=False)
     is_hidden = models.BooleanField(default=False)
+    is_legacy = models.BooleanField(default=False)
 
     class Meta:
         constraints = (
@@ -75,7 +76,7 @@ class School(models.Model):
 
     def save(self, send_to_search=True, **kwargs):
         x = super().save(**kwargs)
-        if send_to_search and search.enabled:
+        if send_to_search and search.enabled and not self.is_legacy:
             search.client.index("schools").add_documents(
                 [self.for_search()],
                 "id",
