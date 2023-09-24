@@ -30,4 +30,8 @@ class Photo(models.Model):
         on_delete=models.CASCADE,
         related_name="photos",
     )
-    image = PictureField(upload_to="photos")
+    image_width = models.PositiveIntegerField()
+    image_height = models.PositiveIntegerField()
+    image = PictureField(
+        upload_to="photos", width_field="image_width", height_field="image_height"
+    )
