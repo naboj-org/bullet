@@ -53,5 +53,7 @@ class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         if "competition" in request.GET:
-            request.session["badmin_competition"] = request.GET.get("competition")
+            request.session[
+                f"badmin_{request.BRANCH.identifier}_competition"
+            ] = request.GET.get("competition")
         return HttpResponseClientRefresh()

@@ -62,7 +62,8 @@ class RegistrationMixin:
             raise RegistrationError()
 
         cc = Category.objects.filter(
-            id=request.session["register_form"]["category"]
+            id=request.session["register_form"]["category"],
+            competition=self.competition,
         ).first()
 
         if not cc:

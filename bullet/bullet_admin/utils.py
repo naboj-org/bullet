@@ -12,13 +12,15 @@ if TYPE_CHECKING:
 
 def get_active_competition(request: HttpRequest):
     if not hasattr(request, "_badmin_competition"):
-        if "badmin_competition" not in request.session:
+        session_key = f"badmin_{request.BRANCH.identifier}_competition"
+        if session_key not in request.session:
             request._badmin_competition = Competition.objects.get_current_competition(
                 request.BRANCH
             )
         else:
+            stored_id = request.session.get(session_key)
             request._badmin_competition = Competition.objects.filter(
-                branch=request.BRANCH, id=request.session.get("badmin_competition")
+                branch=request.BRANCH, id=stored_id
             ).first()
 
     return request._badmin_competition
