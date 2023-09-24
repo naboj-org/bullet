@@ -5,6 +5,7 @@ from competitions.models import Category, Competition, Venue
 from django.db import transaction
 from django.db.models import Q, QuerySet
 from django_countries.fields import Country
+from django_rq import job
 from problems.models import CategoryProblem, ResultRow, SolvedProblem
 from users.models import Team
 
@@ -120,3 +121,45 @@ def add_result_row(team: Team, competition_time: timedelta):
 def fix_result_row(result_row: ResultRow):
     _set_solved_problems(result_row)
     result_row.save()
+
+
+@job
+@transaction.atomic
+def squash_results(competition: Competition | int):
+    if isinstance(competition, int):
+        competition = Competition.objects.get(id=competition)
+
+    ResultRow.objects.filter(team__venue__category__competition=competition).delete()
+
+    teams = Team.objects.filter(venue__category__competition=competition)
+    for team in teams:
+        problems = (
+            SolvedProblem.objects.filter(team=team)
+            .values_list("problem")
+            .order_by("-competition_time")
+        )
+        last_problem = (
+            SolvedProblem.objects.filter(team=team)
+            .order_by("-competition_time")
+            .first()
+        )
+        solved_problems = set(
+            CategoryProblem.objects.filter(
+                problem__in=problems, category=team.venue.category
+            ).values_list("number", flat=True)
+        )
+
+        if not last_problem:
+            continue
+
+        result_row = ResultRow()
+        result_row.team = team
+        result_row.solved_count = len(solved_problems)
+
+        solved_bin = 0
+        for p in solved_problems:
+            solved_bin |= 1 << (p - 1)
+        result_row.solved_problems = solved_bin.to_bytes(16, "big")
+
+        result_row.competition_time = last_problem.competition_time
+        result_row.save()
