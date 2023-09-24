@@ -7,7 +7,6 @@ from bullet_admin.views import (
     categoryproblems,
     competition,
     content,
-    documents,
     education,
     emails,
     home,
@@ -15,9 +14,8 @@ from bullet_admin.views import (
     scanning,
     teams,
     users,
-    venues,
 )
-from django.urls import path
+from django.urls import include, path
 
 app_name = "badmin"
 urlpatterns = [
@@ -159,12 +157,6 @@ urlpatterns = [
         teams.TeamDeleteView.as_view(),
         name="team_delete",
     ),
-    path("teams/waiting/", teams.WaitingListView.as_view(), name="waiting_list"),
-    path(
-        "teams/waiting/automove/",
-        teams.WaitingAutomoveView.as_view(),
-        name="waiting_automove",
-    ),
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),
     path("users/create/", users.UserCreateView.as_view(), name="user_create"),
@@ -216,25 +208,12 @@ urlpatterns = [
         emails.CampaignSendView.as_view(),
         name="email_send",
     ),
-    path(
-        "documents/certificates/",
-        documents.CertificateView.as_view(),
-        name="docs_certificates",
-    ),
-    path(
-        "documents/team_lists/",
-        documents.TeamListView.as_view(),
-        name="docs_teamlists",
-    ),
     path("results/", results.ResultsHomeView.as_view(), name="results"),
     path(
         "results/announce/<venue>/",
         results.ResultsAnnouncementView.as_view(),
         name="results_announce",
     ),
-    path("venues/", venues.VenueListView.as_view(), name="venue_list"),
-    path("venues/<int:pk>/", venues.VenueUpdateView.as_view(), name="venue_update"),
-    path("venues/create/", venues.VenueCreateView.as_view(), name="venue_create"),
     path("education/schools/", education.SchoolListView.as_view(), name="school_list"),
     path(
         "education/schools/<int:pk>/",
@@ -261,4 +240,5 @@ urlpatterns = [
         archive.ProblemImportView.as_view(),
         name="archive_import",
     ),
+    path("venues/", include("bullet_admin.urls.venues")),
 ]

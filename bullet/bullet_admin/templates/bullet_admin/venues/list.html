@@ -28,15 +28,15 @@
                     <th class="p-3">Category</th>
                     <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Registered teams</th>
                     <th class="p-3 text-right hidden md:table-cell">Capacity</th>
-                    <th class="p-3 text-right hidden md:table-cell whitespace-nowrap">Local start</th>
-                    <th class="p-3"></th>
+                    <th class="p-3 whitespace-nowrap">Local start</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y">
                 {% for v in object_list %}
-                    <tr class="{% cycle "" "bg-gray-50" %}">
+                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         <td class="p-3">
+                            <a href="{% url "badmin:venue_detail" pk=v.id %}" class="link absolute inset-0"></a>
                             <div class="flex gap-2 items-center flex-wrap">
                                 <span class="iconify shrink-0" data-icon="flag:{{ v.country.code|lower }}-4x3"></span>
                                 <span class="font-bold">{{ v.shortcode }}</span>
@@ -46,14 +46,7 @@
                         <td class="p-3 whitespace-nowrap">{{ v.category.identifier|title }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.team_count|floatformat:"g" }}</td>
                         <td class="p-3 text-right tabular-nums hidden md:table-cell">{{ v.capacity|floatformat:"g" }}</td>
-                        <td class="p-3 text-right hidden md:table-cell">{{ v.local_start|default:"" }}</td>
-                        <td class="p-3 whitespace-nowrap">
-                            <div class="flex items-center justify-end gap-2">
-                                 <a href="{% url "badmin:venue_update" pk=v.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                            </div>
-                        </td>
+                        <td class="p-3">{{ v.local_start|default:"" }}</td>
                     </tr>
                 {% endfor %}
             </tbody>

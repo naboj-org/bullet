@@ -1,0 +1,13 @@
+{% extends "bullet_admin/venues/_layout.html" %}
+{% load badmin %}
+
+{% block venue_content %}
+    <form method="post" {% if form_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% csrf_token %}
+        {% admin_form2 form %}
+
+        <div class="mt-6">
+            {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
+        </div>
+    </form>
+{% endblock %}

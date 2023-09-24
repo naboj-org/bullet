@@ -6,7 +6,6 @@ from users.models import User
 
 class CertificateForm(forms.Form):
     template = forms.ModelChoiceField(queryset=CertificateTemplate.objects.none())
-    venue = forms.ModelChoiceField(queryset=Venue.objects.none())
     count = forms.IntegerField(
         initial=3,
         help_text="Enter 0 to generate certificates for all teams.",
@@ -14,12 +13,11 @@ class CertificateForm(forms.Form):
     )
     empty = forms.BooleanField(required=False)
 
-    def __init__(self, competition: Competition, user: User, **kwargs):
+    def __init__(self, competition: Competition, **kwargs):
         super().__init__(**kwargs)
         self.fields["template"].queryset = CertificateTemplate.objects.filter(
             branch=competition.branch
         ).order_by("name")
-        self.fields["venue"].queryset = Venue.objects.for_user(competition, user)
 
 
 class TeamListForm(forms.Form):
