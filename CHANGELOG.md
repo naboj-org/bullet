@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.9.3 - 2023-09-24
+
+### Added
+
+- Added link to the old archive at the end of current archive
+- Added date of the competition and registration start to the homepage
+- Added option to view larger photos in albums
+- Added option to upload PDF with problems to the archive
+
+### Changed
+
+- Moved venue related actions under Venues in the admin interface
+- Results data is squashed after the competition ends
+
+### Fixed
+
+- Fixed edit links in content block admin
+- Errors in admin's team edit form are now shown
+- Fixed "Sever Error" when selecting a competition and changing branches
+
 ## 2023.9.2 - 2023-09-06
 
 ### Fixed
