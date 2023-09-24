@@ -1,5 +1,3 @@
-import os.path
-
 from competitions.models import Category, Competition
 from django.core.files.storage import default_storage
 from django.db.models import Avg, Count
@@ -88,11 +86,7 @@ class ProblemStatementView(ArchiveCompetitionMixin, ListView):
         ctx["object_list"] = self.inject_stats(ctx["object_list"])
         self.order_problems(ctx["object_list"])
 
-        pdf_file = os.path.join(
-            "statements",
-            self.request.BRANCH.identifier,
-            f"{self.competition.number}-{get_language()}.pdf",
-        )
+        pdf_file = self.competition.secret_dir / f"problems-{get_language()}.pdf"
         if default_storage.exists(pdf_file):
             ctx["pdf"] = default_storage.url(pdf_file)
         return ctx

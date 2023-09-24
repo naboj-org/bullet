@@ -241,4 +241,9 @@ urlpatterns = [
         name="archive_import",
     ),
     path("venues/", include("bullet_admin.urls.venues")),
+    path(
+        "archive/problem_upload/",
+        archive.ProblemPDFUploadView.as_view(),
+        name="archive_problem_upload",
+    ),
 ]

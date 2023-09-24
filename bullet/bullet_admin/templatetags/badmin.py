@@ -109,6 +109,13 @@ def admin_sidebar(context):
                 ("fa-upload", "Import archive", reverse("badmin:archive_import"))
             )
             items.append(
+                (
+                    "fa-upload",
+                    "Upload problems",
+                    reverse("badmin:archive_problem_upload"),
+                )
+            )
+            items.append(
                 ("fa-book", "Generate problems", reverse("badmin:problems_generate"))
             )
 
