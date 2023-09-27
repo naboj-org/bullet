@@ -23,14 +23,20 @@ class VenueForm(ModelForm):
             "country",
             "accepted_languages",
             "local_start",
+            "registration_flow_type",
         ]
-        labels = {"shortcode": "Barcode prefix", "category": "Category"}
+        labels = {
+            "shortcode": "Barcode prefix",
+            "category": "Category",
+            "registration_flow_type": "Registration flow",
+        }
         help_texts = {
             "local_start": "YYYY-MM-DD HH:MM:SS",
             "email": "Responses to automatic emails from this venue will be "
             "sent there.",
             "accepted_languages": "These languages can be selected when teams "
             "register.",
+            "registration_flow_type": "Only change if you know what you are doing.",
         }
 
         widgets = {

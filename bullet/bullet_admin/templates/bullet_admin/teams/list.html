@@ -121,6 +121,10 @@
                                     <i class="fas fa-camera"></i>
                                 </span>
                                 {% endif %}
+
+                                {% if team.venue.registration_flow.get_admin_row_template %}
+                                    {% include team.venue.registration_flow.get_admin_row_template %}
+                                {% endif %}
                             </td>
                             <td class="p-2 whitespace-nowrap text-right">
                                 <a href="{% url "badmin:team_edit" pk=team.id %}?back={{ request.get_full_path|urlencode }}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
