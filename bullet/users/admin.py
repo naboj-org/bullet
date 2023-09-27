@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from education.models import Grade
 from simple_history.admin import SimpleHistoryAdmin
-from users.models import Contestant, Team, User
+from users.models import Contestant, SpanishTeamData, Team, User
 
 
 @admin.register(User)
@@ -101,3 +101,8 @@ class ContestantAdmin(SimpleHistoryAdmin):
                 "venue__category__competition",
             )
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+@admin.register(SpanishTeamData)
+class SpanishTeamDataAdmin(admin.ModelAdmin):
+    autocomplete_fields = ("team",)
