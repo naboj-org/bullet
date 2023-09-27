@@ -12,6 +12,7 @@ from web.fields import ChoiceArrayField, LanguageField
 
 if TYPE_CHECKING:
     from competitions.models import Competition
+    from competitions.registration_flow import RegistrationFlow
     from users.models import User
 
 
@@ -139,7 +140,7 @@ class Venue(models.Model):
         return self.category.competition.competition_start
 
     @cached_property
-    def registration_flow(self):
+    def registration_flow(self) -> "RegistrationFlow":
         from competitions.registration_flow import (
             RegistrationFlow,
             SpanishRegistrationFlow,

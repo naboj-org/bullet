@@ -216,7 +216,12 @@
                     </div>
                 </div>
             </article>
+
+            {% if team and team.venue.registration_flow.get_admin_bottom_template %}
+                {% include team.venue.registration_flow.get_admin_bottom_template %}
+            {% endif %}
         </form>
+
 
         <div class="my-8 text-center flex flex-row gap-4 justify-center">
             <button type="submit" form="editform" class="btn-admin bg-primary hover:bg-primary-dark">

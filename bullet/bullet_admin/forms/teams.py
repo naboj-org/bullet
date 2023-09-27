@@ -7,7 +7,7 @@ from competitions.models import Competition, Venue
 from django import forms
 from django.db import models
 from django_countries.fields import CountryField
-from users.models import Team, TeamStatus, User
+from users.models import SpanishTeamData, Team, TeamStatus, User
 
 
 class TeamForm(forms.ModelForm):
@@ -57,6 +57,32 @@ class OperatorTeamForm(TeamForm):
         self.fields.pop("contact_phone")
         self.fields.pop("number")
         self.fields.pop("is_disqualified")
+
+
+class SpanishTeamForm(TeamForm):
+    spanish_is_verified = forms.BooleanField(label="Is verified?")
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        if self.instance:
+            team: Team = self.instance
+            if hasattr(team, "spanish_data"):
+                self.fields[
+                    "spanish_is_verified"
+                ].initial = team.spanish_data.is_verified
+
+    def save(self, commit=True):
+        self.instance = super().save(commit)
+
+        if self.instance.id:
+            if hasattr(self.instance, "spanish_data"):
+                sd: SpanishTeamData = self.instance.spanish_data
+            else:
+                sd = SpanishTeamData(team=self.instance)
+            sd.is_verified = self.cleaned_data.get("spanish_is_verified")
+            sd.save()
+
+        return self.instance
 
 
 class TeamFilterForm(forms.Form):
