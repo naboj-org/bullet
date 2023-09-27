@@ -7,11 +7,13 @@ from competitions.models import Category, Venue
 from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.forms import ModelForm
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
+from django.utils.translation import pgettext_lazy
 from education.models import Grade, School, SchoolType
-from users.models import Contestant, Team
+from users.models import Contestant, SpanishTeamData, Team
 
 
 class CategorySelectForm(forms.Form):
@@ -123,3 +125,19 @@ class ContestantForm(ModelForm):
             raise ValidationError(_("This grade can't compete in the chosen category."))
 
         return grade_obj
+
+
+class SpanishRegistrationForm(RegistrationForm):
+    agreement = forms.FileField(
+        validators=[FileExtensionValidator(["pdf", "zip"])],
+        label=pgettext_lazy("spanish registration flow", "Agreements"),
+        help_text=pgettext_lazy(
+            "spanish registration flow",
+            "Upload one signed document per contestant. Allowed file types: PDF, ZIP.",
+        ),
+    )
+
+    def save_related(self):
+        d = SpanishTeamData(team=self.instance)
+        d.agreement = self.cleaned_data.get("agreement")
+        d.save()

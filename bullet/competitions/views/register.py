@@ -4,7 +4,6 @@ from bullet_admin.utils import is_admin
 from competitions.forms.registration import (
     CategorySelectForm,
     ContestantForm,
-    RegistrationForm,
     SchoolSelectForm,
     VenueSelectForm,
 )
@@ -274,8 +273,11 @@ class SchoolSelectView(RegistrationMixin, FormView):
 
 class TeamDetailsView(RegistrationMixin, FormView):
     template_name = "register/details.html"
-    form_class = RegistrationForm
     registration_step = RegistrationStep.SCHOOL
+
+    def get_form_class(self):
+        flow = self.venue.registration_flow
+        return flow.get_form()
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -328,6 +330,9 @@ class TeamDetailsView(RegistrationMixin, FormView):
         team.language = get_language()
         team.consent_photos = "consent_photos" in self.request.POST
         team.save()
+
+        if hasattr(form, "save_related"):
+            form.save_related()
 
         for contestant_form in formset:
             if not contestant_form.has_changed():
