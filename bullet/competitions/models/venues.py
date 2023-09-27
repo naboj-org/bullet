@@ -5,6 +5,7 @@ from countries.models import BranchCountry
 from django.db import models
 from django.db.models import Count, OuterRef, Q, Subquery, Value
 from django.db.models.functions import Coalesce
+from django.utils.functional import cached_property
 from django_countries.fields import CountryField
 from users.models import Team
 from web.fields import ChoiceArrayField, LanguageField
@@ -84,6 +85,10 @@ class VenueManager(models.Manager):
 
 
 class Venue(models.Model):
+    class RegistrationFlowType(models.IntegerChoices):
+        DEFAULT = 0, "Default"
+        NJ_SPAIN = 1, "Spain (NJ)"
+
     name = models.CharField(max_length=256)
     shortcode = models.CharField(max_length=6)
     email = models.EmailField(blank=True, default="")
@@ -100,6 +105,10 @@ class Venue(models.Model):
 
     is_online = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
+
+    registration_flow_type = models.IntegerField(
+        choices=RegistrationFlowType.choices, default=RegistrationFlowType.DEFAULT
+    )
 
     objects = VenueManager.from_queryset(VenueQuerySet)()
 
@@ -128,3 +137,16 @@ class Venue(models.Model):
         if self.local_start:
             return self.local_start
         return self.category.competition.competition_start
+
+    @cached_property
+    def registration_flow(self):
+        from competitions.registration_flow import (
+            RegistrationFlow,
+            SpanishRegistrationFlow,
+        )
+
+        if self.registration_flow_type == Venue.RegistrationFlowType.DEFAULT:
+            return RegistrationFlow()
+        if self.registration_flow_type == Venue.RegistrationFlowType.NJ_SPAIN:
+            return SpanishRegistrationFlow()
+        raise ValueError(f"Unknown registration flow: {self.registration_flow_type}")
