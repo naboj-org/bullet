@@ -79,6 +79,7 @@ class RegistrationMixin:
             .filter(
                 id=request.session["register_form"]["venue"],
                 country=request.COUNTRY_CODE.upper(),
+                category=self.category,
             )
             .first()
         )
@@ -202,7 +203,8 @@ class VenueSelectView(RegistrationMixin, FormView):
             return HttpResponseRedirect(red)
 
         self.venues = Venue.objects.for_competition(self.competition).filter(
-            country=self.request.COUNTRY_CODE.upper()
+            country=self.request.COUNTRY_CODE.upper(),
+            category=self.category,
         )
 
         query = self.request.GET.get("q")
