@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.9.4 - 2023-09-29
+
+### Added
+
+- Added option to modify registration flow and hook special requirements into the
+registration
+
+### Changed
+
+- Updated translations for SK, CS, ES, PL, NL languages
+
+### Fixed
+
+- Venue edit for country administrators caused a server error
+
 ## 2023.9.3 - 2023-09-24
 
 ### Added
