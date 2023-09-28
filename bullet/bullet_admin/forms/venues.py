@@ -52,8 +52,6 @@ class VenueForm(ModelForm):
 
         if user.get_competition_role(competition).venues:
             self.fields.pop("country")
-
-        if not user.get_branch_role(competition.branch).is_admin:
             self.fields.pop("shortcode")
 
     def clean_shortcode(self):
