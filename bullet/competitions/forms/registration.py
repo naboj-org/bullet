@@ -137,6 +137,7 @@ class SpanishRegistrationForm(RegistrationForm):
             "(y sólo en ese caso)</b> aceptamos ZIPs que contengan <b>todas</b> "
             "las autorizaciones del equipo."
         ),
+        required=True,
     )
 
     def save_related(self):
