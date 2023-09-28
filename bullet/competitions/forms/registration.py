@@ -9,9 +9,9 @@ from django import forms
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.forms import ModelForm
+from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
-from django.utils.translation import pgettext_lazy
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, SpanishTeamData, Team
 
@@ -130,10 +130,12 @@ class ContestantForm(ModelForm):
 class SpanishRegistrationForm(RegistrationForm):
     agreement = forms.FileField(
         validators=[FileExtensionValidator(["pdf", "zip"])],
-        label=pgettext_lazy("spanish registration flow", "Agreements"),
-        help_text=pgettext_lazy(
-            "spanish registration flow",
-            "Upload one signed document per contestant. Allowed file types: PDF, ZIP.",
+        label="Autorizaciones",
+        help_text=mark_safe(
+            "Envíe un <b>único documento PDF</b> con <b>todas las autorizaciones "
+            "cumplimentadas al completo y firmadas. En caso de firmas digitales "
+            "(y sólo en ese caso)</b> aceptamos ZIPs que contengan <b>todas</b> "
+            "las autorizaciones del equipo."
         ),
     )
 

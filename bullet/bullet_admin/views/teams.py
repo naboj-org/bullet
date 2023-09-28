@@ -73,6 +73,7 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
                 "school",
                 "venue",
                 "venue__category",
+                "spanish_data",
             )
             .prefetch_related("contestants", "contestants__grade")
             .order_by("venue__name", "venue__category__identifier", "number", "id")
