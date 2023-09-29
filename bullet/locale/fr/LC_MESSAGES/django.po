@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-05 10:17+0000\n"
+"POT-Creation-Date: 2023-09-24 20:42+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,37 +51,84 @@ msgstr "Chimie"
 msgid "Selected school is not valid."
 msgstr "L'établissement choisi est invalide"
 
-#: competitions/forms/registration.py:69
+#: competitions/forms/registration.py:77
 #: competitions/templates/register/details.html:29
 #: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
 #: competitions/templates/teams/edit.html:60
 #: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:123
+#: competitions/templates/teams/edit.html:122
 msgid "Full name"
 msgstr "Nom complet"
 
-#: competitions/forms/registration.py:70
+#: competitions/forms/registration.py:78
 #: competitions/templates/teams/edit.html:44
 msgid "Email"
 msgstr "Adresse e-mail"
 
-#: competitions/forms/registration.py:71
+#: competitions/forms/registration.py:79
 #: competitions/templates/teams/edit.html:46
 msgid "Phone number"
 msgstr "Numéro de téléphone"
 
-#: competitions/forms/registration.py:92
+#: competitions/forms/registration.py:80
+msgid "Language"
+msgstr ""
+
+#: competitions/forms/registration.py:84
+msgid "You will receive problem statements in the language you choose."
+msgstr ""
+
+#: competitions/forms/registration.py:106
 msgid "(Please select)"
 msgstr "Veuillez séléctionner"
 
-#: competitions/forms/registration.py:109
+#: competitions/forms/registration.py:123
 msgid "This grade can't compete in the chosen category."
 msgstr "Des élèves de cette classe de peuvent pas participer dans cette catégorie."
 
+#: competitions/templates/archive/list.html:5
+#: competitions/templates/archive/list.html:9
+msgid "Archive"
+msgstr ""
+
+#: competitions/templates/archive/list.html:22
+#: problems/templates/problems/results.html:6
+#: problems/templates/problems/results.html:21
+#: problems/templates/problems/results/embed.html:4
+#: problems/templates/problems/results/select.html:6
+#: problems/templates/problems/results/select.html:16
+#: problems/templates/problems/results/venue.html:6
+#: problems/templates/problems/results/venue.html:17
+#: web/templates/web/snippets/home_hero_buttons.html:25
+msgid "Results"
+msgstr "Classement"
+
+#: competitions/templates/archive/list.html:23
+#: problems/templates/archive/problems.html:6
+#: problems/templates/archive/problems.html:10
+msgid "Problem statements"
+msgstr ""
+
+#: competitions/templates/archive/list.html:24
+#: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
+msgid "Albums"
+msgstr ""
+
 #: competitions/templates/live.html:7
+#: competitions/templates/live/countdown.html:6
+#: competitions/templates/live/first_problem.html:6
+#: competitions/templates/live/results.html:6
 msgid "Live signage"
 msgstr "Déroulement en ligne"
+
+#: competitions/templates/live/countdown.html:13
+msgid "Do not open the problems until the competition starts."
+msgstr ""
+
+#: competitions/templates/live/first_problem.html:14
+msgid "First solved problem"
+msgstr ""
 
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
@@ -113,7 +160,7 @@ msgstr "Inscrire une équipe"
 
 #: competitions/templates/register/category.html:9
 #: competitions/templates/register/partials/category.html:6
-#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/select.html:25
 msgid "Category"
 msgstr "Catégorie"
 
@@ -136,7 +183,7 @@ msgstr "Vous pouvez modifier les membres de l'équipe jusqu'au début de la comp
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:61
 #: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:127
+#: competitions/templates/teams/edit.html:126
 msgid "Grade"
 msgstr "Classe"
 
@@ -148,7 +195,7 @@ msgid "Contestant %(number)s"
 msgstr "Participant %(number)s"
 
 #: competitions/templates/register/details.html:45
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:19
+#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
 msgstr "Champ obligatoire"
 
@@ -178,22 +225,24 @@ msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of th
 msgstr "<sup>[1]</sup> Vous consentez à ce que vos données personnelles soient traitées pendant toute la durée du fonctionnement du site web de la Compétition ainsi que sur les comptes associées sur les réseaux sociaux. Ce consentement peut être révoqué à tout moment en envoyant un e-mail à l'adresse <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. La rétractation du consentement n'a pas d'effet sur la légalité du traitement effectué avant cette rétractation. La personne concernée ne peut demander la suppression de ses données personnelles que si cela est techniquement possible et que cette suppression n'affecte pas les droits d'autres personnes concernées."
 
 #: competitions/templates/register/partials/category.html:18
+#: competitions/templates/register/partials/competition.html:13
 #: competitions/templates/register/partials/school.html:16
 #: competitions/templates/register/partials/venue.html:22
 msgid "Change"
 msgstr "Changer"
+
+#: competitions/templates/register/partials/competition.html:4
+#: competitions/templates/register/partials/venue.html:4
+#: competitions/templates/register/venue.html:8
+#: competitions/templates/teams/edit.html:33
+msgid "Venue"
+msgstr "Lieu de la compétition"
 
 #: competitions/templates/register/partials/school.html:4
 #: competitions/templates/register/school.html:9
 #: competitions/templates/teams/edit.html:26
 msgid "School"
 msgstr "Établissement"
-
-#: competitions/templates/register/partials/venue.html:4
-#: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:33
-msgid "Venue"
-msgstr "Lieu de la compétition"
 
 #: competitions/templates/register/school.html:11
 msgid "Search schools..."
@@ -260,15 +309,15 @@ msgstr "Supprimer"
 msgid "Update"
 msgstr "Actualiser"
 
-#: competitions/templates/teams/edit.html:138
+#: competitions/templates/teams/edit.html:137
 msgid "Certificate"
 msgstr "Diplôme"
 
-#: competitions/templates/teams/edit.html:139
+#: competitions/templates/teams/edit.html:138
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Vous pouvez enregistrer le diplôme de votre équipe par cliquer sur le bouton en dessous."
 
-#: competitions/templates/teams/edit.html:140
+#: competitions/templates/teams/edit.html:139
 msgid "Download certificate"
 msgstr "Enregistrer"
 
@@ -287,11 +336,11 @@ msgstr "Liste des équipes"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Équipes: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:49
+#: competitions/views/register.py:55
 msgid "Registration did not start yet."
 msgstr "Les inscriptions n'ont pas encore commencé."
 
-#: competitions/views/register.py:51
+#: competitions/views/register.py:57
 msgid "Registration is over."
 msgstr "Les inscriptions sont terminées."
 
@@ -303,51 +352,66 @@ msgstr "L'équipe a été modifiée avec succès."
 msgid "Registration successfully confirmed."
 msgstr "L'inscription est confirmée."
 
-#: competitions/views/teams.py:215
+#: competitions/views/teams.py:210
 msgid "Team was unregistered."
 msgstr "L'équipe a été désinscrite."
 
-#: problems/templates/problems/results.html:6
-#: problems/templates/problems/results.html:12
-#: problems/templates/problems/results/embed.html:7
-#: problems/templates/problems/results/embed.html:13
-#: problems/templates/problems/results/select.html:6
-#: problems/templates/problems/results/select.html:9
-#: problems/templates/problems/results/venue.html:5
-#: problems/templates/problems/results/venue.html:11
-#: web/templates/web/snippets/home_hero_buttons.html:13
-msgid "Results"
-msgstr "Classement"
+#: gallery/templates/gallery/album.html:6
+#: gallery/templates/gallery/album.html:15
+msgid "Album"
+msgstr ""
 
-#: problems/templates/problems/results.html:22 problems/views.py:107
+#: problems/templates/archive/problems.html:20
+msgid "Download as PDF"
+msgstr ""
+
+#: problems/templates/archive/problems.html:27
+#, python-format
+msgid "Problem %(n)s"
+msgstr ""
+
+#: problems/templates/archive/problems.html:32
+msgid "Solution"
+msgstr ""
+
+#: problems/templates/archive/problems.html:46
+msgid "Statistics"
+msgstr ""
+
+#. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
+#: problems/templates/archive/problems.html:69
+msgid "average solving time"
+msgstr ""
+
+#: problems/templates/problems/results.html:32 problems/views/results.py:113
 msgid "International"
 msgstr "International"
 
-#: problems/templates/problems/results/table.html:5
+#: problems/templates/problems/results/table.html:6
 msgid "The competition did not start yet."
 msgstr "Le concours n'a pas encore commencé."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "Results are frozen."
 msgstr "Les résultats sont figés."
 
-#: problems/templates/problems/results/table.html:9
+#: problems/templates/problems/results/table.html:10
 msgid "These are not the final results yet."
 msgstr "Ceci n'est pas le classement définitif."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Final results."
 msgstr "Classement final."
 
-#: problems/templates/problems/results/table.html:13
+#: problems/templates/problems/results/table.html:14
 msgid "Showing official results."
 msgstr "Affichage du classement final."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "Interim results."
 msgstr "Classement provisoire."
 
-#: problems/templates/problems/results/table.html:17
+#: problems/templates/problems/results/table.html:18
 msgid "The competition is ongoing, the results may change."
 msgstr "Le concours est en cours, le classement peut changer."
 
@@ -355,28 +419,29 @@ msgstr "Le concours est en cours, le classement peut changer."
 msgid "(No team has solved any problem yet)"
 msgstr "(Aucune équipe n'a résolu aucun problème pour l'instant)"
 
-#: problems/templates/problems/results/table.html:80
+#: problems/templates/problems/results/table.html:81
 msgid "Previous"
 msgstr "Précédent"
 
-#: problems/templates/problems/results/table.html:83
+#: problems/templates/problems/results/table.html:84
 msgid "Next"
 msgstr "Suivant"
 
-#: users/emails/teams.py:30
+#: users/emails/teams.py:34
 msgid "Confirm your team registration"
 msgstr "Confirmer l'inscription de votre équipe"
 
-#: users/emails/teams.py:43
+#: users/emails/teams.py:49
 msgid "Team moved from waiting list"
 msgstr "Équipe déplacée de la liste d'attente"
 
-#: users/emails/teams.py:56
+#: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Votre équipe a été supprimée"
 
 #: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7
 #: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
 #: web/templates/web/404.html:18 web/templates/web/homepage.html:7
 msgid "Home page"
@@ -470,17 +535,16 @@ msgid "The page you tried to access was not found."
 msgstr "La page à laquelle vous avez essayé d'accéder est introuvable."
 
 #: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:5
+#: web/templates/web/snippets/home_hero_buttons.html:14
 msgid "Registration"
 msgstr "Inscription"
 
 #: web/templates/web/homepage.html:16
-#: web/templates/web/snippets/home_hero_buttons.html:8
 #, python-format
 msgid "Registration ends in %(end)s"
 msgstr "Les inscriptions se terminent dans %(end)s"
 
-#: web/templates/web/root_base.html:43
+#: web/templates/web/root_base.html:47
 msgid "Close"
 msgstr "Fermé"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-04-20 11:35+0000\n"
+"POT-Creation-Date: 2023-09-24 20:42+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,11 +47,11 @@ msgstr "Chemie"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:53
+#: competitions/forms/registration.py:51
 msgid "Selected school is not valid."
 msgstr "Vybraná škola není platná."
 
-#: competitions/forms/registration.py:79
+#: competitions/forms/registration.py:77
 #: competitions/templates/register/details.html:29
 #: competitions/templates/register/details.html:35
 #: competitions/templates/teams/edit.html:43
@@ -61,38 +61,70 @@ msgstr "Vybraná škola není platná."
 msgid "Full name"
 msgstr "Jméno a příjmení"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:78
 #: competitions/templates/teams/edit.html:44
 msgid "Email"
 msgstr "E-mail"
 
-#: competitions/forms/registration.py:81
+#: competitions/forms/registration.py:79
 #: competitions/templates/teams/edit.html:46
 msgid "Phone number"
 msgstr "Telefonní číslo"
 
-#: competitions/forms/registration.py:82
+#: competitions/forms/registration.py:80
 msgid "Language"
 msgstr "Jazyk"
 
-#: competitions/forms/registration.py:86
+#: competitions/forms/registration.py:84
 msgid "You will receive problem statements in the language you choose."
 msgstr "Zadání úloh dostanete v jazyce, který si zvolíte."
 
-#: competitions/forms/registration.py:108
+#: competitions/forms/registration.py:106
 msgid "(Please select)"
 msgstr "(Prosím vyberte)"
 
-#: competitions/forms/registration.py:125
+#: competitions/forms/registration.py:123
 msgid "This grade can't compete in the chosen category."
 msgstr "Tento ročník nemůže soutěžit ve zvolené kategorii."
+
+#: competitions/templates/archive/list.html:5
+#: competitions/templates/archive/list.html:9
+msgid "Archive"
+msgstr "Archiv"
+
+#: competitions/templates/archive/list.html:22
+#: problems/templates/problems/results.html:6
+#: problems/templates/problems/results.html:21
+#: problems/templates/problems/results/embed.html:4
+#: problems/templates/problems/results/select.html:6
+#: problems/templates/problems/results/select.html:16
+#: problems/templates/problems/results/venue.html:6
+#: problems/templates/problems/results/venue.html:17
+#: web/templates/web/snippets/home_hero_buttons.html:25
+msgid "Results"
+msgstr "Výsledky"
+
+#: competitions/templates/archive/list.html:23
+#: problems/templates/archive/problems.html:6
+#: problems/templates/archive/problems.html:10
+msgid "Problem statements"
+msgstr "Zadání úloh"
+
+#: competitions/templates/archive/list.html:24
+#: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
+msgid "Albums"
+msgstr "Alba"
+
+#: competitions/templates/archive/list.html:30
+msgid "Older competitions"
+msgstr "Minulé soutěže"
 
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
 #: competitions/templates/live/first_problem.html:6
 #: competitions/templates/live/results.html:6
 msgid "Live signage"
-msgstr ""
+msgstr "Průběžné pořadí"
 
 #: competitions/templates/live/countdown.html:13
 msgid "Do not open the problems until the competition starts."
@@ -132,7 +164,7 @@ msgstr "Registrace týmů"
 
 #: competitions/templates/register/category.html:9
 #: competitions/templates/register/partials/category.html:6
-#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/select.html:25
 msgid "Category"
 msgstr "Kategorie"
 
@@ -197,22 +229,24 @@ msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of th
 msgstr "<sup>[1]</sup> Souhlas se uděluje na dobu provozování webového sídla Trojsten-u a účtu na sociálních sítích, pokud je má Trojsten vytvořené. Tento souhlas je možné kdykoliv odvolat zasláním e-mailu na adresu <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Odvolání souhlasu nemá vliv na zákonnost zpracování před jeho odvoláním. Dotčená osoba může požadovat odstranění osobních údajů, jen pokud to bude technicky možné a výmazem nebudou dotčena práva jiných dotčených osob."
 
 #: competitions/templates/register/partials/category.html:18
+#: competitions/templates/register/partials/competition.html:13
 #: competitions/templates/register/partials/school.html:16
 #: competitions/templates/register/partials/venue.html:22
 msgid "Change"
 msgstr "Změnit"
+
+#: competitions/templates/register/partials/competition.html:4
+#: competitions/templates/register/partials/venue.html:4
+#: competitions/templates/register/venue.html:8
+#: competitions/templates/teams/edit.html:33
+msgid "Venue"
+msgstr "Soutěžní místa"
 
 #: competitions/templates/register/partials/school.html:4
 #: competitions/templates/register/school.html:9
 #: competitions/templates/teams/edit.html:26
 msgid "School"
 msgstr "Škola"
-
-#: competitions/templates/register/partials/venue.html:4
-#: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:33
-msgid "Venue"
-msgstr "Soutěžní místa"
 
 #: competitions/templates/register/school.html:11
 msgid "Search schools..."
@@ -281,7 +315,7 @@ msgstr "Aktualizovat"
 
 #: competitions/templates/teams/edit.html:137
 msgid "Certificate"
-msgstr ""
+msgstr "Diplomy"
 
 #: competitions/templates/teams/edit.html:138
 msgid "You can download certificate for your team by clicking on the button below."
@@ -322,22 +356,50 @@ msgstr "Tým byl úspěšně upraven."
 msgid "Registration successfully confirmed."
 msgstr "Registrace potvrzena."
 
-#: competitions/views/teams.py:215
+#: competitions/views/teams.py:210
 msgid "Team was unregistered."
 msgstr "Týmu byla zrušena registrace"
 
-#: problems/templates/problems/results.html:6
-#: problems/templates/problems/results.html:12
-#: problems/templates/problems/results/embed.html:4
-#: problems/templates/problems/results/select.html:6
-#: problems/templates/problems/results/select.html:9
-#: problems/templates/problems/results/venue.html:5
-#: problems/templates/problems/results/venue.html:11
-#: web/templates/web/snippets/home_hero_buttons.html:13
-msgid "Results"
-msgstr "Výsledky"
+#: gallery/templates/gallery/album.html:6
+#: gallery/templates/gallery/album.html:15
+msgid "Album"
+msgstr "Album"
 
-#: problems/templates/problems/results.html:22 problems/views.py:101
+#: problems/templates/archive/problems.html:20
+msgid "Download as PDF"
+msgstr "Stáhnout jako PDF"
+
+#: problems/templates/archive/problems.html:27
+#, python-format
+msgid "Problem %(n)s"
+msgstr "Úloha %(n)s"
+
+#: problems/templates/archive/problems.html:32
+msgid "Solution"
+msgstr "Řešení"
+
+#: problems/templates/archive/problems.html:46
+msgid "Statistics"
+msgstr "Statistiky"
+
+#. Translators: This sentence is prefixed with the number of teams that received given problem.
+#: problems/templates/archive/problems.html:54
+msgid "team received"
+msgid_plural "teams received"
+msgstr[0] "tým obdržel úlohu"
+msgstr[1] "týmů obdrželo úlohu"
+
+#. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
+#: problems/templates/archive/problems.html:64
+msgid "teams solved"
+msgstr "týmů vyřešilo"
+
+#. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
+#: problems/templates/archive/problems.html:69
+msgid "average solving time"
+msgstr "prlůměrný čas řešení"
+
+#: problems/templates/problems/results.html:32 problems/views/results.py:113
 msgid "International"
 msgstr "Mezinárodní"
 
@@ -381,15 +443,15 @@ msgstr "Předcházející"
 msgid "Next"
 msgstr "Následující"
 
-#: users/emails/teams.py:30
+#: users/emails/teams.py:34
 msgid "Confirm your team registration"
 msgstr "Potvrďte registraci týmu"
 
-#: users/emails/teams.py:43
+#: users/emails/teams.py:49
 msgid "Team moved from waiting list"
 msgstr "Tým přesunut z čekací listiny"
 
-#: users/emails/teams.py:56
+#: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Váš tým byl odstraněn"
 
@@ -456,7 +518,7 @@ msgstr "Pokud máte problém s kliknutí na tlačítko, můžete zkopírovat tut
 #: web/templates/mail/messages/team_delete.html:7
 #: web/templates/mail/messages/team_delete.txt:3
 msgid "Your team was unregistered from the competition."
-msgstr "Vášemu týmu byla zrušena registrace."
+msgstr "Vašemu týmu byla zrušena registrace."
 
 #: web/templates/mail/messages/team_delete.html:9
 #: web/templates/mail/messages/team_delete.txt:5
@@ -489,17 +551,16 @@ msgid "The page you tried to access was not found."
 msgstr "Stránka, ke které jste se snažili dostat, nebyla nalezena."
 
 #: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:5
+#: web/templates/web/snippets/home_hero_buttons.html:14
 msgid "Registration"
 msgstr "Registrace"
 
 #: web/templates/web/homepage.html:16
-#: web/templates/web/snippets/home_hero_buttons.html:8
 #, python-format
 msgid "Registration ends in %(end)s"
 msgstr "Registrace končí za %(end)s"
 
-#: web/templates/web/root_base.html:43
+#: web/templates/web/root_base.html:47
 msgid "Close"
 msgstr "Zavřít"
 
@@ -519,6 +580,22 @@ msgstr "Organizátoři"
 #: web/templates/web/snippets/home_footer.html:16
 msgid "Our partners"
 msgstr "Naši partneři"
+
+#: web/templates/web/snippets/home_hero_buttons.html:6
+#, python-format
+msgid "Registration starts on %(start)s."
+msgstr "Registrace začíná %(start)s."
+
+#: web/templates/web/snippets/home_hero_buttons.html:9
+#: web/templates/web/snippets/home_hero_buttons.html:20
+#, python-format
+msgid "The competition will take place on %(start)s."
+msgstr "Soutěž se bude konat %(start)s."
+
+#: web/templates/web/snippets/home_hero_buttons.html:17
+#, python-format
+msgid "Registration ends on %(end)s."
+msgstr "Registrace končí %(end)s"
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
