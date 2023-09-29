@@ -14,6 +14,10 @@
 
         <section class="py-5 my-5 border-b">
             <h2 class="font-bold text-2xl mb-6">{% trans "Team information" %}</h2>
+
+            {% if team.venue.registration_flow.get_pre_edit_template %}
+                {% include team.venue.registration_flow.get_pre_edit_template %}
+            {% endif %}
         
             {% if team.is_waiting %}
             <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-4 rounded-md">
@@ -129,6 +133,10 @@
                     </div>
                 {% endfor %}
                 </div>
+            {% endif %}
+
+            {% if team.venue.registration_flow.get_post_edit_template %}
+                {% include team.venue.registration_flow.get_post_edit_template %}
             {% endif %}
 
             {% if show_certificate %}

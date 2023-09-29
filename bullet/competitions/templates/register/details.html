@@ -12,7 +12,11 @@
 
     <hr class="my-6">
 
-    <form method="POST" >
+    {% if venue.registration_flow.get_pre_registration_template %}
+        {% include venue.registration_flow.get_pre_registration_template %}
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
         <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
@@ -43,6 +47,10 @@
         </div>
 
         <div class="text-red-600 mb-4">* {% trans "Required field" %}</div>
+
+        {% if venue.registration_flow.get_post_registration_template %}
+            {% include venue.registration_flow.get_post_registration_template %}
+        {% endif %}
 
         <div class="mb-4 prose prose-sm max-w-none">
             {% country_url "page" slug="rules" as link %}

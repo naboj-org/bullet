@@ -87,10 +87,13 @@ class TeamEditView(FormView):
             raise Http404()
 
         self.category = self.team.venue.category
-        self.can_be_changed = (
-            self.category.competition.competition_start > timezone.now()
-            and not self.team.is_checked_in
-        )
+        if not self.team.venue.registration_flow.can_edit(self.team):
+            self.can_be_changed = False
+        else:
+            self.can_be_changed = (
+                self.category.competition.competition_start > timezone.now()
+                and not self.team.is_checked_in
+            )
 
         if self.team.confirmed_at is None:
             self.team.confirmed_at = timezone.now()

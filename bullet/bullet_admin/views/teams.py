@@ -3,12 +3,7 @@ import json
 from collections import defaultdict
 
 import yaml
-from bullet_admin.forms.teams import (
-    OperatorTeamForm,
-    TeamExportForm,
-    TeamFilterForm,
-    TeamForm,
-)
+from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm
 from bullet_admin.mixins import (
     AdminRequiredMixin,
     IsOperatorContext,
@@ -78,6 +73,7 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
                 "school",
                 "venue",
                 "venue__category",
+                "spanish_data",
             )
             .prefetch_related("contestants", "contestants__grade")
             .order_by("venue__name", "venue__category__identifier", "number", "id")
@@ -192,9 +188,11 @@ class TeamEditView(
     def get_form_class(self):
         competition = get_active_competition(self.request)
         crole = self.request.user.get_competition_role(competition)
+
+        venue = self.object.venue
         if crole.is_operator:
-            return OperatorTeamForm
-        return TeamForm
+            return venue.registration_flow.get_operator_form()
+        return venue.registration_flow.get_admin_form()
 
     def get_formset_class(self):
         return inlineformset_factory(
