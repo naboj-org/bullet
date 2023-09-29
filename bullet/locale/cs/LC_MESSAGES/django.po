@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-24 20:42+0000\n"
+"POT-Creation-Date: 2023-09-29 05:24+0000\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,45 +47,49 @@ msgstr "Chemie"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:51
+#: competitions/forms/registration.py:53
 msgid "Selected school is not valid."
 msgstr "Vybraná škola není platná."
 
-#: competitions/forms/registration.py:77
-#: competitions/templates/register/details.html:29
-#: competitions/templates/register/details.html:35
-#: competitions/templates/teams/edit.html:43
-#: competitions/templates/teams/edit.html:60
-#: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:122
+#: competitions/forms/registration.py:79
+#: competitions/templates/register/details.html:33
+#: competitions/templates/register/details.html:39
+#: competitions/templates/teams/edit.html:47
+#: competitions/templates/teams/edit.html:64
+#: competitions/templates/teams/edit.html:74
+#: competitions/templates/teams/edit.html:126
 msgid "Full name"
 msgstr "Jméno a příjmení"
 
-#: competitions/forms/registration.py:78
-#: competitions/templates/teams/edit.html:44
+#: competitions/forms/registration.py:80
+#: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "E-mail"
 
-#: competitions/forms/registration.py:79
-#: competitions/templates/teams/edit.html:46
+#: competitions/forms/registration.py:81
+#: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "Telefonní číslo"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:82
 msgid "Language"
 msgstr "Jazyk"
 
-#: competitions/forms/registration.py:84
+#: competitions/forms/registration.py:86
 msgid "You will receive problem statements in the language you choose."
 msgstr "Zadání úloh dostanete v jazyce, který si zvolíte."
 
-#: competitions/forms/registration.py:106
+#: competitions/forms/registration.py:108
 msgid "(Please select)"
 msgstr "(Prosím vyberte)"
 
-#: competitions/forms/registration.py:123
+#: competitions/forms/registration.py:125
 msgid "This grade can't compete in the chosen category."
 msgstr "Tento ročník nemůže soutěžit ve zvolené kategorii."
+
+#: competitions/forms/registration.py:132
+msgid "The uploaded file is too large."
+msgstr ""
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
@@ -145,9 +149,9 @@ msgstr "Pokud myslíte, že jde o chybu, kontaktujte nás."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#: competitions/templates/teams/edit.html:38
-#, python-format
-msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, fuzzy, python-format
+#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
 msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času"
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
@@ -168,63 +172,63 @@ msgstr "Registrace týmů"
 msgid "Category"
 msgstr "Kategorie"
 
-#: competitions/templates/register/details.html:18
-#: competitions/templates/teams/edit.html:42
+#: competitions/templates/register/details.html:22
+#: competitions/templates/teams/edit.html:46
 msgid "Contact information"
 msgstr "Kontaktní informace"
 
-#: competitions/templates/register/details.html:21
-#: competitions/templates/teams/edit.html:50
+#: competitions/templates/register/details.html:25
+#: competitions/templates/teams/edit.html:54
 msgid "Contestants"
 msgstr "Soutěžící"
 
-#: competitions/templates/register/details.html:23
-#: competitions/templates/teams/edit.html:51
+#: competitions/templates/register/details.html:27
+#: competitions/templates/teams/edit.html:55
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Můžete změnit soutěžící kdykolikv před začátkem soutěže."
 
-#: competitions/templates/register/details.html:30
-#: competitions/templates/register/details.html:39
-#: competitions/templates/teams/edit.html:61
-#: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:126
+#: competitions/templates/register/details.html:34
+#: competitions/templates/register/details.html:43
+#: competitions/templates/teams/edit.html:65
+#: competitions/templates/teams/edit.html:78
+#: competitions/templates/teams/edit.html:130
 msgid "Grade"
 msgstr "Ročník"
 
-#: competitions/templates/register/details.html:33
-#: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:119
+#: competitions/templates/register/details.html:37
+#: competitions/templates/teams/edit.html:70
+#: competitions/templates/teams/edit.html:123
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Soutěžící %(number)s"
 
-#: competitions/templates/register/details.html:45
+#: competitions/templates/register/details.html:49
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
 msgstr "Povinné pole"
 
-#: competitions/templates/register/details.html:49
+#: competitions/templates/register/details.html:57
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Registrací do Soutěže registrující osoby (zejména učitelé nebo zákonní zástupci registrovaných žáků) souhlasí s <a href=\"%(link)s\">pravidly soutěže</a> a zavazují se jimi řídit. Současně bere registrující osoba na vědomí, že osobní údaje uvedené v registračním formuláři jsou nezbytné pro zabezpečení řádného fungování Soutěže."
 
-#: competitions/templates/register/details.html:60
-#: competitions/templates/teams/edit.html:88
+#: competitions/templates/register/details.html:68
+#: competitions/templates/teams/edit.html:92
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "Registrující osoba uděluje souhlas Trojsten-u se zhotovením obrazových a audiovizuálních záznamů během konání Soutěže, na kterých je zachycena podoba registrující a/i registrované osoby a jejich zveřejněním na webovém sídle Soutěže, webových sídlech lokálních organizátorů, sociální sítích, a to pro marketingové účely propagace Soutěže. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:71
+#: competitions/templates/register/details.html:79
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Více informací o zpracovávání osobních údajů je možné najít na stránce <a href=\"%(link)s\">informace o zpracování osobních údajů</a>."
 
-#: competitions/templates/register/details.html:80
+#: competitions/templates/register/details.html:88
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
 msgstr "Registrovat"
 
-#: competitions/templates/register/details.html:84
-#: competitions/templates/teams/edit.html:104
+#: competitions/templates/register/details.html:92
+#: competitions/templates/teams/edit.html:108
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Souhlas se uděluje na dobu provozování webového sídla Trojsten-u a účtu na sociálních sítích, pokud je má Trojsten vytvořené. Tento souhlas je možné kdykoliv odvolat zasláním e-mailu na adresu <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Odvolání souhlasu nemá vliv na zákonnost zpracování před jeho odvoláním. Dotčená osoba může požadovat odstranění osobních údajů, jen pokud to bude technicky možné a výmazem nebudou dotčena práva jiných dotčených osob."
 
@@ -238,13 +242,13 @@ msgstr "Změnit"
 #: competitions/templates/register/partials/competition.html:4
 #: competitions/templates/register/partials/venue.html:4
 #: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:33
+#: competitions/templates/teams/edit.html:37
 msgid "Venue"
 msgstr "Soutěžní místa"
 
 #: competitions/templates/register/partials/school.html:4
 #: competitions/templates/register/school.html:9
-#: competitions/templates/teams/edit.html:26
+#: competitions/templates/teams/edit.html:30
 msgid "School"
 msgstr "Škola"
 
@@ -274,7 +278,7 @@ msgstr "Hledat soutěžní místa"
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:99
+#: competitions/templates/teams/edit.html:103
 msgid "Unregister team"
 msgstr "Zrušit registraci týmu"
 
@@ -296,32 +300,37 @@ msgstr "Upravit tým"
 msgid "Team information"
 msgstr "Informace o členech týmu"
 
-#: competitions/templates/teams/edit.html:20
+#: competitions/templates/teams/edit.html:24
 msgid "Your team is in the waiting list."
 msgstr "Váš tým je na čekací listině"
 
-#: competitions/templates/teams/edit.html:21
+#: competitions/templates/teams/edit.html:25
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
 msgstr "Kapacita soutěžního místa byla naplněna nebo má Vaše škola již maximum registrovaných týmů. Dáme Vám vědět, pokud se situace změní."
 
-#: competitions/templates/teams/edit.html:62
-#: competitions/templates/teams/edit.html:79
+#: competitions/templates/teams/edit.html:42
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času"
+
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:83
 msgid "Delete?"
 msgstr "Opravdu smazat?"
 
-#: competitions/templates/teams/edit.html:98
+#: competitions/templates/teams/edit.html:102
 msgid "Update"
 msgstr "Aktualizovat"
 
-#: competitions/templates/teams/edit.html:137
+#: competitions/templates/teams/edit.html:145
 msgid "Certificate"
 msgstr "Diplomy"
 
-#: competitions/templates/teams/edit.html:138
+#: competitions/templates/teams/edit.html:146
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Diplom pro svůj tým si můžete stáhnout kliknutím na tlačítko níže."
 
-#: competitions/templates/teams/edit.html:139
+#: competitions/templates/teams/edit.html:147
 msgid "Download certificate"
 msgstr "Stáhnout diplom"
 
@@ -340,11 +349,11 @@ msgstr "Seznam týmů"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Týmy: %(teams)s/%(capacity)s"
 
-#: competitions/views/register.py:55
+#: competitions/views/register.py:54
 msgid "Registration did not start yet."
 msgstr "Registrace ještě nezačala."
 
-#: competitions/views/register.py:57
+#: competitions/views/register.py:56
 msgid "Registration is over."
 msgstr "Registrace již skončila."
 
@@ -352,11 +361,11 @@ msgstr "Registrace již skončila."
 msgid "Team successfully edited."
 msgstr "Tým byl úspěšně upraven."
 
-#: competitions/views/teams.py:99
+#: competitions/views/teams.py:102
 msgid "Registration successfully confirmed."
 msgstr "Registrace potvrzena."
 
-#: competitions/views/teams.py:210
+#: competitions/views/teams.py:213
 msgid "Team was unregistered."
 msgstr "Týmu byla zrušena registrace"
 
