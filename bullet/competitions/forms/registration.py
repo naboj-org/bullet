@@ -127,9 +127,14 @@ class ContestantForm(ModelForm):
         return grade_obj
 
 
+def file_size(file):
+    if file.size > 10_000_000:
+        raise ValidationError(_("The uploaded file is too large."))
+
+
 class SpanishRegistrationForm(RegistrationForm):
     agreement = forms.FileField(
-        validators=[FileExtensionValidator(["pdf", "zip"])],
+        validators=[FileExtensionValidator(["pdf", "zip"]), file_size],
         label="Autorizaciones",
         help_text=mark_safe(
             "Envíe un <b>único documento PDF</b> con <b>todas las autorizaciones "
