@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.10 - 2023-10-03
+
+### Changed
+
+- Updated translations for CS, PL.
+
+### Fixed
+
+- Country administrator can now edit his venues.
+
 ## 2023.9.4 - 2023-09-29
 
 ### Added
