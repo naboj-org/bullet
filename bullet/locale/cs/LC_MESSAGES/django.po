@@ -3,11 +3,15 @@ msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-29 05:24+0000\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Kateřina Rosická\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: POEditor.com\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
+"X-Generator: Poedit 3.3.2\n"
 
 #: competitions/branches.py:72
 msgid "Náboj Math"
@@ -149,10 +153,9 @@ msgstr "Pokud myslíte, že jde o chybu, kontaktujte nás."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času"
+msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -254,7 +257,7 @@ msgstr "Škola"
 
 #: competitions/templates/register/school.html:11
 msgid "Search schools..."
-msgstr "Vyhledat školu"
+msgstr "Vyhledat školu..."
 
 #: competitions/templates/register/thanks.html:13
 msgid "Team successfully registered"
@@ -274,7 +277,7 @@ msgstr "Zpět na úvodní stránku"
 
 #: competitions/templates/register/venue.html:10
 msgid "Search venues..."
-msgstr "Hledat soutěžní místa"
+msgstr "Hledat soutěžní místa..."
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
@@ -302,7 +305,7 @@ msgstr "Informace o členech týmu"
 
 #: competitions/templates/teams/edit.html:24
 msgid "Your team is in the waiting list."
-msgstr "Váš tým je na čekací listině"
+msgstr "Váš tým je na čekací listině."
 
 #: competitions/templates/teams/edit.html:25
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
@@ -311,7 +314,7 @@ msgstr "Kapacita soutěžního místa byla naplněna nebo má Vaše škola již 
 #: competitions/templates/teams/edit.html:42
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
-msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času"
+msgstr "Na tomto soutěžním místě soutěž začne v %(time)s místo obvyklého času."
 
 #: competitions/templates/teams/edit.html:66
 #: competitions/templates/teams/edit.html:83
@@ -367,7 +370,7 @@ msgstr "Registrace potvrzena."
 
 #: competitions/views/teams.py:213
 msgid "Team was unregistered."
-msgstr "Týmu byla zrušena registrace"
+msgstr "Týmu byla zrušena registrace."
 
 #: gallery/templates/gallery/album.html:6
 #: gallery/templates/gallery/album.html:15
@@ -396,7 +399,8 @@ msgstr "Statistiky"
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "tým obdržel úlohu"
-msgstr[1] "týmů obdrželo úlohu"
+msgstr[1] "týmy obdrželi úlohu"
+msgstr[2] "týmů obdrželo úlohu"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
 #: problems/templates/archive/problems.html:64
@@ -604,7 +608,7 @@ msgstr "Soutěž se bude konat %(start)s."
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
 msgid "Registration ends on %(end)s."
-msgstr "Registrace končí %(end)s"
+msgstr "Registrace končí %(end)s."
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
