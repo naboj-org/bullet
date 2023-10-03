@@ -38,7 +38,7 @@ def can_access_venue(
 
     # Country admin can access veunes in his country
     if crole.countries:
-        return venue.country in crole.venues
+        return venue.country in crole.countries
 
     # Venue admin can access his venues
     if crole.venues:
