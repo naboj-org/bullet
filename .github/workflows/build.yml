@@ -40,3 +40,10 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Deploy to production
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: https://semaphore.ttt.trojsten.sk/api/project/1/tasks
+          data: '{"template_id": 7}'
+          bearerToken: ${{ secrets.SEMAPHORE_KEY }}
