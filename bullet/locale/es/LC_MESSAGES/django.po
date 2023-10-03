@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-24 20:42+0000\n"
+"POT-Creation-Date: 2023-09-29 05:24+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -51,45 +51,49 @@ msgstr "Química"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:51
+#: competitions/forms/registration.py:53
 msgid "Selected school is not valid."
 msgstr "El colegio seleccionado no es válido."
 
-#: competitions/forms/registration.py:77
-#: competitions/templates/register/details.html:29
-#: competitions/templates/register/details.html:35
-#: competitions/templates/teams/edit.html:43
-#: competitions/templates/teams/edit.html:60
-#: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:122
+#: competitions/forms/registration.py:79
+#: competitions/templates/register/details.html:33
+#: competitions/templates/register/details.html:39
+#: competitions/templates/teams/edit.html:47
+#: competitions/templates/teams/edit.html:64
+#: competitions/templates/teams/edit.html:74
+#: competitions/templates/teams/edit.html:126
 msgid "Full name"
 msgstr "Nombre completo"
 
-#: competitions/forms/registration.py:78
-#: competitions/templates/teams/edit.html:44
+#: competitions/forms/registration.py:80
+#: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: competitions/forms/registration.py:79
-#: competitions/templates/teams/edit.html:46
+#: competitions/forms/registration.py:81
+#: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "Número de teléfono"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:82
 msgid "Language"
 msgstr "Idioma"
 
-#: competitions/forms/registration.py:84
+#: competitions/forms/registration.py:86
 msgid "You will receive problem statements in the language you choose."
 msgstr "Recibiréis los enunciados de los problemas en el idioma seleccionado."
 
-#: competitions/forms/registration.py:106
+#: competitions/forms/registration.py:108
 msgid "(Please select)"
 msgstr "(por favor, seleccione una opción)"
 
-#: competitions/forms/registration.py:123
+#: competitions/forms/registration.py:125
 msgid "This grade can't compete in the chosen category."
 msgstr "El curso seleccionado no puede competir en la categoría elegida."
+
+#: competitions/forms/registration.py:132
+msgid "The uploaded file is too large."
+msgstr ""
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
@@ -119,6 +123,12 @@ msgstr "Enunciados de los problemas"
 msgid "Albums"
 msgstr "Álbumes"
 
+#: competitions/templates/archive/list.html:30
+#, fuzzy
+#| msgid "Competition day"
+msgid "Older competitions"
+msgstr "Día de la competición"
+
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
 #: competitions/templates/live/first_problem.html:6
@@ -145,9 +155,9 @@ msgstr "Si cree que hay un error, no dude en contactarnos."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#: competitions/templates/teams/edit.html:38
-#, python-format
-msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, fuzzy, python-format
+#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
 msgstr "En esta sede, la competición comenzará a las %(time)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
@@ -168,63 +178,63 @@ msgstr "Registro de equipos"
 msgid "Category"
 msgstr "Categoría"
 
-#: competitions/templates/register/details.html:18
-#: competitions/templates/teams/edit.html:42
+#: competitions/templates/register/details.html:22
+#: competitions/templates/teams/edit.html:46
 msgid "Contact information"
 msgstr "Información de contacto"
 
-#: competitions/templates/register/details.html:21
-#: competitions/templates/teams/edit.html:50
+#: competitions/templates/register/details.html:25
+#: competitions/templates/teams/edit.html:54
 msgid "Contestants"
 msgstr "Participantes"
 
-#: competitions/templates/register/details.html:23
-#: competitions/templates/teams/edit.html:51
+#: competitions/templates/register/details.html:27
+#: competitions/templates/teams/edit.html:55
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Puede cambiar la lista de participantes en cualquier momento antes del inicio de la competición."
 
-#: competitions/templates/register/details.html:30
-#: competitions/templates/register/details.html:39
-#: competitions/templates/teams/edit.html:61
-#: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:126
+#: competitions/templates/register/details.html:34
+#: competitions/templates/register/details.html:43
+#: competitions/templates/teams/edit.html:65
+#: competitions/templates/teams/edit.html:78
+#: competitions/templates/teams/edit.html:130
 msgid "Grade"
 msgstr "Curso"
 
-#: competitions/templates/register/details.html:33
-#: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:119
+#: competitions/templates/register/details.html:37
+#: competitions/templates/teams/edit.html:70
+#: competitions/templates/teams/edit.html:123
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Participante %(number)s"
 
-#: competitions/templates/register/details.html:45
+#: competitions/templates/register/details.html:49
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
 msgstr "Campo requerido"
 
-#: competitions/templates/register/details.html:49
+#: competitions/templates/register/details.html:57
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Al registrarse en el Concurso, las personas registradoras (especialmente los profesores o representantes legales de los alumnos registrados) aceptan las <a href=\"%(link)s\">normas del concurso</a> y se comprometen a cumplirlas. Al mismo tiempo, la persona registradora reconoce que los datos personales facilitados en el formulario de registro son necesarios para garantizar el buen funcionamiento de la Competición."
 
-#: competitions/templates/register/details.html:60
-#: competitions/templates/teams/edit.html:88
+#: competitions/templates/register/details.html:68
+#: competitions/templates/teams/edit.html:92
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "La persona registradora otorga su consentimiento a Trojsten para la realización de grabaciones de vídeo y/o vídeo-audio durante el Concurso, en las que se capte la imagen de la persona registradora y/o de la persona registrada, y su publicación en la página web de la Competición, redes sociales con el fin de promocionar la Competición. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:71
+#: competitions/templates/register/details.html:79
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Puede encontrar más información sobre el tratamiento de datos personales en la página sobre el <a href=\"%(link)s\">tratamiento de datos personales</a>."
 
-#: competitions/templates/register/details.html:80
+#: competitions/templates/register/details.html:88
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
 msgstr "Registro"
 
-#: competitions/templates/register/details.html:84
-#: competitions/templates/teams/edit.html:104
+#: competitions/templates/register/details.html:92
+#: competitions/templates/teams/edit.html:108
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> El consentimiento será válido mientras el sitio web de la Competición y las cuentas de redes sociales estén activas. Este consentimiento puede ser revocado en cualquier momento enviando un correo electrónico a la dirección <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. La retirada del consentimiento no afecta a la legalidad del tratamiento anterior a su retirada. El afectado puede solicitar la supresión de los datos personales solo si es técnicamente posible y la supresión no afecta a los derechos de otros afectados."
 
@@ -238,13 +248,13 @@ msgstr "Modficar"
 #: competitions/templates/register/partials/competition.html:4
 #: competitions/templates/register/partials/venue.html:4
 #: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:33
+#: competitions/templates/teams/edit.html:37
 msgid "Venue"
 msgstr "Sede"
 
 #: competitions/templates/register/partials/school.html:4
 #: competitions/templates/register/school.html:9
-#: competitions/templates/teams/edit.html:26
+#: competitions/templates/teams/edit.html:30
 msgid "School"
 msgstr "Centro escolar"
 
@@ -274,7 +284,7 @@ msgstr "Buscar sedes..."
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:99
+#: competitions/templates/teams/edit.html:103
 msgid "Unregister team"
 msgstr "Dar de baja a un equipo"
 
@@ -296,32 +306,37 @@ msgstr "Editar equipo"
 msgid "Team information"
 msgstr "Información del equipo"
 
-#: competitions/templates/teams/edit.html:20
+#: competitions/templates/teams/edit.html:24
 msgid "Your team is in the waiting list."
 msgstr "Su equipo está en la lista de espera."
 
-#: competitions/templates/teams/edit.html:21
+#: competitions/templates/teams/edit.html:25
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
 msgstr "Se ha excedido el aforo de la sede, o su escuela ya ha registrado suficientes equipos. Nos pondremos en contacto con usted si hay algún cambio en la situación."
 
-#: competitions/templates/teams/edit.html:62
-#: competitions/templates/teams/edit.html:79
+#: competitions/templates/teams/edit.html:42
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "En esta sede, la competición comenzará a las %(time)s."
+
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:83
 msgid "Delete?"
 msgstr "¿Está seguro de que desea borrar?"
 
-#: competitions/templates/teams/edit.html:98
+#: competitions/templates/teams/edit.html:102
 msgid "Update"
 msgstr "Actualizar"
 
-#: competitions/templates/teams/edit.html:137
+#: competitions/templates/teams/edit.html:145
 msgid "Certificate"
 msgstr "Certificado"
 
-#: competitions/templates/teams/edit.html:138
+#: competitions/templates/teams/edit.html:146
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Puede descargar el certificado de su equipo clicando en el botón de abajo."
 
-#: competitions/templates/teams/edit.html:139
+#: competitions/templates/teams/edit.html:147
 msgid "Download certificate"
 msgstr "Descargar el certificado"
 
@@ -340,11 +355,11 @@ msgstr "Lista de equipos"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Equipos: %(teams)s / %(capacity)s"
 
-#: competitions/views/register.py:55
+#: competitions/views/register.py:54
 msgid "Registration did not start yet."
 msgstr "El registro todavía no ha comenzado."
 
-#: competitions/views/register.py:57
+#: competitions/views/register.py:56
 msgid "Registration is over."
 msgstr "El registro ha finalizado."
 
@@ -352,11 +367,11 @@ msgstr "El registro ha finalizado."
 msgid "Team successfully edited."
 msgstr "El equipo se ha editado correctamente."
 
-#: competitions/views/teams.py:99
+#: competitions/views/teams.py:102
 msgid "Registration successfully confirmed."
 msgstr "Registro confirmado con éxito."
 
-#: competitions/views/teams.py:210
+#: competitions/views/teams.py:213
 msgid "Team was unregistered."
 msgstr "Se ha dado de baja al equipo."
 
@@ -580,6 +595,25 @@ msgstr "Organizadores"
 #: web/templates/web/snippets/home_footer.html:16
 msgid "Our partners"
 msgstr "Nuestros socios"
+
+#: web/templates/web/snippets/home_hero_buttons.html:6
+#, fuzzy, python-format
+#| msgid "Registration starts"
+msgid "Registration starts on %(start)s."
+msgstr "El registro comienza"
+
+#: web/templates/web/snippets/home_hero_buttons.html:9
+#: web/templates/web/snippets/home_hero_buttons.html:20
+#, fuzzy, python-format
+#| msgid "The competition did not start yet."
+msgid "The competition will take place on %(start)s."
+msgstr "La competición no ha comenzado todavía."
+
+#: web/templates/web/snippets/home_hero_buttons.html:17
+#, fuzzy, python-format
+#| msgid "Registration ends in %(end)s"
+msgid "Registration ends on %(end)s."
+msgstr "El registro finaliza en %(end)s"
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
