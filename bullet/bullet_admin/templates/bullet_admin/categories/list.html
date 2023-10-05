@@ -25,22 +25,28 @@
             <thead class="text-left bg-gray-100 border-t border-b">
                 <tr>
                     <th class="p-3">Category</th>
-                    <th class="p-3 text-left hidden md:table-cell">Order</th>
-                    <th class="p-3 text-center hidden md:table-cell">Teams per school</th>
-                    <th class="p-3 text-center hidden md:table-cell">Teams second round</th>
-                    <th class="p-3 text-center hidden md:table-cell">Members per team</th>
-                    <th class="p-3"></th>
+                    <th class="p-3 text-right hidden md:table-cell">Order</th>
+                    <th class="p-3 text-right hidden md:table-cell">Available problems</th>
+                    <th class="p-3 text-right hidden md:table-cell">Max. team members</th>
+                    <th class="p-3 text-right hidden md:table-cell">
+                        Max. teams per school
+                        <span class="text-black/70 font-normal">(2nd round)</span>
+                    </th>
+                    <th></th>
                 </tr>
             </thead>
 
             <tbody class="divide-y tabular-nums">
                 {% for v in object_list %}
-                    <tr class="{% cycle "" "bg-gray-50" %}">
+                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                         <td class="p-3">{{ v.identifier }}</td>
-                        <td class="p-3 text-left">{{ v.order }}</td>
-                        <td class="p-3 text-center">{{ v.max_teams_per_school|floatformat:"g" }}</td>
-                        <td class="p-3 text-center">{{ v.max_teams_second_round|floatformat:"g" }}</td>
-                        <td class="p-3 text-center">{{ v.max_members_per_team|floatformat:"g" }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">{{ v.order }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">{{ v.problems_per_team|floatformat:"g" }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">{{ v.max_members_per_team|floatformat:"g" }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">
+                            {{ v.max_teams_per_school|floatformat:"g" }}
+                            <span class="text-black/70 font-normal">({{ v.max_teams_second_round|floatformat:"g" }})</span>
+                        </td>
                         <td class="p-3">
                             <div class="flex items-center justify-end gap-2">
                                 {% if is_branch_admin %}
