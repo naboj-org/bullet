@@ -13,23 +13,27 @@ class HomeView(LoginRequiredMixin, TemplateView):
         ctx = super().get_context_data(**kwargs)
 
         ctx["competition"] = get_active_competition(self.request)
-        ctx["venues"] = Venue.objects.for_request(self.request).annotate(
-            waiting=Count(
-                "team",
-                filter=Q(team__confirmed_at__isnull=False, team__is_waiting=True),
-            ),
-            competing=Count(
-                "team",
-                filter=Q(team__confirmed_at__isnull=False, team__is_waiting=False),
-            ),
-            checked_in=Count(
-                "team",
-                filter=Q(team__is_checked_in=True),
-            ),
-            reviewed=Count(
-                "team",
-                filter=Q(team__is_reviewed=True),
-            ),
+        ctx["venues"] = (
+            Venue.objects.for_request(self.request)
+            .annotate(
+                waiting=Count(
+                    "team",
+                    filter=Q(team__confirmed_at__isnull=False, team__is_waiting=True),
+                ),
+                competing=Count(
+                    "team",
+                    filter=Q(team__confirmed_at__isnull=False, team__is_waiting=False),
+                ),
+                checked_in=Count(
+                    "team",
+                    filter=Q(team__is_checked_in=True),
+                ),
+                reviewed=Count(
+                    "team",
+                    filter=Q(team__is_reviewed=True),
+                ),
+            )
+            .natural_order()
         )
 
         return ctx
