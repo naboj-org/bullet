@@ -18,13 +18,13 @@ class RegistrationFlow:
         """
         Returns the form used in the admin interface.
         """
-        raise TeamForm
+        return TeamForm
 
     def get_operator_form(self) -> Type[BaseForm]:
         """
         Returns the form used in the admin interface (for operators).
         """
-        raise OperatorTeamForm
+        return OperatorTeamForm
 
     def can_edit(self, team) -> bool:
         """
