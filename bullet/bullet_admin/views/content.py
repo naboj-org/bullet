@@ -5,7 +5,7 @@ from bullet_admin.forms.content import (
     MenuItemForm,
     PageForm,
 )
-from bullet_admin.mixins import TranslatorRequiredMixin
+from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView
 from django.db.models import Q
 from django.http import HttpResponseRedirect
@@ -27,15 +27,24 @@ class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if "q" in self.request.GET:
-            qs = qs.filter(
-                Q(title__icontains=self.request.GET["q"])
-                | Q(slug__icontains=self.request.GET["q"])
-            )
+        if "language" in self.request.GET:
+            qs = qs.filter(language=self.request.GET["language"])
         return qs
 
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["languages"] = (
+            Page.objects.filter(branch=self.request.BRANCH)
+            .values_list("language", flat=True)
+            .distinct()
+            .order_by("language")
+        )
+        return ctx
 
-class PageEditView(TranslatorRequiredMixin, PageQuerySetMixin, UpdateView):
+
+class PageEditView(
+    TranslatorRequiredMixin, PageQuerySetMixin, RedirectBackMixin, UpdateView
+):
     template_name = "bullet_admin/content/page_form.html"
     form_class = PageForm
 
@@ -44,11 +53,13 @@ class PageEditView(TranslatorRequiredMixin, PageQuerySetMixin, UpdateView):
         kw["branch"] = self.request.BRANCH
         return kw
 
-    def get_success_url(self):
+    def get_default_success_url(self):
         return reverse("badmin:page_list")
 
 
-class PageCreateView(TranslatorRequiredMixin, PageQuerySetMixin, CreateView):
+class PageCreateView(
+    TranslatorRequiredMixin, PageQuerySetMixin, RedirectBackMixin, CreateView
+):
     template_name = "bullet_admin/content/page_form.html"
     form_class = PageForm
 
@@ -56,13 +67,19 @@ class PageCreateView(TranslatorRequiredMixin, PageQuerySetMixin, CreateView):
         kw = super().get_form_kwargs()
         kw["branch"] = self.request.BRANCH
         return kw
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if "language" not in initial:
+            initial["language"] = self.request.GET.get("language", None)
+        return initial
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["create"] = True
         return ctx
 
-    def get_success_url(self):
+    def get_default_success_url(self):
         return reverse("badmin:page_list")
 
     def form_valid(self, form):

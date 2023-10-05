@@ -1,68 +1,79 @@
 {% extends "bullet_admin/base.html" %}
+{% load countries %}
+{% load utils %}
+{% load i18n %}
+{% load badmin %}
+{% load access %}
 
-{% block title %}Page list{% endblock %}
+{% block title %}Pages{% endblock %}
 
 {% block content %}
-    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Page list</h2>
-            <a href="{% url "badmin:page_create" %}" class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New page</a>
-        </header>
-        <div class="p-4">
-            <form method="get" class="flex items-center gap-2">
-                <input type="search" name="q" placeholder="Search pages" class="input" value="{{ request.GET.q }}">
-                <button type="submit" class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">
-                    <i class="fas fa-search mr-1"></i> Search
-                </button>
-            </form>
-            <hr class="my-4">
+    {% get_active_competition as competition %}
+    <div class="p-8 mx-auto max-w-7xl">
+        {% aheader %}
+            {% slot title %}
+                Pages
+            {% endslot %}
+            {% slot buttons %}
+                {% url "badmin:page_create" as create_url %}
+                {% query_replace back=request.get_full_path language=request.GET.language as back %}
+                {% #abtn color="green" icon="mdi:plus" label="New page" url=create_url|add:back %}
+            {% endslot %}
+        {% endaheader %}
 
-            <div class="overflow-x-auto">
-                <table class="w-full mb-4">
-                    <thead>
-                        <tr class="bg-gray-100 text-left border-b">
-                            <th class="p-3">Title</th>
-                            <th class="p-3">Slug</th>
-                            <th class="p-3">Language</th>
-                            <th class="p-3">Countries</th>
-                            <th class="p-3"></th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y">
-                        {% for page in object_list %}
-                        <tr class="{% cycle "" "bg-gray-50" %}">
-                            <td class="p-3">
-                                {{ page.title }}
-                            </td>
-                            <td class="p-3 text-sm">
-                                {{ page.slug }}
-                            </td>
-                            <td class="p-3 text-sm">
-                                {{ page.language }}
-                            </td>
-                            <td class="p-3 text-sm">
-                                {{ page.countries|join:", " }}
-                            </td>
-                            <td>
-                                <a href="{% url "badmin:page_edit" pk=page.id %}" class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="flex gap-2">
-            {% if page_obj.has_previous %}
-                <a href="?page={{ page_obj.previous_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
+        {% anav class="-mt-4 mb-8" %}
+            {% if not request.GET.language %}
+                {% anavitem url="?" active=True %}(all){% endanavitem %}
+            {% else %}
+                {% anavitem url="?" active=False %}(all){% endanavitem %}
             {% endif %}
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% if "q" in request.GET %}&q={{ request.GET.q }}{% endif %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
-            {% endif %}
-            </div>
-        </div>
-    </article>
+
+            {% for lang in languages %}
+                {% get_language_info for lang as lang_info %}
+                {% query_replace language=lang as url %}
+                {% if request.GET.language == lang %}
+                    {% anavitem url=url active=True %}{{ lang_info.name }}{% endanavitem %}
+                {% else %}
+                    {% anavitem url=url active=False %}{{ lang_info.name }}{% endanavitem %}
+                {% endif %}
+            {% endfor %}
+        {% endanav %}
+
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Title</th>
+                    <th class="p-3">URL</th>
+                    {% if not request.GET.language %}
+                    <th class="p-3">Language</th>
+                    {% endif %}
+                    <th class="p-3">Countries</th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for page in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                        <td class="p-3">
+                            <a href="{% url "badmin:page_edit" pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="link absolute inset-0"></a>
+                            {{ page.title }}
+                        </td>
+                        <td class="p-3 whitespace-nowrap font-mono">{{ page.slug }}</td>
+                        {% if not request.GET.language %}
+                            {% get_language_info for page.language as lang_info %}
+                            <td class="p-3 whitespace-nowrap">{{ lang_info.name }}</td>
+                        {% endif %}
+                        <td class="p-3">
+                            {% for country in page.countries %}
+                                {% get_country country as country_info %}
+                                {{ country_info.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% admin_paginator page_obj %}
+    </div>
 {% endblock %}
