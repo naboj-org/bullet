@@ -37,10 +37,12 @@
                     <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         <td class="p-3">
                             <a href="{% url "badmin:venue_detail" pk=v.id %}" class="link absolute inset-0"></a>
-                            <div class="flex gap-2 items-center flex-wrap">
+                            <div class="flex gap-2 items-center">
                                 <span class="iconify shrink-0" data-icon="flag:{{ v.country.code|lower }}-4x3"></span>
-                                <span class="font-bold">{{ v.shortcode }}</span>
-                                {{ v.name }}
+                                <div>
+                                    <span class="font-bold">{{ v.shortcode }}</span>
+                                    {{ v.name }}
+                                </div>
                             </div>
                         </td>
                         <td class="p-3 whitespace-nowrap">{{ v.category.identifier|title }}</td>
