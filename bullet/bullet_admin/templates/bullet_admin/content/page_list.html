@@ -48,6 +48,7 @@
                     <th class="p-3">Language</th>
                     {% endif %}
                     <th class="p-3">Countries</th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -55,7 +56,6 @@
                 {% for page in object_list %}
                     <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         <td class="p-3">
-                            <a href="{% url "badmin:page_edit" pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="link absolute inset-0"></a>
                             {{ page.title }}
                         </td>
                         <td class="p-3 whitespace-nowrap font-mono">{{ page.slug }}</td>
@@ -68,6 +68,16 @@
                                 {% get_country country as country_info %}
                                 {{ country_info.name }}{% if not forloop.last %}, {% endif %}
                             {% endfor %}
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url 'badmin:page_edit' pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                </a>
+                                <a href="{% url 'badmin:page_delete' pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="text-red-400 hover:text-red-600 p-2 -m-2">
+                                    <span class="iconify" data-icon="mdi:delete"></span>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
