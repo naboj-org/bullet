@@ -6,6 +6,7 @@
 
 {% block content %}
     {% get_active_competition as competition %}
+    {% is_branch_admin as is_branch_admin %}
     <div class="p-8 max-w-7xl mx-auto">
         {% aheader %}
             {% slot title %}
