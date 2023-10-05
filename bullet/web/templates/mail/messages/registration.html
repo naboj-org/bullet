@@ -7,6 +7,8 @@
 
     <p>{% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}</p>
 
+    <p>{% blocktranslate with contestants=team.contestants_names %}Current team members: {{ contestants }}{% endblocktranslate %}</p>
+
     {% country_url "team_edit" secret_link=team.secret_link as link %}
     {% trans "Confirm registration" as link_text %}
     {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
