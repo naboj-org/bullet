@@ -1,6 +1,7 @@
 {% extends "web/base.html" %}
 {% load countries %}
 {% load content_blocks %}
+{% load country_url %}
 {% load static %}
 {% load i18n %}
 
@@ -19,13 +20,21 @@
 {% block content %}
 {% load_blocks "category" %}
 <div class="container mx-auto px-2 mt-8">
-    <div class="flex flex-wrap justify-center gap-1 mb-12">
+    <div class="flex flex-wrap justify-center gap-1 mb-2">
         {% for c in countries %}
             <a href="?country={{ c.country.code }}" class="{% if c.country == country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
                 <img src="https://flagcdn.com/{{ c.country.code|lower }}.svg" class="h-3 inline-block" aria-hidden="true">
                 {{ c.country.name }}
             </a>
         {% endfor %}
+    </div>
+
+    <div class="mb-4 text-center">
+        {% if is_waitinglist %}
+        <a href="{% country_url "team_list" %}" class="link-primary">{% trans "Team list" %}</a>
+        {% else %}
+        <a href="{% country_url "waiting_list" %}" class="link-primary">{% trans "Waiting list" %}</a>
+        {% endif %}
     </div>
 
     {% for v in venues %}
