@@ -93,7 +93,7 @@ msgstr "El curso seleccionado no puede competir en la categoría elegida."
 
 #: competitions/forms/registration.py:132
 msgid "The uploaded file is too large."
-msgstr ""
+msgstr "El archivo subido pesa demasiado."
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
@@ -124,10 +124,8 @@ msgid "Albums"
 msgstr "Álbumes"
 
 #: competitions/templates/archive/list.html:30
-#, fuzzy
-#| msgid "Competition day"
 msgid "Older competitions"
-msgstr "Día de la competición"
+msgstr "Ediciones anteriores"
 
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
@@ -155,10 +153,9 @@ msgstr "Si cree que hay un error, no dude en contactarnos."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "En esta sede, la competición comenzará a las %(time)s."
+msgstr "En esta sede, la competición comenzará a las %(time)s en lugar del comienzo habitual, a las %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -243,7 +240,7 @@ msgstr "<sup>[1]</sup> El consentimiento será válido mientras el sitio web de 
 #: competitions/templates/register/partials/school.html:16
 #: competitions/templates/register/partials/venue.html:22
 msgid "Change"
-msgstr "Modficar"
+msgstr "Modificar"
 
 #: competitions/templates/register/partials/competition.html:4
 #: competitions/templates/register/partials/venue.html:4
@@ -597,23 +594,20 @@ msgid "Our partners"
 msgstr "Nuestros socios"
 
 #: web/templates/web/snippets/home_hero_buttons.html:6
-#, fuzzy, python-format
-#| msgid "Registration starts"
+#, python-format
 msgid "Registration starts on %(start)s."
-msgstr "El registro comienza"
+msgstr "El registro comienza el %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:9
 #: web/templates/web/snippets/home_hero_buttons.html:20
-#, fuzzy, python-format
-#| msgid "The competition did not start yet."
+#, python-format
 msgid "The competition will take place on %(start)s."
-msgstr "La competición no ha comenzado todavía."
+msgstr "La competición comenzará el %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:17
-#, fuzzy, python-format
-#| msgid "Registration ends in %(end)s"
+#, python-format
 msgid "Registration ends on %(end)s."
-msgstr "El registro finaliza en %(end)s"
+msgstr "El registro finaliza el %(end)s."
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
