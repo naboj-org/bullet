@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.10.2 - 2023-10-08
+
+### Changed
+
+- Updated translations for ES.
+- Updated authorization field message in Spanish registration flow.
+- Improved labels and help texts in category forms and tables.
+- "Legacy" schools (that were imported from old system) are now not shown in the admin.
+
+### Fixed
+
+- Link between team list and waiting list now preserves selected country. 
+- Category editing in admin did not use current competition.
+- Fixed line wrapping in venue and school list.
+- Album list did require admin permissions, not just photographer.
+
 ## 2023.10.1 - 2023-10-05
 
 ### Added
