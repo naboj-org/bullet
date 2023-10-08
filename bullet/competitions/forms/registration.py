@@ -140,7 +140,8 @@ class SpanishRegistrationForm(RegistrationForm):
             "Envíe un <b>único documento PDF</b> con <b>todas las autorizaciones "
             "cumplimentadas al completo y firmadas. En caso de firmas digitales "
             "(y sólo en ese caso)</b> aceptamos ZIPs que contengan <b>todas</b> "
-            "las autorizaciones del equipo."
+            "las autorizaciones del equipo. El <b>link</b> a la <b>autorización</b> "
+            "se encuentra más <b>abajo</b>."
         ),
         required=True,
     )
