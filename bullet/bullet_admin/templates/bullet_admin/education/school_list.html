@@ -35,13 +35,13 @@
                 {% for sch in object_list %}
                     <tr class="{% cycle "" "bg-gray-50" %}">
                         <td class="p-3">
-                            <div class="flex gap-2 items-center flex-wrap">
+                            <div class="flex gap-2 items-center">
                                 <span class="iconify shrink-0" data-icon="flag:{{ sch.country.code|lower }}-4x3"></span>
                                 {{ sch.name }}
 
                                 {% if sch.is_hidden %}
                                 <div title="Hidden" class="shrink-0 text-gray-600">
-                                    <span class="iconify" title="Hidden" data-icon="mdi:eye-off"></span>
+                                    <span class="iconify" data-icon="mdi:eye-off"></span>
                                 </div>
                                 {% endif %}
                             </div>

@@ -11,5 +11,8 @@ class SchoolForm(forms.ModelForm):
         }
         labels = {"is_hidden": "Is hidden?"}
         help_texts = {
-            "is_hidden": "Hides the school from school search during team registration."
+            "is_hidden": "Hides the school from school search during team "
+            "registration.",
+            "search": "You can add any extra words or phrases that won't be shown, but "
+            "will get used by the search engine.",
         }

@@ -8,12 +8,17 @@ from education.models import School
 from bullet import search
 
 
-class SchoolListView(SchoolEditorAccess, ListView):
+class SchoolQuerySetMixin:
+    def get_queryset(self):
+        return School.objects.filter(is_legacy=False)
+
+
+class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
     template_name = "bullet_admin/education/school_list.html"
     paginate_by = 100
 
     def get_queryset(self):
-        qs = School.objects.get_queryset()
+        qs = super().get_queryset()
         search_query = self.request.GET.get("q")
         if search_query:
             ids = search.client.index("schools").search(search_query)["hits"]
@@ -30,9 +35,10 @@ class SchoolListView(SchoolEditorAccess, ListView):
         return ctx
 
 
-class SchoolUpdateView(SchoolEditorAccess, GenericForm, UpdateView):
+class SchoolUpdateView(
+    SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, UpdateView
+):
     form_class = SchoolForm
-    model = School
     form_title = "Edit school"
 
     def form_valid(self, form):
@@ -43,9 +49,10 @@ class SchoolUpdateView(SchoolEditorAccess, GenericForm, UpdateView):
         return redirect("badmin:school_list")
 
 
-class SchoolCreateView(SchoolEditorAccess, GenericForm, CreateView):
+class SchoolCreateView(
+    SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, CreateView
+):
     form_class = SchoolForm
-    model = School
     form_title = "New school"
 
     def form_valid(self, form):

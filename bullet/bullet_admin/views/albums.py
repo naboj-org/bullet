@@ -1,4 +1,4 @@
-from bullet_admin.access import AdminAccess, PhotoUploadAccess
+from bullet_admin.access import PhotoUploadAccess
 from bullet_admin.forms.album import AlbumForm
 from bullet_admin.views import GenericForm
 from countries.models import BranchCountry
@@ -8,7 +8,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
 
 
-class AlbumListView(AdminAccess, ListView):
+class AlbumListView(PhotoUploadAccess, ListView):
     template_name = "bullet_admin/albums/list.html"
     paginate_by = 100
 

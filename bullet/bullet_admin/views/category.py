@@ -1,34 +1,32 @@
-from bullet_admin.access import BranchAdminAccess, is_branch_admin
+from bullet_admin.access import BranchAdminAccess
 from bullet_admin.forms.category import CategoryForm
+from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
-from competitions.models import Category, Competition
+from competitions.models import Category
 from django.shortcuts import redirect
+from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
 
 class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):
-    form_title = "Edit Category"
+    form_title = "Edit category"
     form_class = CategoryForm
 
-    def get_object(self, queryset=None):
-        return Category.objects.filter(id=self.kwargs["pk"]).first()
+    def get_queryset(self):
+        competition = get_active_competition(self.request)
+        return Category.objects.filter(competition=competition)
 
-    def form_valid(self, form):
-        category: Category = form.save(commit=False)
-        category.save()
-
-        return redirect("badmin:category_list")
+    def get_success_url(self):
+        return reverse("badmin:category_list")
 
 
 class CategoryCreateView(BranchAdminAccess, GenericForm, CreateView):
-    form_title = "New Category"
+    form_title = "New category"
     form_class = CategoryForm
 
     def form_valid(self, form):
         category: Category = form.save(commit=False)
-        category.competition = Competition.objects.get_current_competition(
-            self.request.BRANCH
-        )
+        category.competition = get_active_competition(self.request)
         category.save()
 
         return redirect("badmin:category_list")
@@ -39,12 +37,11 @@ class CategoryListView(ListView):
     paginate_by = 100
 
     def get_queryset(self):
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
+        competition = get_active_competition(self.request)
         return Category.objects.filter(competition=competition)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
-        competition = Competition.objects.get_current_competition(self.request.BRANCH)
+        competition = get_active_competition(self.request)
         ctx["category_count"] = Category.objects.filter(competition=competition).count()
-        ctx["is_branch_admin"] = is_branch_admin(self.request.user, self.request.BRANCH)
         return ctx

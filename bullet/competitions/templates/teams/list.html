@@ -31,9 +31,9 @@
 
     <div class="mb-4 text-center">
         {% if is_waitinglist %}
-        <a href="{% country_url "team_list" %}" class="link-primary">{% trans "Team list" %}</a>
+        <a href="{% country_url "team_list" %}?country={{ country }}" class="link-primary">{% trans "Team list" %}</a>
         {% else %}
-        <a href="{% country_url "waiting_list" %}" class="link-primary">{% trans "Waiting list" %}</a>
+        <a href="{% country_url "waiting_list" %}?country={{ country }}" class="link-primary">{% trans "Waiting list" %}</a>
         {% endif %}
     </div>
 
