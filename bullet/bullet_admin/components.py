@@ -9,3 +9,13 @@ class AdminHeader(component.Component):
 @component.register("abtn")
 class AdminButton(component.Component):
     template_name = "bullet_admin/components/button.html"
+
+
+@component.register("anav")
+class AdminNavigation(component.Component):
+    template_name = "bullet_admin/components/navigation.html"
+
+
+@component.register("anavitem")
+class AdminNavigationItem(component.Component):
+    template_name = "bullet_admin/components/navigation_item.html"

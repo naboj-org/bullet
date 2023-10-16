@@ -1,0 +1,4 @@
+{% load components %}
+<nav class="flex flex-wrap gap-2 flex-col sm:flex-row text-sm font-medium {{ attributes.class }}">
+    {% render_slot slots.inner_block %}
+</nav>

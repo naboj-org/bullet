@@ -5,12 +5,13 @@ from bullet_admin.forms.content import (
     MenuItemForm,
     PageForm,
 )
-from bullet_admin.mixins import TranslatorRequiredMixin
-from bullet_admin.views import DeleteView
+from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
+from bullet_admin.views import DeleteView as BDeleteView
+from bullet_admin.views import GenericForm
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from web.models import ContentBlock, Logo, Menu, Page
 
 
@@ -27,42 +28,62 @@ class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
-        if "q" in self.request.GET:
-            qs = qs.filter(
-                Q(title__icontains=self.request.GET["q"])
-                | Q(slug__icontains=self.request.GET["q"])
-            )
+        if "language" in self.request.GET:
+            qs = qs.filter(language=self.request.GET["language"])
         return qs
-
-
-class PageEditView(TranslatorRequiredMixin, PageQuerySetMixin, UpdateView):
-    template_name = "bullet_admin/content/page_form.html"
-    form_class = PageForm
-
-    def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
-        return kw
-
-    def get_success_url(self):
-        return reverse("badmin:page_list")
-
-
-class PageCreateView(TranslatorRequiredMixin, PageQuerySetMixin, CreateView):
-    template_name = "bullet_admin/content/page_form.html"
-    form_class = PageForm
-
-    def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
-        return kw
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        ctx["create"] = True
+        ctx["languages"] = (
+            Page.objects.filter(branch=self.request.BRANCH)
+            .values_list("language", flat=True)
+            .distinct()
+            .order_by("language")
+        )
         return ctx
 
-    def get_success_url(self):
+
+class PageEditView(
+    TranslatorRequiredMixin,
+    PageQuerySetMixin,
+    RedirectBackMixin,
+    GenericForm,
+    UpdateView,
+):
+    form_title = "Edit page"
+    form_class = PageForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def get_default_success_url(self):
+        return reverse("badmin:page_list")
+
+
+class PageCreateView(
+    TranslatorRequiredMixin,
+    PageQuerySetMixin,
+    RedirectBackMixin,
+    GenericForm,
+    CreateView,
+):
+    form_title = "Create page"
+    form_class = PageForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["branch"] = self.request.BRANCH
+        return kw
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if "language" not in initial:
+            initial["language"] = self.request.GET.get("language", None)
+        return initial
+
+    def get_default_success_url(self):
         return reverse("badmin:page_list")
 
     def form_valid(self, form):
@@ -73,8 +94,12 @@ class PageCreateView(TranslatorRequiredMixin, PageQuerySetMixin, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PageDeleteView(TranslatorRequiredMixin, PageQuerySetMixin, DeleteView):
-    def get_success_url(self):
+class PageDeleteView(
+    TranslatorRequiredMixin, PageQuerySetMixin, RedirectBackMixin, DeleteView
+):
+    template_name = "bullet_admin/content/page_delete.html"
+
+    def get_default_success_url(self):
         return reverse("badmin:page_list")
 
 
@@ -139,7 +164,7 @@ class ContentBlockEditView(
 
 
 class ContentBlockDeleteView(
-    TranslatorRequiredMixin, ContentBlockQuerySetMixin, DeleteView
+    TranslatorRequiredMixin, ContentBlockQuerySetMixin, BDeleteView
 ):
     def get_success_url(self):
         return reverse(
@@ -224,7 +249,7 @@ class LogoCreateView(TranslatorRequiredMixin, CreateView):
         return HttpResponseRedirect(reverse("badmin:logo_list"))
 
 
-class LogoDeleteView(TranslatorRequiredMixin, DeleteView):
+class LogoDeleteView(TranslatorRequiredMixin, BDeleteView):
     def get_queryset(self):
         return Logo.objects.filter(branch=self.request.BRANCH)
 
@@ -277,7 +302,7 @@ class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
         return reverse("badmin:menu_list")
 
 
-class MenuItemDeleteView(TranslatorRequiredMixin, DeleteView):
+class MenuItemDeleteView(TranslatorRequiredMixin, BDeleteView):
     def get_queryset(self):
         return Menu.objects.filter(branch=self.request.BRANCH)
 

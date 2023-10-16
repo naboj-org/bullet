@@ -16,6 +16,14 @@ class PageForm(forms.ModelForm):
             "content": forms.Textarea(attrs={"rows": 30}),
         }
 
+        labels = {
+            "slug": "URL",
+        }
+
+        help_texts = {
+            "slug": "The part after naboj.org/xx/xx/.",
+        }
+
     def __init__(self, branch: Branch, **kwargs):
         super().__init__(**kwargs)
         self._branch = branch
