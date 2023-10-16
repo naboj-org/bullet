@@ -5,9 +5,10 @@ document.body.addEventListener("htmx:afterSwap", (evt) => {
 
 let audio = new Audio('/static/sound/barcode_scanner.mp3');
 
-document.getElementById("js-open-reader").addEventListener("click", () => {
+document.getElementById("js-open-reader").addEventListener("click", (ev) => {
+    ev.preventDefault()
     document.getElementById("reader-wrapper").classList.remove("hidden")
-    document.getElementById("js-open-reader").style.display = "none"
+    document.getElementById("js-open-reader").classList.add("hidden")
     document.getElementById("js-scanform").classList.add("hidden")
     let successElement = document.getElementById("success-indicator")
 
