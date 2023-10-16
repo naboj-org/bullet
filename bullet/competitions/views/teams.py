@@ -2,7 +2,6 @@ from collections import defaultdict
 
 from competitions.forms.registration import ContestantForm
 from competitions.models import Category, Competition, Venue
-from countries.models import BranchCountry
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -120,9 +119,17 @@ class TeamListView(TemplateView):
             .select_related("school")
         )
 
+    def get_countries(self):
+        return (
+            Venue.objects.filter(category__competition=self.competition)
+            .order_by("country")
+            .distinct("country")
+            .values_list("country", flat=True)
+        )
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
-        competition: Competition = Competition.objects.get_current_competition(
+        self.competition: Competition = Competition.objects.get_current_competition(
             self.request.BRANCH
         )
 
@@ -130,7 +137,9 @@ class TeamListView(TemplateView):
             "country", self.request.COUNTRY_CODE
         ).upper()
         venues: QuerySet[Venue] = (
-            Venue.objects.for_competition(competition).filter(country=country).all()
+            Venue.objects.for_competition(self.competition)
+            .filter(country=country)
+            .all()
         )
         teams: QuerySet[Team] = self.get_teams(venues).all()
 
@@ -140,11 +149,7 @@ class TeamListView(TemplateView):
 
         ctx["venues"] = [{"venue": v, "teams": venue_teams[v.id]} for v in venues]
         ctx["country"] = country
-        ctx["countries"] = (
-            BranchCountry.objects.filter(branch=self.request.BRANCH)
-            .order_by("country")
-            .all()
-        )
+        ctx["countries"] = self.get_countries()
         return ctx
 
 
