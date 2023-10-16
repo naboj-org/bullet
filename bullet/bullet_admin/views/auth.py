@@ -1,5 +1,7 @@
+from bullet_admin.forms.auth import AuthenticationForm
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Invisible
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm as DjPasswordResetForm
 from django.contrib.auth.views import LoginView as DjLoginView
@@ -16,6 +18,14 @@ from bullet.utils.email import send_email
 
 class LoginView(DjLoginView):
     template_name = "bullet_admin/login.html"
+    form_class = AuthenticationForm
+
+    def form_valid(self, form):
+        if form.cleaned_data.get("remember_me"):
+            self.request.session.set_expiry(settings.SESSION_COOKIE_AGE)
+        else:
+            self.request.session.set_expiry(6 * 60 * 60)  # 6 hours
+        return super().form_valid(form)
 
 
 class LogoutView(DjLogoutView):
