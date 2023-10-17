@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.10.3 - 2023-10-17
+
+### Added
+
+- Added an option for selecting between short-lived and long-lived session on login (Remember me).
+
+### Changed
+
+- Reworked pages administration.
+- Removed France from Náboj Junior homepage.
+- Team lists now only show countries with at least one venue.
+- Reworked problem scanner.
+
 ## 2023.10.2 - 2023-10-08
 
 ### Changed
