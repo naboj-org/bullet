@@ -1,0 +1,19 @@
+<div class="mb-12">
+    <form hx-post="{% url "badmin:scanning_problems" %}" hx-target="#js-scanner-status" hx-swap="outerHTML"
+          hx-indicator="#scanner-indicator" class="mb-8" id="js-scanform" autocomplete="off">
+        {% csrf_token %}
+        <input type="text" name="barcode" id="js-scanfield" class="form-input input" placeholder="Barcode" autofocus>
+
+        <div class="mt-4 space-x-2">
+            {% #abtn label="Scan" button color="blue" %}
+            {% #abtn label="Phone scanner" url="#" icon="mdi:cellphone" id="js-open-reader" %}
+        </div>
+    </form>
+
+    <div id="reader-wrapper" class="relative hidden mb-8">
+        <div id="js-reader"></div>
+        <div id="success-indicator" class="z-10 absolute inset-0 ring-inset ring-8 ring-green-500/0"></div>
+    </div>
+
+    {% include "bullet_admin/scanning/problem/_scanner_status.html" %}
+</div>

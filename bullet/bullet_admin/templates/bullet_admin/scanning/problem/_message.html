@@ -1,0 +1,10 @@
+<div class="flex items-center gap-1">
+    {% if log.result == log.Result.OK %}
+        <span data-icon="mdi:check" class="iconify w-5 h-5"></span>
+    {% elif log.result == log.Result.SCAN_ERR %}
+        <span data-icon="mdi:alert" class="iconify w-5 h-5"></span>
+    {% elif log.result == log.Result.INTEGRITY_ERR %}
+        <span data-icon="mdi:close-circle" class="iconify w-5 h-5"></span>
+    {% endif %}
+    {{ log.message }}
+</div>

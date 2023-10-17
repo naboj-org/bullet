@@ -1,0 +1,50 @@
+<div id="js-scanner-status">
+    <div class="rounded-md overflow-hidden grid grid-cols-2 sm:grid-cols-4 gap-6 p-4 relative text-white/90
+            {% if last_log == None %}bg-gray-100 text-black/90{% elif last_log.result == last_log.Result.OK %}bg-green-600{% elif last_log.result == last_log.Result.SCAN_ERR %}bg-amber-600{% elif last_log.result == last_log.Result.INTEGRITY_ERR %}bg-red-700{% endif %}">
+        <div class="bg-gray-100 absolute inset-0 flex items-center justify-center htmx-indicator" id="scanner-indicator">
+            <span class="iconify w-12 h-12 text-gray-500 animate-spin" data-icon="mdi:loading"></span>
+        </div>
+
+        <div>
+            <div class="text-base font-semibold">
+                Venue
+            </div>
+
+            <div class="font-mono text-3xl mt-1">
+                {{ scanned_code.venue.shortcode|default:"-" }}
+            </div>
+
+            <div class="text-sm">
+                {{ scanned_code.venue|default:"-" }}
+            </div>
+        </div>
+        <div class="col-span-2">
+            <div class="text-base font-semibold">
+                Team
+            </div>
+
+            <div class="font-mono text-3xl mt-1">
+                {{ scanned_code.team.number|stringformat:"03d"|default:"-" }}
+            </div>
+
+            <div class="text-sm">
+                {{ scanned_code.team|default:"-" }}
+            </div>
+        </div>
+        <div class="sm:row-auto row-start-1 sm:col-auto col-start-2">
+            <div class="text-base font-semibold">
+                Problem
+            </div>
+
+            <div class="font-mono text-3xl mt-1">
+                {{ scanned_code.problem_number|default:"-" }}
+            </div>
+        </div>
+    </div>
+
+    {% if last_log.result != last_log.Result.OK %}
+    <div class="col-span-full text-lg mt-2">
+        {% include "./_message.html" with log=last_log %}
+    </div>
+    {% endif %}
+</div>

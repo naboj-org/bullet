@@ -1,0 +1,40 @@
+{% load badmin %}
+<div id="js-scan-history" hx-swap-oob="true">
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3 hidden sm:table-cell">Timestamp</th>
+                    <th class="p-3">Barcode</th>
+                    <th class="p-3">Message</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for log in logs %}
+                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100
+                            {% if log.result == log.Result.OK %}text-green-700{% elif log.result == log.Result.SCAN_ERR %}text-amber-700{% elif log.result == log.Result.INTEGRITY_ERR %}text-red-700{% endif %}">
+                        <td class="p-3 whitespace-nowrap tabular-nums hidden sm:table-cell">
+                            {{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}
+                        </td>
+                        <td class="p-3 whitespace-nowrap">{{ log.barcode }}</td>
+                        <td class="p-3 whitespace-nowrap w-full">
+                            {% include "./_message.html" %}
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                {% if log.result == log.Result.OK %}
+                                    <a href="{% url 'badmin:scanning_problems_undo' %}?barcode={{ log.barcode|urlencode }}" title="Undo" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                        <span class="iconify" data-icon="mdi:undo"></span>
+                                    </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% admin_paginator page_obj %}
+</div>

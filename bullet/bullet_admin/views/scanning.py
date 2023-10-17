@@ -7,6 +7,7 @@ from bullet_admin.utils import can_access_venue, get_active_competition
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.core.paginator import Paginator
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
@@ -23,7 +24,7 @@ from problems.logic import (
     mark_problem_solved,
     mark_problem_unsolved,
 )
-from problems.logic.scanner import parse_barcode, save_scan
+from problems.logic.scanner import ScannedBarcode, parse_barcode, save_scan
 from problems.models import CategoryProblem, Problem, ScannerLog, SolvedProblem
 from users.models import Team
 
@@ -33,18 +34,25 @@ class ProblemScanView(OperatorRequiredMixin, View):
         self.competition = get_active_competition(request)
         return super().dispatch(request, *args, **kwargs)
 
+    def get_context_data(self):
+        query = ScannerLog.objects.filter(user=self.request.user).order_by("-timestamp")
+        paginator = Paginator(query, 15)
+        page = paginator.get_page(self.request.GET.get("page", 1))
+        return {
+            "logs": page.object_list,
+            "page_obj": page,
+            "last_log": None,
+            "scanned_code": None,
+        }
+
     def get(self, request, *args, **kwargs):
         return TemplateResponse(
             request,
             "bullet_admin/scanning/problem.html",
-            {
-                "logs": ScannerLog.objects.filter(user=self.request.user).order_by(
-                    "-timestamp"
-                )
-            },
+            self.get_context_data(),
         )
 
-    def scan(self, barcode) -> ScannerLog:
+    def scan(self, barcode) -> tuple[ScannerLog, ScannedBarcode]:
         ts = timezone.now()
         log = ScannerLog(timestamp=ts, user=self.request.user, barcode=barcode)
         try:
@@ -53,7 +61,7 @@ class ProblemScanView(OperatorRequiredMixin, View):
             log.result = ScannerLog.Result.SCAN_ERR
             log.message = str(e)
             log.save()
-            return log
+            return log, None
 
         if not can_access_venue(self.request, scanned_barcode.venue):
             log.result = ScannerLog.Result.SCAN_ERR
@@ -62,25 +70,25 @@ class ProblemScanView(OperatorRequiredMixin, View):
                 f"problems in {scanned_barcode.venue.shortcode}."
             )
             log.save()
-            return log
+            return log, scanned_barcode
 
         if scanned_barcode.venue.start_time > timezone.now():
             log.result = ScannerLog.Result.INTEGRITY_ERR
             log.message = "The competition did not start yet."
             log.save()
-            return log
+            return log, scanned_barcode
 
         if scanned_barcode.venue.is_reviewed:
             log.result = ScannerLog.Result.INTEGRITY_ERR
             log.message = "The venue was already marked as reviewed."
             log.save()
-            return log
+            return log, scanned_barcode
 
         if scanned_barcode.team.is_reviewed:
             log.result = ScannerLog.Result.INTEGRITY_ERR
             log.message = "The team was already marked as reviewed."
             log.save()
-            return log
+            return log, scanned_barcode
 
         try:
             save_scan(scanned_barcode, ts)
@@ -88,21 +96,26 @@ class ProblemScanView(OperatorRequiredMixin, View):
             log.result = ScannerLog.Result.INTEGRITY_ERR
             log.message = str(e)
             log.save()
-            return log
+            return log, scanned_barcode
 
         log.result = ScannerLog.Result.OK
         log.save()
-        return log
+        return log, scanned_barcode
 
     def post(self, request, *args, **kwargs):
         barcode = self.request.POST.get("barcode", "").strip()[:32]
         if not barcode:
             return HttpResponse()
 
-        log = self.scan(barcode)
-        return TemplateResponse(
-            request, "bullet_admin/scanning/_logentry.html", {"log": log}
-        )
+        log, barcode = self.scan(barcode)
+        template = "bullet_admin/scanning/problem.html"
+        if self.request.htmx:
+            template = "bullet_admin/scanning/problem/_response.html"
+
+        ctx = self.get_context_data()
+        ctx["last_log"] = log
+        ctx["scanned_code"] = barcode
+        return TemplateResponse(request, template, ctx)
 
 
 class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
