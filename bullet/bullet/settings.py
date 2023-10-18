@@ -1,4 +1,5 @@
 import os
+import random
 import socket
 from pathlib import Path
 
@@ -175,7 +176,9 @@ PROBLEM_SOLVE_KEY = env("PROBLEM_SOLVE_KEY", default="")
 
 
 def silky_intercept(request):
-    return not request.path.startswith("/silk/")
+    if request.path.startswith("/silk/"):
+        return False
+    return random.random() < 0.1
 
 
 SILKY_AUTHENTICATION = True
