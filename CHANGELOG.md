@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.10.4 - 2023-10-26
+
+### Fixed
+
+- Fields with multiple checkboxes are now displaying normally.
+- School edit form did not save school types.
+
 ## 2023.10.3 - 2023-10-17
 
 ### Added
