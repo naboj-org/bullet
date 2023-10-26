@@ -45,6 +45,7 @@ class SchoolUpdateView(
         school: School = form.save(commit=False)
         school.importer_ignored = True
         school.save()
+        form.save_m2m()
 
         return redirect("badmin:school_list")
 
@@ -59,5 +60,6 @@ class SchoolCreateView(
         school: School = form.save(commit=False)
         school.importer_ignored = True
         school.save()
+        form.save_m2m()
 
         return redirect("badmin:school_list")
