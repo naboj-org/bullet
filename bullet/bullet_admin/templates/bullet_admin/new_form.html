@@ -10,7 +10,7 @@
 
     {% for field in form.visible_fields %}
     <div>
-        {% if field.field.widget.input_type == "checkbox" %}
+        {% if field.field.widget.input_type == "checkbox" and field.widget_type != "checkboxselectmultiple" %}
             <label class="flex items-center font-semibold gap-2">
                 {% bcheckbox field %}
                 {{ field.label }} {% if field.field.required %}<span title="Required field" class="text-red-600">*</span>{% endif %}

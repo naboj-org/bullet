@@ -39,12 +39,14 @@ class SchoolUpdateView(
     SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, UpdateView
 ):
     form_class = SchoolForm
+    template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
 
     def form_valid(self, form):
         school: School = form.save(commit=False)
         school.importer_ignored = True
         school.save()
+        form.save_m2m()
 
         return redirect("badmin:school_list")
 
@@ -59,5 +61,6 @@ class SchoolCreateView(
         school: School = form.save(commit=False)
         school.importer_ignored = True
         school.save()
+        form.save_m2m()
 
         return redirect("badmin:school_list")
