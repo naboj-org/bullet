@@ -39,6 +39,7 @@ class SchoolUpdateView(
     SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, UpdateView
 ):
     form_class = SchoolForm
+    template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
 
     def form_valid(self, form):
