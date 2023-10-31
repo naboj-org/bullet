@@ -55,8 +55,8 @@ def send_to_competition_email(team_id: int):
 
 
 @job
-def send_deletion_email(team_id: int):
-    team = Team.objects.get(id=team_id)
+def send_deletion_email(team: Team):
+    # We must use pickled Team here as the team don't exist in the database
     with TeamCountry(team):
         send_email(
             Branches[team.venue.category.competition.branch],
