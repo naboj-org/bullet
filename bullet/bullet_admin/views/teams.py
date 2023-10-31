@@ -254,7 +254,7 @@ class TeamDeleteView(AdminRequiredMixin, DeleteView):
         if not can_access_venue(request, obj.venue):
             return HttpResponseForbidden()
 
-        send_deletion_email.delay(obj.id)
+        send_deletion_email.delay(obj)
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
