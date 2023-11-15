@@ -2,6 +2,7 @@ from competitions.models import Competition, Venue
 from countries.utils import country_reverse
 from django.http import HttpResponseBadRequest
 from django.utils.decorators import method_decorator
+from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import TemplateView
@@ -66,7 +67,11 @@ class LiveResultsView(TemplateView):
         self.competition = Competition.objects.get_current_competition(
             self.request.BRANCH
         )
-        venue_codes = request.GET.get("venues", "").upper().split(",")
+        venue_codes = request.GET.get("venues", "")
+        if venue_codes:
+            venue_codes = venue_codes.upper().split(",")
+        else:
+            venue_codes = []
         venues = {
             v.shortcode: v
             for v in Venue.objects.for_competition(self.competition).filter(
@@ -74,8 +79,13 @@ class LiveResultsView(TemplateView):
             )
         }
         categories = []
-
         content_blocks.load_blocks(request, "category")
+
+        query = {"embed": 1}
+        venue_timer = request.GET.get("venue_timer")
+        if venue_timer:
+            query["venue_timer"] = venue_timer
+        query = urlencode(query)
 
         for code in venue_codes:
             if code not in venues:
@@ -91,7 +101,7 @@ class LiveResultsView(TemplateView):
             self.screens.append(
                 {
                     "title": f"{venue.name} ({category_name})",
-                    "url": f"{url}?embed",
+                    "url": f"{url}?{query}",
                 }
             )
 
@@ -109,7 +119,7 @@ class LiveResultsView(TemplateView):
                 self.screens.append(
                     {
                         "title": f"{c.name} ({category_name})",
-                        "url": f"{url}?embed",
+                        "url": f"{url}?{query}",
                     }
                 )
 
@@ -123,7 +133,7 @@ class LiveResultsView(TemplateView):
                 self.screens.append(
                     {
                         "title": f"{_('International')} ({category_name})",
-                        "url": f"{url}?embed",
+                        "url": f"{url}?{query}",
                     }
                 )
 
