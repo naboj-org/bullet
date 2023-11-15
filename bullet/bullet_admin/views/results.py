@@ -1,16 +1,19 @@
-from bullet_admin.mixins import AdminRequiredMixin
-from bullet_admin.utils import can_access_venue, get_active_competition
+from bullet_admin.access import AdminAccess, VenueAccess
+from bullet_admin.utils import get_active_competition
 from competitions.models import Category, Venue
 from countries.models import BranchCountry
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.utils.functional import cached_property
 from django.views.generic import TemplateView
 from problems.logic.results import get_venue_results
 
 
-class ResultsHomeView(AdminRequiredMixin, TemplateView):
+class ResultsHomeView(AdminAccess, TemplateView):
     template_name = "bullet_admin/results/select.html"
+    allow_operator = True
+    require_unlocked_competition = False
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -26,18 +29,17 @@ class ResultsHomeView(AdminRequiredMixin, TemplateView):
         return ctx
 
 
-class ResultsAnnouncementView(AdminRequiredMixin, TemplateView):
+class ResultsAnnouncementView(VenueAccess, TemplateView):
     template_name = "bullet_admin/results/announce.html"
+    allow_operator = True
+    require_unlocked_competition = False
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.can_access():
-            return self.handle_fail()
+    @cached_property
+    def venue(self):
+        return get_object_or_404(Venue, id=self.kwargs["venue"])
 
-        self.venue = get_object_or_404(Venue, id=kwargs["venue"])
-        if not can_access_venue(request, self.venue):
-            return self.handle_fail()
-
-        return super().dispatch(request, *args, **kwargs)
+    def get_permission_venue(self) -> "Venue":
+        return self.venue
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
