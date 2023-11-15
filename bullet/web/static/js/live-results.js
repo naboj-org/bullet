@@ -18,7 +18,7 @@
             htmx.ajax("GET", screens[i].url, "#js-screen-"+i)
         }
 
-        setTimeout(scrollMore, 10000)
+        setTimeout(scrollMore, 5000)
     }
 
     const nextScreen = () => {
@@ -34,10 +34,14 @@
 
     const scrollMore = () => {
         const oldScroll = document.scrollingElement.scrollTop
-        document.scrollingElement.scrollTop += window.innerHeight / 4
+
+        const row = document.querySelector("#js-results-content tr")
+        const offset = Math.max(Math.round(row.clientHeight / 40), 1)
+        const divided = row.clientHeight / offset
+        document.scrollingElement.scrollTop += offset
 
         if (oldScroll !== document.scrollingElement.scrollTop) {
-            setTimeout(scrollMore, 5000)
+            setTimeout(scrollMore, 1000/divided)
         } else {
             setTimeout(nextScreen, 1000)
         }
