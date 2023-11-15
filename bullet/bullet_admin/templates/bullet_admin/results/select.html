@@ -1,47 +1,53 @@
 {% extends "bullet_admin/base.html" %}
-{% load bform %}
-{% load country_url %}
 
 {% block title %}Results{% endblock %}
 
 {% block content %}
-    <article class="border rounded-md bg-white shadow-lg overflow-hidden m-8">
-        <header class="px-4 py-3 bg-slate-100 border-b">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Category results</h2>
-        </header>
-        <table class="w-full">
+    <div class="p-8 max-w-7xl mx-auto">
+        {% aheader show_subtitle=True %}
+            {% slot title %}
+                Results
+            {% endslot %}
+
+            Select "Admin results" to see unfrozen results during the competition.
+        {% endaheader %}
+
+        {% asubheader %}
+            Category results
+        {% endasubheader %}
+
+        <table class="w-full text-sm">
             <tbody class="divide-y">
                 {% for c in categories %}
-                <tr>
-                    <td class="p-4">{{ c.identifier }}</td>
-                    <td class="p-4">
+                <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                    <td class="p-3 whitespace-nowrap">{{ c.identifier }}</td>
+                    <td class="p-3 whitespace-nowrap">
                         <a href="{% url "results_category" b_country=country b_language=language category=c.identifier %}" class="link-primary">Public results</a>
                     </td>
-                    <td class="p-4">
+                    <td class="p-3 whitespace-nowrap">
                         <a href="{% url "results_category" b_country=country b_language=language category=c.identifier %}?admin=1" class="link-primary">Admin results</a>
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-    </article>
 
-    <article class="border rounded-md bg-white shadow-lg overflow-hidden m-8">
-        <header class="px-4 py-3 bg-slate-100 border-b">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Venue results</h2>
-        </header>
-        <table class="w-full">
+        {% asubheader %}
+            Venue results
+        {% endasubheader %}
+
+        <table class="w-full text-sm">
             <tbody class="divide-y">
                 {% for v in venues %}
-                <tr>
-                    <td class="p-4">{{ v }}</td>
-                    <td class="p-4">
+                <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                    <td class="p-3 whitespace-nowrap">{{ v }}</td>
+                    <td class="p-3 whitespace-nowrap">
                         <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}" class="link-primary">Public results</a>
                     </td>
-                    <td class="p-4">
+                    <td class="p-3 whitespace-nowrap">
                         <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}?admin=1" class="link-primary">Admin results</a>
                     </td>
-                    <td class="p-4">
+                    <td class="p-3 whitespace-nowrap">
                         {% if v in my_venues %}
                         <a href="{% url "badmin:results_announce" venue=v.id %}?hidden" class="link-primary">Results announcement</a>
                         {% endif %}
@@ -50,5 +56,5 @@
                 {% endfor %}
             </tbody>
         </table>
-    </article>
+    </div>
 {% endblock %}
