@@ -1,4 +1,4 @@
-from bullet_admin.utils import is_admin
+from bullet_admin.access import is_any_admin
 from competitions.models import Category, Competition, Venue
 from django.http import Http404
 from django.shortcuts import get_object_or_404
@@ -77,7 +77,9 @@ class CategoryResultsView(ResultsViewMixin, ListView):
 
         admin = False
         if request.GET.get("admin") == "1":
-            admin = is_admin(self.request.user, self.competition)
+            admin = is_any_admin(
+                self.request.user, self.competition, allow_operator=True
+            )
 
         start_time = None
         if "venue_timer" in request.GET:
@@ -135,7 +137,9 @@ class VenueResultsView(ResultsViewMixin, ListView):
 
         admin = False
         if request.GET.get("admin") == "1":
-            admin = is_admin(self.request.user, self.competition)
+            admin = is_any_admin(
+                self.request.user, self.competition, allow_operator=True
+            )
         self.results_time = results_time(
             self.competition,
             timezone.now(),

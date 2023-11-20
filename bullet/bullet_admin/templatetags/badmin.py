@@ -44,15 +44,9 @@ def admin_sidebar(context):
                     "Review",
                     reverse("badmin:scanning_review"),
                 ),
+                ("fa-trophy", "Results", reverse("badmin:results")),
             ]
         )
-
-        if not competition_role.is_operator:
-            items.extend(
-                [
-                    ("fa-trophy", "Results", reverse("badmin:results")),
-                ]
-            )
 
         menu_items.append(("Competition", items))
 
