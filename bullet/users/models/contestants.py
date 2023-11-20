@@ -218,6 +218,7 @@ class Team(models.Model):
             "language": self.language,
             "status": self.status.value,
             "contestants": self.contestants_names,
+            "online_password": self.online_password,
         }
 
 
