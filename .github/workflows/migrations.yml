@@ -26,4 +26,5 @@ jobs:
     - name: Tests for missing migrations
       env:
         DEBUG: True
+        DATABASE_URL: 'sqlite://'
       run: pipenv run bullet/manage.py makemigrations --check
