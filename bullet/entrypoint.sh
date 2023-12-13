@@ -2,10 +2,10 @@
 
 env="${1:-prod}"
 
-python manage.py wait_for_database
-
 if [ "$env" = "worker" ]; then
   exec python manage.py rqworker default
+elif [ "$env" = "dev" ]; then
+  python manage.py wait_for_database
 fi
 
 python manage.py migrate
