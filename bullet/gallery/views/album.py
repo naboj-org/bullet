@@ -19,7 +19,7 @@ class AlbumView(GalleryCompetitionMixin, ListView):
     template_name = "gallery/album.html"
 
     def get_queryset(self):
-        return Photo.objects.filter(album=self.album)
+        return Photo.objects.filter(album=self.album).order_by("taken_at")
 
     def dispatch(self, request, *args, **kwargs):
         self.album = get_object_or_404(
