@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Náboj German Translation\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-29 05:24+0000\n"
-"PO-Revision-Date: 2023-03-03 07:53+0100\n"
+"PO-Revision-Date: 2023-12-11 09:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 2.4.2\n"
 
 #: competitions/branches.py:72
 msgid "Náboj Math"
@@ -82,11 +82,11 @@ msgstr "Telefonnummer"
 
 #: competitions/forms/registration.py:82
 msgid "Language"
-msgstr ""
+msgstr "Sprache"
 
 #: competitions/forms/registration.py:86
 msgid "You will receive problem statements in the language you choose."
-msgstr ""
+msgstr "Du bekommst die Aufgaben in der gewählten Sprache gestellt."
 
 #: competitions/forms/registration.py:108
 msgid "(Please select)"
@@ -98,12 +98,12 @@ msgstr "Diese Schulstufe kann in der gewählten Kategorie nicht antreten."
 
 #: competitions/forms/registration.py:132
 msgid "The uploaded file is too large."
-msgstr ""
+msgstr "Die hochgeladene Datei ist zu groß."
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
-msgstr ""
+msgstr "Archiv"
 
 #: competitions/templates/archive/list.html:22
 #: problems/templates/problems/results.html:6
@@ -121,18 +121,16 @@ msgstr "Ergebnisse"
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problem statements"
-msgstr ""
+msgstr "Aufgabenstellung"
 
 #: competitions/templates/archive/list.html:24
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
 msgid "Albums"
-msgstr ""
+msgstr "Alben"
 
 #: competitions/templates/archive/list.html:30
-#, fuzzy
-#| msgid "Competition day"
 msgid "Older competitions"
-msgstr "Wettbewerbstag"
+msgstr "Ältere Wettbewerbe"
 
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
@@ -160,10 +158,9 @@ msgstr "Wenn du glaubst, dass das ein Fehler ist, kontaktiere uns."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "An diesem Veranstaltungsort beginnt der Wettbewerb um %(time)s statt zur üblichen Startzeit."
+msgstr "An diesem Veranstaltungsort beginnt der Wettbewerb um %(time)s statt zur üblichen Startzeit %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -383,41 +380,41 @@ msgstr "Team wurde abgemeldet."
 #: gallery/templates/gallery/album.html:6
 #: gallery/templates/gallery/album.html:15
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: problems/templates/archive/problems.html:20
 msgid "Download as PDF"
-msgstr ""
+msgstr "Als PDF herunterladen"
 
 #: problems/templates/archive/problems.html:27
 #, python-format
 msgid "Problem %(n)s"
-msgstr ""
+msgstr "Aufgabe %(n)s"
 
 #: problems/templates/archive/problems.html:32
 msgid "Solution"
-msgstr ""
+msgstr "Lösung"
 
 #: problems/templates/archive/problems.html:46
 msgid "Statistics"
-msgstr ""
+msgstr "Statistik"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
 #: problems/templates/archive/problems.html:54
 msgid "team received"
 msgid_plural "teams received"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Team erhalten"
+msgstr[1] "Teams erhalten"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
 #: problems/templates/archive/problems.html:64
 msgid "teams solved"
-msgstr ""
+msgstr "Teams gelöst"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
 #: problems/templates/archive/problems.html:69
 msgid "average solving time"
-msgstr ""
+msgstr "durchschnittliche Zeit für die Lösung"
 
 #: problems/templates/problems/results.html:32 problems/views/results.py:113
 msgid "International"
@@ -602,23 +599,20 @@ msgid "Our partners"
 msgstr "Unsere Partner"
 
 #: web/templates/web/snippets/home_hero_buttons.html:6
-#, fuzzy, python-format
-#| msgid "Registration starts"
+#, python-format
 msgid "Registration starts on %(start)s."
-msgstr "Anmeldung startet"
+msgstr "Anmeldung startet um %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:9
 #: web/templates/web/snippets/home_hero_buttons.html:20
-#, fuzzy, python-format
-#| msgid "The competition did not start yet."
+#, python-format
 msgid "The competition will take place on %(start)s."
-msgstr "Der Wettbewerb hat noch nicht begonnen."
+msgstr "Der Wettbewerb findet am %(start)s statt."
 
 #: web/templates/web/snippets/home_hero_buttons.html:17
-#, fuzzy, python-format
-#| msgid "Registration ends in %(end)s"
+#, python-format
 msgid "Registration ends on %(end)s."
-msgstr "Anmeldung endet in %(end)s"
+msgstr "Anmeldung endet in %(end)s."
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
