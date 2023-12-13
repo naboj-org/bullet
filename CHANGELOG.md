@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2023.12 - 2023-12-13
+
+### Changed
+
+- Updated HU translations
+- Updated DE translations
+- Photos in albums are now sorted by time of creation
+
 ## 2023.11 - 2023-11-20
 
 ### Changed
