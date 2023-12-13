@@ -35,3 +35,4 @@ class Photo(models.Model):
     image = PictureField(
         upload_to="photos", width_field="image_width", height_field="image_height"
     )
+    taken_at = models.DateTimeField(blank=True, null=True)

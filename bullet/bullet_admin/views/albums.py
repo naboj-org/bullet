@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from bullet_admin.access import PhotoUploadAccess
 from bullet_admin.forms.album import AlbumForm
 from bullet_admin.views import GenericForm
@@ -6,6 +8,7 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
+from PIL import Image
 
 
 class AlbumListView(PhotoUploadAccess, ListView):
@@ -43,8 +46,17 @@ class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
 
     def form_valid(self, form):
         album: Album = form.save(commit=False)
-        for photo in form.cleaned_data["photo_files"]:
-            Photo(album=album, image=photo).save()
+        for file in form.cleaned_data["photo_files"]:
+            photo = Photo(album=album, image=file)
+
+            im = Image.open(file)
+            taken_at: str | None = im.getexif().get(36867)
+            if taken_at:
+                photo.taken_at = datetime.strptime(
+                    taken_at, "%Y:%m:%d %H:%M:%S"
+                ).replace(tzinfo=timezone.utc)
+
+            photo.save()
         album.save()
         messages.success(self.request, "Album edited successfully.")
         return redirect("badmin:album_list")
