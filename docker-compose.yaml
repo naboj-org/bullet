@@ -54,7 +54,7 @@ services:
       -  geiop_data:/usr/share/GeoIP
 
   meilisearch:
-    image: getmeili/meilisearch:v0.28
+    image: getmeili/meilisearch:v1.6.0
     volumes:
       - search_data:/meili_data
 
