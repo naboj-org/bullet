@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-09-29 05:24+0000\n"
-"PO-Revision-Date: 2023-03-17 19:49+0200\n"
+"PO-Revision-Date: 2024-01-10 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: et_EE\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: competitions/branches.py:72
 msgid "Náboj Math"
@@ -82,11 +82,11 @@ msgstr "Telefoninumber"
 
 #: competitions/forms/registration.py:82
 msgid "Language"
-msgstr ""
+msgstr "Keel"
 
 #: competitions/forms/registration.py:86
 msgid "You will receive problem statements in the language you choose."
-msgstr ""
+msgstr "Te saate ülesannete tekstid teie valitud keeles."
 
 #: competitions/forms/registration.py:108
 msgid "(Please select)"
@@ -98,12 +98,12 @@ msgstr "See klass ei saa osaleda valitud vanuserühmas."
 
 #: competitions/forms/registration.py:132
 msgid "The uploaded file is too large."
-msgstr ""
+msgstr "Üleslaetud fail on liiga suur."
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
-msgstr ""
+msgstr "Arhiiv"
 
 #: competitions/templates/archive/list.html:22
 #: problems/templates/problems/results.html:6
@@ -121,18 +121,16 @@ msgstr "Tulemused"
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problem statements"
-msgstr ""
+msgstr "Ülesannete tekstid"
 
 #: competitions/templates/archive/list.html:24
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
 msgid "Albums"
-msgstr ""
+msgstr "Pildialbumid"
 
 #: competitions/templates/archive/list.html:30
-#, fuzzy
-#| msgid "Competition day"
 msgid "Older competitions"
-msgstr "Võistluse kuupäev"
+msgstr "Varasemad võistlused"
 
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
@@ -160,10 +158,9 @@ msgstr "Kui usute, et tegemist on veaga, võtke meiega ühendust."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja asemel kell %(time)s."
+msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja %(usual)s asemel kell %(time)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -383,41 +380,41 @@ msgstr "Võistkonna registreering tühistati."
 #: gallery/templates/gallery/album.html:6
 #: gallery/templates/gallery/album.html:15
 msgid "Album"
-msgstr ""
+msgstr "Pildialbum"
 
 #: problems/templates/archive/problems.html:20
 msgid "Download as PDF"
-msgstr ""
+msgstr "Lae alla PDF"
 
 #: problems/templates/archive/problems.html:27
 #, python-format
 msgid "Problem %(n)s"
-msgstr ""
+msgstr "Ülesanne %(n)s"
 
 #: problems/templates/archive/problems.html:32
 msgid "Solution"
-msgstr ""
+msgstr "Lahendus"
 
 #: problems/templates/archive/problems.html:46
 msgid "Statistics"
-msgstr ""
+msgstr "Statistika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
 #: problems/templates/archive/problems.html:54
 msgid "team received"
 msgid_plural "teams received"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "võistkond sai kätte"
+msgstr[1] "võistkonda sai kätte"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
 #: problems/templates/archive/problems.html:64
 msgid "teams solved"
-msgstr ""
+msgstr "võistkonda lahendas ära"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
 #: problems/templates/archive/problems.html:69
 msgid "average solving time"
-msgstr ""
+msgstr "keskmine lahendamise aeg"
 
 #: problems/templates/problems/results.html:32 problems/views/results.py:113
 msgid "International"
@@ -602,23 +599,20 @@ msgid "Our partners"
 msgstr "Meie partnerid"
 
 #: web/templates/web/snippets/home_hero_buttons.html:6
-#, fuzzy, python-format
-#| msgid "Registration starts"
+#, python-format
 msgid "Registration starts on %(start)s."
-msgstr "Registreerumine algus"
+msgstr "Registreerumine algus: %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:9
 #: web/templates/web/snippets/home_hero_buttons.html:20
-#, fuzzy, python-format
-#| msgid "The competition did not start yet."
+#, python-format
 msgid "The competition will take place on %(start)s."
-msgstr "Võistlus pole veel alanud."
+msgstr "Võistluse kuupäev: %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:17
-#, fuzzy, python-format
-#| msgid "Registration ends in %(end)s"
+#, python-format
 msgid "Registration ends on %(end)s."
-msgstr "Registreerumise lõpuni on jäänud %(end)s"
+msgstr "Registreerumise lõpp: %(end)s."
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
