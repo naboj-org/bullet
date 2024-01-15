@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     "documents",
     #
     "django_countries",
-    "captcha",
+    "django_recaptcha",
     "django_minify_html",
     "fontawesomefree",
     "django_htmx",
@@ -212,7 +212,7 @@ if dsn:
 if DEBUG:
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
     INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ips + ["127.0.0.1"]
-    SILENCED_SYSTEM_CHECKS = ["captcha.recaptcha_test_key_error"]
+    SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 else:
     SESSION_COOKIE_DOMAIN = env("PARENT_HOST", default="naboj.org")
     SESSION_COOKIE_SECURE = True

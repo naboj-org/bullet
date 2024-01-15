@@ -1,8 +1,6 @@
 from typing import Iterable
 
 from bullet_admin.forms.utils import get_language_choices_for_venue
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
 from competitions.models import Category, Venue
 from countries.logic.country import get_country
 from django import forms
@@ -12,6 +10,8 @@ from django.forms import ModelForm
 from django.utils.safestring import mark_safe
 from django.utils.translation import get_language
 from django.utils.translation import gettext_lazy as _
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Invisible
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, SpanishTeamData, Team
 

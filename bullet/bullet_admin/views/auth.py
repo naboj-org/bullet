@@ -1,6 +1,4 @@
 from bullet_admin.forms.auth import AuthenticationForm
-from captcha.fields import ReCaptchaField
-from captcha.widgets import ReCaptchaV2Invisible
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.forms import PasswordResetForm as DjPasswordResetForm
@@ -11,6 +9,8 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView as DjPasswordResetConfirmView,
 )
 from django.contrib.auth.views import PasswordResetView as DjPasswordResetView
+from django_recaptcha.fields import ReCaptchaField
+from django_recaptcha.widgets import ReCaptchaV2Invisible
 from django_rq import job
 
 from bullet.utils.email import send_email
