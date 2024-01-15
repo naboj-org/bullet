@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.MM[.PATCH]` version format.
 
+## 2024.1 - 2024-01-15
+
+### Changed
+
+- Updated ET translations
+
 ## 2023.12.1 - 2023-12-14
 
 ### Fixed
