@@ -7,7 +7,7 @@ tag = true
 push = true
 
 [tool.bumpver.file_patterns]
-"setup.cfg" = [
+"pyproject.toml" = [
     'current_version = "{version}"',
 ]
 "bullet/bullet/__init__.py" = [
