@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 05:24+0000\n"
+"POT-Creation-Date: 2024-01-21 17:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -51,11 +51,11 @@ msgstr "Chemie"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:53
+#: competitions/forms/registration.py:54
 msgid "Selected school is not valid."
 msgstr "De geselecteerde school is niet geldig."
 
-#: competitions/forms/registration.py:79
+#: competitions/forms/registration.py:80
 #: competitions/templates/register/details.html:33
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:47
@@ -65,33 +65,33 @@ msgstr "De geselecteerde school is niet geldig."
 msgid "Full name"
 msgstr "Volledige naam"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "E-mailadres"
 
-#: competitions/forms/registration.py:81
+#: competitions/forms/registration.py:82
 #: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "Telefoonnummer"
 
-#: competitions/forms/registration.py:82
+#: competitions/forms/registration.py:83
 msgid "Language"
 msgstr "Taal"
 
-#: competitions/forms/registration.py:86
+#: competitions/forms/registration.py:87
 msgid "You will receive problem statements in the language you choose."
 msgstr "U ontvangt probleemopgaven in de taal die u kiest."
 
-#: competitions/forms/registration.py:108
+#: competitions/forms/registration.py:109
 msgid "(Please select)"
 msgstr "(Selecteer aub)"
 
-#: competitions/forms/registration.py:125
+#: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
 msgstr "Deze klas kan niet concurreren in de gekozen categorie."
 
-#: competitions/forms/registration.py:132
+#: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
 msgstr ""
 
@@ -338,17 +338,19 @@ msgstr "U kunt het certificaat voor uw team downloaden door op onderstaande knop
 msgid "Download certificate"
 msgstr "Certificaat downloaden"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:12
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:13
+#: competitions/templates/teams/list.html:37
 msgid "Waiting list"
 msgstr "Wachtlijst"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:15
+#: competitions/templates/teams/list.html:35
 msgid "Team list"
 msgstr "Teamlijst"
 
-#: competitions/templates/teams/list.html:40
+#: competitions/templates/teams/list.html:50
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Teams: %(teams)s / %(capacity)s"
@@ -369,7 +371,7 @@ msgstr "Team succesvol bewerkt."
 msgid "Registration successfully confirmed."
 msgstr "Inschrijving bevestigd."
 
-#: competitions/views/teams.py:213
+#: competitions/views/teams.py:219
 msgid "Team was unregistered."
 msgstr "Team is uitgeschreven."
 
@@ -391,28 +393,33 @@ msgstr "Opgave %(n)s"
 msgid "Solution"
 msgstr "Oplossing"
 
-#: problems/templates/archive/problems.html:46
+#. Translators: This is a label for numerical answer of a problem used in problem archive.
+#: problems/templates/archive/problems.html:36
+msgid "Answer"
+msgstr "Antwoord"
+
+#: problems/templates/archive/problems.html:47
 msgid "Statistics"
 msgstr "Statistieken"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:54
+#: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "teams ontvingen"
 msgstr[1] "Geen enkel team heeft al een probleem opgelost"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:64
+#: problems/templates/archive/problems.html:65
 msgid "teams solved"
 msgstr "teams opgelost"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:69
+#: problems/templates/archive/problems.html:70
 msgid "average solving time"
 msgstr "gemiddelde oplostijd"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:113
+#: problems/templates/problems/results.html:32 problems/views/results.py:116
 msgid "International"
 msgstr "Internationale"
 
@@ -447,14 +454,6 @@ msgstr "De wedstrijd is aan de gang, de resultaten kunnen nog veranderen."
 #: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "Geen enkel team heeft al een probleem opgelost"
-
-#: problems/templates/problems/results/table.html:81
-msgid "Previous"
-msgstr "Vorige"
-
-#: problems/templates/problems/results/table.html:84
-msgid "Next"
-msgstr "Volgende"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -500,22 +499,30 @@ msgstr "Hallo %(name)s!"
 msgid "Please click on the following link to confirm your registration."
 msgstr "Klik aub op de volgende link om uw inschrijving te bevestigen."
 
-#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Huidige teamleden: %(contestants)s"
+
+#: web/templates/mail/messages/registration.html:13
 msgid "Confirm registration"
 msgstr "Inschrijving bevestigen"
 
-#: web/templates/mail/messages/registration.html:14
-#: web/templates/mail/messages/registration.txt:7
+#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "U kan deze link ook gebruiken om uw team aan te passen."
 
-#: web/templates/mail/messages/registration.html:15
-#: web/templates/mail/messages/registration.txt:9
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Beantwoord gerust deze e-mail als u nog vragen heeft."
 
-#: web/templates/mail/messages/registration.html:17
-#: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.txt:13
 #: web/templates/mail/messages/team_delete.html:12
 #: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
@@ -523,7 +530,7 @@ msgstr "Beantwoord gerust deze e-mail als u nog vragen heeft."
 msgid "Best regards,"
 msgstr "Met vriendelijke groeten,"
 
-#: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/registration.html:27
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Als de knop niet werkt, kunt u het volgende adres in een browser openen:"
@@ -543,12 +550,6 @@ msgstr "Teamleden: %(contestants)s"
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "Uw team is verplaatst van de wachtlijst naar de lijst van deelnemende teams."
-
-#: web/templates/mail/messages/to_competition.html:10
-#: web/templates/mail/messages/to_competition.txt:5
-#, python-format
-msgid "Current team members: %(contestants)s"
-msgstr "Huidige teamleden: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7

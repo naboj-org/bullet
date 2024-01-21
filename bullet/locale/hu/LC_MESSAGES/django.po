@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 05:24+0000\n"
+"POT-Creation-Date: 2024-01-21 17:02+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -51,11 +51,11 @@ msgstr "Kémia"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:53
+#: competitions/forms/registration.py:54
 msgid "Selected school is not valid."
 msgstr "A kiválasztott iskola nem megfelelő."
 
-#: competitions/forms/registration.py:79
+#: competitions/forms/registration.py:80
 #: competitions/templates/register/details.html:33
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:47
@@ -65,33 +65,33 @@ msgstr "A kiválasztott iskola nem megfelelő."
 msgid "Full name"
 msgstr "Teljes név"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "E-mail cím"
 
-#: competitions/forms/registration.py:81
+#: competitions/forms/registration.py:82
 #: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "Telefonszám"
 
-#: competitions/forms/registration.py:82
+#: competitions/forms/registration.py:83
 msgid "Language"
 msgstr "Nyelv"
 
-#: competitions/forms/registration.py:86
+#: competitions/forms/registration.py:87
 msgid "You will receive problem statements in the language you choose."
 msgstr "A kiválasztott nyelven fogjátok megkapni a feladatokat."
 
-#: competitions/forms/registration.py:108
+#: competitions/forms/registration.py:109
 msgid "(Please select)"
 msgstr "(Kérjük, válasszon)"
 
-#: competitions/forms/registration.py:125
+#: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
 msgstr "A megadott osztály nem versenyezhet a kiválasztott kategóriában."
 
-#: competitions/forms/registration.py:132
+#: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
 msgstr "A feltöltött file túl nagy."
 
@@ -337,17 +337,19 @@ msgstr "Az alábbi gombra kattintva letöltheti a csapatának szóló emléklapo
 msgid "Download certificate"
 msgstr "Emléklap letöltése"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:12
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:13
+#: competitions/templates/teams/list.html:37
 msgid "Waiting list"
 msgstr "Várólista"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:15
+#: competitions/templates/teams/list.html:35
 msgid "Team list"
 msgstr "Csapatok listája"
 
-#: competitions/templates/teams/list.html:40
+#: competitions/templates/teams/list.html:50
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Csapatok: %(teams)s / %(capacity)s"
@@ -368,7 +370,7 @@ msgstr "A csapat adatait sikeresen módosította."
 msgid "Registration successfully confirmed."
 msgstr "Regisztráció sikeresen megerősítve."
 
-#: competitions/views/teams.py:213
+#: competitions/views/teams.py:219
 msgid "Team was unregistered."
 msgstr "A csapat nem volt regisztrálva."
 
@@ -390,28 +392,33 @@ msgstr "%(n)s. feladat"
 msgid "Solution"
 msgstr "Megoldás"
 
-#: problems/templates/archive/problems.html:46
+#. Translators: This is a label for numerical answer of a problem used in problem archive.
+#: problems/templates/archive/problems.html:36
+msgid "Answer"
+msgstr "Eredmény"
+
+#: problems/templates/archive/problems.html:47
 msgid "Statistics"
 msgstr "Statisztika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:54
+#: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "csapat kapta meg a feladatot"
 msgstr[1] "csapat kapta meg a feladatot"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:64
+#: problems/templates/archive/problems.html:65
 msgid "teams solved"
 msgstr "csapat oldotta meg a feladatot"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:69
+#: problems/templates/archive/problems.html:70
 msgid "average solving time"
 msgstr "átlagos megoldási idő"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:113
+#: problems/templates/problems/results.html:32 problems/views/results.py:116
 msgid "International"
 msgstr "Nemzetközi"
 
@@ -446,14 +453,6 @@ msgstr "A verseny még tart, az eredmények változhatnak."
 #: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "(Egy csapat sem oldott még meg feladatot)"
-
-#: problems/templates/problems/results/table.html:81
-msgid "Previous"
-msgstr "Előző"
-
-#: problems/templates/problems/results/table.html:84
-msgid "Next"
-msgstr "Következő"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -499,22 +498,30 @@ msgstr "Helló %(name)s!"
 msgid "Please click on the following link to confirm your registration."
 msgstr "Kérjük kattintson az alábbi linkre a regisztráció megerősítéséhez."
 
-#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Aktuális csapattagok: %(contestants)s"
+
+#: web/templates/mail/messages/registration.html:13
 msgid "Confirm registration"
 msgstr "Erősítse meg a regisztrációt"
 
-#: web/templates/mail/messages/registration.html:14
-#: web/templates/mail/messages/registration.txt:7
+#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "Ezt a linket használhatja a csapat adatainak módosításához is."
 
-#: web/templates/mail/messages/registration.html:15
-#: web/templates/mail/messages/registration.txt:9
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Ha bármilyen kérdése van, kérjük, válaszoljon erre az e-mailre."
 
-#: web/templates/mail/messages/registration.html:17
-#: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.txt:13
 #: web/templates/mail/messages/team_delete.html:12
 #: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
@@ -522,7 +529,7 @@ msgstr "Ha bármilyen kérdése van, kérjük, válaszoljon erre az e-mailre."
 msgid "Best regards,"
 msgstr "Üdvözlettel,"
 
-#: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/registration.html:27
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Ha nem működik a gomb, beillesztheti ezt a címet a böngészőjébe:"
@@ -542,12 +549,6 @@ msgstr "Csapat tagok: %(contestants)s"
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "A csapat a várólistáról a versenyző csapatok listájára került."
-
-#: web/templates/mail/messages/to_competition.html:10
-#: web/templates/mail/messages/to_competition.txt:5
-#, python-format
-msgid "Current team members: %(contestants)s"
-msgstr "Aktuális csapattagok: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7

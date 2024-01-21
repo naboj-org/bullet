@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 05:24+0000\n"
+"POT-Creation-Date: 2024-01-21 17:02+0000\n"
 "PO-Revision-Date: 2024-01-10 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,11 +56,11 @@ msgstr "Keemia"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:53
+#: competitions/forms/registration.py:54
 msgid "Selected school is not valid."
 msgstr "Valitud kooli ei leidu."
 
-#: competitions/forms/registration.py:79
+#: competitions/forms/registration.py:80
 #: competitions/templates/register/details.html:33
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:47
@@ -70,33 +70,33 @@ msgstr "Valitud kooli ei leidu."
 msgid "Full name"
 msgstr "Ees- ja perekonnanimi"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "Meiliaadress"
 
-#: competitions/forms/registration.py:81
+#: competitions/forms/registration.py:82
 #: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "Telefoninumber"
 
-#: competitions/forms/registration.py:82
+#: competitions/forms/registration.py:83
 msgid "Language"
 msgstr "Keel"
 
-#: competitions/forms/registration.py:86
+#: competitions/forms/registration.py:87
 msgid "You will receive problem statements in the language you choose."
 msgstr "Te saate ülesannete tekstid teie valitud keeles."
 
-#: competitions/forms/registration.py:108
+#: competitions/forms/registration.py:109
 msgid "(Please select)"
 msgstr "(Palun valige)"
 
-#: competitions/forms/registration.py:125
+#: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
 msgstr "See klass ei saa osaleda valitud vanuserühmas."
 
-#: competitions/forms/registration.py:132
+#: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
 msgstr "Üleslaetud fail on liiga suur."
 
@@ -342,17 +342,19 @@ msgstr "Saate oma võistkonna sertifikaadi alla laadida, klõpsates alloleval nu
 msgid "Download certificate"
 msgstr "Lae alla sertifikaat"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:12
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:13
+#: competitions/templates/teams/list.html:37
 msgid "Waiting list"
 msgstr "Ootenimekiri"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:15
+#: competitions/templates/teams/list.html:35
 msgid "Team list"
 msgstr "Võistkondade nimekiri"
 
-#: competitions/templates/teams/list.html:40
+#: competitions/templates/teams/list.html:50
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Võistkondi: %(teams)s / %(capacity)s"
@@ -373,7 +375,7 @@ msgstr "Võistkond on edukalt muudetud."
 msgid "Registration successfully confirmed."
 msgstr "Registreering on edukalt kinnitatud."
 
-#: competitions/views/teams.py:213
+#: competitions/views/teams.py:219
 msgid "Team was unregistered."
 msgstr "Võistkonna registreering tühistati."
 
@@ -395,28 +397,33 @@ msgstr "Ülesanne %(n)s"
 msgid "Solution"
 msgstr "Lahendus"
 
-#: problems/templates/archive/problems.html:46
+#. Translators: This is a label for numerical answer of a problem used in problem archive.
+#: problems/templates/archive/problems.html:36
+msgid "Answer"
+msgstr "Vastus"
+
+#: problems/templates/archive/problems.html:47
 msgid "Statistics"
 msgstr "Statistika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:54
+#: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "võistkond sai kätte"
 msgstr[1] "võistkonda sai kätte"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:64
+#: problems/templates/archive/problems.html:65
 msgid "teams solved"
 msgstr "võistkonda lahendas ära"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:69
+#: problems/templates/archive/problems.html:70
 msgid "average solving time"
 msgstr "keskmine lahendamise aeg"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:113
+#: problems/templates/problems/results.html:32 problems/views/results.py:116
 msgid "International"
 msgstr "Rahvusvahelised"
 
@@ -451,14 +458,6 @@ msgstr "Võistlus on käimas, tulemused võivad muutuda."
 #: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "(Ükski võistkond ei ole veel ühtegi ülesannet ära lahendanud)"
-
-#: problems/templates/problems/results/table.html:81
-msgid "Previous"
-msgstr "Eelmine"
-
-#: problems/templates/problems/results/table.html:84
-msgid "Next"
-msgstr "Järgmine"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -504,22 +503,30 @@ msgstr "Tere, %(name)s!"
 msgid "Please click on the following link to confirm your registration."
 msgstr "Et viia registreerumine lõpule, palun vajutage sellele lingile."
 
-#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Praegused võistkonna liikmed: %(contestants)s"
+
+#: web/templates/mail/messages/registration.html:13
 msgid "Confirm registration"
 msgstr "Kinnita registreering"
 
-#: web/templates/mail/messages/registration.html:14
-#: web/templates/mail/messages/registration.txt:7
+#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "Selle lingi abil saate ka oma tiimi muuta."
 
-#: web/templates/mail/messages/registration.html:15
-#: web/templates/mail/messages/registration.txt:9
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Kui teil on küsimusi, vastake julgelt sellele kirjale."
 
-#: web/templates/mail/messages/registration.html:17
-#: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.txt:13
 #: web/templates/mail/messages/team_delete.html:12
 #: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
@@ -527,7 +534,7 @@ msgstr "Kui teil on küsimusi, vastake julgelt sellele kirjale."
 msgid "Best regards,"
 msgstr "Parimate soovidega,"
 
-#: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/registration.html:27
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Kui teil on raskusi nupule vajutamisega, võite kopeerida selle aadressi oma brauserisse:"
@@ -547,12 +554,6 @@ msgstr "Võistkonna liikmed: %(contestants)s"
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "Teie võistkond on eemaldatud ootenimekirjast ja lisatud osalevate võistkondade nimekirja."
-
-#: web/templates/mail/messages/to_competition.html:10
-#: web/templates/mail/messages/to_competition.txt:5
-#, python-format
-msgid "Current team members: %(contestants)s"
-msgstr "Praegused võistkonna liikmed: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7
