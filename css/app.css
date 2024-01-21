@@ -155,10 +155,14 @@
 }
 
 /* TeX equations */
-img.math.inline {
+.prose-archive img.math.inline {
     margin: 0;
 }
 
-img.math.display {
+.prose-archive img.math.display {
     @apply mx-auto my-4;
+}
+
+.prose-archive img:not(.math) {
+    @apply mx-auto max-w-full w-2/3 max-h-40 object-contain;
 }
