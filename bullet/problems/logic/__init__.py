@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
 
 from django.utils import timezone
+from users.models import Team
+
 from problems.logic.results import add_result_row, fix_result_row
 from problems.models import Problem, ResultRow, SolvedProblem
-from users.models import Team
 
 
 def get_last_problem_for_team(team: Team):

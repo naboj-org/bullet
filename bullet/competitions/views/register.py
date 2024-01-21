@@ -1,13 +1,6 @@
 from enum import IntEnum
 
 from bullet_admin.utils import is_admin
-from competitions.forms.registration import (
-    CategorySelectForm,
-    ContestantForm,
-    SchoolSelectForm,
-    VenueSelectForm,
-)
-from competitions.models import Category, Competition, Venue
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.db import transaction
@@ -22,6 +15,13 @@ from education.models import School
 from users.emails.teams import send_confirmation_email
 
 from bullet import search
+from competitions.forms.registration import (
+    CategorySelectForm,
+    ContestantForm,
+    SchoolSelectForm,
+    VenueSelectForm,
+)
+from competitions.models import Category, Competition, Venue
 
 
 class RegistrationError(Exception):

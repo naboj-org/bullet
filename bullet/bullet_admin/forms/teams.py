@@ -1,13 +1,14 @@
-from bullet_admin.forms.utils import (
-    get_country_choices,
-    get_language_choices,
-    get_language_choices_for_venue,
-)
 from competitions.models import Competition, Venue
 from django import forms
 from django.db import models
 from django_countries.fields import CountryField
 from users.models import SpanishTeamData, Team, TeamStatus, User
+
+from bullet_admin.forms.utils import (
+    get_country_choices,
+    get_language_choices,
+    get_language_choices_for_venue,
+)
 
 
 class TeamForm(forms.ModelForm):

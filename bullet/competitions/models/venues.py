@@ -11,9 +11,10 @@ from users.models import Team
 from web.fields import ChoiceArrayField, LanguageField
 
 if TYPE_CHECKING:
+    from users.models import User
+
     from competitions.models import Competition
     from competitions.registration_flow import RegistrationFlow
-    from users.models import User
 
 
 class VenueQuerySet(models.QuerySet):

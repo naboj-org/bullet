@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.urls import reverse
 from django.utils.safestring import mark_safe
+
 from web.models import ContentBlock
 
 

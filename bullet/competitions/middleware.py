@@ -1,5 +1,6 @@
-from competitions.branches import Branches
 from django.http import HttpResponseForbidden
+
+from competitions.branches import Branches
 
 
 class BranchMiddleware:

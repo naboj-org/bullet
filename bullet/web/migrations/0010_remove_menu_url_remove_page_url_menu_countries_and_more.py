@@ -2,8 +2,9 @@
 
 import django.contrib.postgres.fields
 import django_countries.fields
-import web.fields
 from django.db import migrations, models
+
+import web.fields
 
 
 class Migration(migrations.Migration):

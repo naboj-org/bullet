@@ -1,12 +1,13 @@
-from countries.logic import country
-from countries.logic.detection import get_country_language_from_request
-from countries.models import BranchCountry
-from countries.utils import country_reverse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils import translation
 from django.views import View
 from django.views.generic import TemplateView
+
+from countries.logic import country
+from countries.logic.detection import get_country_language_from_request
+from countries.models import BranchCountry
+from countries.utils import country_reverse
 
 
 class CountryDetectView(View):

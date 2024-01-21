@@ -1,5 +1,6 @@
-from countries.models import BranchCountry
 from django.contrib import admin
+
+from countries.models import BranchCountry
 
 
 @admin.register(BranchCountry)

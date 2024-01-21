@@ -1,4 +1,3 @@
-from competitions.models import Competition, Venue
 from countries.utils import country_reverse
 from django.http import HttpResponseBadRequest
 from django.utils.decorators import method_decorator
@@ -9,6 +8,8 @@ from django.views.generic import TemplateView
 from django_countries.fields import Country
 from problems.models import SolvedProblem
 from web import content_blocks
+
+from competitions.models import Competition, Venue
 
 
 class LiveView(TemplateView):

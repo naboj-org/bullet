@@ -1,7 +1,6 @@
 from typing import Iterable
 
 from bullet_admin.forms.utils import get_language_choices_for_venue
-from competitions.models import Category, Venue
 from countries.logic.country import get_country
 from django import forms
 from django.core.exceptions import ValidationError
@@ -14,6 +13,8 @@ from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Invisible
 from education.models import Grade, School, SchoolType
 from users.models import Contestant, SpanishTeamData, Team
+
+from competitions.models import Category, Venue
 
 
 class CategorySelectForm(forms.Form):

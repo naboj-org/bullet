@@ -1,11 +1,12 @@
-from bullet_admin.models import CompetitionRole
-from bullet_admin.utils import get_active_competition
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseDeleteView
 from django_htmx.http import HttpResponseClientRefresh
+
+from bullet_admin.models import CompetitionRole
+from bullet_admin.utils import get_active_competition
 
 
 class DeleteView(BaseDeleteView):

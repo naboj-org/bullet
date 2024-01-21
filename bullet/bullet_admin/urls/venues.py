@@ -1,5 +1,6 @@
-from bullet_admin.views import venues
 from django.urls import path
+
+from bullet_admin.views import venues
 
 urlpatterns = [
     path("", venues.VenueListView.as_view(), name="venue_list"),

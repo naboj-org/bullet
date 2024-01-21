@@ -1,10 +1,11 @@
-from bullet_admin.models import BranchRole, CompetitionRole
 from competitions.models import Competition, Venue
 from countries.models import BranchCountry
 from django import forms
 from django.core.exceptions import ValidationError
 from django_countries.fields import Country
 from users.models import User
+
+from bullet_admin.models import BranchRole, CompetitionRole
 
 
 class UserForm(forms.ModelForm):
@@ -32,7 +33,7 @@ class CompetitionRoleForm(forms.ModelForm):
         self,
         competition: Competition,
         allowed_objects: list[Venue] | list[Country] | None,
-        **kwargs
+        **kwargs,
     ):
         super().__init__(**kwargs)
 

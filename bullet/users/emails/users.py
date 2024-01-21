@@ -1,7 +1,7 @@
 from django_rq import job
-from users.models import User
 
 from bullet.utils.email import send_email
+from users.models import User
 
 
 @job

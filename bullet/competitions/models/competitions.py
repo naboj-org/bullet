@@ -4,12 +4,13 @@ from datetime import timedelta
 from pathlib import Path
 
 from bullet_admin.models import CompetitionRole
-from competitions.branches import Branch
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils import timezone
 from users.models import User
 from web.fields import BranchField
+
+from competitions.branches import Branch
 
 
 def get_random_string():

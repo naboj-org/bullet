@@ -3,15 +3,6 @@ import json
 from collections import defaultdict
 
 import yaml
-from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm
-from bullet_admin.mixins import (
-    AdminRequiredMixin,
-    IsOperatorContext,
-    OperatorRequiredMixin,
-    RedirectBackMixin,
-    VenueMixin,
-)
-from bullet_admin.utils import can_access_venue, get_active_competition
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -40,6 +31,15 @@ from users.models import Contestant, Team
 
 from bullet import search
 from bullet.views import FormAndFormsetMixin
+from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm
+from bullet_admin.mixins import (
+    AdminRequiredMixin,
+    IsOperatorContext,
+    OperatorRequiredMixin,
+    RedirectBackMixin,
+    VenueMixin,
+)
+from bullet_admin.utils import can_access_venue, get_active_competition
 
 
 class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):

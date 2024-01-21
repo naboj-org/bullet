@@ -1,7 +1,3 @@
-from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserForm
-from bullet_admin.mixins import DelegateRequiredMixin
-from bullet_admin.models import BranchRole, CompetitionRole
-from bullet_admin.utils import get_active_competition
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
@@ -15,6 +11,11 @@ from django.views.generic import ListView
 from django_countries.fields import Country
 from users.emails.users import send_onboarding_email
 from users.models import User
+
+from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserForm
+from bullet_admin.mixins import DelegateRequiredMixin
+from bullet_admin.models import BranchRole, CompetitionRole
+from bullet_admin.utils import get_active_competition
 
 
 class UserListView(DelegateRequiredMixin, ListView):

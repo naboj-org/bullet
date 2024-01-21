@@ -6,8 +6,9 @@ from django.db import transaction
 from django.db.models import Q, QuerySet
 from django_countries.fields import Country
 from django_rq import job
-from problems.models import CategoryProblem, ResultRow, SolvedProblem
 from users.models import Team
+
+from problems.models import CategoryProblem, ResultRow, SolvedProblem
 
 
 def get_results(

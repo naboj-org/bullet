@@ -1,9 +1,6 @@
 import json
 from datetime import datetime, timedelta
 
-from bullet_admin.forms.review import get_review_formset
-from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
-from bullet_admin.utils import can_access_venue, get_active_competition
 from django.conf import settings
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -27,6 +24,10 @@ from problems.logic import (
 from problems.logic.scanner import ScannedBarcode, parse_barcode, save_scan
 from problems.models import CategoryProblem, Problem, ScannerLog, SolvedProblem
 from users.models import Team
+
+from bullet_admin.forms.review import get_review_formset
+from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
+from bullet_admin.utils import can_access_venue, get_active_competition
 
 
 class ProblemScanView(OperatorRequiredMixin, View):

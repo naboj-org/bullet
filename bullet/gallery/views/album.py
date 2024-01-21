@@ -2,8 +2,9 @@ from competitions.models import Competition
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
 from django.views.generic import ListView
-from gallery.models import Album, Photo
 from problems.views.archive import ArchiveCompetitionMixin
+
+from gallery.models import Album, Photo
 
 
 class GalleryCompetitionMixin(ArchiveCompetitionMixin):

@@ -1,7 +1,5 @@
 from collections import defaultdict
 
-from competitions.forms.registration import ContestantForm
-from competitions.models import Category, Competition, Venue
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -28,6 +26,9 @@ from users.logic import (
     get_venues_waiting_list,
 )
 from users.models import Contestant, Team
+
+from competitions.forms.registration import ContestantForm
+from competitions.models import Category, Competition, Venue
 
 
 class TeamEditView(FormView):

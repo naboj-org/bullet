@@ -1,7 +1,3 @@
-from bullet_admin.access import BranchAdminAccess
-from bullet_admin.forms.competition import CompetitionForm
-from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
 from competitions.models import Competition
 from django.contrib import messages
 from django.forms import Form
@@ -10,6 +6,11 @@ from django.urls import reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from problems.logic.results import squash_results
 from problems.logic.stats import generate_stats
+
+from bullet_admin.access import BranchAdminAccess
+from bullet_admin.forms.competition import CompetitionForm
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm
 
 
 class CompetitionFormMixin(GenericForm):

@@ -1,5 +1,6 @@
-from bullet_admin.models import BranchRole, CompetitionRole
 from django.contrib import admin
+
+from bullet_admin.models import BranchRole, CompetitionRole
 
 
 @admin.register(BranchRole)

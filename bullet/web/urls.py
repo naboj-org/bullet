@@ -2,6 +2,7 @@ from countries.views import CountryDetectView, CountrySelectView
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import include, path, re_path
+
 from web import views
 from web.views import page
 

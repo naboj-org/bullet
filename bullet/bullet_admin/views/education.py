@@ -1,11 +1,11 @@
-from bullet_admin.access import SchoolEditorAccess
-from bullet_admin.forms.education import SchoolForm
-from bullet_admin.views import GenericForm
 from django.shortcuts import redirect
 from django.views.generic import CreateView, ListView, UpdateView
 from education.models import School
 
 from bullet import search
+from bullet_admin.access import SchoolEditorAccess
+from bullet_admin.forms.education import SchoolForm
+from bullet_admin.views import GenericForm
 
 
 class SchoolQuerySetMixin:

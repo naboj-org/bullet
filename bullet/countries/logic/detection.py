@@ -3,11 +3,12 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from django.http import HttpRequest
 
-from countries.logic.cache import get_country_cache
 from django.contrib.gis.geoip2 import GeoIP2, GeoIP2Exception
 from django.utils.translation import get_language_info
 from django.utils.translation.trans_real import parse_accept_lang_header
 from geoip2.errors import AddressNotFoundError
+
+from countries.logic.cache import get_country_cache
 
 
 def _ip_from_request(request: "HttpRequest") -> str:

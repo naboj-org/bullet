@@ -1,10 +1,11 @@
-from bullet_admin.utils import get_active_competition, is_admin
 from competitions.models import Venue
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import QuerySet
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
 from django.utils.http import url_has_allowed_host_and_scheme
+
+from bullet_admin.utils import get_active_competition, is_admin
 
 
 class AccessMixin:

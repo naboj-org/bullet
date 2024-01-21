@@ -1,6 +1,7 @@
 import factory
 from competitions.models import Category, Competition
 from factory.django import DjangoModelFactory
+
 from problems.models import CategoryProblem, Problem
 
 

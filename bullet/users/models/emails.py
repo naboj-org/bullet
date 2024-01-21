@@ -6,11 +6,11 @@ from django.db.models import Count
 from django.template import Context, Template
 from django_countries.fields import CountryField
 from django_rq import job
-from users.emails.teams import TeamCountry
-from users.models import Team, TeamStatus
 from web.fields import ChoiceArrayField, LanguageField
 
 from bullet.utils.email import send_email
+from users.emails.teams import TeamCountry
+from users.models import Team, TeamStatus
 
 
 @job

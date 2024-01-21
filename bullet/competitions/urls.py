@@ -1,5 +1,6 @@
-from competitions.views import archive, live, register, teams
 from django.urls import path
+
+from competitions.views import archive, live, register, teams
 
 urlpatterns = [
     path(

@@ -1,6 +1,7 @@
 from competitions.models import Competition
 from django.shortcuts import render
 from django.views.generic import RedirectView, TemplateView
+
 from web.models import Logo
 
 

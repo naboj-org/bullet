@@ -3,6 +3,7 @@ from datetime import timedelta
 from typing import Iterable
 
 from django import template
+
 from problems.models import CategoryProblem, ProblemStatement
 
 register = template.Library()

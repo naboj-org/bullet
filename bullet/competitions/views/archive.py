@@ -1,5 +1,6 @@
-from competitions.models import Competition
 from django.views.generic import ListView
+
+from competitions.models import Competition
 
 
 class ArchiveListView(ListView):

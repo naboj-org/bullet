@@ -1,13 +1,14 @@
 import re
 from re import Match, Pattern
 
-from countries.logic import country
-from countries.logic.cache import get_country_cache
-from countries.models import BranchCountry
 from django.conf import settings
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 from django.utils import timezone, translation
+
+from countries.logic import country
+from countries.logic.cache import get_country_cache
+from countries.models import BranchCountry
 
 country_language_re: Pattern[str] = re.compile(r"^/([a-z]{2})/([^/]+)/")
 

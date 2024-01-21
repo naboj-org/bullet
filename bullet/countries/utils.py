@@ -1,6 +1,7 @@
-from countries.logic.country import get_country
 from django.urls import reverse
 from django.utils.translation import get_language
+
+from countries.logic.country import get_country
 
 
 def country_reverse(viewname, urlconf=None, args=None, kwargs=None, current_app=None):

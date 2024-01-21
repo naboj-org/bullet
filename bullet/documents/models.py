@@ -2,8 +2,9 @@ import subprocess
 
 from django.db import models
 from django.template import Context, Template
-from documents.generators import prepare_rsvg
 from web.fields import BranchField
+
+from documents.generators import prepare_rsvg
 
 
 class SelfServeCertificate(models.Model):

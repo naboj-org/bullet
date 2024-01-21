@@ -3,6 +3,7 @@ import string
 from competitions.models import Category, Competition, Venue
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
+
 from users.models import Team
 
 

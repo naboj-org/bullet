@@ -6,9 +6,10 @@ from datetime import datetime
 from competitions.models import Competition, Venue
 from django.db import transaction
 from django.utils import timezone
+from users.models import Team
+
 from problems.logic import get_last_problem_for_team, mark_problem_solved
 from problems.models import Problem, SolvedProblem
-from users.models import Team
 
 barcode_re = re.compile(
     r"^(?P<venue>[A-Z]+)(?P<team>[0-9]{3})(?P<problem>[0-9]{2})(?P<checksum>[0-9])$"

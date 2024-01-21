@@ -1,4 +1,5 @@
 from django.contrib import admin
+
 from web.models import ContentBlock, Logo, Menu, Page
 
 admin.site.site_title = "Bullet system administration"

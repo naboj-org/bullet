@@ -1,9 +1,10 @@
-from bullet_admin.utils import get_active_competition
 from competitions.models import Venue
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Count, Q
 from django.views.generic import TemplateView
+
+from bullet_admin.utils import get_active_competition
 
 
 class HomeView(LoginRequiredMixin, TemplateView):

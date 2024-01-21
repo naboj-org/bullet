@@ -1,3 +1,3 @@
-from .contestants import *  # noqac
+from .contestants import *  # noqa
 from .emails import *  # noqa
 from .organizers import *  # noqa

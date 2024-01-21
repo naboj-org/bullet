@@ -1,5 +1,3 @@
-from bullet_admin.access import AdminAccess, VenueAccess
-from bullet_admin.utils import get_active_competition
 from competitions.models import Category, Venue
 from countries.models import BranchCountry
 from django.http import Http404
@@ -8,6 +6,9 @@ from django.urls import reverse
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView
 from problems.logic.results import get_venue_results
+
+from bullet_admin.access import AdminAccess, VenueAccess
+from bullet_admin.utils import get_active_competition
 
 
 class ResultsHomeView(AdminAccess, TemplateView):

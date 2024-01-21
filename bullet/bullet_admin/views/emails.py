@@ -1,6 +1,3 @@
-from bullet_admin.forms.emails import EmailCampaignForm
-from bullet_admin.mixins import AdminRequiredMixin
-from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -17,6 +14,10 @@ from django.views.generic import (
     UpdateView,
 )
 from users.models import EmailCampaign, TeamStatus, User
+
+from bullet_admin.forms.emails import EmailCampaignForm
+from bullet_admin.mixins import AdminRequiredMixin
+from bullet_admin.utils import get_active_competition
 
 
 def can_edit_campaign(request, campaign: EmailCampaign):
