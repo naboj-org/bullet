@@ -1,7 +1,14 @@
 # Changelog
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project uses the `YYYY.MM[.PATCH]` version format.
+and this project uses the `YYYY.N` version format.
+
+## 2024.2 - 2024-01-21
+
+### Changed
+
+- Images in archive are now scaled properly.
+- Update missing translations for "Answer" in the problem archive.
 
 ## 2024.1 - 2024-01-15
 
