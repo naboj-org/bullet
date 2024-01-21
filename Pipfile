@@ -37,10 +37,8 @@ pyyaml = "==6.0.1"
 psycopg = {extras = ["binary"], version = "==3.1.17"}
 
 [dev-packages]
-black = "==23.12.1"
-isort = "==5.13.2"
 pre-commit = "==3.6.0"
-flake8 = "==7.0.0"
 factory-boy = "==3.3.0"
 mdgen = "==0.1.10"
 bumpver = "==2023.1129"
+ruff = "==v0.1.13"
