@@ -9,7 +9,7 @@
 <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">
     {% trans "Problem statements" %}
 </h1>
-<h2 class="text-2xl md:text-4xl mt-4 font-bold mb-4 md:mb-16">{{ competition.name }}</h2>
+<h2 class="text-2xl md:text-4xl mt-4 mb-4 md:mb-16">{{ competition.name }}</h2>
 {% endblock %}
 
 {% block content %}
@@ -25,14 +25,15 @@
     {% for problem in object_list %}
     <article class="my-8 max-w-prose mx-auto px-2">
         <h2 class="font-bold text-lg">{% blocktrans with n=problem|problem_number %}Problem {{ n }}{% endblocktrans %}</h2>
-        <div class="prose">
+        <div class="prose prose-archive">
             {{ problem.statement|safe }}
 
             <details class="border px-4 py-2 rounded mt-4">
                 <summary class="text-primary cursor-pointer">{% trans "Solution" %}</summary>
 
                 <div class="mt-2">
-                    <p><i>Answer:</i> {{ problem.answer|safe }}</p>
+                    {# Translators: This is a label for numerical answer of a problem used in problem archive. #}
+                    <p><i>{% translate "Answer" %}:</i> {{ problem.answer|safe }}</p>
 
                     <hr>
 
@@ -69,10 +70,6 @@
                         <div class="text-sm">{% trans "average solving time" %}</div>
                     </div>
                 </div>
-
-{#                <p class="mt-2">#}
-{#                    <a href="#" class="link-primary">{% trans "More stats" %}</a>#}
-{#                </p>#}
             </div>
         </details>
         {% endif %}
