@@ -1,3 +1,5 @@
+from django.urls import include, path
+
 from bullet_admin.views import (
     CompetitionSwitchView,
     albums,
@@ -15,7 +17,6 @@ from bullet_admin.views import (
     teams,
     users,
 )
-from django.urls import include, path
 
 app_name = "badmin"
 urlpatterns = [

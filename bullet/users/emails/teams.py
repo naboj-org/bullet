@@ -3,9 +3,9 @@ from countries.logic import country
 from django.utils import translation
 from django.utils.translation import gettext as _
 from django_rq import job
-from users.models import Team
 
 from bullet.utils.email import send_email
+from users.models import Team
 
 
 class TeamCountry:

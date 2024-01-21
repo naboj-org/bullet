@@ -1,4 +1,5 @@
 from django import template
+
 from web import content_blocks
 
 register = template.Library()

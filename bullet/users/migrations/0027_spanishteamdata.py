@@ -2,8 +2,9 @@
 
 import django.core.validators
 import django.db.models.deletion
-import users.models.contestants
 from django.db import migrations, models
+
+import users.models.contestants
 
 
 class Migration(migrations.Migration):

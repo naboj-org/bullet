@@ -3,8 +3,9 @@ from datetime import timedelta
 
 from competitions.models import Category, Competition
 from django_rq import job
-from problems.models import ProblemStat, SolvedProblem
 from users.models import Team
+
+from problems.models import ProblemStat, SolvedProblem
 
 
 @job

@@ -1,9 +1,10 @@
 from typing import TYPE_CHECKING
 
-from bullet_admin.mixins import AccessMixin
-from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from django.core.exceptions import ImproperlyConfigured
+
+from bullet_admin.mixins import AccessMixin
+from bullet_admin.utils import get_active_competition
 
 if TYPE_CHECKING:
     from competitions.models import Competition, Venue

@@ -2,11 +2,12 @@ import io
 
 from competitions.models import Venue
 from django.db.models import Q
-from documents.models import CertificateTemplate
 from pikepdf import Pdf
 from problems.logic.results import get_venue_results
 from users.models import Team
 from web.models import ContentBlock
+
+from documents.models import CertificateTemplate
 
 
 def _get_category_name(venue: Venue) -> str:

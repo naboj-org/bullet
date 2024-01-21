@@ -1,12 +1,13 @@
-from bullet_admin.access import BranchAdminAccess
-from bullet_admin.forms.problem import ProblemsGenerateForm
-from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
 from competitions.models import Category
 from django.db import transaction
 from django.shortcuts import redirect
 from django.views.generic import FormView
 from problems.models import CategoryProblem, Problem
+
+from bullet_admin.access import BranchAdminAccess
+from bullet_admin.forms.problem import ProblemsGenerateForm
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm
 
 
 class ProblemsGenerateView(BranchAdminAccess, GenericForm, FormView):

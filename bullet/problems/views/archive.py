@@ -4,6 +4,7 @@ from django.db.models import Avg, Count
 from django.shortcuts import get_object_or_404
 from django.utils.translation import get_language
 from django.views.generic import ListView
+
 from problems.models import ProblemStat, ProblemStatement
 from problems.views.results import (
     CategoryResultsView,

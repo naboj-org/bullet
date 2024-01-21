@@ -1,8 +1,8 @@
 from competitions.branches import Branches
 from countries.models import BranchCountry
-from web.models import Menu
 
 from bullet import VERSION
+from web.models import Menu
 
 
 def menu_context(request):

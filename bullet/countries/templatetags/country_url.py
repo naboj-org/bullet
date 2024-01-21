@@ -1,9 +1,10 @@
-from countries.utils import country_reverse
 from django import template
 from django.template import TemplateSyntaxError
 from django.template.base import kwarg_re
 from django.template.defaulttags import URLNode
 from django.utils.html import conditional_escape
+
+from countries.utils import country_reverse
 
 register = template.Library()
 

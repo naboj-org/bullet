@@ -1,5 +1,6 @@
-from competitions.models import Category, Competition, Venue, Wildcard
 from django.contrib import admin
+
+from competitions.models import Category, Competition, Venue, Wildcard
 
 
 class CategoryInlineAdmin(admin.TabularInline):

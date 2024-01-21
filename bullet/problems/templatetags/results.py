@@ -1,5 +1,6 @@
 from competitions.models import Competition, Venue
 from django import template
+
 from problems.models import ResultRow
 
 register = template.Library()

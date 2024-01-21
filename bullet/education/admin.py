@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db.models import ManyToManyField
 from django.forms import CheckboxSelectMultiple
+
 from education.models import Education, Grade, School, SchoolType
 
 

@@ -1,4 +1,5 @@
 from django.urls import path
+
 from problems.views import archive, results
 
 urlpatterns = [

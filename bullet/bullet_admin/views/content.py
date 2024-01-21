@@ -1,3 +1,9 @@
+from django.db.models import Q
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from web.models import ContentBlock, Logo, Menu, Page
+
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
@@ -8,11 +14,6 @@ from bullet_admin.forms.content import (
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView as BDeleteView
 from bullet_admin.views import GenericForm
-from django.db.models import Q
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from web.models import ContentBlock, Logo, Menu, Page
 
 
 class PageQuerySetMixin:

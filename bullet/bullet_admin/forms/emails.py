@@ -1,7 +1,8 @@
-from bullet_admin.forms.utils import get_country_choices, get_language_choices
 from competitions.models import Competition, Venue
 from django import forms
 from users.models import EmailCampaign, User
+
+from bullet_admin.forms.utils import get_country_choices, get_language_choices
 
 
 class EmailCampaignForm(forms.ModelForm):

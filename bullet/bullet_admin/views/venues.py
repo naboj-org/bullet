@@ -1,9 +1,3 @@
-from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
-from bullet_admin.forms.documents import CertificateForm
-from bullet_admin.forms.venues import VenueForm
-from bullet_admin.mixins import AdminRequiredMixin
-from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
 from competitions.models import Venue
 from django.contrib import messages
 from django.forms import Form
@@ -18,6 +12,13 @@ from documents.generators.team_list import team_list
 from users.emails.teams import send_to_competition_email
 from users.logic import get_venue_waiting_list
 from users.models import Team
+
+from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
+from bullet_admin.forms.documents import CertificateForm
+from bullet_admin.forms.venues import VenueForm
+from bullet_admin.mixins import AdminRequiredMixin
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm
 
 
 class VenueListView(AdminAccess, ListView):

@@ -3,6 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from education.models import Grade
 from simple_history.admin import SimpleHistoryAdmin
+
 from users.models import Contestant, SpanishTeamData, Team, User
 
 

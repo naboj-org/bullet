@@ -1,11 +1,12 @@
-from bullet_admin.access import BranchAdminAccess
-from bullet_admin.forms.category import CategoryForm
-from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
 from competitions.models import Category
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
+
+from bullet_admin.access import BranchAdminAccess
+from bullet_admin.forms.category import CategoryForm
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm
 
 
 class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):

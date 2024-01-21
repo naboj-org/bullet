@@ -1,11 +1,12 @@
 import io
 
 from django.db.models import QuerySet
-from documents.generators.reportlab_utils import prepare_pdf, render_table
 from reportlab.lib.enums import TA_CENTER
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.platypus import Paragraph
+
+from documents.generators.reportlab_utils import prepare_pdf, render_table
 
 
 def team_list(teams: QuerySet, title: str) -> io.BytesIO:

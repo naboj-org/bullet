@@ -1,8 +1,9 @@
 from typing import Type
 
 from bullet_admin.forms.teams import OperatorTeamForm, SpanishTeamForm, TeamForm
-from competitions.forms.registration import RegistrationForm, SpanishRegistrationForm
 from django.forms import BaseForm
+
+from competitions.forms.registration import RegistrationForm, SpanishRegistrationForm
 
 
 class RegistrationFlow:

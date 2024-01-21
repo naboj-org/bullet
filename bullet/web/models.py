@@ -6,6 +6,7 @@ from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils.text import slugify
 from django_countries.fields import CountryField
+
 from web.fields import BranchField, ChoiceArrayField, LanguageField
 
 

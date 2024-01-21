@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import ListView, TemplateView
 from django_countries.fields import Country
+
 from problems.logic.results import (
     get_category_results,
     get_country_results,

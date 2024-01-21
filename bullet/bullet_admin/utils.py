@@ -1,10 +1,11 @@
 from typing import TYPE_CHECKING
 
-from bullet_admin.models import CompetitionRole
 from competitions.models import Competition
 from django.db.models import Q
 from django.http import HttpRequest
 from users.models import User
+
+from bullet_admin.models import CompetitionRole
 
 if TYPE_CHECKING:
     from competitions.models import Venue
