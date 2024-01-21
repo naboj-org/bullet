@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj_Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 05:24+0000\n"
+"POT-Creation-Date: 2024-01-21 17:02+0000\n"
 "PO-Revision-Date: 2023-02-15 21:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
@@ -56,11 +56,11 @@ msgstr ""
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
-#: competitions/forms/registration.py:53
+#: competitions/forms/registration.py:54
 msgid "Selected school is not valid."
 msgstr "مدرسه ای که انتخاب کرده اید نامعتبر است."
 
-#: competitions/forms/registration.py:79
+#: competitions/forms/registration.py:80
 #: competitions/templates/register/details.html:33
 #: competitions/templates/register/details.html:39
 #: competitions/templates/teams/edit.html:47
@@ -70,33 +70,33 @@ msgstr "مدرسه ای که انتخاب کرده اید نامعتبر است.
 msgid "Full name"
 msgstr "نام کامل"
 
-#: competitions/forms/registration.py:80
+#: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:48
 msgid "Email"
 msgstr "آدرس پست الکترونیکی"
 
-#: competitions/forms/registration.py:81
+#: competitions/forms/registration.py:82
 #: competitions/templates/teams/edit.html:50
 msgid "Phone number"
 msgstr "شماره تماس"
 
-#: competitions/forms/registration.py:82
+#: competitions/forms/registration.py:83
 msgid "Language"
 msgstr ""
 
-#: competitions/forms/registration.py:86
+#: competitions/forms/registration.py:87
 msgid "You will receive problem statements in the language you choose."
 msgstr ""
 
-#: competitions/forms/registration.py:108
+#: competitions/forms/registration.py:109
 msgid "(Please select)"
 msgstr "لطفا انخاب کنید"
 
-#: competitions/forms/registration.py:125
+#: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
 msgstr "پایه ی تحصیلی شما نمی تواند دراین رده ی مسابقه شرکت نماید"
 
-#: competitions/forms/registration.py:132
+#: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
 msgstr ""
 
@@ -373,17 +373,19 @@ msgstr "می توانید گواهی شرکت تیم خودرا با کلیک ک
 msgid "Download certificate"
 msgstr "دریافت گواهی نامه"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:12
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:13
+#: competitions/templates/teams/list.html:37
 msgid "Waiting list"
 msgstr "فهرست انتظار"
 
-#: competitions/templates/teams/list.html:7
-#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:8
+#: competitions/templates/teams/list.html:15
+#: competitions/templates/teams/list.html:35
 msgid "Team list"
 msgstr "فهرست تیم ها"
 
-#: competitions/templates/teams/list.html:40
+#: competitions/templates/teams/list.html:50
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr ""
@@ -406,7 +408,7 @@ msgstr "ویرایش اطلاعات تیم شما با موفقیت انجام �
 msgid "Registration successfully confirmed."
 msgstr "ثبت نام تیم شما با موفقیت تایید شد."
 
-#: competitions/views/teams.py:213
+#: competitions/views/teams.py:219
 msgid "Team was unregistered."
 msgstr "تیم شما ثبت نشده بود."
 
@@ -428,28 +430,33 @@ msgstr ""
 msgid "Solution"
 msgstr ""
 
-#: problems/templates/archive/problems.html:46
+#. Translators: This is a label for numerical answer of a problem used in problem archive.
+#: problems/templates/archive/problems.html:36
+msgid "Answer"
+msgstr ""
+
+#: problems/templates/archive/problems.html:47
 msgid "Statistics"
 msgstr ""
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:54
+#: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] ""
 msgstr[1] ""
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:64
+#: problems/templates/archive/problems.html:65
 msgid "teams solved"
 msgstr ""
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:69
+#: problems/templates/archive/problems.html:70
 msgid "average solving time"
 msgstr ""
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:113
+#: problems/templates/problems/results.html:32 problems/views/results.py:116
 msgid "International"
 msgstr "رده ی بین المللی"
 
@@ -484,14 +491,6 @@ msgstr "هنوز مسابقه درجریان است؛ نتایج ممکن است
 #: problems/templates/problems/results/table.html:71
 msgid "(No team has solved any problem yet)"
 msgstr "(هنوز هیج تیمی مسئله ای را حل نکرده است)"
-
-#: problems/templates/problems/results/table.html:81
-msgid "Previous"
-msgstr "قبلی"
-
-#: problems/templates/problems/results/table.html:84
-msgid "Next"
-msgstr "بعدی"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -542,22 +541,32 @@ msgstr ""
 msgid "Please click on the following link to confirm your registration."
 msgstr "برای تایید ثبت نام خود لطفا روی این پیوند کلیک کنید."
 
-#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr ""
+"اعضای فعلی تیم:\n"
+"%(contestants)s"
+
+#: web/templates/mail/messages/registration.html:13
 msgid "Confirm registration"
 msgstr "تایید ثبت نام"
 
-#: web/templates/mail/messages/registration.html:14
-#: web/templates/mail/messages/registration.txt:7
+#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "می توانید با استفاده از این پیوند اطلاعات مربوط به تیم خودرا ویرایش کنید."
 
-#: web/templates/mail/messages/registration.html:15
-#: web/templates/mail/messages/registration.txt:9
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "اگر هرگونه پرسشی دارید، لطفا به این نامه پاسخ بدهید."
 
-#: web/templates/mail/messages/registration.html:17
-#: web/templates/mail/messages/registration.txt:11
+#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.txt:13
 #: web/templates/mail/messages/team_delete.html:12
 #: web/templates/mail/messages/team_delete.txt:7
 #: web/templates/mail/messages/to_competition.html:18
@@ -565,7 +574,7 @@ msgstr "اگر هرگونه پرسشی دارید، لطفا به این نام�
 msgid "Best regards,"
 msgstr "بابهترین آرزوها،"
 
-#: web/templates/mail/messages/registration.html:25
+#: web/templates/mail/messages/registration.html:27
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "اگر برای کلیک کردن روی این دکمه مشکلی دارید؛ می توانید این آدرس را در مرورگر خود جانمایی کنید."
@@ -587,14 +596,6 @@ msgstr ""
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "تیم شما از فهرست انتظار خارچ و به فهرست تیم های بخش رقابت وارد شده است."
-
-#: web/templates/mail/messages/to_competition.html:10
-#: web/templates/mail/messages/to_competition.txt:5
-#, python-format
-msgid "Current team members: %(contestants)s"
-msgstr ""
-"اعضای فعلی تیم:\n"
-"%(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7
