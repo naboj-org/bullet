@@ -19,6 +19,11 @@ class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
 
     def get_queryset(self):
         qs = super().get_queryset()
+
+        country = self.request.GET.get("country")
+        if country:
+            qs = qs.filter(country=country)
+
         search_query = self.request.GET.get("q")
         if search_query:
             ids = search.client.index("schools").search(search_query)["hits"]
@@ -32,6 +37,7 @@ class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["school_count"] = School.objects.count()
+        ctx["countries"] = School.objects.values_list("country", flat=True).distinct()
         return ctx
 
 
