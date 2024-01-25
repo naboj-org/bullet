@@ -8,7 +8,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 
-from bullet_admin.forms.files import FileDeleteForm, FileUploadForm, FolderCreateForm
+from bullet_admin.forms.files import (
+    FileDeleteForm,
+    FileUploadForm,
+    FolderCreateForm,
+    TestForm,
+)
 from bullet_admin.mixins import TranslatorRequiredMixin
 from bullet_admin.views import GenericForm
 
@@ -40,6 +45,10 @@ class FileTreeView(TranslatorRequiredMixin, TemplateView):
         branch_root, abs_path = get_path(self.request, self.request.GET.get("path", ""))
 
         if not default_storage.exists(abs_path):
+            return []
+
+        real_path = default_storage.path(abs_path)
+        if os.path.isfile(real_path):
             return []
 
         dirs, files = default_storage.listdir(abs_path)
@@ -141,3 +150,27 @@ class FileDeleteView(TranslatorRequiredMixin, GenericForm, FormView):
         else:
             default_storage.delete(path)
         return HttpResponseRedirect(reverse("badmin:file_tree"))
+
+
+class TreeFieldView(FileTreeView):
+    def get_template_names(self):
+        if self.request.GET.get("selected"):
+            return ["bullet_admin/files/tree_field.html"]
+        return ["bullet_admin/files/tree_field_open.html"]
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        if self.request.GET.get("selected"):
+            ctx["field"] = {
+                "name": self.request.GET.get("field"),
+                "value": self.request.GET.get("path"),
+            }
+        return ctx
+
+
+class TreeFieldTestView(GenericForm, FormView):
+    form_class = TestForm
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
