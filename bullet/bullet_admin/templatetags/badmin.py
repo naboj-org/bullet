@@ -59,6 +59,7 @@ def admin_sidebar(context):
                     ("fa-cube", "Blocks", reverse("badmin:contentblock_list")),
                     ("fa-handshake", "Logos", reverse("badmin:logo_list")),
                     ("fa-bars", "Menu items", reverse("badmin:menu_list")),
+                    ("fa-folder", "File browser", reverse("badmin:file_tree")),
                 ),
             )
         )
