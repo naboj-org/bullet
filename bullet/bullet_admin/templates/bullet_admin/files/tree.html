@@ -15,23 +15,21 @@
                 File browser
             {% endslot %}
             {% slot buttons %}
-{#                {% url "badmin:page_create" as create_url %}#}
-{#                {% query_replace back=request.get_full_path language=request.GET.language as back %}#}
-{#                {% #abtn color="green" icon="mdi:upload" label="Upload file" url=create_url|add:back %}#}
-                {% #abtn icon="mdi:folder-plus" label="New folder" url="#" %}
-                {% #abtn color="green" icon="mdi:upload" label="Upload file" url="#" %}
+                {% query_replace path=request.GET.path as path_query %}
+                {% url "badmin:file_create_folder" as folder_url %}
+                {% #abtn icon="mdi:folder-plus" label="New folder" url=folder_url|add:path_query %}
+                {% url "badmin:file_upload" as upload_url %}
+                {% #abtn color="green" icon="mdi:upload" label="Upload file" url=upload_url|add:path_query %}
             {% endslot %}
         {% endaheader %}
 
-        {% if request.GET.path %}
-            {% url "badmin:file_tree" as home %}
-            {% abreadcrumbs class="-mt-4 mb-8" home=home %}
-                {% for parent in parents %}
-                    {% query_replace path=parent.1 as parent_link %}
-                    {% #abreadcrumb url=parent_link text=parent.0 %}
-                {% endfor %}
-            {% endabreadcrumbs %}
-        {% endif %}
+        {% url "badmin:file_tree" as home %}
+        {% abreadcrumbs class="-mt-4 mb-8" home=home %}
+            {% for parent in parents %}
+                {% query_replace path=parent.1 as parent_link %}
+                {% #abreadcrumb url=parent_link text=parent.0 %}
+            {% endfor %}
+        {% endabreadcrumbs %}
 
         <table class="w-full text-sm">
             <thead class="text-left bg-gray-100 border-t border-b">
@@ -60,10 +58,7 @@
                         <td class="p-3 whitespace-nowrap">{% if not file.is_dir %}{{ file.size|filesizeformat }}{% endif %}</td>
                         <td class="p-3 whitespace-nowrap">
                             <div class="flex items-center justify-end gap-2">
-                                <a href="?back={{ request.get_full_path|urlencode }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
-                                    <span class="iconify" data-icon="mdi:edit"></span>
-                                </a>
-                                <a href="?back={{ request.get_full_path|urlencode }}" class="text-red-400 hover:text-red-600 p-2 -m-2">
+                                <a href="{% url "badmin:file_delete" %}{% query_replace path=file.path %}" class="text-red-400 hover:text-red-600 p-2 -m-2">
                                     <span class="iconify" data-icon="mdi:delete"></span>
                                 </a>
                             </div>
