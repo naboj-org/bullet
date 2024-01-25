@@ -1,0 +1,25 @@
+<li>
+    <div class="relative pb-8">
+        {% if not last %}
+        <span class="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200"
+              aria-hidden="true"></span>
+        {% endif %}
+
+        <div class="relative flex space-x-3">
+            {% now "Y-m-d" as today %}
+            <div>
+                <span class="h-8 w-8 rounded-full {% if date >= date|date:"Y-m-d" %}bg-primary{% else %}bg-gray-400{% endif %} flex items-center justify-center ring-8 ring-white text-white">
+                    <span class="iconify w-4 h-4" data-icon="{{ icon }}"></span>
+                </span>
+            </div>
+            <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1">
+                <div class="text-gray-600">
+                    {{ text }}
+                </div>
+                <div class="whitespace-nowrap text-right text-gray-800">
+                    {{ date|date }}{% if show_time %}, {{ date|time }}{% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</li>

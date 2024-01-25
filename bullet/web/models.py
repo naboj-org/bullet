@@ -1,13 +1,20 @@
 import os.path
 
 from competitions.branches import Branches
+from competitions.models import Competition
 from django.conf import settings
 from django.db import models
 from django.db.models import UniqueConstraint
 from django.utils.text import slugify
 from django_countries.fields import CountryField
 
-from web.fields import BranchField, ChoiceArrayField, LanguageField
+from web.fields import (
+    BranchField,
+    ChoiceArrayField,
+    IntegerChoiceArrayField,
+    LanguageField,
+)
+from web.page_blocks.types import PAGE_BLOCK_TYPES, get_page_block_choices
 
 
 class Page(models.Model):
@@ -95,3 +102,20 @@ class ContentBlock(models.Model):
             branch = Branches[self.branch].short_name
             return prefix + f"({branch} {self.country.code}-{self.language})"
         return prefix + f"({self.country.code}-{self.language})"
+
+
+class PageBlock(models.Model):
+    page = models.ForeignKey(Page, on_delete=models.CASCADE)
+    states = IntegerChoiceArrayField(
+        models.IntegerField(choices=Competition.State.choices)
+    )
+    order = models.IntegerField()
+    block_type = models.IntegerField(choices=get_page_block_choices())
+    data = models.JSONField(blank=True, null=True)
+
+    class Meta:
+        ordering = ["page", "order"]
+
+    @property
+    def block(self):
+        return PAGE_BLOCK_TYPES[self.block_type]
