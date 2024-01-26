@@ -13,6 +13,7 @@ PAGE_BLOCK_TYPES = {
     ),
     5: PageBlock("hero", "Hero header", "mdi:page-layout-header", None, None),
     6: PageBlock("markdown", "Markdown text", "mdi:language-markdown", None, None),
+    7: PageBlock("image_grid", "Image grid", "mdi:file-image-box", None, None),
 }
 
 
