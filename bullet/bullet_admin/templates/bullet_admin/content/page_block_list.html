@@ -1,0 +1,46 @@
+{% extends "bullet_admin/base.html" %}
+{% load utils %}
+
+{% block title %}Page blocks{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-7xl">
+        {% aheader show_subtitle=True %}
+            {% slot title %}
+                Page blocks
+            {% endslot %}
+            {{ page.title }}
+            {% slot buttons %}
+{#                {% url "badmin:page_create" as create_url %}#}
+{#                {% query_replace back=request.get_full_path language=request.GET.language as back %}#}
+{#                {% #abtn color="green" icon="mdi:plus" label="New page" url=create_url|add:back %}#}
+            {% endslot %}
+        {% endaheader %}
+
+        <div class="space-y-2">
+        {% for block in object_list %}
+            <div class="border rounded-md p-4 flex items-center gap-4 relative hover:bg-gray-50">
+                <div class="w-24 aspect-video bg-gray-200"></div>
+                <div>
+                    <div class="font-semibold">
+                        {{ block.block.name }}
+                        <a href="#" class="absolute inset-0"></a>
+                    </div>
+                    <div class="text-sm flex flex-wrap gap-3">
+                        {% for state in states %}
+                            <div>
+                                {% if state in block.states %}
+                                    <span class="iconify text-green-600 inline" data-icon="mdi:check"></span>
+                                {% else %}
+                                    <span class="iconify text-red-600 inline" data-icon="mdi:close"></span>
+                                {% endif %}
+                                {{ state.label }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

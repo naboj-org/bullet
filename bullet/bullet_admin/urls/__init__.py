@@ -66,6 +66,11 @@ urlpatterns = [
     path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
     path("content/pages/<pk>/", content.PageEditView.as_view(), name="page_edit"),
     path(
+        "content/pages/<int:page_id>/blocks/",
+        content.PageBlockListView.as_view(),
+        name="page_block_list",
+    ),
+    path(
         "content/pages/<pk>/delete/",
         content.PageDeleteView.as_view(),
         name="page_delete",

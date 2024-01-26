@@ -1,8 +1,10 @@
+from competitions.models import Competition
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from web.models import ContentBlock, Logo, Menu, Page
+from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
 from bullet_admin.forms.content import (
     ContentBlockForm,
@@ -102,6 +104,19 @@ class PageDeleteView(
 
     def get_default_success_url(self):
         return reverse("badmin:page_list")
+
+
+class PageBlockListView(TranslatorRequiredMixin, ListView):
+    template_name = "bullet_admin/content/page_block_list.html"
+
+    def get_queryset(self):
+        return PageBlock.objects.filter(page_id=self.kwargs["page_id"])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        ctx["page"] = get_object_or_404(Page, id=self.kwargs["page_id"])
+        ctx["states"] = Competition.State
+        return ctx
 
 
 class ContentBlockQuerySetMixin:
