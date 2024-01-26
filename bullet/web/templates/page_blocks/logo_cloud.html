@@ -1,9 +1,10 @@
 {% extends "page_blocks/_base.html" %}
 
 {% block container %}
-    <h2 class="font-bold {% if background == "color" %}text-primary{% else %}text-gray-800{% endif %} text-3xl md:text-4xl mb-4">{{ title|safe }}</h2>
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center">
-        {% for item in logos %}
+    {% include "page_blocks/_centered_header.html" %}
+
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center {% if title or text %}mt-8{% endif %}">
+        {% for item in items %}
             <a href="{{ item.url }}"
                style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}"
                class="bg-white h-24 md:h-32 rounded-md p-6">
