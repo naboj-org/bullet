@@ -71,6 +71,11 @@ urlpatterns = [
         name="page_block_list",
     ),
     path(
+        "content/pages/<int:page_id>/blocks/<int:pk>/",
+        content.PageBlockUpdateView.as_view(),
+        name="page_block_update",
+    ),
+    path(
         "content/pages/<pk>/delete/",
         content.PageDeleteView.as_view(),
         name="page_delete",

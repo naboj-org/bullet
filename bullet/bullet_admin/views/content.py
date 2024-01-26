@@ -3,9 +3,11 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.utils.functional import cached_property
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
+from bullet.views import FormAndFormsetMixin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
@@ -117,6 +119,56 @@ class PageBlockListView(TranslatorRequiredMixin, ListView):
         ctx["page"] = get_object_or_404(Page, id=self.kwargs["page_id"])
         ctx["states"] = Competition.State
         return ctx
+
+
+class PageBlockUpdateView(
+    TranslatorRequiredMixin, FormAndFormsetMixin, GenericForm, FormView
+):
+    form_title = "Update page block"
+
+    @cached_property
+    def page_block(self):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
+
+    def get_form_class(self):
+        return self.page_block.block.form
+
+    def get_formset_class(self):
+        return self.page_block.block.formset
+
+    def save_forms(self, form, formset):
+        block = self.page_block
+        if block.data is None:
+            block.data = {}
+        block.data.update(form.cleaned_data)
+        if formset is not None:
+            items = []
+            for form in formset:
+                if not form.cleaned_data or form.cleaned_data["DELETE"]:
+                    continue
+                data = form.cleaned_data
+                del data["DELETE"]
+                items.append(data)
+            block.data["items"] = items
+        block.save()
+
+    def get_initial(self):
+        return self.page_block.data
+
+    def get_formset_kwargs(self):
+        kw = super().get_formset_kwargs()
+        if "items" in self.page_block.data:
+            kw["initial"] = self.page_block.data["items"]
+        return kw
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
 
 
 class ContentBlockQuerySetMixin:

@@ -26,7 +26,7 @@
                 <div>
                     <div class="font-semibold">
                         {{ block.block.name }}
-                        <a href="#" class="absolute inset-0"></a>
+                        <a href="{% url "badmin:page_block_update" page_id=block.page_id pk=block.id %}" class="absolute inset-0"></a>
                     </div>
                     <div class="text-sm flex flex-wrap gap-3">
                         {% for state in states %}

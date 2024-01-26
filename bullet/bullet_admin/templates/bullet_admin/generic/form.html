@@ -22,6 +22,13 @@
             {% csrf_token %}
             {% admin_form2 form %}
 
+            {{ formset.management_form }}
+
+            {% for form in formset %}
+            <hr class="my-6">
+            {% admin_form2 form %}
+            {% endfor %}
+
             <div class="mt-6">
                 {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
             </div>
