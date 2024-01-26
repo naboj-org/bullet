@@ -4,32 +4,35 @@
 
 {% block root_content %}
     {% block main %}
-        <div class="flex flex-wrap align-baseline gap-1 bg-gray-900 p-4 border-b-4 border-primary justify-between">
-            {% if branches %}
-            <div class="relative">
-                <button type="button" class="font-medium cursor-pointer text-white text-left whitespace-nowrap" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
-                    {{ branch.name }} <i class="fas fa-caret-down"></i>
-                </button>
-                <nav id="js-branch-menu" class="absolute bg-white border shadow-lg rounded-md p-2 space-y-1 w-48 hidden" aria-labelledby="js-branch-button" tabindex="-1">
-                    {% for b in branches %}
-                        <a class="{% if branch == b %}bg-primary text-white{% else %}hover:bg-gray-200{% endif %} block px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.name }}</a>
-                    {% endfor %}
-                </nav>
-            </div>
-            {% endif %}
-            <div>
-                {% if user.is_authenticated %}
-                <a href="{% url "badmin:home" %}" class="text-gray-500 hover:text-gray-300 mr-4 text-lg">Admin</a>
+        <div class="border-b-4 border-primary bg-gray-900">
+            <div class="flex flex-wrap align-baseline gap-1 max-w-7xl mx-auto py-4 px-6 lg:px-8 justify-between">
+                {% if branches %}
+                <div class="relative">
+                    <button type="button" class="font-medium cursor-pointer text-white text-left whitespace-nowrap" id="js-branch-button" aria-expanded="true" aria-haspopup="true">
+                        {{ branch.name }} <i class="fas fa-caret-down"></i>
+                    </button>
+                    <nav id="js-branch-menu" class="absolute bg-white border shadow-lg rounded-md p-2 space-y-1 w-48 hidden" aria-labelledby="js-branch-button" tabindex="-1">
+                        {% for b in branches %}
+                            <a class="{% if branch == b %}bg-primary text-white{% else %}hover:bg-gray-200{% endif %} block px-2 py-1 rounded" href="//{{ b.domain }}">{{ b.name }}</a>
+                        {% endfor %}
+                    </nav>
+                </div>
                 {% endif %}
-                <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap">
-                    <i class="fas fa-globe"></i>
-                    Change language
-                </a>
+
+                <div>
+                    {% if user.is_authenticated %}
+                    <a href="{% url "badmin:home" %}" class="text-gray-500 hover:text-gray-300 mr-4 text-lg">Admin</a>
+                    {% endif %}
+                    <a href="{% url "country_selector" %}" class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap">
+                        <i class="fas fa-globe"></i>
+                        Change language
+                    </a>
+                </div>
             </div>
         </div>
 
-        <header class="bg-hero border-b border-primary">
-            <div class="container mx-auto py-12 px-2 {% block heroclass %}{% endblock %}">
+        <header class="bg-hero">
+            <div class="max-w-7xl mx-auto py-6 md:py-12 px-6 lg:px-8 {% block heroclass %}{% endblock %}">
                 <div id="default-nav">
                     {% include 'web/snippets/main_nav.html' with primary=True %}
                 </div>
@@ -39,7 +42,9 @@
         </header>
 
         <div class="border-b-2 border-primary shadow-lg transition-transform fixed bg-white top-0 transform-gpu -translate-y-full w-full z-10" id="backup-nav">
-            {% include 'web/snippets/main_nav.html' %}
+            <div class="mx-auto max-w-7xl px-6 lg:px-8 py-4">
+                {% include 'web/snippets/main_nav.html' %}
+            </div>
         </div>
 
         {% block content %}

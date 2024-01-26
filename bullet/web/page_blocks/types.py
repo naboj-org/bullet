@@ -10,6 +10,7 @@ PAGE_BLOCK_TYPES = {
         None,
         competition_timeline.get_context,
     ),
+    5: PageBlock("hero", "Hero header", None, None),
 }
 
 
