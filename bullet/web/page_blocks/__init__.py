@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 class PageBlock:
     identifier: str
     name: str
+    icon: str
     form: Form | None
     context_data: Callable[[HttpRequest, dict], dict] | None
 
