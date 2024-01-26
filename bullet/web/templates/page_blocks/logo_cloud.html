@@ -1,12 +1,14 @@
-<footer class="{% if background == "color" %}bg-primary-lighter{% endif %} md:py-24 py-12">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <h2 class="font-bold {% if background == "color" %}text-primary{% else %}text-gray-800{% endif %} text-2xl mb-8">{{ title }}</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center">
-            {% for item in logos %}
-                <a href="{{ item.url }}" style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}" class="bg-white h-24 md:h-32 rounded-md p-6">
-                    <img src="{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
-                </a>
-            {% endfor %}
-        </div>
+{% extends "page_blocks/_base.html" %}
+
+{% block container %}
+    <h2 class="font-bold {% if background == "color" %}text-primary{% else %}text-gray-800{% endif %} text-3xl md:text-4xl mb-4">{{ title|safe }}</h2>
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center">
+        {% for item in logos %}
+            <a href="{{ item.url }}"
+               style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}"
+               class="bg-white h-24 md:h-32 rounded-md p-6">
+                <img src="{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
+            </a>
+        {% endfor %}
     </div>
-</footer>
+{% endblock %}
