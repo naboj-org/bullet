@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.3 - 2024-01-30
+
+### Added
+
+- Allow content administrators to manage files uploaded to the website's storage.
+- Added an option for administrators to filter schools by countries in the school list.
+
+### Changed
+
+- Updated DE translations.
+
+### Fixed
+
+- Resolved issues with logging out of the system.
+- Resolved a bug in which country fields did not work correctly or completely crash the website.
+
 ## 2024.2 - 2024-01-21
 
 ### Changed
