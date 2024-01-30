@@ -9,6 +9,8 @@
     {{ field|add_class:"datetime-picker input form-input" }}
 {% elif field.field.widget.input_type == "time" %}
     {{ field|add_class:"time-picker input form-input" }}
+{% elif field.field.widget.input_type == "file_browser" %}
+    {% include "bullet_admin/files/tree_field.html" %}
 {% else %}
     {{ field|add_class:"input" }}
 {% endif %}

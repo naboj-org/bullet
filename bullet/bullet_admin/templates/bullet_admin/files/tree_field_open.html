@@ -1,0 +1,49 @@
+{% load utils %}
+
+<div hx-target="this" hx-swap="outerHTML">
+    <input type="hidden" name="{{ request.GET.field }}" value="{{ request.GET.initial }}">
+
+    {% url "badmin:file_form_field" as home %}
+    <div hx-boost="true" hx-push-url="false" class="flex items-center justify-between my-4">
+        {% query_transform path="" as default_query %}
+        {% abreadcrumbs home=home|add:default_query %}
+            {% for parent in parents %}
+                {% query_transform path=parent.1 as parent_link %}
+                {% #abreadcrumb url=home|add:parent_link text=parent.0 %}
+            {% endfor %}
+        {% endabreadcrumbs %}
+
+        {% url "badmin:file_form_field" as field_url %}
+        {% query_replace field=request.GET.field path=request.GET.initial selected=1 as query %}
+        {% #abtn color="red" label="Cancel" url=field_url|add:query %}
+    </div>
+
+    <div class="divide-y">
+        {% for file in files %}
+            <a class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100 p-3 flex items-center justify-between"
+               hx-get="{{ home }}{% if file.is_dir %}{% query_transform path=file.path %}{% else %}{% query_transform path=file.path selected=1 %}{% endif %}">
+                <div class="flex items-center gap-2">
+                    {% if file.is_dir %}
+                        <span class="iconify" data-icon="mdi:folder"></span>
+                    {% else %}
+                        <span class="iconify" data-icon="mdi:file"></span>
+                    {% endif %}
+                    {{ file.name }}
+                </div>
+                {% if file.is_dir %}
+                    <div title="Open folder">
+                        <span class="iconify text-gray-400" data-icon="mdi:chevron-right"></span>
+                    </div>
+                {% else %}
+                    <div title="Select this file">
+                        <span class="iconify text-gray-400" data-icon="mdi:check"></span>
+                    </div>
+                {% endif %}
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if not files %}
+        {% #aemptystate icon="mdi:folder-search" title="There is nothing here" %}
+    {% endif %}
+</div>

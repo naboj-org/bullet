@@ -24,3 +24,18 @@ class AdminNavigation(component.Component):
 @component.register("anavitem")
 class AdminNavigationItem(component.Component):
     template_name = "bullet_admin/components/navigation_item.html"
+
+
+@component.register("abreadcrumbs")
+class AdminBreadcrumbs(component.Component):
+    template_name = "bullet_admin/components/breadcrumbs.html"
+
+
+@component.register("abreadcrumb")
+class AdminBreadcrumbsItem(component.Component):
+    template_name = "bullet_admin/components/breadcrumb.html"
+
+
+@component.register("aemptystate")
+class AdminEmptyState(component.Component):
+    template_name = "bullet_admin/components/empty_state.html"
