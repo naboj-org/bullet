@@ -12,7 +12,6 @@ from bullet_admin.forms.files import (
     FileDeleteForm,
     FileUploadForm,
     FolderCreateForm,
-    TestForm,
 )
 from bullet_admin.mixins import TranslatorRequiredMixin
 from bullet_admin.views import GenericForm
@@ -166,11 +165,3 @@ class TreeFieldView(FileTreeView):
                 "value": self.request.GET.get("path"),
             }
         return ctx
-
-
-class TreeFieldTestView(GenericForm, FormView):
-    form_class = TestForm
-
-    def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)

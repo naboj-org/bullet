@@ -1,7 +1,5 @@
 from django import forms
 
-from bullet_admin.fields import FileBrowserInput
-
 
 class FolderCreateForm(forms.Form):
     path = forms.CharField(disabled=True, required=False, label="Parent path")
@@ -35,7 +33,3 @@ class FileDeleteForm(forms.Form):
         initial_path = kwargs.pop("initial_path")
         super().__init__(**kwargs)
         self.fields["path"].initial = initial_path
-
-
-class TestForm(forms.Form):
-    path = forms.CharField(label="Path", widget=FileBrowserInput())
