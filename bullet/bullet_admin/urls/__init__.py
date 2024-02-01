@@ -71,6 +71,11 @@ urlpatterns = [
         name="page_block_list",
     ),
     path(
+        "content/pages/<int:page_id>/blocks/new/",
+        content.PageBlockCreateView.as_view(),
+        name="page_block_create",
+    ),
+    path(
         "content/pages/<int:page_id>/blocks/<int:pk>/",
         content.PageBlockUpdateView.as_view(),
         name="page_block_update",

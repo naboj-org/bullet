@@ -11,9 +11,8 @@
             {% endslot %}
             {{ page.title }}
             {% slot buttons %}
-{#                {% url "badmin:page_create" as create_url %}#}
-{#                {% query_replace back=request.get_full_path language=request.GET.language as back %}#}
-{#                {% #abtn color="green" icon="mdi:plus" label="New page" url=create_url|add:back %}#}
+                {% url "badmin:page_block_create" page_id=page.id as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New block" url=create_url %}
             {% endslot %}
         {% endaheader %}
 

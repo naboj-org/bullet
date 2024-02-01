@@ -13,6 +13,7 @@ from bullet_admin.forms.content import (
     ContentBlockWithRefForm,
     LogoForm,
     MenuItemForm,
+    PageBlockCreateForm,
     PageBlockUpdateForm,
     PageForm,
 )
@@ -162,7 +163,7 @@ class PageBlockUpdateView(
 
     def get_formset_kwargs(self):
         kw = super().get_formset_kwargs()
-        if "items" in self.page_block.data:
+        if self.page_block.data and "items" in self.page_block.data:
             kw["initial"] = self.page_block.data["items"]
         return kw
 
@@ -187,6 +188,24 @@ class PageBlockSettingsView(TranslatorRequiredMixin, GenericForm, UpdateView):
         return reverse(
             "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
         )
+
+
+class PageBlockCreateView(TranslatorRequiredMixin, GenericForm, CreateView):
+    form_title = "New page block"
+    form_class = PageBlockCreateForm
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_update",
+            kwargs={"page_id": self.kwargs["page_id"], "pk": self.object.id},
+        )
+
+    def form_valid(self, form):
+        self.object = block = form.save(commit=False)
+        block.page = get_object_or_404(Page, id=self.kwargs["page_id"])
+        block.save()
+
+        return HttpResponseRedirect(self.get_success_url())
 
 
 class PageBlockDeleteView(TranslatorRequiredMixin, DeleteView):

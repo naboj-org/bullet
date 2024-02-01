@@ -254,3 +254,19 @@ class PageBlockUpdateForm(forms.ModelForm):
         help_texts = {"order": "Blocks are shown in ascending order."}
 
         widgets = {"states": forms.CheckboxSelectMultiple()}
+
+
+class PageBlockCreateForm(forms.ModelForm):
+    class Meta:
+        model = PageBlock
+        fields = ["states", "order", "block_type"]
+
+        labels = {
+            "states": "Visibility",
+            "order": "Order",
+            "block_type": "Block type",
+        }
+
+        help_texts = {"order": "Blocks are shown in ascending order."}
+
+        widgets = {"states": forms.CheckboxSelectMultiple()}
