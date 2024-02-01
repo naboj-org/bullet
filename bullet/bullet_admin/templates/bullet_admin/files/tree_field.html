@@ -1,6 +1,6 @@
 {% load utils %}
 <div class="flex items-center justify-between" hx-target="this" hx-swap="outerHTML" hx-boost="true" hx-push-url="false">
-    <input type="hidden" name="{{ field.name }}" value="{{ field.value|default:"" }}">
+    <input type="hidden" name="{{ field.html_name }}" value="{{ field.value|default:"" }}">
     <span>{{ field.value|default:"(none selected)" }}</span>
     {% url "badmin:file_form_field" as field_url %}
     {% query_replace field=field.html_name initial=field.value|default_if_none:"" as query %}

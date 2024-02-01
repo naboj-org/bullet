@@ -161,7 +161,7 @@ class TreeFieldView(FileTreeView):
         ctx = super().get_context_data(**kwargs)
         if self.request.GET.get("selected"):
             ctx["field"] = {
-                "name": self.request.GET.get("field"),
+                "html_name": self.request.GET.get("field"),
                 "value": self.request.GET.get("path"),
             }
         return ctx
