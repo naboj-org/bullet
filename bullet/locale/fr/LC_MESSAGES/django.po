@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-21 17:02+0000\n"
+"POT-Creation-Date: 2024-02-01 21:51+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -465,11 +465,9 @@ msgstr "Équipe déplacée de la liste d'attente"
 msgid "Your team has been deleted"
 msgstr "Votre équipe a été supprimée"
 
-#: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7
-#: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
+#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
 msgstr "Page d'accueil"
 
@@ -554,6 +552,28 @@ msgstr "Votre équipe a été déplacée de la liste d'attente et fait maintenan
 msgid "You can edit team details by clicking the link below."
 msgstr "Vous pouvez modifier les détails de votre équipe en cliquant sur le lien ci-dessous."
 
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:11
+msgid "Registration start"
+msgstr "Début des inscriptions"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:16
+msgid "Second registration round start"
+msgstr "Second tour d'inscriptions"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+#: web/templates/web/snippets/home_timeline.html:35
+msgid "Registration end"
+msgstr "Fin des inscriptions"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:25
+#: web/templates/web/snippets/home_timeline.html:43
+msgid "Competition day"
+msgstr "Jour du concours"
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Introuvable"
@@ -561,16 +581,6 @@ msgstr "Introuvable"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "La page à laquelle vous avez essayé d'accéder est introuvable."
-
-#: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Inscription"
-
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "Les inscriptions se terminent dans %(end)s"
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
@@ -606,6 +616,10 @@ msgstr "Début des inscriptions"
 msgid "The competition will take place on %(start)s."
 msgstr "Le concours n'a pas encore commencé."
 
+#: web/templates/web/snippets/home_hero_buttons.html:14
+msgid "Registration"
+msgstr "Inscription"
+
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, fuzzy, python-format
 #| msgid "Registration ends in %(end)s"
@@ -623,11 +637,3 @@ msgstr "Début des inscriptions"
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
 msgstr "Second tour d'inscriptions"
-
-#: web/templates/web/snippets/home_timeline.html:35
-msgid "Registration end"
-msgstr "Fin des inscriptions"
-
-#: web/templates/web/snippets/home_timeline.html:43
-msgid "Competition day"
-msgstr "Jour du concours"

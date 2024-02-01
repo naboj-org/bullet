@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-21 17:02+0000\n"
+"POT-Creation-Date: 2024-02-01 21:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -466,11 +466,9 @@ msgstr "El equipo ha sido movido de la lista de espera"
 msgid "Your team has been deleted"
 msgstr "Su equipo ha sido eliminado"
 
-#: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7
-#: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
+#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
 msgstr "Página de inicio"
 
@@ -555,6 +553,28 @@ msgstr "Su equipo ha pasado de la lista de espera a la lista de equipos competid
 msgid "You can edit team details by clicking the link below."
 msgstr "Puede editar los detalles del equipo haciendo clic en el enlace de abajo."
 
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:11
+msgid "Registration start"
+msgstr "El registro comienza"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:16
+msgid "Second registration round start"
+msgstr "Segunda ronda de registro"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+#: web/templates/web/snippets/home_timeline.html:35
+msgid "Registration end"
+msgstr "Fin del registro"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:25
+#: web/templates/web/snippets/home_timeline.html:43
+msgid "Competition day"
+msgstr "Día de la competición"
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "No encontrado"
@@ -562,16 +582,6 @@ msgstr "No encontrado"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "La página a la que ha intentado acceder no se encuentra."
-
-#: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Registro"
-
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "El registro finaliza en %(end)s"
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
@@ -605,6 +615,10 @@ msgstr "El registro comienza el %(start)s."
 msgid "The competition will take place on %(start)s."
 msgstr "La competición comenzará el %(start)s."
 
+#: web/templates/web/snippets/home_hero_buttons.html:14
+msgid "Registration"
+msgstr "Registro"
+
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
 msgid "Registration ends on %(end)s."
@@ -621,11 +635,3 @@ msgstr "El registro comienza"
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
 msgstr "Segunda ronda de registro"
-
-#: web/templates/web/snippets/home_timeline.html:35
-msgid "Registration end"
-msgstr "Fin del registro"
-
-#: web/templates/web/snippets/home_timeline.html:43
-msgid "Competition day"
-msgstr "Día de la competición"
