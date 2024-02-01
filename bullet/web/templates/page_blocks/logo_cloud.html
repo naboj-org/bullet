@@ -3,7 +3,7 @@
 {% block container %}
     {% include "page_blocks/_centered_header.html" %}
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 items-center {% if title or text %}mt-8{% endif %}">
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 items-center {% if title or text %}mt-8{% endif %}">
         {% for item in items %}
             <a href="{{ item.url }}"
                style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}"
