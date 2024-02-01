@@ -1,3 +1,4 @@
+from bullet_admin.fields import FileBrowserInput
 from django import forms
 from django.forms import formset_factory
 from django.utils.safestring import mark_safe
@@ -23,7 +24,7 @@ class CompetitionTimelineForm(TitleTextMixin, forms.Form):
 
 
 class HeroForm(TitleTextMixin, forms.Form):
-    image = forms.CharField(label="Image", required=False)  # TODO: use new file picker
+    image = forms.CharField(label="Image", required=False, widget=FileBrowserInput())
     cta_text = forms.CharField(label="Button label", required=False)
     cta_url = forms.CharField(label="Button link URL", required=False)
 
@@ -33,7 +34,7 @@ class ImageGridForm(BackgroundMixin, TitleTextMixin, forms.Form):
 
 
 class ImageGridItemForm(TitleTextMixin, forms.Form):
-    image = forms.CharField(label="Image", required=False)  # TODO: use new file picker
+    image = forms.CharField(label="Image", required=False, widget=FileBrowserInput())
 
 
 ImageGridFormset = formset_factory(ImageGridItemForm, extra=4, can_delete=True)
@@ -51,7 +52,7 @@ class MarkdownForm(BackgroundMixin, TitleTextMixin, forms.Form):
 
 
 class ImageTextForm(BackgroundMixin, TitleTextMixin, forms.Form):
-    image = forms.CharField(label="Image", required=False)  # TODO: use new file picker
+    image = forms.CharField(label="Image", required=False, widget=FileBrowserInput())
     side = forms.ChoiceField(
         label="Image position",
         choices=[("left", "Image on the left"), ("right", "Image on the right")],
@@ -93,7 +94,7 @@ class LogoCloudForm(BackgroundMixin, TitleTextMixin, forms.Form):
 
 class LogoCloudItemForm(forms.Form):
     name = forms.CharField(label="Name")
-    image = forms.CharField(label="Image")  # TODO: use new file picker
+    image = forms.CharField(label="Image", widget=FileBrowserInput())
     url = forms.CharField(label="Link URL")
     size = forms.IntegerField(
         label="Size",
