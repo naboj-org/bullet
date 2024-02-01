@@ -3,6 +3,6 @@
     <input type="hidden" name="{{ field.name }}" value="{{ field.value|default:"" }}">
     <span>{{ field.value|default:"(none selected)" }}</span>
     {% url "badmin:file_form_field" as field_url %}
-    {% query_replace field=field.name initial=field.value|default_if_none:"" as query %}
+    {% query_replace field=field.html_name initial=field.value|default_if_none:"" as query %}
     {% #abtn label="Select file" url=field_url|add:query %}
 </div>
