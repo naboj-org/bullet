@@ -1,115 +1,13 @@
 {% extends "web/base.html" %}
-{% load content_blocks %}
-{% load static %}
+{% load page_blocks %}
 {% load i18n %}
-{% load country_url %}
 
 {% block title %}{% trans "Home page" %}{% endblock %}
-{% block heroclass %}md:bg-hero-image{% endblock %}
-{% block hero %}
-<div class="flex">
-    <div class="md:w-2/5 mt-8 md:mt-24 mb-4 md:mb-8">
-        <p class="text-4xl md:text-6xl font-bold mb-12 md:mb-16">Lorem ipsum dolor sit amet, <span class="text-primary">consectetur</span> adipisicing elit.</p>
-        {% if competition.is_registration_open %}
-        <a href="{% country_url "register" %}" class="hero-btn">{% trans "Registration" %}</a>
-        <p class="font-light mt-12 md:mt-16">
-            {% blocktrans trimmed with end=competition.registration_end|timeuntil %}
-                Registration ends in {{ end }}
-            {% endblocktrans %}
-        </p>
-        {% endif %}
-    </div>
-</div>
-{% endblock %}
 
 {% block content %}
-{% load_blocks "home" %}
-<div class="container mx-auto px-2">
-    <div class="flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col md:flex-row">
-        <img src="https://picsum.photos/800/500" class="md:w-3/5 shrink-0 rounded-md shadow-md">
-        <div class="grow">
-            <h2 class="font-bold text-3xl md:text-4xl mb-6">
-                <span class="text-primary">International competition</span>
-                liked by students everywhere
-            </h2>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at blanditiis excepturi facilis, id ipsum natus neque nihil, nulla obcaecati placeat provident quo repudiandae sequi voluptate. Architecto nihil nulla voluptatem.
-        </div>
-    </div>
+    {% for page_block in page_blocks %}
+    {% render_page_block page_block %}
+    {% endfor %}
 
-    <div class="my-16 md:my-32">
-        <h2 class="font-bold text-4xl mb-6 md:mb-16 text-center">What is <span class="text-primary">Naboj</span>?</h2>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 mx-auto md:max-w-4xl gap-8">
-            <div class="flex items-center">
-                <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
-                <div>
-                    <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
-                <div>
-                    <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
-                <div>
-                    <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <div class="w-12 h-12 rounded-full bg-primary shrink-0 mr-4"></div>
-                <div>
-                    <h3 class="font-bold">Lorem ipsum dolor sit amet.</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta dolore eum eveniet exercitationem inventore labore odio pariatur quidem, repellat velit.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {% include "web/snippets/home_timeline.html" %}
-
-</div>
-
-<div class="bg-primary-light py-12 md:py-32">
-    <div class="container mx-auto px-2 flex content-between items-center gap-6 md:gap-16 my-12 md:my-32 flex-col-reverse md:flex-row">
-        <div class="grow">
-            <h2 class="font-bold text-3xl md:text-4xl mb-6">
-                <span class="text-primary">International competition</span>
-                liked by students everywhere
-            </h2>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Alias at blanditiis excepturi facilis, id ipsum natus neque nihil, nulla obcaecati placeat provident quo repudiandae sequi voluptate. Architecto nihil nulla voluptatem.
-        </div>
-        <img src="https://picsum.photos/800/500" class="md:w-3/5 shrink-0 rounded-md shadow-md">
-    </div>
-</div>
-
-{% if open_competition %}
-    <div class="container mx-auto px-2">
-        <div class="my-10 md:my-24 text-center">
-            <h2 class="font-bold text-4xl mb-8">Are you <span class="text-primary">ready</span>?</h2>
-
-            <div class="mx-auto max-w-4xl">
-                <p>Registration closes in</p>
-                {# TODO more human readable display & actual countdown in JS #}
-                <p class="text-xl mb-10">{{ registration_open_for }}</p>
-
-                <a href="{% country_url 'register' %}" class="hero-btn">Register</a>
-            </div>
-        </div>
-    </div>
-{% endif %}
-
-{#    {% trans "dynamic:intro" context branch.label %}#}
-
-    {% content_block "home:hello" %}
-
-{% endblock %}
-
-{% block footer %}
-    {% include "web/snippets/home_footer.html" %}
+    {% include "web/snippets/state_selector.html" %}
 {% endblock %}

@@ -1,0 +1,8 @@
+{% if title %}
+    <h2 class="font-bold text-center text-3xl md:text-4xl mb-4 text-gray-800 bold-primary">{{ title|safe }}</h2>
+{% endif %}
+{% if text %}
+    <div class="text-lg text-center text-gray-600 leading-8">
+        {{ text|safe }}
+    </div>
+{% endif %}

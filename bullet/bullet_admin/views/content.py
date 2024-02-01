@@ -1,14 +1,20 @@
+from competitions.models import Competition
 from django.db.models import Q
 from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
-from web.models import ContentBlock, Logo, Menu, Page
+from django.utils.functional import cached_property
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
+from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
+from bullet.views import FormAndFormsetMixin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
     LogoForm,
     MenuItemForm,
+    PageBlockCreateForm,
+    PageBlockUpdateForm,
     PageForm,
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
@@ -51,8 +57,8 @@ class PageEditView(
     GenericForm,
     UpdateView,
 ):
-    form_title = "Edit page"
     form_class = PageForm
+    template_name = "bullet_admin/content/page_edit.html"
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
@@ -102,6 +108,120 @@ class PageDeleteView(
 
     def get_default_success_url(self):
         return reverse("badmin:page_list")
+
+
+class PageBlockListView(TranslatorRequiredMixin, ListView):
+    template_name = "bullet_admin/content/page_block_list.html"
+
+    def get_queryset(self):
+        return PageBlock.objects.filter(page_id=self.kwargs["page_id"])
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = super().get_context_data(object_list=object_list, **kwargs)
+        ctx["page"] = get_object_or_404(Page, id=self.kwargs["page_id"])
+        ctx["states"] = Competition.State
+        return ctx
+
+
+class PageBlockUpdateView(
+    TranslatorRequiredMixin, FormAndFormsetMixin, GenericForm, FormView
+):
+    form_title = "Page block content"
+
+    @cached_property
+    def page_block(self):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
+
+    def get_form_class(self):
+        return self.page_block.block.form
+
+    def get_formset_class(self):
+        return self.page_block.block.formset
+
+    def save_forms(self, form, formset):
+        block = self.page_block
+        if block.data is None:
+            block.data = {}
+        block.data.update(form.cleaned_data)
+        if formset is not None:
+            items = []
+            for form in formset:
+                if not form.cleaned_data or form.cleaned_data["DELETE"]:
+                    continue
+                data = form.cleaned_data
+                del data["DELETE"]
+                items.append(data)
+            block.data["items"] = items
+        block.save()
+
+    def get_initial(self):
+        return self.page_block.data
+
+    def get_formset_kwargs(self):
+        kw = super().get_formset_kwargs()
+        if self.page_block.data and "items" in self.page_block.data:
+            kw["initial"] = self.page_block.data["items"]
+        return kw
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
+
+
+class PageBlockSettingsView(TranslatorRequiredMixin, GenericForm, UpdateView):
+    form_title = "Page block settings"
+    form_class = PageBlockUpdateForm
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
+
+
+class PageBlockCreateView(TranslatorRequiredMixin, GenericForm, CreateView):
+    form_title = "New page block"
+    form_class = PageBlockCreateForm
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_update",
+            kwargs={"page_id": self.kwargs["page_id"], "pk": self.object.id},
+        )
+
+    def form_valid(self, form):
+        self.object = block = form.save(commit=False)
+        block.page = get_object_or_404(Page, id=self.kwargs["page_id"])
+        block.save()
+
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class PageBlockDeleteView(TranslatorRequiredMixin, DeleteView):
+    template_name = "bullet_admin/content/page_block_delete.html"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
 
 
 class ContentBlockQuerySetMixin:

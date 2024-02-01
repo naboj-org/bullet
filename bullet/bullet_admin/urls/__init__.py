@@ -66,6 +66,31 @@ urlpatterns = [
     path("content/pages/new/", content.PageCreateView.as_view(), name="page_create"),
     path("content/pages/<pk>/", content.PageEditView.as_view(), name="page_edit"),
     path(
+        "content/pages/<int:page_id>/blocks/",
+        content.PageBlockListView.as_view(),
+        name="page_block_list",
+    ),
+    path(
+        "content/pages/<int:page_id>/blocks/new/",
+        content.PageBlockCreateView.as_view(),
+        name="page_block_create",
+    ),
+    path(
+        "content/pages/<int:page_id>/blocks/<int:pk>/",
+        content.PageBlockUpdateView.as_view(),
+        name="page_block_update",
+    ),
+    path(
+        "content/pages/<int:page_id>/blocks/<int:pk>/settings/",
+        content.PageBlockSettingsView.as_view(),
+        name="page_block_settings",
+    ),
+    path(
+        "content/pages/<int:page_id>/blocks/<int:pk>/delete/",
+        content.PageBlockDeleteView.as_view(),
+        name="page_block_delete",
+    ),
+    path(
         "content/pages/<pk>/delete/",
         content.PageDeleteView.as_view(),
         name="page_delete",

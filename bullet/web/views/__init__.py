@@ -1,8 +1,9 @@
 from competitions.models import Competition
 from django.shortcuts import render
+from django.utils import translation
 from django.views.generic import RedirectView, TemplateView
 
-from web.models import Logo
+from web.models import Logo, Page
 
 
 class BranchSpecificTemplateMixin:
@@ -26,9 +27,9 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         context = super().get_context_data(**kwargs)
         self.branch = self.request.BRANCH
 
-        context["competition"] = Competition.objects.get_current_competition(
-            self.branch
-        )
+        context["competition"] = (
+            competition
+        ) = Competition.objects.get_current_competition(self.branch)
 
         context["partners"] = (
             Logo.objects.partners()
@@ -40,6 +41,22 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
             .for_branch_country(self.branch, self.request.COUNTRY_CODE)
             .all()
         )
+
+        page = Page.objects.filter(
+            branch=self.request.BRANCH,
+            language=translation.get_language(),
+            countries__contains=[self.request.COUNTRY_CODE.upper()],
+            slug="_homepage_",
+        ).first()
+        if page:
+            current_state = competition.state
+            get_state = self.request.GET.get("state", "")
+            if self.request.user.is_authenticated and get_state.isnumeric():
+                current_state = get_state
+
+            context["page_blocks"] = page.pageblock_set.filter(
+                states__contains=[current_state]
+            ).all()
 
         return context
 

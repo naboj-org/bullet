@@ -1,0 +1,27 @@
+<div class="bg-hero md:pb-24 pb-12 pt-8 relative border-b border-primary">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-8 items-center">
+            <div class="max-w-xl">
+                <h1 class="text-4xl md:text-6xl font-bold mb-8 bold-primary text-gray-900">
+                    {{ title|safe }}
+                </h1>
+
+                <p class="text-lg text-gray-600">
+                    {{ text|safe }}
+                </p>
+
+                {% if cta_url %}
+                    <div class="mt-12">
+                        <a href="{{ cta_url }}" class="btn">{{ cta_text }}</a>
+                    </div>
+                {% endif %}
+            </div>
+
+            {% if image %}
+            <div>
+                <img src="{{ image_root }}{{ image }}" class="w-full shadow-xl rounded-lg"/>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

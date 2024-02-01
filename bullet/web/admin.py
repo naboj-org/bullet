@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from web.models import ContentBlock, Logo, Menu, Page
+from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
 admin.site.site_title = "Bullet system administration"
 admin.site.site_header = "Bullet system administration"
@@ -28,3 +28,8 @@ class MenuAdmin(admin.ModelAdmin):
 class ContentBlockAdmin(admin.ModelAdmin):
     list_filter = ["branch", "country", "language"]
     list_display = ["reference", "branch", "country", "language"]
+
+
+@admin.register(PageBlock)
+class PageBlockAdmin(admin.ModelAdmin):
+    list_display = ["page", "order", "block_type", "states"]

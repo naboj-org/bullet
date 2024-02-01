@@ -3,7 +3,7 @@ from countries.models import BranchCountry
 from django import forms
 from django.core.exceptions import ValidationError
 from django_countries import countries
-from web.models import ContentBlock, Logo, Menu, Page
+from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
 
 class PageForm(forms.ModelForm):
@@ -242,3 +242,31 @@ class MenuItemForm(forms.ModelForm):
                 )
 
         return data
+
+
+class PageBlockUpdateForm(forms.ModelForm):
+    class Meta:
+        model = PageBlock
+        fields = ["states", "order"]
+
+        labels = {"states": "Visibility", "order": "Order"}
+
+        help_texts = {"order": "Blocks are shown in ascending order."}
+
+        widgets = {"states": forms.CheckboxSelectMultiple()}
+
+
+class PageBlockCreateForm(forms.ModelForm):
+    class Meta:
+        model = PageBlock
+        fields = ["states", "order", "block_type"]
+
+        labels = {
+            "states": "Visibility",
+            "order": "Order",
+            "block_type": "Block type",
+        }
+
+        help_texts = {"order": "Blocks are shown in ascending order."}
+
+        widgets = {"states": forms.CheckboxSelectMultiple()}
