@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.6 - 2024-02-02
+
+### Changed
+
+- Improved logo cloud block template.
+
+### Fixed
+
+- Using file selector sometimes moved the whole page around.
+
 ## 2024.5 - 2024-02-01
 
 ### Fixed
