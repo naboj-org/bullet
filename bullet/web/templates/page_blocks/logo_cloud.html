@@ -8,7 +8,7 @@
             <a href="{{ item.url }}"
                style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}"
                class="bg-white h-24 md:h-32 rounded-md p-6">
-                <img src="{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
+                <img src="{{ image_root }}{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
             </a>
         {% endfor %}
     </div>

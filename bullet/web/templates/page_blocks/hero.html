@@ -17,9 +17,11 @@
                 {% endif %}
             </div>
 
+            {% if image %}
             <div>
-                <img src="{{ image }}" class="w-full shadow-xl rounded-lg"/>
+                <img src="{{ image_root }}{{ image }}" class="w-full shadow-xl rounded-lg"/>
             </div>
+            {% endif %}
         </div>
     </div>
 </div>
