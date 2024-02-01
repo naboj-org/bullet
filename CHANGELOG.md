@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.4 - 2024-02-01
+
+### Added
+
+- Completely new way to manage homepage and other pages that require more than a markdown content (page blocks).
+
+### Changed
+
+- Upgraded Chemistry and Physics homepage to page blocks.
+
 ## 2024.3 - 2024-01-30
 
 ### Added
