@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-21 17:02+0000\n"
+"POT-Creation-Date: 2024-02-01 21:51+0000\n"
 "PO-Revision-Date: 2024-01-10 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -471,11 +471,9 @@ msgstr "Võistkond lubati võistlusele"
 msgid "Your team has been deleted"
 msgstr "Teie võistkond kustutati"
 
-#: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7
-#: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
+#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
 msgstr "Kodulehekülg"
 
@@ -560,6 +558,28 @@ msgstr "Teie võistkond on eemaldatud ootenimekirjast ja lisatud osalevate võis
 msgid "You can edit team details by clicking the link below."
 msgstr "Te saate võistkonna andmeid muuta, klõpsates alloleval lingil."
 
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:11
+msgid "Registration start"
+msgstr "Registreerumine algus"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:16
+msgid "Second registration round start"
+msgstr "Registreerumise teine voor"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+#: web/templates/web/snippets/home_timeline.html:35
+msgid "Registration end"
+msgstr "Registreerumise lõpp"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:25
+#: web/templates/web/snippets/home_timeline.html:43
+msgid "Competition day"
+msgstr "Võistluse kuupäev"
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Ei leitud"
@@ -567,16 +587,6 @@ msgstr "Ei leitud"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "Lehekülge ei leitud."
-
-#: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Registreerumine"
-
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "Registreerumise lõpuni on jäänud %(end)s"
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
@@ -610,6 +620,10 @@ msgstr "Registreerumine algus: %(start)s."
 msgid "The competition will take place on %(start)s."
 msgstr "Võistluse kuupäev: %(start)s."
 
+#: web/templates/web/snippets/home_hero_buttons.html:14
+msgid "Registration"
+msgstr "Registreerumine"
+
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
 msgid "Registration ends on %(end)s."
@@ -626,11 +640,3 @@ msgstr "Registreerumine algus"
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
 msgstr "Registreerumise teine voor"
-
-#: web/templates/web/snippets/home_timeline.html:35
-msgid "Registration end"
-msgstr "Registreerumise lõpp"
-
-#: web/templates/web/snippets/home_timeline.html:43
-msgid "Competition day"
-msgstr "Võistluse kuupäev"

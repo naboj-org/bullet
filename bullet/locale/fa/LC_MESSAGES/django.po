@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj_Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-21 17:02+0000\n"
+"POT-Creation-Date: 2024-02-01 21:51+0000\n"
 "PO-Revision-Date: 2023-02-15 21:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
@@ -504,11 +504,9 @@ msgstr "تیم از فهرست انتظار خارج شده است"
 msgid "Your team has been deleted"
 msgstr "تیم شما حذف شده است"
 
-#: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7
-#: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
+#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
 msgstr "صفحه ی اصلی"
 
@@ -602,6 +600,28 @@ msgstr "تیم شما از فهرست انتظار خارچ و به فهرست �
 msgid "You can edit team details by clicking the link below."
 msgstr "با کلیک روی پیوند زیر می توانید اطلاعات تیم خود را ویرایش نمایید."
 
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:11
+msgid "Registration start"
+msgstr "ثبت نام شروع شده است"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:16
+msgid "Second registration round start"
+msgstr "دور دوم ثبت نام"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+#: web/templates/web/snippets/home_timeline.html:35
+msgid "Registration end"
+msgstr "پایان ثبت نام"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:25
+#: web/templates/web/snippets/home_timeline.html:43
+msgid "Competition day"
+msgstr "روز مسابقه"
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "یافت نشد."
@@ -609,16 +629,6 @@ msgstr "یافت نشد."
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "صفحه ای که می خواهید به آن دست رسی پیدا کنید یافت نشد."
-
-#: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "ثبت نام"
-
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "ثبت نام در تاریخ %(end)s به پایان خواهد رسید."
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
@@ -657,6 +667,10 @@ msgstr "ثبت نام شروع شده است"
 msgid "The competition will take place on %(start)s."
 msgstr "مسابقه شروع نشده بود."
 
+#: web/templates/web/snippets/home_hero_buttons.html:14
+msgid "Registration"
+msgstr "ثبت نام"
+
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, fuzzy, python-format
 #| msgid "Registration ends in %(end)s"
@@ -674,11 +688,3 @@ msgstr "ثبت نام شروع شده است"
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
 msgstr "دور دوم ثبت نام"
-
-#: web/templates/web/snippets/home_timeline.html:35
-msgid "Registration end"
-msgstr "پایان ثبت نام"
-
-#: web/templates/web/snippets/home_timeline.html:43
-msgid "Competition day"
-msgstr "روز مسابقه"

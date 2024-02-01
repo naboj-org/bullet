@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-21 17:02+0000\n"
+"POT-Creation-Date: 2024-02-01 21:51+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -469,11 +469,9 @@ msgstr "Tím presunutý z čakacej listiny"
 msgid "Your team has been deleted"
 msgstr "Tím bol odstránený"
 
-#: web/templates/chemistry/web/homepage.html:7
 #: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7
-#: web/templates/physics/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:7
+#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
+#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
 msgstr "Domovská stránka"
 
@@ -558,6 +556,28 @@ msgstr "Váš tím bol presunutý z čakacej listiny medzi súťažiace tímy."
 msgid "You can edit team details by clicking the link below."
 msgstr "Svoj tím môžete upraviť kliknutím na odkaz nižšie."
 
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:11
+msgid "Registration start"
+msgstr "Začiatok registrácie"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:16
+msgid "Second registration round start"
+msgstr "Druhé kolo registrácie"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+#: web/templates/web/snippets/home_timeline.html:35
+msgid "Registration end"
+msgstr "Koniec registrácie"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:25
+#: web/templates/web/snippets/home_timeline.html:43
+msgid "Competition day"
+msgstr "Deň súťaže"
+
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Nenájdené"
@@ -565,16 +585,6 @@ msgstr "Nenájdené"
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
 msgstr "Stránka, ktorú ste chceli otvoriť nebola nájdená."
-
-#: web/templates/web/homepage.html:14
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Zaregistrovať tím"
-
-#: web/templates/web/homepage.html:16
-#, python-format
-msgid "Registration ends in %(end)s"
-msgstr "Registrácia končí o %(end)s"
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
@@ -608,6 +618,10 @@ msgstr "Registrácia začína dňa %(start)s."
 msgid "The competition will take place on %(start)s."
 msgstr "Súťaž prebehne dňa %(start)s."
 
+#: web/templates/web/snippets/home_hero_buttons.html:14
+msgid "Registration"
+msgstr "Zaregistrovať tím"
+
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
 msgid "Registration ends on %(end)s."
@@ -624,11 +638,3 @@ msgstr "Začiatok registrácie"
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
 msgstr "Druhé kolo registrácie"
-
-#: web/templates/web/snippets/home_timeline.html:35
-msgid "Registration end"
-msgstr "Koniec registrácie"
-
-#: web/templates/web/snippets/home_timeline.html:43
-msgid "Competition day"
-msgstr "Deň súťaže"
