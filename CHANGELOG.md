@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.5 - 2024-02-01
+
+### Fixed
+
+- File selector did not work correctly inside forms with mupltiple entries.
+- Changed translations to reflect new labels on homepage.
+
 ## 2024.4 - 2024-02-01
 
 ### Added
