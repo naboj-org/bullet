@@ -1,0 +1,42 @@
+{% extends "bullet_admin/base.html" %}
+{% load static %}
+{% load badmin %}
+
+{% block title %}Edit page{% endblock %}
+
+{% block extrahead %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script defer src="https://cdn.jsdelivr.net/combine/npm/easymde@2.18.0/dist/easymde.min.js,npm/markdown-it-footnote@3.0.3/dist/markdown-it-footnote.min.js,npm/markdown-it-abbr@1.0.4/dist/markdown-it-abbr.min.js,npm/markdown-it@13.0.1/dist/markdown-it.min.js,npm/markdown-it-admon@1.0.0/dist/markdown-it-admon.min.js,npm/markdown-it-attrs@4.1.4/markdown-it-attrs.browser.min.js"></script>
+    <script defer src="{% static 'js/markdown.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-3xl">
+        {% aheader %}
+            {% slot title %}
+                Edit page
+            {% endslot %}
+            {% slot buttons %}
+                {% url "badmin:page_block_list" page_id=page.id as block_url %}
+                {% #abtn icon="mdi:code-block-parentheses" label="Page blocks" url=block_url %}
+            {% endslot %}
+        {% endaheader %}
+
+        {% if page.pageblock_set.exists %}
+        <div class="bg-amber-100 text-amber-800 text-sm p-4 -mt-4 mb-6 rounded-md">
+            <p><b>This page uses page blocks.</b> If you want to edit its content, click on the page blocks button above. The text inside the "content" field on this page is ignored.</p>
+        </div>
+        {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+            {% admin_form2 form %}
+
+            {{ formset.management_form }}
+
+            <div class="mt-6">
+                {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -57,8 +57,8 @@ class PageEditView(
     GenericForm,
     UpdateView,
 ):
-    form_title = "Edit page"
     form_class = PageForm
+    template_name = "bullet_admin/content/page_edit.html"
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
