@@ -1,5 +1,5 @@
 {% load utils %}
-<div class="flex items-center justify-between" hx-target="this" hx-swap="outerHTML" hx-boost="true" hx-push-url="false">
+<div class="flex items-center justify-between" hx-target="this" hx-swap="outerHTML show:none" hx-boost="true" hx-push-url="false">
     <input type="hidden" name="{{ field.html_name }}" value="{{ field.value|default:"" }}">
     <span>{{ field.value|default:"(none selected)" }}</span>
     {% url "badmin:file_form_field" as field_url %}

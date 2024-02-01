@@ -1,6 +1,6 @@
 {% load utils %}
 
-<div hx-target="this" hx-swap="outerHTML">
+<div hx-target="this" hx-swap="outerHTML show:none">
     <input type="hidden" name="{{ request.GET.field }}" value="{{ request.GET.initial }}">
 
     {% url "badmin:file_form_field" as home %}
