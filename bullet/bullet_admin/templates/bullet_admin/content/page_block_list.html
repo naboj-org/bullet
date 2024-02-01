@@ -19,16 +19,15 @@
 
         <div class="space-y-2">
         {% for block in object_list %}
-            <div class="border rounded-md p-4 flex items-center gap-4 relative hover:bg-gray-50">
+            <div class="border rounded-md p-4 flex items-center gap-4">
                 <div class="w-16 h-16 rounded bg-gray-200 flex items-center justify-center">
                     <span class="iconify w-10 h-10 text-gray-700" data-icon="{{ block.block.icon }}"></span>
                 </div>
                 <div>
                     <div class="font-semibold">
                         {{ block.block.name }}
-                        <a href="{% url "badmin:page_block_update" page_id=block.page_id pk=block.id %}" class="absolute inset-0"></a>
                     </div>
-                    <div class="text-sm flex flex-wrap gap-3">
+                    <div class="text-sm flex flex-wrap gap-x-3 gap-y-1">
                         {% for state in states %}
                             <div>
                                 {% if state in block.states %}
@@ -40,6 +39,14 @@
                             </div>
                         {% endfor %}
                     </div>
+                </div>
+                <div class="ml-auto flex items-center justify-end gap-1 flex-wrap">
+                    {% url "badmin:page_block_update" page_id=block.page_id pk=block.id as update %}
+                    {% #abtn url=update label="Edit content" %}
+                    {% url "badmin:page_block_settings" page_id=block.page_id pk=block.id as settings %}
+                    {% #abtn url=settings label="Settings" %}
+                    {% url "badmin:page_block_delete" page_id=block.page_id pk=block.id as delete %}
+                    {% #abtn url=delete label="Delete" color="red" %}
                 </div>
             </div>
         {% endfor %}

@@ -13,6 +13,7 @@ from bullet_admin.forms.content import (
     ContentBlockWithRefForm,
     LogoForm,
     MenuItemForm,
+    PageBlockUpdateForm,
     PageForm,
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
@@ -124,7 +125,7 @@ class PageBlockListView(TranslatorRequiredMixin, ListView):
 class PageBlockUpdateView(
     TranslatorRequiredMixin, FormAndFormsetMixin, GenericForm, FormView
 ):
-    form_title = "Update page block"
+    form_title = "Page block content"
 
     @cached_property
     def page_block(self):
@@ -164,6 +165,39 @@ class PageBlockUpdateView(
         if "items" in self.page_block.data:
             kw["initial"] = self.page_block.data["items"]
         return kw
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
+
+
+class PageBlockSettingsView(TranslatorRequiredMixin, GenericForm, UpdateView):
+    form_title = "Page block settings"
+    form_class = PageBlockUpdateForm
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
+
+    def get_success_url(self):
+        return reverse(
+            "badmin:page_block_list", kwargs={"page_id": self.kwargs["page_id"]}
+        )
+
+
+class PageBlockDeleteView(TranslatorRequiredMixin, DeleteView):
+    template_name = "bullet_admin/content/page_block_delete.html"
+
+    def get_object(self, queryset=None):
+        return get_object_or_404(
+            PageBlock,
+            page_id=self.kwargs["page_id"],
+            id=self.kwargs["pk"],
+        )
 
     def get_success_url(self):
         return reverse(
