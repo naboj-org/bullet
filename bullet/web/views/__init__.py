@@ -49,8 +49,13 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
             slug="_homepage_",
         ).first()
         if page:
+            current_state = competition.state
+            get_state = self.request.GET.get("state", "")
+            if self.request.user.is_authenticated and get_state.isnumeric():
+                current_state = get_state
+
             context["page_blocks"] = page.pageblock_set.filter(
-                states__contains=[competition.state]
+                states__contains=[current_state]
             ).all()
 
         return context
