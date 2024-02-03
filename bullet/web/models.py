@@ -119,3 +119,11 @@ class PageBlock(models.Model):
     @property
     def block(self):
         return PAGE_BLOCK_TYPES[self.block_type]
+
+    @property
+    def title(self) -> str:
+        if not isinstance(self.data, dict):
+            return ""
+        if "title" not in self.data:
+            return ""
+        return self.data["title"]
