@@ -11,7 +11,9 @@ register = template.Library()
 
 @register.simple_tag(name="render_page_block", takes_context=True)
 def page_block(context, block: "PageBlock"):
-    ctx = block.data
+    ctx = {}
+    if isinstance(block.data, dict):
+        ctx = block.data
     ctx["image_root"] = (
         settings.MEDIA_URL + "files/" + context.request.BRANCH.identifier + "/"
     )
