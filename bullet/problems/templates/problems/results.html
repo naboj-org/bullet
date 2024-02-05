@@ -2,6 +2,7 @@
 {% load country_url %}
 {% load content_blocks %}
 {% load i18n %}
+{% load utils %}
 
 {% block title %}{% trans "Results" %}{% endblock %}
 
@@ -27,12 +28,12 @@
 {% block content %}
 <div class="container mx-auto px-2 mt-8">
     <div class="flex flex-wrap justify-center gap-1 mb-12">
-        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}"
+        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}{% query_transform %}"
            class="{% if not country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
             {% trans "International" %}
         </a>
         {% for c in countries %}
-            <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}"
+            <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
                class="{% if c == country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
                 <img src="https://flagcdn.com/{{ c.code|lower }}.svg" class="h-3 inline-block" aria-hidden="true">
                 {{ c.name }}
