@@ -19,12 +19,15 @@
         <div class="space-y-2">
         {% for block in object_list %}
             <div class="border rounded-md p-4 flex items-center gap-4">
-                <div class="w-16 h-16 rounded bg-gray-200 flex items-center justify-center">
+                <div class="w-16 h-16 rounded bg-gray-200 flex shrink-0 items-center justify-center">
                     <span class="iconify w-10 h-10 text-gray-700" data-icon="{{ block.block.icon }}"></span>
                 </div>
                 <div>
-                    <div class="font-semibold">
-                        {{ block.block.name }}
+                    <div>
+                        <span class="font-semibold">{{ block.title }}</span>
+                        <span class="text-gray-600 text-sm">
+                            ({{ block.block.name }})
+                        </span>
                     </div>
                     <div class="text-sm flex flex-wrap gap-x-3 gap-y-1">
                         {% for state in states %}
