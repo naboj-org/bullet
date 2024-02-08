@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.8 - 2024-02-08
+
+### Fixed
+
+- Fixed homepage not displaying for logged-out users.
+
 ## 2024.7 - 2024-02-08
 
 ### Added
