@@ -1,5 +1,7 @@
 {% load widget_tweaks %}
-{% if field.widget_type == "checkboxselectmultiple" %}
+{% if field.widget_type == "radioselect" %}
+    {% include "form/radioselect.html" with widget=field.field.widget %}
+{% elif field.widget_type == "checkboxselectmultiple" %}
     {% include "form/checkboxmultiple.html" with widget=field.field.widget %}
 {% elif field.field.widget.input_type == "text" %}
     {{ field|add_class:"input form-input" }}

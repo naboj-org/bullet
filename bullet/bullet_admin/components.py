@@ -39,3 +39,8 @@ class AdminBreadcrumbsItem(component.Component):
 @component.register("aemptystate")
 class AdminEmptyState(component.Component):
     template_name = "bullet_admin/components/empty_state.html"
+
+
+@component.register("aalert")
+class AdminAlertState(component.Component):
+    template_name = "bullet_admin/components/alert.html"

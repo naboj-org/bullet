@@ -2,7 +2,9 @@ from competitions.branches import Branch
 from countries.models import BranchCountry
 from django import forms
 from django.core.exceptions import ValidationError
+from django.utils.translation import get_language_info
 from django_countries import countries
+from django_countries.fields import Country
 from web.models import ContentBlock, Logo, Menu, Page, PageBlock
 
 
@@ -270,3 +272,22 @@ class PageBlockCreateForm(forms.ModelForm):
         help_texts = {"order": "Blocks are shown in ascending order."}
 
         widgets = {"states": forms.CheckboxSelectMultiple()}
+
+
+class PageCopyForm(forms.Form):
+    page = forms.ModelChoiceField(
+        label="Source page", queryset=Page.objects.none(), widget=forms.RadioSelect()
+    )
+
+    def __init__(self, **kwargs):
+        page_qs = kwargs.pop("page_qs")
+        super().__init__(**kwargs)
+        self.fields["page"].queryset = page_qs
+
+        def label(obj):
+            lang = get_language_info(obj.language)
+            countries = [Country(c).name for c in obj.countries]
+            countries = ", ".join(countries)
+            return f"{obj.title} ({lang['name']}, {countries})"
+
+        self.fields["page"].label_from_instance = label
