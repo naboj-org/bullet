@@ -7,7 +7,6 @@ class CompetitionForm(ModelForm):
     class Meta:
         model = Competition
         fields = [
-            "name",
             "number",
             "web_start",
             "registration_start",
@@ -20,7 +19,6 @@ class CompetitionForm(ModelForm):
         ]
 
         help_texts = {
-            "name": "Name of the competition",
             "web_start": "Date from when the competition will be shown on homepage",
             "results_freeze": "How long before the competition "
             "end the result table freezes",
