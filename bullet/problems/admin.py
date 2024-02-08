@@ -9,7 +9,7 @@ class CategoryProblemAdminInline(admin.TabularInline):
 
 @admin.register(models.Problem)
 class ProblemAdmin(admin.ModelAdmin):
-    list_filter = ("competition__name", "competition__branch")
+    list_filter = ("competition", "competition__branch")
     list_display = ("name", "competition")
     inlines = (CategoryProblemAdminInline,)
 

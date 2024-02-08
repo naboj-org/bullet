@@ -10,7 +10,7 @@ from django.utils import timezone
 from users.models import User
 from web.fields import BranchField
 
-from competitions.branches import Branch
+from competitions.branches import Branch, Branches
 
 
 def get_random_string():
@@ -73,7 +73,6 @@ class CompetitionQuerySet(models.QuerySet):
 
 
 class Competition(models.Model):
-    name = models.CharField(max_length=128)
     branch = BranchField()
     number = models.IntegerField(
         null=True, blank=True
@@ -109,6 +108,10 @@ class Competition(models.Model):
 
     def __str__(self):
         return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'
+
+    @property
+    def name(self):
+        return f"{Branches[self.branch].name} {self.competition_start.year}"
 
     @property
     def is_registration_open(self):
