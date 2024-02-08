@@ -21,8 +21,9 @@ def page_block(context, block: "PageBlock"):
 
     user = context.request.user
     ctx["can_edit_block"] = False
-    is_translator = user.get_branch_role(request.BRANCH).is_translator
-    if user.is_authenticated and (user.is_superuser or is_translator):
-        ctx["can_edit_block"] = True
+    if user.is_authenticated:
+        is_translator = user.get_branch_role(request.BRANCH).is_translator
+        if user.is_superuser or is_translator:
+            ctx["can_edit_block"] = True
 
     return block.block.render(context.request, ctx)
