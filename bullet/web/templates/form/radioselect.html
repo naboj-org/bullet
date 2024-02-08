@@ -1,0 +1,10 @@
+<div>
+    {% for choice in field %}
+        <label class="block">
+            <input type="radio" name="{{ choice.data.name }}"
+                   value="{{ choice.data.value }}" class="radio"
+                   {% if choice.data.selected %}checked{% endif %}>
+            {{ choice.data.label }}
+        </label>
+    {% endfor %}
+</div>

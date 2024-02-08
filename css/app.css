@@ -67,6 +67,10 @@
     @apply rounded bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-primary focus:ring-1 focus:ring-offset-2 focus:ring-gray-500;
 }
 
+.radio {
+    @apply rounded-full bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-primary focus:ring-1 focus:ring-offset-2 focus:ring-gray-500;
+}
+
 .btn {
     @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
 }

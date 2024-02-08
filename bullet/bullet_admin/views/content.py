@@ -1,4 +1,5 @@
 from competitions.models import Competition
+from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -15,6 +16,7 @@ from bullet_admin.forms.content import (
     MenuItemForm,
     PageBlockCreateForm,
     PageBlockUpdateForm,
+    PageCopyForm,
     PageForm,
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
@@ -48,6 +50,42 @@ class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
             .order_by("language")
         )
         return ctx
+
+
+class PageCopyView(TranslatorRequiredMixin, PageQuerySetMixin, GenericForm, FormView):
+    template_name = "bullet_admin/content/page_copy.html"
+    form_title = "Copy content"
+    form_class = PageCopyForm
+
+    @cached_property
+    def page(self):
+        return get_object_or_404(self.get_queryset(), id=self.kwargs["page_id"])
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["page_qs"] = self.get_queryset()
+        return kw
+
+    @transaction.atomic
+    def form_valid(self, form):
+        source: Page = form.cleaned_data["page"]
+        dest: Page = self.page
+
+        dest.content = source.content
+        dest.save()
+
+        dest.pageblock_set.get_queryset().delete()
+
+        for block in source.pageblock_set.all():
+            new_block = PageBlock()
+            new_block.page = dest
+            new_block.data = block.data
+            new_block.order = block.order
+            new_block.block_type = block.block_type
+            new_block.states = block.states
+            new_block.save()
+
+        return HttpResponseRedirect(reverse("badmin:page_edit", kwargs={"pk": dest.id}))
 
 
 class PageEditView(

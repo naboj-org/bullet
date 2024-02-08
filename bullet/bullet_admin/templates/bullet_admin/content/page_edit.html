@@ -19,6 +19,8 @@
             {% slot buttons %}
                 {% url "badmin:page_block_list" page_id=page.id as block_url %}
                 {% #abtn icon="mdi:code-block-parentheses" label="Page blocks" url=block_url %}
+                {% url "badmin:page_copy" page_id=page.id as copy_url %}
+                {% #abtn icon="mdi:content-paste" label="Copy from..." url=copy_url %}
             {% endslot %}
         {% endaheader %}
 
