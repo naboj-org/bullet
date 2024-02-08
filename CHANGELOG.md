@@ -3,6 +3,30 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.7 - 2024-02-08
+
+### Added
+
+- Added a link to quickly edit a given page block right from the front-page.
+- Added deprecation notes to content blocks and logos in the admin.
+- Added an indicator in the archive that tells that a given competition year is only available to admins.
+- Added an option to copy content and blocks from another page.
+
+### Changed
+
+- Title of a block is now displayed in block list.
+- Competition name is now automatically generated from local branch name and the competition year.
+- Upgraded Math homepage to page blocks.
+
+### Removed
+
+- Removed "official results" message from the results.
+
+### Fixed
+
+- Blocks with completely empty data no longer crash the site.
+- Admin results did not persist when changing countries.
+
 ## 2024.6 - 2024-02-02
 
 ### Changed
