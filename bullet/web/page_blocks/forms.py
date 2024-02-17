@@ -7,6 +7,10 @@ BackgroundField = forms.ChoiceField(
     label="Background", choices=[("white", "White"), ("color", "Branch color")]
 )
 
+PaddingField = forms.ChoiceField(
+    label="Spacing", choices=[("normal", "Normal"), ("half", "Half")]
+)
+
 
 class TitleTextMixin(forms.Form):
     title = forms.CharField(label="Title", required=False)
@@ -17,10 +21,11 @@ class TitleTextMixin(forms.Form):
 
 class BackgroundMixin(forms.Form):
     background = BackgroundField
+    padding = PaddingField
 
 
-class CompetitionTimelineForm(TitleTextMixin, forms.Form):
-    background = BackgroundField
+class CompetitionTimelineForm(BackgroundMixin, TitleTextMixin, forms.Form):
+    pass
 
 
 class HeroForm(TitleTextMixin, forms.Form):
