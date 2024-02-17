@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.9 - 2024-02-17
+
+### Added
+
+- Added an option to change spacing around page blocks to half.
+- Added an ption to reorder icons / logos in page blocks.
+- Added RO translations.
+
+### Changed
+
+- Reworked logo cloud to allow more consistent logo displays.
+
 ## 2024.8 - 2024-02-08
 
 ### Fixed
