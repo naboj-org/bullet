@@ -3,11 +3,12 @@
 {% block container %}
     {% include "page_blocks/_centered_header.html" %}
 
-    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 items-center {% if title or text %}mt-8{% endif %}">
+    <div class="flex flex-wrap gap-6 items-center {% if title or text %}mt-8{% endif %}
+        {% if align == "center" %}justify-center{% elif align == "right" %}justify-end{% elif align == "spaced" %}justify-around{% endif %}">
         {% for item in items %}
             <a href="{{ item.url }}"
-               style="grid-column: span {{ item.size|default:1 }} / span {{ item.size|default:1 }}"
-               class="bg-white h-24 md:h-32 rounded-md p-6">
+               style="height: calc({{ size|default:1 }} * 8rem);"
+               class="bg-white rounded-md p-6">
                 <img src="{{ image_root }}{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
             </a>
         {% endfor %}

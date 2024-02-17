@@ -94,18 +94,26 @@ IconGridFormset = formset_factory(IconGridItemForm, extra=4, can_delete=True)
 
 
 class LogoCloudForm(BackgroundMixin, TitleTextMixin, forms.Form):
-    pass
+    align = forms.ChoiceField(
+        label="Align",
+        choices=[
+            ("left", "Left"),
+            ("center", "Center"),
+            ("spaced", "Spaced"),
+            ("right", "Right"),
+        ],
+    )
+    size = forms.FloatField(
+        label="Logo size",
+        help_text="The height of the logos.",
+        required=False,
+    )
 
 
 class LogoCloudItemForm(forms.Form):
     name = forms.CharField(label="Name")
     image = forms.CharField(label="Image", widget=FileBrowserInput())
     url = forms.CharField(label="Link URL")
-    size = forms.IntegerField(
-        label="Size",
-        help_text="How many colums of the grid should this logo take.",
-        required=False,
-    )
 
 
 LogoCloudFormset = formset_factory(LogoCloudItemForm, extra=4, can_delete=True)
