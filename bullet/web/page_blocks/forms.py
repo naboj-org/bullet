@@ -90,7 +90,9 @@ class IconGridItemForm(TitleTextMixin, forms.Form):
     )
 
 
-IconGridFormset = formset_factory(IconGridItemForm, extra=4, can_delete=True)
+IconGridFormset = formset_factory(
+    IconGridItemForm, extra=4, can_delete=True, can_order=True
+)
 
 
 class LogoCloudForm(BackgroundMixin, TitleTextMixin, forms.Form):
@@ -116,4 +118,6 @@ class LogoCloudItemForm(forms.Form):
     url = forms.CharField(label="Link URL")
 
 
-LogoCloudFormset = formset_factory(LogoCloudItemForm, extra=4, can_delete=True)
+LogoCloudFormset = formset_factory(
+    LogoCloudItemForm, extra=4, can_delete=True, can_order=True
+)
