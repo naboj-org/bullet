@@ -7,7 +7,7 @@
         {% if align == "center" %}justify-center{% elif align == "right" %}justify-end{% elif align == "spaced" %}justify-around{% endif %}">
         {% for item in items %}
             <a href="{{ item.url }}"
-               style="height: calc({{ size|default:1 }} * 8rem);"
+               style="height: calc({{ size|default:1|floatformat:"d" }} * 8rem);"
                class="bg-white rounded-md p-6">
                 <img src="{{ image_root }}{{ item.image }}" class="w-full h-full object-contain" alt="{{ item.name }}">
             </a>
