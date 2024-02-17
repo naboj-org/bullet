@@ -6,59 +6,60 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-08 21:02+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2024-02-09 19:27+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ro\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);\n"
+"X-Generator: Poedit 3.4.2\n"
 
 #: competitions/branches.py:72
 msgid "Náboj Math"
-msgstr ""
+msgstr "Naboj Matematică"
 
 #: competitions/branches.py:72
 msgctxt "branch name"
 msgid "Math"
-msgstr ""
+msgstr "Matematică"
 
 #: competitions/branches.py:76
 msgid "Náboj Physics"
-msgstr ""
+msgstr "Naboj Fizică"
 
 #: competitions/branches.py:77
 msgctxt "branch name"
 msgid "Physics"
-msgstr ""
+msgstr "Fizică"
 
 #: competitions/branches.py:83
 msgid "Náboj Junior"
-msgstr ""
+msgstr "Naboj Junior"
 
 #: competitions/branches.py:84
 msgctxt "branch name"
 msgid "Junior"
-msgstr ""
+msgstr "Junior"
 
 #: competitions/branches.py:90
 msgid "Náboj Chemistry"
-msgstr ""
+msgstr "Nanoj Chimie"
 
 #: competitions/branches.py:91
 msgctxt "branch name"
 msgid "Chemistry"
-msgstr ""
+msgstr "Chimie"
 
 #. Translators: This is a rare error that occurs when the user selects
 #. a school that we don't have in our database.
 #: competitions/forms/registration.py:54
 msgid "Selected school is not valid."
-msgstr ""
+msgstr "Școala selectată nu este validă."
 
 #: competitions/forms/registration.py:80
 #: competitions/templates/register/details.html:33
@@ -68,42 +69,42 @@ msgstr ""
 #: competitions/templates/teams/edit.html:74
 #: competitions/templates/teams/edit.html:126
 msgid "Full name"
-msgstr ""
+msgstr "Numele complet"
 
 #: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:48
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: competitions/forms/registration.py:82
 #: competitions/templates/teams/edit.html:50
 msgid "Phone number"
-msgstr ""
+msgstr "Număr telefon"
 
 #: competitions/forms/registration.py:83
 msgid "Language"
-msgstr ""
+msgstr "Limbă"
 
 #: competitions/forms/registration.py:87
 msgid "You will receive problem statements in the language you choose."
-msgstr ""
+msgstr "Veți primi enunțurile problemelor în limba pe care o alegeți."
 
 #: competitions/forms/registration.py:109
 msgid "(Please select)"
-msgstr ""
+msgstr "(Vă rugăm să selectați)"
 
 #: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
-msgstr ""
+msgstr "Acestă clasă  nu poate concura în categoria aleasă."
 
 #: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
-msgstr ""
+msgstr "Fișierul încărcat este prea mare."
 
 #: competitions/templates/archive/list.html:5
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
-msgstr ""
+msgstr "Arhivă"
 
 #: competitions/templates/archive/list.html:27
 #: problems/templates/problems/results.html:7
@@ -115,85 +116,85 @@ msgstr ""
 #: problems/templates/problems/results/venue.html:17
 #: web/templates/web/snippets/home_hero_buttons.html:25
 msgid "Results"
-msgstr ""
+msgstr "Rezultate"
 
 #: competitions/templates/archive/list.html:28
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problem statements"
-msgstr ""
+msgstr "Enunțuri  probleme"
 
 #: competitions/templates/archive/list.html:29
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
 msgid "Albums"
-msgstr ""
+msgstr "Albume"
 
 #: competitions/templates/archive/list.html:35
 msgid "Older competitions"
-msgstr ""
+msgstr "Competiții mai vechi"
 
 #: competitions/templates/live.html:7
 #: competitions/templates/live/countdown.html:6
 #: competitions/templates/live/first_problem.html:6
 #: competitions/templates/live/results.html:6
 msgid "Live signage"
-msgstr ""
+msgstr "Live"
 
 #: competitions/templates/live/countdown.html:13
 msgid "Do not open the problems until the competition starts."
-msgstr ""
+msgstr "Nu deschideți problemele până la începerea concursului."
 
 #: competitions/templates/live/first_problem.html:14
 msgid "First solved problem"
-msgstr ""
+msgstr "Prima problemă rezolvată"
 
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
 #: competitions/templates/register/_school.html:14
 msgid "No schools matched your query."
-msgstr ""
+msgstr "Nicio școală nu corespunde cererii dumneavoastră."
 
 #: competitions/templates/register/_school.html:15
 msgid "If you believe this is an error, contact us."
-msgstr ""
+msgstr "Dacă credeți că este vorba de o eroare, contactați-ne."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:17
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr ""
+msgstr "În acest loc, competiția va începe la %(time)s în loc de ora obișnuită de începere %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
 msgid "No venues matched your query."
-msgstr ""
+msgstr "Niciun loc nu a corespuns cererii dumneavoastră."
 
 #. Translators: Registration page title
 #: competitions/templates/register/base.html:5
 #: competitions/templates/register/base.html:8
 #: competitions/templates/register/thanks.html:5
 msgid "Team registration"
-msgstr ""
+msgstr "Înregistrarea echipei"
 
 #: competitions/templates/register/category.html:9
 #: competitions/templates/register/partials/category.html:6
 #: problems/templates/problems/results/select.html:25
 msgid "Category"
-msgstr ""
+msgstr "Categorie"
 
 #: competitions/templates/register/details.html:22
 #: competitions/templates/teams/edit.html:46
 msgid "Contact information"
-msgstr ""
+msgstr "Informații de Contact"
 
 #: competitions/templates/register/details.html:25
 #: competitions/templates/teams/edit.html:54
 msgid "Contestants"
-msgstr ""
+msgstr "Concurenți"
 
 #: competitions/templates/register/details.html:27
 #: competitions/templates/teams/edit.html:55
 msgid "You can change the list of contestants at any time before the start of the competition."
-msgstr ""
+msgstr "Puteți modifica lista de concurenți în orice moment înainte de începerea concursului."
 
 #: competitions/templates/register/details.html:34
 #: competitions/templates/register/details.html:43
@@ -201,281 +202,282 @@ msgstr ""
 #: competitions/templates/teams/edit.html:78
 #: competitions/templates/teams/edit.html:130
 msgid "Grade"
-msgstr ""
+msgstr "Clasa"
 
 #: competitions/templates/register/details.html:37
 #: competitions/templates/teams/edit.html:70
 #: competitions/templates/teams/edit.html:123
 #, python-format
 msgid "Contestant %(number)s"
-msgstr ""
+msgstr "Concurent %(number)s"
 
 #: competitions/templates/register/details.html:49
 #: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
 msgid "Required field"
-msgstr ""
+msgstr "Câmp obligatoriu"
 
 #: competitions/templates/register/details.html:57
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
-msgstr ""
+msgstr "Prin înscrierea la concurs, persoanele înscrise (în special profesorii sau reprezentanții legali ai elevilor înscriși) sunt de acord cu <a href=\"%(link)s\">regulile concursului</a> și se angajează să le respecte. În același timp, persoana înscrisă recunoaște că datele cu caracter personal furnizate în formularul de înscriere sunt necesare pentru a asigura buna desfășurare a concursului."
 
 #: competitions/templates/register/details.html:68
 #: competitions/templates/teams/edit.html:92
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
-msgstr ""
+msgstr "Solicitantul este de acord să permită organizatorului să realizeze înregistrări video și/sau audio în timpul Concursului, pe care să fie captată imaginea solicitantului și/sau a persoanei înscrise și publicarea acestora pe site-ul web al Concursului, pe rețelele de socializare în scopuri de marketing și promovare a Concursului. <sup>[1]</sup>"
 
 #: competitions/templates/register/details.html:79
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
-msgstr ""
+msgstr "Mai multe informații despre prelucrarea datelor cu caracter personal pot fi găsite <a href=\"%(link)s\">pe această pagină</a>."
 
 #: competitions/templates/register/details.html:88
 #: web/templates/web/snippets/home_timeline.html:51
 msgid "Register"
-msgstr ""
+msgstr "Înregistrare"
 
 #: competitions/templates/register/details.html:92
 #: competitions/templates/teams/edit.html:108
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
-msgstr ""
+msgstr "<sup>[1]</sup> Consimțământul se acordă pe durata funcționării site-ului web al Competiției și a conturilor acestuia pe rețelele sociale. Acest consimțământ poate fi revocat în orice moment prin trimiterea unui e-mail la adresa <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Retragerea consimțământului nu afectează legalitatea prelucrării înainte de retragerea acesteia. Persoana afectată poate solicita ștergerea datelor cu caracter personal numai dacă este posibil din punct de vedere tehnic și ștergerea nu afectează drepturile altor persoane afectate."
 
 #: competitions/templates/register/partials/category.html:18
 #: competitions/templates/register/partials/competition.html:13
 #: competitions/templates/register/partials/school.html:16
 #: competitions/templates/register/partials/venue.html:22
 msgid "Change"
-msgstr ""
+msgstr "Schimbă"
 
 #: competitions/templates/register/partials/competition.html:4
 #: competitions/templates/register/partials/venue.html:4
 #: competitions/templates/register/venue.html:8
 #: competitions/templates/teams/edit.html:37
 msgid "Venue"
-msgstr ""
+msgstr "Locație"
 
 #: competitions/templates/register/partials/school.html:4
 #: competitions/templates/register/school.html:9
 #: competitions/templates/teams/edit.html:30
 msgid "School"
-msgstr ""
+msgstr "Școala"
 
 #: competitions/templates/register/school.html:11
 msgid "Search schools..."
-msgstr ""
+msgstr "Caută școala."
 
 #: competitions/templates/register/thanks.html:13
 msgid "Team successfully registered"
-msgstr ""
+msgstr "Echipa a fost înregistrată cu succes"
 
 #: competitions/templates/register/thanks.html:16
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
-msgstr ""
+msgstr "Un link de confirmare a fost trimis. Verifică în inbox sau spam. <b> Înregistrarea echipei nu este finalizată dacă nu apasți pe link-ul de confirmare. </b>"
 
 #: competitions/templates/register/thanks.html:19
 msgid "Register another team"
-msgstr ""
+msgstr "Înregistrează altă echipă"
 
 #: competitions/templates/register/thanks.html:20
 msgid "Back to the homepage"
-msgstr ""
+msgstr "Înapoi la homepage"
 
 #: competitions/templates/register/venue.html:10
 msgid "Search venues..."
-msgstr ""
+msgstr "Caută locații."
 
 #: competitions/templates/teams/delete.html:4
 #: competitions/templates/teams/delete.html:7
 #: competitions/templates/teams/edit.html:103
 msgid "Unregister team"
-msgstr ""
+msgstr "Echipe neînregistrate"
 
 #: competitions/templates/teams/delete.html:14
 msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
-msgstr ""
+msgstr "Ești sigur ca dorești să elimi echipa din competiție? Acțiunea este ireversibilă."
 
 #: competitions/templates/teams/delete.html:16
 msgid "Unregister"
-msgstr ""
+msgstr "Elimină echipa"
 
 #: competitions/templates/teams/edit.html:7
 #: competitions/templates/teams/edit.html:9
 #: web/templates/mail/messages/to_competition.html:14
 msgid "Edit team"
-msgstr ""
+msgstr "Editează echipa"
 
 #: competitions/templates/teams/edit.html:16
 msgid "Team information"
-msgstr ""
+msgstr "Informații echipă"
 
 #: competitions/templates/teams/edit.html:24
 msgid "Your team is in the waiting list."
-msgstr ""
+msgstr "Echipa este în lista de așteptare."
 
 #: competitions/templates/teams/edit.html:25
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
-msgstr ""
+msgstr "Capacitatea locației a fost atinsă sau școala ta are deja numărul maxim de echipe înregistrate. Te vom contacta dacă situația se schimbă."
 
 #: competitions/templates/teams/edit.html:42
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
-msgstr ""
+msgstr "În această locație, concursul va începe la %(time)s în loc de ora inițială."
 
 #: competitions/templates/teams/edit.html:66
 #: competitions/templates/teams/edit.html:83
 msgid "Delete?"
-msgstr ""
+msgstr "Stergi?"
 
 #: competitions/templates/teams/edit.html:102
 msgid "Update"
-msgstr ""
+msgstr "Schimbă"
 
 #: competitions/templates/teams/edit.html:145
 msgid "Certificate"
-msgstr ""
+msgstr "Diplomă"
 
 #: competitions/templates/teams/edit.html:146
 msgid "You can download certificate for your team by clicking on the button below."
-msgstr ""
+msgstr "Poți descărca diploma echipei tale apăsând pe butonul de mai jos."
 
 #: competitions/templates/teams/edit.html:147
 msgid "Download certificate"
-msgstr ""
+msgstr "Descarcă diplomă"
 
 #: competitions/templates/teams/list.html:8
 #: competitions/templates/teams/list.html:13
 #: competitions/templates/teams/list.html:37
 msgid "Waiting list"
-msgstr ""
+msgstr "Lista de așteptare"
 
 #: competitions/templates/teams/list.html:8
 #: competitions/templates/teams/list.html:15
 #: competitions/templates/teams/list.html:35
 msgid "Team list"
-msgstr ""
+msgstr "Lista echipelor"
 
 #: competitions/templates/teams/list.html:50
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
-msgstr ""
+msgstr "Echipe: %(teams)s / %(capacity)s"
 
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
-msgstr ""
+msgstr "Înregistrarea încă nu a început."
 
 #: competitions/views/register.py:56
 msgid "Registration is over."
-msgstr ""
+msgstr "Înregistrarea s-a terminat."
 
 #: competitions/views/teams.py:57
 msgid "Team successfully edited."
-msgstr ""
+msgstr "Echipa a fost editată cu success."
 
 #: competitions/views/teams.py:102
 msgid "Registration successfully confirmed."
-msgstr ""
+msgstr "Înregistrare confirmată."
 
 #: competitions/views/teams.py:219
 msgid "Team was unregistered."
-msgstr ""
+msgstr "Echipa a fost ștearsă."
 
 #: gallery/templates/gallery/album.html:6
 #: gallery/templates/gallery/album.html:15
 msgid "Album"
-msgstr ""
+msgstr "Album"
 
 #: problems/templates/archive/problems.html:20
 msgid "Download as PDF"
-msgstr ""
+msgstr "Descarcă PDF"
 
 #: problems/templates/archive/problems.html:27
 #, python-format
 msgid "Problem %(n)s"
-msgstr ""
+msgstr "Problema %(n)s"
 
 #: problems/templates/archive/problems.html:32
 msgid "Solution"
-msgstr ""
+msgstr "Soluție"
 
 #. Translators: This is a label for numerical answer of a problem used in problem archive.
 #: problems/templates/archive/problems.html:36
 msgid "Answer"
-msgstr ""
+msgstr "Răspuns"
 
 #: problems/templates/archive/problems.html:47
 msgid "Statistics"
-msgstr ""
+msgstr "Statistică"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
 #: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Echipa a primit"
+msgstr[1] "Echipa a primit "
+msgstr[2] "Echipele au primit"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
 #: problems/templates/archive/problems.html:65
 msgid "teams solved"
-msgstr ""
+msgstr "echipa a rezolvat"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
 #: problems/templates/archive/problems.html:70
 msgid "average solving time"
-msgstr ""
+msgstr "timpul mediu de rezolvare"
 
 #: problems/templates/problems/results.html:33 problems/views/results.py:116
 msgid "International"
-msgstr ""
+msgstr "Internațional"
 
 #: problems/templates/problems/results/table.html:6
 msgid "The competition did not start yet."
-msgstr ""
+msgstr "Concursul nu a început încă."
 
 #: problems/templates/problems/results/table.html:10
 msgid "Results are frozen."
-msgstr ""
+msgstr "Rezultatele sunt blocate."
 
 #: problems/templates/problems/results/table.html:10
 msgid "These are not the final results yet."
-msgstr ""
+msgstr "Acestea nu sunt rezultatele finale."
 
 #: problems/templates/problems/results/table.html:14
 msgid "Interim results."
-msgstr ""
+msgstr "Rezultate provizorii."
 
 #: problems/templates/problems/results/table.html:14
 msgid "The competition is ongoing, the results may change."
-msgstr ""
+msgstr "Concursul este încă în desfășurare, rezultatele se pot schimba."
 
 #: problems/templates/problems/results/table.html:67
 msgid "(No team has solved any problem yet)"
-msgstr ""
+msgstr "(Nicio echipă nu a rezolvat problema încă)"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
-msgstr ""
+msgstr "Confrimă înregistrarea echipei tale"
 
 #: users/emails/teams.py:49
 msgid "Team moved from waiting list"
-msgstr ""
+msgstr "Echipa a fost mutată din lista de așteptare"
 
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
-msgstr ""
+msgstr "Echipa ta a fost ștearsă"
 
 #: web/templates/junior/web/homepage.html:7 web/templates/web/404.html:16
 #: web/templates/web/404.html:18 web/templates/web/homepage.html:5
 msgid "Home page"
-msgstr ""
+msgstr "Home page"
 
 #: web/templates/mail/base.html:336
 msgid "Competition logo"
-msgstr ""
+msgstr "Logo-ul concursului"
 
 #: web/templates/mail/base.html:355
 #, python-format
 msgid "You have received this message because you have registered for the competition %(branch)s."
-msgstr ""
+msgstr "Ai primit acest mesaj deoarece te-ai înregistrat pentru concurs %(branch)s."
 
 #: web/templates/mail/messages/registration.html:6
 #: web/templates/mail/messages/registration.txt:1
@@ -485,12 +487,12 @@ msgstr ""
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
-msgstr ""
+msgstr "Bună, %(name)s!"
 
 #: web/templates/mail/messages/registration.html:8
 #: web/templates/mail/messages/registration.txt:3
 msgid "Please click on the following link to confirm your registration."
-msgstr ""
+msgstr "Apasă următorul link pentru a confirma înregistrarea."
 
 #: web/templates/mail/messages/registration.html:10
 #: web/templates/mail/messages/registration.txt:5
@@ -498,21 +500,21 @@ msgstr ""
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
-msgstr ""
+msgstr "Membri echipei: %(contestants)s"
 
 #: web/templates/mail/messages/registration.html:13
 msgid "Confirm registration"
-msgstr ""
+msgstr "Confirmă înregistrarea"
 
 #: web/templates/mail/messages/registration.html:16
 #: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
-msgstr ""
+msgstr "Poți folosi acest link pentru a modifica echipa."
 
 #: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
-msgstr ""
+msgstr "Dacă ai întrebări, te rugăm răspunde la acest e-mail."
 
 #: web/templates/mail/messages/registration.html:19
 #: web/templates/mail/messages/registration.txt:13
@@ -521,113 +523,113 @@ msgstr ""
 #: web/templates/mail/messages/to_competition.html:18
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
-msgstr ""
+msgstr "Salutări,"
 
 #: web/templates/mail/messages/registration.html:27
 #: web/templates/mail/messages/to_competition.html:26
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
-msgstr ""
+msgstr "Dacă întimpini dificultăți la apasarea butonului, poți insera această adresă în browser:"
 
 #: web/templates/mail/messages/team_delete.html:7
 #: web/templates/mail/messages/team_delete.txt:3
 msgid "Your team was unregistered from the competition."
-msgstr ""
+msgstr "Echipa ta a fost ștearsă din concurs."
 
 #: web/templates/mail/messages/team_delete.html:9
 #: web/templates/mail/messages/team_delete.txt:5
 #, python-format
 msgid "Team members: %(contestants)s"
-msgstr ""
+msgstr "Membri echipei: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
-msgstr ""
+msgstr "Echipa ta a fost mutată din lista de așteptare în lista echipelor participante la concurs."
 
 #: web/templates/mail/messages/to_competition.html:12
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
-msgstr ""
+msgstr "Poți edita echipa apăsând link-ul de mai jos."
 
 #. Translators: Used on the homepage timeline
 #: web/templates/page_blocks/competition_timeline.html:11
 msgid "Registration start"
-msgstr ""
+msgstr "Înregistrarea a început"
 
 #. Translators: Used on the homepage timeline
 #: web/templates/page_blocks/competition_timeline.html:16
 msgid "Second registration round start"
-msgstr ""
+msgstr "A doua sesiune de înregistrare a început"
 
 #. Translators: Used on the homepage timeline
 #: web/templates/page_blocks/competition_timeline.html:21
 #: web/templates/web/snippets/home_timeline.html:35
 msgid "Registration end"
-msgstr ""
+msgstr "Înregistrarea s-a terminat"
 
 #. Translators: Used on the homepage timeline
 #: web/templates/page_blocks/competition_timeline.html:25
 #: web/templates/web/snippets/home_timeline.html:43
 msgid "Competition day"
-msgstr ""
+msgstr "Ziua concursului"
 
 #: web/templates/web/404.html:5 web/templates/web/404.html:9
 msgid "Not found"
-msgstr ""
+msgstr "Nu a fost găsit"
 
 #: web/templates/web/404.html:12
 msgid "The page you tried to access was not found."
-msgstr ""
+msgstr "Pagina pe care încerci să o accesezi nu a fost găsită."
 
 #: web/templates/web/root_base.html:47
 msgid "Close"
-msgstr ""
+msgstr "Închide"
 
 #: web/templates/web/snippets/copyright.html:6
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
-msgstr ""
+msgstr "Toate orele sunt în ora locală %(tz_name)s dacă nu se specifică altceva."
 
 #: web/templates/web/snippets/copyright.html:8
 msgid "Data protection policy"
-msgstr ""
+msgstr "Protecția datelor"
 
 #: web/templates/web/snippets/home_footer.html:5
 msgid "Organizers"
-msgstr ""
+msgstr "Organizatori"
 
 #: web/templates/web/snippets/home_footer.html:16
 msgid "Our partners"
-msgstr ""
+msgstr "Parteneri"
 
 #: web/templates/web/snippets/home_hero_buttons.html:6
 #, python-format
 msgid "Registration starts on %(start)s."
-msgstr ""
+msgstr "Înregistrarea începe la %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:9
 #: web/templates/web/snippets/home_hero_buttons.html:20
 #, python-format
 msgid "The competition will take place on %(start)s."
-msgstr ""
+msgstr "Concursul va avea loc pe %(start)s."
 
 #: web/templates/web/snippets/home_hero_buttons.html:14
 msgid "Registration"
-msgstr ""
+msgstr "Înregistrare"
 
 #: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
 msgid "Registration ends on %(end)s."
-msgstr ""
+msgstr "Înregistrarea se termină la %(end)s."
 
 #: web/templates/web/snippets/home_timeline.html:7
 msgid "Important dates"
-msgstr ""
+msgstr "Date importante"
 
 #: web/templates/web/snippets/home_timeline.html:17
 msgid "Registration starts"
-msgstr ""
+msgstr "Înregistrarea începe"
 
 #: web/templates/web/snippets/home_timeline.html:26
 msgid "Second round of registration"
-msgstr ""
+msgstr "A doua rundă de înregistrări"
