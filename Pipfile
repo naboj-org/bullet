@@ -37,7 +37,7 @@ pyyaml = "==6.0.1"
 psycopg = {extras = ["binary"], version = "==3.1.17"}
 
 [dev-packages]
-pre-commit = "==3.6.0"
+pre-commit = "==3.6.2"
 factory-boy = "==3.3.0"
 mdgen = "==0.1.10"
 bumpver = "==2023.1129"
