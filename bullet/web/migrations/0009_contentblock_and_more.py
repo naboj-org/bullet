@@ -154,7 +154,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="contentblock",
             constraint=models.UniqueConstraint(
-                ["reference", "branch", "country", "language"],
+                fields=("reference", "branch", "country", "language"),
                 name="ref_branch_country_lang_unique",
             ),
         ),

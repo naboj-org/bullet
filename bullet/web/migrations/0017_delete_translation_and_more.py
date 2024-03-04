@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="contentblock",
             constraint=models.UniqueConstraint(
-                ["group", "reference", "branch", "country", "language"],
+                fields=("group", "reference", "branch", "country", "language"),
                 name="content_block__reference_unique",
             ),
         ),
