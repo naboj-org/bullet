@@ -38,7 +38,6 @@ class RegistrationInProgressCompetitionFactory(DjangoModelFactory):
     class Meta:
         model = Competition
 
-    name = factory.Faker("sentence")
     branch = factory.Faker("random_element", elements=[b.id for b in Branches])
     number = factory.Faker("pyint")
 
@@ -71,7 +70,6 @@ class EndedCompetitionFactory(DjangoModelFactory):
     class Meta:
         model = Competition
 
-    name = factory.Faker("sentence")
     branch = factory.Faker("random_element", elements=[b.id for b in Branches])
     number = factory.Faker("pyint")
 
