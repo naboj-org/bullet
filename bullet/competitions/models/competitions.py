@@ -203,6 +203,11 @@ class Category(models.Model):
 
 
 class Wildcard(models.Model):
-    competition = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
+    competition = models.ForeignKey(
+        "competitions.Competition", on_delete=models.CASCADE
+    )
+    category = models.ForeignKey(
+        "competitions.Category", on_delete=models.CASCADE, blank=True, null=True
+    )
     school = models.ForeignKey("education.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)
