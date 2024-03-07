@@ -1,8 +1,10 @@
 import string
+from collections import defaultdict
 
-from competitions.models import Category, Competition, Venue
+from competitions.models import Category, Competition, Venue, Wildcard
 from django.db.models import Count, F, Q, QuerySet
 from django.utils import timezone
+from education.models import School
 
 from users.models import Team
 
@@ -12,29 +14,55 @@ def venue_has_capacity(venue: Venue) -> bool:
     return venue.capacity > teams
 
 
+def get_team_count_per_category(
+    competition: Competition, school: School
+) -> dict[int, int]:
+    """
+    Returns a mapping between category ID and number of teams from a given school.
+    """
+    counts = (
+        Team.objects.competing()
+        .filter(venue__category__competition=competition, school=school)
+        .values("venue__category")
+        .annotate(count=Count("*"))
+    )
+    output = {item["venue__category"]: item["count"] for item in counts}
+    return defaultdict(lambda: 0, output)
+
+
 def school_has_capacity(team: Team) -> bool:
     venue: Venue = team.venue
     category: Category = venue.category
     competition: Competition = category.competition
 
-    school_limit = category.max_teams_per_school
-    if (
-        competition.registration_second_round_start
-        and competition.registration_second_round_start <= team.registered_at
-    ):
-        school_limit = category.max_teams_second_round
-
-    teams_from_school = (
-        Team.objects.competing()
-        .filter(
-            venue__category=category,
-            school=team.school,
-        )
-        .count()
-    )
-    if school_limit == 0:
+    category_team_limit = category.max_teams_per_school_at(team.registered_at)
+    if category_team_limit == 0:
         return True
-    return school_limit > teams_from_school
+
+    category_wildcards = Wildcard.objects.filter(
+        competition=competition, category=category, school=team.school
+    ).count()
+    team_counts = get_team_count_per_category(competition, team.school)
+
+    teams_in_this_category = team_counts[category.id]
+    total_allowed_teams = category_team_limit + category_wildcards
+
+    if teams_in_this_category < total_allowed_teams:
+        return True
+
+    universal_wildcards = Wildcard.objects.filter(
+        competition=competition, category=None, school=team.school
+    ).count()
+
+    used_universal_wildcards = 0
+    for cat in competition.category_set.all():
+        if cat == category:
+            continue
+        used_universal_wildcards += max(
+            0, team_counts[cat.id] - cat.max_teams_per_school_at(team.registered_at)
+        )
+
+    return universal_wildcards - used_universal_wildcards > 0
 
 
 def add_team_to_competition(team: Team):

@@ -194,10 +194,12 @@ class Category(models.Model):
 
     def max_teams_per_school_at(self, time):
         competition = self.competition
-        if (
+        second_round_started = (
             competition.registration_second_round_start
             and competition.registration_second_round_start <= time
-        ):
+        )
+
+        if second_round_started:
             return self.max_teams_second_round
         return self.max_teams_per_school
 
