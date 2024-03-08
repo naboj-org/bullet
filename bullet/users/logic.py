@@ -103,9 +103,14 @@ def _waiting_list(team_filter: Q, inner_filter: Q):
                     )
                 )
                 & inner_filter,
-            )
+            ),
+            wildcards=Count(
+                "school__wildcard",
+                filter=Q(school__wildcard__category=F("venue__category")),
+            ),
+            from_school_corrected=F("from_school") - F("wildcards"),
         )
-        .order_by("from_school", "registered_at")
+        .order_by("from_school_corrected", "registered_at")
     )
 
 
