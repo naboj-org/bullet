@@ -27,6 +27,10 @@ class AdminDomainMiddleware:
 
 
 class BulletMinifyHtmlMiddleware(MinifyHtmlMiddleware):
+    minify_args = MinifyHtmlMiddleware.minify_args | {
+        "keep_closing_tags": True,
+    }
+
     def should_minify(self, request, response) -> bool:
         is_admin = hasattr(request, "_is_admin_domain") and request._is_admin_domain
         return super().should_minify(request, response) and not is_admin
