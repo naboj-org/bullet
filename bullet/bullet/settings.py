@@ -80,6 +80,7 @@ DATABASES = {
 }
 
 MIDDLEWARE = [
+    "web.middleware.BulletMinifyHtmlMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -93,7 +94,6 @@ MIDDLEWARE = [
     "silk.middleware.SilkyMiddleware",
     "competitions.middleware.BranchMiddleware",
     "countries.middleware.CountryLanguageMiddleware",
-    "web.middleware.BulletMinifyHtmlMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
     "simple_history.middleware.HistoryRequestMiddleware",
 ]
