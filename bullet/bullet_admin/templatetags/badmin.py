@@ -1,3 +1,4 @@
+from bullet_admin.access import is_country_admin
 from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from competitions.models import Competition
@@ -12,15 +13,17 @@ register = template.Library()
 def admin_sidebar(context):
     user: User = context.request.user
     branch: Branch = context.request.BRANCH
-    competiton: Competition = get_active_competition(context.request)
+    competition: Competition = get_active_competition(context.request)
 
     menu_items = []
 
     branch_role = user.get_branch_role(branch)
-    competition_role = user.get_competition_role(competiton)
+    competition_role = user.get_competition_role(competition)
     any_admin = (
         branch_role.is_admin or competition_role.venues or competition_role.countries
     )
+
+    country_admin = is_country_admin(user, competition)
 
     if any_admin:
         items = [("fa-users", "Teams", reverse("badmin:team_list"))]
@@ -47,6 +50,9 @@ def admin_sidebar(context):
                 ("fa-trophy", "Results", reverse("badmin:results")),
             ]
         )
+
+        if country_admin:
+            items.append(("fa-diamond", "Wildcards", reverse("badmin:wildcard_list")))
 
         menu_items.append(("Competition", items))
 

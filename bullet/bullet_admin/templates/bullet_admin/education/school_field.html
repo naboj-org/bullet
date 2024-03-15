@@ -1,0 +1,5 @@
+{% if form.school.value %}
+    {% include "bullet_admin/partials/_school_input_filled.html" with school=form.school.value %}
+{% else %}
+    {% include "bullet_admin/partials/_school_input.html" %}
+{% endif %}
