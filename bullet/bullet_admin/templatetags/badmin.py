@@ -111,7 +111,7 @@ def admin_sidebar(context):
                 )
             )
             items.append(
-                ("fa-book", "Generate problems", reverse("badmin:problems_generate"))
+                ("fa-book", "Problem settings", reverse("badmin:problems_generate"))
             )
 
         menu_items.append(
