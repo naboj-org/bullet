@@ -264,4 +264,4 @@ class PhotoUploadAccess(AccessMixin):
             return True
 
         brole = self.request.user.get_branch_role(self.request.BRANCH)
-        return brole.is_photographer
+        return brole.is_photographer or brole.is_admin
