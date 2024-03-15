@@ -1,9 +1,10 @@
-from competitions.models import Competition, Venue
+from competitions.models import Category, Competition, Venue, Wildcard
 from django import forms
 from django.db import models
 from django_countries.fields import CountryField
 from users.models import SpanishTeamData, Team, TeamStatus, User
 
+from bullet_admin.fields import SchoolInput
 from bullet_admin.forms.utils import (
     get_country_choices,
     get_language_choices,
@@ -133,3 +134,29 @@ class TeamExportForm(TeamFilterForm):
         YAML = "yaml", "YAML"
 
     format = forms.ChoiceField(label="Export format", choices=Format.choices)
+
+
+class WildcardForm(forms.ModelForm):
+    class Meta:
+        model = Wildcard
+        fields = ["school", "category", "note"]
+
+        widgets = {
+            "school": SchoolInput(),
+        }
+
+    def __init__(self, **kwargs):
+        self.competition = kwargs.pop("competition")
+        super().__init__(**kwargs)
+
+        self.fields["category"].queryset = Category.objects.filter(
+            competition=self.competition
+        )
+
+    def save(self, commit=True):
+        wildcard = super().save(commit=False)
+        wildcard.competition = self.competition
+        if commit:
+            wildcard.save()
+
+        return wildcard

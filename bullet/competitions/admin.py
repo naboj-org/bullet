@@ -54,4 +54,4 @@ class CompetitionVenueAdmin(admin.ModelAdmin):
 
 @admin.register(Wildcard)
 class WildcardAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ["school"]

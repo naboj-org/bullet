@@ -1,9 +1,9 @@
 from competitions.models import Competition
-from django.forms import DateTimeInput, ModelForm
+from django import forms
 from users.models import User
 
 
-class CompetitionForm(ModelForm):
+class CompetitionForm(forms.ModelForm):
     class Meta:
         model = Competition
         fields = [
@@ -27,13 +27,13 @@ class CompetitionForm(ModelForm):
         labels = {"is_cancelled": "Cancel the competition?", "number": "Year"}
 
         widgets = {
-            "web_start": DateTimeInput(attrs={"type": "datetime"}),
-            "registration_start": DateTimeInput(attrs={"type": "datetime"}),
-            "registration_second_round_start": DateTimeInput(
+            "web_start": forms.DateTimeInput(attrs={"type": "datetime"}),
+            "registration_start": forms.DateTimeInput(attrs={"type": "datetime"}),
+            "registration_second_round_start": forms.DateTimeInput(
                 attrs={"type": "datetime"}
             ),
-            "registration_end": DateTimeInput(attrs={"type": "datetime"}),
-            "competition_start": DateTimeInput(attrs={"type": "datetime"}),
+            "registration_end": forms.DateTimeInput(attrs={"type": "datetime"}),
+            "competition_start": forms.DateTimeInput(attrs={"type": "datetime"}),
         }
 
     def __init__(self, user: User, **kwargs):
