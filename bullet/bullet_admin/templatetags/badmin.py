@@ -76,7 +76,6 @@ def admin_sidebar(context):
 
     if (
         branch_role.is_admin
-        or branch_role.is_school_editor
         or competition_role.can_delegate
         or competition_role.countries
         or competition_role.venues
@@ -86,7 +85,7 @@ def admin_sidebar(context):
 
         if competition_role.can_delegate or branch_role.is_admin:
             items.append(("fa-users", "Users", reverse("badmin:user_list")))
-        if user.is_superuser or branch_role.is_school_editor:
+        if user.is_superuser or branch_role.is_admin or competition_role.countries:
             items.append(("fa-building", "Schools", reverse("badmin:school_list")))
         if (
             user.is_superuser
