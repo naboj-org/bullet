@@ -16,7 +16,6 @@
 {% elif field.field.widget.input_type == "school_input" %}
     {% include "bullet_admin/education/school_field.html" %}
 {% else %}
-    {{ field.field.widget.input_type }}
     {{ field|add_class:"input" }}
 {% endif %}
 {% if field.errors %}
