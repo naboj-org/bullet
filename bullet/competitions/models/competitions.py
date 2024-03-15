@@ -194,15 +194,22 @@ class Category(models.Model):
 
     def max_teams_per_school_at(self, time):
         competition = self.competition
-        if (
+        second_round_started = (
             competition.registration_second_round_start
             and competition.registration_second_round_start <= time
-        ):
+        )
+
+        if second_round_started:
             return self.max_teams_second_round
         return self.max_teams_per_school
 
 
 class Wildcard(models.Model):
-    competition = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
+    competition = models.ForeignKey(
+        "competitions.Competition", on_delete=models.CASCADE
+    )
+    category = models.ForeignKey(
+        "competitions.Category", on_delete=models.CASCADE, blank=True, null=True
+    )
     school = models.ForeignKey("education.School", on_delete=models.CASCADE)
     note = models.TextField(blank=True)
