@@ -12,7 +12,7 @@
 
     <div class="hidden md:-mt-px md:flex">
         {% for p in pages %}
-            {% if p == paginator.ELLIPSIS %}
+            {% if p == ellipsis %}
                 <span class="inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium text-gray-500">...</span>
             {% elif p == page.number %}
                 <a href="{% query_transform page=p %}"

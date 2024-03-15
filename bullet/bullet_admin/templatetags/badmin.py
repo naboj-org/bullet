@@ -5,6 +5,8 @@ from django import template
 from django.urls import reverse
 from users.models import User
 
+from bullet.search import DumbPage
+
 register = template.Library()
 
 
@@ -142,8 +144,9 @@ def admin_form2(form):
 
 @register.inclusion_tag("bullet_admin/paginator.html", takes_context=True)
 def admin_paginator(context, page):
-    context["paginator"] = page.paginator
-    context["pages"] = page.paginator.get_elided_page_range(page.number)
+    if not isinstance(page, DumbPage):
+        context["ellipsis"] = page.paginator.ELLIPSIS
+        context["pages"] = page.paginator.get_elided_page_range(page.number)
     context["page"] = page
     return context
 
