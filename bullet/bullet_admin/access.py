@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING
 
 from competitions.branches import Branch
 from django.core.exceptions import ImproperlyConfigured
+from django_countries.fields import Country
 
 from bullet_admin.mixins import AccessMixin
 from bullet_admin.utils import get_active_competition
@@ -98,6 +99,34 @@ def is_country_admin(
     return bool(crole.countries)
 
 
+def is_country_admin_in(
+    user: "User",
+    competition: "Competition",
+    country: "Country",
+    allow_operator: bool = False,
+) -> bool:
+    """
+    Checks whether the user is country admin (or better) in the competition in a given country.
+    """
+    if not user.is_authenticated:
+        return False
+
+    # Superuser has all permissions
+    if user.is_superuser:
+        return True
+
+    # Branch admin is, obviously an admin
+    if user.get_branch_role(competition.branch).is_admin:
+        return True
+
+    crole = user.get_competition_role(competition)
+    if crole.is_operator and not allow_operator:
+        return False
+
+    # Country admin and venue admins are admins, too
+    return country in crole.countries
+
+
 def is_branch_admin(user: "User", branch: "Branch") -> bool:
     """
     Checks whether the user is country admin (or better) in the competition.
@@ -182,6 +211,34 @@ class CountryAdminAccess(AdminAccess):
             return False
 
         return is_country_admin(self.request.user, competition, self.allow_operator)
+
+
+class CountryAdminInAccess(AdminAccess):
+    """
+    Permission check mixin, uses `get_permission_competition` to check users'
+    access to the competition. Allows country admin of a given country to acces the view.
+
+    `require_unlocked_competition` - whether to require the competition to be unlocked
+    to allow access (the competition cannot have results_public)
+    `allow_operator` - whether to allow operators to access this view
+    """
+
+    def get_permission_country(self) -> "Country":
+        raise ImproperlyConfigured(
+            "Override get_permission_country to use CountryAdminInAccess."
+        )
+
+    def can_access(self):
+        competition = self.get_permission_competition()
+        if self.require_unlocked_competition and competition.results_public:
+            return False
+
+        return is_country_admin_in(
+            self.request.user,
+            competition,
+            self.get_permission_country(),
+            self.allow_operator,
+        )
 
 
 class BranchAdminAccess(AdminAccess):
