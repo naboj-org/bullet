@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.11 - 2024-03-15
+
+### Added
+
+- Support for wildcards during registration.
+- Wildcard editing in the admin interface for country administrators.
+
+### Changed
+
+- School editing is now available for all country admins.
+
+### Fixed
+
+- When searching schools, it was not possible to see more than 20 results.
+
 ## 2024.10 - 2024-02-17
 
 ### Fixed
