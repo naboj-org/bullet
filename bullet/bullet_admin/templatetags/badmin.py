@@ -5,6 +5,8 @@ from django import template
 from django.urls import reverse
 from users.models import User
 
+from bullet.search import DumbPage
+
 register = template.Library()
 
 
@@ -74,7 +76,6 @@ def admin_sidebar(context):
 
     if (
         branch_role.is_admin
-        or branch_role.is_school_editor
         or competition_role.can_delegate
         or competition_role.countries
         or competition_role.venues
@@ -84,7 +85,7 @@ def admin_sidebar(context):
 
         if competition_role.can_delegate or branch_role.is_admin:
             items.append(("fa-users", "Users", reverse("badmin:user_list")))
-        if user.is_superuser or branch_role.is_school_editor:
+        if user.is_superuser or branch_role.is_admin or competition_role.countries:
             items.append(("fa-building", "Schools", reverse("badmin:school_list")))
         if (
             user.is_superuser
@@ -142,8 +143,9 @@ def admin_form2(form):
 
 @register.inclusion_tag("bullet_admin/paginator.html", takes_context=True)
 def admin_paginator(context, page):
-    context["paginator"] = page.paginator
-    context["pages"] = page.paginator.get_elided_page_range(page.number)
+    if not isinstance(page, DumbPage):
+        context["ellipsis"] = page.paginator.ELLIPSIS
+        context["pages"] = page.paginator.get_elided_page_range(page.number)
     context["page"] = page
     return context
 

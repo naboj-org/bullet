@@ -3,8 +3,9 @@ from django.views.generic import CreateView, ListView, UpdateView
 from education.models import School
 
 from bullet import search
-from bullet_admin.access import SchoolEditorAccess
+from bullet_admin.access import CountryAdminAccess, CountryAdminInAccess
 from bullet_admin.forms.education import SchoolForm
+from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
 
@@ -13,9 +14,17 @@ class SchoolQuerySetMixin:
         return School.objects.filter(is_legacy=False)
 
 
-class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
+class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, ListView):
     template_name = "bullet_admin/education/school_list.html"
     paginate_by = 100
+    require_unlocked_competition = False
+
+    def get_allowed_countries(self):
+        competition = get_active_competition(self.request)
+        role = self.request.user.get_competition_role(competition)
+        if role.countries:
+            return role.countries
+        return None
 
     def get_queryset(self):
         qs = super().get_queryset()
@@ -24,12 +33,18 @@ class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
         if country:
             qs = qs.filter(country=country)
 
+        allowed_countries = self.get_allowed_countries()
+        if allowed_countries is not None:
+            qs = qs.filter(country__in=allowed_countries)
+
         search_query = self.request.GET.get("q")
         if search_query:
-            ids = search.client.index("schools").search(search_query)["hits"]
-            ids = [x["id"] for x in ids]
-            qs = qs.filter(id__in=ids).all()
-            qs = sorted(qs, key=lambda s: ids.index(s.id))
+            options = {}
+            if allowed_countries is not None:
+                country_filter = ",".join([f"'{c}'" for c in allowed_countries])
+                options["filter"] = f"country IN [{country_filter}]"
+
+            qs = search.MeiliQuerySet(qs, "schools", search_query, options)
         else:
             qs = qs.order_by("country", "name", "address")
         return qs
@@ -37,16 +52,29 @@ class SchoolListView(SchoolEditorAccess, SchoolQuerySetMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["school_count"] = School.objects.count()
-        ctx["countries"] = School.objects.values_list("country", flat=True).distinct()
+
+        countries = School.objects.values_list("country", flat=True).distinct()
+        allowed_countries = self.get_allowed_countries()
+        if allowed_countries is not None:
+            countries = countries.filter(country__in=allowed_countries)
+        ctx["countries"] = countries
+
+        if self.request.GET.get("q"):
+            ctx["page_obj"] = search.nerf_page(ctx["page_obj"])
+
         return ctx
 
 
 class SchoolUpdateView(
-    SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, UpdateView
+    CountryAdminInAccess, SchoolQuerySetMixin, GenericForm, UpdateView
 ):
     form_class = SchoolForm
     template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
+    require_unlocked_competition = False
+
+    def get_permission_country(self):
+        return self.get_object().country
 
     def form_valid(self, form):
         school: School = form.save(commit=False)
@@ -58,8 +86,9 @@ class SchoolUpdateView(
 
 
 class SchoolCreateView(
-    SchoolEditorAccess, SchoolQuerySetMixin, GenericForm, CreateView
+    CountryAdminAccess, SchoolQuerySetMixin, GenericForm, CreateView
 ):
+    require_unlocked_competition = False
     form_class = SchoolForm
     form_title = "New school"
 
