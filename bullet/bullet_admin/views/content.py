@@ -193,7 +193,7 @@ class PageBlockUpdateView(
                 data = form.cleaned_data
                 del data["DELETE"]
                 items.append(data)
-            items.sort(key=lambda x: x["ORDER"] if "ORDER" in x else 0)
+            items.sort(key=lambda x: x.get("ORDER") or 0)
             block.data["items"] = items
         block.save()
 
