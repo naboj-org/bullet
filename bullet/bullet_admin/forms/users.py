@@ -17,7 +17,7 @@ class UserForm(forms.ModelForm):
 class BranchRoleForm(forms.ModelForm):
     class Meta:
         model = BranchRole
-        fields = ("is_translator", "is_admin")
+        fields = ("is_translator", "is_photographer", "is_admin")
 
 
 class CompetitionRoleForm(forms.ModelForm):
