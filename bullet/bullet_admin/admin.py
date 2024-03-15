@@ -5,7 +5,7 @@ from bullet_admin.models import BranchRole, CompetitionRole
 
 @admin.register(BranchRole)
 class BranchRoleAdmin(admin.ModelAdmin):
-    list_display = ("branch", "user", "is_translator", "is_school_editor", "is_admin")
+    list_display = ("branch", "user", "is_translator", "is_admin")
     list_filter = ("branch",)
     autocomplete_fields = ("user",)
 
