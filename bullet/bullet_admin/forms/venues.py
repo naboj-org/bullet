@@ -28,11 +28,15 @@ class VenueForm(ModelForm):
         ]
         labels = {
             "shortcode": "Barcode prefix",
+            "name": "Place",
             "category": "Category",
             "registration_flow_type": "Registration flow",
         }
         help_texts = {
             "local_start": "YYYY-MM-DD HH:MM:SS",
+            "name": "Should not contain category name.",
+            "shortcode": "Only uppercase letters. The convention is to use 5 letters: "
+            "2 for country, 2 for city, 1 for category.",
             "email": "Responses to automatic emails from this venue will be "
             "sent there.",
             "accepted_languages": "These languages can be selected when teams "
