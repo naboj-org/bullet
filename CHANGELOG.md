@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.13 - 2024-03-17
+
+### Changed
+
+- Updated PL translations.
+- The venue name field was renamed to avoid confusion about whether the category name should be included in the name.
+- Updated Slovak school importer to use Trojsten's school list.
+
 ## 2024.12 - 2024-03-15
 
 ### Added
