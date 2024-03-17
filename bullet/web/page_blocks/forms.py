@@ -85,7 +85,8 @@ class IconGridItemForm(TitleTextMixin, forms.Form):
     icon = forms.CharField(
         label="Icon",
         help_text=mark_safe(
-            "You can find available icons on <a href='https://icones.js.org/collection/all' target='_blank' class='link'>Icônes</a>."
+            "You can find available icons on <a href='https://icones.js.org/collection"
+            "/all' target='_blank' class='link'>Icônes</a>."
         ),
     )
 

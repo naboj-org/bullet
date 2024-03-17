@@ -106,7 +106,8 @@ def is_country_admin_in(
     allow_operator: bool = False,
 ) -> bool:
     """
-    Checks whether the user is country admin (or better) in the competition in a given country.
+    Checks whether the user is country admin (or better) in the competition in a given
+    country.
     """
     if not user.is_authenticated:
         return False
@@ -216,7 +217,8 @@ class CountryAdminAccess(AdminAccess):
 class CountryAdminInAccess(AdminAccess):
     """
     Permission check mixin, uses `get_permission_competition` to check users'
-    access to the competition. Allows country admin of a given country to acces the view.
+    access to the competition. Allows country admin of a given country to acces the
+    view.
 
     `require_unlocked_competition` - whether to require the competition to be unlocked
     to allow access (the competition cannot have results_public)
