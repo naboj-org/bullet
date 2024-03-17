@@ -488,9 +488,8 @@ msgstr "Otrzymałeś tę wiadomość, ponieważ zarejestrowałeś drużynę w za
 #: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:6
 #: web/templates/mail/messages/to_competition.txt:1
-#, python-format
 msgid "Hello, %(name)s!"
-msgstr "Witaj, %(name)s!"
+msgstr "Dzień dobry!"
 
 #: web/templates/mail/messages/registration.html:8
 #: web/templates/mail/messages/registration.txt:3
