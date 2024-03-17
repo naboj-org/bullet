@@ -86,6 +86,9 @@ class SlovakSchoolImporter(BaseSchoolImporter):
                     continue
                 types.append(self.type_mapping[year])
 
+            if not types:
+                continue
+
             yield ImportedSchool(
                 row["name"],
                 row["address"],
