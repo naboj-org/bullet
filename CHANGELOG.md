@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.14 - 2024-03-18
+
+### Added
+
+- Serbian school importer.
+
+### Fixed
+
+- Schools with both universal and category wildcards were calculated incorrectly.
+- Removed a rare race condition when sending confirmation emails.
+- Public waiting list is now sorted correctly.
+
 ## 2024.13 - 2024-03-17
 
 ### Changed
