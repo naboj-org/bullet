@@ -56,7 +56,7 @@
         <div class="flex flex-col md:flex-row md:items-center px-4 py-2 {% cycle "bg-gray-50" "" %} rounded-md">
             <div class="md:w-1/2 mb-1 md:mb-0">
                 {% if team.school %}
-                <div class="text-primary font-bold text-lg">
+                <div class="text-primary font-bold">
                     {{ team.school.name }}
 
                     {% if team.in_school_symbol %}
@@ -65,10 +65,10 @@
                 </div>
                 <div class="text-sm text-gray-600">{{ team.school.address }}</div>
                 {% else %}
-                <div class="text-primary font-bold text-lg">{{ team.name }}</div>
+                <div class="text-primary font-bold">{{ team.name }}</div>
                 {% endif %}
             </div>
-            <div class="md:w-1/2">
+            <div class="md:w-1/2 text-sm">
                 {{ team.contestants.all|join:", " }}
             </div>
         </div>
