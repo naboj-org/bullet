@@ -23,7 +23,6 @@ from users.emails.admin import UnregisteredTeam, send_team_unregistered
 from users.logic import (
     add_team_to_competition,
     get_venue_waiting_list,
-    get_venues_waiting_list,
 )
 from users.models import Contestant, Team
 
@@ -169,13 +168,15 @@ class WaitingListView(TeamListView):
                 category_venues[venue.category_id].append(venue)
 
         qs = Team.objects.none()
+        # TODO: improve performance of this
         for venue_groups in category_venues.values():
-            wl = (
-                get_venues_waiting_list(venue_groups)
-                .prefetch_related("contestants", "contestants__grade")
-                .select_related("school")
-            )
-            qs = qs.union(wl)
+            for venue in venue_groups:
+                wl = (
+                    get_venue_waiting_list(venue)
+                    .prefetch_related("contestants", "contestants__grade")
+                    .select_related("school")
+                )
+                qs = qs.union(wl)
 
         return qs
 
