@@ -30,6 +30,21 @@ def get_team_count_per_category(
     return defaultdict(lambda: 0, output)
 
 
+def wildcard_count_per_category(
+    competition: Competition, school: School
+) -> dict[int | None, int]:
+    """
+    Returns a mapping between category ID and number of wildcards for a given school.
+    """
+    counts = (
+        Wildcard.objects.filter(competition=competition, school=school)
+        .values("category")
+        .annotate(count=Count("*"))
+    )
+    output = {item["category"]: item["count"] for item in counts}
+    return defaultdict(lambda: 0, output)
+
+
 def school_has_capacity(team: Team) -> bool:
     venue: Venue = team.venue
     category: Category = venue.category
@@ -39,27 +54,24 @@ def school_has_capacity(team: Team) -> bool:
     if category_team_limit == 0:
         return True
 
-    category_wildcards = Wildcard.objects.filter(
-        competition=competition, category=category, school=team.school
-    ).count()
+    wildcard_counts = wildcard_count_per_category(competition, team.school)
     team_counts = get_team_count_per_category(competition, team.school)
 
     teams_in_this_category = team_counts[category.id]
-    total_allowed_teams = category_team_limit + category_wildcards
+    wildcards_in_this_category = wildcard_counts[category.id]
+    total_allowed_teams = category_team_limit + wildcards_in_this_category
 
     if teams_in_this_category < total_allowed_teams:
         return True
 
-    universal_wildcards = Wildcard.objects.filter(
-        competition=competition, category=None, school=team.school
-    ).count()
-
+    universal_wildcards = wildcard_counts[None]
     used_universal_wildcards = 0
     for cat in competition.category_set.all():
-        if cat == category:
-            continue
         used_universal_wildcards += max(
-            0, team_counts[cat.id] - cat.max_teams_per_school_at(team.registered_at)
+            0,
+            team_counts[cat.id]
+            - cat.max_teams_per_school_at(team.registered_at)
+            - wildcard_counts[cat.id],
         )
 
     return universal_wildcards - used_universal_wildcards > 0
