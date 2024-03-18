@@ -1,8 +1,9 @@
 import string
 from collections import defaultdict
+from typing import Iterable, Protocol, Sequence, Union
 
 from competitions.models import Category, Competition, Venue, Wildcard
-from django.db.models import Count, F, Q, QuerySet
+from django.db.models import Count, QuerySet
 from django.utils import timezone
 from education.models import School
 
@@ -98,43 +99,76 @@ def add_team_to_competition(team: Team):
     team.to_competition()
 
 
-def _waiting_list(team_filter: Q, inner_filter: Q):
-    return (
-        Team.objects.filter(Q(is_waiting=True) & team_filter)
-        .annotate(
-            from_school=Count(
-                "school__team",
-                filter=(
-                    Q(  # teams that were confirmed earlier than this team
-                        school__team__confirmed_at__lte=F("confirmed_at"),
-                        school__team__confirmed_at__isnull=False,
-                    )
-                    | Q(  # already competing teams
-                        school__team__is_waiting=False,
-                        school__team__confirmed_at__isnull=False,
-                    )
-                )
-                & inner_filter,
-            ),
-            wildcards=Count(
-                "school__wildcard",
-                filter=Q(school__wildcard__category=F("venue__category")),
-            ),
-            from_school_corrected=F("from_school") - F("wildcards"),
-        )
-        .order_by("from_school_corrected", "registered_at")
+class HasWaitingListMeta(Protocol):
+    from_school: int
+    from_school_corrected: int
+    wildcards: int
+
+
+WaitingListTeam = Union[Team, HasWaitingListMeta]
+
+
+def _waiting_list(
+    competition: Competition, venues: Iterable[Venue]
+) -> Sequence[WaitingListTeam]:
+    waiting_teams = (
+        Team.objects.filter(is_waiting=True, venue__category__competition=competition)
+        .order_by("registered_at")
+        .select_related("school", "venue")
+        .prefetch_related("contestants", "contestants__grade")
+    )
+    related_schools = waiting_teams.values("school")
+
+    teams_from_school = (
+        Team.objects.competing()
+        .filter(venue__category__competition=competition, school__in=related_schools)
+        .values("school", "venue__category")
+        .annotate(count=Count("*"))
+    )
+    teams_from_school = defaultdict(
+        lambda: 0,
+        {(x["school"], x["venue__category"]): x["count"] for x in teams_from_school},
     )
 
+    wildcards_in_school = (
+        Wildcard.objects.filter(
+            school__in=related_schools, category__isnull=False, competition=competition
+        )
+        .values("school", "category")
+        .annotate(count=Count("*"))
+    )
+    wildcards_in_school = defaultdict(
+        lambda: 0,
+        {(x["school"], x["category"]): x["count"] for x in wildcards_in_school},
+    )
 
-def get_venue_waiting_list(venue: Venue) -> QuerySet[Team]:
+    our_teams = []
+
+    for team in waiting_teams:
+        school = team.school_id
+        category = team.venue.category_id
+
+        teams_from_school[school, category] += 1
+        team.from_school = teams_from_school[school, category]
+        team.wildcards = wildcards_in_school[school, category]
+        team.from_school_corrected = team.from_school - team.wildcards
+
+        if team.venue in venues:
+            our_teams.append(team)
+
+    return sorted(our_teams, key=lambda t: (t.from_school_corrected, t.registered_at))
+
+
+def get_venue_waiting_list(venue: Venue) -> Sequence[WaitingListTeam]:
     # We need all competition venues here to properly count registered
     # teams across all of them.
-    all_venues = Venue.objects.filter(category=venue.category)
-    return _waiting_list(Q(venue=venue), Q(school__team__venue__in=all_venues))
+    return _waiting_list(venue.category.competition, [venue])
 
 
-def get_venues_waiting_list(venues: QuerySet[Venue]) -> QuerySet[Team]:
-    return _waiting_list(Q(venue__in=venues), Q(school__team__venue__in=venues))
+def get_venues_waiting_list(
+    competition: Competition, venues: QuerySet[Venue]
+) -> Sequence[WaitingListTeam]:
+    return _waiting_list(competition, venues.all())
 
 
 def get_school_symbol(n: int) -> str:
