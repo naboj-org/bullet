@@ -3,6 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.15 - 2024-03-19
+
+### Changed
+
+- Updated CZ translations.
+
+### Fixed
+
+- Schools with wildcards, schools with teams in multiple venues and schools with more than 5 teams on the waiting list 
+  were not ordered correctly in the waiting list. The waiting list logic was completely rewritten. Big thanks to Andrzej
+  from Math for noticing this.
+- Fixed inconsistencies between public and admin waiting lists.
+
 ## 2024.14 - 2024-03-18
 
 ### Added
