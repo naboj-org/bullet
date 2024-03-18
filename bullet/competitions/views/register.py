@@ -1,4 +1,5 @@
 from enum import IntEnum
+from functools import partial
 
 from bullet_admin.utils import is_admin
 from countries.utils import country_reverse
@@ -344,7 +345,7 @@ class TeamDetailsView(RegistrationMixin, FormView):
             contestant.team = team
             contestant.save()
 
-        send_confirmation_email.delay(team.id)
+        transaction.on_commit(partial(send_confirmation_email.delay, team.id))
         del self.request.session["register_form"]
         return HttpResponseRedirect(country_reverse("register_thanks"))
 
