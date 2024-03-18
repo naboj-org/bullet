@@ -1,4 +1,5 @@
 from collections import defaultdict
+from typing import Sequence
 
 from countries.utils import country_reverse
 from django.contrib import messages
@@ -23,6 +24,7 @@ from users.emails.admin import UnregisteredTeam, send_team_unregistered
 from users.logic import (
     add_team_to_competition,
     get_venue_waiting_list,
+    get_venues_waiting_list,
 )
 from users.models import Contestant, Team
 
@@ -141,7 +143,7 @@ class TeamListView(TemplateView):
             .filter(country=country)
             .all()
         )
-        teams: QuerySet[Team] = self.get_teams(venues).all()
+        teams: QuerySet[Team] = self.get_teams(venues)
 
         venue_teams: dict[int, list[Team]] = defaultdict(lambda: [])
         for team in teams:
@@ -159,26 +161,8 @@ class WaitingListView(TeamListView):
         ctx["is_waitinglist"] = True
         return ctx
 
-    def get_teams(self, venues) -> QuerySet[Team]:
-        category_venues = {}
-        for venue in venues:
-            if venue.category_id not in category_venues:
-                category_venues[venue.category_id] = [venue]
-            else:
-                category_venues[venue.category_id].append(venue)
-
-        qs = Team.objects.none()
-        # TODO: improve performance of this
-        for venue_groups in category_venues.values():
-            for venue in venue_groups:
-                wl = (
-                    get_venue_waiting_list(venue)
-                    .prefetch_related("contestants", "contestants__grade")
-                    .select_related("school")
-                )
-                qs = qs.union(wl)
-
-        return qs
+    def get_teams(self, venues) -> Sequence[Team]:
+        return get_venues_waiting_list(self.competition, venues)
 
 
 class TeamDeleteView(DeleteView):
@@ -205,14 +189,14 @@ class TeamDeleteView(DeleteView):
         self.object.delete()
 
         if competition.is_registration_open and not team.is_waiting:
-            waiting_list = get_venue_waiting_list(team.venue).first()
-            if (
-                waiting_list
-                and waiting_list.from_school
-                <= category.max_teams_per_school_at(timezone.now())
-            ):
-                waiting_list.to_competition()
-                waiting_list.save()
+            waiting_list = get_venue_waiting_list(team.venue)
+            if len(waiting_list):
+                first_team = waiting_list[0]
+                if first_team.from_school_corrected <= category.max_teams_per_school_at(
+                    timezone.now()
+                ):
+                    first_team.to_competition()
+                    first_team.save()
 
         if competition.registration_end <= timezone.now():
             send_team_unregistered.delay(unregistered_team)
