@@ -65,8 +65,9 @@
                         </td>
                         <td class="p-3 whitespace-nowrap">
                             <div>
-                                Teams from school: <b>{{ team.from_school }}</b>
+                                Teams from school: <b>{{ team.from_school_corrected }}</b>
                             </div>
+                            {% if team.wildcards %}<div class="text-xs text-gray-600">({{ team.from_school }} team{{ team.from_school|pluralize }} - {{ team.wildcards }} wildcard{{ team.wildcards|pluralize }})</div>{% endif %}
                             <div class="text-xs text-gray-600">
                                 {{ team.registered_at|date:"j M Y, H:i" }}
                             </div>
