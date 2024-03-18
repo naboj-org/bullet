@@ -11,6 +11,7 @@ from education.importers.nl import DutchSchoolImporter
 from education.importers.old import OldSchoolImporter
 from education.importers.old_ro import RomanianSchoolImporter
 from education.importers.pl import PolishSchoolImporter
+from education.importers.rs import SerbianSchoolImporter
 from education.importers.sk import SlovakSchoolImporter
 from education.importers.wales import WalesSchoolImporter
 
@@ -28,4 +29,5 @@ IMPORTERS = {
     "old": OldSchoolImporter,
     "wales": WalesSchoolImporter,
     "old_ro": RomanianSchoolImporter,
+    "rs": SerbianSchoolImporter,
 }
