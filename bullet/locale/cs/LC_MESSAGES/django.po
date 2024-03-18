@@ -218,7 +218,7 @@ msgstr "Registrací do Soutěže registrující osoby (zejména učitelé nebo z
 #: competitions/templates/register/details.html:68
 #: competitions/templates/teams/edit.html:92
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
-msgstr "Registrující osoba uděluje souhlas Trojsten-u se zhotovením obrazových a audiovizuálních záznamů během konání Soutěže, na kterých je zachycena podoba registrující a/i registrované osoby a jejich zveřejněním na webovém sídle Soutěže, webových sídlech lokálních organizátorů, sociální sítích, a to pro marketingové účely propagace Soutěže. <sup>[1]</sup>"
+msgstr "Registrující osoba uděluje souhlas organizátorům soutěže se zhotovením obrazových a audiovizuálních záznamů během konání Soutěže, na kterých je zachycena podoba registrující a/i registrované osoby a jejich zveřejněním na webovém sídle Soutěže, webových sídlech lokálních organizátorů, sociální sítích, a to pro marketingové účely propagace Soutěže. <sup>[1]</sup>"
 
 #: competitions/templates/register/details.html:79
 #, python-format
@@ -265,7 +265,7 @@ msgstr "Tým úspěšně zaregistrován"
 
 #: competitions/templates/register/thanks.html:16
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
-msgstr "Poslali jsme vám potvrzovací odkaz. Prosím zkontrolujte svoji e-mailovou schránku a nevyžádanou poštu. <b> Registrace týmy nebude kompletní dokud nekliknete na potvrzovací odkaz </b>"
+msgstr "Poslali jsme Vám potvrzovací odkaz. Prosím, zkontrolujte svoji e-mailovou schránku a nevyžádanou poštu. <b> Registrace týmů nebude kompletní, dokud nekliknete na potvrzovací odkaz. </b>"
 
 #: competitions/templates/register/thanks.html:19
 msgid "Register another team"
