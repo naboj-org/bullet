@@ -4,6 +4,7 @@ import socket
 from pathlib import Path
 
 import environ
+from django.conf.locale import LANG_INFO
 from django_countries.widgets import LazyChoicesMixin
 
 import bullet
@@ -180,6 +181,11 @@ MEILISEARCH_URL = env("MEILISEARCH_URL", default="http://meilisearch:7700/")
 MEILISEARCH_KEY = env("MEILISEARCH_KEY", default=None)
 
 PROBLEM_SOLVE_KEY = env("PROBLEM_SOLVE_KEY", default="")
+
+
+# TODO: Remove after merging upstream:
+# https://github.com/django/django/pull/18017
+LANG_INFO["sk"]["name_local"] = "slovensky"
 
 
 def silky_intercept(request):
