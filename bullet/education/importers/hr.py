@@ -33,7 +33,7 @@ class CroatianSchoolImporter(BaseSchoolImporter):
         for row in reader:
             address = f"{row['Adresa']}, {row['Mjesto']}"
 
-            types = [x.strip() for x in row["TipUstanove"].split()]
+            types = [x.strip() for x in row["TipUstanove"].split(",")]
 
             our_types = []
             for type in types:

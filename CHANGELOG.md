@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.17 - 2024-03-25
+
+### Fixed
+
+- Croatian school importer failed to correctly detect school types in some cases. 
+
 ## 2024.16 - 2024-03-25
 
 ### Changed
