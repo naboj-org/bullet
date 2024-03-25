@@ -16,6 +16,17 @@ and this project uses the `YYYY.N` version format.
   from Math for noticing this.
 - Fixed inconsistencies between public and admin waiting lists.
 
+## 2024.15 - 2024-03-25
+
+### Changed
+
+- The waiting list is now sorted by the confirmation time, rather than the registration time.
+- Added support for Srednja škola to the Croatian school importer.
+
+### Fixed
+
+- Pictures uploaded to albums were not processed.
+
 ## 2024.14 - 2024-03-18
 
 ### Added
