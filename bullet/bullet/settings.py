@@ -237,6 +237,6 @@ PICTURES = {
     "FILE_TYPES": ["WEBP"],
     "PIXEL_DENSITIES": [1, 2],
     "USE_PLACEHOLDERS": False,
-    "QUEUE_NAME": "pictures",
+    "QUEUE_NAME": "default",
     "PROCESSOR": "pictures.tasks.process_picture",
 }
