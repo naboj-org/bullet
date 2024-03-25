@@ -113,7 +113,7 @@ def _waiting_list(
 ) -> Sequence[WaitingListTeam]:
     waiting_teams = (
         Team.objects.filter(is_waiting=True, venue__category__competition=competition)
-        .order_by("registered_at")
+        .order_by("confirmed_at")
         .select_related("school", "venue")
         .prefetch_related("contestants", "contestants__grade")
     )
@@ -156,7 +156,7 @@ def _waiting_list(
         if team.venue in venues:
             our_teams.append(team)
 
-    return sorted(our_teams, key=lambda t: (t.from_school_corrected, t.registered_at))
+    return sorted(our_teams, key=lambda t: (t.from_school_corrected, t.confirmed_at))
 
 
 def get_venue_waiting_list(venue: Venue) -> Sequence[WaitingListTeam]:
