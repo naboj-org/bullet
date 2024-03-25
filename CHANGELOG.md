@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.16 - 2024-03-25
+
+### Changed
+
+- The waiting list is now sorted by the confirmation time, rather than the registration time.
+- Added support for Srednja škola to the Croatian school importer.
+
+### Fixed
+
+- Pictures uploaded to albums were not processed.
+
 ## 2024.15 - 2024-03-19
 
 ### Changed
@@ -15,17 +26,6 @@ and this project uses the `YYYY.N` version format.
   were not ordered correctly in the waiting list. The waiting list logic was completely rewritten. Big thanks to Andrzej
   from Math for noticing this.
 - Fixed inconsistencies between public and admin waiting lists.
-
-## 2024.15 - 2024-03-25
-
-### Changed
-
-- The waiting list is now sorted by the confirmation time, rather than the registration time.
-- Added support for Srednja škola to the Croatian school importer.
-
-### Fixed
-
-- Pictures uploaded to albums were not processed.
 
 ## 2024.14 - 2024-03-18
 
