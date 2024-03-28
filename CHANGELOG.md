@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.18 - 2024-03-28
+
+### Added
+
+- The system now provides audible feedback while scanning.
+- Tearoffs can be generated right from the system. This can be found in the "Venues" section of the admin interface.
+
+### Changed
+
+- Updated some CZ translations.
+
 ## 2024.17 - 2024-03-25
 
 ### Fixed
