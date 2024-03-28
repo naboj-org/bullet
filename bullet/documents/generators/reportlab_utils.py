@@ -1,5 +1,6 @@
 import io
 import os
+from pathlib import Path
 
 from reportlab.lib import colors
 from reportlab.lib.enums import TA_CENTER
@@ -16,6 +17,11 @@ from reportlab.platypus import (
     Table,
     TableStyle,
 )
+
+
+def register_font(name: str):
+    font_dir = Path(__file__).parent.parent / "fonts"
+    pdfmetrics.registerFont(TTFont(name, font_dir / f"{name}.ttf"))
 
 
 def prepare_pdf(footer_str: str) -> (io.BytesIO, BaseDocTemplate):
