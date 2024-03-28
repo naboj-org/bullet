@@ -1,6 +1,7 @@
 <div id="js-scanner-status">
-    <div class="rounded-md overflow-hidden grid grid-cols-2 sm:grid-cols-4 gap-6 p-4 relative text-white/90
-            {% if last_log == None %}bg-gray-100 text-black/90{% elif last_log.result == last_log.Result.OK %}bg-green-600{% elif last_log.result == last_log.Result.SCAN_ERR %}bg-amber-600{% elif last_log.result == last_log.Result.INTEGRITY_ERR %}bg-red-700{% endif %}">
+    <div class="rounded-md overflow-hidden grid grid-cols-2 sm:grid-cols-4 gap-6 p-4 relative
+            {% if last_log is None %}text-black/90{% else %}text-white/90{% endif %}
+            {% if last_log is None %}bg-gray-100 text-black/90{% elif last_log.result == last_log.Result.OK %}bg-green-600{% elif last_log.result == last_log.Result.SCAN_ERR %}bg-amber-600{% elif last_log.result == last_log.Result.INTEGRITY_ERR %}bg-red-700{% endif %}">
         <div class="bg-gray-100 absolute inset-0 flex items-center justify-center htmx-indicator" id="scanner-indicator">
             <span class="iconify w-12 h-12 text-gray-500 animate-spin" data-icon="mdi:loading"></span>
         </div>
