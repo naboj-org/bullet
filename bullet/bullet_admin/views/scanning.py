@@ -15,6 +15,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, TemplateView
+from django_htmx.http import trigger_client_event
 from problems.logic import (
     fix_results,
     get_last_problem_for_team,
@@ -116,7 +117,8 @@ class ProblemScanView(OperatorRequiredMixin, View):
         ctx = self.get_context_data()
         ctx["last_log"] = log
         ctx["scanned_code"] = barcode
-        return TemplateResponse(request, template, ctx)
+        response = TemplateResponse(request, template, ctx)
+        return trigger_client_event(response, "scan-complete", {"result": log.result})
 
 
 class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
@@ -192,8 +194,7 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         except ValueError as e:
             error = e
 
-        # TODO: Replace with self.render_to_response()
-        return TemplateResponse(
+        response = TemplateResponse(
             request,
             "bullet_admin/scanning/_review_teams_status.html",
             {
@@ -201,6 +202,9 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
                 "venue": self.venue,
                 "error": error,
             },
+        )
+        return trigger_client_event(
+            response, "scan-complete", {"result": 1 if error != "" else 0}
         )
 
 
