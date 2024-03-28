@@ -3,7 +3,7 @@ document.body.addEventListener("htmx:afterSwap", () => {
     document.getElementById("js-scanfield").focus()
 })
 
-const error_audio = new Audio('/static/sound/barcode_error.ogg');
+const error_audio = new Audio('/static/sound/barcode_error.mp3');
 const success_audio = new Audio('/static/sound/barcode_success.mp3');
 
 document.body.addEventListener("scan-complete", async (evt) => {
