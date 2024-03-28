@@ -1,7 +1,19 @@
-document.body.addEventListener("htmx:afterSwap", (evt) => {
+document.body.addEventListener("htmx:afterSwap", () => {
     document.getElementById("js-scanform").reset()
     document.getElementById("js-scanfield").focus()
 })
+
+const error_audio = new Audio('/static/sound/barcode_error.ogg');
+const success_audio = new Audio('/static/sound/barcode_success.mp3');
+
+document.body.addEventListener("scan-complete", async (evt) => {
+    if (evt.detail.result === 0) {
+        await success_audio.play();
+    } else {
+        await error_audio.play();
+    }
+})
+
 
 let audio = new Audio('/static/sound/barcode_scanner.mp3');
 
