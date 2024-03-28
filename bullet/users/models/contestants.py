@@ -12,6 +12,7 @@ from phonenumbers import PhoneNumberFormat
 from simple_history.models import HistoricalRecords
 
 from bullet import search
+from bullet.utils.string import shorten
 
 
 class TeamStatus(models.TextChoices):
@@ -110,6 +111,14 @@ class Team(models.Model):
         if self.in_school_symbol:
             return f"{self.school} {self.in_school_symbol}"
         return f"{self.school}"
+
+    @property
+    def display_name_short(self):
+        if self.name:
+            return shorten(self.name, 75)
+        if self.in_school_symbol:
+            return f"{shorten(str(self.school), 75)} {self.in_school_symbol}"
+        return shorten(str(self.school), 75)
 
     @property
     def contact_phone_pretty(self):

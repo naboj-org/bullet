@@ -9,12 +9,13 @@ from django.views import View
 from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
+from documents.generators.tearoff import TearoffGenerator
 from users.emails.teams import send_to_competition_email
 from users.logic import get_venue_waiting_list
 from users.models import Team
 
 from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
-from bullet_admin.forms.documents import CertificateForm
+from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import VenueForm
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
@@ -156,3 +157,23 @@ class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, View):
 
     def get_redirect_url(self):
         return reverse("badmin:waiting_list", kwargs={"pk": self.venue.id})
+
+
+class TearoffView(VenueMixin, GenericForm, FormView):
+    form_class = TearoffForm
+    form_multipart = True
+    template_name = "bullet_admin/venues/tearoffs.html"
+
+    def form_valid(self, form):
+        t = TearoffGenerator(form.cleaned_data["problems"])
+        teams = list(
+            Team.objects.competing()
+            .filter(venue=self.venue, number__isnull=False)
+            .all()
+        )
+        for i in range(form.cleaned_data["backup_teams"]):
+            teams.append(Team(venue=self.venue, name="???", number=999 - i))
+        data = t.generate_pdf(
+            teams, form.cleaned_data["first_problem"], form.cleaned_data["ordering"]
+        )
+        return FileResponse(data, filename="tearoffs.pdf")

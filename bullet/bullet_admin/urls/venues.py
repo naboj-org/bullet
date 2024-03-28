@@ -25,4 +25,9 @@ urlpatterns = [
         venues.TeamListView.as_view(),
         name="venue_teamlists",
     ),
+    path(
+        "<int:pk>/tearoffs/",
+        venues.TearoffView.as_view(),
+        name="venue_tearoffs",
+    ),
 ]
