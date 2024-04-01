@@ -42,6 +42,13 @@ pages = [
         'Learn more about viewing and managing teams using the "Teams" page.',
         Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
     ),
+    Page(
+        "permissions",
+        "Permissions",
+        "Get a better understanding of all the user permissions and roles in the "
+        "system.",
+        Access.VENUE | Access.COUNTRY | Access.BRANCH,
+    ),
 ]
 
 
