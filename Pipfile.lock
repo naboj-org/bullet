@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "cb59a31cc5a18dd2c068c3a5adcc23623ed0fba88e72073a27005d8081702961"
+            "sha256": "fd01b390b53728bc19a07b0f3dedb740a39fc1f521d3adf4c56629d8ad1fe75f"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -702,12 +702,12 @@
         },
         "meilisearch": {
             "hashes": [
-                "sha256:86bf63ef482f38aa13a602984fc2b97670b8f53fce8262df518d8c41f3520149",
-                "sha256:966edab243f2fe1b2d34d9ddd4ad99183344fed49858cda75f3671d746bfc320"
+                "sha256:0a45949245fac2f5622510b25d80f8d3e074ee1538adb907cff1aad8ec53293a",
+                "sha256:3dba5d8df5bfc93c1270299b8bca5b520f6cad6e172d3dccdcff43604d3cf8c7"
             ],
             "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==0.30.0"
+            "version": "==0.31.0"
         },
         "minify-html": {
             "hashes": [
@@ -1060,10 +1060,10 @@
         },
         "pydantic": {
             "hashes": [
-                "sha256:72c6034df47f46ccdf81869fddb81aade68056003900a8724a4f160700016a2a",
-                "sha256:e07805c4c7f5c6826e33a1d4c9d47950d7eaf34868e2690f8594d2e30241f11f"
+                "sha256:b1704e0847db01817624a6b86766967f552dd9dbf3afba4004409f908dcc84e6",
+                "sha256:cc46fce86607580867bdc3361ad462bab9c222ef042d3da86f2fb333e1d916c5"
             ],
-            "version": "==2.6.3"
+            "version": "==2.6.4"
         },
         "pydantic-core": {
             "hashes": [
