@@ -1,0 +1,37 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-3xl">
+        {% aheader show_subtitle=True %}
+            {% slot title %}
+                Documentation
+            {% endslot %}
+            User manuals and an explanation of the administration interface.
+        {% endaheader %}
+
+        <div class="divide-y">
+            {% for page in pages %}
+            <a href="{% url "badmin:documentation" page.slug %}" class="p-4 block hover:bg-gray-50 rounded">
+                <div class="font-semibold text-gray-900 mb-0.5">{{ page.title }}</div>
+                <div class="text-sm text-gray-600 leading-tight">{{ page.description }}</div>
+                <div class="text-xs mt-2 space-x-1">
+                    {% if page.access.allows_operator %}
+                    <span class="px-1.5 py-0.5 rounded bg-blue-600 text-white font-bold">Operator</span>
+                    {% endif %}
+                    {% if page.access.allows_venue_admin %}
+                    <span class="px-1.5 py-0.5 rounded bg-green-600 text-white font-bold">Venue admin</span>
+                    {% endif %}
+                    {% if page.access.allows_country_admin %}
+                    <span class="px-1.5 py-0.5 rounded bg-amber-600 text-white font-bold">Country admin</span>
+                    {% endif %}
+                    {% if page.access.allows_branch_admin %}
+                    <span class="px-1.5 py-0.5 rounded bg-red-600 text-white font-bold">Branch admin</span>
+                    {% endif %}
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
