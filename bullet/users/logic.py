@@ -1,12 +1,16 @@
 import string
 from collections import defaultdict
+from functools import partial
 from typing import Iterable, Protocol, Sequence, Union
 
 from competitions.models import Category, Competition, Venue, Wildcard
+from django.db import transaction
 from django.db.models import Count, QuerySet
 from django.utils import timezone
+from django_rq import job
 from education.models import School
 
+from users.emails.teams import send_to_competition_email
 from users.models import Team
 
 
@@ -97,6 +101,30 @@ def add_team_to_competition(team: Team):
         return
 
     team.to_competition()
+
+
+@transaction.atomic
+def move_eligible_teams(venue: Venue):
+    team_count = venue.remaining_capacity
+    waiting_list = get_venue_waiting_list(venue)[:team_count]
+    limit = venue.category.max_teams_per_school_at()
+
+    for team in waiting_list:
+        if limit != 0 and team.from_school_corrected > limit:
+            break
+
+        team.to_competition()
+        team.save()
+
+        transaction.on_commit(partial(send_to_competition_email.delay, team.id))
+
+
+@job
+def move_all_eligible_teams(competition_id):
+    competition = Competition.objects.get(pk=competition_id)
+    venues = Venue.objects.filter(category__competition=competition)
+    for venue in venues:
+        move_eligible_teams(venue)
 
 
 class HasWaitingListMeta(Protocol):

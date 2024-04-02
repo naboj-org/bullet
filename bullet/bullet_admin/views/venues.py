@@ -10,8 +10,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator
-from users.emails.teams import send_to_competition_email
-from users.logic import get_venue_waiting_list
+from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
 from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
@@ -144,19 +143,7 @@ class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
 
 class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, View):
     def post(self, request, *args, **kwargs):
-        team_count = self.venue.remaining_capacity
-        waiting_list = get_venue_waiting_list(self.venue)[:team_count]
-        limit = self.venue.category.max_teams_per_school_at()
-
-        for team in waiting_list:
-            if limit != 0 and team.from_school_corrected > limit:
-                break
-
-            team.to_competition()
-            team.save()
-
-            send_to_competition_email.delay(team.id)
-
+        move_eligible_teams(self.venue)
         return HttpResponseRedirect(self.get_redirect_url())
 
     def get_redirect_url(self):
