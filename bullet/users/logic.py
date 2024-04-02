@@ -51,7 +51,7 @@ def school_has_capacity(team: Team) -> bool:
     category: Category = venue.category
     competition: Competition = category.competition
 
-    category_team_limit = category.max_teams_per_school_at(team.registered_at)
+    category_team_limit = category.max_teams_per_school_at()
     if category_team_limit == 0:
         return True
 
@@ -71,7 +71,7 @@ def school_has_capacity(team: Team) -> bool:
         used_universal_wildcards += max(
             0,
             team_counts[cat.id]
-            - cat.max_teams_per_school_at(team.registered_at)
+            - cat.max_teams_per_school_at()
             - wildcard_counts[cat.id],
         )
 

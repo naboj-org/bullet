@@ -146,8 +146,12 @@ class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, View):
     def post(self, request, *args, **kwargs):
         team_count = self.venue.remaining_capacity
         waiting_list = get_venue_waiting_list(self.venue)[:team_count]
+        limit = self.venue.category.max_teams_per_school_at()
 
         for team in waiting_list:
+            if limit != 0 and team.from_school_corrected > limit:
+                break
+
             team.to_competition()
             team.save()
 

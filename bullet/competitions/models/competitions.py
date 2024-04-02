@@ -192,12 +192,19 @@ class Category(models.Model):
     def __str__(self):
         return f"{self.identifier} ({self.competition.name})"
 
-    def max_teams_per_school_at(self, time):
+    def max_teams_per_school_at(self, time=None):
+        if time is None:
+            time = timezone.now()
+
         competition = self.competition
         second_round_started = (
             competition.registration_second_round_start
             and competition.registration_second_round_start <= time
         )
+
+        registration_ended = competition.registration_end <= time
+        if registration_ended:
+            return 0
 
         if second_round_started:
             return self.max_teams_second_round
