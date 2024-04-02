@@ -253,6 +253,16 @@ class BranchAdminAccess(AdminAccess):
         return is_branch_admin(self.request.user, self.request.BRANCH)
 
 
+class UnlockedCompetitionMixin:
+    def can_access(self):
+        can = super().can_access()
+        if not can:
+            return False
+
+        competition = get_active_competition(self.request)
+        return not competition.results_public
+
+
 class PhotoUploadAccess(AccessMixin):
     """
     Allows access only to Album & Gallery editing
