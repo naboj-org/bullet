@@ -16,6 +16,9 @@ class DeleteView(BaseDeleteView):
 
 class GenericForm:
     form_title = None
+    form_submit_label = "Save"
+    form_submit_icon = "mdi:content-save"
+    form_submit_color = "blue"
     form_multipart = False
     template_name = "bullet_admin/generic/form.html"
 
@@ -23,6 +26,9 @@ class GenericForm:
         ctx = super().get_context_data(**kwargs)
         ctx["form_title"] = self.form_title
         ctx["form_multipart"] = self.form_multipart
+        ctx["form_submit_label"] = self.form_submit_label
+        ctx["form_submit_icon"] = self.form_submit_icon
+        ctx["form_submit_color"] = self.form_submit_color
         return ctx
 
 
