@@ -120,6 +120,13 @@ def admin_sidebar(context):
             items.append(
                 ("fa-book", "Problem settings", reverse("badmin:problems_generate"))
             )
+            items.append(
+                (
+                    "fa-fast-forward",
+                    "Move waiting lists",
+                    reverse("badmin:competition_automove"),
+                )
+            )
 
         menu_items.append(
             (

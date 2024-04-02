@@ -6,8 +6,9 @@ from django.urls import reverse
 from django.views.generic import CreateView, FormView, UpdateView
 from problems.logic.results import squash_results
 from problems.logic.stats import generate_stats
+from users.logic import move_all_eligible_teams
 
-from bullet_admin.access import BranchAdminAccess
+from bullet_admin.access import BranchAdminAccess, UnlockedCompetitionMixin
 from bullet_admin.forms.competition import CompetitionForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -44,17 +45,9 @@ class CompetitionCreateView(BranchAdminAccess, CompetitionFormMixin, CreateView)
         return redirect("badmin:competition_switch")
 
 
-class CompetitionFinalizeView(BranchAdminAccess, FormView):
+class CompetitionFinalizeView(UnlockedCompetitionMixin, BranchAdminAccess, FormView):
     form_class = Form
     template_name = "bullet_admin/competition/confirm.html"
-
-    def can_access(self):
-        can = super().can_access()
-        if not can:
-            return False
-
-        competition = get_active_competition(self.request)
-        return not competition.results_public
 
     def form_valid(self, form):
         competition = get_active_competition(self.request)
@@ -68,3 +61,22 @@ class CompetitionFinalizeView(BranchAdminAccess, FormView):
         generate_stats.delay(competition.id)
         squash_results.delay(competition.id)
         competition.save()
+
+
+class CompetitionAutomoveView(
+    UnlockedCompetitionMixin, BranchAdminAccess, GenericForm, FormView
+):
+    form_class = Form
+    form_title = "Move waiting lists automatically"
+    form_submit_label = "Move automatically"
+    form_submit_color = "green"
+    form_submit_icon = "mdi:fast-forward"
+    template_name = "bullet_admin/competition/automove.html"
+
+    def form_valid(self, form):
+        competition = get_active_competition(self.request)
+        move_all_eligible_teams.delay(competition.id)
+        messages.success(
+            self.request, "The teams will be moved to the competition shortly."
+        )
+        return redirect("badmin:home")
