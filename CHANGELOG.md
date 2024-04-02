@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.19 - 2024-04-02
+
+### Added
+
+- New option to automatically move teams from waiting list in all venues.
+- Documentation about the system for administrators, currently only Teams and Permissions, more to come.
+
+### Changed
+
+- "Move automatically" in the venue waiting list now honors current registration rules and limits.
+
 ## 2024.18 - 2024-03-28
 
 ### Added
