@@ -1,4 +1,5 @@
 from collections import defaultdict
+from functools import partial
 from typing import Sequence
 
 from countries.utils import country_reverse
@@ -21,6 +22,7 @@ from django.views.generic import DeleteView, FormView, TemplateView
 from documents.generators.certificate import certificate_for_team
 from documents.models import SelfServeCertificate
 from users.emails.admin import UnregisteredTeam, send_team_unregistered
+from users.emails.teams import send_to_competition_email
 from users.logic import (
     add_team_to_competition,
     get_venue_waiting_list,
@@ -54,7 +56,8 @@ class TeamEditView(FormView):
         form.save()
         if "consent_photos" in self.request.POST:
             self.team.consent_photos = True
-            self.team.save()
+        self.team._change_reason = "edited via team edit link"
+        self.team.save()
         messages.success(self.request, _("Team successfully edited."))
         return HttpResponseRedirect(
             country_reverse("team_edit", kwargs={"secret_link": self.team.secret_link})
@@ -99,6 +102,7 @@ class TeamEditView(FormView):
         if self.team.confirmed_at is None:
             self.team.confirmed_at = timezone.now()
             add_team_to_competition(self.team)
+            self.team._change_reason = "confirmed registration"
             self.team.save()
             messages.success(request, _("Registration successfully confirmed."))
 
@@ -186,6 +190,7 @@ class TeamDeleteView(DeleteView):
             team.display_name,
             team.contestants_names,
         )
+        self.object._change_reason = "unregistered via team edit link"
         self.object.delete()
 
         if competition.is_registration_open and not team.is_waiting:
@@ -197,6 +202,9 @@ class TeamDeleteView(DeleteView):
                 ):
                     first_team.to_competition()
                     first_team.save()
+                    transaction.on_commit(
+                        partial(send_to_competition_email.delay, first_team.id)
+                    )
 
         if competition.registration_end <= timezone.now():
             send_team_unregistered.delay(unregistered_team)
