@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.20 - 2024-04-03
+
+### Added
+
+- Actions made through the team edit link now contain descriptions in history entries.
+
+### Fixed
+
+- Emails were not sent to teams when they got moved from waiting list automatically when another team unregisters.
+
 ## 2024.19 - 2024-04-02
 
 ### Added
