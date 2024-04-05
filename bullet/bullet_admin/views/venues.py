@@ -2,7 +2,7 @@ from competitions.models import Venue
 from django.contrib import messages
 from django.forms import Form
 from django.http import FileResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.views import View
@@ -10,13 +10,14 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator
+from problems.logic.results import save_venue_ranks
 from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
 from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
 from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import VenueForm
-from bullet_admin.mixins import AdminRequiredMixin
+from bullet_admin.mixins import AdminRequiredMixin, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
@@ -168,3 +169,27 @@ class TearoffView(VenueMixin, GenericForm, FormView):
             teams, form.cleaned_data["first_problem"], form.cleaned_data["ordering"]
         )
         return FileResponse(data, filename="tearoffs.pdf")
+
+
+class FinishReviewView(VenueMixin, RedirectBackMixin, GenericForm, FormView):
+    form_class = Form
+    form_title = "Finish venue review"
+    form_submit_color = "green"
+    form_submit_label = "Finish review"
+    form_submit_icon = "mdi:check"
+    template_name = "bullet_admin/venues/finish_review.html"
+
+    def get_default_success_url(self):
+        return reverse("badmin:venue_detail", kwargs={"pk": self.venue.id})
+
+    def form_valid(self, form):
+        if self.venue.has_unreviewed_teams:
+            messages.error(self.request, "This venue has unreviewed teams.")
+            return redirect("badmin:venue_finish_review", self.venue.id)
+
+        self.venue.is_reviewed = True
+        self.venue.save()
+
+        save_venue_ranks.delay(self.venue.id)
+
+        return super().form_valid(form)

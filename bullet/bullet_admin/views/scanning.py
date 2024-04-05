@@ -177,15 +177,8 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
                 )
 
         scanned_barcode.team.is_reviewed = True
+        scanned_barcode.team._change_reason = "reviewed via barcode"
         scanned_barcode.team.save()
-
-        if (
-            not Team.objects.competing()
-            .filter(venue=self.venue, is_reviewed=False)
-            .exists()
-        ):
-            self.venue.is_reviewed = True
-            self.venue.save()
 
     def post(self, request, *args, **kwargs):
         error = ""
@@ -259,16 +252,8 @@ class TeamToggleReviewedView(OperatorRequiredMixin, VenueMixin, View):
             raise PermissionDenied()
 
         team.is_reviewed = not team.is_reviewed
-        team._change_reason = "Manual review"
+        team._change_reason = "reviewed manually"
         team.save()
-
-        if (
-            not Team.objects.competing()
-            .filter(venue=team.venue, is_reviewed=False)
-            .exists()
-        ):
-            team.venue.is_reviewed = True
-            team.venue.save()
 
         return TemplateResponse(
             request,

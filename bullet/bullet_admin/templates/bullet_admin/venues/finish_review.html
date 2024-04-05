@@ -1,0 +1,12 @@
+{% extends "bullet_admin/generic/form.html" %}
+
+{% block before_form %}
+    {% if venue.has_unreviewed_teams %}
+        {% aalert color="red" class="mb-6" %}
+            <p>This venue has unreviewed teams. Please <a class="link" href="{% url "badmin:scanning_review" %}?venue={{ venue.id }}">review them</a> before continuing.</p>
+        {% endaalert %}
+    {% endif %}
+
+    <p>Do you want to mark venue {{ venue }} as reviewed?</p>
+    <p class="mt-1">No futher changes to the venue's teams will be possible.</p>
+{% endblock %}

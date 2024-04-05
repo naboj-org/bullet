@@ -1,3 +1,15 @@
+{% if not venue.is_reviewed and not venue.has_unreviewed_teams %}
+    {% aalert color="orange" class="mb-4" %}
+        <p>All teams in this venue are reviewed. Please, <a class="link" href="{% url "badmin:venue_finish_review" venue.id %}?back={{ request.get_full_path|urlencode }}">finish the review</a> when ready.</p>
+    {% endaalert %}
+{% endif %}
+
+{% if venue.is_reviewed %}
+    {% aalert color="green" class="mb-4" %}
+        <p>This venue was marked as reviewed.</p>
+    {% endaalert %}
+{% endif %}
+
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
     {% for team in teams %}
         <div class="border {% if team.is_reviewed %}bg-green-100 border-green-700{% else %}bg-red-100 border-red-700{% endif %} py-2 px-3 rounded-md">
