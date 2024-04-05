@@ -3,6 +3,7 @@ from typing import TYPE_CHECKING
 from competitions.models import Competition
 from django.db.models import Q
 from django.http import HttpRequest
+from django.utils.http import url_has_allowed_host_and_scheme
 from users.models import User
 
 from bullet_admin.models import CompetitionRole
@@ -76,3 +77,17 @@ def get_venue_admin_emails(venue: "Venue"):
         )
         .values_list("user__email", flat=True)
     )
+
+
+def get_redirect_url(request: HttpRequest, fallback_url="#"):
+    if "next" in request.GET:
+        back_url = request.GET["next"]
+        is_valid_url = url_has_allowed_host_and_scheme(
+            url=back_url,
+            allowed_hosts={request.get_host()},
+            require_https=request.is_secure(),
+        )
+        if is_valid_url:
+            return back_url
+
+    return fallback_url
