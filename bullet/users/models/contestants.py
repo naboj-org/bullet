@@ -232,6 +232,12 @@ class Team(models.Model):
             "status": self.status.value,
             "contestants": self.contestants_names,
             "online_password": self.online_password,
+            "rank_venue": self.rank_venue or "",
+            "rank_country": self.rank_country or "",
+            "rank_international": self.rank_international or "",
+            "solved_problems": self.solved_problem_count
+            if hasattr(self, "solved_problem_count")
+            else "",
         }
 
 

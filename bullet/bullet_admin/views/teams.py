@@ -7,6 +7,7 @@ from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
+from django.db.models import Count
 from django.forms import inlineformset_factory
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.shortcuts import get_object_or_404
@@ -121,6 +122,7 @@ class TeamExportView(AdminRequiredMixin, FormView):
             )
             .prefetch_related("contestants", "contestants__grade")
             .order_by("venue__name", "venue__category__identifier", "number", "id")
+            .annotate(solved_problem_count=Count("solved_problems__id"))
         )
         qs = form.apply_filter(qs)
 
