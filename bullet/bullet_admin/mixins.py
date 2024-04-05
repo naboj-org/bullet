@@ -3,9 +3,8 @@ from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import QuerySet
 from django.http import HttpResponseNotFound, HttpResponseRedirect
 from django.urls import reverse
-from django.utils.http import url_has_allowed_host_and_scheme
 
-from bullet_admin.utils import get_active_competition, is_admin
+from bullet_admin.utils import get_active_competition, get_redirect_url, is_admin
 
 
 class AccessMixin:
@@ -125,14 +124,4 @@ class RedirectBackMixin:
         )
 
     def get_success_url(self):
-        if "back" in self.request.GET:
-            back_url = self.request.GET["back"]
-            is_valid_url = url_has_allowed_host_and_scheme(
-                url=back_url,
-                allowed_hosts={self.request.get_host()},
-                require_https=self.request.is_secure(),
-            )
-            if is_valid_url:
-                return back_url
-
-        return self.get_default_success_url()
+        return get_redirect_url(self.request, self.get_default_success_url())
