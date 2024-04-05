@@ -85,6 +85,10 @@ class Team(models.Model):
     is_disqualified = models.BooleanField(default=False)
     consent_photos = models.BooleanField(default=False)
 
+    rank_venue = models.IntegerField(null=True, blank=True)
+    rank_country = models.IntegerField(null=True, blank=True)
+    rank_international = models.IntegerField(null=True, blank=True)
+
     objects = TeamQuerySet.as_manager()
     history = HistoricalRecords()
 
