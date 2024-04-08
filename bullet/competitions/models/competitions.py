@@ -210,6 +210,13 @@ class Category(models.Model):
             return self.max_teams_second_round
         return self.max_teams_per_school
 
+    @property
+    def first_problem(self):
+        first = self.problems.order_by("number").first()
+        if not first:
+            return None
+        return first.number
+
 
 class Wildcard(models.Model):
     competition = models.ForeignKey(

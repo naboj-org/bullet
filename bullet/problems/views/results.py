@@ -109,6 +109,7 @@ class CategoryResultsView(ResultsViewMixin, ListView):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["team_problem_count"] = self.category.problems_per_team
         ctx["problem_count"] = self.category.problems.count()
+        ctx["first_problem"] = self.category.first_problem
         ctx["category"] = self.category
         ctx["results_time"] = self.results_time
 
