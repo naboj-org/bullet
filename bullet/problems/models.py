@@ -69,13 +69,14 @@ class ResultRow(models.Model):
     solved_problems = models.BinaryField()
     solved_count = models.IntegerField()
 
-    def get_squares(self, problem_count, team_problem_count):
+    def get_squares(self, problem_count, team_problem_count, first_problem):
+        offset = first_problem - 1
         squares = []
         solved = int.from_bytes(self.solved_problems, "big")
 
         for i in range(problem_count):
             st = 0
-            if solved & (1 << i):
+            if solved & (1 << (i + offset)):
                 st = 2
             elif i < self.solved_count + team_problem_count:
                 st = 1

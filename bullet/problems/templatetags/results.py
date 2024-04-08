@@ -7,8 +7,13 @@ register = template.Library()
 
 
 @register.inclusion_tag("problems/results/squares.html")
-def squares(obj: ResultRow, problem_count: int, team_problem_count: int):
-    return {"squares": obj.get_squares(problem_count, team_problem_count)}
+def squares(
+    obj: ResultRow, problem_count: int, team_problem_count: int, first_problem: int
+):
+    return {
+        "squares": obj.get_squares(problem_count, team_problem_count, first_problem),
+        "offset": first_problem - 1,
+    }
 
 
 @register.inclusion_tag("problems/results/timer.html")
