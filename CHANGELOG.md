@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.21 - 2024-04-09
+
+### Added
+
+- Team ranks are calculated after the competition.
+- Team ranks and the number of solved problems are exported.
+
+### Changed
+
+- Both categories now share problem numbers.
+
 ## 2024.20 - 2024-04-03
 
 ### Added
