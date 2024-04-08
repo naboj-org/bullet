@@ -43,7 +43,7 @@ class TearoffGenerator:
         for team in teams:
             for i in range(problem_count):
                 page = i + offset
-                problem = i + 1
+                problem = page + 1
                 if i == problem_count - 1:
                     problem = 0
                 out.append(Tearoff(team, problem, page))
@@ -54,12 +54,16 @@ class TearoffGenerator:
         for team_chunk in chunk_list(teams, self.statements_per_page):
             for i in range(problem_count):
                 page = i + offset
-                problem = i + 1
+                problem = page + 1
                 if i == problem_count - 1:
                     problem = 0
 
                 for team in team_chunk:
                     out.append(Tearoff(team, problem, page))
+
+                empty_spaces = self.statements_per_page - len(team_chunk)
+                for o in range(empty_spaces):
+                    out.append(None)
         return out
 
     def generate_pdf(
@@ -76,7 +80,7 @@ class TearoffGenerator:
 
         return self.generate_tearoffs(tearoffs)
 
-    def generate_tearoffs(self, tearoffs: Sequence[Tearoff]) -> BinaryIO:
+    def generate_tearoffs(self, tearoffs: Sequence[Tearoff | None]) -> BinaryIO:
         output_stream = io.BytesIO()
         canvas = Canvas(output_stream)
         pages = chunk_list(tearoffs, self.statements_per_page)
@@ -96,8 +100,10 @@ class TearoffGenerator:
         final_stream.seek(0)
         return final_stream
 
-    def add_stamp_page(self, canvas: Canvas, tearoffs: Iterable[Tearoff]):
+    def add_stamp_page(self, canvas: Canvas, tearoffs: Iterable[Tearoff | None]):
         for i, tearoff in enumerate(tearoffs):
+            if tearoff is None:
+                continue
             self._place_stamp(canvas, i * self.statement_height, tearoff)
 
     def _place_stamp(self, canvas: Canvas, offset_y: float, tearoff: Tearoff):
@@ -168,8 +174,10 @@ class TearoffGenerator:
         text.textOut(tearoff.team.display_name_short)
         canvas.drawText(text)
 
-    def add_statements_to_page(self, page: Page, tearoffs: Iterable[Tearoff]):
+    def add_statements_to_page(self, page: Page, tearoffs: Iterable[Tearoff | None]):
         for i, tearoff in enumerate(tearoffs):
+            if tearoff is None:
+                continue
             page.add_underlay(
                 self.problem_pdf.pages[tearoff.page_number],
                 Rectangle(
