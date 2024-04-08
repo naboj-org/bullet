@@ -30,4 +30,9 @@ urlpatterns = [
         venues.TearoffView.as_view(),
         name="venue_tearoffs",
     ),
+    path(
+        "<int:pk>/finish_review/",
+        venues.FinishReviewView.as_view(),
+        name="venue_finish_review",
+    ),
 ]

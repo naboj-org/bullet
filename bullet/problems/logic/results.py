@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime, timedelta
+from typing import Iterable
 
 from competitions.models import Category, Competition, Venue
 from django.db import transaction
@@ -164,3 +165,72 @@ def squash_results(competition: Competition | int):
 
         result_row.competition_time = last_problem.competition_time
         result_row.save()
+
+
+def _save_ranks(results: Iterable[ResultRow], where: str):
+    rank = 1
+    for row in results:
+        team = row.team
+        setattr(team, where, rank)
+        team._change_reason = f"storing {where}"
+        team.save()
+        rank += 1
+
+
+@job
+@transaction.atomic
+def save_venue_ranks(venue: Venue | int):
+    if isinstance(venue, int):
+        venue = Venue.objects.get(id=venue)
+
+    Team.objects.filter(venue=venue).update(rank_venue=None)
+
+    results = get_venue_results(venue)
+    _save_ranks(results, "rank_venue")
+
+
+@job
+@transaction.atomic
+def save_country_ranks(category: Category | int, country: str):
+    if isinstance(category, int):
+        category = Category.objects.get(id=category)
+
+    Team.objects.filter(venue__category=category, venue__country=country).update(
+        rank_country=None
+    )
+
+    results = get_country_results(country, category)
+    _save_ranks(results, "rank_country")
+
+
+@job
+@transaction.atomic
+def save_international_ranks(category: Category | int):
+    if isinstance(category, int):
+        category = Category.objects.get(id=category)
+
+    Team.objects.filter(venue__category=category).update(rank_international=None)
+
+    results = get_category_results(category)
+    _save_ranks(results, "rank_international")
+
+
+@job
+def save_all_ranks(competition: Competition | int):
+    if isinstance(competition, int):
+        competition = Competition.objects.get(id=competition)
+
+    venues = Venue.objects.filter(category__competition=competition)
+    for venue in venues:
+        save_venue_ranks(venue)
+
+    categories = Category.objects.filter(competition=competition)
+    countries = (
+        venues.order_by("country").distinct("country").values_list("country", flat=True)
+    )
+    for country in countries:
+        for category in categories:
+            save_country_ranks(category, country)
+
+    for category in categories:
+        save_international_ranks(category)

@@ -4,7 +4,7 @@ from django.forms import Form
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views.generic import CreateView, FormView, UpdateView
-from problems.logic.results import squash_results
+from problems.logic.results import save_all_ranks, squash_results
 from problems.logic.stats import generate_stats
 from users.logic import move_all_eligible_teams
 
@@ -60,6 +60,7 @@ class CompetitionFinalizeView(UnlockedCompetitionMixin, BranchAdminAccess, FormV
         competition.results_public = True
         generate_stats.delay(competition.id)
         squash_results.delay(competition.id)
+        save_all_ranks.delay(competition.id)
         competition.save()
 
 

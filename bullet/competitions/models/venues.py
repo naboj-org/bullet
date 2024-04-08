@@ -152,3 +152,7 @@ class Venue(models.Model):
         if self.registration_flow_type == Venue.RegistrationFlowType.NJ_SPAIN:
             return SpanishRegistrationFlow()
         raise ValueError(f"Unknown registration flow: {self.registration_flow_type}")
+
+    @cached_property
+    def has_unreviewed_teams(self) -> bool:
+        return Team.objects.competing().filter(venue=self, is_reviewed=False).exists()

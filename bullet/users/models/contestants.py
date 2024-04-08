@@ -85,6 +85,10 @@ class Team(models.Model):
     is_disqualified = models.BooleanField(default=False)
     consent_photos = models.BooleanField(default=False)
 
+    rank_venue = models.IntegerField(null=True, blank=True)
+    rank_country = models.IntegerField(null=True, blank=True)
+    rank_international = models.IntegerField(null=True, blank=True)
+
     objects = TeamQuerySet.as_manager()
     history = HistoricalRecords()
 
@@ -228,6 +232,12 @@ class Team(models.Model):
             "status": self.status.value,
             "contestants": self.contestants_names,
             "online_password": self.online_password,
+            "rank_venue": self.rank_venue or "",
+            "rank_country": self.rank_country or "",
+            "rank_international": self.rank_international or "",
+            "solved_problems": self.solved_problem_count
+            if hasattr(self, "solved_problem_count")
+            else "",
         }
 
 
