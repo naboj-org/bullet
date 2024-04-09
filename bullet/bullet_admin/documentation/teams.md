@@ -58,6 +58,7 @@ The team editing interface is pretty straightforward. Herein, we point out some 
 ### Operators and Editing
 
 An operator has limited ability to edit teams. Operator does not have access to view or edit the following fields:
+
 * School
 * Venue
 * Contact's name, email, and phone number
