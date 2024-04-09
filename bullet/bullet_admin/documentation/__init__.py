@@ -56,6 +56,12 @@ pages = [
         "the teams ordered in the results.",
         Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
     ),
+    Page(
+        "problem_scanning",
+        "Problem scanning",
+        "Learn how to scan solved problems and resolve any problems that can occur.",
+        Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+    ),
 ]
 
 

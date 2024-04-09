@@ -9,6 +9,11 @@
             {% slot title %}
                 Problem scanning
             {% endslot %}
+
+            {% slot buttons %}
+                {% url "badmin:documentation" "problem_scanning" as help_url %}
+                {% #abtn icon="mdi:help" label="Help" url=help_url %}
+            {% endslot %}
         {% endaheader %}
         {% include "bullet_admin/scanning/problem/_scanner.html" %}
 
