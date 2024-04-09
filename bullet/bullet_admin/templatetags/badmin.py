@@ -4,6 +4,8 @@ from competitions.branches import Branch
 from competitions.models import Competition
 from django import template
 from django.urls import reverse
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
 from users.models import User
 
 from bullet.search import DumbPage
@@ -168,3 +170,13 @@ def percent(value, max_value):
     if max_value == 0:
         return "0"
     return f"{float(value) / float(max_value) * 100:0.2f}"
+
+
+@register.filter()
+def highlight_barcode(barcode):
+    barcode = escape(barcode)
+    if len(barcode) != 11:
+        return barcode
+    return mark_safe(
+        f'{barcode[0:4]}<b class="text-base">{barcode[4:8]}</b>{barcode[8:]}'
+    )

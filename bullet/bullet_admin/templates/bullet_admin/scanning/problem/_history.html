@@ -18,7 +18,7 @@
                         <td class="p-3 whitespace-nowrap tabular-nums hidden sm:table-cell">
                             {{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}
                         </td>
-                        <td class="p-3 whitespace-nowrap">{{ log.barcode }}</td>
+                        <td class="p-3 whitespace-nowrap">{{ log.barcode|highlight_barcode }}</td>
                         <td class="p-3 whitespace-nowrap w-full">
                             {% include "./_message.html" %}
                         </td>
