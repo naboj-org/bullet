@@ -1,7 +1,7 @@
 from competitions.models import Category, Venue
-from countries.models import BranchCountry
+from countries.logic.detection import get_country_language_from_request
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.functional import cached_property
 from django.views.generic import TemplateView
@@ -16,14 +16,17 @@ class ResultsHomeView(AdminAccess, TemplateView):
     allow_operator = True
     require_unlocked_competition = False
 
+    def dispatch(self, request, *args, **kwargs):
+        self.detection = get_country_language_from_request(self.request)
+        if not self.detection:
+            return redirect("country_selector")
+
+        return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         competition = get_active_competition(self.request)
-
-        country = BranchCountry.objects.filter(branch=self.request.BRANCH).first()
-        ctx["country"] = country.country.code.lower()
-        ctx["language"] = country.languages[0]
-
+        ctx["country"], ctx["language"] = self.detection
         ctx["venues"] = Venue.objects.for_competition(competition)
         ctx["my_venues"] = Venue.objects.for_request(self.request)
         ctx["categories"] = Category.objects.filter(competition=competition)
