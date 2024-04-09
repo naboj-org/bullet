@@ -3,6 +3,24 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.22 - 2024-04-09
+
+### Added
+
+- Categories and team numbers in the scan history are highlighted.
+- Documentation for results and problem scanning.
+- New option to retry failed scans in the problem scanning interface.
+- Old scanning logs are no longer shown.
+
+### Changed
+
+- Admin results page now link to the last used country/language combination.
+- When creating problems for the competition, unified problem numbers are used.
+
+### Fixed
+
+- Fixed typo in "Teams" documentation page.
+
 ## 2024.21 - 2024-04-09
 
 ### Added
