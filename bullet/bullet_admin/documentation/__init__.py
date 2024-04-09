@@ -49,6 +49,13 @@ pages = [
         "system.",
         Access.VENUE | Access.COUNTRY | Access.BRANCH,
     ),
+    Page(
+        "results",
+        "Results",
+        "Learn how to view (unfrozen) results, announce them and understand how are "
+        "the teams ordered in the results.",
+        Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+    ),
 ]
 
 
