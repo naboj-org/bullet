@@ -39,7 +39,7 @@ class ProblemsGenerateView(BranchAdminAccess, GenericForm, FormView):
                         competition=competition,
                     ),
                     category=category,
-                    number=i + 1,
+                    number=i + 1 + offset,
                 ).save()
 
         return redirect("badmin:home")
