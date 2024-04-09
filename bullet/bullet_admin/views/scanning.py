@@ -37,7 +37,9 @@ class ProblemScanView(OperatorRequiredMixin, View):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self):
-        query = ScannerLog.objects.filter(user=self.request.user).order_by("-timestamp")
+        query = ScannerLog.objects.filter(
+            user=self.request.user, timestamp__gte=timezone.now() - timedelta(days=5)
+        ).order_by("-timestamp")
         paginator = Paginator(query, 15)
         page = paginator.get_page(self.request.GET.get("page", 1))
         return {

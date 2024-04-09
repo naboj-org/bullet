@@ -28,6 +28,11 @@
                                     <a href="{% url 'badmin:scanning_problems_undo' %}?barcode={{ log.barcode|urlencode }}" title="Undo" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
                                         <span class="iconify" data-icon="mdi:undo"></span>
                                     </a>
+                                {% else %}
+                                    <button hx-post="{% url "badmin:scanning_problems" %}" hx-target="#js-scanner-status" hx-swap="outerHTML" hx-indicator="#scanner-indicator" hx-vals='{"barcode": "{{ log.barcode|urlencode }}"}'
+                                            title="Retry" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                        <span class="iconify" data-icon="mdi:refresh"></span>
+                                    </button>
                                 {% endif %}
                             </div>
                         </td>
