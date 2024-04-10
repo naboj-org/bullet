@@ -1,3 +1,5 @@
+import os
+import secrets
 import subprocess
 
 from django.db import models
@@ -44,3 +46,18 @@ class CertificateTemplate(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def tex_template_upload(instance, filename):
+    name, ext = os.path.splitext(filename)
+    uid = secrets.token_urlsafe(64)
+    return os.path.join("tex_templates", f"{uid}{ext}")
+
+
+class TexTemplate(models.Model):
+    competition = models.ForeignKey(
+        "competitions.Competition", on_delete=models.CASCADE
+    )
+    name = models.CharField(max_length=128)
+    single_team = models.BooleanField(default=False)
+    template = models.FileField(upload_to=tex_template_upload)
