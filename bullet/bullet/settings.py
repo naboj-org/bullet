@@ -74,6 +74,8 @@ INSTALLED_APPS = [
     "debug_toolbar",
     "pictures",
     "gallery",
+    #
+    "django_cleanup.apps.CleanupConfig",
 ]
 
 DATABASES = {
@@ -246,3 +248,7 @@ PICTURES = {
     "QUEUE_NAME": "default",
     "PROCESSOR": "pictures.tasks.process_picture",
 }
+
+LETTER_URL = env("LETTER_URL", default="")
+LETTER_TOKEN = env("LETTER_TOKEN", default="")
+LETTER_CALLBACK_ROOT = env("LETTER_CALLBACK_ROOT", default="https://math.naboj.org")
