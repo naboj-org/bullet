@@ -228,6 +228,7 @@ class Team(models.Model):
             "code": self.code,
             "name": self.name,
             "display_name": self.display_name,
+            "display_name_short": self.display_name_short,
             "language": self.language,
             "status": self.status.value,
             "contestants": self.contestants_names

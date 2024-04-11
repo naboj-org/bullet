@@ -13,6 +13,9 @@
                 TeX Templates
             {% endslot %}
             {% slot buttons %}
+                {% url "badmin:documentation" "tex" as help_url %}
+                {% #abtn icon="mdi:help" label="Help" url=help_url %}
+
                 {% url "badmin:tex_template_create" as create_url %}
                 {% #abtn color="green" icon="mdi:plus" label="New template" url=create_url %}
             {% endslot %}
