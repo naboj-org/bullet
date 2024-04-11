@@ -98,6 +98,7 @@ class TearoffGenerator:
         final_stream = io.BytesIO()
         pdf.save(final_stream)
         final_stream.seek(0)
+        self.problem_pdf.close()
         return final_stream
 
     def add_stamp_page(self, canvas: Canvas, tearoffs: Iterable[Tearoff | None]):
@@ -107,7 +108,6 @@ class TearoffGenerator:
             self._place_stamp(canvas, i * self.statement_height, tearoff)
 
     def _place_stamp(self, canvas: Canvas, offset_y: float, tearoff: Tearoff):
-        # TODO: Clean up the positioning math.
         canvas.saveState()
         canvas.rotate(90)
 
@@ -115,15 +115,17 @@ class TearoffGenerator:
         barcode_string += str(get_check_digit(barcode_string))
 
         bar_h = 8
+        start_x = (offset_y + 5) * mm
+        start_y = (-210 + self.stamp_width - 2) * mm
+        max_width = min((self.statement_height - 10) * mm, 100 * mm)
+        max_height = (self.stamp_width - 2 - 5) * mm
 
         canvas.setFillGray(0)
         code = code128.Code128(
             barcode_string, barHeight=bar_h * mm, barWidth=1, quiet=0
         )
-        code.barWidth = ((self.statement_height - 30) / code.width) * mm
-        code.drawOn(
-            canvas, (offset_y + 5) * mm, (-210 + self.stamp_width - 4.5 - bar_h) * mm
-        )
+        code.barWidth = (max_width - max_height - 2 * mm) / code.width
+        code.drawOn(canvas, start_x, start_y - max_height)
 
         prefix_len = len(tearoff.team.venue.shortcode)
         middle_len = 3
@@ -133,35 +135,37 @@ class TearoffGenerator:
             middle_len += 1
             inverted = tearoff.team.venue.shortcode[-1] == "S"
 
+        font_size = max_height - (bar_h + 0.5) * mm
         canvas.setFillGray(0)
         if inverted:
             canvas.rect(
-                (offset_y + 5) * mm,
-                (-210 + self.stamp_width - 4.5 - 16) * mm,
-                (self.statement_height - 30) * mm,
-                (15 - bar_h) * mm,
+                start_x,
+                start_y,
+                max_width - max_height - 2 * mm,
+                -font_size,
                 fill=True,
+                stroke=False,
             )
-            canvas.setFillGray(255)
+            canvas.setFillGray(1)
 
         text = canvas.beginText()
-        text.setTextOrigin(
-            (offset_y + 5) * mm, (-210 + self.stamp_width - 4.5 - 16) * mm
-        )
-        text.setFont("IBMPlexMono-Regular", (13 - bar_h) * mm)
+        text.setTextOrigin(start_x, start_y - (bar_h + 0.5) * mm)
+        text.setFont("IBMPlexMono-Regular", font_size * 0.5)
         text.textOut(barcode_string[:prefix_len])
-        text.setFont("IBMPlexMono-Bold", (15 - bar_h) * mm)
+        text.setFont("IBMPlexMono-Bold", font_size)
         text.textOut(barcode_string[prefix_len : prefix_len + middle_len])
-        text.setFont("IBMPlexMono-Regular", (13 - bar_h) * mm)
+        text.setFont("IBMPlexMono-Regular", font_size * 0.5)
         text.textOut(barcode_string[prefix_len + middle_len :])
         canvas.drawText(text)
 
         canvas.setFillGray(0)
-        code = qr.QrCode(barcode_string, width=16 * mm, height=16 * mm, qrBorder=0)
+        code = qr.QrCode(
+            barcode_string, width=max_height, height=max_height, qrBorder=0
+        )
         code.drawOn(
             canvas,
-            (self.statement_height - 16 - 5 + offset_y) * mm,
-            (-210 + self.stamp_width - 4.5 - 16) * mm,
+            start_x + max_width - max_height,
+            start_y - max_height,
         )
 
         canvas.restoreState()
