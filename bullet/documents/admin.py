@@ -13,3 +13,14 @@ class CertificateTemplateAdmin(admin.ModelAdmin):
     list_display = ("name", "branch")
     list_filter = ("branch",)
     inlines = (SelfServeCertificateInline,)
+
+
+@admin.register(models.TexTemplate)
+class TexTemplateAdmin(admin.ModelAdmin):
+    list_display = ("competition", "name")
+    list_filter = ("competition",)
+
+
+@admin.register(models.TexJob)
+class TexJobAdmin(admin.ModelAdmin):
+    list_display = ("id",)

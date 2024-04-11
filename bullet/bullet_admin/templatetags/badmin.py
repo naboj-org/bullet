@@ -102,6 +102,9 @@ def admin_sidebar(context):
             or competition_role.venues
         ):
             items.append(("fa-location-pin", "Venues", reverse("badmin:venue_list")))
+            items.append(
+                ("fa-file-text", "TeX Templates", reverse("badmin:tex_template_list"))
+            )
         if branch_role.is_admin:
             items.append(
                 ("fa-gear", "Edit Competition", reverse("badmin:competition_edit"))

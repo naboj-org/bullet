@@ -179,6 +179,11 @@ urlpatterns = [
     path("teams/export/", teams.TeamExportView.as_view(), name="team_export"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
+        "teams/<int:pk>/tex_document/",
+        teams.TeamGenerateDocumentView.as_view(),
+        name="team_tex_document",
+    ),
+    path(
         "teams/<int:pk>/to_competition/",
         teams.TeamToCompetitionView.as_view(),
         name="team_to_competition",
@@ -280,6 +285,7 @@ urlpatterns = [
     path("files/", include("bullet_admin.urls.files")),
     path("wildcards/", include("bullet_admin.urls.wildcards")),
     path("documentation/", include("bullet_admin.urls.documentation")),
+    path("tex/", include("bullet_admin.urls.tex")),
     path(
         "archive/problem_upload/",
         archive.ProblemPDFUploadView.as_view(),

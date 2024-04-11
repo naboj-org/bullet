@@ -210,7 +210,7 @@ class Team(models.Model):
             secrets.choice("346789ABCDEFGHJKLMNPQRTUVWXY") for i in range(10)
         )
 
-    def to_export(self):
+    def to_export(self, str_only: bool = False):
         return {
             "id": self.id,
             "contact_name": self.contact_name,
@@ -228,9 +228,12 @@ class Team(models.Model):
             "code": self.code,
             "name": self.name,
             "display_name": self.display_name,
+            "display_name_short": self.display_name_short,
             "language": self.language,
             "status": self.status.value,
-            "contestants": self.contestants_names,
+            "contestants": self.contestants_names
+            if str_only
+            else [c.full_name for c in self.contestants.all()],
             "online_password": self.online_password,
             "rank_venue": self.rank_venue or "",
             "rank_country": self.rank_country or "",

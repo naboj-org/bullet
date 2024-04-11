@@ -62,6 +62,12 @@ pages = [
         "Learn how to scan solved problems and resolve any problems that can occur.",
         Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
     ),
+    Page(
+        "tex",
+        "TeX Document Generation",
+        "Learn how to generate certificates and other TeX-based documents.",
+        Access.VENUE | Access.COUNTRY | Access.BRANCH,
+    ),
 ]
 
 

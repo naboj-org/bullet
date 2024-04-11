@@ -10,7 +10,7 @@ from django.db import transaction
 from django.db.models import Count
 from django.forms import inlineformset_factory
 from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
@@ -21,6 +21,7 @@ from django.views.generic import (
     TemplateView,
     UpdateView,
 )
+from documents.models import TexJob
 from education.models import School
 from users.emails.teams import (
     send_confirmation_email,
@@ -32,7 +33,9 @@ from users.models import Contestant, Team
 
 from bullet import search
 from bullet.views import FormAndFormsetMixin
+from bullet_admin.access import AdminAccess
 from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm
+from bullet_admin.forms.tex import TexTeamRenderForm
 from bullet_admin.mixins import (
     AdminRequiredMixin,
     IsOperatorContext,
@@ -41,6 +44,7 @@ from bullet_admin.mixins import (
     VenueMixin,
 )
 from bullet_admin.utils import can_access_venue, get_active_competition
+from bullet_admin.views import GenericForm
 
 
 class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
@@ -126,7 +130,10 @@ class TeamExportView(AdminRequiredMixin, FormView):
         )
         qs = form.apply_filter(qs)
 
-        data = [team.to_export() for team in qs]
+        data = [
+            team.to_export(form.cleaned_data["format"] == TeamExportForm.Format.CSV)
+            for team in qs
+        ]
 
         response = None
         if form.cleaned_data["format"] == TeamExportForm.Format.JSON:
@@ -158,6 +165,28 @@ class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, View):
 
         send_to_competition_email.delay(team.id)
         return HttpResponseRedirect(self.get_success_url())
+
+
+class TeamGenerateDocumentView(AdminAccess, GenericForm, FormView):
+    require_unlocked_competition = False
+    form_class = TexTeamRenderForm
+    form_title = "Generate TeX Document"
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
+        return kw
+
+    def form_valid(self, form):
+        team = get_object_or_404(Team, id=self.kwargs["pk"]).to_export()
+        job = TexJob.objects.create(
+            creator=self.request.user,
+            template=form.cleaned_data["template"],
+            context={"teams": [team], "team": team},
+        )
+        job.render()
+
+        return redirect("badmin:tex_job_detail", pk=job.id)
 
 
 class TeamResendConfirmationView(AdminRequiredMixin, View):

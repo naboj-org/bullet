@@ -1,0 +1,62 @@
+{% extends "bullet_admin/base.html" %}
+{% load utils %}
+{% load badmin %}
+{% load access %}
+{% load countries %}
+
+{% block title %}TeX Templates{% endblock %}
+
+{% block content %}
+    <div class="p-8">
+        {% aheader %}
+            {% slot title %}
+                TeX Templates
+            {% endslot %}
+            {% slot buttons %}
+                {% url "badmin:documentation" "tex" as help_url %}
+                {% #abtn icon="mdi:help" label="Help" url=help_url %}
+
+                {% url "badmin:tex_template_create" as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New template" url=create_url %}
+            {% endslot %}
+        {% endaheader %}
+
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Type</th>
+                    <th class="p-3"></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for template in object_list %}
+                    <tr class="{% cycle "" "bg-gray-50" %}">
+                        <td class="p-3">
+                            {{ template.name }}
+                        </td>
+                        <td class="p-3">
+                            {{ template.get_type_display }}
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url 'badmin:tex_template_update' pk=template.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Edit">
+                                    <span class="iconify" data-icon="mdi:edit"></span>
+                                </a>
+                                <a href="{{ template.template.url }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Download sources">
+                                    <span class="iconify" data-icon="mdi:download"></span>
+                                </a>
+                                {% if template.type == template.Type.GENERIC %}
+                                <a href="{% url 'badmin:tex_template_render' pk=template.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Generate document">
+                                    <span class="iconify" data-icon="mdi:play"></span>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

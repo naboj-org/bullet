@@ -1,13 +1,20 @@
 from competitions.models import Competition, Venue
 from django import forms
 from django.core.exceptions import ValidationError
-from documents.models import CertificateTemplate
+from documents.models import CertificateTemplate, TexTemplate
 from pikepdf import Pdf
 from users.models import User
 
 
 class CertificateForm(forms.Form):
-    template = forms.ModelChoiceField(queryset=CertificateTemplate.objects.none())
+    template = forms.ModelChoiceField(
+        queryset=CertificateTemplate.objects.none(), required=False
+    )
+    tex_template = forms.ModelChoiceField(
+        queryset=TexTemplate.objects.none(),
+        required=False,
+        label="TeX Template",
+    )
     count = forms.IntegerField(
         initial=3,
         help_text="Enter 0 to generate certificates for all teams.",
@@ -20,6 +27,27 @@ class CertificateForm(forms.Form):
         self.fields["template"].queryset = CertificateTemplate.objects.filter(
             branch=competition.branch
         ).order_by("name")
+        self.fields["tex_template"].queryset = TexTemplate.objects.filter(
+            competition=competition,
+            type=TexTemplate.Type.TEAM_MULTIPLE,
+        )
+
+    def clean(self):
+        has_template = bool(self.cleaned_data.get("template"))
+        has_tex_template = bool(self.cleaned_data.get("tex_template"))
+
+        if not has_template and not has_tex_template:
+            raise ValidationError("Please select template or TeX template to continue.")
+        if has_template and has_tex_template:
+            raise ValidationError(
+                "Please don't select template and TeX template at the same time."
+            )
+        if has_tex_template and self.cleaned_data.get("empty"):
+            raise ValidationError(
+                "Generating empty certificates with TeX is currently not supported."
+            )
+
+        return self.cleaned_data
 
 
 class TeamListForm(forms.Form):
