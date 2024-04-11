@@ -8,16 +8,13 @@
 
 {% block content %}
     <div class="p-8">
-        {% is_country_admin as can_edit %}
         {% aheader %}
             {% slot title %}
                 TeX Templates
             {% endslot %}
             {% slot buttons %}
-                {% if can_edit %}
-                    {% url "badmin:tex_template_create" as create_url %}
-                    {% #abtn color="green" icon="mdi:plus" label="New template" url=create_url %}
-                {% endif %}
+                {% url "badmin:tex_template_create" as create_url %}
+                {% #abtn color="green" icon="mdi:plus" label="New template" url=create_url %}
             {% endslot %}
         {% endaheader %}
 
@@ -41,14 +38,12 @@
                         </td>
                         <td class="p-3 whitespace-nowrap">
                             <div class="flex items-center justify-end gap-2">
-                                {% if can_edit %}
                                 <a href="{% url 'badmin:tex_template_update' pk=template.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Edit">
                                     <span class="iconify" data-icon="mdi:edit"></span>
                                 </a>
                                 <a href="{{ template.template.url }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Download sources">
                                     <span class="iconify" data-icon="mdi:download"></span>
                                 </a>
-                                {% endif %}
                             </div>
                         </td>
                     </tr>

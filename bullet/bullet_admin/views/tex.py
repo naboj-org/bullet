@@ -10,7 +10,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django_htmx.http import HTMX_STOP_POLLING
 from documents.models import TexJob, TexTemplate
 
-from bullet_admin.access import AdminAccess, CountryAdminAccess
+from bullet_admin.access import AdminAccess
 from bullet_admin.forms.tex import LetterCallbackForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -63,7 +63,7 @@ class TemplateListView(AdminAccess, ListView):
         return TexTemplate.objects.filter(competition=competition)
 
 
-class TemplateCreateView(CountryAdminAccess, GenericForm, CreateView):
+class TemplateCreateView(AdminAccess, GenericForm, CreateView):
     form_title = "Create TeX Template"
     form_class = TexTemplateForm
     form_multipart = True
@@ -76,7 +76,7 @@ class TemplateCreateView(CountryAdminAccess, GenericForm, CreateView):
         return redirect("badmin:tex_template_list")
 
 
-class TemplateUpdateView(CountryAdminAccess, GenericForm, UpdateView):
+class TemplateUpdateView(AdminAccess, GenericForm, UpdateView):
     form_title = "Update TeX Template"
     form_class = TexTemplateForm
     form_multipart = True
