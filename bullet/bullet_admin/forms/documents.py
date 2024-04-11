@@ -1,6 +1,8 @@
 from competitions.models import Competition, Venue
 from django import forms
+from django.core.exceptions import ValidationError
 from documents.models import CertificateTemplate
+from pikepdf import Pdf
 from users.models import User
 
 
@@ -49,3 +51,28 @@ class TearoffForm(forms.Form):
         label="Problem ordering",
         choices=[("align", "Aligned"), ("seq", "Sequential")],
     )
+
+    def __init__(self, *, problems, first_problem, **kwargs):
+        super().__init__(**kwargs)
+
+        self.fields["first_problem"].initial = first_problem
+        self._problem_count = problems
+
+    def clean_problems(self):
+        pdf = None
+        try:
+            pdf = Pdf.open(self.cleaned_data["problems"])
+        except Exception:
+            if pdf:
+                pdf.close()
+            raise ValidationError("The uploaded file is not a valid PDF.")
+
+        if len(pdf.pages) != self._problem_count + 1:
+            pdf.close()
+            raise ValidationError(
+                f"The uploaded file does not have the correct number of pages. "
+                f"Expected {self._problem_count} + 1."
+            )
+
+        pdf.close()
+        return self.cleaned_data["problems"]

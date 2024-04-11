@@ -98,6 +98,7 @@ class TearoffGenerator:
         final_stream = io.BytesIO()
         pdf.save(final_stream)
         final_stream.seek(0)
+        self.problem_pdf.close()
         return final_stream
 
     def add_stamp_page(self, canvas: Canvas, tearoffs: Iterable[Tearoff | None]):
