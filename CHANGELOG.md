@@ -3,6 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.23 - 2024-04-10
+
+### Added
+
+- New TeX document generation engine.
+
+### Changed
+
+- Improved tearoff generation.
+- Added an option to disable QR codes on tearoffs.
+- Changed save button label in email campaigns to be less scary.
+
 ## 2024.22 - 2024-04-09
 
 ### Added
