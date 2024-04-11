@@ -10,6 +10,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator
+from documents.models import TexJob
 from problems.logic.results import save_venue_ranks
 from problems.models import CategoryProblem, Problem
 from users.logic import get_venue_waiting_list, move_eligible_teams
@@ -113,6 +114,21 @@ class CertificateView(VenueMixin, GenericForm, FormView):
         return kw
 
     def form_valid(self, form):
+        if template := form.cleaned_data.get("tex_template"):
+            teams = (
+                Team.objects.competing().filter(venue=self.venue).order_by("rank_venue")
+            )
+            if count := form.cleaned_data.get("count"):
+                teams = teams.filter(rank_venue__lte=count)
+
+            job = TexJob.objects.create(
+                template=template,
+                creator=self.request.user,
+                context={"teams": [t.to_export() for t in teams]},
+            )
+            job.render()
+            return redirect("badmin:tex_job_detail", pk=job.id)
+
         data = certificates_for_venue(
             self.venue,
             form.cleaned_data["template"],

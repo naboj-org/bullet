@@ -126,7 +126,10 @@ class TeamExportView(AdminRequiredMixin, FormView):
         )
         qs = form.apply_filter(qs)
 
-        data = [team.to_export() for team in qs]
+        data = [
+            team.to_export(form.cleaned_data["format"] == TeamExportForm.Format.CSV)
+            for team in qs
+        ]
 
         response = None
         if form.cleaned_data["format"] == TeamExportForm.Format.JSON:
