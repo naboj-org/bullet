@@ -228,6 +228,10 @@
                 <i class="fas fa-save"></i> Save
             </button>
             {% if object and not is_operator %}
+                <a href="{% url "badmin:team_tex_document" pk=object.id %}" class="btn-admin bg-primary hover:bg-primary-dark">
+                    <i class="fas fa-file-text"></i>
+                    Generate document
+                </a>
                 <a href="{% url "badmin:team_delete" pk=object.id %}" class="btn-admin bg-red-500 hover:bg-red-600">
                     <i class="fas fa-trash"></i>
                     Delete team
