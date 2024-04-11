@@ -1,5 +1,7 @@
+from competitions.models import Competition
 from django import forms
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 from documents.models import TexTemplate
 
 
@@ -41,3 +43,19 @@ class TexRenderForm(forms.Form):
             raise ValidationError("This must be a JSON object.")
 
         return context
+
+
+class TexTeamRenderForm(forms.Form):
+    template = forms.ModelChoiceField(
+        queryset=TexTemplate.objects.none(),
+        label="TeX Template",
+    )
+
+    def __init__(self, *, competition: Competition, **kwargs):
+        super().__init__(**kwargs)
+        self.fields["template"].queryset = TexTemplate.objects.filter(
+            competition=competition,
+        ).filter(
+            Q(type=TexTemplate.Type.TEAM_MULTIPLE)
+            | Q(type=TexTemplate.Type.TEAM_SINGLE)
+        )
