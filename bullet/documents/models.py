@@ -95,7 +95,7 @@ class TexJob(models.Model):
 
     output_file = models.FileField(upload_to=tex_job_upload, blank=True)
     output_log = models.TextField(blank=True)
-    output_error = models.CharField(blank=True)
+    output_error = models.CharField(blank=True, max_length=256)
     completed = models.BooleanField(default=False)
 
     def render(self):
