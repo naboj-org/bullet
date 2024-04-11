@@ -44,6 +44,11 @@
                                 <a href="{{ template.template.url }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Download sources">
                                     <span class="iconify" data-icon="mdi:download"></span>
                                 </a>
+                                {% if template.type == template.Type.GENERIC %}
+                                <a href="{% url 'badmin:tex_template_render' pk=template.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2" title="Generate document">
+                                    <span class="iconify" data-icon="mdi:play"></span>
+                                </a>
+                                {% endif %}
                             </div>
                         </td>
                     </tr>

@@ -13,7 +13,7 @@
             Job ID: {{ texjob.id }}
         {% endaheader %}
 
-        <div {% if not texjob.completed %}hx-trigger="every 5s"{% endif %} hx-get="{% url "badmin:tex_job_detail" texjob.id %}">
+        <div {% if not texjob.completed %}hx-trigger="every 5s"{% endif %} hx-get="{% url "badmin:tex_job_detail" texjob.id %}?poll">
             {% include "./job_output.html" %}
         </div>
     </div>

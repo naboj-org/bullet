@@ -4,14 +4,15 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.decorators import method_decorator
+from django.utils.functional import cached_property
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
 from django_htmx.http import HTMX_STOP_POLLING
 from documents.models import TexJob, TexTemplate
 
 from bullet_admin.access import AdminAccess
-from bullet_admin.forms.tex import LetterCallbackForm, TexTemplateForm
+from bullet_admin.forms.tex import LetterCallbackForm, TexRenderForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
@@ -57,6 +58,7 @@ class JobDetailView(LoginRequiredMixin, DetailView):
 
 class TemplateListView(AdminAccess, ListView):
     template_name = "bullet_admin/tex/template/list.html"
+    require_unlocked_competition = False
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
@@ -67,6 +69,7 @@ class TemplateCreateView(AdminAccess, GenericForm, CreateView):
     form_title = "Create TeX Template"
     form_class = TexTemplateForm
     form_multipart = True
+    require_unlocked_competition = False
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -80,6 +83,7 @@ class TemplateUpdateView(AdminAccess, GenericForm, UpdateView):
     form_title = "Update TeX Template"
     form_class = TexTemplateForm
     form_multipart = True
+    require_unlocked_competition = False
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
@@ -87,3 +91,26 @@ class TemplateUpdateView(AdminAccess, GenericForm, UpdateView):
 
     def get_success_url(self):
         return reverse("badmin:tex_template_list")
+
+
+class TemplateRenderView(AdminAccess, GenericForm, FormView):
+    form_title = "Generate TeX Document"
+    form_class = TexRenderForm
+    require_unlocked_competition = False
+
+    @cached_property
+    def tex_template(self):
+        competition = get_active_competition(self.request)
+        return get_object_or_404(
+            TexTemplate, competition=competition, id=self.kwargs["pk"]
+        )
+
+    def form_valid(self, form):
+        context = form.cleaned_data.get("context")
+
+        job = TexJob.objects.create(
+            creator=self.request.user, template=self.tex_template, context=context
+        )
+        job.render()
+
+        return redirect("badmin:tex_job_detail", pk=job.id)

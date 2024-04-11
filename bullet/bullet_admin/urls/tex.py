@@ -5,6 +5,7 @@ from bullet_admin.views.tex import (
     LetterCallbackView,
     TemplateCreateView,
     TemplateListView,
+    TemplateRenderView,
     TemplateUpdateView,
 )
 
@@ -33,5 +34,10 @@ urlpatterns = [
         "templates/<int:pk>/",
         TemplateUpdateView.as_view(),
         name="tex_template_update",
+    ),
+    path(
+        "templates/<int:pk>/render/",
+        TemplateRenderView.as_view(),
+        name="tex_template_render",
     ),
 ]
