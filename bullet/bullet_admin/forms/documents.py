@@ -79,6 +79,9 @@ class TearoffForm(forms.Form):
         label="Problem ordering",
         choices=[("align", "Aligned"), ("seq", "Sequential")],
     )
+    include_qr_codes = forms.BooleanField(
+        label="Include QR code", initial=True, required=False
+    )
 
     def __init__(self, *, problems, first_problem, **kwargs):
         super().__init__(**kwargs)
