@@ -1,6 +1,12 @@
 from django.urls import path
 
-from bullet_admin.views.tex import JobDetailView, LetterCallbackView
+from bullet_admin.views.tex import (
+    JobDetailView,
+    LetterCallbackView,
+    TemplateCreateView,
+    TemplateListView,
+    TemplateUpdateView,
+)
 
 urlpatterns = [
     path(
@@ -12,5 +18,20 @@ urlpatterns = [
         "jobs/<uuid:pk>/",
         JobDetailView.as_view(),
         name="tex_job_detail",
+    ),
+    path(
+        "templates/",
+        TemplateListView.as_view(),
+        name="tex_template_list",
+    ),
+    path(
+        "templates/create/",
+        TemplateCreateView.as_view(),
+        name="tex_template_create",
+    ),
+    path(
+        "templates/<int:pk>/",
+        TemplateUpdateView.as_view(),
+        name="tex_template_update",
     ),
 ]

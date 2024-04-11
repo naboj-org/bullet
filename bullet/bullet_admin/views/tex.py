@@ -1,21 +1,25 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import DetailView
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django_htmx.http import HTMX_STOP_POLLING
-from documents.models import TexJob
+from documents.models import TexJob, TexTemplate
 
-from bullet_admin.forms.tex import LetterCallbackForm
+from bullet_admin.access import AdminAccess, CountryAdminAccess
+from bullet_admin.forms.tex import LetterCallbackForm, TexTemplateForm
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm
 
 
 @method_decorator(csrf_exempt, name="dispatch")
 class LetterCallbackView(View):
     def post(self, *args, **kwargs):
-        job = get_object_or_404(TexJob, pk=kwargs["id"], output_file="")
+        job = get_object_or_404(TexJob, pk=kwargs["pk"], output_file="")
 
         form = LetterCallbackForm(self.request.POST, self.request.FILES)
         if not form.is_valid():
@@ -49,3 +53,37 @@ class JobDetailView(LoginRequiredMixin, DetailView):
         if self.request.htmx:
             return ["bullet_admin/tex/job_output.html"]
         return ["bullet_admin/tex/job.html"]
+
+
+class TemplateListView(AdminAccess, ListView):
+    template_name = "bullet_admin/tex/template/list.html"
+
+    def get_queryset(self):
+        competition = get_active_competition(self.request)
+        return TexTemplate.objects.filter(competition=competition)
+
+
+class TemplateCreateView(CountryAdminAccess, GenericForm, CreateView):
+    form_title = "Create TeX Template"
+    form_class = TexTemplateForm
+    form_multipart = True
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.competition = get_active_competition(self.request)
+        self.object.save()
+
+        return redirect("badmin:tex_template_list")
+
+
+class TemplateUpdateView(CountryAdminAccess, GenericForm, UpdateView):
+    form_title = "Update TeX Template"
+    form_class = TexTemplateForm
+    form_multipart = True
+
+    def get_queryset(self):
+        competition = get_active_competition(self.request)
+        return TexTemplate.objects.filter(competition=competition)
+
+    def get_success_url(self):
+        return reverse("badmin:tex_template_list")

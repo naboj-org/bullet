@@ -72,6 +72,12 @@ class TexTemplate(models.Model):
     template = models.FileField(upload_to=tex_template_upload)
     entrypoint = models.CharField(max_length=128)
 
+    class Meta:
+        ordering = ["competition", "name"]
+
+    def __str__(self):
+        return self.name
+
 
 def tex_job_upload(instance, filename):
     name, ext = os.path.splitext(filename)
@@ -99,3 +105,6 @@ class TexJob(models.Model):
             self.context,
             reverse("badmin:tex_letter_callback", kwargs={"pk": self.id}),
         )
+
+    def __str__(self):
+        return str(self.id)
