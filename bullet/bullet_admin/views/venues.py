@@ -196,7 +196,10 @@ class TearoffView(VenueMixin, GenericForm, FormView):
         for i in range(form.cleaned_data["backup_teams"]):
             teams.append(Team(venue=self.venue, name="???", number=999 - i))
         data = t.generate_pdf(
-            teams, form.cleaned_data["first_problem"], form.cleaned_data["ordering"]
+            teams,
+            form.cleaned_data["first_problem"],
+            form.cleaned_data["ordering"],
+            form.cleaned_data["include_qr_codes"],
         )
         return FileResponse(data, filename="tearoffs.pdf")
 

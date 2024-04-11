@@ -67,7 +67,11 @@ class TearoffGenerator:
         return out
 
     def generate_pdf(
-        self, teams: Sequence[Team], first_problem: int, ordering: str
+        self,
+        teams: Sequence[Team],
+        first_problem: int,
+        ordering: str,
+        include_qr: bool = True,
     ) -> BinaryIO:
         offset = first_problem - 1
         problem_count = len(self.problem_pdf.pages) - offset
@@ -78,15 +82,17 @@ class TearoffGenerator:
         if ordering == "align":
             tearoffs = self.aligned_tearoffs(teams, problem_count, offset)
 
-        return self.generate_tearoffs(tearoffs)
+        return self.generate_tearoffs(tearoffs, include_qr)
 
-    def generate_tearoffs(self, tearoffs: Sequence[Tearoff | None]) -> BinaryIO:
+    def generate_tearoffs(
+        self, tearoffs: Sequence[Tearoff | None], include_qr: bool
+    ) -> BinaryIO:
         output_stream = io.BytesIO()
         canvas = Canvas(output_stream)
         pages = chunk_list(tearoffs, self.statements_per_page)
 
         for page in pages:
-            self.add_stamp_page(canvas, page)
+            self.add_stamp_page(canvas, page, include_qr)
             canvas.showPage()
         canvas.save()
         output_stream.seek(0)
@@ -101,13 +107,17 @@ class TearoffGenerator:
         self.problem_pdf.close()
         return final_stream
 
-    def add_stamp_page(self, canvas: Canvas, tearoffs: Iterable[Tearoff | None]):
+    def add_stamp_page(
+        self, canvas: Canvas, tearoffs: Iterable[Tearoff | None], include_qr: bool
+    ):
         for i, tearoff in enumerate(tearoffs):
             if tearoff is None:
                 continue
-            self._place_stamp(canvas, i * self.statement_height, tearoff)
+            self._place_stamp(canvas, i * self.statement_height, tearoff, include_qr)
 
-    def _place_stamp(self, canvas: Canvas, offset_y: float, tearoff: Tearoff):
+    def _place_stamp(
+        self, canvas: Canvas, offset_y: float, tearoff: Tearoff, include_qr: bool
+    ):
         canvas.saveState()
         canvas.rotate(90)
 
@@ -117,8 +127,15 @@ class TearoffGenerator:
         bar_h = 8
         start_x = (offset_y + 5) * mm
         start_y = (-210 + self.stamp_width - 2) * mm
-        max_width = min((self.statement_height - 10) * mm, 100 * mm)
+        max_width = (self.statement_height - 10) * mm
         max_height = (self.stamp_width - 2 - 5) * mm
+
+        if max_width > 75 * mm:
+            start_x += (max_width - 75) / 2
+            max_width = 75 * mm
+
+        if not include_qr:
+            start_x += max_height / 2
 
         canvas.setFillGray(0)
         code = code128.Code128(
@@ -158,15 +175,16 @@ class TearoffGenerator:
         text.textOut(barcode_string[prefix_len + middle_len :])
         canvas.drawText(text)
 
-        canvas.setFillGray(0)
-        code = qr.QrCode(
-            barcode_string, width=max_height, height=max_height, qrBorder=0
-        )
-        code.drawOn(
-            canvas,
-            start_x + max_width - max_height,
-            start_y - max_height,
-        )
+        if include_qr:
+            canvas.setFillGray(0)
+            code = qr.QrCode(
+                barcode_string, width=max_height, height=max_height, qrBorder=0
+            )
+            code.drawOn(
+                canvas,
+                start_x + max_width - max_height,
+                start_y - max_height,
+            )
 
         canvas.restoreState()
 
