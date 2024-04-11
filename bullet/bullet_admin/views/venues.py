@@ -116,7 +116,15 @@ class CertificateView(VenueMixin, GenericForm, FormView):
     def form_valid(self, form):
         if template := form.cleaned_data.get("tex_template"):
             teams = (
-                Team.objects.competing().filter(venue=self.venue).order_by("rank_venue")
+                Team.objects.competing()
+                .filter(venue=self.venue)
+                .order_by("rank_venue")
+                .select_related(
+                    "school",
+                    "venue",
+                    "venue__category",
+                )
+                .prefetch_related("contestants", "contestants__grade")
             )
             if count := form.cleaned_data.get("count"):
                 teams = teams.filter(rank_venue__lte=count)
