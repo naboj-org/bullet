@@ -158,6 +158,7 @@ class VenueResultsView(ResultsViewMixin, ListView):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["team_problem_count"] = self.venue.category.problems_per_team
         ctx["problem_count"] = self.venue.category.problems.count()
+        ctx["first_problem"] = self.venue.category.first_problem
         ctx["venue"] = self.venue
         ctx["results_time"] = self.results_time
         return ctx
