@@ -55,6 +55,9 @@ class EmailCampaign(models.Model):
 
     excluded_teams = models.ManyToManyField("users.Team", blank=True, related_name="+")
 
+    class Meta:
+        ordering = ["-last_sent", "subject"]
+
     def get_teams(self, ignore_excluded=False):
         qs = (
             Team.objects.filter(
