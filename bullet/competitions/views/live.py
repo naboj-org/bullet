@@ -1,50 +1,74 @@
 from countries.utils import country_reverse
 from django.http import HttpResponseBadRequest
+from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.utils.functional import cached_property
 from django.utils.http import urlencode
 from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
-from django.views.generic import TemplateView
+from django.views.generic import FormView, TemplateView
 from django_countries.fields import Country
 from problems.models import SolvedProblem
 from web import content_blocks
 
+from competitions.forms.live import LiveSetupForm
 from competitions.models import Competition, Venue
 
 
-class LiveView(TemplateView):
-    template_name = "live.html"
+class LiveView(FormView):
+    template_name = "live/setup.html"
+    form_class = LiveSetupForm
 
-    def get(self, request, *args, **kwargs):
-        self.competition = Competition.objects.get_current_competition(
-            self.request.BRANCH
+    @cached_property
+    def competition(self):
+        return Competition.objects.get_current_competition(self.request.BRANCH)
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = self.competition
+        return kw
+
+    def form_valid(self, form):
+        start_time = self.competition.competition_start
+        query_data = {}
+
+        if venue_timer := form.cleaned_data["venue_timer"]:
+            start_time = venue_timer.start_time
+            query_data["venue_timer"] = venue_timer.shortcode
+
+        query_data["venues"] = ",".join(
+            [v.shortcode for v in form.cleaned_data["venues"]]
         )
 
-        venue_timer = request.GET.get("venue_timer", "").upper()
-        self.start_time = self.competition.competition_start
+        if country := form.cleaned_data["country"]:
+            query_data["country"] = country
+            query_data["country_limit"] = form.cleaned_data["country_limit"] or 0
+        query_data["international"] = 1 if form.cleaned_data["international"] else 0
+        query_data["international_limit"] = (
+            form.cleaned_data["international_limit"] or 0
+        )
+        query_data["hide_squares"] = 1 if form.cleaned_data["hide_squares"] else 0
+        query_data["hide_contestants"] = (
+            1 if form.cleaned_data["hide_contestants"] else 0
+        )
 
-        if venue_timer:
-            venue = (
-                Venue.objects.for_competition(self.competition)
-                .filter(shortcode=venue_timer)
-                .first()
-            )
-            self.start_time = venue.start_time
+        query = "?" + urlencode(query_data)
 
-        return super().get(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["competition"] = self.competition
-        query = ctx["query"] = f"?{self.request.GET.urlencode()}"
-        ctx["data"] = {
-            "countdown": country_reverse("live_countdown") + query,
-            "results": country_reverse("live_results") + query,
-            "first_problem": country_reverse("live_first_problem") + query,
-            "start": self.start_time,
-            "duration": self.competition.competition_duration.total_seconds(),
-        }
-        return ctx
+        return render(
+            self.request,
+            "live/view.html",
+            {
+                "competition": self.competition,
+                "query": query,
+                "data": {
+                    "countdown": country_reverse("live_countdown") + query,
+                    "results": country_reverse("live_results") + query,
+                    "first_problem": country_reverse("live_first_problem") + query,
+                    "start": start_time,
+                    "duration": self.competition.competition_duration.total_seconds(),
+                },
+            },
+        )
 
 
 @method_decorator(xframe_options_exempt, name="get")
@@ -84,9 +108,12 @@ class LiveResultsView(TemplateView):
 
         query = {"embed": 1}
         venue_timer = request.GET.get("venue_timer")
-        if venue_timer:
+        if venue_timer and venue_timer in venue_codes:
             query["venue_timer"] = venue_timer
-        query = urlencode(query)
+        if hide_contestants := request.GET.get("hide_contestants"):
+            query["hide_contestants"] = hide_contestants
+        if hide_squares := request.GET.get("hide_squares"):
+            query["hide_squares"] = hide_squares
 
         for code in venue_codes:
             if code not in venues:
@@ -102,12 +129,15 @@ class LiveResultsView(TemplateView):
             self.screens.append(
                 {
                     "title": f"{venue.name} ({category_name})",
-                    "url": f"{url}?{query}",
+                    "url": f"{url}?{urlencode(query)}",
                 }
             )
 
         country = request.GET.get("country")
         if country:
+            screen_query = query.copy()
+            screen_query["limit"] = request.GET.get("country_limit", 0)
+
             c = Country(country)
             for category in categories:
                 category_name = content_blocks.get_block(
@@ -120,12 +150,14 @@ class LiveResultsView(TemplateView):
                 self.screens.append(
                     {
                         "title": f"{c.name} ({category_name})",
-                        "url": f"{url}?{query}",
+                        "url": f"{url}?{urlencode(screen_query)}",
                     }
                 )
 
         international = request.GET.get("international")
         if international in {"1", "true", "yes"}:
+            screen_query = query.copy()
+            screen_query["limit"] = request.GET.get("international_limit", 0)
             for category in categories:
                 category_name = content_blocks.get_block(
                     request, f"category:name_{category}"
@@ -134,7 +166,7 @@ class LiveResultsView(TemplateView):
                 self.screens.append(
                     {
                         "title": f"{_('International')} ({category_name})",
-                        "url": f"{url}?{query}",
+                        "url": f"{url}?{urlencode(screen_query)}",
                     }
                 )
 
