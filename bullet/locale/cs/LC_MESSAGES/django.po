@@ -460,11 +460,11 @@ msgid "Confirm your team registration"
 msgstr "Potvrďte registraci týmu"
 
 #: users/emails/teams.py:49
-msgid "Team moved from waiting list."
+msgid "Team moved from waiting list"
 msgstr "Tým přesunut z čekací listiny."
 
 #: users/emails/teams.py:64
-msgid "Your team has been deleted."
+msgid "Your team has been deleted"
 msgstr "Váš tým byl odstraněn."
 
 #: web/templates/junior/web/homepage.html:7
@@ -505,7 +505,7 @@ msgid "Current team members: %(contestants)s"
 msgstr "Aktuální členové týmu: %(contestants)s"
 
 #: web/templates/mail/messages/registration.html:13
-msgid "Confirm registration."
+msgid "Confirm registration"
 msgstr "Potvrďte registraci."
 
 #: web/templates/mail/messages/registration.html:16
