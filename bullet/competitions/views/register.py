@@ -9,7 +9,6 @@ from django.db.models import Q
 from django.forms import formset_factory
 from django.http import HttpResponseRedirect
 from django.utils import timezone
-from django.utils.translation import get_language
 from django.utils.translation import gettext as _
 from django.views.generic import FormView, TemplateView
 from education.models import School
@@ -330,7 +329,6 @@ class TeamDetailsView(RegistrationMixin, FormView):
         team = form.save(commit=False)
         team.school = self.school
         team.venue = self.venue
-        team.language = get_language()
         team.consent_photos = "consent_photos" in self.request.POST
         team.save()
 
