@@ -3,6 +3,29 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.25 - 2024-04-15
+
+### Added
+
+- `category` is now exported in team data.
+- A form to set up live signage, which removes the need to build the URLs manually.
+
+### Changed
+
+- `venue` in exported data no longer contains the category.
+- Updated CZ translations.
+- Email campaigns are ordered by the date of last delivery.
+
+### Fixed
+
+- We now actually save the language selected by a team during registration.
+
+## 2024.24 - 2024-04-12
+
+### Fixed
+
+- Venue results were not rendering at all.
+
 ## 2024.23 - 2024-04-10
 
 ### Added
