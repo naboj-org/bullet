@@ -47,6 +47,23 @@ class ResultsSelectView(CompetitionMixin, TemplateView):
 class ResultsViewMixin(CompetitionMixin):
     paginate_by = 100
 
+    def get_results(self):
+        raise NotImplementedError()
+
+    def get_queryset(self):
+        qs = self.get_results()
+
+        limit = self.request.GET.get("limit", 0)
+        try:
+            limit = int(limit)
+        except ValueError:
+            return qs
+
+        if limit <= 0:
+            return qs
+
+        return qs[:limit]
+
     def get_template_names(self):
         if "embed" in self.request.GET:
             return ["problems/results/embed.html"]
@@ -55,6 +72,8 @@ class ResultsViewMixin(CompetitionMixin):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["start_index"] = ctx["page_obj"].start_index
+        ctx["hide_squares"] = self.request.GET.get("hide_squares") == "1"
+        ctx["hide_contestants"] = self.request.GET.get("hide_contestants") == "1"
         return ctx
 
 
@@ -98,7 +117,7 @@ class CategoryResultsView(ResultsViewMixin, ListView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):
+    def get_results(self):
         if self.country:
             return get_country_results(
                 self.country.upper(), self.category, self.results_time.time
@@ -151,7 +170,7 @@ class VenueResultsView(ResultsViewMixin, ListView):
 
         return super().dispatch(request, *args, **kwargs)
 
-    def get_queryset(self):
+    def get_results(self):
         return get_venue_results(self.venue, self.results_time.time)
 
     def get_context_data(self, *, object_list=None, **kwargs):

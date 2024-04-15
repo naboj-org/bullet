@@ -51,12 +51,16 @@
                 </td>
                 <td class="p-2 text-xs">
                     <div class="flex justify-between gap-3 items-center">
+                        {% if not hide_squares %}
                         {% squares row problem_count team_problem_count first_problem %}
+                        {% endif %}
 
                         <div class="text-base md:hidden">{{ row.solved_count }}</div>
                     </div>
 
+                    {% if not hide_contestants %}
                     <div class="mt-1">{{ row.team.contestants.all|join:", " }}</div>
+                    {% endif %}
                 </td>
                 <td class="p-2 hidden md:table-cell">
                     {{ row.solved_count }}
