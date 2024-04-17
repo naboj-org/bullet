@@ -3,6 +3,7 @@ from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
 from competitions.models import Competition
 from django import template
+from django.conf import settings
 from django.urls import reverse
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
@@ -144,6 +145,7 @@ def admin_sidebar(context):
         {
             "menu_items": menu_items,
             "competition": get_active_competition(context.request),
+            "is_staging": settings.PARENT_HOST != "naboj.org",
         }
     )
     return context
