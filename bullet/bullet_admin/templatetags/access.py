@@ -1,4 +1,9 @@
-from bullet_admin.access import is_any_admin, is_branch_admin, is_country_admin
+from bullet_admin.access import (
+    can_access_venue,
+    is_any_admin,
+    is_branch_admin,
+    is_country_admin,
+)
 from bullet_admin.utils import get_active_competition
 from django import template
 
@@ -15,6 +20,12 @@ def is_any_admin_tag(context):
 def is_country_admin_tag(context):
     request = context["request"]
     return is_country_admin(request.user, get_active_competition(request))
+
+
+@register.simple_tag(takes_context=True, name="is_venue_admin")
+def is_venue_admin_tag(context, venue):
+    request = context["request"]
+    return can_access_venue(request.user, venue)
 
 
 @register.simple_tag(takes_context=True, name="is_branch_admin")
