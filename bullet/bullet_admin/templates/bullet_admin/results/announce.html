@@ -1,4 +1,5 @@
 {% extends "web/root_base.html" %}
+{% load results %}
 
 {% block title %}Results announcement{% endblock %}
 
@@ -20,6 +21,13 @@
                 <div class="text-5xl font-bold mb-6">{{ team.name }}</div>
             {% endif %}
             <div class="text-3xl">{{ team.contestants_names }}</div>
+
+            <div class="flex justify-center">
+                {% big_squares result_row %}
+            </div>
+            <div class="text-4xl mt-4">
+                {{ result_row.solved_count }}
+            </div>
         {% endif %}
     </div>
     {% endif %}

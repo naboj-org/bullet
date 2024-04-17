@@ -234,7 +234,7 @@ class FinishReviewView(VenueMixin, RedirectBackMixin, GenericForm, FormView):
         save_venue_ranks.delay(self.venue.id)
 
         unreviewed_venue = Venue.objects.filter(
-            category=self.venue.category, country=self.venue.country
+            category=self.venue.category, country=self.venue.country, is_reviewed=False
         ).exists()
         if not unreviewed_venue:
             save_country_ranks.delay(self.venue.category.id, self.venue.country)

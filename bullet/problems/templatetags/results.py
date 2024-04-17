@@ -1,3 +1,5 @@
+from typing import Optional
+
 from competitions.models import Competition, Venue
 from django import template
 
@@ -8,12 +10,34 @@ register = template.Library()
 
 @register.inclusion_tag("problems/results/squares.html")
 def squares(
-    obj: ResultRow, problem_count: int, team_problem_count: int, first_problem: int
+    obj: ResultRow,
+    problem_count: Optional[int] = None,
+    team_problem_count: Optional[int] = None,
+    first_problem: Optional[int] = None,
 ):
+    if not team_problem_count:
+        team_problem_count = obj.team.venue.category.problems_per_team
+    if not first_problem:
+        first_problem = obj.team.venue.category.first_problem
+    if not problem_count:
+        problem_count = obj.team.venue.category.problems.count()
+
     return {
         "squares": obj.get_squares(problem_count, team_problem_count, first_problem),
         "offset": first_problem - 1,
     }
+
+
+@register.inclusion_tag("problems/results/squares.html")
+def big_squares(
+    obj: ResultRow,
+    problem_count: Optional[int] = None,
+    team_problem_count: Optional[int] = None,
+    first_problem: Optional[int] = None,
+):
+    ctx = squares(obj, problem_count, team_problem_count, first_problem)
+    ctx["big"] = True
+    return ctx
 
 
 @register.inclusion_tag("problems/results/timer.html")

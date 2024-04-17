@@ -3,6 +3,7 @@ from bullet_admin.access import (
     is_any_admin,
     is_branch_admin,
     is_country_admin,
+    is_country_admin_in,
 )
 from bullet_admin.utils import get_active_competition
 from django import template
@@ -20,6 +21,12 @@ def is_any_admin_tag(context):
 def is_country_admin_tag(context):
     request = context["request"]
     return is_country_admin(request.user, get_active_competition(request))
+
+
+@register.simple_tag(takes_context=True, name="is_country_admin_in")
+def is_country_admin_in_tag(context, country):
+    request = context["request"]
+    return is_country_admin_in(request.user, get_active_competition(request), country)
 
 
 @register.simple_tag(takes_context=True, name="is_venue_admin")
@@ -47,6 +54,14 @@ def is_country_operator_tag(context):
     request = context["request"]
     return is_country_admin(
         request.user, get_active_competition(request), allow_operator=True
+    )
+
+
+@register.simple_tag(takes_context=True, name="is_country_operator_in")
+def is_country_operator_in_tag(context, country):
+    request = context["request"]
+    return is_country_admin_in(
+        request.user, get_active_competition(request), country, allow_operator=True
     )
 
 

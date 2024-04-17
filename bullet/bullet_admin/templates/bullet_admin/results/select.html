@@ -1,4 +1,6 @@
 {% extends "bullet_admin/base.html" %}
+{% load countries %}
+{% load access %}
 
 {% block title %}Results{% endblock %}
 
@@ -15,25 +17,50 @@
             {% endslot %}
         {% endaheader %}
 
+        {% regroup country_categories by category__identifier as categories  %}
+        {% for category in categories %}
         {% asubheader %}
-            Category results
+            {{ category.grouper|title }} results
         {% endasubheader %}
 
         <table class="w-full text-sm">
             <tbody class="divide-y">
-                {% for c in categories %}
-                <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
-                    <td class="p-3 whitespace-nowrap">{{ c.identifier }}</td>
+                <tr class="relative hover:bg-gray-100 even:bg-gray-50">
+                    {% get_country country_results.country as c %}
+                    <td class="p-3 whitespace-nowrap">International</td>
                     <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=c.identifier %}" class="link-primary">Public results</a>
+                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}" class="link-primary">Public results</a>
                     </td>
                     <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=c.identifier %}?admin=1" class="link-primary">Admin results</a>
+                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}?admin=1" class="link-primary">Admin results</a>
+                    </td>
+                    <td></td>
+                </tr>
+                {% for country_results in category.list %}
+                <tr class="relative hover:bg-gray-100 even:bg-gray-50">
+                    {% get_country country_results.country as c %}
+                    <td class="p-3 whitespace-nowrap">{{ c.name }}</td>
+                    <td class="p-3 whitespace-nowrap">
+                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}" class="link-primary">Public results</a>
+                    </td>
+                    <td class="p-3 whitespace-nowrap">
+                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}?admin=1" class="link-primary">Admin results</a>
+                    </td>
+                    <td class="p-3 whitespace-nowrap">
+                        {% is_country_operator_in c as can_open %}
+                        {% if can_open %}
+                            {% if not country_results.unreviewed %}
+                                <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden" class="link-primary">Results announcement</a>
+                            {% else %}
+                                <span>Unfinished review</span>
+                            {% endif %}
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
+        {% endfor %}
 
         {% asubheader %}
             Venue results
@@ -52,7 +79,11 @@
                     </td>
                     <td class="p-3 whitespace-nowrap">
                         {% if v in my_venues %}
-                        <a href="{% url "badmin:results_announce" venue=v.id %}?hidden" class="link-primary">Results announcement</a>
+                            {% if v.is_reviewed %}
+                            <a href="{% url "badmin:results_announce" venue=v.id %}?hidden" class="link-primary">Results announcement</a>
+                            {% else %}
+                                <span>Unfinished review</span>
+                            {% endif %}
                         {% endif %}
                     </td>
                 </tr>
