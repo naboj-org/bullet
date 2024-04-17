@@ -1,3 +1,5 @@
+from functools import partial
+
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
@@ -132,7 +134,9 @@ class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
             crole.save()
             cform.save_m2m()
 
-        send_onboarding_email.delay(request.BRANCH, user.id, passwd)
+        transaction.on_commit(
+            partial(send_onboarding_email.delay, request.BRANCH, user.id, passwd)
+        )
         messages.success(request, "The user was created.")
         return HttpResponseRedirect(reverse("badmin:user_list"))
 
