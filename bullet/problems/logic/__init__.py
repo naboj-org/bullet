@@ -11,6 +11,8 @@ def get_last_problem_for_team(team: Team):
     return (
         SolvedProblem.objects.filter(team=team).count()
         + team.venue.category.problems_per_team
+        + team.venue.category.first_problem
+        - 1
     )
 
 
