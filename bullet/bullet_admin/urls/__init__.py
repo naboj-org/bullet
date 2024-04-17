@@ -251,9 +251,14 @@ urlpatterns = [
     ),
     path("results/", results.ResultsHomeView.as_view(), name="results"),
     path(
-        "results/announce/<venue>/",
-        results.ResultsAnnouncementView.as_view(),
+        "results/announce/venue/<venue>/",
+        results.VenueResultsAnnouncementView.as_view(),
         name="results_announce",
+    ),
+    path(
+        "results/announce/country/<country>/<category>/",
+        results.CountryResultsAnnouncementView.as_view(),
+        name="results_announce_country",
     ),
     path("education/schools/", education.SchoolListView.as_view(), name="school_list"),
     path(
