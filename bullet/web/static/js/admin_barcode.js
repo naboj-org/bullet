@@ -3,10 +3,14 @@ document.body.addEventListener("htmx:afterSwap", () => {
     document.getElementById("js-scanfield").focus()
 })
 
+let scanning = true;
 const error_audio = new Audio('/static/sound/barcode_error.mp3');
 const success_audio = new Audio('/static/sound/barcode_success.mp3');
 
 document.body.addEventListener("scan-complete", async (evt) => {
+    scanning = true;
+    document.getElementById("success-indicator").animate({opacity: "0"}, {duration: 100, fill: "forwards"})
+
     if (evt.detail.result === 0) {
         await success_audio.play();
     } else {
@@ -16,6 +20,7 @@ document.body.addEventListener("scan-complete", async (evt) => {
 
 
 let audio = new Audio('/static/sound/barcode_scanner.mp3');
+
 
 document.getElementById("js-open-reader").addEventListener("click", (ev) => {
     ev.preventDefault()
@@ -36,13 +41,15 @@ document.getElementById("js-open-reader").addEventListener("click", (ev) => {
         formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE, Html5QrcodeSupportedFormats.CODE_128],
     }
     codeScanner.start({ facingMode: "environment" }, config, (text, result) => {
-        if (text !== lastCode) {
+        if (text !== lastCode && scanning) {
             lastCode = text
+            scanning = false
             document.getElementById("js-scanfield").value = text
             htmx.trigger("#js-scanform", "submit")
             navigator.vibrate(200)
             audio.play()
             successElement.animate({boxShadow: "inset 0 0 0 8px rgb(34 197 94 / 100)"}, {duration: 500, iterations: 1})
+            successElement.animate({opacity: "0.8"}, {duration: 100, fill: "forwards"})
         }
     })
 })
