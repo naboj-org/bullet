@@ -3,6 +3,22 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.27 - 2024-04-17
+
+### Added
+
+- Results can be announced country-wide.
+- We now show the number of solved problems and the problem squares in results announcement.
+
+### Changed
+
+- Results announcement now requires the venue to be reviewed.
+- When using phone scanner, you cannot scan another code while one is being processed.
+
+### Fixed
+
+- User onboarding mails were sometimes delayed.
+
 ## 2024.26 - 2024-04-17
 
 ### Added
