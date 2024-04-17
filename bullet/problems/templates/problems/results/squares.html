@@ -1,5 +1,7 @@
 <div class="flex flex-wrap gap-0.5">
 {% for sq in squares %}
-    <div title="{{ forloop.counter|add:offset }}" class="shrink-0 rounded w-3 h-3 {% if forloop.counter|divisibleby:5 %}me-1 break-after-auto{% else %}break-after-avoid{% endif %} {% if sq == 2 %}bg-primary{% elif sq == 1 %}bg-white ring-inset ring-2 ring-primary {% else %}bg-gray-200{% endif %}"></div>
+    <div title="{{ forloop.counter|add:offset }}" class="shrink-0 rounded {% if big %}w-8 font-medium h-8 flex justify-center items-center{% else %}w-3 h-3{% endif %} {% if forloop.counter|divisibleby:5 %}me-1 break-after-auto{% else %}break-after-avoid{% endif %} {% if sq == 2 %}bg-primary{% elif sq == 1 %}bg-white ring-inset ring-2 ring-primary {% else %}bg-gray-200{% endif %}">
+        {% if big %}{{ forloop.counter|add:offset }}{% endif %}
+    </div>
 {% endfor %}
 </div>
