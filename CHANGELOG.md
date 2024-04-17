@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.26 - 2024-04-17
+
+### Added
+
+- New banned in the sidebar showing that you are using staging version.
+- Country ranks are calculated when all venues from a country are reviewed.
+
+### Changed
+
+- Add note that country admin should finish review of a venue.
+
+### Fixed
+
+- Scanning for categories with offseted problems now work correctly.
+
 ## 2024.25 - 2024-04-15
 
 ### Added
