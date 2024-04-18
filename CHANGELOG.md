@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.28 - 2024-04-18
+
+### Fixed
+
+- When finishing venue review, you would sometimes get error 405.
+
 ## 2024.27 - 2024-04-17
 
 ### Added
