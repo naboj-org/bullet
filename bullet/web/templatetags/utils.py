@@ -18,3 +18,11 @@ def query_replace(**kwargs):
     for k, v in kwargs.items():
         query[k] = v
     return f"?{query.urlencode()}"
+
+
+@register.simple_tag(takes_context=True)
+def add_query(context, url, **kwargs):
+    query = QueryDict(mutable=True)
+    for k, v in kwargs.items():
+        query[k] = v
+    return f"{url}?{query.urlencode()}"

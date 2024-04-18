@@ -1,10 +1,13 @@
 {% load access %}
+{% load utils %}
 
 {% if not venue.is_reviewed and not venue.has_unreviewed_teams %}
     {% is_venue_admin venue as can_finish %}
     {% aalert color="orange" class="mb-4" %}
         {% if can_finish %}
-        <p>All teams in this venue are reviewed. Please, <a class="link" href="{% url "badmin:venue_finish_review" venue.id %}?back={{ request.get_full_path|urlencode }}">finish the review</a> when ready.</p>
+        {% url "badmin:scanning_review" as back_url %}
+        {% add_query back_url venue=venue.id as back_url %}
+        <p>All teams in this venue are reviewed. Please, <a class="link" href="{% url "badmin:venue_finish_review" venue.id %}?back={{ back_url|urlencode }}">finish the review</a> when ready.</p>
         {% else %}
         <p>All teams in this venue are reviewed. Please ask the venue administrator to finish review when ready.</p>
         {% endif %}
