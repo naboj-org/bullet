@@ -116,7 +116,7 @@ msgstr "Výsledky"
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problem statements"
-msgstr "Zadania"
+msgstr "Zadania a riešenia úloh"
 
 #: competitions/templates/archive/list.html:24
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
