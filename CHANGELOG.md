@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.31 - 2024-04-24
+
+### Fixed
+
+- Display of average solving time for problem that was not solved errored out.
+- Generate stats for all problems.
+
 ## 2024.30 - 2024-04-23
 
 ### Fixed
