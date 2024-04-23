@@ -38,8 +38,8 @@ def generate_stats_category(category: Category):
     # Populate receive times with first problems
     for team in teams:
         receive_times[team.id] = {
-            i + 1: timedelta(seconds=0)
-            for i in range(first_problem, category.problems_per_team + first_problem)
+            i + first_problem: timedelta(seconds=0)
+            for i in range(category.problems_per_team)
         }
 
     for solve in solves:
@@ -48,7 +48,7 @@ def generate_stats_category(category: Category):
         ] = solve.competition_time
 
         # The team just received their next problem
-        received_problem = len(receive_times[solve.team_id]) + 1
+        received_problem = len(receive_times[solve.team_id]) + first_problem
         receive_times[solve.team_id][received_problem] = solve.competition_time
 
     stats = []
