@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.29 - 2024-04-23
+
+### Changed
+
+- Updated some translations.
+- Country administrator can now upload problems.
+
+### Fixed
+
+- Stats for offset category.
+
 ## 2024.28 - 2024-04-18
 
 ### Fixed
