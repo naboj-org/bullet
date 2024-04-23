@@ -173,7 +173,7 @@ def _save_ranks(results: Iterable[ResultRow], where: str):
         team = row.team
         setattr(team, where, rank)
         team._change_reason = f"storing {where}"
-        team.save()
+        team.save(send_to_search=False)
         rank += 1
 
 

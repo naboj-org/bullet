@@ -20,6 +20,7 @@ def generate_stats(competition: Competition | int):
 
 def generate_stats_category(category: Category):
     category_problems = category.problems.all()
+    first_problem = category.first_problem
     problem_number_map: dict[int, int] = {
         p.problem.id: p.number for p in category_problems
     }
@@ -37,7 +38,8 @@ def generate_stats_category(category: Category):
     # Populate receive times with first problems
     for team in teams:
         receive_times[team.id] = {
-            i + 1: timedelta(seconds=0) for i in range(category.problems_per_team)
+            i + 1: timedelta(seconds=0)
+            for i in range(first_problem, category.problems_per_team + first_problem)
         }
 
     for solve in solves:
