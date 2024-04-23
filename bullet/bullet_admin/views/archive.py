@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from problems.logic.upload import ProblemImportError
 
-from bullet_admin.access import BranchAdminAccess
+from bullet_admin.access import BranchAdminAccess, CountryAdminAccess
 from bullet_admin.forms.archive import ProblemImportForm, ProblemUploadForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -27,10 +27,11 @@ class ProblemImportView(BranchAdminAccess, GenericForm, FormView):
         return redirect("badmin:archive_import")
 
 
-class ProblemPDFUploadView(BranchAdminAccess, GenericForm, FormView):
+class ProblemPDFUploadView(CountryAdminAccess, GenericForm, FormView):
     form_class = ProblemUploadForm
     form_title = "Upload problems"
     form_multipart = True
+    require_unlocked_competition = False
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
