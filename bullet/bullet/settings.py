@@ -5,15 +5,8 @@ from pathlib import Path
 
 import environ
 from django.conf.locale import LANG_INFO
-from django_countries.widgets import LazyChoicesMixin
 
 import bullet
-
-# monkey-patched django-countries
-LazyChoicesMixin.get_choices = lambda self: self._choices
-LazyChoicesMixin.choices = property(
-    LazyChoicesMixin.get_choices, LazyChoicesMixin.set_choices
-)
 
 env = environ.Env()
 
