@@ -116,6 +116,7 @@ def admin_sidebar(context):
             items.append(
                 ("fa-upload", "Import archive", reverse("badmin:archive_import"))
             )
+        if branch_role.is_admin or competition_role.countries:
             items.append(
                 (
                     "fa-upload",
@@ -123,6 +124,7 @@ def admin_sidebar(context):
                     reverse("badmin:archive_problem_upload"),
                 )
             )
+        if branch_role.is_admin:
             items.append(
                 ("fa-book", "Problem settings", reverse("badmin:problems_generate"))
             )
