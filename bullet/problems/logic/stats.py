@@ -54,7 +54,7 @@ def generate_stats_category(category: Category):
     stats = []
     for team in teams:
         for number, received in receive_times[team.id].items():
-            if number > len(category_problems):
+            if number > len(category_problems) + first_problem - 1:
                 continue
             solved = None
             if number in solve_times[team.id]:

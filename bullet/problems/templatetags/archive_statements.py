@@ -25,6 +25,9 @@ def problem_number(obj: ProblemStatement):
 
 @register.filter()
 def timedelta_format(td: timedelta):
+    if not td:
+        return "-"
+
     total = td.total_seconds()
     hours, rem = divmod(total, 3600)
     minutes, seconds = divmod(rem, 60)
