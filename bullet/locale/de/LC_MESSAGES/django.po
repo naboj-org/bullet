@@ -121,7 +121,7 @@ msgstr "Ergebnisse"
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problem statements"
-msgstr "Aufgabenstellung"
+msgstr "Aufgabenstellungen und Lösungen"
 
 #: competitions/templates/archive/list.html:24
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
