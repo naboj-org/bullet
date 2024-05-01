@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "3b4753eb67c439f93e30b64aecb42437ebbb3e7767a7cd2e61821ce38b4ed3a6"
+            "sha256": "e4ed1959af80761a6900d2658e5244adf460c7bdf726ab1b701776b0f746f18b"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -1019,11 +1019,11 @@
         },
         "phonenumbers": {
             "hashes": [
-                "sha256:2742071c9d0af09274c8a5b2a26d9a36acbf2ea5cb62943cc2ceadb5c0c87641",
-                "sha256:e45d0bc852516a3a6594bcec0ae47b825421a8adcfcf5f114ad148f1523d8646"
+                "sha256:58286a8e617bd75f541e04313b28c36398be6d4443a778c85e9617a93c391310",
+                "sha256:64f061a967dcdae11e1c59f3688649e697b897110a33bb74d5a69c3e35321245"
             ],
             "index": "pypi",
-            "version": "==8.13.31"
+            "version": "==8.13.35"
         },
         "pikepdf": {
             "hashes": [
