@@ -71,10 +71,10 @@
                         </td>
                         <td class="p-3 whitespace-nowrap">
                             <div class="flex items-center justify-end gap-2">
-                                <a href="{% url 'badmin:page_edit' pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                <a href="{% url 'badmin:page_edit' pk=page.id %}?next={{ request.get_full_path|urlencode }}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
                                     <span class="iconify" data-icon="mdi:edit"></span>
                                 </a>
-                                <a href="{% url 'badmin:page_delete' pk=page.id %}?back={{ request.get_full_path|urlencode }}" class="text-red-400 hover:text-red-600 p-2 -m-2">
+                                <a href="{% url 'badmin:page_delete' pk=page.id %}?next={{ request.get_full_path|urlencode }}" class="text-red-400 hover:text-red-600 p-2 -m-2">
                                     <span class="iconify" data-icon="mdi:delete"></span>
                                 </a>
                             </div>
