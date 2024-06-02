@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect
-from django.urls import reverse
+from django.urls import resolve, reverse
 from django.utils import translation
 from django.views import View
 from django.views.generic import TemplateView
@@ -7,11 +7,10 @@ from django.views.generic import TemplateView
 from countries.logic import country
 from countries.logic.detection import get_country_language_from_request
 from countries.models import BranchCountry
-from countries.utils import country_reverse
 
 
 class CountryDetectView(View):
-    redirect_to = "homepage"
+    redirect_to = "country_selector"
 
     def get(self, *args):
         detection = get_country_language_from_request(self.request)
@@ -22,7 +21,8 @@ class CountryDetectView(View):
             c, lang = detection
             country.activate(c)
             translation.activate(lang)
-            url = country_reverse(self.redirect_to)
+            url = f"/{c}/{lang}{self.request.path}"
+            resolve(url)
 
         response = HttpResponseRedirect(redirect_to=url)
         response.headers["Vary"] = "Cookie, Accept-Language"
