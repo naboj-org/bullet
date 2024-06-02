@@ -1,3 +1,6 @@
+from urllib.parse import quote
+
+from bullet_admin.utils import get_redirect_url
 from django.http import HttpResponseRedirect
 from django.urls import resolve, reverse
 from django.utils import translation
@@ -17,6 +20,8 @@ class CountryDetectView(View):
 
         if detection is None:
             url = reverse("country_selector")
+            if self.request.path != "/":
+                url = f"{url}?next={quote(self.request.get_full_path())}"
         else:
             c, lang = detection
             country.activate(c)
@@ -47,4 +52,5 @@ class CountrySelectView(TemplateView):
                 )
 
         ctx["countries"] = Countries
+        ctx["redirect"] = get_redirect_url(self.request, "/")
         return ctx
