@@ -58,10 +58,6 @@ class AlbumFormMixin(GenericForm):
         kw["branch"] = self.request.BRANCH
         return kw
 
-
-class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
-    form_title = "Edit album"
-
     def form_valid(self, form):
         album: Album = form.save(commit=False)
         for file in form.cleaned_data["photo_files"]:
@@ -79,19 +75,13 @@ class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
         messages.success(self.request, "Album edited successfully.")
         return redirect("badmin:album_list")
 
+
+class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
+    form_title = "Edit album"
+
     def get_queryset(self):
         return Album.objects.filter(competition__branch=self.request.BRANCH)
 
 
 class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
     form_title = "New album"
-
-    def form_valid(self, form):
-        album: Album = form.save(commit=False)
-        album.save()
-
-        for photo in form.cleaned_data["photo_files"]:
-            Photo(album=album, image=photo).save()
-
-        messages.success(self.request, "Album created successfully.")
-        return redirect("badmin:album_list")
