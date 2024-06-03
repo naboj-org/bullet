@@ -1,0 +1,20 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Move team?{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Move team to competition?</h2>
+        </header>
+        <form method="post" class="p-4">
+            {% csrf_token %}
+            <p>Are you sure you want to move the following team from waiting list to competition?</p>
+            <p class="font-bold">{{ team.display_name }}</p>
+
+            <button type="submit" class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark">
+                        <i class="fas fa-angles-right"></i> Move to competition
+            </button>
+        </form>
+    </article>
+{% endblock %}
