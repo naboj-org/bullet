@@ -1,6 +1,8 @@
 import csv
 import json
 from collections import defaultdict
+from datetime import datetime
+from functools import partial
 
 import yaml
 from competitions.forms.registration import ContestantForm
@@ -15,6 +17,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.views import View
 from django.views.generic import (
+    CreateView,
     DeleteView,
     FormView,
     ListView,
@@ -34,7 +37,7 @@ from users.models import Contestant, Team
 from bullet import search
 from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import AdminAccess
-from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm
+from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm, TeamForm
 from bullet_admin.forms.tex import TexTeamRenderForm
 from bullet_admin.mixins import (
     AdminRequiredMixin,
@@ -393,3 +396,32 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
         messages.success(request, "Numbers assigned successfully.")
         u = reverse("badmin:team_assign_numbers")
         return HttpResponseRedirect(f"{u}?venue={self.venue.id}")
+
+
+class TeamCreateView(AdminAccess, CreateView):
+    template_name = "bullet_admin/teams/create.html"
+
+    def get_form_class(self):
+        competition = get_active_competition(self.request)
+        crole = self.request.user.get_competition_role(competition)
+
+        if crole.is_operator:
+            return HttpResponseForbidden()
+        return TeamForm
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["instance"] = None
+        kw["competition"] = get_active_competition(self.request)
+        return kw
+
+    def form_valid(self, form):
+        send_mail = "send_mail" in self.request.POST
+        team = form.save(commit=False)
+        if not send_mail:
+            team.confirmed_at = datetime.now()
+        team.save()
+        messages.success(self.request, "Team saved.")
+        if send_mail:
+            transaction.on_commit(partial(send_confirmation_email.delay, team.id))
+        return HttpResponseRedirect(reverse("badmin:team_list"))

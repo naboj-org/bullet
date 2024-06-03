@@ -39,7 +39,7 @@ class TeamForm(forms.ModelForm):
         super().__init__(**kwargs)
 
         self.fields["venue"].queryset = Venue.objects.for_competition(competition)
-        if self.instance:
+        if kwargs["instance"]:
             self.fields["language"].choices = get_language_choices_for_venue(
                 self.instance.venue
             )
