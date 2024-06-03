@@ -10,6 +10,12 @@
         <form method="post" class="p-4">
             {% csrf_token %}
 
+            <div class="mt-1 sm:mt-0 sm:col-span-2">
+                <label for="send_mail">
+                    <input type="checkbox" checked class="checkbox" name="send_mail">
+                    Send mail to contact person
+                </label>
+            </div>
             <p>Are you sure you want to delete the following team?</p>
             <p class="font-bold">{{ team.display_name }}</p>
 
