@@ -5,8 +5,14 @@ from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
 from django.utils.functional import cached_property
-from django.views import View
-from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    FormView,
+    ListView,
+    TemplateView,
+    UpdateView,
+)
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator
@@ -167,7 +173,10 @@ class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
         return get_venue_waiting_list(self.venue)
 
 
-class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, View):
+class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, TemplateView):
+    model = Venue
+    template_name = "bullet_admin/venues/waiting_list_automove.html"
+
     def post(self, request, *args, **kwargs):
         move_eligible_teams(self.venue)
         return HttpResponseRedirect(self.get_redirect_url())

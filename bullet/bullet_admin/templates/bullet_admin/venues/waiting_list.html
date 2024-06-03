@@ -12,21 +12,17 @@
         <p><b>{{ remaining }}</b> unoccupied team slot{{ remaining|pluralize }} remaining out of {{ venue.capacity }}.</p>
 
         {% if remaining > 0 and object_list and not competition.results_public %}
-        <form action="{% url "badmin:waiting_list_automove" pk=venue.id %}" method="post">
-            {% csrf_token %}
+        <div class="bg-green-100 text-green-800 text-sm p-4 mt-4 rounded-md space-y-4">
+            <p>
+                Your venue has enough capacity for another <b>{{ remaining }}</b> teams. You can automatically move teams from the waiting list to the competition to fill the capacity.
+            </p>
 
-            <div class="bg-green-100 text-green-800 text-sm p-4 mt-4 rounded-md space-y-4">
-                <p>
-                    Your venue has enough capacity for another <b>{{ remaining }}</b> teams. You can automatically move teams from the waiting list to the competition to fill the capacity.
-                </p>
-
-                <p class="mt-1 italic">
-                    This action follows the current registration rules, meaning that the limit of teams per school will be used.
-                </p>
-
-                {% #abtn button color="green" icon="mdi:fast-forward" label="Move automatically" %}
-            </div>
-        </form>
+            <p class="mt-1 italic">
+                This action follows the current registration rules, meaning that the limit of teams per school will be used.
+            </p>
+            {% url "badmin:waiting_list_automove" pk=venue.id as move_url%}
+            {% #abtn url=move_url color="green" icon="mdi:fast-forward" label="Move automatically" %}
+        </div>
         {% endif %}
         {% endwith %}
     </div>
