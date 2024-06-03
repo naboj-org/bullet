@@ -154,7 +154,10 @@ class TeamExportView(AdminRequiredMixin, FormView):
         return response
 
 
-class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, View):
+class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
+    model = Team
+    template_name = "bullet_admin/teams/to_competition.html"
+
     def get_default_success_url(self):
         return reverse("badmin:team_edit", kwargs={"pk": self.kwargs["pk"]})
 
