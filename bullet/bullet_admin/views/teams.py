@@ -284,11 +284,13 @@ class TeamDeleteView(AdminRequiredMixin, DeleteView):
     template_name = "bullet_admin/teams/delete.html"
 
     def post(self, request, *args, **kwargs):
+        send_mail = "send_mail" in self.request.POST
         obj = self.get_object()
         if not can_access_venue(request, obj.venue):
             return HttpResponseForbidden()
 
-        send_deletion_email.delay(obj)
+        if send_mail:
+            send_deletion_email.delay(obj)
         return super().post(request, *args, **kwargs)
 
     def get_success_url(self):
