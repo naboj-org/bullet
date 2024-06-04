@@ -21,7 +21,7 @@ from bullet_admin.forms.content import (
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView as BDeleteView
-from bullet_admin.views import GenericForm, GenericList
+from bullet_admin.views import GenericDelete, GenericForm, GenericList
 
 
 class PageQuerySetMixin:
@@ -422,13 +422,25 @@ class LogoDeleteView(TranslatorRequiredMixin, BDeleteView):
         return reverse("badmin:logo_list")
 
 
-class MenuItemListView(TranslatorRequiredMixin, ListView):
-    template_name = "bullet_admin/content/menu_list.html"
+class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
+    model = Menu
+    create_url = reverse_lazy("badmin:menu_create")
+    fields = ["title", "url", "order", "language", "countries"]
+    field_templates = {
+        "language": "bullet_admin/content/language.html",
+        "countries": "bullet_admin/content/countries.html",
+    }
 
     def get_queryset(self):
         return Menu.objects.filter(branch=self.request.BRANCH).order_by(
             "language", "order"
         )
+
+    def get_edit_url(self, menu: Menu) -> str:
+        return reverse("badmin:menu_edit", args=[menu.pk])
+
+    def get_delete_url(self, menu: Menu) -> str:
+        return reverse("badmin:menu_delete", args=[menu.pk])
 
 
 class MenuItemEditView(TranslatorRequiredMixin, UpdateView):
@@ -467,9 +479,7 @@ class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
         return reverse("badmin:menu_list")
 
 
-class MenuItemDeleteView(TranslatorRequiredMixin, BDeleteView):
-    def get_queryset(self):
-        return Menu.objects.filter(branch=self.request.BRANCH)
-
-    def get_success_url(self):
-        return reverse("badmin:menu_list")
+class MenuItemDeleteView(
+    TranslatorRequiredMixin, RedirectBackMixin, GenericDelete, DeleteView
+):
+    model = Menu
