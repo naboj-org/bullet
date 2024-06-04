@@ -99,7 +99,16 @@
             {% endif %}
         {% endblock %}
     
-        {% block before_list %}{% endblock %}
+        {% block before_list %}
+            <form class="flex mb-4 items-center gap-2">
+                {% for name, list in request.GET.lists %}
+                    {% if name != "q" %}
+                        <input type="hidden" name="{{ name }}" value="{{ list.0 }}">
+                    {% endif %}
+                {% endfor %}
+                <input type="search" name="q" placeholder="Search {{ list_title|lower }}" class="input" value="{{ request.GET.q }}">
+            </form>
+        {% endblock %}
     
         <table class="w-full text-sm">
             <thead class="text-left bg-gray-100 border-t border-b">
