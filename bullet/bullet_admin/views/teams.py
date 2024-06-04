@@ -433,8 +433,7 @@ class TeamCreateView(AdminAccess, CreateView):
 
 
 def get_team_members(team, time):
-    members = Contestant.history.as_of(time).filter(team=team)
-    return members
+    return Contestant.history.as_of(time).filter(team=team)
 
 
 class TeamHistoryView(AdminAccess, ListView):
@@ -447,6 +446,7 @@ class TeamHistoryView(AdminAccess, ListView):
         current = team.history.first()
 
         prev_members = get_team_members(team, datetime.now())
+        t = datetime.now()
         while current.prev_record:
             current_members, prev_members = (
                 prev_members,
@@ -455,16 +455,9 @@ class TeamHistoryView(AdminAccess, ListView):
             members_changes = []
             for member in current_members:
                 if member in prev_members:
-                    t = (
-                        datetime.now()
-                        if not current.next_record
-                        else current.next_record.history_date
-                    )
-                    cur_member = Contestant.history.filter(
-                        history_date__lte=t, id=member.id
-                    ).first()
-                    prev_member = Contestant.history.filter(
-                        history_date__lte=current.history_date, id=member.id
+                    cur_member = member.history.filter(history_date__lte=t).first()
+                    prev_member = member.history.filter(
+                        history_date__lte=current.history_date
                     ).first()
 
                     changes = cur_member.diff_against(prev_member).changes
@@ -494,5 +487,6 @@ class TeamHistoryView(AdminAccess, ListView):
                     "members_changes": members_changes,
                 }
             )
+            t = current.history_date
             current = current.prev_record
         return qs
