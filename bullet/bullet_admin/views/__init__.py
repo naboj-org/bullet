@@ -37,6 +37,24 @@ class GenericForm:
         return ctx
 
 
+class GenericDelete:
+    template_name = "bullet_admin/generic/delete.html"
+    model_name = None
+    object_name = None
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["model_name"] = (
+            self.model_name
+            if self.model_name
+            else self.get_queryset().model._meta.verbose_name
+        )
+        ctx["object_name"] = (
+            self.object_name if self.object_name else str(self.get_object())
+        )
+        return ctx
+
+
 class GenericList:
     template_name = "bullet_admin/generic/list.html"
     paginate_by = 100
