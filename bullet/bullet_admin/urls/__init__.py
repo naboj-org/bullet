@@ -204,6 +204,11 @@ urlpatterns = [
         teams.TeamDeleteView.as_view(),
         name="team_delete",
     ),
+    path(
+        "teams/<int:pk>/revert/<team_time>/<contestant_time>",
+        teams.TeamRevertView.as_view(),
+        name="team_revert",
+    ),
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),
     path("users/create/", users.UserCreateView.as_view(), name="user_create"),
