@@ -439,6 +439,7 @@ def get_team_members(team, time):
 class TeamHistoryView(AdminAccess, ListView):
     model = Team
     template_name = "bullet_admin/teams/history.html"
+    paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
         qs = []
@@ -485,8 +486,15 @@ class TeamHistoryView(AdminAccess, ListView):
                         if member not in current_members
                     ],
                     "members_changes": members_changes,
+                    "t1": current.prev_record.history_date,
+                    "t2": current.history_date,
                 }
             )
             t = current.history_date
             current = current.prev_record
         return qs
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx["team"] = Team.objects.get(id=self.kwargs["pk"])
+        return ctx
