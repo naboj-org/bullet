@@ -1,0 +1,7 @@
+{% load countries %}
+<div class="flex gap-4">
+    {% for country in object.countries %}
+        {% get_country country as country_info %}
+        {% #country name=country_info.name code=country_info.code %}
+    {% endfor %}
+</div>
