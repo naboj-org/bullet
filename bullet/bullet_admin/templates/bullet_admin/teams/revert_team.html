@@ -1,0 +1,19 @@
+{% extends "bullet_admin/base.html" %}
+
+{% block title %}Team revert{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Revert team changes?</h2>
+        </header>
+        <form method="post" class="p-4">
+            {% csrf_token %}
+            <p>Are you sure you want to revert all changes in the team to this point?</p>
+
+            <button type="submit" class="mt-2 btn-admin-sm bg-gray-500 hover:bg-gray-600">
+                        <i class="fas fa-history"></i> Revert changes
+            </button>
+        </form>
+    </article>
+{% endblock %}
