@@ -498,3 +498,26 @@ class TeamHistoryView(AdminAccess, ListView):
         ctx = super().get_context_data(*args, **kwargs)
         ctx["team"] = Team.objects.get(id=self.kwargs["pk"])
         return ctx
+
+
+class TeamRevertView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
+    model = Team
+    template_name = "bullet_admin/teams/revert_team.html"
+
+    def get_default_success_url(self):
+        return reverse("badmin:team_history", kwargs={"pk": self.kwargs["pk"]})
+
+    def post(self, request, *args, **kwargs):
+        team = get_object_or_404(Team, id=self.kwargs["pk"])
+        team_time, contestant_time = kwargs["team_time"], kwargs["contestant_time"]
+        team.history.filter(history_date__lte=team_time).first().instance.save()
+        current_members = get_team_members(team, datetime.now())
+        previous_members = get_team_members(team, contestant_time)
+
+        for member in current_members:
+            if member not in previous_members:
+                member.delete()
+        for member in previous_members:
+            member.history.as_of(contestant_time).save()
+
+        return HttpResponseRedirect(self.get_success_url())
