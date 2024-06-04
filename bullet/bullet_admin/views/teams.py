@@ -430,3 +430,7 @@ class TeamCreateView(AdminAccess, CreateView):
         if send_mail:
             transaction.on_commit(partial(send_confirmation_email.delay, team.id))
         return HttpResponseRedirect(reverse("badmin:team_list"))
+
+
+class TeamHistoryView(AdminAccess, View):
+    model = Team
