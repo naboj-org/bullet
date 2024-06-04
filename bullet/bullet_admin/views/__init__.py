@@ -149,7 +149,7 @@ class GenericList:
         return (
             self.list_title
             if self.list_title
-            else self.get_model()._meta.verbose_name_plural
+            else self.get_model()._meta.verbose_name_plural.capitalize()
         )
 
     def get_fields(self):
