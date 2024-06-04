@@ -432,5 +432,19 @@ class TeamCreateView(AdminAccess, CreateView):
         return HttpResponseRedirect(reverse("badmin:team_list"))
 
 
-class TeamHistoryView(AdminAccess, View):
+class TeamHistoryView(AdminAccess, ListView):
     model = Team
+    template_name = "bullet_admin/teams/history.html"
+
+    def get_queryset(self, *args, **kwargs):
+        team_history = Team.objects.get(id=self.kwargs["pk"]).history.all()
+        current = team_history.first()
+        qs = []
+        if current.prev_record:
+            while current.prev_record:
+                user = current.history_user
+                time = current.history_date
+                changes = current.diff_against(current.prev_record).changes
+                qs.append({"user": user, "time": time, "changes": changes})
+                current = current.prev_record
+        return qs
