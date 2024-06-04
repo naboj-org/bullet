@@ -65,6 +65,7 @@ class AlbumFormMixin(GenericForm):
 
     def form_valid(self, form):
         album: Album = form.save(commit=False)
+        album.competition = get_active_competition(self.request)
         for file in form.cleaned_data["photo_files"]:
             photo = Photo(album=album, image=file)
 
