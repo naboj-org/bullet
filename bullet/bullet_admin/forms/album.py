@@ -1,4 +1,3 @@
-from competitions.models import Competition
 from countries.models import BranchCountry
 from django import forms
 from django.forms import ModelForm
@@ -35,7 +34,7 @@ class AlbumForm(ModelForm):
     def __init__(self, **kwargs):
         branch = kwargs.pop("branch", None)
         super().__init__(**kwargs)
-        self.fields["competition"].queryset = Competition.objects.filter(branch=branch)
+        self.fields.pop("competition")
 
         available_countries = set()
 
