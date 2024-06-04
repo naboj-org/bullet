@@ -21,6 +21,11 @@ class AdminLink(component.Component):
     template_name = "bullet_admin/components/link.html"
 
 
+@component.register("country")
+class Country(component.Component):
+    template_name = "bullet_admin/components/country.html"
+
+
 @component.register("anav")
 class AdminNavigation(component.Component):
     template_name = "bullet_admin/components/navigation.html"
