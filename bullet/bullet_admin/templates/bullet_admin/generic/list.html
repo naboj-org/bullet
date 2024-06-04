@@ -1,0 +1,153 @@
+{% extends "bullet_admin/base.html" %}
+{% load countries %}
+{% load utils %}
+{% load i18n %}
+{% load badmin %}
+{% load access %}
+
+{% block title %}{{ list_title }}{% endblock %}
+
+{% block content %}
+    {% get_active_competition as competition %}
+    <div class="p-8 mx-auto max-w-7xl">
+        
+        {% aheader show_subtitle=subtitle is not None %}
+            {% slot title %}
+                {{ list_title }}
+                {% if count %}<span class="text-gray-400 font-normal">{{ count|floatformat:"g" }}</span>{% endif %}
+            {% endslot %}
+            {% slot buttons %}
+                {% query_replace back=request.get_full_path as back %}
+                {% if help_url %}{% #abtn icon="mdi:help" label="Help" url=help_url|add:back %}{% endif %}
+                {% if new_folder_url %}
+                    {% #abtn icon="mdi:folder-plus" label="New folder" url=new_folder_url|add:back %}
+                {% endif %}
+                {% if assign_numbers_url %}
+                    {% #abtn icon="mdi:numeric" label="Assign numbers" url=assign_numbers_url|add:back %}
+                {% endif %}
+                {% if export_url %}
+                    {% #abtn color="blue" icon="mdi:export" label="Export" url=export_url|add:back %}
+                {% endif %}
+                {% if create_url %}
+                    {% if object_name %}
+                        {% #abtn color="green" icon="mdi:plus" label="New "|add:object_name url=create_url|add:back %}
+                    {% else %}
+                        {% #abtn color="green" icon="mdi:plus" label="New" url=create_url|add:back %}
+                    {% endif %}
+                {% endif %}
+                {% if upload_url %}
+                    {% #abtn color="green" icon="mdi:upload" label="Upload File" url=upload_url|add:back %}
+                {% endif %}
+                {% comment %}
+                	Add buttons if needed.
+                {% endcomment %}
+            {% endslot %}
+            {{ subtitle }}
+        {% endaheader %}
+
+        {% block navigation %}
+            {% if countries %}
+                {% anav class="-mt-4 mb-8" %}
+                    {% query_transform country="" as url %}
+                    {% if not request.GET.country %}
+                        {% anavitem url=url active=True %}(all){% endanavitem %}
+                    {% else %}
+                        {% anavitem url=url active=False %}(all){% endanavitem %}
+                    {% endif %}
+    
+                    {% for country in countries %}
+                        {% get_country country as country_info %}
+                        {% query_transform country=country as url %}
+                        {% if request.GET.country == country %}
+                            {% anavitem url=url active=True %}
+                                <div class="flex gap-2 items-center flex-wrap"> 
+                                    <span class="iconify shrink-0 shadow-lg" data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+                                    <span>{{ country_info.name }}</span>
+                                </div>
+                            {% endanavitem %}
+                        {% else %}
+                            {% anavitem url=url active=False %}
+                                <div class="flex gap-2 items-center flex-wrap"> 
+                                    <span class="iconify shrink-0 shadow-lg" data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+                                    <span>{{ country_info.name }}</span>
+                                </div>
+                            {% endanavitem %}
+                        {% endif %}
+                    {% endfor %}
+                {% endanav %}
+            {% endif %}
+            
+            {% if languages %}
+                {% anav class="-mt-4 mb-8" %}
+                    {% query_transform language="" as url %}
+                    {% if not request.GET.language %}
+                        {% anavitem url=url active=True %}(all){% endanavitem %}
+                    {% else %}
+                        {% anavitem url=url active=False %}(all){% endanavitem %}
+                    {% endif %}
+        
+                    {% for lang in languages %}
+                        {% get_language_info for lang as lang_info %}
+                        {% query_transform language=lang as url %}
+                        {% if request.GET.language == lang %}
+                            {% anavitem url=url active=True %}{{ lang_info.name }}{% endanavitem %}
+                        {% else %}
+                            {% anavitem url=url active=False %}{{ lang_info.name }}{% endanavitem %}
+                        {% endif %}
+                    {% endfor %}
+                {% endanav %}
+            {% endif %}
+        {% endblock %}
+    
+        {% block before_list %}{% endblock %}
+    
+        <table class="w-full text-sm">
+            <thead class="text-left bg-gray-100 border-t border-b">
+                <tr>
+                    {% for label, field in labels %}
+                        <th class="p-0 whitespace-nowrap">
+                            {% if orderby == field %}
+                                {% query_transform orderby="-"|add:field as url %}
+                            {% else %}
+                                {% query_transform orderby=field as url %}
+                            {% endif %}
+                            <a href="{{ url }}" class="p-3 pr-1 flex items-center hover:bg-gray-200">
+                                {{ label }}
+                                {% if orderby == field %}
+                                    <span class="iconify w-5 h-5 shrink-0" data-icon="mdi:arrow-down-drop"></span>
+                                {% elif orderby == "-"|add:field %}
+                                    <span class="iconify w-5 h-5 shrink-0" data-icon="mdi:arrow-drop-up"></span>
+                                {% endif %}
+                            </a>
+
+                        </th>
+                    {% endfor %}
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody class="divide-y">
+                {% for object, edit_url, delete_url, view_url in table_row %}
+                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                        {% for item in object %}
+                            <td class="p-3 whitespace-nowrap ">
+                                {{ item }}
+                            </td>
+                        {% endfor %}
+
+
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                {% if edit_url %}{% #alink type="edit" url=edit_url %}{% endif %}
+                                {% if delete_url %}{% #alink type="delete" url=delete_url %}{% endif %}
+                                {% if view_url %}{% #alink type="view" url=view_url %}{% endif %}
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% admin_paginator page_obj %}
+    </div>
+{% endblock %}
