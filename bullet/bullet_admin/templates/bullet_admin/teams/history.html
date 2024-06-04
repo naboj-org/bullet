@@ -7,7 +7,7 @@
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team history</h2>
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team history {{ team.pk }}</h2>
         </header>
         <div class="p-4">
             <div class="overflow-x-auto">
@@ -32,7 +32,47 @@
                             </td>
                             <td class="p-2">
                                 <ul>
-                                    {% for change in record.changes %}<li class="flex items-center gap-x-1">{{ change.field }}: <span class="text-red-500">{{ change.old }}</span> <span class="iconify -ml-0.5 w-5 h-5" data-icon="mdi:arrow-right-thin"></span><span class="text-green-500">{{ change.new }}</span></li>{% endfor %}
+                                    {% for change in record.changes %}
+                                        <li class="flex items-center gap-x-1">{{ change.field }}:
+                                            <span class="text-red-500">{{ change.old }}</span>
+                                            <span class="iconify -ml-0.5 w-5 h-5" data-icon="mdi:arrow-right-thin"></span>
+                                            <span class="text-green-500">{{ change.new }}</span>
+                                        </li>
+                                    {% endfor %}
+                                    {% if record.added_members %}
+                                        <li class="flex items-center gap-x-1 text-green-500"> Added contestants:
+                                            <span class="text-black">
+                                                {% for user in record.added_members %}
+                                                    {{ user }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        </li>
+                                    {% endif %}
+                                    {% if record.removed_members %}
+                                        <li class="flex items-center gap-x-1 text-red-500"> Removed contestants: 
+                                            <span class="text-black">
+                                                {% for user in record.removed_members %}
+                                                    {{ user }}{% if not forloop.last %}, {% endif %}
+                                                {% endfor %}
+                                            </span>
+                                        </li>
+                                    {% endif %}
+                                    {% if record.members_changes %}
+                                        {% for member in record.members_changes %}
+                                            <li class="flex items-center gap-x-1 font-bold"> Contestant {{ member.member }}: 
+                                                <ul>
+                                                    {% for change in member.changes %}
+                                                        <li class="flex items-center gap-x-1 font-normal">
+                                                            {{ change.field }}:
+                                                            <span class="text-red-500"> {{ change.old }} </span>
+                                                            <span class="iconify -ml-0.5 w-5 h-5" data-icon="mdi:arrow-right-thin"></span>
+                                                            <span class="text-green-500">{{ change.new }}</span>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            </li>
+                                        {% endfor %}
+                                    {% endif %}
                                 </ul>
                             </td>
                             <td class="p-2 whitespace-nowrap text-right">
