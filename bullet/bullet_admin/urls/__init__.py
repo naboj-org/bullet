@@ -288,6 +288,11 @@ urlpatterns = [
         "gallery/albums/<int:pk>/", albums.AlbumUpdateView.as_view(), name="album_edit"
     ),
     path(
+        "gallery/albums/<int:pk>/delete",
+        albums.AlbumDeleteView.as_view(),
+        name="album_delete",
+    ),
+    path(
         "archive/import/",
         archive.ProblemImportView.as_view(),
         name="archive_import",
