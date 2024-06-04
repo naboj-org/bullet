@@ -1,3 +1,5 @@
+from operator import attrgetter
+
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
@@ -9,7 +11,7 @@ from django.views.generic.edit import BaseDeleteView
 from django_htmx.http import HttpResponseClientRefresh
 
 from bullet_admin.models import CompetitionRole
-from bullet_admin.utils import get_active_competition
+from bullet_admin.utils import get_active_competition, get_allowed_countries
 
 
 class DeleteView(BaseDeleteView):
@@ -56,8 +58,11 @@ class GenericList:
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        qs = self.get_queryset()
+        qs = self.get_country_queryset(self.get_queryset())
+        qs = self.get_language_queryset(qs)
 
+        ctx["countries"] = self.country_navigation()
+        ctx["languages"] = self.language_navigation()
         ctx |= self.order_table(qs)
         ctx["count"] = qs.count()
         ctx["list_title"] = self.get_list_title()
@@ -72,6 +77,59 @@ class GenericList:
         ctx["labels"] = self.get_labels()
 
         return ctx
+
+    def get_country_queryset(self, qs):
+        country = self.request.GET.get("country")
+        if country:
+            qs = qs.filter(country=country)
+
+        allowed_countries = get_allowed_countries(self.request)
+        if allowed_countries is not None:
+            qs = qs.filter(country__in=allowed_countries)
+        return qs
+
+    def country_navigation(self):
+        if "country" not in map(
+            attrgetter("name"), self.get_model()._meta.get_fields()
+        ):
+            return None
+
+        allowed_countries = get_allowed_countries(self.request)
+        countries = (
+            self.get_queryset()
+            .order_by("country")
+            .values_list("country", flat=True)
+            .distinct()
+        )
+        if allowed_countries is not None:
+            countries = countries.filter(country__in=allowed_countries)
+
+        if countries.count() <= 1:
+            return None
+        return countries
+
+    def get_language_queryset(self, qs):
+        language = self.request.GET.get("language")
+        if language:
+            qs = qs.filter(language=language)
+        return qs
+
+    def language_navigation(self):
+        if "language" not in map(
+            attrgetter("name"), self.get_model()._meta.get_fields()
+        ):
+            return None
+
+        languages = (
+            self.get_queryset()
+            .order_by("language")
+            .values_list("language", flat=True)
+            .distinct()
+        )
+
+        if languages.count() <= 1:
+            return None
+        return languages
 
     def order_table(self, qs):
         ctx = {}
