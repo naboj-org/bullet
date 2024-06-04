@@ -76,21 +76,22 @@ class GenericList:
     field_templates = {}
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = {}
         qs = self.get_queryset()
         if object_list:
             qs = object_list
         qs = self.get_country_queryset(qs)
         qs = self.get_language_queryset(qs)
-        qs = self.get_search_queryset(qs)
         qs = self.get_orderby_queryset(qs)
+        ctx["count"] = qs.count()
+        qs = self.get_search_queryset(qs)
 
-        ctx = super().get_context_data(object_list=qs, **kwargs)
+        ctx |= super().get_context_data(object_list=qs, **kwargs)
 
         ctx["countries"] = self.country_navigation()
         ctx["languages"] = self.language_navigation()
         ctx["orderby"] = self.request.GET.get("orderby")
         ctx["table_row"] = map(self.create_row, ctx["object_list"])
-        ctx["count"] = qs.count()
         ctx["list_title"] = self.get_list_title()
         ctx["object_name"] = self.get_object_name()
         ctx["help_url"] = self.help_url
