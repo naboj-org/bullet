@@ -1,0 +1,30 @@
+{% extends "bullet_admin/base.html" %}
+{% load badmin %}
+
+{% block title %}Delete {{ model_name }}{% endblock %}
+
+{% block content %}
+    <div class="p-8 mx-auto max-w-3xl">
+        {% aheader %}
+            {% slot title %}
+                Delete {{ model_name }}
+            {% endslot %}
+        {% endaheader %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            <p>Are you sure you want to delete {{ model_name }} "{{ object_name }}"?</p>
+
+            <div class="mt-6 space-x-2">
+                {% #abtn button label="Delete" icon="mdi:delete" color="red" %}
+                {% if request.GET.back %}
+                    {% #abtn url=request.GET.back label="Cancel" %}
+                {% else %}
+                    {% url "badmin:page_list" as back %}
+                    {% #abtn url=back label="Cancel" %}
+                {% endif %}
+            </div>
+        </form>
+    </div>
+{% endblock %}
