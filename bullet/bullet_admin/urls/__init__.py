@@ -195,6 +195,11 @@ urlpatterns = [
         name="team_resend_confirmation",
     ),
     path(
+        "teams/<int:pk>/history/",
+        teams.TeamHistoryView.as_view(),
+        name="team_history",
+    ),
+    path(
         "teams/<int:pk>/delete/",
         teams.TeamDeleteView.as_view(),
         name="team_delete",
