@@ -1,35 +1,52 @@
 from datetime import datetime, timezone
 
-from countries.models import BranchCountry
+from countries.logic.detection import get_country_language_from_request
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
 from PIL import Image
 
 from bullet_admin.access import PhotoUploadAccess
 from bullet_admin.forms.album import AlbumForm
-from bullet_admin.views import GenericForm
+from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericForm, GenericList
 
 
-class AlbumListView(PhotoUploadAccess, ListView):
-    template_name = "bullet_admin/albums/list.html"
-    paginate_by = 100
+class AlbumListView(PhotoUploadAccess, GenericList, ListView):
+    create_url = reverse_lazy("badmin:album_create")
+    labels = {"slug": "URL suffix (slug)"}
+    fields = ["title", "slug", "country", "photos"]
+    field_templates = {
+        "country": "bullet_admin/albums/country.html",
+        "photos": "bullet_admin/albums/photos.html",
+    }
 
     def get_queryset(self):
-        return Album.objects.filter(competition__branch=self.request.BRANCH)
+        return Album.objects.filter(competition=get_active_competition(self.request))
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        ctx = super().get_context_data(object_list=object_list, **kwargs)
-        ctx["album_count"] = Album.objects.filter(
-            competition__branch=self.request.BRANCH
-        ).count()
+    def get_edit_url(self, album: Album) -> str:
+        return reverse("badmin:album_edit", args=[album.pk])
 
-        country = BranchCountry.objects.filter(branch=self.request.BRANCH).first()
-        ctx["country"] = country.country.code.lower()
-        ctx["language"] = country.languages[0]
+    def get_view_url(self, album: Album) -> str:
+        country, language = self.detection
+        return reverse(
+            "archive_album",
+            kwargs={
+                "b_country": country,
+                "b_language": language,
+                "competition_number": album.competition.number,
+                "slug": album.slug,
+            },
+        )
 
-        return ctx
+    def dispatch(self, request, *args, **kwargs):
+        self.detection = get_country_language_from_request(self.request)
+        if not self.detection:
+            return redirect("country_selector")
+
+        return super().dispatch(request, *args, **kwargs)
 
 
 class AlbumFormMixin(GenericForm):
