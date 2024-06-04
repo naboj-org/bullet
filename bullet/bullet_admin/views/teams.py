@@ -25,7 +25,7 @@ from django.views.generic import (
     UpdateView,
 )
 from documents.models import TexJob
-from education.models import School
+from education.models import Grade, School
 from users.emails.teams import (
     send_confirmation_email,
     send_deletion_email,
@@ -432,19 +432,67 @@ class TeamCreateView(AdminAccess, CreateView):
         return HttpResponseRedirect(reverse("badmin:team_list"))
 
 
+def get_team_members(team, time):
+    members = Contestant.history.as_of(time).filter(team=team)
+    return members
+
+
 class TeamHistoryView(AdminAccess, ListView):
     model = Team
     template_name = "bullet_admin/teams/history.html"
 
     def get_queryset(self, *args, **kwargs):
-        team_history = Team.objects.get(id=self.kwargs["pk"]).history.all()
-        current = team_history.first()
         qs = []
-        if current.prev_record:
-            while current.prev_record:
-                user = current.history_user
-                time = current.history_date
-                changes = current.diff_against(current.prev_record).changes
-                qs.append({"user": user, "time": time, "changes": changes})
-                current = current.prev_record
+        team = Team.objects.get(id=self.kwargs["pk"])
+        current = team.history.first()
+
+        prev_members = get_team_members(team, datetime.now())
+        while current.prev_record:
+            current_members, prev_members = (
+                prev_members,
+                get_team_members(team, current.history_date),
+            )
+            members_changes = []
+            for member in current_members:
+                if member in prev_members:
+                    t = (
+                        datetime.now()
+                        if not current.next_record
+                        else current.next_record.history_date
+                    )
+                    cur_member = Contestant.history.filter(
+                        history_date__lte=t, id=member.id
+                    ).first()
+                    prev_member = Contestant.history.filter(
+                        history_date__lte=current.history_date, id=member.id
+                    ).first()
+
+                    changes = cur_member.diff_against(prev_member).changes
+                    if changes:
+                        for change in changes:
+                            if change.field == "grade":
+                                change.old = Grade.objects.get(id=change.old)
+                                change.new = Grade.objects.get(id=change.new)
+                        members_changes.append({"member": member, "changes": changes})
+
+            changes = current.diff_against(current.prev_record).changes
+            qs.append(
+                {
+                    "user": current.history_user,
+                    "time": current.history_date,
+                    "changes": changes,
+                    "added_members": [
+                        member
+                        for member in current_members
+                        if member not in prev_members
+                    ],
+                    "removed_members": [
+                        member
+                        for member in prev_members
+                        if member not in current_members
+                    ],
+                    "members_changes": members_changes,
+                }
+            )
+            current = current.prev_record
         return qs
