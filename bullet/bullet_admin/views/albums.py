@@ -103,3 +103,8 @@ class AlbumCreateView(PhotoUploadAccess, RedirectBackMixin, AlbumFormMixin, Crea
 
 class AlbumDeleteView(PhotoUploadAccess, RedirectBackMixin, GenericDelete, DeleteView):
     model = Album
+
+    def form_valid(self, form):
+        super().form_valid(form)
+        messages.success(self.request, "Album deleted successfully.")
+        return HttpResponseRedirect(self.get_success_url())
