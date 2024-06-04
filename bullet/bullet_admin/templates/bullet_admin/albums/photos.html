@@ -1,0 +1,7 @@
+{% load pictures %}
+
+<div class="flex gap-0.5">
+    {% for photo in object.photos.all|slice:":10" %}
+        {% picture photo.image img_loading="lazy" img_class="object-cover w-full h-5" %}
+    {% endfor %}
+</div>

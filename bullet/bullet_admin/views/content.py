@@ -3,7 +3,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Logo, Menu, Page, PageBlock
@@ -21,7 +21,7 @@ from bullet_admin.forms.content import (
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView as BDeleteView
-from bullet_admin.views import GenericForm
+from bullet_admin.views import GenericForm, GenericList
 
 
 class PageQuerySetMixin:
@@ -31,25 +31,30 @@ class PageQuerySetMixin:
         )
 
 
-class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, ListView):
-    template_name = "bullet_admin/content/page_list.html"
-    paginate_by = 100
+class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, GenericList, ListView):
+    create_url = reverse_lazy("badmin:page_create")
+    labels = {"slug": "URL"}
+    fields = ["title", "slug", "language", "countries"]
+    field_templates = {
+        "language": "bullet_admin/content/language.html",
+        "countries": "bullet_admin/content/countries.html",
+    }
 
-    def get_queryset(self):
-        qs = super().get_queryset()
-        if "language" in self.request.GET:
-            qs = qs.filter(language=self.request.GET["language"])
-        return qs
+    def get_edit_url(self, page: Page) -> str:
+        return reverse("badmin:page_edit", args=[page.pk])
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        ctx["languages"] = (
-            Page.objects.filter(branch=self.request.BRANCH)
-            .values_list("language", flat=True)
-            .distinct()
-            .order_by("language")
+    def get_delete_url(self, page: Page) -> str:
+        return reverse("badmin:page_delete", args=[page.pk])
+
+    def get_view_url(self, page: Page) -> str:
+        return reverse(
+            "page",
+            kwargs={
+                "b_country": page.countries[0].lower(),
+                "b_language": page.language,
+                "slug": page.slug,
+            },
         )
-        return ctx
 
 
 class PageCopyView(TranslatorRequiredMixin, PageQuerySetMixin, GenericForm, FormView):
