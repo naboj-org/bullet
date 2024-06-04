@@ -7,7 +7,7 @@ from django.db.models import Exists, OuterRef, Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views import View
 from django.views.generic import ListView
 from django_countries.fields import Country
@@ -18,11 +18,14 @@ from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserFo
 from bullet_admin.mixins import DelegateRequiredMixin
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericList
 
 
-class UserListView(DelegateRequiredMixin, ListView):
-    template_name = "bullet_admin/users/list.html"
-    paginate_by = 50
+class UserListView(DelegateRequiredMixin, GenericList, ListView):
+    create_url = reverse_lazy("badmin:user_create")
+    fields = ["get_full_name", "email", "has_branch_role"]
+    labels = {"get_full_name": "Full Name", "has_branch_role": "Admin access"}
+    field_templates = {"has_branch_role": "bullet_admin/users/role.html"}
 
     def get_queryset(self):
         branch_role = BranchRole.objects.filter(
@@ -37,15 +40,10 @@ class UserListView(DelegateRequiredMixin, ListView):
             has_competition_role=Exists(competition_role),
         )
 
-        if self.request.GET.get("q"):
-            q = self.request.GET["q"]
-            qs = qs.filter(
-                Q(first_name__icontains=q)
-                | Q(last_name__icontains=q)
-                | Q(email__icontains=q)
-            )
-
         return qs
+
+    def get_edit_url(self, user: User) -> str:
+        return reverse("badmin:user_edit", args=[user.pk])
 
 
 class UserFormsMixin:
