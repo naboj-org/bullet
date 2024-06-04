@@ -5,7 +5,7 @@ from education.models import School
 from bullet import search
 from bullet_admin.access import CountryAdminAccess, CountryAdminInAccess
 from bullet_admin.forms.education import SchoolForm
-from bullet_admin.utils import get_active_competition
+from bullet_admin.utils import get_allowed_countries
 from bullet_admin.views import GenericForm
 
 
@@ -19,13 +19,6 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, ListView):
     paginate_by = 100
     require_unlocked_competition = False
 
-    def get_allowed_countries(self):
-        competition = get_active_competition(self.request)
-        role = self.request.user.get_competition_role(competition)
-        if role.countries:
-            return role.countries
-        return None
-
     def get_queryset(self):
         qs = super().get_queryset()
 
@@ -33,7 +26,7 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, ListView):
         if country:
             qs = qs.filter(country=country)
 
-        allowed_countries = self.get_allowed_countries()
+        allowed_countries = get_allowed_countries(self.request)
         if allowed_countries is not None:
             qs = qs.filter(country__in=allowed_countries)
 
@@ -54,7 +47,7 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, ListView):
         ctx["school_count"] = School.objects.count()
 
         countries = School.objects.values_list("country", flat=True).distinct()
-        allowed_countries = self.get_allowed_countries()
+        allowed_countries = get_allowed_countries(self.request)
         if allowed_countries is not None:
             countries = countries.filter(country__in=allowed_countries)
         ctx["countries"] = countries

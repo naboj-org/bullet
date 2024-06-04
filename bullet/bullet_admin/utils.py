@@ -27,6 +27,14 @@ def get_active_competition(request: HttpRequest):
     return request._badmin_competition
 
 
+def get_allowed_countries(request: HttpRequest):
+    competition = get_active_competition(request)
+    role = request.user.get_competition_role(competition)
+    if role.countries:
+        return role.countries
+    return None
+
+
 def can_access_venue(request: HttpRequest, venue: "Venue") -> bool:
     brole = request.user.get_branch_role(request.BRANCH)
     if brole.is_admin and venue.category.competition.branch == request.BRANCH:
