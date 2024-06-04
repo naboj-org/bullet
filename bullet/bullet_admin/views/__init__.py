@@ -1,6 +1,9 @@
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
+from django.template.loader import render_to_string
+from django.utils.functional import cached_property
+from django.utils.safestring import mark_safe
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseDeleteView
 from django_htmx.http import HttpResponseClientRefresh
@@ -30,6 +33,110 @@ class GenericForm:
         ctx["form_submit_icon"] = self.form_submit_icon
         ctx["form_submit_color"] = self.form_submit_color
         return ctx
+
+
+class GenericList:
+    template_name = "bullet_admin/generic/list.html"
+    paginate_by = 100
+    list_title = None
+    object_name = None
+    help_url = None
+    create_url = None
+    upload_url = None
+    export_url = None
+    new_folder_url = None
+    assign_numbers_url = None
+    subtitle = None
+    labels = {}
+    fields = []
+    edit_urls = []
+    delete_urls = []
+    view_urls = []
+    field_templates = {}
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        qs = self.get_queryset()
+
+        ctx |= self.order_table(qs)
+        ctx["count"] = qs.count()
+        ctx["list_title"] = self.get_list_title()
+        ctx["object_name"] = self.get_object_name()
+        ctx["help_url"] = self.help_url
+        ctx["create_url"] = self.create_url
+        ctx["upload_url"] = self.upload_url
+        ctx["export_url"] = self.export_url
+        ctx["new_folder_url"] = self.new_folder_url
+        ctx["assign_numbers_url"] = self.assign_numbers_url
+        ctx["subtitle"] = self.subtitle
+        ctx["labels"] = self.get_labels()
+
+        return ctx
+
+    def order_table(self, qs):
+        ctx = {}
+        orderby = self.request.GET.get("orderby")
+        if orderby:
+            ctx["table_row"] = map(self.create_row, qs.order_by(orderby))
+            ctx["orderby"] = orderby
+        else:
+            ctx["table_row"] = map(self.create_row, qs)
+        return ctx
+
+    @cached_property
+    def get_model(self):
+        return self.model if self.model else self.get_queryset().model
+
+    def get_list_title(self):
+        return (
+            self.list_title
+            if self.list_title
+            else self.get_model()._meta.verbose_name_plural
+        )
+
+    def get_fields(self):
+        return (
+            self.fields
+            if self.fields
+            else [field.name for field in self.get_model()._meta.get_fields()]
+        )
+
+    def get_object_name(self):
+        return (
+            self.object_name
+            if self.object_name
+            else self.get_list_title().split(" ")[-1].lower()[0:-1]
+        )
+
+    def get_labels(self):
+        return [
+            (self.labels[field] if field in self.labels else field.capitalize(), field)
+            for field in self.get_fields()
+        ]
+
+    def create_row(self, object):
+        return [
+            [
+                getattr(object, field)
+                if field not in self.field_templates
+                else mark_safe(
+                    render_to_string(self.field_templates[field], {"object": object})
+                )
+                for field in self.get_fields()
+            ],
+            self.get_edit_url(object),
+            self.get_delete_url(object),
+            self.get_view_url(object),
+        ]
+
+    def get_edit_url(self, obj) -> str | None:
+        return None
+
+    def get_delete_url(self, obj) -> str | None:
+        return None
+
+    def get_view_url(self, obj) -> str | None:
+        return None
 
 
 class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
