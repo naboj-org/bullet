@@ -542,3 +542,27 @@ class RecentlyDeletedTeamsView(AdminAccess, ListView):
             history_type="-", history_date__gte=datetime.now() - timedelta(days=100)
         ).order_by("-history_date")
         return qs
+
+
+class TeamRestoreView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
+    model = Team
+    template_name = "bullet_admin/teams/restore.html"
+
+    def get_default_success_url(self):
+        return reverse("badmin:recently_deleted")
+
+    def post(self, request, *args, **kwargs):
+        team = Team.history.filter(id=kwargs["pk"]).first()
+        prev = team.prev_record.instance
+        time = team.history_date
+
+        previous_members = get_team_members(prev, time)
+        print(previous_members)
+        for member in previous_members:
+            member.instance.save()
+
+        team.delete()
+        prev.save()
+        prev.history.first().prev_record.delete()
+
+        return HttpResponseRedirect(self.get_success_url())
