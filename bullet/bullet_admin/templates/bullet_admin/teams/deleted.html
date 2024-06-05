@@ -1,0 +1,83 @@
+{% extends "bullet_admin/base.html" %}
+{% load utils %}
+{% load bform %}
+
+{% block title %}Recently deleted teams{% endblock %}
+
+{% block content %}
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Recently deleted teams</h2>
+        </header>
+        <div class="p-4">
+
+            <div class="overflow-x-auto">
+                <table class="w-full mb-4">
+                    <thead>
+                        <tr class="bg-gray-100 text-left border-b">
+                            <th class="p-2">Number</th>
+                            <th class="p-2">School</th>
+                            <th class="p-2">Contact information</th>
+                            {% if not hide_venue %}
+                            <th class="p-2">Venue / Category</th>
+                            {% endif %}
+                            <th class="p-2">Deleted</th>
+                            <th class="p-2"></th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="divide-y">
+                        {% for team in object_list %}
+                        <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
+                            <td class="p-2 font-mono tracking-wider">
+                                {% if team.number %}
+                                <span class="text-gray-500">{{ team.venue.shortcode }}</span>{{ team.number|stringformat:"03d" }}
+                                {% else %}
+                                <span class="text-gray-500">---</span>
+                                {% endif %}
+                                <div class="text-gray-500 text-xs">{{ team.id_display }}</div>
+                            </td>
+                            <td class="p-2">
+                                <div class="font-bold">
+                                    {{ team.school.name }}
+                                    {% if team.in_school_symbol %}
+                                        <span class="text-primary">{{ team.in_school_symbol }}</span>
+                                    {% endif %}
+                                </div>
+                                <div class="text-sm">{{ team.school.address }}</div>
+                            </td>
+                            <td class="p-2">
+                                <div>{{ team.contact_name }}</div>
+                                {% if not is_operator %}
+                                    <div class="text-sm"><a href="mailto:{{ team.contact_email }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_email }}</a></div>
+                                    {% if team.contact_phone %}
+                                    <div class="text-sm"><a href="tel:{{ team.contact_phone }}" class="hover:text-primary-dark text-primary underline">{{ team.contact_phone_pretty }}</a></div>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                            {% if not hide_venue %}
+                            <td class="p-2">
+                                <div>{{ team.venue.name }}</div>
+                                <div class="text-sm">{{ team.venue.category.identifier|title }}</div>
+                            </td>
+                            {% endif %}
+                            <td>
+                                <div>{{ team.history_date }}</div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="flex gap-2">
+            {% if page_obj.has_previous %}
+                <a href="{% query_transform page=page_obj.previous_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
+            {% endif %}
+            {% if page_obj.has_next %}
+                <a href="{% query_transform page=page_obj.next_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
+            {% endif %}
+            </div>
+        </div>
+    </article>
+{% endblock %}
