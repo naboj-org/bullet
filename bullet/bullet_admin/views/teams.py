@@ -1,7 +1,7 @@
 import csv
 import json
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timedelta
 from functools import partial
 
 import yaml
@@ -531,3 +531,14 @@ class TeamRevertView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
             member.history.as_of(contestant_time).save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+
+class RecentlyDeletedTeamsView(AdminAccess, ListView):
+    template_name = "bullet_admin/teams/deleted.html"
+    paginate_by = 20
+
+    def get_queryset(self, *args, **kwargs):
+        qs = Team.history.filter(
+            history_type="-", history_date__gte=datetime.now() - timedelta(days=100)
+        ).order_by("-history_date")
+        return qs
