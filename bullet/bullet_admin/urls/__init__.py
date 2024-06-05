@@ -180,6 +180,11 @@ urlpatterns = [
     path("teams/create/", teams.TeamCreateView.as_view(), name="team_create"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
+        "teams/recently_deleted",
+        teams.RecentlyDeletedTeamsView.as_view(),
+        name="recently_deleted",
+    ),
+    path(
         "teams/<int:pk>/tex_document/",
         teams.TeamGenerateDocumentView.as_view(),
         name="team_tex_document",
