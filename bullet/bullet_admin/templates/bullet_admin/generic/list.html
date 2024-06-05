@@ -140,7 +140,7 @@
                     <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         {% for item in object %}
                             <td class="p-3 whitespace-nowrap ">
-                                {{ item }}
+                                {% if item %}{{ item }}{% endif %}
                             </td>
                         {% endfor %}
 
@@ -149,7 +149,7 @@
                             <div class="flex items-center justify-end gap-2">
                                 {% if edit_url %}{% #alink type="edit" url=edit_url %}{% endif %}
                                 {% if delete_url %}{% #alink type="delete" url=delete_url %}{% endif %}
-                                {% if view_url %}{% #alink type="view" url=view_url %}{% endif %}
+                                {% if view_url %}{% #alink type=view_type url=view_url %}{% endif %}
                             </div>
                         </td>
                     </tr>

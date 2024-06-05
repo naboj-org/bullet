@@ -4,12 +4,13 @@
     class="p-2 -m-2
         {% if attributes.type == "edit" %}text-green-600 hover:text-green-400
         {% elif attributes.type == "delete" %}text-red-600 hover:text-red-400
-        {% elif attributes.type == "view" %}text-blue-600 hover:text-blue-400
+        {% else%}text-blue-600 hover:text-blue-400
     {% endif %}">
         <span class="iconify w-5 h-5 shrink-0" data-icon=
             {% if attributes.type == "edit" %}"mdi:square-edit-outline"
             {% elif attributes.type == "delete" %}"mdi:delete"
             {% elif attributes.type == "view" %}"mdi:export"
             {% elif attributes.type == "history" %}"mdi:history"
+            {% elif attributes.type == "internal-view" %}"mdi:eye"
         {% endif %}></span>
 </a>

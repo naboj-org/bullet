@@ -74,6 +74,7 @@ class GenericList:
     delete_urls = []
     view_urls = []
     field_templates = {}
+    view_type = "view"
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = {}
@@ -102,6 +103,7 @@ class GenericList:
         ctx["assign_numbers_url"] = self.assign_numbers_url
         ctx["subtitle"] = self.subtitle
         ctx["labels"] = self.get_labels()
+        ctx["view_type"] = self.view_type
 
         return ctx
 
@@ -209,7 +211,12 @@ class GenericList:
 
     def get_labels(self):
         return [
-            (self.labels[field] if field in self.labels else field.capitalize(), field)
+            (
+                self.labels[field]
+                if field in self.labels
+                else field.replace("_", " ").capitalize(),
+                field,
+            )
             for field in self.get_fields()
         ]
 
