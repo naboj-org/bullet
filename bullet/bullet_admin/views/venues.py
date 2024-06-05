@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.forms import Form
 from django.http import FileResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
 from django.views.generic import (
     CreateView,
@@ -27,13 +27,19 @@ from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import VenueForm
 from bullet_admin.mixins import AdminRequiredMixin, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
+from bullet_admin.views import GenericForm, GenericList
 
 
-class VenueListView(AdminAccess, ListView):
+class VenueListView(AdminAccess, GenericList, ListView):
     require_unlocked_competition = False
-    template_name = "bullet_admin/venues/list.html"
-    paginate_by = 100
+    fields = ["name", "category", "team_count", "capacity", "local_start"]
+    labels = {"name": "Venue", "team_count": "Registered teams"}
+    field_templates = {
+        "name": "bullet_admin/venues/venue.html",
+        "category": "bullet_admin/venues/category.html",
+    }
+    view_type = "internal-view"
+    create_url = reverse_lazy("badmin:venue_create")
 
     def get_queryset(self):
         # For whatever reason, when you annotate the queryset, it loses
@@ -42,10 +48,8 @@ class VenueListView(AdminAccess, ListView):
             Venue.objects.for_request(self.request).annotate_teamcount().natural_order()
         )
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        ctx = super().get_context_data(object_list=object_list, **kwargs)
-        ctx["venue_count"] = Venue.objects.for_request(self.request).count()
-        return ctx
+    def get_view_url(self, venue: Venue) -> str:
+        return reverse("badmin:venue_detail", kwargs={"pk": venue.id})
 
 
 class VenueFormMixin(GenericForm):
