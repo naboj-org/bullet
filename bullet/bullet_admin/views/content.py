@@ -423,7 +423,6 @@ class LogoDeleteView(TranslatorRequiredMixin, BDeleteView):
 
 
 class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
-    model = Menu
     create_url = reverse_lazy("badmin:menu_create")
     fields = ["title", "url", "order", "language", "countries"]
     field_templates = {
