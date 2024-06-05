@@ -37,6 +37,7 @@ def admin_sidebar(context):
             items.extend(
                 [
                     ("fa-envelope", "Emails", reverse("badmin:email_list")),
+                    ("fa-trash", "Deleted teams", reverse("badmin:recently_deleted")),
                 ]
             )
 
