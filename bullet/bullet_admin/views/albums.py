@@ -21,7 +21,7 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
     labels = {"slug": "URL suffix (slug)"}
     fields = ["title", "slug", "country", "photos"]
     field_templates = {
-        "country": "bullet_admin/albums/country.html",
+        "country": "bullet_admin/partials/country.html",
         "photos": "bullet_admin/albums/photos.html",
     }
 
