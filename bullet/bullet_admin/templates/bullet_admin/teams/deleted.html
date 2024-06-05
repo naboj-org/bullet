@@ -64,6 +64,12 @@
                             <td>
                                 <div>{{ team.history_date }}</div>
                             </td>
+                            <td class="p-2 whitespace-nowrap text-right">
+                                <a href="{% url "badmin:team_restore" pk=team.id%}"
+                                   class="btn-admin-sm bg-gray-500 hover:bg-gray-600 ">
+                                    <i class="fas fa-history"></i> Restore
+                                </a>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
