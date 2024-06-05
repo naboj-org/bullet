@@ -2,6 +2,7 @@ from operator import attrgetter
 
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.http import HttpResponseNotAllowed
 from django.template.loader import render_to_string
 from django.utils.functional import cached_property
@@ -74,15 +75,23 @@ class GenericList:
     view_urls = []
     field_templates = {}
 
-    def get_context_data(self, **kwargs):
-        ctx = super().get_context_data(**kwargs)
-        qs = self.get_country_queryset(self.get_queryset())
+    def get_context_data(self, *, object_list=None, **kwargs):
+        ctx = {}
+        qs = self.get_queryset()
+        if object_list:
+            qs = object_list
+        qs = self.get_country_queryset(qs)
         qs = self.get_language_queryset(qs)
+        qs = self.get_orderby_queryset(qs)
+        ctx["count"] = qs.count()
+        qs = self.get_search_queryset(qs)
+
+        ctx |= super().get_context_data(object_list=qs, **kwargs)
 
         ctx["countries"] = self.country_navigation()
         ctx["languages"] = self.language_navigation()
-        ctx |= self.order_table(qs)
-        ctx["count"] = qs.count()
+        ctx["orderby"] = self.request.GET.get("orderby")
+        ctx["table_row"] = map(self.create_row, ctx["object_list"])
         ctx["list_title"] = self.get_list_title()
         ctx["object_name"] = self.get_object_name()
         ctx["help_url"] = self.help_url
@@ -149,15 +158,24 @@ class GenericList:
             return None
         return languages
 
-    def order_table(self, qs):
-        ctx = {}
+    def get_orderby_queryset(self, qs):
         orderby = self.request.GET.get("orderby")
         if orderby:
-            ctx["table_row"] = map(self.create_row, qs.order_by(orderby))
-            ctx["orderby"] = orderby
-        else:
-            ctx["table_row"] = map(self.create_row, qs)
-        return ctx
+            return qs.order_by(orderby)
+        return qs
+
+    def get_search_queryset(self, qs):
+        search = self.request.GET.get("q")
+        if search:
+            query = Q()
+            for field in self.get_model()._meta.get_fields():
+                try:
+                    field__icontains = field + "__icontains"
+                    query |= Q(**{field__icontains: search})
+                except TypeError:
+                    pass
+            qs = qs.filter(query)
+        return qs
 
     @cached_property
     def get_model(self):
