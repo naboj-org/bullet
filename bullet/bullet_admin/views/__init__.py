@@ -167,14 +167,19 @@ class GenericList:
     def get_search_queryset(self, qs):
         search = self.request.GET.get("q")
         if search:
-            query = Q()
-            for field in self.get_model()._meta.get_fields():
-                try:
-                    field__icontains = field + "__icontains"
-                    query |= Q(**{field__icontains: search})
-                except TypeError:
-                    pass
-            qs = qs.filter(query)
+            big_query = Q()
+            for word in search.split():
+                query = Q()
+                for field in self.get_model()._meta.get_fields():
+                    if type(field).__name__ not in [
+                        "ManyToOneRel",
+                        "ForeignKey",
+                        "ManyToManyField",
+                    ]:
+                        field__icontains = field.name + "__icontains"
+                        query |= Q(**{field__icontains: word})
+                big_query &= query
+            qs = qs.filter(big_query)
         return qs
 
     @cached_property
