@@ -34,7 +34,7 @@ from users.emails.teams import (
 from users.logic import get_school_symbol
 from users.models import Contestant, Team
 
-from bullet import search
+from bullet import search, settings
 from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import AdminAccess
 from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm, TeamForm
@@ -262,6 +262,16 @@ class TeamEditView(
             }
         )
         return kw
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        country = str(ctx["object"].venue.country.code).lower()
+        language = ctx["object"].language
+        branch = self.request.BRANCH
+        ctx[
+            "root_url"
+        ] = f"https://{branch.identifier}.{settings.PARENT_HOST}/{country}/{language}/teams/"
+        return ctx
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
