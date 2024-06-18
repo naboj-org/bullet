@@ -95,12 +95,12 @@ class GenericList:
         ctx["table_row"] = map(self.create_row, ctx["object_list"])
         ctx["list_title"] = self.get_list_title()
         ctx["object_name"] = self.get_object_name()
-        ctx["help_url"] = self.help_url
-        ctx["create_url"] = self.create_url
-        ctx["upload_url"] = self.upload_url
-        ctx["export_url"] = self.export_url
-        ctx["new_folder_url"] = self.new_folder_url
-        ctx["assign_numbers_url"] = self.assign_numbers_url
+        ctx["help_url"] = self.get_help_url()
+        ctx["create_url"] = self.get_create_url()
+        ctx["upload_url"] = self.get_upload_url()
+        ctx["export_url"] = self.get_export_url()
+        ctx["new_folder_url"] = self.get_new_folder_url()
+        ctx["assign_numbers_url"] = self.get_assign_numbers_url()
         ctx["subtitle"] = self.subtitle
         ctx["labels"] = self.get_labels()
         ctx["view_type"] = self.view_type
@@ -226,7 +226,10 @@ class GenericList:
                 getattr(object, field)
                 if field not in self.field_templates
                 else mark_safe(
-                    render_to_string(self.field_templates[field], {"object": object})
+                    render_to_string(
+                        self.field_templates[field],
+                        {"object": object, "request": self.request},
+                    )
                 )
                 for field in self.get_fields()
             ],
@@ -243,6 +246,30 @@ class GenericList:
 
     def get_view_url(self, obj) -> str | None:
         return None
+
+    def get_download_url(self, obj) -> str | None:
+        return None
+
+    def get_generate_url(self, obj) -> str | None:
+        return None
+
+    def get_help_url(self) -> str | None:
+        return self.help_url if self.help_url else None
+
+    def get_create_url(self) -> str | None:
+        return self.create_url if self.create_url else None
+
+    def get_upload_url(self) -> str | None:
+        return self.upload_url if self.upload_url else None
+
+    def get_export_url(self) -> str | None:
+        return self.export_url if self.export_url else None
+
+    def get_new_folder_url(self) -> str | None:
+        return self.new_folder_url if self.new_folder_url else None
+
+    def get_assign_numbers_url(self) -> str | None:
+        return self.assign_numbers_url if self.assign_numbers_url else None
 
 
 class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
