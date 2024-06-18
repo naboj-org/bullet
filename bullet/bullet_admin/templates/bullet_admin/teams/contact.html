@@ -1,0 +1,17 @@
+{% load access %}
+{% is_any_admin as admin %}
+<div>{{ object.contact_name }}</div>
+{% if admin %}
+    <div class="text-sm">
+        <a href="mailto:{{ object.contact_email }}" class="hover:text-primary-dark text-primary underline relative z-10z">
+            {{ object.contact_email }}
+        </a>
+    </div>
+    {% if object.contact_phone %}
+        <div class="text-sm">
+            <a href="tel:{{ object.contact_phone }}" class="hover:text-primary-dark text-primary underline relative z-10">
+                {{ object.contact_phone_pretty }}
+            </a>
+        </div>
+    {% endif %}
+{% endif %}
