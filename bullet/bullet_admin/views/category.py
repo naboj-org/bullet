@@ -1,12 +1,13 @@
 from competitions.models import Category
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
+from django.utils.safestring import mark_safe
 from django.views.generic import CreateView, ListView, UpdateView
 
 from bullet_admin.access import BranchAdminAccess
 from bullet_admin.forms.category import CategoryForm
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
+from bullet_admin.views import GenericForm, GenericList
 
 
 class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):
@@ -33,16 +34,32 @@ class CategoryCreateView(BranchAdminAccess, GenericForm, CreateView):
         return redirect("badmin:category_list")
 
 
-class CategoryListView(ListView):
-    template_name = "bullet_admin/categories/list.html"
-    paginate_by = 100
+class CategoryListView(GenericList, ListView):
+    list_title = "Categories"
+    fields = [
+        "identifier",
+        "order",
+        "problems_per_team",
+        "max_members_per_team",
+        "max_teams_per_school",
+    ]
+    labels = {
+        "identifier": "Category",
+        "problems_per_team": "Available problems",
+        "max_members_per_team": "Max. team members",
+        "max_teams_per_school": mark_safe(
+            "Max. teams per school"
+            "<span class='ml-1 text-black/70 font-normal'>(2nd round)</span>"
+        ),
+    }
+    create_url = reverse_lazy("badmin:category_create")
+
+    field_templates = {
+        "max_teams_per_school": "bullet_admin/categories/max_teams_per_school.html",
+    }
 
     def get_queryset(self):
-        competition = get_active_competition(self.request)
-        return Category.objects.filter(competition=competition)
+        return Category.objects.filter(competition=get_active_competition(self.request))
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        ctx = super().get_context_data(object_list=object_list, **kwargs)
-        competition = get_active_competition(self.request)
-        ctx["category_count"] = Category.objects.filter(competition=competition).count()
-        return ctx
+    def get_edit_url(self, category: Category) -> str:
+        return reverse("badmin:category_edit", args=[category.pk])
