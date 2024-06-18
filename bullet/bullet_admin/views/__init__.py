@@ -2,7 +2,7 @@ from operator import attrgetter
 
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.db.models import Q
+from django.db.models import F, Func, Q
 from django.http import HttpResponseNotAllowed
 from django.template.loader import render_to_string
 from django.utils.functional import cached_property
@@ -110,7 +110,15 @@ class GenericList:
     def get_country_queryset(self, qs):
         country = self.request.GET.get("country")
         if country:
-            qs = qs.filter(country=country)
+            fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+            if "country" in fields:
+                qs = qs.filter(country=country)
+            elif "countries" in fields:
+                qs = qs.filter(countries__contains=[country]) | qs.filter(countries=[])
+            elif "team_countries" in fields:
+                qs = qs.filter(team_countries__contains=[country]) | qs.filter(
+                    team_countries=[]
+                )
 
         allowed_countries = get_allowed_countries(self.request)
         if allowed_countries is not None:
@@ -118,18 +126,27 @@ class GenericList:
         return qs
 
     def country_navigation(self):
-        if "country" not in map(
-            attrgetter("name"), self.get_model()._meta.get_fields()
-        ):
+        allowed_countries = get_allowed_countries(self.request)
+        countries = self.get_queryset()
+        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
+        if "country" in fields:
+            pass
+        elif "countries" in fields:
+            countries = countries.annotate(
+                country=Func(F("countries"), function="unnest")
+            )
+        elif "team_countries" in fields:
+            countries = countries.annotate(
+                country=Func(F("team_countries"), function="unnest")
+            )
+        else:
             return None
 
-        allowed_countries = get_allowed_countries(self.request)
         countries = (
-            self.get_queryset()
-            .order_by("country")
-            .values_list("country", flat=True)
-            .distinct()
+            countries.values_list("country", flat=True).order_by("country").distinct()
         )
+
         if allowed_countries is not None:
             countries = countries.filter(country__in=allowed_countries)
 
@@ -140,20 +157,46 @@ class GenericList:
     def get_language_queryset(self, qs):
         language = self.request.GET.get("language")
         if language:
-            qs = qs.filter(language=language)
+            fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
+            if "language" in fields:
+                qs = qs.filter(language=language)
+            elif "languages" in fields:
+                qs = qs.filter(languages__contains=[language]) | qs.filter(languages=[])
+            elif "team_languages" in fields:
+                qs = qs.filter(team_languages__contains=[language]) | qs.filter(
+                    team_languages=[]
+                )
+            elif "accepted_languages" in fields:
+                qs = qs.filter(accepted_languages__contains=[language]) | qs.filter(
+                    accepted_languages=[]
+                )
+
         return qs
 
     def language_navigation(self):
-        if "language" not in map(
-            attrgetter("name"), self.get_model()._meta.get_fields()
-        ):
+        languages = self.get_queryset()
+        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
+        if "language" in fields:
+            languages = languages
+        elif "languages" in fields:
+            languages = languages.annotate(
+                language=Func(F("languages"), function="unnest")
+            )
+        elif "team_languages" in fields:
+            languages = languages.annotate(
+                language=Func(F("team_languages"), function="unnest")
+            )
+        elif "accepted_languages" in fields:
+            languages = languages.annotate(
+                language=Func(F("accepted_languages"), function="unnest")
+            )
+        else:
             return None
 
         languages = (
-            self.get_queryset()
-            .order_by("language")
-            .values_list("language", flat=True)
-            .distinct()
+            languages.values_list("language", flat=True).order_by("language").distinct()
         )
 
         if languages.count() <= 1:
@@ -233,6 +276,8 @@ class GenericList:
             self.get_edit_url(object),
             self.get_delete_url(object),
             self.get_view_url(object),
+            self.get_download_url(object),
+            self.get_generate_url(object),
         ]
 
     def get_edit_url(self, obj) -> str | None:
@@ -242,6 +287,12 @@ class GenericList:
         return None
 
     def get_view_url(self, obj) -> str | None:
+        return None
+
+    def get_download_url(self, obj) -> str | None:
+        return None
+
+    def get_generate_url(self, obj) -> str | None:
         return None
 
 
