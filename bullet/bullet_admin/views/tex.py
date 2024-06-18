@@ -2,7 +2,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.functional import cached_property
 from django.views import View
@@ -14,7 +14,7 @@ from documents.models import TexJob, TexTemplate
 from bullet_admin.access import AdminAccess
 from bullet_admin.forms.tex import LetterCallbackForm, TexRenderForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm
+from bullet_admin.views import GenericForm, GenericList
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -56,13 +56,27 @@ class JobDetailView(LoginRequiredMixin, DetailView):
         return ["bullet_admin/tex/job.html"]
 
 
-class TemplateListView(AdminAccess, ListView):
-    template_name = "bullet_admin/tex/template/list.html"
+class TemplateListView(AdminAccess, GenericList, ListView):
     require_unlocked_competition = False
+    fields = ["name", "type"]
+    create_url = reverse_lazy("badmin:tex_template_create")
+    help_url = reverse_lazy("badmin:documentation", args=["tex"])
 
     def get_queryset(self):
-        competition = get_active_competition(self.request)
-        return TexTemplate.objects.filter(competition=competition)
+        return TexTemplate.objects.filter(
+            competition=get_active_competition(self.request)
+        )
+
+    def get_edit_url(self, template: TexTemplate) -> str:
+        return reverse("badmin:tex_template_update", args=[template.pk])
+
+    def get_download_url(self, template: TexTemplate) -> str:
+        return template.template.url
+
+    def get_generate_url(self, template: TexTemplate) -> str | None:
+        if template.type == template.Type.GENERIC:
+            return reverse("badmin:tex_template_render", args=[template.pk])
+        return None
 
 
 class TemplateCreateView(AdminAccess, GenericForm, CreateView):
