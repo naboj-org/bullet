@@ -1,0 +1,7 @@
+<div class="font-bold">
+    {{ object.school.name }}
+    {% if object.in_school_symbol %}
+    	<span class="text-primary">{{ object.in_school_symbol }}</span>
+    {% endif %}
+</div>
+<div class="text-sm">{{ object.school.address }}</div>

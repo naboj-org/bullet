@@ -46,13 +46,49 @@ from bullet_admin.mixins import (
     RedirectBackMixin,
     VenueMixin,
 )
-from bullet_admin.utils import can_access_venue, get_active_competition
-from bullet_admin.views import GenericForm
+from bullet_admin.utils import (
+    can_access_venue,
+    get_active_competition,
+    get_allowed_countries,
+)
+from bullet_admin.views import GenericForm, GenericList
 
 
-class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
-    template_name = "bullet_admin/teams/list.html"
-    paginate_by = 100
+class TeamListView(OperatorRequiredMixin, IsOperatorContext, GenericList, ListView):
+    labels = {
+        "contact_name": "Contact Informations",
+        "venue": "Venue / Category",
+        "consent_photos": "Status",
+    }
+
+    field_templates = {
+        "number": "bullet_admin/teams/number.html",
+        "school": "bullet_admin/teams/school.html",
+        "contact_name": "bullet_admin/teams/contact.html",
+        "contestants": "bullet_admin/teams/contestants.html",
+        "consent_photos": "bullet_admin/teams/status.html",
+    }
+
+    def get_assign_numbers_url(self) -> str | None:
+        if self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).is_operator:
+            return None
+        return reverse("badmin:team_assign_numbers")
+
+    def get_export_url(self) -> str | None:
+        if self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).is_operator:
+            return None
+        return reverse("badmin:team_export")
+
+    def get_create_url(self) -> str | None:
+        if self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).is_operator:
+            return None
+        return reverse("badmin:team_create")
 
     def get_form(self):
         return TeamFilterForm(
@@ -95,17 +131,60 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
 
         return qs
 
-    def get_context_data(self, *args, **kwargs):
-        ctx = super().get_context_data(*args, **kwargs)
+    def get_edit_url(self, team: Team) -> str | None:
+        if self.request.user.get_competition_role(
+            get_active_competition(self.request)
+        ).is_operator:
+            return None
+        return reverse("badmin:team_edit", kwargs={"pk": team.id})
+
+    def get_fields(self):
         brole = self.request.user.get_branch_role(self.request.BRANCH)
         crole = self.request.user.get_competition_role(
             get_active_competition(self.request)
         )
-        ctx["hide_venue"] = (
-            not brole.is_admin and not crole.countries and len(crole.venues) < 2
+        if not brole.is_admin and not crole.countries and len(crole.venues) < 2:
+            return [
+                "number",
+                "school",
+                "contact_name",
+                "contestants",
+                "consent_photos",
+            ]
+        return [
+            "number",
+            "school",
+            "contact_name",
+            "contestants",
+            "venue",
+            "consent_photos",
+        ]
+
+    def get_country_queryset(self, qs):
+        country = self.request.GET.get("country")
+        if country:
+            qs = qs.filter(venue__country=country)
+
+        allowed_countries = get_allowed_countries(self.request)
+        if allowed_countries is not None:
+            qs = qs.filter(venue__country__in=allowed_countries)
+        return qs
+
+    def country_navigation(self):
+        allowed_countries = get_allowed_countries(self.request)
+        countries = (
+            self.get_queryset()
+            .values_list("venue__country", flat=True)
+            .order_by("venue__country")
+            .distinct()
         )
-        ctx["search_form"] = self.get_form()
-        return ctx
+
+        if allowed_countries is not None:
+            countries = countries.filter(country__in=allowed_countries)
+
+        if countries.count() <= 1:
+            return None
+        return countries
 
 
 class TeamExportView(AdminRequiredMixin, FormView):
@@ -536,6 +615,8 @@ class TeamRevertView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
 class RecentlyDeletedTeamsView(AdminAccess, ListView):
     template_name = "bullet_admin/teams/deleted.html"
     paginate_by = 20
+
+    require_unlocked_competition = False
 
     def get_queryset(self, *args, **kwargs):
         qs = Team.history.filter(

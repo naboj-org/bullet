@@ -1,0 +1,5 @@
+<ul class="text-xs">
+    {% for contestant in object.contestants.all %}
+    	<li>{{ contestant.full_name }}</li>
+    {% endfor %}
+</ul>

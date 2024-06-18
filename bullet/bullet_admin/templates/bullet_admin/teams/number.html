@@ -1,0 +1,8 @@
+<span class="font-mono tracking-wider">
+	{% if object.number %}
+	    <span class="text-gray-500">{{ object.venue.shortcode }}</span>{{ object.number|stringformat:"03d" }}
+	{% else %}
+	    <span class="text-gray-500">---</span>
+	{% endif %}
+	<div class="text-gray-500 text-xs">{{ object.id_display }}</div>
+</span>
