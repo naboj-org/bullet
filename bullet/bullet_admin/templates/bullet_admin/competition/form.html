@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}{{ form_title }}{% endblock %}
-
+{% block title %}
+    {{ form_title }}
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader %}
@@ -10,14 +10,11 @@
                 {{ form_title }}
             {% endslot %}
         {% endaheader %}
-
         <form method="post">
             {% csrf_token %}
             {% admin_form2 form %}
-
             <div class="mt-6 space-x-2">
                 {% #abtn button label="Save" icon="mdi:content-save" color="blue" %}
-
                 {% if not object.results_public %}
                     {% url "badmin:competition_finalize" as finalize_url %}
                     {% #abtn label="Finalize" icon="mdi:check" url=finalize_url %}
@@ -25,4 +22,4 @@
             </div>
         </form>
     </div>
-{% endblock %}
+{% endblock content %}

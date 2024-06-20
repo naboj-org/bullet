@@ -1,5 +1,7 @@
 {% if can_edit_block %}
-<a href="{% url "badmin:page_block_update" page_id=block.page_id pk=block.id %}" class="absolute right-0 bottom-0 p-2 hover:text-gray-900 text-gray-900/40">
-    <span class="iconify" data-icon="mdi:pencil"></span>
-</a>
+    <a href="{% url "badmin:page_block_update" page_id=block.page_id pk=block.id %}"
+       class="absolute right-0 bottom-0 p-2 hover:text-gray-900 text-gray-900/40">
+        <span class="iconify"
+              data-icon="mdi:pencil"></span>
+    </a>
 {% endif %}

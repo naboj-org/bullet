@@ -3,13 +3,15 @@
 {% load country_url %}
 {% load static %}
 {% load i18n %}
-
-{% block title %}{% trans "Live signage" %}{% endblock %}
-
+{% block title %}
+    {% trans "Live signage" %}
+{% endblock title %}
 {% block root_content %}
-    <iframe src="{{ data.countdown }}" class="min-w-screen min-h-screen w-full h-full" frameborder="0" id="js-frame"></iframe>
-
+    <iframe src="{{ data.countdown }}"
+            class="min-w-screen min-h-screen w-full h-full"
+            frameborder="0"
+            id="js-frame"></iframe>
     {{ data|json_script:"js-data" }}
     <script src="{% static "js/venue-timer.js" %}"></script>
     <script src="{% static "js/live.js" %}"></script>
-{% endblock %}
+{% endblock root_content %}

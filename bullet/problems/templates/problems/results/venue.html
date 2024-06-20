@@ -2,26 +2,25 @@
 {% load country_url %}
 {% load content_blocks %}
 {% load i18n %}
-
-{% block title %}{% trans "Results" %}{% endblock %}
-
+{% block title %}
+    {% trans "Results" %}
+{% endblock title %}
 {% block extrahead %}
     {{ block.super }}
-    <link rel="canonical" href="{% country_url "archive_results_venue" competition_number=competition.number venue=venue.shortcode %}">
-{% endblock %}
-
+    <link rel="canonical"
+          href="{% country_url "archive_results_venue" competition_number=competition.number venue=venue.shortcode %}">
+{% endblock extrahead %}
 {% block hero %}
-{% load_blocks "category" %}
-<div class="mt-8 md:mt-24 mb-4 md:mb-16">
-    <h1 class="text-4xl md:text-6xl font-bold">
-        {% trans "Results" %}
-    </h1>
-    <h2 class="text-2xl md:text-4xl mt-4 font-bold">{{ venue.name }} ({% content_block "category:name_"|add:venue.category.identifier %}), {{ competition.name }}</h2>
-</div>
-{% endblock %}
-
+    {% load_blocks "category" %}
+    <div class="mt-8 md:mt-24 mb-4 md:mb-16">
+        <h1 class="text-4xl md:text-6xl font-bold">{% trans "Results" %}</h1>
+        <h2 class="text-2xl md:text-4xl mt-4 font-bold">
+            {{ venue.name }} ({% content_block "category:name_"|add:venue.category.identifier %}), {{ competition.name }}
+        </h2>
+    </div>
+{% endblock hero %}
 {% block content %}
-<div class="container mx-auto px-2 mt-8">
-    {% include "problems/results/table.html" %}
-</div>
-{% endblock %}
+    <div class="container mx-auto px-2 mt-8">
+        {% include "problems/results/table.html" %}
+    </div>
+{% endblock content %}

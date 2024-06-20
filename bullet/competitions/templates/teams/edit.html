@@ -3,150 +3,171 @@
 {% load static %}
 {% load country_url %}
 {% load i18n %}
-
-{% block title %}{% trans "Edit team" %}{% endblock %}
+{% block title %}
+    {% trans "Edit team" %}
+{% endblock title %}
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">{% trans "Edit team" %}</h1>
-{% endblock %}
-
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
+        {% trans "Edit team" %}
+    </h1>
+{% endblock hero %}
 {% block content %}
     <main class="mx-auto w-full max-w-4xl p-3">
-
         <section class="py-5 my-5 border-b">
             <h2 class="font-bold text-2xl mb-6">{% trans "Team information" %}</h2>
-
             {% if team.venue.registration_flow.get_pre_edit_template %}
                 {% include team.venue.registration_flow.get_pre_edit_template %}
             {% endif %}
-        
             {% if team.is_waiting %}
-            <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-4 rounded-md">
-                <i class="fas fa-exclamation-triangle mx-1"></i> <b>{% trans "Your team is in the waiting list." %}</b>
-                {% trans "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes." %}
-            </div>
+                <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-4 rounded-md">
+                    <i class="fas fa-exclamation-triangle mx-1"></i> <b>{% trans "Your team is in the waiting list." %}</b>
+                    {% trans "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes." %}
+                </div>
             {% endif %}
-
             <p>
                 <strong>{% trans "School" %}:</strong>
                 {{ team.school.name }}, {{ team.school.address }}
-
                 {% if team.in_school_symbol %}
                     <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
                 {% endif %}
             </p>
-            <p><strong>{% trans "Venue" %}:</strong> {{ team.venue }}</p>
-
-            {% if team.venue.local_start %}
-            <p class="text-red-600">
-                <i class="fas fa-exclamation-triangle"></i>
-                {% blocktrans with time=team.venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
+            <p>
+                <strong>{% trans "Venue" %}:</strong> {{ team.venue }}
             </p>
+            {% if team.venue.local_start %}
+                <p class="text-red-600">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {% blocktrans with time=team.venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktrans %}
+                </p>
             {% endif %}
-
             <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
-            <p><strong>{% trans "Full name" %}:</strong> {{ team.contact_name }}</p>
-            <p><strong>{% trans "Email" %}:</strong> {{ team.contact_email }}</p>
+            <p>
+                <strong>{% trans "Full name" %}:</strong> {{ team.contact_name }}
+            </p>
+            <p>
+                <strong>{% trans "Email" %}:</strong> {{ team.contact_email }}
+            </p>
             {% if team.contact_phone %}
-                <p><strong>{% trans "Phone number" %}:</strong> {{ team.contact_phone_pretty }}</p>
+                <p>
+                    <strong>{% trans "Phone number" %}:</strong> {{ team.contact_phone_pretty }}
+                </p>
             {% endif %}
         </section>
         <section>
             <h2 class="font-bold text-2xl mb-1 mt-6">{% trans "Contestants" %}</h2>
-            <div class="mb-6 text-gray-700">{% trans "You can change the list of contestants at any time before the start of the competition." %}</div>
-
+            <div class="mb-6 text-gray-700">
+                {% trans "You can change the list of contestants at any time before the start of the competition." %}
+            </div>
             {% if can_be_changed %}
-                <form method="POST">
+                <form method="post">
                     {% csrf_token %}
                     {{ form.management_form }}
-
                     <div class="grid grid-cols-1 md:grid-cols-contestants-edit gap-2 mb-8">
                         <div class="w-auto md:block hidden"></div>
                         <div class="hidden md:block">{% trans "Full name" %}</div>
                         <div class="hidden md:block">{% trans "Grade" %}</div>
                         <div class="hidden md:block text-center">{% trans "Delete?" %}</div>
-
                         {% for f in form %}
-                        <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">
-                            {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
-                            {{ f.id }}
-                        </div>
-                        <div>
-                            <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}" for="id_{{ f.full_name.html_name }}">{% trans "Full name" %}:</label>
-                            {% bfield f.full_name %}
-                        </div>
-                        <div>
-                            <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}" for="id_{{ f.grade.html_name }}">{% trans "Grade" %}:</label>
-                            {% bfield f.grade %}
-                        </div>
-                        <div class="flex md:justify-center items-center gap-2">
-                            {% bcheckbox f.DELETE %}
-                            <label class="md:hidden font-bold" for="id_{{ f.DELETE.html_name }}">{% trans "Delete?" %}</label>
-                        </div>
+                            <div class="w-auto whitespace-nowrap text-xl
+                                        {% if f.field.required %}font-bold{% endif %}
+                                        mt-4 md:py-3 md:mt-0 md:text-base">
+                                {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
+                                {{ f.id }}
+                            </div>
+                            <div>
+                                <label class="md:hidden font-bold
+                                              {% if f.full_name.errors %}text-red-600{% endif %}"
+                                       for="id_{{ f.full_name.html_name }}">
+                                    {% trans "Full name" %}:
+                                </label>
+                                {% bfield f.full_name %}
+                            </div>
+                            <div>
+                                <label class="md:hidden font-bold
+                                              {% if f.grade.errors %}text-red-600{% endif %}"
+                                       for="id_{{ f.grade.html_name }}">
+                                    {% trans "Grade" %}:
+                                </label>
+                                {% bfield f.grade %}
+                            </div>
+                            <div class="flex md:justify-center items-center gap-2">
+                                {% bcheckbox f.DELETE %}
+                                <label class="md:hidden font-bold"
+                                       for="id_{{ f.DELETE.html_name }}">
+                                    {% trans "Delete?" %}
+                                </label>
+                            </div>
                         {% endfor %}
                     </div>
-
                     {% if not venue.is_online and not team.consent_photos %}
-                    <div class="mb-4">
-                        <label>
-                            <input type="checkbox" class="checkbox" name="consent_photos">
-                            {% blocktrans trimmed %}
-                                The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of
-                                the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
-                                for marketing and promotional purposes of the Competition. <sup>[1]</sup>
-                            {% endblocktrans %}
-                        </label>
-                    </div>
+                        <div class="mb-4">
+                            <label>
+                                <input type="checkbox"
+                                       class="checkbox"
+                                       name="consent_photos">
+                                {% blocktrans trimmed %}
+                                    The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of
+                                    the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
+                                    for marketing and promotional purposes of the Competition. <sup>[1]</sup>
+                                {% endblocktrans %}
+                            </label>
+                        </div>
                     {% endif %}
-
                     <div class="flex gap-4 items-baseline">
-                        <button type="submit" class="btn">{% trans "Update" %}</button>
-                        <a class="underline text-primary hover:text-primary-dark" href="{% country_url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
+                        <button type="submit"
+                                class="btn">{% trans "Update" %}</button>
+                        <a class="underline text-primary hover:text-primary-dark"
+                           href="{% country_url "team_delete" secret_link=team.secret_link %}">{% trans "Unregister team" %}</a>
                     </div>
-
                     {% if not venue.is_online and not team.consent_photos %}
-                    <div class="mt-8 prose prose-sm max-w-none">
-                        {% blocktrans trimmed with link=link %}
-                            <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
-                            This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
-                            Withdrawal of consent does not affect the legality of the processing before its withdrawal.
-                            The affected person can request the deletion of personal data only if it is technically possible and the deletion
-                            does not affect the rights of other affected persons.
-                        {% endblocktrans %}
-                    </div>
+                        <div class="mt-8 prose prose-sm max-w-none">
+                            {% blocktrans trimmed with link=link %}
+                                <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
+                                This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
+                                Withdrawal of consent does not affect the legality of the processing before its withdrawal.
+                                The affected person can request the deletion of personal data only if it is technically possible and the deletion
+                                does not affect the rights of other affected persons.
+                            {% endblocktrans %}
+                        </div>
                     {% endif %}
                 </form>
             {% else %}
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                {% for contestant in team.contestants.all %}
-                    <div>
-                        <h3 class="text-xl mt-3 mb-1">
-                            {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
-                        </h3>
-                        <p>
-                            <strong>{% trans "Full name" %}:</strong>
-                            {{ contestant.full_name }}
-                        </p>
-                        <p>
-                            <strong>{% trans "Grade" %}:</strong>
-                            {{ contestant.grade.name }}
-                        </p>
-                    </div>
-                {% endfor %}
+                    {% for contestant in team.contestants.all %}
+                        <div>
+                            <h3 class="text-xl mt-3 mb-1">
+                                {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
+                            </h3>
+                            <p>
+                                <strong>{% trans "Full name" %}:</strong>
+                                {{ contestant.full_name }}
+                            </p>
+                            <p>
+                                <strong>{% trans "Grade" %}:</strong>
+                                {{ contestant.grade.name }}
+                            </p>
+                        </div>
+                    {% endfor %}
                 </div>
             {% endif %}
-
             {% if team.venue.registration_flow.get_post_edit_template %}
                 {% include team.venue.registration_flow.get_post_edit_template %}
             {% endif %}
-
             {% if show_certificate %}
-            <form method="POST" action="{% country_url 'team_certificate' secret_link=team.secret_link %}" class="my-6">
-                {% csrf_token %}
-                <h2 class="font-bold text-2xl mb-1">{% trans "Certificate" %}</h2>
-                <p class="mb-3">{% trans "You can download certificate for your team by clicking on the button below." %}</p>
-                <button type="submit" class="btn"><i class="fas fa-download"></i> {% trans "Download certificate" %}</button>
-            </form>
+                <form method="post"
+                      action="{% country_url 'team_certificate' secret_link=team.secret_link %}"
+                      class="my-6">
+                    {% csrf_token %}
+                    <h2 class="font-bold text-2xl mb-1">{% trans "Certificate" %}</h2>
+                    <p class="mb-3">
+                        {% trans "You can download certificate for your team by clicking on the button below." %}
+                    </p>
+                    <button type="submit"
+                            class="btn">
+                        <i class="fas fa-download"></i> {% trans "Download certificate" %}
+                    </button>
+                </form>
             {% endif %}
         </section>
     </main>
-{% endblock %}
+{% endblock content %}

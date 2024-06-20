@@ -1,26 +1,36 @@
 {% if available_venues %}
-<article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-    <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-        <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Venue selector</h2>
-    </header>
-    <div class="p-4">
-        <p class="mb-2">You have administrator access to multiple venues. Please select a venue you want to use from the dropdown below:</p>
-
-        <form method="get" class="flex gap-2" id="js-venue-selector">
-            <select name="venue" class="input">
-                {% for avenue in available_venues %}
-                    <option value="{{ avenue.id }}" {% if avenue.id == venue.id %}selected{% endif %}>{{ avenue.name }} ({{ avenue.category.identifier }})</option>
-                {% endfor %}
-            </select>
-
-            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Select</button>
-        </form>
-    </div>
-</article>
-
-<script>
+    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                Venue selector
+            </h2>
+        </header>
+        <div class="p-4">
+            <p class="mb-2">
+                You have administrator access to multiple venues. Please select a venue you want to use from the dropdown below:
+            </p>
+            <form method="get"
+                  class="flex gap-2"
+                  id="js-venue-selector">
+                <select name="venue"
+                        class="input">
+                    {% for avenue in available_venues %}
+                        <option value="{{ avenue.id }}"
+                                {% if avenue.id == venue.id %}selected{% endif %}>
+                            {{ avenue.name }} ({{ avenue.category.identifier }})
+                        </option>
+                    {% endfor %}
+                </select>
+                <button type="submit"
+                        class="btn-admin bg-primary hover:bg-primary-dark">
+                    Select
+                </button>
+            </form>
+        </div>
+    </article>
+    <script>
 document.querySelector("#js-venue-selector select").addEventListener("change", () => {
     document.getElementById("js-venue-selector").submit()
 })
-</script>
+    </script>
 {% endif %}

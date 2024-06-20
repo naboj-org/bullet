@@ -1,26 +1,23 @@
 <div class="border-b border-gray-200 pb-4">
-    <h2 class="text-base font-semibold text-gray-900">
-        Current state
-    </h2>
+    <h2 class="text-base font-semibold text-gray-900">Current state</h2>
 </div>
 <div class="pt-4">
     <div class="text-3xl text-gray-700">{{ competition.state.label }}</div>
-
     <p class="text-gray-700 mt-1 leading-6">
         {% if competition.state == competition.state.BEFORE_WEB_START %}
-        The competition is not visible to the public.
+            The competition is not visible to the public.
         {% elif competition.state == competition.state.BEFORE_REGISTRATION %}
-        We are waiting for the registration to start.
+            We are waiting for the registration to start.
         {% elif competition.state == competition.state.REGISTRATION %}
-        The registration is open.
+            The registration is open.
         {% elif competition.state == competition.state.AFTER_REGISTRATION %}
-        The registration is now closed.
+            The registration is now closed.
         {% elif competition.state == competition.state.COMPETITION %}
-        The competition has begun and is currently underway.
+            The competition has begun and is currently underway.
         {% elif competition.state == competition.state.AFTER_COMPETITION %}
-        The competition is over, but the results haven't been announced yet.
+            The competition is over, but the results haven't been announced yet.
         {% elif competition.state == competition.state.LOCKED %}
-        The competition is over, and no further changes are allowed.
+            The competition is over, and no further changes are allowed.
         {% endif %}
     </p>
 </div>

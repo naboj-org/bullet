@@ -1,13 +1,12 @@
 {% extends "bullet_admin/base.html" %}
 {% load markdownify %}
-
-{% block title %}{{ page.title }}{% endblock %}
-
+{% block title %}
+    {{ page.title }}
+{% endblock title %}
 {% block content %}
     <div class="p-8 pb-0 mx-auto max-w-3xl">
-        <a href="{% url "badmin:documentation" %}" class="link">Back to documentation index</a>
+        <a href="{% url "badmin:documentation" %}"
+           class="link">Back to documentation index</a>
     </div>
-    <div class="p-8 mx-auto max-w-3xl prose">
-        {{ page.content|markdownify }}
-    </div>
-{% endblock %}
+    <div class="p-8 mx-auto max-w-3xl prose">{{ page.content|markdownify }}</div>
+{% endblock content %}

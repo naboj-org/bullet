@@ -1,24 +1,44 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
 {% load static %}
-{% block title %}{% if create %}Create{% else %}Edit{% endif %} menu item{% endblock %}
+{% block title %}
+    {% if create %}
+        Create
+    {% else %}
+        Edit
+    {% endif %}
+    menu item
+{% endblock title %}
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">{% if create %}Create{% else %}Edit{% endif %} menu item</h2>
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                {% if create %}
+                    Create
+                {% else %}
+                    Edit
+                {% endif %}
+                menu item
+            </h2>
         </header>
-        <form method="post" class="p-4">
+        <form method="post"
+              class="p-4">
             {% csrf_token %}
             {% bformv form %}
-
-            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
+            <button type="submit"
+                    class="btn-admin bg-primary hover:bg-primary-dark">Save</button>
         </form>
         {% if object %}
-        <hr>
-        <form method="post" class="p-4" action="{% url "badmin:menu_delete" pk=object.id %}">
-            {% csrf_token %}
-            <button type="submit" class="btn-admin bg-red-500 hover:bg-red-600">Delete menu item</button>
-        </form>
+            <hr>
+            <form method="post"
+                  class="p-4"
+                  action="{% url "badmin:menu_delete" pk=object.id %}">
+                {% csrf_token %}
+                <button type="submit"
+                        class="btn-admin bg-red-500 hover:bg-red-600">
+                    Delete menu item
+                </button>
+            </form>
         {% endif %}
     </article>
-{% endblock %}
+{% endblock content %}

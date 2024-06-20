@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}Dashboard{% endblock %}
-
+{% block title %}
+    Dashboard
+{% endblock title %}
 {% block content %}
     <div class="p-8">
         {% aheader show_subtitle=True %}
@@ -15,63 +15,56 @@
             {% endslot %}
             Welcome to the Náboj administration system. This is your dashboard, where you can easily find information and access common actions.
         {% endaheader %}
-
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-            <div>
-                {% include "./state.html" %}
-            </div>
-            <div>
-                {% include "./dates.html" %}
-            </div>
-            <div>
-                {% include "./help.html" %}
-            </div>
+            <div>{% include "./state.html" %}</div>
+            <div>{% include "./dates.html" %}</div>
+            <div>{% include "./help.html" %}</div>
         </div>
-
         <div class="border-b border-gray-200 pb-4 mt-8">
-            <h2 class="text-base font-semibold text-gray-900">
-                Your venues
-            </h2>
+            <h2 class="text-base font-semibold text-gray-900">Your venues</h2>
         </div>
-
         <div class="mt-4 grid grid-cols-2 gap-4">
             {% for v in venues %}
-            <div class="bg-gray-100 border rounded-md p-3">
-                <div class="font-semibold">{{ v }}</div>
-
-                {% if competition.state >= competition.state.REGISTRATION %}
-                <div class="rounded bg-white w-full h-2 overflow-hidden my-1">
-                    <div class="h-full bg-green-600" style="width: {% percent v.competing v.capacity %}%;"></div>
-                </div>
-                {% endif %}
-
-                <div class="text-sm text-gray-800">
-                    {% if competition.state < competition.state.REGISTRATION %}
-                        {{ v.capacity }} teams capacity
-                    {% else %}
-                        {{ v.competing }} / {{ v.capacity }} teams registered {% if v.waiting %}(+ {{ v.waiting }} on the waiting list){% endif %}
+                <div class="bg-gray-100 border rounded-md p-3">
+                    <div class="font-semibold">{{ v }}</div>
+                    {% if competition.state >= competition.state.REGISTRATION %}
+                        <div class="rounded bg-white w-full h-2 overflow-hidden my-1">
+                            <div class="h-full bg-green-600"
+                                 style="width: {% percent v.competing v.capacity %}%">
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="text-sm text-gray-800">
+                        {% if competition.state < competition.state.REGISTRATION %}
+                            {{ v.capacity }} teams capacity
+                        {% else %}
+                            {{ v.competing }} / {{ v.capacity }} teams registered
+                            {% if v.waiting %}(+ {{ v.waiting }} on the waiting list){% endif %}
+                        {% endif %}
+                    </div>
+                    {% if competition.state >= competition.state.AFTER_REGISTRATION %}
+                        {% if competition.state < competition.state.AFTER_COMPETITION %}
+                            <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
+                                <div class="h-full bg-purple-600"
+                                     style="width: {% percent v.checked_in v.competing %}%">
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-800">
+                                {{ v.checked_in }} / {{ v.competing }} teams checked in
+                            </div>
+                        {% else %}
+                            <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
+                                <div class="h-full bg-blue-600"
+                                     style="width: {% percent v.reviewed v.competing %}%">
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-800">
+                                {{ v.reviewed }} / {{ v.competing }} teams reviewed
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
-
-                {% if competition.state >= competition.state.AFTER_REGISTRATION %}
-                    {% if competition.state < competition.state.AFTER_COMPETITION %}
-                    <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
-                        <div class="h-full bg-purple-600" style="width: {% percent v.checked_in v.competing %}%;"></div>
-                    </div>
-                    <div class="text-sm text-gray-800">
-                        {{ v.checked_in }} / {{ v.competing }} teams checked in
-                    </div>
-                    {% else %}
-                    <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
-                        <div class="h-full bg-blue-600" style="width: {% percent v.reviewed v.competing %}%;"></div>
-                    </div>
-                    <div class="text-sm text-gray-800">
-                        {{ v.reviewed }} / {{ v.competing }} teams reviewed
-                    </div>
-                    {% endif %}
-                {% endif %}
-            </div>
             {% endfor %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

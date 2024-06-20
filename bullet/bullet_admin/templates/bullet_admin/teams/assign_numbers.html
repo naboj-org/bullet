@@ -1,27 +1,32 @@
 {% extends "bullet_admin/base.html" %}
-
-{% block title %}Assign numbers{% endblock %}
-
+{% block title %}
+    Assign numbers
+{% endblock title %}
 {% block content %}
     {% include "bullet_admin/partials/venue_selector.html" %}
-
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Assign numbers</h2>
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                Assign numbers
+            </h2>
         </header>
-        <form action="{% url "badmin:team_assign_numbers" %}{% if "venue" in request.GET %}?venue={{ request.GET.venue }}{% endif %}" method="post" class="p-4">
+        <form action="{% url "badmin:team_assign_numbers" %}{% if "venue" in request.GET %}?venue={{ request.GET.venue }}{% endif %}"
+              method="post"
+              class="p-4">
             {% csrf_token %}
-
-            <p>This will automatically assign numbers to all registered teams that do not currently have a number. The system will try to fill in the gaps in the numbers.</p>
-
+            <p>
+                This will automatically assign numbers to all registered teams that do not currently have a number. The system will try to fill in the gaps in the numbers.
+            </p>
             <label class="items-baseline block my-4">
-                <input type="checkbox" class="checkbox" name="force">
+                <input type="checkbox"
+                       class="checkbox"
+                       name="force">
                 Force team number reassignment for <b>all</b> teams (including teams that do currently have a number).
             </label>
-
-            <button type="submit" class="btn-admin bg-green-500 hover:bg-green-600 mt-2">
+            <button type="submit"
+                    class="btn-admin bg-green-500 hover:bg-green-600 mt-2">
                 <i class="fas fa-arrow-down-1-9"></i> Assign team numbers
             </button>
         </form>
     </article>
-{% endblock %}
+{% endblock content %}

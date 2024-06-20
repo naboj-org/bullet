@@ -1,129 +1,133 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
-
-{% block title %}{% if object %}Edit{% else %}New{% endif %} user{% endblock %}
-
+{% block title %}
+    {% if object %}
+        Edit
+    {% else %}
+        New
+    {% endif %}
+    user
+{% endblock title %}
 {% block content %}
     {% if object == request.user %}
-    <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 m-8 rounded-md">
-        <b>Be careful!</b> You are currently editing your user account.
-    </div>
+        <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 m-8 rounded-md">
+            <b>Be careful!</b> You are currently editing your user account.
+        </div>
     {% endif %}
-
     <form method="post">
         {% csrf_token %}
         <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
             <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Personal information</h2>
+                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                    Personal information
+                </h2>
             </header>
             <div class="divide-y">
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <label for="{{ form.first_name.id_for_label }}">First name</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield form.first_name %}
-                    </div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.first_name %}</div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <label for="{{ form.last_name.id_for_label }}">Last name</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield form.last_name %}
-                    </div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.last_name %}</div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <div>
-                        <label for="{{ form.email.id_for_label }}">Email <span class="text-red-600">*</span></label>
-                        <p class="text-gray-700 text-sm">
-                            A password will be sent to this email address.
-                        </p>
+                        <label for="{{ form.email.id_for_label }}">
+                            Email <span class="text-red-600">*</span>
+                        </label>
+                        <p class="text-gray-700 text-sm">A password will be sent to this email address.</p>
                     </div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield form.email %}
-                    </div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.email %}</div>
                 </div>
             </div>
         </article>
-
         {% if bform %}
-        <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Branch permissions</h2>
-            </header>
-            <div class="divide-y">
-                <div class="p-4">
-                    <label class="flex items-center gap-2">{% bcheckbox bform.is_translator %} Allow access to content management</label>
-                    <span class="text-gray-700 text-sm">
-                        This lets the user go to the "Content" section in the admin sidebar. The user can manage the pages, blocks and other content options.
-                    </span>
+            <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+                <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                    <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                        Branch permissions
+                    </h2>
+                </header>
+                <div class="divide-y">
+                    <div class="p-4">
+                        <label class="flex items-center gap-2">
+                            {% bcheckbox bform.is_translator %} Allow access to content management
+                        </label>
+                        <span class="text-gray-700 text-sm">
+                            This lets the user go to the "Content" section in the admin sidebar. The user can manage the pages, blocks and other content options.
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <label class="flex items-center gap-2">
+                            {% bcheckbox bform.is_photographer %} Photo management
+                        </label>
+                        <span class="text-gray-700 text-sm">This will allow the user to upload and manage photo albums.</span>
+                    </div>
+                    <div class="p-4">
+                        <label class="flex items-center gap-2">
+                            {% bcheckbox bform.is_admin %} Is branch administrator
+                        </label>
+                        <span class="text-gray-700 text-sm">This will allow the user to manage everything in this branch of Náboj.</span>
+                    </div>
                 </div>
-                <div class="p-4">
-                    <label class="flex items-center gap-2">{% bcheckbox bform.is_photographer %} Photo management</label>
-                    <span class="text-gray-700 text-sm">
-                        This will allow the user to upload and manage photo albums.
-                    </span>
-                </div>
-                <div class="p-4">
-                    <label class="flex items-center gap-2">{% bcheckbox bform.is_admin %} Is branch administrator</label>
-                    <span class="text-gray-700 text-sm">
-                        This will allow the user to manage everything in this branch of Náboj.
-                    </span>
-                </div>
-            </div>
-        </article>
+            </article>
         {% endif %}
-
         {% if cform %}
-        <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Competition permissions</h2>
-            </header>
-            <div class="divide-y">
-                {% if cform.non_field_errors %}
-                <div class="p-4 text-red-600 bg-red-100">
-                    {{ cform.non_field_errors|first|escape }}
-                </div>
-                {% endif %}
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <div>
-                        <label for="{{ cform.venue_objects.id_for_label }}">Venue administrator in</label>
-                        <p class="text-gray-700 text-sm">
-                            Venue administrators have access to team data for teams that are registered at their venues. They can also perform competition tasks such as scanning and reviewing the venue.
-                        </p>
+            <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
+                <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+                    <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                        Competition permissions
+                    </h2>
+                </header>
+                <div class="divide-y">
+                    {% if cform.non_field_errors %}
+                        <div class="p-4 text-red-600 bg-red-100">
+                            {{ cform.non_field_errors|first|escape }}
+                        </div>
+                    {% endif %}
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                        <div>
+                            <label for="{{ cform.venue_objects.id_for_label }}">Venue administrator in</label>
+                            <p class="text-gray-700 text-sm">
+                                Venue administrators have access to team data for teams that are registered at their venues. They can also perform competition tasks such as scanning and reviewing the venue.
+                            </p>
+                        </div>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield cform.venue_objects %}</div>
                     </div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield cform.venue_objects %}
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                        <div>
+                            <label for="{{ cform.countries.id_for_label }}">Country administrator in</label>
+                            <p class="text-gray-700 text-sm">
+                                Country administrators have the same access as venue administrators, but for the entire country (all venues in the country).
+                            </p>
+                        </div>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield cform.countries %}</div>
+                    </div>
+                    <div class="p-4">
+                        <label class="flex items-center gap-2">
+                            {% bcheckbox cform.can_delegate %} Can delegate permissions
+                        </label>
+                        <span class="text-gray-700 text-sm">
+                            This will allow the user to create new users with the same or lower permissions than themselves. Additionally, the user can grant those permissions to existing users.
+                        </span>
+                    </div>
+                    <div class="p-4">
+                        <label class="flex items-center gap-2">
+                            {% bcheckbox cform.is_operator %} Limit to operator access
+                        </label>
+                        <span class="text-gray-700 text-sm">
+                            This restricts the user to actions that are required during the competition, such as team check-in, problem scanning, and venue review.
+                        </span>
                     </div>
                 </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <div>
-                        <label for="{{ cform.countries.id_for_label }}">Country administrator in</label>
-                        <p class="text-gray-700 text-sm">
-                            Country administrators have the same access as venue administrators, but for the entire country (all venues in the country).
-                        </p>
-                    </div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% bfield cform.countries %}
-                    </div>
-                </div>
-                <div class="p-4">
-                    <label class="flex items-center gap-2">{% bcheckbox cform.can_delegate %} Can delegate permissions</label>
-                    <span class="text-gray-700 text-sm">
-                        This will allow the user to create new users with the same or lower permissions than themselves. Additionally, the user can grant those permissions to existing users.
-                    </span>
-                </div>
-                <div class="p-4">
-                    <label class="flex items-center gap-2">{% bcheckbox cform.is_operator %} Limit to operator access</label>
-                    <span class="text-gray-700 text-sm">
-                        This restricts the user to actions that are required during the competition, such as team check-in, problem scanning, and venue review.
-                    </span>
-                </div>
-            </div>
-        </article>
+            </article>
         {% endif %}
-
         <div class="my-8 text-center">
-            <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark">
+            <button type="submit"
+                    class="btn-admin bg-primary hover:bg-primary-dark">
                 <i class="fas fa-save"></i> Save
             </button>
         </div>
     </form>
-{% endblock %}
+{% endblock content %}

@@ -1,10 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load markdownify %}
-
-{% block title %}Release notes{% endblock %}
-
+{% block title %}
+    Release notes
+{% endblock title %}
 {% block content %}
-    <div class="p-8 prose mx-auto">
-        {{ changelog|markdownify }}
-    </div>
-{% endblock %}
+    <div class="p-8 prose mx-auto">{{ changelog|markdownify }}</div>
+{% endblock content %}

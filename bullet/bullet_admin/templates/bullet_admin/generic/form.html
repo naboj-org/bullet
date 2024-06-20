@@ -1,15 +1,17 @@
 {% extends "bullet_admin/base.html" %}
 {% load static %}
 {% load badmin %}
-
-{% block title %}{{ form_title }}{% endblock %}
-
+{% block title %}
+    {{ form_title }}
+{% endblock title %}
 {% block extrahead %}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
-    <script defer src="https://cdn.jsdelivr.net/combine/npm/easymde@2.18.0/dist/easymde.min.js,npm/markdown-it-footnote@3.0.3/dist/markdown-it-footnote.min.js,npm/markdown-it-abbr@1.0.4/dist/markdown-it-abbr.min.js,npm/markdown-it@13.0.1/dist/markdown-it.min.js,npm/markdown-it-admon@1.0.0/dist/markdown-it-admon.min.js,npm/markdown-it-attrs@4.1.4/markdown-it-attrs.browser.min.js"></script>
-    <script defer src="{% static 'js/markdown.js' %}"></script>
-{% endblock %}
-
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script defer
+            src="https://cdn.jsdelivr.net/combine/npm/easymde@2.18.0/dist/easymde.min.js,npm/markdown-it-footnote@3.0.3/dist/markdown-it-footnote.min.js,npm/markdown-it-abbr@1.0.4/dist/markdown-it-abbr.min.js,npm/markdown-it@13.0.1/dist/markdown-it.min.js,npm/markdown-it-admon@1.0.0/dist/markdown-it-admon.min.js,npm/markdown-it-attrs@4.1.4/markdown-it-attrs.browser.min.js"></script>
+    <script defer
+            src="{% static 'js/markdown.js' %}"></script>
+{% endblock extrahead %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader %}
@@ -17,25 +19,22 @@
                 {{ form_title }}
             {% endslot %}
         {% endaheader %}
-
-        {% block before_form %}{% endblock %}
-
-        <form method="post" {% if form_multipart %}enctype="multipart/form-data"{% endif %}>
+        {% block before_form %}
+        {% endblock before_form %}
+        <form method="post"
+              {% if form_multipart %}enctype="multipart/form-data"{% endif %}>
             {% csrf_token %}
             {% admin_form2 form %}
-
             {{ formset.management_form }}
-
             {% for form in formset %}
-            <hr class="my-6">
-            {% admin_form2 form %}
+                <hr class="my-6">
+                {% admin_form2 form %}
             {% endfor %}
-
             <div class="mt-6">
                 {% #abtn button label=form_submit_label icon=form_submit_icon color=form_submit_color %}
             </div>
         </form>
-
-        {% block after_form %}{% endblock %}
+        {% block after_form %}
+        {% endblock after_form %}
     </div>
-{% endblock %}
+{% endblock content %}
