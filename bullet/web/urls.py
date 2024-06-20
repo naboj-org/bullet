@@ -7,7 +7,7 @@ from web import views
 from web.views import page
 
 urlpatterns = [
-    path("", CountryDetectView.as_view()),
+    path("", CountryDetectView.as_view(), name="root"),
     path("country_selector/", CountrySelectView.as_view(), name="country_selector"),
     path("admin/", include("bullet_admin.urls")),
     re_path(
