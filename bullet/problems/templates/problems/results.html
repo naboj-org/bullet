@@ -3,44 +3,54 @@
 {% load content_blocks %}
 {% load i18n %}
 {% load utils %}
-
-{% block title %}{% trans "Results" %}{% endblock %}
-
+{% block title %}
+    {% trans "Results" %}
+{% endblock title %}
 {% block extrahead %}
     {{ block.super }}
     {% if country %}
-    <link rel="canonical" href="{% country_url "archive_results_category" competition_number=competition.number category=category.identifier country=country|lower %}">
+        <link rel="canonical"
+              href="{% country_url "archive_results_category" competition_number=competition.number category=category.identifier country=country|lower %}">
     {% else %}
-    <link rel="canonical" href="{% country_url "archive_results_category" competition_number=competition.number category=category.identifier %}">
+        <link rel="canonical"
+              href="{% country_url "archive_results_category" competition_number=competition.number category=category.identifier %}">
     {% endif %}
-{% endblock %}
-
+{% endblock extrahead %}
 {% block hero %}
-{% load_blocks "category" %}
-<div class="mt-8 md:mt-24 mb-4 md:mb-16">
-    <h1 class="text-4xl md:text-6xl font-bold">
-        {% trans "Results" %}
-    </h1>
-    <h2 class="text-2xl md:text-4xl mt-4 font-bold">{% content_block "category:name_"|add:category.identifier %}, {{ country_name }}, {{ competition.name }}</h2>
-</div>
-{% endblock %}
-
-{% block content %}
-<div class="container mx-auto px-2 mt-8">
-    <div class="flex flex-wrap justify-center gap-1 mb-12">
-        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}{% query_transform %}"
-           class="{% if not country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
-            {% trans "International" %}
-        </a>
-        {% for c in countries %}
-            <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
-               class="{% if c == country %}bg-primary text-white font-bold{% else %}bg-gray-100{% endif %} whitespace-nowrap py-1 px-2 rounded">
-                <img src="https://flagcdn.com/{{ c.code|lower }}.svg" class="h-3 inline-block" aria-hidden="true">
-                {{ c.name }}
-            </a>
-        {% endfor %}
+    {% load_blocks "category" %}
+    <div class="mt-8 md:mt-24 mb-4 md:mb-16">
+        <h1 class="text-4xl md:text-6xl font-bold">{% trans "Results" %}</h1>
+        <h2 class="text-2xl md:text-4xl mt-4 font-bold">
+            {% content_block "category:name_"|add:category.identifier %}, {{ country_name }}, {{ competition.name }}
+        </h2>
     </div>
-
-    {% include "problems/results/table.html" %}
-</div>
-{% endblock %}
+{% endblock hero %}
+{% block content %}
+    <div class="container mx-auto px-2 mt-8">
+        <div class="flex flex-wrap justify-center gap-1 mb-12">
+            <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}{% query_transform %}"
+               class="{% if not country %}
+                          bg-primary text-white font-bold
+                      {% else %}
+                          bg-gray-100
+                      {% endif %}
+                      whitespace-nowrap py-1 px-2 rounded">
+                {% trans "International" %}
+            </a>
+            {% for c in countries %}
+                <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
+                   class="{% if c == country %}
+                              bg-primary text-white font-bold
+                          {% else %}
+                              bg-gray-100
+                          {% endif %}
+                          whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
+                    <span class="iconify shrink-0 shadow-lg"
+                          data-icon="flag:{{ c.code|lower }}-4x3"></span>
+                    {{ c.name }}
+                </a>
+            {% endfor %}
+        </div>
+        {% include "problems/results/table.html" %}
+    </div>
+{% endblock content %}

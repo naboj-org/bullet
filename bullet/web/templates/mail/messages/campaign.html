@@ -1,6 +1,5 @@
 {% extends "mail/base.html" %}
 {% load markdownify %}
-
 {% block body %}
     {{ content|markdownify }}
-{% endblock %}
+{% endblock body %}

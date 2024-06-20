@@ -1,22 +1,25 @@
 {% extends "web/base.html" %}
 {% load i18n %}
-
-{% block title %}Language selection {{ super }}{% endblock %}
-
+{% block title %}
+    Language selection {{ super }}
+{% endblock title %}
 {% block content %}
-
-<div class="container mx-auto grid sm:grid-cols-2 md:grid-cols-4 px-4 mt-16">
-    {% for country in countries %}
-        <div class="mb-8">
-            <h2 class="font-bold text-xl flex gap-2 items-center">
-                <img src="https://flagcdn.com/{{ country.country.code|lower }}.svg" class="h-4" alt="Flag of {{ country.country.name }}">
-                {{ country.country.name }}
-            </h2>
-            {% for language in country.languages %}
-                {% get_language_info for language as lang %}
-                <a hreflang="{{ language|lower }}" href="/{{ country.country.code|lower }}/{{ language|lower }}/" class="block text-primary hover:text-primary-dark">{{ lang.name_local }}</a>
-            {% endfor %}
-        </div>
-    {% endfor %}
-</div>
-{% endblock %}
+    <div class="container mx-auto grid sm:grid-cols-2 md:grid-cols-4 px-4 mt-16">
+        {% for country in countries %}
+            <div class="mb-8">
+                <h2 class="font-bold text-xl flex gap-2 items-center">
+                    <img src="https://flagcdn.com/{{ country.country.code|lower }}.svg"
+                         class="h-4"
+                         alt="Flag of {{ country.country.name }}">
+                    {{ country.country.name }}
+                </h2>
+                {% for language in country.languages %}
+                    {% get_language_info for language as lang %}
+                    <a hreflang="{{ language|lower }}"
+                       href="/{{ country.country.code|lower }}/{{ language|lower }}/"
+                       class="block text-primary hover:text-primary-dark">{{ lang.name_local }}</a>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

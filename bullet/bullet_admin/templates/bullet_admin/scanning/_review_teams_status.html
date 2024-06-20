@@ -1,11 +1,10 @@
 {% if error %}
-<div id="js-reader-status" class="p-4 border-t bg-red-100 text-red-800" hx-swap-oob="true">
-    {{ request.POST.barcode }}: {{ error }}
-</div>
+    <div id="js-reader-status"
+         class="p-4 border-t bg-red-100 text-red-800"
+         hx-swap-oob="true">{{ request.POST.barcode }}: {{ error }}</div>
 {% else %}
-<div id="js-reader-status" class="p-4 border-t bg-green-100 text-green-800" hx-swap-oob="true">
-    {{ request.POST.barcode }}: OK
-</div>
+    <div id="js-reader-status"
+         class="p-4 border-t bg-green-100 text-green-800"
+         hx-swap-oob="true">{{ request.POST.barcode }}: OK</div>
 {% endif %}
-
 {% include "bullet_admin/scanning/_review_teams.html" %}

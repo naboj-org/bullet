@@ -1,94 +1,97 @@
 {% extends "bullet_admin/base.html" %}
 {% load countries %}
 {% load access %}
-
-{% block title %}Results{% endblock %}
-
+{% block title %}
+    Results
+{% endblock title %}
 {% block content %}
     <div class="p-8 max-w-7xl mx-auto">
         {% aheader %}
             {% slot title %}
                 Results
             {% endslot %}
-
             {% slot buttons %}
                 {% url "badmin:documentation" "results" as help_url %}
                 {% #abtn icon="mdi:help" label="Help" url=help_url %}
             {% endslot %}
         {% endaheader %}
-
-        {% regroup country_categories by category__identifier as categories  %}
+        {% regroup country_categories by category__identifier as categories %}
         {% for category in categories %}
-        {% asubheader %}
-            {{ category.grouper|title }} results
-        {% endasubheader %}
-
-        <table class="w-full text-sm">
-            <tbody class="divide-y">
-                <tr class="relative hover:bg-gray-100 even:bg-gray-50">
-                    {% get_country country_results.country as c %}
-                    <td class="p-3 whitespace-nowrap">International</td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}" class="link-primary">Public results</a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}?admin=1" class="link-primary">Admin results</a>
-                    </td>
-                    <td></td>
-                </tr>
-                {% for country_results in category.list %}
-                <tr class="relative hover:bg-gray-100 even:bg-gray-50">
-                    {% get_country country_results.country as c %}
-                    <td class="p-3 whitespace-nowrap">{{ c.name }}</td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}" class="link-primary">Public results</a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}?admin=1" class="link-primary">Admin results</a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        {% is_country_operator_in c as can_open %}
-                        {% if can_open %}
-                            {% if not country_results.unreviewed %}
-                                <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden" class="link-primary">Results announcement</a>
-                            {% else %}
-                                <span>Unfinished review</span>
-                            {% endif %}
-                        {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+            {% asubheader %}
+                {{ category.grouper|title }} results
+            {% endasubheader %}
+            <table class="w-full text-sm">
+                <tbody class="divide-y">
+                    <tr class="relative hover:bg-gray-100 even:bg-gray-50">
+                        {% get_country country_results.country as c %}
+                        <td class="p-3 whitespace-nowrap">International</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}"
+                               class="link-primary">Public results</a>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <a href="{% url "results_category" b_country=country b_language=language category=category.grouper %}?admin=1"
+                               class="link-primary">Admin results</a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    {% for country_results in category.list %}
+                        <tr class="relative hover:bg-gray-100 even:bg-gray-50">
+                            {% get_country country_results.country as c %}
+                            <td class="p-3 whitespace-nowrap">{{ c.name }}</td>
+                            <td class="p-3 whitespace-nowrap">
+                                <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}"
+                                   class="link-primary">Public results</a>
+                            </td>
+                            <td class="p-3 whitespace-nowrap">
+                                <a href="{% url "results_category" b_country=country b_language=language category=category.grouper country=c %}?admin=1"
+                                   class="link-primary">Admin results</a>
+                            </td>
+                            <td class="p-3 whitespace-nowrap">
+                                {% is_country_operator_in c as can_open %}
+                                {% if can_open %}
+                                    {% if not country_results.unreviewed %}
+                                        <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden"
+                                           class="link-primary">Results announcement</a>
+                                    {% else %}
+                                        <span>Unfinished review</span>
+                                    {% endif %}
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         {% endfor %}
-
         {% asubheader %}
             Venue results
         {% endasubheader %}
-
         <table class="w-full text-sm">
             <tbody class="divide-y">
                 {% for v in venues %}
-                <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
-                    <td class="p-3 whitespace-nowrap">{{ v }}</td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}" class="link-primary">Public results</a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}?admin=1" class="link-primary">Admin results</a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        {% if v in my_venues %}
-                            {% if v.is_reviewed %}
-                            <a href="{% url "badmin:results_announce" venue=v.id %}?hidden" class="link-primary">Results announcement</a>
-                            {% else %}
-                                <span>Unfinished review</span>
+                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                        <td class="p-3 whitespace-nowrap">{{ v }}</td>
+                        <td class="p-3 whitespace-nowrap">
+                            <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}"
+                               class="link-primary">Public results</a>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <a href="{% url "results_venue" b_country=country b_language=language venue=v.shortcode %}?admin=1"
+                               class="link-primary">Admin results</a>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            {% if v in my_venues %}
+                                {% if v.is_reviewed %}
+                                    <a href="{% url "badmin:results_announce" venue=v.id %}?hidden"
+                                       class="link-primary">Results announcement</a>
+                                {% else %}
+                                    <span>Unfinished review</span>
+                                {% endif %}
                             {% endif %}
-                        {% endif %}
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-{% endblock %}
+{% endblock content %}

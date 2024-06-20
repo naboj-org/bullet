@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}Delete page block{% endblock %}
-
+{% block title %}
+    Delete page block
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader %}
@@ -10,12 +10,9 @@
                 Delete page block
             {% endslot %}
         {% endaheader %}
-
         <form method="post">
             {% csrf_token %}
-
             <p>Are you sure you want to delete block "{{ object.block.name }}"?</p>
-
             <div class="mt-6 space-x-2">
                 {% #abtn button label="Delete" icon="mdi:delete" color="red" %}
                 {% if request.GET.back %}
@@ -27,4 +24,4 @@
             </div>
         </form>
     </div>
-{% endblock %}
+{% endblock content %}

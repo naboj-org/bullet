@@ -1,70 +1,69 @@
 {% extends "bullet_admin/venues/_layout.html" %}
-
 {% block venue_content %}
-
-<dl class="divide-y divide-gray-100">
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Name</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.name }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Shortcode</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.shortcode }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Category</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.category.identifier|title }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Email</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.email }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Address</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.address }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Country</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.country.name }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Accepted languages</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {{ venue.accepted_languages|join:", " }}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Reviewed?</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {% if venue.is_reviewed %}
-                <span class="iconify text-green-600 w-4 h-4" data-icon="mdi:check"></span>
-            {% else %}
-                <span class="iconify text-red-600 w-4 h-4" data-icon="mdi:close"></span>
-            {% endif %}
-        </dd>
-    </div>
-    <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-        <dt class="text-sm font-medium text-gray-900">Local start</dt>
-        <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
-            {% if venue.local_start %}
-                {{ venue.local_start|date:"d.m.Y H:i" }}
-            {% else %}
-                <span class="text-gray-600">(global)</span>
-            {% endif %}
-        </dd>
-    </div>
-</dl>
-
-{% endblock %}
+    <dl class="divide-y divide-gray-100">
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Name</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.name }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Shortcode</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.shortcode }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Category</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.category.identifier|title }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Email</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.email }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Address</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.address }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Country</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.country.name }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Accepted languages</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {{ venue.accepted_languages|join:", " }}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Reviewed?</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {% if venue.is_reviewed %}
+                    <span class="iconify text-green-600 w-4 h-4"
+                          data-icon="mdi:check"></span>
+                {% else %}
+                    <span class="iconify text-red-600 w-4 h-4"
+                          data-icon="mdi:close"></span>
+                {% endif %}
+            </dd>
+        </div>
+        <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+            <dt class="text-sm font-medium text-gray-900">Local start</dt>
+            <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
+                {% if venue.local_start %}
+                    {{ venue.local_start|date:"d.m.Y H:i" }}
+                {% else %}
+                    <span class="text-gray-600">(global)</span>
+                {% endif %}
+            </dd>
+        </div>
+    </dl>
+{% endblock venue_content %}

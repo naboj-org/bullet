@@ -1,19 +1,24 @@
 {% extends "mail/base.html" %}
 {% load i18n %}
 {% load country_url %}
-
 {% block body %}
     <p>Hello!</p>
-
-    <p>We have created an account for you to access the Náboj admin interface.<br>
-    The interface can be accessed at: <a href="{{ root_url }}/admin">{{ root_url }}/admin</a></p>
-
-    <p>Your login credentials:<br>
-    Email: {{ user.email }}<br>
-    Password: {{ password }}</p>
-
+    <p>
+        We have created an account for you to access the Náboj admin interface.
+        <br>
+        The interface can be accessed at: <a href="{{ root_url }}/admin">{{ root_url }}/admin</a>
+    </p>
+    <p>
+        Your login credentials:
+        <br>
+        Email: {{ user.email }}
+        <br>
+        Password: {{ password }}
+    </p>
     <p>The password can be changed after logging in.</p>
-
-    <p>Best regards,<br>
-    Náboj</p>
-{% endblock %}
+    <p>
+        Best regards,
+        <br>
+        Náboj
+    </p>
+{% endblock body %}

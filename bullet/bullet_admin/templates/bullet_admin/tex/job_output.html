@@ -1,11 +1,12 @@
 {% if not texjob.completed %}
-<div class="my-16 mx-8 flex items-center flex-col">
-    <span class="iconify h-16 w-16 text-gray-500 mb-4" data-icon="mdi:file-document-refresh"></span>
-    <p class="text-gray-600 text-xl">
-        Hold tight!
-    </p>
-    <p class="text-sm mt-2">The system is generating your documents. This page will refresh automatically.</p>
-</div>
+    <div class="my-16 mx-8 flex items-center flex-col">
+        <span class="iconify h-16 w-16 text-gray-500 mb-4"
+              data-icon="mdi:file-document-refresh"></span>
+        <p class="text-gray-600 text-xl">Hold tight!</p>
+        <p class="text-sm mt-2">
+            The system is generating your documents. This page will refresh automatically.
+        </p>
+    </div>
 {% else %}
     <div class="space-y-2">
         {% if texjob.output_error %}
@@ -17,7 +18,9 @@
         {% if texjob.output_log %}
             <div>
                 <div class="font-bold">Tectonic output:</div>
-                <div class="bg-gray-100 rounded p-2 whitespace-pre font-mono text-xs">{{ texjob.output_log|linebreaksbr }}</div>
+                <div class="bg-gray-100 rounded p-2 whitespace-pre font-mono text-xs">
+                    {{ texjob.output_log|linebreaksbr }}
+                </div>
             </div>
         {% endif %}
     </div>

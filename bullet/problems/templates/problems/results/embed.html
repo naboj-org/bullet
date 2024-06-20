@@ -1,8 +1,8 @@
 {% extends "web/root_base.html" %}
 {% load i18n %}
-
-{% block title %}{% trans "Results" %}{% endblock %}
-
+{% block title %}
+    {% trans "Results" %}
+{% endblock title %}
 {% block root_content %}
     {% include "problems/results/table.html" with embed=True %}
-{% endblock %}
+{% endblock root_content %}

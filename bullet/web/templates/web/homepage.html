@@ -1,13 +1,12 @@
 {% extends "web/base.html" %}
 {% load page_blocks %}
 {% load i18n %}
-
-{% block title %}{% trans "Home page" %}{% endblock %}
-
+{% block title %}
+    {% trans "Home page" %}
+{% endblock title %}
 {% block content %}
     {% for page_block in page_blocks %}
-    {% render_page_block page_block %}
+        {% render_page_block page_block %}
     {% endfor %}
-
     {% include "web/snippets/state_selector.html" %}
-{% endblock %}
+{% endblock content %}

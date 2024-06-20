@@ -2,20 +2,19 @@
 {% load static %}
 {% load i18n %}
 {% load badmin %}
-
-{% block title %}Administrator login{% endblock %}
-
+{% block title %}
+    Administrator login
+{% endblock title %}
 {% block root_content %}
     <main class="min-h-screen min-w-screen bg-primary">
-
         <div class="w-full max-w-xl p-8 mx-auto">
             <article class="rounded-md bg-white shadow-lg overflow-hidden p-8">
-                <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}" class="w-40 mx-auto mb-8" alt="Naboj logo">
-
+                <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}"
+                     class="w-40 mx-auto mb-8"
+                     alt="Naboj logo">
                 <form method="post">
                     {% csrf_token %}
                     {% admin_form2 form %}
-
                     <div class="mt-6 space-x-2">
                         {% #abtn button color="blue" label="Log in" %}
                         {% url "badmin:password_reset" as reset %}
@@ -25,4 +24,4 @@
             </article>
         </div>
     </main>
-{% endblock %}
+{% endblock root_content %}

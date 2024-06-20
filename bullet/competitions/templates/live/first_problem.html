@@ -2,37 +2,43 @@
 {% load utils %}
 {% load content_blocks %}
 {% load i18n %}
-
-{% block title %}{% trans "Live signage" %}{% endblock %}
-
+{% block title %}
+    {% trans "Live signage" %}
+{% endblock title %}
 {% block root_content %}
     {% load_blocks "category" %}
-    <div class="min-h-screen h-screen grid grid-cols-2 divide-x" id="js-screens" {% if not stop %}hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens"{% endif %}>
+    <div class="min-h-screen h-screen grid grid-cols-2 divide-x"
+         id="js-screens"
+         {% if not stop %}
+             hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens"
+         {% endif %}>
         {% for screen in screens %}
-        <div class="p-4 flex flex-col items-center justify-center text-center">
-            <div class="text-4xl">
-                {% trans "First solved problem" %}
-            </div>
-            <div class="text-2xl mb-6">{% content_block "category:name_"|add:screen.category %}</div>
-            {% if screen.problem %}
-            <div class="my-6">
-                {% if screen.problem.team.school %}
-                    <div class="text-5xl font-bold mb-2">
-                        {{ screen.problem.team.school.name }}
-                        {% if screen.problem.team.in_school_symbol %}
-                        <span class="text-primary">{{ screen.problem.team.in_school_symbol }}</span>
+            <div class="p-4 flex flex-col items-center justify-center text-center">
+                <div class="text-4xl">{% trans "First solved problem" %}</div>
+                <div class="text-2xl mb-6">
+                    {% content_block "category:name_"|add:screen.category %}
+                </div>
+                {% if screen.problem %}
+                    <div class="my-6">
+                        {% if screen.problem.team.school %}
+                            <div class="text-5xl font-bold mb-2">
+                                {{ screen.problem.team.school.name }}
+                                {% if screen.problem.team.in_school_symbol %}
+                                    <span class="text-primary">{{ screen.problem.team.in_school_symbol }}</span>
+                                {% endif %}
+                            </div>
+                            <div class="text-3xl font-bold">{{ screen.problem.team.school.address }}</div>
+                        {% else %}
+                            <div class="text-5xl font-bold">{{ screen.problem.team.name }}</div>
                         {% endif %}
                     </div>
-                    <div class="text-3xl font-bold">{{ screen.problem.team.school.address }}</div>
+                    <div class="font-mono text-gray-700 text-5xl mt-6">
+                        {{ screen.problem.competition_time }}
+                    </div>
                 {% else %}
-                    <div class="text-5xl font-bold">{{ screen.problem.team.name }}</div>
+                    <div class="text-gray-700 text-5xl">?</div>
                 {% endif %}
             </div>
-            <div class="font-mono text-gray-700 text-5xl mt-6">{{ screen.problem.competition_time }}</div>
-            {% else %}
-            <div class="text-gray-700 text-5xl">?</div>
-            {% endif %}
-        </div>
         {% endfor %}
     </div>
-{% endblock %}
+{% endblock root_content %}

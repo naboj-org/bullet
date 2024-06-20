@@ -1,9 +1,9 @@
 {% extends "bullet_admin/base.html" %}
 {% load static %}
 {% load badmin %}
-
-{% block title %}TeX Job Result{% endblock %}
-
+{% block title %}
+    TeX Job Result
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader show_subtitle=True %}
@@ -12,9 +12,9 @@
             {% endslot %}
             Job ID: {{ texjob.id }}
         {% endaheader %}
-
-        <div {% if not texjob.completed %}hx-trigger="every 5s"{% endif %} hx-get="{% url "badmin:tex_job_detail" texjob.id %}?poll">
+        <div {% if not texjob.completed %}hx-trigger="every 5s"{% endif %}
+             hx-get="{% url "badmin:tex_job_detail" texjob.id %}?poll">
             {% include "./job_output.html" %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

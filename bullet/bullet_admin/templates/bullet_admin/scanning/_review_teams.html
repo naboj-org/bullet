@@ -1,28 +1,36 @@
 {% load access %}
 {% load utils %}
-
 {% if not venue.is_reviewed and not venue.has_unreviewed_teams %}
     {% is_venue_admin venue as can_finish %}
     {% aalert color="orange" class="mb-4" %}
         {% if can_finish %}
-        {% url "badmin:scanning_review" as back_url %}
-        {% add_query back_url venue=venue.id as back_url %}
-        <p>All teams in this venue are reviewed. Please, <a class="link" href="{% url "badmin:venue_finish_review" venue.id %}?back={{ back_url|urlencode }}">finish the review</a> when ready.</p>
+            {% url "badmin:scanning_review" as back_url %}
+            {% add_query back_url venue=venue.id as back_url %}
+            <p>
+                All teams in this venue are reviewed. Please, <a class="link"
+    href="{% url "badmin:venue_finish_review" venue.id %}?back={{ back_url|urlencode }}">finish the review</a> when ready.
+            </p>
         {% else %}
-        <p>All teams in this venue are reviewed. Please ask the venue administrator to finish review when ready.</p>
+            <p>
+                All teams in this venue are reviewed. Please ask the venue administrator to finish review when ready.
+            </p>
         {% endif %}
     {% endaalert %}
 {% endif %}
-
 {% if venue.is_reviewed %}
     {% aalert color="green" class="mb-4" %}
         <p>This venue was marked as reviewed.</p>
     {% endaalert %}
 {% endif %}
-
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
     {% for team in teams %}
-        <div class="border {% if team.is_reviewed %}bg-green-100 border-green-700{% else %}bg-red-100 border-red-700{% endif %} py-2 px-3 rounded-md">
+        <div class="border
+                    {% if team.is_reviewed %}
+                        bg-green-100 border-green-700
+                    {% else %}
+                        bg-red-100 border-red-700
+                    {% endif %}
+                    py-2 px-3 rounded-md">
             <div class="text-lg">
                 {% if team.is_reviewed %}
                     <i class="fas fa-check-circle text-green-600 mr-2"></i>
@@ -31,18 +39,30 @@
                 {% endif %}
                 <span class="font-mono">{{ team.code }}</span>
             </div>
-            <div class="text-xs">
-                {{ team.display_name }}
-            </div>
+            <div class="text-xs">{{ team.display_name }}</div>
             {% if not venue.is_reviewed %}
-            <div class="mt-1 flex flex-wrap gap-1">
-                {% if not team.is_reviewed %}
-                <a href="{% url "badmin:scanning_review_team" pk=team.id %}" class="btn-admin-sm bg-blue-500 hover:bg-blue-600"><i class="fas fa-edit"></i> Edit problems</a>
-                {% endif %}
-                <button hx-post="{% url "badmin:scanning_review_toggle_team" pk=team.id %}" class="btn-admin-sm {% if team.is_reviewed %}bg-red-500 hover:bg-red-600{% else %}bg-green-500 hover:bg-green-600{% endif %}">
-                    <i class="fas {% if team.is_reviewed %}fa-times{% else %}fa-check{% endif %}"></i> Mark as {% if team.is_reviewed %}un{% endif %}reviewed
-                </button>
-            </div>
+                <div class="mt-1 flex flex-wrap gap-1">
+                    {% if not team.is_reviewed %}
+                        <a href="{% url "badmin:scanning_review_team" pk=team.id %}"
+                           class="btn-admin-sm bg-blue-500 hover:bg-blue-600"><i class="fas fa-edit"></i> Edit problems</a>
+                    {% endif %}
+                    <button hx-post="{% url "badmin:scanning_review_toggle_team" pk=team.id %}"
+                            class="btn-admin-sm
+                                   {% if team.is_reviewed %}
+                                       bg-red-500 hover:bg-red-600
+                                   {% else %}
+                                       bg-green-500 hover:bg-green-600
+                                   {% endif %}">
+                        <i class="fas
+                                  {% if team.is_reviewed %}
+                                      fa-times
+                                  {% else %}
+                                      fa-check
+                                  {% endif %}"></i> Mark as
+                        {% if team.is_reviewed %}un{% endif %}
+                        reviewed
+                    </button>
+                </div>
             {% endif %}
         </div>
     {% endfor %}

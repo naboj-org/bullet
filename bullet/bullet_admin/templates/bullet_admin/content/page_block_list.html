@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load utils %}
-
-{% block title %}Page blocks{% endblock %}
-
+{% block title %}
+    Page blocks
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-7xl">
         {% aheader show_subtitle=True %}
@@ -15,43 +15,43 @@
                 {% #abtn color="green" icon="mdi:plus" label="New block" url=create_url %}
             {% endslot %}
         {% endaheader %}
-
         <div class="space-y-2">
-        {% for block in object_list %}
-            <div class="border rounded-md p-4 flex items-center gap-4">
-                <div class="w-16 h-16 rounded bg-gray-200 flex shrink-0 items-center justify-center">
-                    <span class="iconify w-10 h-10 text-gray-700" data-icon="{{ block.block.icon }}"></span>
-                </div>
-                <div>
+            {% for block in object_list %}
+                <div class="border rounded-md p-4 flex items-center gap-4">
+                    <div class="w-16 h-16 rounded bg-gray-200 flex shrink-0 items-center justify-center">
+                        <span class="iconify w-10 h-10 text-gray-700"
+                              data-icon="{{ block.block.icon }}"></span>
+                    </div>
                     <div>
-                        <span class="font-semibold">{{ block.title }}</span>
-                        <span class="text-gray-600 text-sm">
-                            ({{ block.block.name }})
-                        </span>
+                        <div>
+                            <span class="font-semibold">{{ block.title }}</span>
+                            <span class="text-gray-600 text-sm">({{ block.block.name }})</span>
+                        </div>
+                        <div class="text-sm flex flex-wrap gap-x-3 gap-y-1">
+                            {% for state in states %}
+                                <div>
+                                    {% if state in block.states %}
+                                        <span class="iconify text-green-600 inline"
+                                              data-icon="mdi:check"></span>
+                                    {% else %}
+                                        <span class="iconify text-red-600 inline"
+                                              data-icon="mdi:close"></span>
+                                    {% endif %}
+                                    {{ state.label }}
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <div class="text-sm flex flex-wrap gap-x-3 gap-y-1">
-                        {% for state in states %}
-                            <div>
-                                {% if state in block.states %}
-                                    <span class="iconify text-green-600 inline" data-icon="mdi:check"></span>
-                                {% else %}
-                                    <span class="iconify text-red-600 inline" data-icon="mdi:close"></span>
-                                {% endif %}
-                                {{ state.label }}
-                            </div>
-                        {% endfor %}
+                    <div class="ml-auto flex items-center justify-end gap-1 flex-wrap">
+                        {% url "badmin:page_block_update" page_id=block.page_id pk=block.id as update %}
+                        {% #abtn url=update label="Edit content" %}
+                        {% url "badmin:page_block_settings" page_id=block.page_id pk=block.id as settings %}
+                        {% #abtn url=settings label="Settings" %}
+                        {% url "badmin:page_block_delete" page_id=block.page_id pk=block.id as delete %}
+                        {% #abtn url=delete label="Delete" color="red" %}
                     </div>
                 </div>
-                <div class="ml-auto flex items-center justify-end gap-1 flex-wrap">
-                    {% url "badmin:page_block_update" page_id=block.page_id pk=block.id as update %}
-                    {% #abtn url=update label="Edit content" %}
-                    {% url "badmin:page_block_settings" page_id=block.page_id pk=block.id as settings %}
-                    {% #abtn url=settings label="Settings" %}
-                    {% url "badmin:page_block_delete" page_id=block.page_id pk=block.id as delete %}
-                    {% #abtn url=delete label="Delete" color="red" %}
-                </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

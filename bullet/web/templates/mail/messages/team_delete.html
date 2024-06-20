@@ -1,15 +1,18 @@
 {% extends "mail/base.html" %}
 {% load i18n %}
-
 {% block body %}
-    <p>{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}</p>
-
-    <p>{% blocktranslate %}Your team was unregistered from the competition.{% endblocktranslate %}</p>
-
-    <p>{% blocktranslate with contestants=team.contestants_names %}Team members: {{ contestants }}{% endblocktranslate %}</p>
-
     <p>
-        {% trans "Best regards," %}<br>
+        {% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate %}Your team was unregistered from the competition.{% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate with contestants=team.contestants_names %}Team members: {{ contestants }}{% endblocktranslate %}
+    </p>
+    <p>
+        {% trans "Best regards," %}
+        <br>
         {{ branch.name }}
     </p>
-{% endblock %}
+{% endblock body %}

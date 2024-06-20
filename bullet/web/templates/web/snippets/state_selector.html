@@ -1,16 +1,16 @@
 {% if user.is_authenticated %}
-<div class="bg-white shadow border rounded-tl fixed bottom-0 right-0 px-2 py-1 flex items-center gap-2 text-xs">
-    <div class="shrink-0">
-        View page during:
+    <div class="bg-white shadow border rounded-tl fixed bottom-0 right-0 px-2 py-1 flex items-center gap-2 text-xs">
+        <div class="shrink-0">View page during:</div>
+        <form>
+            <select name="state"
+                    onchange="this.form.submit()"
+                    class="input text-xs">
+                <option value="">(real)</option>
+                {% for state in competition.State %}
+                    <option value="{{ state }}"
+                            {% if request.GET.state == state|stringformat:"d" %}selected{% endif %}>{{ state.label }}</option>
+                {% endfor %}
+            </select>
+        </form>
     </div>
-
-    <form>
-        <select name="state" onchange="this.form.submit()" class="input text-xs">
-            <option value="">(real)</option>
-            {% for state in competition.State %}
-            <option value="{{ state }}" {% if request.GET.state == state|stringformat:"d" %}selected{% endif %}>{{ state.label }}</option>
-            {% endfor %}
-        </select>
-    </form>
-</div>
 {% endif %}

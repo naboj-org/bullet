@@ -1,25 +1,23 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}Import problems{% endblock %}
-
+{% block title %}
+    Import problems
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader show_subtitle=True %}
             {% slot title %}
                 Import problems
             {% endslot %}
-
             Please contact Náboj IT for further information regarding the import file structure.
         {% endaheader %}
-
-        <form method="post" enctype="multipart/form-data">
+        <form method="post"
+              enctype="multipart/form-data">
             {% csrf_token %}
             {% admin_form2 form %}
-
             <div class="mt-6">
                 {% #abtn button label="Import" icon="mdi:upload" color="blue" %}
             </div>
         </form>
     </div>
-{% endblock %}
+{% endblock content %}

@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load utils %}
-
-{% block title %}File browser{% endblock %}
-
+{% block title %}
+    File browser
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-7xl">
         {% aheader %}
@@ -17,7 +17,6 @@
                 {% #abtn color="green" icon="mdi:upload" label="Upload file" url=upload_url|add:path_query %}
             {% endslot %}
         {% endaheader %}
-
         {% url "badmin:file_tree" as home %}
         {% abreadcrumbs class="-mt-4 mb-8" home=home %}
             {% for parent in parents %}
@@ -25,44 +24,45 @@
                 {% #abreadcrumb url=parent_link text=parent.0 %}
             {% endfor %}
         {% endabreadcrumbs %}
-
         <table class="w-full text-sm">
             <thead class="text-left bg-gray-100 border-t border-b">
-            <tr>
-                <th class="p-3">Name</th>
-                <th class="p-3">Size</th>
-                <th></th>
-            </tr>
-            </thead>
-
-            <tbody class="divide-y">
-            {% for file in files %}
-                <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
-                    <td class="p-3">
-                        <a href="
-                                {% if file.is_dir %}{% query_replace path=file.path %}{% else %}{{ file.public_path }}{% endif %}"
-                           {% if not file.is_dir %}target="_blank"{% endif %}
-                           class="flex items-center gap-2">
-                            {% if file.is_dir %}
-                                <span class="iconify" data-icon="mdi:folder"></span>
-                            {% else %}
-                                <span class="iconify" data-icon="mdi:file"></span>
-                            {% endif %}
-                            {{ file.name }}
-                        </a>
-                    </td>
-                    <td class="p-3 whitespace-nowrap">
-                        {% if not file.is_dir %}{{ file.size|filesizeformat }}{% endif %}</td>
-                    <td class="p-3 whitespace-nowrap">
-                        <div class="flex items-center justify-end gap-2">
-                            <a href="{% url "badmin:file_delete" %}{% query_replace path=file.path %}"
-                               class="text-red-400 hover:text-red-600 p-2 -m-2">
-                                <span class="iconify" data-icon="mdi:delete"></span>
-                            </a>
-                        </div>
-                    </td>
+                <tr>
+                    <th class="p-3">Name</th>
+                    <th class="p-3">Size</th>
+                    <th></th>
                 </tr>
-            {% endfor %}
+            </thead>
+            <tbody class="divide-y">
+                {% for file in files %}
+                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
+                        <td class="p-3">
+                            <a href=" {% if file.is_dir %}{% query_replace path=file.path %}{% else %}{{ file.public_path }}{% endif %}"
+                               {% if not file.is_dir %}target="_blank"{% endif %}
+                               class="flex items-center gap-2">
+                                {% if file.is_dir %}
+                                    <span class="iconify"
+                                          data-icon="mdi:folder"></span>
+                                {% else %}
+                                    <span class="iconify"
+                                          data-icon="mdi:file"></span>
+                                {% endif %}
+                                {{ file.name }}
+                            </a>
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            {% if not file.is_dir %}{{ file.size|filesizeformat }}{% endif %}
+                        </td>
+                        <td class="p-3 whitespace-nowrap">
+                            <div class="flex items-center justify-end gap-2">
+                                <a href="{% url "badmin:file_delete" %}{% query_replace path=file.path %}"
+                                   class="text-red-400 hover:text-red-600 p-2 -m-2">
+                                    <span class="iconify"
+                                          data-icon="mdi:delete"></span>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
         {% if not files %}
@@ -75,4 +75,4 @@
             {% endaemptystate %}
         {% endif %}
     </div>
-{% endblock %}
+{% endblock content %}

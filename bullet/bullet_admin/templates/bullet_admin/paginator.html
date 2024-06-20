@@ -2,14 +2,14 @@
 <nav class="flex items-center justify-between border-t border-gray-200 px-4 sm:px-0">
     <div class="-mt-px flex w-0 flex-1">
         {% if page.has_previous %}
-        <a href="{% query_transform page=page.previous_page_number %}"
-           class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-            <span class="iconify mr-1" data-icon="mdi:arrow-left"></span>
-            Previous
-        </a>
+            <a href="{% query_transform page=page.previous_page_number %}"
+               class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                <span class="iconify mr-1"
+                      data-icon="mdi:arrow-left"></span>
+                Previous
+            </a>
         {% endif %}
     </div>
-
     <div class="hidden md:-mt-px md:flex">
         {% for p in pages %}
             {% if p == ellipsis %}
@@ -23,14 +23,14 @@
             {% endif %}
         {% endfor %}
     </div>
-
     <div class="-mt-px flex w-0 flex-1 justify-end">
         {% if page.has_next %}
-        <a href="{% query_transform page=page.next_page_number %}"
-           class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
-            Next
-            <span class="iconify ml-1" data-icon="mdi:arrow-right"></span>
-        </a>
+            <a href="{% query_transform page=page.next_page_number %}"
+               class="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700">
+                Next
+                <span class="iconify ml-1"
+                      data-icon="mdi:arrow-right"></span>
+            </a>
         {% endif %}
     </div>
 </nav>

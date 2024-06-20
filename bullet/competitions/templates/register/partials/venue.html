@@ -1,24 +1,17 @@
 {% load i18n %}
 {% load country_url %}
-
 <h2 class="font-bold text-2xl my-6">{% trans "Venue" %}</h2>
-
 <div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
     <div>
-        <div class="font-bold text-xl">
-            {{ venue.name }}
-        </div>
-        <p>
-            {{ venue.address }}
-        </p>
+        <div class="font-bold text-xl">{{ venue.name }}</div>
+        <p>{{ venue.address }}</p>
         {% if venue.local_start %}
-        <span class="block mt-1 text-red-600 text-lg">
-            <i class="fas fa-exclamation-triangle"></i>
-            {% blocktrans with time=venue.local_start|time usual=competition.competition_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time of {{ usual }}.{% endblocktrans %}
-        </span>
+            <span class="block mt-1 text-red-600 text-lg">
+                <i class="fas fa-exclamation-triangle"></i>
+                {% blocktrans with time=venue.local_start|time usual=competition.competition_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time of {{ usual }}.{% endblocktrans %}
+            </span>
         {% endif %}
     </div>
-    <a href="{% country_url 'register_venue' %}" class="ms-auto shrink-0 text-primary hover:underline">
-        {% trans "Change" %}
-    </a>
+    <a href="{% country_url 'register_venue' %}"
+       class="ms-auto shrink-0 text-primary hover:underline">{% trans "Change" %}</a>
 </div>

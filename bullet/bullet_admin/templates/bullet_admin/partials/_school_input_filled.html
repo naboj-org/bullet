@@ -1,10 +1,17 @@
-<div class="flex items-center justify-between" id="js-school-input">
+<div class="flex items-center justify-between"
+     id="js-school-input">
     <div>
-        <input type="hidden" name="school" value="{{ school.id }}">
+        <input type="hidden"
+               name="school"
+               value="{{ school.id }}">
         <div>{{ school.name }}</div>
         <div class="text-sm text-gray-600">{{ school.address }}</div>
     </div>
-    <a href="#" class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0" hx-get="{% url "badmin:school_input" %}?default={{ school.id }}" hx-target="#js-school-input" hx-swap="outerHTML">
+    <a href="#"
+       class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0"
+       hx-get="{% url "badmin:school_input" %}?default={{ school.id }}"
+       hx-target="#js-school-input"
+       hx-swap="outerHTML">
         <i class="fas fa-edit"></i>
     </a>
 </div>

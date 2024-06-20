@@ -1,20 +1,20 @@
 {% extends "mail/base.html" %}
 {% load i18n %}
-
 {% block body %}
     <p>Hello!</p>
-
     <p>One of your teams has cancelled registration.</p>
-
     <p>
-        Venue: {{ team.venue }}<br>
-        Number: {{ team.code }} / {{ team.id }}<br>
-        Team: {{ team.name }}<br>
+        Venue: {{ team.venue }}
+        <br>
+        Number: {{ team.code }} / {{ team.id }}
+        <br>
+        Team: {{ team.name }}
+        <br>
         Contestants: {{ team.contestants }}
     </p>
-
     <p>
-        Best regards,<br>
+        Best regards,
+        <br>
         {{ branch.name }}
     </p>
-{% endblock %}
+{% endblock body %}

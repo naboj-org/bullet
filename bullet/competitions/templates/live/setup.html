@@ -3,22 +3,23 @@
 {% load static %}
 {% load country_url %}
 {% load i18n %}
-
-{% block title %}{% trans "Live signage" %}{% endblock %}
+{% block title %}
+    {% trans "Live signage" %}
+{% endblock title %}
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">{% trans "Live signage" %}</h1>
-{% endblock %}
-
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
+        {% trans "Live signage" %}
+    </h1>
+{% endblock hero %}
 {% block content %}
     <main class="max-w-2xl mx-auto px-2 mt-8 space-y-4">
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
-
             {% bform form %}
-
             <div class="flex justify-center mt-6">
-                <button type="submit" class="btn">{% trans "Start" %}</button>
+                <button type="submit"
+                        class="btn">{% trans "Start" %}</button>
             </div>
         </form>
     </main>
-{% endblock %}
+{% endblock content %}

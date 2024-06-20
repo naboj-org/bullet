@@ -1,14 +1,15 @@
 {% extends "bullet_admin/base.html" %}
 {% load utils %}
 {% load bform %}
-
-{% block title %} Team history{% endblock %}
-
+{% block title %}
+    Team history
+{% endblock title %}
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">History of a team from
-                <span class="text-black"> {{ team.school }} </span>
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+                History of a team from
+                <span class="text-black">{{ team.school }}</span>
             </h2>
         </header>
         <div class="p-4">
@@ -22,88 +23,95 @@
                             <th class="p-2"></th>
                         </tr>
                     </thead>
-
                     <tbody class="divide-y">
                         {% for record in object_list %}
-                        <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
-                            <td class="p-2 font-mono tracking-wider">
-                                <div class="text-gray-500">{{ record.user }}</div>
-                            </td>
-                            <td class="p-2">
-                                <div> {{ record.time }} </div>
-                            </td>
-                            <td class="p-2">
-                                <ul>
-                                    {% for change in record.changes %}
-                                        <li class="flex items-center gap-x-1">{{ change.field }}:
-                                            <span class="text-red-500">{{ change.old }}</span>
-                                            <span class="iconify -ml-0.5 w-5 h-5" data-icon="mdi:arrow-right-thin"></span>
-                                            <span class="text-green-500">{{ change.new }}</span>
-                                        </li>
-                                    {% endfor %}
-                                    {% if record.added_members %}
-                                        <li class="flex items-center gap-x-1 text-green-500 font-bold"> Added contestants:
-                                            <span class="text-black font-normal">
-                                                {% for user in record.added_members %}
-                                                    {{ user }}{% if not forloop.last %}, {% endif %}
-                                                {% endfor %}
-                                            </span>
-                                        </li>
-                                    {% endif %}
-                                    {% if record.removed_members %}
-                                        <li class="flex items-center gap-x-1 text-red-500 font-bold"> Removed contestants:
-                                            <span class="text-black font-normal">
-                                                {% for user in record.removed_members %}
-                                                    {{ user }}{% if not forloop.last %}, {% endif %}
-                                                {% endfor %}
-                                            </span>
-                                        </li>
-                                    {% endif %}
-                                    {% if record.members_changes %}
-                                        {% for member in record.members_changes %}
-                                            <li class="flex items-center gap-x-1 font-bold"> Contestant {{ member.member }}: 
-                                                <ul>
-                                                    {% for change in member.changes %}
-                                                        <li class="flex items-center gap-x-1 font-normal">
-                                                            {{ change.field }}:
-                                                            <span class="text-red-500"> {{ change.old }} </span>
-                                                            <span class="iconify -ml-0.5 w-5 h-5" data-icon="mdi:arrow-right-thin"></span>
-                                                            <span class="text-green-500">{{ change.new }}</span>
-                                                        </li>
-                                                    {% endfor %}
-                                                </ul>
+                            <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
+                                <td class="p-2 font-mono tracking-wider">
+                                    <div class="text-gray-500">{{ record.user }}</div>
+                                </td>
+                                <td class="p-2">
+                                    <div>{{ record.time }}</div>
+                                </td>
+                                <td class="p-2">
+                                    <ul>
+                                        {% for change in record.changes %}
+                                            <li class="flex items-center gap-x-1">
+                                                {{ change.field }}:
+                                                <span class="text-red-500">{{ change.old }}</span>
+                                                <span class="iconify -ml-0.5 w-5 h-5"
+                                                      data-icon="mdi:arrow-right-thin"></span>
+                                                <span class="text-green-500">{{ change.new }}</span>
                                             </li>
                                         {% endfor %}
-                                    {% endif %}
-                                </ul>
-                            </td>
-                            <td class="p-2 whitespace-nowrap text-right">
-                                <a href="{% url "badmin:team_revert" pk=team.id team_time=record.t1 contestant_time=record.t2 %}"
-                                   class="btn-admin-sm bg-gray-500 hover:bg-gray-600 ">
-                                    <i class="fas fa-history"></i> Revert
-                                </a>
-                            </td>
-                        </tr>
+                                        {% if record.added_members %}
+                                            <li class="flex items-center gap-x-1 text-green-500 font-bold">
+                                                Added contestants:
+                                                <span class="text-black font-normal">
+                                                    {% for user in record.added_members %}
+                                                        {{ user }}
+                                                        {% if not forloop.last %},{% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            </li>
+                                        {% endif %}
+                                        {% if record.removed_members %}
+                                            <li class="flex items-center gap-x-1 text-red-500 font-bold">
+                                                Removed contestants:
+                                                <span class="text-black font-normal">
+                                                    {% for user in record.removed_members %}
+                                                        {{ user }}
+                                                        {% if not forloop.last %},{% endif %}
+                                                    {% endfor %}
+                                                </span>
+                                            </li>
+                                        {% endif %}
+                                        {% if record.members_changes %}
+                                            {% for member in record.members_changes %}
+                                                <li class="flex items-center gap-x-1 font-bold">
+                                                    Contestant {{ member.member }}:
+                                                    <ul>
+                                                        {% for change in member.changes %}
+                                                            <li class="flex items-center gap-x-1 font-normal">
+                                                                {{ change.field }}:
+                                                                <span class="text-red-500">{{ change.old }}</span>
+                                                                <span class="iconify -ml-0.5 w-5 h-5"
+                                                                      data-icon="mdi:arrow-right-thin"></span>
+                                                                <span class="text-green-500">{{ change.new }}</span>
+                                                            </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </ul>
+                                </td>
+                                <td class="p-2 whitespace-nowrap text-right">
+                                    <a href="{% url "badmin:team_revert" pk=team.id team_time=record.t1 contestant_time=record.t2 %}"
+                                       class="btn-admin-sm bg-gray-500 hover:bg-gray-600">
+                                        <i class="fas fa-history"></i> Revert
+                                    </a>
+                                </td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-
             <div class="flex gap-2">
-            {% if page_obj.has_previous %}
-                <a href="{% query_transform page=page_obj.previous_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
-            {% endif %}
-            {% if page_obj.has_next %}
-                <a href="{% query_transform page=page_obj.next_page_number %}" class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
-            {% endif %}
+                {% if page_obj.has_previous %}
+                    <a href="{% query_transform page=page_obj.previous_page_number %}"
+                       class="btn-admin bg-primary hover:bg-primary-dark">Previous</a>
+                {% endif %}
+                {% if page_obj.has_next %}
+                    <a href="{% query_transform page=page_obj.next_page_number %}"
+                       class="btn-admin bg-primary hover:bg-primary-dark">Next</a>
+                {% endif %}
             </div>
         </div>
     </article>
-
     <script>
         document.getElementById("js-filter-button").addEventListener("click", (e) => {
             document.getElementById("js-filter").classList.toggle("hidden")
             e.preventDefault()
         })
     </script>
-{% endblock %}
+{% endblock content %}
