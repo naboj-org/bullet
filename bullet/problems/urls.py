@@ -1,6 +1,6 @@
 from django.urls import path
 
-from problems.views import archive, results
+from problems.views import archive, results, statistics
 
 urlpatterns = [
     path(
@@ -48,5 +48,15 @@ urlpatterns = [
         "archive/<int:competition_number>/problems/",
         archive.ProblemStatementView.as_view(),
         name="archive_problems",
+    ),
+    path(
+        "archive/<int:competition_number>/problem/<int:pk>/",
+        statistics.ProblemStatisticsView.as_view(),
+        name="problem_statistics",
+    ),
+    path(
+        "archive/<int:competition_number>/school/<int:pk>/",
+        statistics.SchoolStatisticsView.as_view(),
+        name="school_statistics",
     ),
 ]
