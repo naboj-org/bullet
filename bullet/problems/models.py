@@ -2,6 +2,8 @@ from django.db import models
 from django.db.models import UniqueConstraint
 from web.fields import LanguageField
 
+from django_pandas.managers import DataFrameManager
+
 
 class Problem(models.Model):
     competition = models.ForeignKey(
@@ -46,6 +48,8 @@ class ProblemStat(models.Model):
     received_time = models.DurationField()
     solved_time = models.DurationField(blank=True, null=True)
     solve_duration = models.DurationField(blank=True, null=True)
+
+    objects = DataFrameManager()
 
 
 class ScannerLog(models.Model):
