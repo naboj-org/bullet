@@ -1,0 +1,26 @@
+{% extends "web/base.html" %}
+{% load i18n %}
+{% load country_url %}
+{% load archive_statements %}
+{% block title %}
+    {% trans "Problem statistics" %}
+{% endblock title %}
+{% block hero %}
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">
+        {% trans "Problem statistics" %}
+    </h1>
+    <h2 class="text-2xl md:text-4xl mt-4 mb-4 md:mb-16">{{ competition.name }}</h2>
+{% endblock hero %}
+{% block content %}
+    <main class="my-8 max-w-screen-md mx-auto px-2">
+        <h2 class="font-bold text-lg">
+            {% blocktrans with n=object.name %}Problem {{ n }}{% endblocktrans %}
+        </h2>
+        <div class="prose prose-archive">{{ problem.statement|safe }}</div>
+        {% for plot in plots %}
+            <img src="data:image/svg+xml;base64,{{ plot }}"
+                 alt="Plot of the problem statistics"
+                 class="max-w-screen-md" />
+        {% endfor %}
+    </main>
+{% endblock content %}
