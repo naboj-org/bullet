@@ -115,7 +115,7 @@ msgstr "Wyniki"
 #: competitions/templates/archive/list.html:23
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
-msgid "Problem statements"
+msgid "Problems and solutions"
 msgstr "Zadania"
 
 #: competitions/templates/archive/list.html:24

@@ -24,7 +24,7 @@ class ProblemImportForm(forms.Form):
 class ProblemUploadForm(forms.Form):
     language = forms.ChoiceField(label="Language")
     file = forms.FileField(
-        label="Problem statements", validators=[FileExtensionValidator(["pdf"])]
+        label="Problems and solutions", validators=[FileExtensionValidator(["pdf"])]
     )
 
     def __init__(self, competition, **kwargs):
