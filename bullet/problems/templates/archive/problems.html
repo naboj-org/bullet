@@ -2,77 +2,78 @@
 {% load i18n %}
 {% load country_url %}
 {% load archive_statements %}
-
-{% block title %}{% trans "Problem statements" %}{% endblock %}
-
-{% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">
+{% block title %}
     {% trans "Problem statements" %}
-</h1>
-<h2 class="text-2xl md:text-4xl mt-4 mb-4 md:mb-16">{{ competition.name }}</h2>
-{% endblock %}
-
+{% endblock title %}
+{% block hero %}
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">
+        {% trans "Problem statements" %}
+    </h1>
+    <h2 class="text-2xl md:text-4xl mt-4 mb-4 md:mb-16">{{ competition.name }}</h2>
+{% endblock hero %}
 {% block content %}
     {% if pdf %}
-    <div class="max-w-prose my-16 mx-auto text-center px-2">
-        <a href="{{ pdf }}" class="btn">
-            <iconify-icon inline icon="mdi:download"></iconify-icon>
-            {% trans "Download as PDF" %}
-        </a>
-    </div>
-    {% endif %}
-
-    {% for problem in object_list %}
-    <article class="my-8 max-w-prose mx-auto px-2">
-        <h2 class="font-bold text-lg">{% blocktrans with n=problem|problem_number %}Problem {{ n }}{% endblocktrans %}</h2>
-        <div class="prose prose-archive">
-            {{ problem.statement|safe }}
-
-            <details class="border px-4 py-2 rounded mt-4">
-                <summary class="text-primary cursor-pointer">{% trans "Solution" %}</summary>
-
-                <div class="mt-2">
-                    {# Translators: This is a label for numerical answer of a problem used in problem archive. #}
-                    <p><i>{% translate "Answer" %}:</i> {{ problem.answer|safe }}</p>
-
-                    <hr>
-
-                    {{ problem.solution|safe }}
-                </div>
-            </details>
+        <div class="max-w-prose my-16 mx-auto text-center px-2">
+            <a href="{{ pdf }}"
+               class="btn">
+                <iconify-icon inline icon="mdi:download"></iconify-icon>
+                {% trans "Download as PDF" %}
+            </a>
         </div>
-
-        {% if problem.stats %}
-        <details class="border px-4 py-2 rounded mt-4">
-            <summary class="text-primary cursor-pointer">{% trans "Statistics" %}</summary>
-
-            <div class="mt-2">
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div class="text-center">
-                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats.received }}</div>
-                        <div class="text-sm">
-                            {# Translators: This sentence is prefixed with the number of teams that received given problem. #}
-                            {% blocktranslate trimmed count n=problem.stats.received %}
-                                team received
-                            {% plural %}
-                                teams received
-                            {% endblocktranslate %}
+    {% endif %}
+    {% for problem in object_list %}
+        <article class="my-8 max-w-prose mx-auto px-2">
+            <h2 class="font-bold text-lg">
+                {% blocktrans with n=problem|problem_number %}Problem {{ n }}{% endblocktrans %}
+            </h2>
+            <div class="prose prose-archive">
+                {{ problem.statement|safe }}
+                <details class="border px-4 py-2 rounded mt-4">
+                    <summary class="text-primary cursor-pointer">{% trans "Solution" %}</summary>
+                    <div class="mt-2">
+                        {# Translators: This is a label for numerical answer of a problem used in problem archive. #}
+                        <p>
+                            <i>{% translate "Answer" %}:</i> {{ problem.answer|safe }}
+                        </p>
+                        <hr>
+                        {{ problem.solution|safe }}
+                    </div>
+                </details>
+            </div>
+            {% if problem.stats %}
+                <details class="border px-4 py-2 rounded mt-4">
+                    <summary class="text-primary cursor-pointer">{% trans "Statistics" %}</summary>
+                    <div class="mt-2">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold tabular-nums">{{ problem.stats.received }}</div>
+                                <div class="text-sm">
+                                    {# Translators: This sentence is prefixed with the number of teams that received given problem. #}
+                                    {% blocktranslate trimmed count n=problem.stats.received %}
+                                        team received
+                                    {% plural %}
+                                        teams received
+                                    {% endblocktranslate %}
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold tabular-nums">
+                                    {{ problem.stats|problem_solve_percentage }}<span class="text-2xl text-gray-600">%</span>
+                                </div>
+                                {# Translators: This sentence is prefixed with the percentage amount of teams that solved given problem. #}
+                                <div class="text-sm">{% trans "teams solved" %}</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold tabular-nums">
+                                    {{ problem.stats.avg_time|timedelta_format }}
+                                </div>
+                                {# Translators: This sentence is prefixed with the average solving time in HH:MM:SS format. #}
+                                <div class="text-sm">{% trans "average solving time" %}</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats|problem_solve_percentage }}<span class="text-2xl text-gray-600">%</span></div>
-                        {# Translators: This sentence is prefixed with the percentage amount of teams that solved given problem. #}
-                        <div class="text-sm">{% trans "teams solved" %}</div>
-                    </div>
-                    <div class="text-center">
-                        <div class="text-4xl font-bold tabular-nums">{{ problem.stats.avg_time|timedelta_format }}</div>
-                        {# Translators: This sentence is prefixed with the average solving time in HH:MM:SS format. #}
-                        <div class="text-sm">{% trans "average solving time" %}</div>
-                    </div>
-                </div>
-            </div>
-        </details>
-        {% endif %}
-    </article>
+                </details>
+            {% endif %}
+        </article>
     {% endfor %}
-{% endblock %}
+{% endblock content %}

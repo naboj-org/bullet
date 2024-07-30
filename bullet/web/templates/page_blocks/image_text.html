@@ -1,23 +1,25 @@
 {% extends "page_blocks/_base.html" %}
-
 {% block container %}
     <div class="grid grid-cols-1 lg:grid-cols-2 items-center gap-x-8 gap-y-16">
         <div class="max-w-lg">
-            <h2 class="font-bold text-3xl md:text-4xl mb-4 text-gray-800 bold-primary">{{ title|safe }}</h2>
-            <div class="text-lg text-gray-600 leading-8">
-                {{ text|safe }}
-            </div>
-
+            <h2 class="font-bold text-3xl md:text-4xl mb-4 text-gray-800 bold-primary">
+                {{ title|safe }}
+            </h2>
+            <div class="text-lg text-gray-600 leading-8">{{ text|safe }}</div>
             {% if cta_url %}
                 <div class="mt-6">
-                    <a href="{{ cta_url }}" class="btn inline-block">{{ cta_text }}</a>
+                    <a href="{{ cta_url }}"
+                       class="btn inline-block">{{ cta_text }}</a>
                 </div>
             {% endif %}
         </div>
         {% if image %}
-        <div class="max-w-lg {% if side == "left" %}lg:order-first{% endif %}">
-            <img src="{{ image_root }}{{ image }}" class="w-full rounded-lg shadow-xl">
-        </div>
+            <div class="max-w-lg
+                        {% if side == "left" %}lg:order-first{% endif %}">
+                <img src="{{ image_root }}{{ image }}"
+                     class="w-full rounded-lg shadow-xl"
+                     alt="{{ title }}">
+            </div>
         {% endif %}
     </div>
-{% endblock %}
+{% endblock container %}

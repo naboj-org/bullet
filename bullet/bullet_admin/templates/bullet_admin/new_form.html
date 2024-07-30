@@ -1,34 +1,39 @@
 {% load bform %}
 <div class="space-y-4">
     {% if form.non_field_errors %}
-    <div class="text-red-600">
-        {% for err in form.non_field_errors %}
-            <p>{{ err }}</p>
-        {% endfor %}
-    </div>
-    {% endif %}
-
-    {% for field in form.visible_fields %}
-    <div>
-        {% if field.field.widget.input_type == "checkbox" and field.widget_type != "checkboxselectmultiple" %}
-            <label class="flex items-center font-semibold gap-2">
-                {% bcheckbox field %}
-                {{ field.label }} {% if field.field.required %}<span title="Required field" class="text-red-600">*</span>{% endif %}
-            </label>
-            {% if field.errors %}
-                <div class="text-red-600">{{ field.errors|first }}</div>
-            {% endif %}
-            {% if field.help_text %}
-                <div class="text-sm text-gray-500">{{ field.help_text }}</div>
-            {% endif %}
-        {% else %}
-        <label for="{{ field.id_for_label }}" class="font-semibold">{{ field.label }} {% if field.field.required %}<span title="Required field" class="text-red-600">*</span>{% endif %}</label>
-        <div class="mt-1">
-            {% bfield field %}
+        <div class="text-red-600">
+            {% for err in form.non_field_errors %}<p>{{ err }}</p>{% endfor %}
         </div>
-        {% endif %}
-    </div>
+    {% endif %}
+    {% for field in form.visible_fields %}
+        <div>
+            {% if field.field.widget.input_type == "checkbox" and field.widget_type != "checkboxselectmultiple" %}
+                <label class="flex items-center font-semibold gap-2">
+                    {% bcheckbox field %}
+                    {{ field.label }}
+                    {% if field.field.required %}
+                        <span title="Required field"
+                              class="text-red-600">*</span>
+                    {% endif %}
+                </label>
+                {% if field.errors %}
+                    <div class="text-red-600">{{ field.errors|first }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                    <div class="text-sm text-gray-500">{{ field.help_text }}</div>
+                {% endif %}
+            {% else %}
+                <label for="{{ field.id_for_label }}"
+                       class="font-semibold">
+                    {{ field.label }}
+                    {% if field.field.required %}
+                        <span title="Required field"
+                              class="text-red-600">*</span>
+                    {% endif %}
+                </label>
+                <div class="mt-1">{% bfield field %}</div>
+            {% endif %}
+        </div>
     {% endfor %}
 </div>
-
 {% for field in hidden_fields %}{{ field }}{% endfor %}

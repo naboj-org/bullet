@@ -1,7 +1,7 @@
 {% extends "bullet_admin/base.html" %}
-
-{% block title %}Team list{% endblock %}
-
+{% block title %}
+    Team list
+{% endblock title %}
 {% block content %}
     <form method="post">
         {% csrf_token %}
@@ -21,27 +21,30 @@
                             <th class="p-2">Venue</th>
                         </tr>
                     </thead>
-
                     <tbody class="divide-y">
                         {% for team in teams %}
-                        <tr class="{% cycle "" "bg-gray-50" %}">
-                            <td class="p-2 text-center">
-                                <input type="checkbox" class="checkbox" name="excluded" value="{{ team.id }}" {% if team.id in excluded_teams %}checked{% endif %}>
-                            </td>
-                            <td class="p-2">{{ team.id_display }}</td>
-                            <td class="p-2">{{ team.display_name }}</td>
-                            <td class="p-2">{{ team.contestants_names }}</td>
-                            <td class="p-2">{{ team.venue.country }}</td>
-                            <td class="p-2">{{ team.venue }}</td>
-                        </tr>
+                            <tr class="{% cycle "" "bg-gray-50" %}">
+                                <td class="p-2 text-center">
+                                    <input type="checkbox"
+                                           class="checkbox"
+                                           name="excluded"
+                                           value="{{ team.id }}"
+                                           {% if team.id in excluded_teams %}checked{% endif %}>
+                                </td>
+                                <td class="p-2">{{ team.id_display }}</td>
+                                <td class="p-2">{{ team.display_name }}</td>
+                                <td class="p-2">{{ team.contestants_names }}</td>
+                                <td class="p-2">{{ team.venue.country }}</td>
+                                <td class="p-2">{{ team.venue }}</td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>
-
-                <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark mt-4">
+                <button type="submit"
+                        class="btn-admin bg-primary hover:bg-primary-dark mt-4">
                     <i class="fas fa-save"></i> Save
                 </button>
             </div>
         </article>
     </form>
-{% endblock %}
+{% endblock content %}

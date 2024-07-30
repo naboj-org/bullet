@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}Delete wildcard{% endblock %}
-
+{% block title %}
+    Delete wildcard
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader %}
@@ -10,12 +10,9 @@
                 Delete wildcard
             {% endslot %}
         {% endaheader %}
-
         <form method="post">
             {% csrf_token %}
-
             <p>Are you sure you want to delete this wildcard?</p>
-
             <dl class="divide-y divide-gray-100 mt-4">
                 <div class="px-3 py-4 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                     <dt class="text-sm font-medium text-gray-900">School</dt>
@@ -30,13 +27,11 @@
                     </dd>
                 </div>
             </dl>
-
             <div class="mt-6 space-x-2">
                 {% #abtn button label="Delete" icon="mdi:delete" color="red" %}
-
                 {% url "badmin:wildcard_list" as back %}
                 {% #abtn url=back label="Cancel" %}
             </div>
         </form>
     </div>
-{% endblock %}
+{% endblock content %}

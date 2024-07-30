@@ -2,19 +2,14 @@
 {% load country_url %}
 {% load content_blocks %}
 {% load_blocks "category" %}
-
 <h2 class="font-bold text-2xl mb-6">{% trans "Category" %}</h2>
-
 <div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
     <div>
         <div class="font-bold text-xl">
             {% content_block "category:name_"|add:category.identifier %}
         </div>
-        <p>
-            {% content_block "category:description_"|add:category.identifier %}
-        </p>
+        <p>{% content_block "category:description_"|add:category.identifier %}</p>
     </div>
-    <a href="{% country_url 'register' %}" class="ms-auto shrink-0 text-primary hover:underline">
-        {% trans "Change" %}
-    </a>
+    <a href="{% country_url 'register' %}"
+       class="ms-auto shrink-0 text-primary hover:underline">{% trans "Change" %}</a>
 </div>

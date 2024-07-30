@@ -1,27 +1,27 @@
 {% load bform %}
-
 <article class="border rounded-md bg-white shadow-lg overflow-hidden mt-6">
     <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-        <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Registration agreements</h2>
+        <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+            Registration agreements
+        </h2>
     </header>
     <div>
         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
             <label>Agreement file</label>
             <div class="mt-1 sm:mt-0 sm:col-span-2">
                 {% if team.spanish_data.agreement %}
-                <a href="{{ team.spanish_data.agreement.url }}" class="link-primary">Download</a>
+                    <a href="{{ team.spanish_data.agreement.url }}"
+                       class="link-primary">Download</a>
                 {% else %}
-                (none)
+                    (none)
                 {% endif %}
             </div>
         </div>
         {% if form.spanish_is_verified %}
-        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
-            <label for="{{ form.spanish_is_verified.id_for_label }}">Verified?</label>
-            <div class="mt-1 sm:mt-0 sm:col-span-2">
-                {% bfield form.spanish_is_verified %}
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4 border-t">
+                <label for="{{ form.spanish_is_verified.id_for_label }}">Verified?</label>
+                <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.spanish_is_verified %}</div>
             </div>
-        </div>
         {% endif %}
     </div>
 </article>

@@ -1,20 +1,38 @@
 <div id="js-school-input">
     <div class="flex gap-2 items-center">
-        <input type="text" class="input form-input" name="q" hx-get="{% url "badmin:school_input" %}{% if default %}?default={{ default }}{% endif %}" hx-trigger="keyup changed delay:100ms" hx-swap="outerHTML" hx-select="#js-school-list" hx-target="#js-school-list">
-
+        <input type="text"
+               class="input form-input"
+               name="q"
+               hx-get="{% url "badmin:school_input" %}
+                       {% if default %}?default={{ default }}{% endif %}"
+               hx-trigger="keyup changed delay:100ms"
+               hx-swap="outerHTML"
+               hx-select="#js-school-list"
+               hx-target="#js-school-list">
         {% if default %}
-        <a href="#" class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0" hx-post="{% url "badmin:school_input" %}"  hx-vals='{"school": {{ default }}}' hx-target="#js-school-input" hx-swap="outerHTML" hx-params="school">
-            <i class="fas fa-times"></i>
-        </a>
+            <a href="#"
+               class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0"
+               hx-post="{% url "badmin:school_input" %}"
+               hx-vals='{"school": {{ default }} }'
+               hx-target="#js-school-input"
+               hx-swap="outerHTML"
+               hx-params="school">
+                <i class="fas fa-times"></i>
+            </a>
         {% endif %}
     </div>
-
-    <div id="js-school-list" class="space-y-1 mt-1" hx-params="school" hx-target="#js-school-input" hx-swap="outerHTML">
+    <div id="js-school-list"
+         class="space-y-1 mt-1"
+         hx-params="school"
+         hx-target="#js-school-input"
+         hx-swap="outerHTML">
         {% for school in schools %}
-        <div class="p-2 hover:bg-gray-100 rounded cursor-pointer" hx-post="{% url "badmin:school_input" %}" hx-vals='{"school": {{ school.id }}}'>
-            <div>{{ school.name }}</div>
-            <div class="text-sm text-gray-600">{{ school.address }}</div>
-        </div>
+            <div class="p-2 hover:bg-gray-100 rounded cursor-pointer"
+                 hx-post="{% url "badmin:school_input" %}"
+                 hx-vals='{"school": {{ school.id }} }'>
+                <div>{{ school.name }}</div>
+                <div class="text-sm text-gray-600">{{ school.address }}</div>
+            </div>
         {% endfor %}
     </div>
 </div>

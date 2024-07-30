@@ -1,15 +1,17 @@
 {% extends "web/base.html" %}
 {% load i18n %}
-
 {# Translators: Registration page title #}
-{% block title %}{% trans "Team registration" %}{% endblock %}
-
+{% block title %}
+    {% trans "Team registration" %}
+{% endblock title %}
 {% block hero %}
-<h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-16 mb-4 md:mb-12">{% trans "Team registration" %}</h1>
-{% endblock %}
-
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-16 mb-4 md:mb-12">
+        {% trans "Team registration" %}
+    </h1>
+{% endblock hero %}
 {% block content %}
     <div class="mx-auto w-full max-w-4xl p-3 mt-10">
-        {% block register_content %}{% endblock %}
+        {% block register_content %}
+        {% endblock register_content %}
     </div>
-{% endblock %}
+{% endblock content %}

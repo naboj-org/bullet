@@ -1,8 +1,8 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
-
-{% block title %}Team export{% endblock %}
-
+{% block title %}
+    Team export
+{% endblock title %}
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
@@ -10,14 +10,13 @@
         </header>
         <form method="post">
             {% csrf_token %}
-
             {% admin_form form %}
-
             <div class="p-4">
-                <button type="submit" class="btn-admin bg-blue-500 hover:bg-blue-600 mt-4">
+                <button type="submit"
+                        class="btn-admin bg-blue-500 hover:bg-blue-600 mt-4">
                     <i class="fas fa-download"></i> Export teams
                 </button>
             </div>
         </form>
     </article>
-{% endblock %}
+{% endblock content %}

@@ -1,28 +1,23 @@
 {% extends "bullet_admin/base.html" %}
 {% load static %}
-
-{% block title %}Problem scanning{% endblock %}
-
+{% block title %}
+    Problem scanning
+{% endblock title %}
 {% block content %}
     <div class="p-8 mx-auto max-w-7xl">
         {% aheader %}
             {% slot title %}
                 Problem scanning
             {% endslot %}
-
             {% slot buttons %}
                 {% url "badmin:documentation" "problem_scanning" as help_url %}
                 {% #abtn icon="mdi:help" label="Help" url=help_url %}
             {% endslot %}
         {% endaheader %}
         {% include "bullet_admin/scanning/problem/_scanner.html" %}
-
-        <h2 class="text-base font-semibold text-gray-900 pb-4">
-            Scanning history
-        </h2>
+        <h2 class="text-base font-semibold text-gray-900 pb-4">Scanning history</h2>
         {% include "bullet_admin/scanning/problem/_history.html" %}
     </div>
-
     <script src="{% static "js/html5-qrcode.min.js" %}"></script>
     <script src="{% static "js/admin_barcode.js" %}"></script>
-{% endblock %}
+{% endblock content %}

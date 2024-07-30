@@ -1,19 +1,20 @@
 {% load i18n %}
 <div id="js_school_list">
     {% for school in schools %}
-    <button type="submit" name="school" value="{{ school.id }}" class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md w-full mb-3">
-        <div class="font-bold text-xl">
-            {{ school.name }}
-        </div>
-        <div>{{ school.address }}</div>
-    </button>
+        <button type="submit"
+                name="school"
+                value="{{ school.id }}"
+                class="text-left px-8 py-4 bg-gray-50 rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md w-full mb-3">
+            <div class="font-bold text-xl">{{ school.name }}</div>
+            <div>{{ school.address }}</div>
+        </button>
     {% empty %}
         {% if request.GET.q %}
-        <div class="text-red-800">
-            {# Translators: The user attempted to search for a school, but we were unable to find any matching results. #}
-            <p class="text-lg font-bold">{% trans "No schools matched your query." %}</p>
-            <p>{% trans "If you believe this is an error, contact us." %}</p>
-        </div>
+            <div class="text-red-800">
+                {# Translators: The user attempted to search for a school, but we were unable to find any matching results. #}
+                <p class="text-lg font-bold">{% trans "No schools matched your query." %}</p>
+                <p>{% trans "If you believe this is an error, contact us." %}</p>
+            </div>
         {% endif %}
     {% endfor %}
 </div>

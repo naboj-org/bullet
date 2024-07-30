@@ -1,9 +1,9 @@
 {% extends "bullet_admin/base.html" %}
 {% load badmin %}
 {% load access %}
-
-{% block title %}Venues{% endblock %}
-
+{% block title %}
+    Venues
+{% endblock title %}
 {% block content %}
     {% get_active_competition as competition %}
     {% is_branch_admin as is_branch_admin %}
@@ -20,7 +20,6 @@
                 {% endif %}
             {% endslot %}
         {% endaheader %}
-
         <table class="w-full text-sm">
             <thead class="text-left bg-gray-100 border-t border-b">
                 <tr>
@@ -35,14 +34,17 @@
                     <th></th>
                 </tr>
             </thead>
-
             <tbody class="divide-y tabular-nums">
                 {% for v in object_list %}
                     <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                         <td class="p-3">{{ v.identifier }}</td>
                         <td class="p-3 text-right hidden md:table-cell">{{ v.order }}</td>
-                        <td class="p-3 text-right hidden md:table-cell">{{ v.problems_per_team|floatformat:"g" }}</td>
-                        <td class="p-3 text-right hidden md:table-cell">{{ v.max_members_per_team|floatformat:"g" }}</td>
+                        <td class="p-3 text-right hidden md:table-cell">
+                            {{ v.problems_per_team|floatformat:"g" }}
+                        </td>
+                        <td class="p-3 text-right hidden md:table-cell">
+                            {{ v.max_members_per_team|floatformat:"g" }}
+                        </td>
                         <td class="p-3 text-right hidden md:table-cell">
                             {{ v.max_teams_per_school|floatformat:"g" }}
                             <span class="text-black/70 font-normal">({{ v.max_teams_second_round|floatformat:"g" }})</span>
@@ -50,9 +52,11 @@
                         <td class="p-3">
                             <div class="flex items-center justify-end gap-2">
                                 {% if is_branch_admin %}
-                                <a href="{% url 'badmin:category_edit' pk=v.id %}" class="text-gray-400 hover:text-gray-600 p-2 -m-2">
-                                    <span class="iconify" data-icon="mdi:edit"></span>
-                                </a>
+                                    <a href="{% url 'badmin:category_edit' pk=v.id %}"
+                                       class="text-gray-400 hover:text-gray-600 p-2 -m-2">
+                                        <span class="iconify"
+                                              data-icon="mdi:edit"></span>
+                                    </a>
                                 {% endif %}
                             </div>
                         </td>
@@ -61,7 +65,7 @@
             </tbody>
         </table>
         {% if is_paginated %}
-        {% admin_paginator page_obj %}
+            {% admin_paginator page_obj %}
         {% endif %}
     </div>
-{% endblock %}
+{% endblock content %}

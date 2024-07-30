@@ -3,9 +3,16 @@
 {% load country_url %}
 <footer class="text-gray-700 text-center md:mt-16 mt-10 mb-12">
     {% get_current_timezone as tz_name %}
-    <p>{% blocktrans with tz_name=tz_name tz_offset=tz_offset %}All times are in timezone {{ tz_name }} unless stated otherwise.{% endblocktrans %}</p>
+    <p>
+        {% blocktrans with tz_name=tz_name tz_offset=tz_offset %}All times are in timezone {{ tz_name }} unless stated otherwise.{% endblocktrans %}
+    </p>
     {% if request.COUNTRY_CODE %}
-    <p><a href="{% country_url "page" slug="gdpr" %}" class="link-primary">{% trans "Data protection policy" %}</a></p>
+        <p>
+            <a href="{% country_url "page" slug="gdpr" %}"
+               class="link-primary">{% trans "Data protection policy" %}</a>
+        </p>
     {% endif %}
-    <p class="mt-2 text-sm">&copy; Naboj IT Team {% now "Y" %} <span class="text-xs">(v{{ bullet_version }})</span></p>
+    <p class="mt-2 text-sm">
+        © Naboj IT Team {% now "Y" %} <span class="text-xs">(v{{ bullet_version }})</span>
+    </p>
 </footer>

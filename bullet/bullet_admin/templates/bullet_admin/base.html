@@ -1,17 +1,13 @@
 {% extends "web/root_base.html" %}
-
 {% load badmin %}
-
 {% block root_content %}
     <main class="flex h-screen min-w-screen flex-col md:flex-row">
-
         <aside class="shrink-0 md:w-64 bg-gray-800 flex flex-col">
             {% admin_sidebar %}
         </aside>
-
         <section class="overflow-y-auto w-full h-full">
-            {% block content %}{% endblock %}
+            {% block content %}
+            {% endblock content %}
         </section>
-
     </main>
-{% endblock %}
+{% endblock root_content %}

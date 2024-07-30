@@ -1,14 +1,17 @@
 {% extends "bullet_admin/venues/form.html" %}
-
 {% block before_form %}
     <div class="-mt-2 mb-6 text-sm">
-        <p class="mb-2">This interface allows you to generate printable tear-off for your venue. A tear-off is the document with problems and barcodes for teams.</p>
-
+        <p class="mb-2">
+            This interface allows you to generate printable tear-off for your venue. A tear-off is the document with problems and barcodes for teams.
+        </p>
         <p class="mb-2">The problems on a tear-off can be ordered in two ways:</p>
-
         <ul class="list-disc list-outside ml-6">
-            <li><b>Aligned:</b> Problems are sorted so that when you print the whole document, problems from the same team will be under each other, so you can just cut the papers and have them already ordered. For example, you will get one page with the first problem for the first four teams, then another page with the second problem and so on.</li>
-            <li><b>Sequential:</b> Problems are sorted sequentially on the page, meaning you will need to order them manually. For example, you will get a page containing problems 1–4 for the first team, then another page containing problems 5–8, and so on.</li>
+            <li>
+                <b>Aligned:</b> Problems are sorted so that when you print the whole document, problems from the same team will be under each other, so you can just cut the papers and have them already ordered. For example, you will get one page with the first problem for the first four teams, then another page with the second problem and so on.
+            </li>
+            <li>
+                <b>Sequential:</b> Problems are sorted sequentially on the page, meaning you will need to order them manually. For example, you will get a page containing problems 1–4 for the first team, then another page containing problems 5–8, and so on.
+            </li>
         </ul>
     </div>
-{% endblock %}
+{% endblock before_form %}

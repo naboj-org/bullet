@@ -1,16 +1,43 @@
 {% load utils %}
 {% query_transform back=request.get_full_path as back %}
 <a href="{{ attributes.url }}{% if not attributes.disable_back %}{{ back }}{% endif %}"
-    class="p-2 -m-2
-        {% if attributes.type == "edit" %}text-green-600 hover:text-green-400
-        {% elif attributes.type == "delete" %}text-red-600 hover:text-red-400
-        {% else%}text-blue-600 hover:text-blue-400
-    {% endif %}">
-        <span class="iconify w-5 h-5 shrink-0" data-icon=
-            {% if attributes.type == "edit" %}"mdi:square-edit-outline"
-            {% elif attributes.type == "delete" %}"mdi:delete"
-            {% elif attributes.type == "view" %}"mdi:export"
-            {% elif attributes.type == "history" %}"mdi:history"
-            {% elif attributes.type == "internal-view" %}"mdi:eye"
-        {% endif %}></span>
+   class="p-2 -m-2
+          {% if attributes.type == "edit" %}
+              text-green-600 hover:text-green-400
+          {% elif attributes.type == "delete" %}
+              text-red-600 hover:text-red-400
+          {% else %}
+              text-blue-600 hover:text-blue-400
+          {% endif %}"
+   title="{% if attributes.type == "edit" %}
+              Edit
+          {% elif attributes.type == "delete" %}
+              Delete
+          {% elif attributes.type == "view" %}
+              View
+          {% elif attributes.type == "history" %}
+              History
+          {% elif attributes.type == "internal-view" %}
+              View
+          {% elif attributes.type == "download" %}
+              Download sources
+          {% elif attributes.type == "generate" %}
+              Generate documents
+          {% endif %}">
+    <span class="iconify w-5 h-5 shrink-0"
+          {% if attributes.type == "edit" %}
+              data-icon="mdi:square-edit-outline"
+          {% elif attributes.type == "delete" %}
+              data-icon="mdi:delete"
+          {% elif attributes.type == "view" %}
+              data-icon="mdi:export"
+          {% elif attributes.type == "history" %}
+              data-icon="mdi:history"
+          {% elif attributes.type == "internal-view" %}
+              data-icon="mdi:eye"
+          {% elif attributes.type == "download" %}
+              data-icon="mdi:download"
+          {% elif attributes.type == "generate" %}
+              data-icon="mdi:play"
+          {% endif %}></span>
 </a>

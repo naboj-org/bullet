@@ -1,42 +1,68 @@
 {% extends "bullet_admin/base.html" %}
-
-{% block title %}{{ venue }}{% endblock %}
-
+{% block title %}
+    {{ venue }}
+{% endblock title %}
 {% block content %}
-    <div class="p-8 mx-auto {% block venue_width %}max-w-3xl{% endblock %}">
+    <div class="p-8 mx-auto
+                {% block venue_width %}
+                    max-w-3xl
+                {% endblock venue_width %}">
         {% aheader show_subtitle=True %}
             {% slot title %}
                 {{ venue }}
             {% endslot %}
         {% endaheader %}
-
         <nav class="flex flex-wrap gap-2 mb-8 -mt-4 flex-col sm:flex-row text-sm font-medium">
-            <a href="{% url "badmin:venue_detail" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "venue_detail" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Overview</a>
+            <a href="{% url "badmin:venue_detail" pk=venue.id %}"
+               class="rounded-md px-3 py-2
+                      {% if request.resolver_match.url_name == "venue_detail" %}
+                          bg-blue-100 text-blue-700
+                      {% else %}
+                          text-gray-500 hover:text-gray-700
+                      {% endif %}">Overview</a>
             {% if not venue.category.competition.results_public %}
-            <a href="{% url "badmin:venue_update" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "venue_update" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Settings</a>
+                <a href="{% url "badmin:venue_update" pk=venue.id %}"
+                   class="rounded-md px-3 py-2
+                          {% if request.resolver_match.url_name == "venue_update" %}
+                              bg-blue-100 text-blue-700
+                          {% else %}
+                              text-gray-500 hover:text-gray-700
+                          {% endif %}">Settings</a>
             {% endif %}
-            <a href="{% url "badmin:waiting_list" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "waiting_list" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Waiting list</a>
-            <a href="{% url "badmin:venue_certificates" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "venue_certificates" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Certificates</a>
-            <a href="{% url "badmin:venue_teamlists" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "venue_teamlists" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Team list PDF</a>
+            <a href="{% url "badmin:waiting_list" pk=venue.id %}"
+               class="rounded-md px-3 py-2
+                      {% if request.resolver_match.url_name == "waiting_list" %}
+                          bg-blue-100 text-blue-700
+                      {% else %}
+                          text-gray-500 hover:text-gray-700
+                      {% endif %}">Waiting list</a>
+            <a href="{% url "badmin:venue_certificates" pk=venue.id %}"
+               class="rounded-md px-3 py-2
+                      {% if request.resolver_match.url_name == "venue_certificates" %}
+                          bg-blue-100 text-blue-700
+                      {% else %}
+                          text-gray-500 hover:text-gray-700
+                      {% endif %}">Certificates</a>
+            <a href="{% url "badmin:venue_teamlists" pk=venue.id %}"
+               class="rounded-md px-3 py-2
+                      {% if request.resolver_match.url_name == "venue_teamlists" %}
+                          bg-blue-100 text-blue-700
+                      {% else %}
+                          text-gray-500 hover:text-gray-700
+                      {% endif %}">Team list PDF</a>
             {% if not venue.category.competition.results_public %}
-            <a href="{% url "badmin:venue_tearoffs" pk=venue.id %}" class="rounded-md px-3 py-2
-                {% if request.resolver_match.url_name == "venue_tearoffs" %}bg-blue-100 text-blue-700
-                {% else %}text-gray-500 hover:text-gray-700{% endif %}">Tearoffs</a>
+                <a href="{% url "badmin:venue_tearoffs" pk=venue.id %}"
+                   class="rounded-md px-3 py-2
+                          {% if request.resolver_match.url_name == "venue_tearoffs" %}
+                              bg-blue-100 text-blue-700
+                          {% else %}
+                              text-gray-500 hover:text-gray-700
+                          {% endif %}">Tearoffs</a>
             {% endif %}
         </nav>
-
         <div>
-            {% block venue_content %}{% endblock %}
+            {% block venue_content %}
+            {% endblock venue_content %}
         </div>
     </div>
-{% endblock %}
+{% endblock content %}

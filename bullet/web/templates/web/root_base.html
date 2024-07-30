@@ -1,61 +1,85 @@
 {% load static %}
 {% load i18n %}
-<!doctype html>{% get_current_language_bidi as lang_bidi %}
-<html lang="{{ request.LANGUAGE_CODE }}" {% if lang_bidi %}dir="rtl"{% endif %}>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %} – {{ branch.name }}</title>
-    <link rel="icon" type="image/svg+xml" href="{% static 'img/icon.svg' %}">
-    <link rel="mask-icon" href="{% static 'img/icon.svg' %}" color="white">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="{% static 'app.css' %}?v={{ bullet_version }}" type="text/css"/>
-    {% block extrahead %}{% endblock %}
-    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-    <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-</head>
-
-<body class="branch-{{ branch.identifier }}" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
-    {% block root_content %}{% endblock %}
-    {% block messages %}
-        {% if messages %}
-            <ul class="fixed right-0 top-0 z-20 m-6 max-w-prose space-y-4">
-                {% for message in messages %}
-                <li class="border p-4 rounded relative bg-white shadow-xl flex items-center gap-3">
-                    <div class="shrink-0 text-xl">
-                        {% if message.tags == "info" %}
-                        <i class="fas fa-circle-info text-cyan-500"></i>
-                        {% elif message.tags == "success" %}
-                        <i class="fas fa-circle-check text-green-600"></i>
-                        {% elif message.tags == "warning" %}
-                        <i class="fas fa-exclamation-triangle text-amber-600"></i>
-                        {% elif message.tags == "error" %}
-                        <i class="fas fa-circle-xmark text-red-600"></i>
-                        {% endif %}
-                    </div>
-                    <span>{{ message }}</span>
-                    <div onclick="this.parentNode.remove()" class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer" role="button" title="{% trans "Close" %}">
-                        <i class="fas fa-xmark"></i>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endblock messages %}
-
-    <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.8.0" defer></script>
-    <script>
+<!DOCTYPE html>{% get_current_language_bidi as lang_bidi %}
+<html lang="{{ request.LANGUAGE_CODE }}"
+      {% if lang_bidi %}dir="rtl"{% endif %}>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta name="description"
+              content="{% block description %}
+                       {% endblock description %}">
+        <meta name="keywords"
+              content="{% block keywords %}
+                           {{ branch.name }},Competition,STEM
+                       {% endblock keywords %}">
+        <meta http-equiv="X-UA-Compatible"
+              content="ie=edge">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        – {{ branch.name }}</title>
+        <link rel="icon"
+              type="image/svg+xml"
+              href="{% static 'img/icon.svg' %}">
+        <link rel="mask-icon"
+              href="{% static 'img/icon.svg' %}"
+              color="white">
+        <link rel="preconnect"
+              href="https://fonts.googleapis.com">
+        <link rel="preconnect"
+              href="https://fonts.gstatic.com"
+              crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
+              rel="stylesheet">
+        <link rel="stylesheet"
+              href="{% static 'app.css' %}?v={{ bullet_version }}"
+              type="text/css" />
+        {% block extrahead %}
+        {% endblock extrahead %}
+        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+        <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
+        <link rel="stylesheet"
+              href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    </head>
+    <body class="branch-{{ branch.identifier }}"
+          hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {% block root_content %}
+        {% endblock root_content %}
+        {% block messages %}
+            {% if messages %}
+                <ul class="fixed right-0 top-0 z-20 m-6 max-w-prose space-y-4">
+                    {% for message in messages %}
+                        <li class="border p-4 rounded relative bg-white shadow-xl flex items-center gap-3">
+                            <div class="shrink-0 text-xl">
+                                {% if message.tags == "info" %}
+                                    <i class="fas fa-circle-info text-cyan-500"></i>
+                                {% elif message.tags == "success" %}
+                                    <i class="fas fa-circle-check text-green-600"></i>
+                                {% elif message.tags == "warning" %}
+                                    <i class="fas fa-exclamation-triangle text-amber-600"></i>
+                                {% elif message.tags == "error" %}
+                                    <i class="fas fa-circle-xmark text-red-600"></i>
+                                {% endif %}
+                            </div>
+                            <span>{{ message }}</span>
+                            <div onclick="this.parentNode.remove()"
+                                 class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer"
+                                 role="button"
+                                 title="{% trans "Close" %}">
+                                <i class="fas fa-xmark"></i>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endblock messages %}
+        <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+        <script src="https://unpkg.com/htmx.org@1.8.0"
+                defer></script>
+        <script>
         flatpickr(".datetime-picker", {
             enableTime: true,
             time_24hr: true,
@@ -66,6 +90,6 @@
             noCalendar: true,
             time_24hr: true,
         });
-    </script>
-</body>
+        </script>
+    </body>
 </html>

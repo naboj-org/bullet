@@ -1,15 +1,15 @@
 {% extends "bullet_admin/base.html" %}
 {% load static %}
-
-{% block title %}Venue review{% endblock %}
-
+{% block title %}
+    Venue review
+{% endblock title %}
 {% block content %}
     {% include "bullet_admin/partials/venue_selector.html" %}
-
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Scan problem</h2>
-            <button id="js-open-reader" class="btn-admin-sm bg-blue-500 hover:bg-blue-600">
+            <button id="js-open-reader"
+                    class="btn-admin-sm bg-blue-500 hover:bg-blue-600">
                 <i class="fas fa-mobile mr-1"></i> Phone scanner
             </button>
         </header>
@@ -17,34 +17,44 @@
             <p class="p-4 border-b">
                 For every team, scan the first problem that the team didn't receive.
             </p>
-
-            <form hx-post="{% url "badmin:scanning_review" %}{% if request.GET.venue %}?venue={{ request.GET.venue }}{% endif %}" hx-target="#js-review-teams"
-                  class="flex p-4 gap-2" id="js-scanform" autocomplete="off">
+            <form hx-post="{% url "badmin:scanning_review" %}
+                           {% if request.GET.venue %}?venue={{ request.GET.venue }}{% endif %}"
+                  hx-target="#js-review-teams"
+                  class="flex p-4 gap-2"
+                  id="js-scanform"
+                  autocomplete="off">
                 {% csrf_token %}
-                <input type="text" name="barcode" id="js-scanfield" class="form-input input" placeholder="Barcode" autofocus>
-
-                <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark shrink-0">
+                <input type="text"
+                       name="barcode"
+                       id="js-scanfield"
+                       class="form-input input"
+                       placeholder="Barcode"
+                       autofocus>
+                <button type="submit"
+                        class="btn-admin bg-primary hover:bg-primary-dark shrink-0">
                     Scan
                 </button>
             </form>
-
-            <div id="reader-wrapper" class="relative hidden">
+            <div id="reader-wrapper"
+                 class="relative hidden">
                 <div id="js-reader"></div>
-                <div id="success-indicator" class="z-10 absolute inset-0 ring-inset ring-8 ring-green-500/0"></div>
+                <div id="success-indicator"
+                     class="z-10 absolute inset-0 ring-inset ring-8 ring-green-500/0">
+                </div>
             </div>
             <div id="js-reader-status"></div>
         </div>
     </article>
-
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team review</h2>
         </header>
-        <div class="p-4" id="js-review-teams" hx-target="#js-review-teams">
+        <div class="p-4"
+             id="js-review-teams"
+             hx-target="#js-review-teams">
             {% include "bullet_admin/scanning/_review_teams.html" %}
         </div>
     </article>
-
     <script src="{% static "js/html5-qrcode.min.js" %}"></script>
     <script src="{% static "js/admin_barcode.js" %}"></script>
-{% endblock %}
+{% endblock content %}

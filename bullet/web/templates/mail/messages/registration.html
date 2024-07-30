@@ -1,31 +1,36 @@
 {% extends "mail/base.html" %}
 {% load i18n %}
 {% load country_url %}
-
 {% block body %}
-    <p>{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}</p>
-
-    <p>{% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}</p>
-
-    <p>{% blocktranslate with contestants=team.contestants_names %}Current team members: {{ contestants }}{% endblocktranslate %}</p>
-
+    <p>
+        {% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate with contestants=team.contestants_names %}Current team members: {{ contestants }}{% endblocktranslate %}
+    </p>
     {% country_url "team_edit" secret_link=team.secret_link as link %}
     {% trans "Confirm registration" as link_text %}
     {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
-
-    <p>{% blocktranslate %}You can also use that link to modify your team.{% endblocktranslate %}</p>
-    <p>{% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}</p>
     <p>
-        {% trans "Best regards," %}<br>
+        {% blocktranslate %}You can also use that link to modify your team.{% endblocktranslate %}
+    </p>
+    <p>
+        {% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}
+    </p>
+    <p>
+        {% trans "Best regards," %}
+        <br>
         {{ branch.name }}
     </p>
-
     <hr>
-
     <p>
         <small>
-            {% trans "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}<br>
+            {% trans "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}
+            <br>
             {{ root_url }}{{ link }}
         </small>
     </p>
-{% endblock %}
+{% endblock body %}

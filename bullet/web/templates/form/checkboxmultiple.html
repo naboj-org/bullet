@@ -1,8 +1,10 @@
 <div>
     {% for choice in field %}
         <label class="block">
-            <input type="checkbox" name="{{ choice.data.name }}"
-                   value="{{ choice.data.value }}" class="checkbox"
+            <input type="checkbox"
+                   name="{{ choice.data.name }}"
+                   value="{{ choice.data.value }}"
+                   class="checkbox"
                    {% if choice.data.selected %}checked{% endif %}>
             {{ choice.data.label }}
         </label>

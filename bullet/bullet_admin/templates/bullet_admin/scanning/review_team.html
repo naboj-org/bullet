@@ -1,15 +1,16 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
 {% load badmin %}
-
-{% block title %}Team review{% endblock %}
-
+{% block title %}
+    Team review
+{% endblock title %}
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team review</h2>
         </header>
-        <form method="post" class="divide-y">
+        <form method="post"
+              class="divide-y">
             <div class="p-4">
                 {% csrf_token %}
                 {{ form.management_form }}
@@ -18,7 +19,6 @@
                     <div class="text-sm font-mono">{{ team.code }}</div>
                 </div>
             </div>
-
             <table class="w-full">
                 <thead class="hidden sm:table-header-group">
                     <tr class="text-left border-b bg-gray-100">
@@ -28,39 +28,39 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y">
-                {% for f in form %}
-                    <tr class="even:bg-gray-50 grid sm:table-row">
-                        <td class="px-4 py-2 font-bold sm:font-normal">
-                            Problem {{ f.number.value }}
-                            {{ f.number }}
-                        </td>
-                        <td class="px-4 py-2 flex items-center gap-2 sm:table-cell">
-                            <label for="{{ f.is_solved.id_for_label }}" class="sm:hidden">Solved?</label>
-                            {% bcheckbox f.is_solved %}
-                        </td>
-                        <td class="px-4 py-2">
-                            <div class="flex items-center gap-2 sm:block">
-                                <label for="{{ f.is_solved.id_for_label }}" class="sm:hidden">Time</label>
-                                {% bfield f.competition_time %}
-                            </div>
-                            {% if f.errors %}
-                            <ul class="text-red-600 text-sm mt-1">
-                                {% for err in f.errors.values %}
-                                    <li>{{ err }}</li>
-                                {% endfor %}
-                            </ul>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
+                    {% for f in form %}
+                        <tr class="even:bg-gray-50 grid sm:table-row">
+                            <td class="px-4 py-2 font-bold sm:font-normal">
+                                Problem {{ f.number.value }}
+                                {{ f.number }}
+                            </td>
+                            <td class="px-4 py-2 flex items-center gap-2 sm:table-cell">
+                                <label for="{{ f.is_solved.id_for_label }}"
+                                       class="sm:hidden">Solved?</label>
+                                {% bcheckbox f.is_solved %}
+                            </td>
+                            <td class="px-4 py-2">
+                                <div class="flex items-center gap-2 sm:block">
+                                    <label for="{{ f.is_solved.id_for_label }}"
+                                           class="sm:hidden">Time</label>
+                                    {% bfield f.competition_time %}
+                                </div>
+                                {% if f.errors %}
+                                    <ul class="text-red-600 text-sm mt-1">
+                                        {% for err in f.errors.values %}<li>{{ err }}</li>{% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-
             <div class="p-4">
-                <button type="submit" class="btn-admin bg-blue-500 hover:bg-blue-600">
+                <button type="submit"
+                        class="btn-admin bg-blue-500 hover:bg-blue-600">
                     <i class="fas fa-check"></i> Save
                 </button>
             </div>
         </form>
     </article>
-{% endblock %}
+{% endblock content %}
