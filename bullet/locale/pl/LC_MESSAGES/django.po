@@ -405,9 +405,9 @@ msgstr "Statystyki"
 #: problems/templates/archive/problems.html:55
 msgid "team received"
 msgid_plural "teams received"
-msgstr[0] "pierwsze poprawne rozwiązanie"
-msgstr[1] "pierwsze poprawne rozwiązania"
-msgstr[2] "pierwszych poprawnych rozwiązań"
+msgstr[0] "drużyna otrzymała"
+msgstr[1] "drużyny otrzymały"
+msgstr[2] "drużyn otrzymało"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
 #: problems/templates/archive/problems.html:65
