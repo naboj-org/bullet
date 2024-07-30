@@ -121,7 +121,7 @@ msgstr "Rezultate"
 #: competitions/templates/archive/list.html:28
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
-msgid "Problem statements"
+msgid "Problems and solutions"
 msgstr "Enunțuri  probleme"
 
 #: competitions/templates/archive/list.html:29
