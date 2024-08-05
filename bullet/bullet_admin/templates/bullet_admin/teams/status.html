@@ -1,0 +1,23 @@
+<div class="whitespace-nowrap text-xs tracking-wide font-bold text-white flex gap-1">
+    {% if object.status == object.status.UNCONFIRMED %}
+        <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
+    {% elif object.status == object.status.WAITINGLIST %}
+        <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
+    {% elif object.status == object.status.CHECKEDIN %}
+        <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
+    {% elif object.status == object.status.REVIEWED %}
+        <span class="bg-blue-600 px-2 py-1 rounded">Reviewed</span>
+    {% elif object.status == object.status.REGISTERED %}
+        <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
+    {% elif object.status == object.status.DISQUALIFIED %}
+        <span class="bg-red-600 px-2 py-1 rounded">Disqualified</span>
+    {% endif %}
+
+    {% if not object.venue.is_online %}
+        <span class="iconify p-1 w-7 h-6 {% if object.consent_photos %}bg-green-500{% else %}bg-red-600{% endif %} rounded" data-icon="mdi:camera"></span>
+    {% endif %}
+
+    {% if object.venue.registration_flow.get_admin_row_template %}
+        {% include object.venue.registration_flow.get_admin_row_template %}
+    {% endif %}
+</div>
