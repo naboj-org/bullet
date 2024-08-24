@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.32 - 2024-08-24
+
+### Added
+
+- New option to register new teams directly from the admin interface.
+- An option to delete a team without sending an email.
+- An option to view team change history and revert changes in the admin interface.
+- Show team edit links to administators.
+- Show recently deleted teams and allow restoring them in the admin interface.
+
+### Changed
+
+- Moving teams from waiting list to the competition now requires an confirmation.
+- Updated PL, SL translations.
+
 ## 2024.31 - 2024-04-24
 
 ### Fixed
