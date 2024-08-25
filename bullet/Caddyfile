@@ -1,0 +1,15 @@
+:8000 {
+    handle_path /static/* {
+        root * /app/static
+        file_server
+    }
+
+    handle_path /uploads/* {
+        root * /app/uploads
+        file_server
+    }
+
+    reverse_proxy 127.0.0.1:8001 {
+        trusted_proxies private_ranges
+    }
+}
