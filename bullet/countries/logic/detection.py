@@ -15,7 +15,7 @@ from countries.logic.cache import get_country_cache
 def _country_from_ip(request: "HttpRequest") -> str | None:
     try:
         g: GeoIP2 = GeoIP2()
-        ip = get_client_ip(request)
+        ip, _ = get_client_ip(request)
         if not ip:
             return None
         country_code: str = g.country_code(ip)
