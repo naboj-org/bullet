@@ -44,6 +44,8 @@ jobs:
       - name: Deploy to production
         uses: fjogeleit/http-request-action@v1
         with:
-          url: https://semaphore.ttt.trojsten.sk/api/project/1/tasks
-          data: '{"template_id": 7}'
-          bearerToken: ${{ secrets.SEMAPHORE_KEY }}
+          url: ${{ vars.DEPLOY_KEEL_URL }}
+          data: '{"name": "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}", "tag": "${{ github.ref_name }}"}'
+          username: keel
+          password: ${{ secrets.DEPLOY_KEEL_PASSWORD }}
+          httpsCA: ${{ vars.DEPLOY_KEEL_CA }}
