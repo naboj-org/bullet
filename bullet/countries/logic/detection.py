@@ -7,20 +7,18 @@ from django.contrib.gis.geoip2 import GeoIP2, GeoIP2Exception
 from django.utils.translation import get_language_info
 from django.utils.translation.trans_real import parse_accept_lang_header
 from geoip2.errors import AddressNotFoundError
+from ipware import get_client_ip
 
 from countries.logic.cache import get_country_cache
-
-
-def _ip_from_request(request: "HttpRequest") -> str:
-    if "HTTP_X_FORWARDED_FOR" in request.META:
-        return request.META["HTTP_X_FORWARDED_FOR"].split(",")[-1].strip()
-    return request.META.get("REMOTE_ADDR", "")
 
 
 def _country_from_ip(request: "HttpRequest") -> str | None:
     try:
         g: GeoIP2 = GeoIP2()
-        country_code: str = g.country_code(_ip_from_request(request))
+        ip = get_client_ip(request)
+        if not ip:
+            return None
+        country_code: str = g.country_code(ip)
         if not country_code:
             return None
         return country_code.lower()

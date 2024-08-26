@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "269568245272b09906197a9fb09e04637a4c6336f2934583b347a46ec9db2af8"
+            "sha256": "b1b0b937b70e65a4219a009e81c0b3e596091b97f173f5e349eb432fc7ab71db"
         },
         "pipfile-spec": 6,
         "requires": {},
@@ -365,6 +365,15 @@
             "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==1.19.0"
+        },
+        "django-ipware": {
+            "hashes": [
+                "sha256:d9ec43d2bf7cdf216fed8d494a084deb5761a54860a53b2e74346a4f384cff47",
+                "sha256:db16bbee920f661ae7f678e4270460c85850f03c6761a4eaeb489bdc91f64709"
+            ],
+            "index": "pypi",
+            "markers": "python_version >= '3.8'",
+            "version": "==7.0.1"
         },
         "django-minify-html": {
             "hashes": [
@@ -1358,6 +1367,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==2.20.1"
+        },
+        "python-ipware": {
+            "hashes": [
+                "sha256:9117b1c4dddcb5d5ca49e6a9617de2fc66aec2ef35394563ac4eecabdf58c062",
+                "sha256:fc936e6e7ec9fcc107f9315df40658f468ac72f739482a707181742882e36b60"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==3.0.0"
         },
         "pyyaml": {
             "hashes": [
