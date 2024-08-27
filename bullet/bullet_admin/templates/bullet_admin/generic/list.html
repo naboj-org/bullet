@@ -127,57 +127,6 @@
                        value="{{ request.GET.q }}">
             </form>
         {% endblock before_list %}
-        <table class="w-full text-sm">
-            <thead class="text-left bg-gray-100 border-t border-b">
-                <tr>
-                    {% for label, field in labels %}
-                        <th class="p-0 whitespace-nowrap">
-                            {% if orderby == field %}
-                                {% query_transform orderby="-"|add:field as url %}
-                            {% else %}
-                                {% query_transform orderby=field as url %}
-                            {% endif %}
-                            <a href="{{ url }}"
-                               class="p-3 pr-1 flex items-center hover:bg-gray-200">
-                                {{ label }}
-                                {% if orderby == field %}
-                                    <span class="iconify w-5 h-5 shrink-0"
-                                          data-icon="mdi:arrow-down-drop"></span>
-                                {% elif orderby == "-"|add:field %}
-                                    <span class="iconify w-5 h-5 shrink-0"
-                                          data-icon="mdi:arrow-drop-up"></span>
-                                {% endif %}
-                            </a>
-                        </th>
-                    {% endfor %}
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody class="divide-y">
-                {% for object, edit_url, delete_url, view_url in table_row %}
-                    <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
-                        {% for item in object %}
-                            <td class="p-3 whitespace-nowrap">
-                                {% if item %}{{ item }}{% endif %}
-                            </td>
-                        {% endfor %}
-                        <td class="p-3 whitespace-nowrap">
-                            <div class="flex items-center justify-end gap-2">
-                                {% if edit_url %}
-                                    {% #alink type="edit" url=edit_url %}
-                                {% endif %}
-                                {% if delete_url %}
-                                    {% #alink type="delete" url=delete_url %}
-                                {% endif %}
-                                {% if view_url %}
-                                    {% #alink type=view_type url=view_url %}
-                                {% endif %}
-                            </div>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
         <div class="overflow-x-auto">
             <table class="w-full text-sm">
                 <thead class="text-left bg-gray-100 border-t border-b">
