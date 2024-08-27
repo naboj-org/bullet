@@ -3,9 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.36 - 2024-08-27
+
+### Fixed
+
+- Fixed a page list in the admin interface.
+
+### Added
+
+- New Email, Tex templates and Category views in the admin interface with filters by country and language.
+
 ## 2024.35 - 2024-08-26
 
-*No user-facing changes.*
+_No user-facing changes._
 
 ## 2024.34 - 2024-08-26
 
@@ -15,7 +25,7 @@ and this project uses the `YYYY.N` version format.
 
 ## 2024.33 - 2024-08-25
 
-*No user-facing changes.*
+_No user-facing changes._
 
 ## 2024.32 - 2024-08-24
 
@@ -193,7 +203,7 @@ and this project uses the `YYYY.N` version format.
 
 ### Fixed
 
-- Croatian school importer failed to correctly detect school types in some cases. 
+- Croatian school importer failed to correctly detect school types in some cases.
 
 ## 2024.16 - 2024-03-25
 
@@ -214,7 +224,7 @@ and this project uses the `YYYY.N` version format.
 
 ### Fixed
 
-- Schools with wildcards, schools with teams in multiple venues and schools with more than 5 teams on the waiting list 
+- Schools with wildcards, schools with teams in multiple venues and schools with more than 5 teams on the waiting list
   were not ordered correctly in the waiting list. The waiting list logic was completely rewritten. Big thanks to Andrzej
   from Math for noticing this.
 - Fixed inconsistencies between public and admin waiting lists.
@@ -437,7 +447,7 @@ and this project uses the `YYYY.N` version format.
 
 ### Fixed
 
-- Link between team list and waiting list now preserves selected country. 
+- Link between team list and waiting list now preserves selected country.
 - Category editing in admin did not use current competition.
 - Fixed line wrapping in venue and school list.
 - Album list did require admin permissions, not just photographer.
@@ -469,7 +479,7 @@ and this project uses the `YYYY.N` version format.
 ### Added
 
 - Added option to modify registration flow and hook special requirements into the
-registration
+  registration
 
 ### Changed
 
@@ -539,7 +549,7 @@ registration
 
 - `web_start` is now honored when selecting current competition on the frontpage
 - Admin now disallows you to create pages and blocks with invalid country-language combinations
-- 
+-
 
 ## 2023.4.6 - 2023-04-20
 
@@ -764,6 +774,7 @@ registration
 - Slower scrolling of live results
 
 ### Removed
+
 ### Fixed
 
 ## 2022.11.5 - 2022-11-08
@@ -789,6 +800,7 @@ registration
 - Merger certificates into one PDF instead of zipping them
 
 ### Removed
+
 ### Fixed
 
 - Automatic mark venue as reviewed
@@ -832,6 +844,7 @@ registration
 - Increase gunicorn request timeout
 
 ### Removed
+
 ### Fixed
 
 - Result position number on other pages
@@ -874,6 +887,7 @@ registration
 - Reset team number on school or venue change
 
 ### Removed
+
 ### Fixed
 
 - Team number assignment
@@ -929,6 +943,7 @@ registration
 - Team sorting in public team list
 
 ### Removed
+
 ### Fixed
 
 ## 2022.10.9 - 2022-10-20
