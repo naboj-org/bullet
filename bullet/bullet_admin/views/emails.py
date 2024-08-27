@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views import View
 from django.views.generic import (
@@ -18,6 +18,7 @@ from users.models import EmailCampaign, TeamStatus, User
 from bullet_admin.forms.emails import EmailCampaignForm
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
+from bullet_admin.views import GenericList
 
 
 def can_edit_campaign(request, campaign: EmailCampaign):
@@ -54,12 +55,18 @@ def can_edit_campaign(request, campaign: EmailCampaign):
     return True
 
 
-class CampaignListView(AdminRequiredMixin, ListView):
-    template_name = "bullet_admin/emails/list.html"
+class CampaignListView(AdminRequiredMixin, GenericList, ListView):
+    fields = ["subject", "last_sent"]
+    create_url = reverse_lazy("badmin:email_create")
+    view_type = "internal-view"
 
     def get_queryset(self):
-        competition = get_active_competition(self.request)
-        return EmailCampaign.objects.filter(competition=competition)
+        return EmailCampaign.objects.filter(
+            competition=get_active_competition(self.request)
+        )
+
+    def get_view_url(self, campaign: EmailCampaign) -> str:
+        return reverse("badmin:email_detail", args=[campaign.pk])
 
 
 class CampaignCreateView(AdminRequiredMixin, CreateView):
