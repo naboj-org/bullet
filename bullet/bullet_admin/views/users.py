@@ -19,6 +19,10 @@ from bullet_admin.mixins import DelegateRequiredMixin
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericList
+import secrets
+
+
+PASSWORD_ALPHABET = "346789ABCDEFGHJKLMNPQRTUVWXY"
 
 
 class UserListView(DelegateRequiredMixin, GenericList, ListView):
@@ -114,7 +118,7 @@ class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
             )
 
         user: User = form.save(commit=False)
-        passwd = User.objects.make_random_password()
+        passwd = ''.join(secrets.choice(PASSWORD_ALPHABET) for i in range(8))
         user.set_password(passwd)
         user.save()
 
