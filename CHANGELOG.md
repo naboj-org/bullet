@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.37 - 2024-08-28
+
+### Fixed
+
+- Creating new users no longer error out.
+
 ## 2024.36 - 2024-08-27
 
 ### Fixed
