@@ -109,8 +109,9 @@ class GenericList:
 
     def get_country_queryset(self, qs):
         country = self.request.GET.get("country")
+        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
         if country:
-            fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
             if "country" in fields:
                 qs = qs.filter(country=country)
             elif "countries" in fields:
@@ -121,8 +122,17 @@ class GenericList:
                 )
 
         allowed_countries = get_allowed_countries(self.request)
+        qss = []
         if allowed_countries is not None:
-            qs = qs.filter(country__in=allowed_countries)
+            for country in allowed_countries:
+                if "country" in fields:
+                    qss.append(qs.filter(country__in=[country]))
+                elif "countries" in fields:
+                    qss.append(qs.filter(countries__contains=[country]))
+                elif "team_countries" in fields:
+                    qss.append(qs.filter(team_countries__contains=[country]))
+            return qss[0].union(*qss)
+
         return qs
 
     def country_navigation(self):
@@ -143,14 +153,14 @@ class GenericList:
         else:
             return None
 
-        countries = (
+        countries = set(
             countries.values_list("country", flat=True).order_by("country").distinct()
         )
 
         if allowed_countries is not None:
-            countries = countries.filter(country__in=allowed_countries)
+            countries &= set(allowed_countries)
 
-        if countries.count() <= 1:
+        if len(countries) <= 1:
             return None
         return countries
 
