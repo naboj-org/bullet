@@ -131,7 +131,8 @@ class GenericList:
                     qss.append(qs.filter(countries__contains=[country]))
                 elif "team_countries" in fields:
                     qss.append(qs.filter(team_countries__contains=[country]))
-            return qss[0].union(*qss)
+            if len(qss) > 0:
+                return qss[0].union(*qss)
 
         return qs
 

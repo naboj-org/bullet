@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
-## 2024.38 - 2024-09-03
+## 2024.39 - 2024-09-03
 
 ### Fixed
 
