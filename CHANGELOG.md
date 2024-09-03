@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.38 - 2024-09-03
+
+### Fixed
+
+- Country filter in the admin interface now works correctly.
+
 ## 2024.37 - 2024-08-28
 
 ### Fixed
