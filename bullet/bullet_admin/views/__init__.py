@@ -153,14 +153,14 @@ class GenericList:
         else:
             return None
 
-        countries = (
+        countries = set(
             countries.values_list("country", flat=True).order_by("country").distinct()
         )
 
         if allowed_countries is not None:
-            countries = countries.filter(country__in=allowed_countries)
+            countries &= set(allowed_countries)
 
-        if countries.count() <= 1:
+        if len(countries) <= 1:
             return None
         return countries
 
