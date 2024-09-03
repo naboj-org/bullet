@@ -109,8 +109,9 @@ class GenericList:
 
     def get_country_queryset(self, qs):
         country = self.request.GET.get("country")
+        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
         if country:
-            fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
             if "country" in fields:
                 qs = qs.filter(country=country)
             elif "countries" in fields:
@@ -122,7 +123,16 @@ class GenericList:
 
         allowed_countries = get_allowed_countries(self.request)
         if allowed_countries is not None:
-            qs = qs.filter(country__in=allowed_countries)
+            if "country" in fields:
+                qs = qs.filter(country__in=allowed_countries)
+            elif "countries" in fields:
+                qs = qs.filter(countries__contains=allowed_countries) | qs.filter(
+                    countries=[]
+                )
+            elif "team_countries" in fields:
+                qs = qs.filter(team_countries__contains=allowed_countries) | qs.filter(
+                    team_countries=[]
+                )
         return qs
 
     def country_navigation(self):
@@ -324,7 +334,7 @@ class CompetitionSwitchView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         if "competition" in request.GET:
-            request.session[
-                f"badmin_{request.BRANCH.identifier}_competition"
-            ] = request.GET.get("competition")
+            request.session[f"badmin_{request.BRANCH.identifier}_competition"] = (
+                request.GET.get("competition")
+            )
         return HttpResponseClientRefresh()
