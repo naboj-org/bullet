@@ -1,12 +1,4 @@
-<div class="{% if background == "color" %}
-                bg-primary-light
-            {% endif %}
-            {% if padding == "half" %}
-                md:py-12 py-6
-            {% else %}
-                md:py-24 py-12
-            {% endif %}
-            relative">
+<div class="{% if background == "color" %} bg-primary-light {% endif %} {% if padding == "half" %} md:py-12 py-6 {% else %} md:py-24 py-12 {% endif %} relative">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
         {% block container %}
         {% endblock container %}

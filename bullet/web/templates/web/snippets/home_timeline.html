@@ -7,10 +7,7 @@
             <div class="flex justify-center mb-10">
                 <div class="timeline w-3/4 md:w-auto box-border">
                     {% now "Y-m-d" as today %}
-                    <div class="container flex justify-center m-0
-                                {% if today > competition.registration_start|date:"Y-m-d" %}
-                                    gray-border text-gray-400
-                                {% endif %}">
+                    <div class="container flex justify-center m-0 {% if today > competition.registration_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content w-80 md:w-full">
                             <p class="text-base md:text-xl">
                                 {{ competition.registration_start|date }},
@@ -20,10 +17,7 @@
                         </div>
                     </div>
                     {% if competition.registration_second_round_start %}
-                        <div class="container flex items-center m-0
-                                    {% if today > competition.registration_second_round_start|date:"Y-m-d" %}
-                                        gray-border text-gray-400
-                                    {% endif %}">
+                        <div class="container flex items-center m-0 {% if today > competition.registration_second_round_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                             <div class="content w-80 md:w-full">
                                 <p class="text-base md:text-xl">
                                     {{ competition.registration_second_round_start|date }},
@@ -33,10 +27,7 @@
                             </div>
                         </div>
                     {% endif %}
-                    <div class="container flex items-center m-0
-                                {% if today > competition.registration_end|date:"Y-m-d" %}
-                                    gray-border text-gray-400
-                                {% endif %}">
+                    <div class="container flex items-center m-0 {% if today > competition.registration_end|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content">
                             <p class="text-base md:text-xl">
                                 {{ competition.registration_end|date }},
@@ -45,10 +36,7 @@
                             <p class="text-lg md:text-2xl">{% trans "Registration end" %}</p>
                         </div>
                     </div>
-                    <div class="container flex items-center m-0
-                                {% if today > competition.competition_start|date:"Y-m-d" %}
-                                    gray-border text-gray-400
-                                {% endif %}">
+                    <div class="container flex items-center m-0 {% if today > competition.competition_start|date:"Y-m-d" %} gray-border text-gray-400 {% endif %}">
                         <div class="content">
                             <p class="text-base md:text-xl">{{ competition.competition_start|date }}</p>
                             <p class="text-lg md:text-2xl">{% trans "Competition day" %}</p>

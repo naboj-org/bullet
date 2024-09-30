@@ -18,12 +18,7 @@
                              aria-labelledby="js-branch-button"
                              tabindex="-1">
                             {% for b in branches %}
-                                <a class="{% if branch == b %}
-                                              bg-primary text-white
-                                          {% else %}
-                                              hover:bg-gray-200
-                                          {% endif %}
-                                          block px-2 py-1 rounded"
+                                <a class="{% if branch == b %} bg-primary text-white {% else %} hover:bg-gray-200 {% endif %} block px-2 py-1 rounded"
                                    href="//{{ b.domain }}">{{ b.name }}</a>
                             {% endfor %}
                         </nav>
@@ -43,9 +38,7 @@
             </div>
         </div>
         <header class="bg-hero">
-            <div class="max-w-7xl mx-auto py-6 md:py-12 px-6 lg:px-8
-                        {% block heroclass %}
-                        {% endblock heroclass %}">
+            <div class="max-w-7xl mx-auto py-6 md:py-12 px-6 lg:px-8 {% block heroclass %} {% endblock heroclass %}">
                 <div id="default-nav">
                     {% include "web/snippets/main_nav.html" with primary=True %}
                 </div>

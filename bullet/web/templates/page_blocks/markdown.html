@@ -2,8 +2,7 @@
 {% load markdownify %}
 {% block container %}
     {% include "page_blocks/_centered_header.html" %}
-    <main class="prose mx-auto max-w-2xl
-                 {% if title or text %}mt-12{% endif %}">
+    <main class="prose mx-auto max-w-2xl {% if title or text %}mt-12{% endif %}">
         {{ content | markdownify }}
     </main>
 {% endblock container %}

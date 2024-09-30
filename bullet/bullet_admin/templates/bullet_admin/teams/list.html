@@ -135,12 +135,7 @@
                                         <span class="bg-red-600 px-2 py-1 rounded">Disqualified</span>
                                     {% endif %}
                                     {% if not team.venue.is_online %}
-                                        <span class="{% if team.consent_photos %}
-                                                         bg-green-500
-                                                     {% else %}
-                                                         bg-red-600
-                                                     {% endif %}
-                                                     px-2 py-1 rounded">
+                                        <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded">
                                             <i class="fas fa-camera"></i>
                                         </span>
                                     {% endif %}

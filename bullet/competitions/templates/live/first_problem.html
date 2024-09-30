@@ -9,9 +9,7 @@
     {% load_blocks "category" %}
     <div class="min-h-screen h-screen grid grid-cols-2 divide-x"
          id="js-screens"
-         {% if not stop %}
-             hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens"
-         {% endif %}>
+         {% if not stop %} hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens" {% endif %}>
         {% for screen in screens %}
             <div class="p-4 flex flex-col items-center justify-center text-center">
                 <div class="text-4xl">{% trans "First solved problem" %}</div>

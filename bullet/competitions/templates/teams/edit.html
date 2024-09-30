@@ -68,23 +68,19 @@
                         <div class="hidden md:block">{% trans "Grade" %}</div>
                         <div class="hidden md:block text-center">{% trans "Delete?" %}</div>
                         {% for f in form %}
-                            <div class="w-auto whitespace-nowrap text-xl
-                                        {% if f.field.required %}font-bold{% endif %}
-                                        mt-4 md:py-3 md:mt-0 md:text-base">
+                            <div class="w-auto whitespace-nowrap text-xl {% if f.field.required %}font-bold{% endif %} mt-4 md:py-3 md:mt-0 md:text-base">
                                 {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
                                 {{ f.id }}
                             </div>
                             <div>
-                                <label class="md:hidden font-bold
-                                              {% if f.full_name.errors %}text-red-600{% endif %}"
+                                <label class="md:hidden font-bold {% if f.full_name.errors %}text-red-600{% endif %}"
                                        for="id_{{ f.full_name.html_name }}">
                                     {% trans "Full name" %}:
                                 </label>
                                 {% bfield f.full_name %}
                             </div>
                             <div>
-                                <label class="md:hidden font-bold
-                                              {% if f.grade.errors %}text-red-600{% endif %}"
+                                <label class="md:hidden font-bold {% if f.grade.errors %}text-red-600{% endif %}"
                                        for="id_{{ f.grade.html_name }}">
                                     {% trans "Grade" %}:
                                 </label>

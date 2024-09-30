@@ -13,14 +13,7 @@
             </thead>
             <tbody class="divide-y">
                 {% for log in logs %}
-                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100
-                               {% if log.result == log.Result.OK %}
-                                   text-green-700
-                               {% elif log.result == log.Result.SCAN_ERR %}
-                                   text-amber-700
-                               {% elif log.result == log.Result.INTEGRITY_ERR %}
-                                   text-red-700
-                               {% endif %}">
+                    <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100 {% if log.result == log.Result.OK %} text-green-700 {% elif log.result == log.Result.SCAN_ERR %} text-amber-700 {% elif log.result == log.Result.INTEGRITY_ERR %} text-red-700 {% endif %}">
                         <td class="p-3 whitespace-nowrap tabular-nums hidden sm:table-cell">
                             {{ log.timestamp|date:"d.m.Y" }} {{ log.timestamp|date:"H:i:s" }}
                         </td>

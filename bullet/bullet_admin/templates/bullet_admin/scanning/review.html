@@ -17,8 +17,7 @@
             <p class="p-4 border-b">
                 For every team, scan the first problem that the team didn't receive.
             </p>
-            <form hx-post="{% url "badmin:scanning_review" %}
-                           {% if request.GET.venue %}?venue={{ request.GET.venue }}{% endif %}"
+            <form hx-post="{% url "badmin:scanning_review" %}{% if request.GET.venue %}?venue={{ request.GET.venue }}{% endif %}"
                   hx-target="#js-review-teams"
                   class="flex p-4 gap-2"
                   id="js-scanform"

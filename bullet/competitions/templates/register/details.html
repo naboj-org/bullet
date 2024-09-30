@@ -27,22 +27,18 @@
             <div class="hidden md:block">{% trans "Full name" %}</div>
             <div class="hidden md:block">{% trans "Grade" %}</div>
             {% for form in formset %}
-                <div class="w-auto whitespace-nowrap text-xl
-                            {% if form.field.required %}font-bold{% endif %}
-                            mt-4 md:mt-0 md:py-3 md:text-base">
+                <div class="w-auto whitespace-nowrap text-xl {% if form.field.required %}font-bold{% endif %} mt-4 md:mt-0 md:py-3 md:text-base">
                     {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
                 </div>
                 <div>
-                    <label class="md:hidden font-bold
-                                  {% if form.full_name.errors %}text-red-600{% endif %}"
+                    <label class="md:hidden font-bold {% if form.full_name.errors %}text-red-600{% endif %}"
                            for="id_{{ form.full_name.html_name }}">
                         {% trans "Full name" %}:
                     </label>
                     {% bfield form.full_name %}
                 </div>
                 <div>
-                    <label class="md:hidden font-bold
-                                  {% if form.graduation_year.errors %}text-red-600{% endif %}"
+                    <label class="md:hidden font-bold {% if form.graduation_year.errors %}text-red-600{% endif %}"
                            for="id_{{ form.graduation_year.html_name }}">
                         {% trans "Grade" %}:
                     </label>

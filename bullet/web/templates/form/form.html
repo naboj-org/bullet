@@ -9,8 +9,7 @@
 {% for field in form.visible_fields %}
     {% if field.widget_type != 'recaptchav2invisible' %}
         <div class="flex mb-3 flex-col md:flex-row">
-            <div class="w-full h-full shrink-0 md:w-1/4 md:py-3 md:text-right md:me-4
-                        {% if field.errors %}text-red-600{% endif %}">
+            <div class="w-full h-full shrink-0 md:w-1/4 md:py-3 md:text-right md:me-4 {% if field.errors %}text-red-600{% endif %}">
                 {% if field.label %}
                     <label for="{{ field.id_for_label }}">
                         {{ field.label }}

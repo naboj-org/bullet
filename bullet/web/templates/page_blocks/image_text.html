@@ -14,8 +14,7 @@
             {% endif %}
         </div>
         {% if image %}
-            <div class="max-w-lg
-                        {% if side == "left" %}lg:order-first{% endif %}">
+            <div class="max-w-lg {% if side == "left" %}lg:order-first{% endif %}">
                 <img src="{{ image_root }}{{ image }}"
                      class="w-full rounded-lg shadow-xl"
                      alt="{{ title }}">

@@ -29,22 +29,12 @@
     <div class="container mx-auto px-2 mt-8">
         <div class="flex flex-wrap justify-center gap-1 mb-12">
             <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}{% query_transform %}"
-               class="{% if not country %}
-                          bg-primary text-white font-bold
-                      {% else %}
-                          bg-gray-100
-                      {% endif %}
-                      whitespace-nowrap py-1 px-2 rounded">
+               class="{% if not country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded">
                 {% trans "International" %}
             </a>
             {% for c in countries %}
                 <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
-                   class="{% if c == country %}
-                              bg-primary text-white font-bold
-                          {% else %}
-                              bg-gray-100
-                          {% endif %}
-                          whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
+                   class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
                     <span class="iconify shrink-0 shadow-lg"
                           data-icon="flag:{{ c.code|lower }}-4x3"></span>
                     {{ c.name }}

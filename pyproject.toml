@@ -14,7 +14,7 @@ push = true
 select = ["E", "F", "I"]
 
 [tool.djlint]
-format_attribute_template_tags = true
+format_attribute_template_tags = false
 profile = "django"
 max_line_length = 88
 max_attribute_length = 4

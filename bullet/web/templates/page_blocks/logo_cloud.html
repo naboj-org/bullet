@@ -1,15 +1,7 @@
 {% extends "page_blocks/_base.html" %}
 {% block container %}
     {% include "page_blocks/_centered_header.html" %}
-    <div class="flex flex-wrap gap-6 items-center
-                {% if title or text %}mt-8{% endif %}
-                {% if align == "center" %}
-                    justify-center
-                {% elif align == "right" %}
-                    justify-end
-                {% elif align == "spaced" %}
-                    justify-around
-                {% endif %}">
+    <div class="flex flex-wrap gap-6 items-center {% if title or text %}mt-8{% endif %} {% if align == "center" %} justify-center {% elif align == "right" %} justify-end {% elif align == "spaced" %} justify-around {% endif %}">
         {% for item in items %}
             <a href="{{ item.url }}"
                style="height: calc({{ size|default:1|floatformat:"d" }} * 8rem)"

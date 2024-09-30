@@ -17,12 +17,7 @@
             {% for competition in competitions %}
                 <div hx-trigger="click"
                      hx-post="{% url "badmin:competition_switch" %}?competition={{ competition.id }}"
-                     class="cursor-pointer border rounded-md p-3
-                            {% if competition == active %}
-                                bg-primary-light border-primary-dark
-                            {% else %}
-                                hover:bg-gray-100
-                            {% endif %}">
+                     class="cursor-pointer border rounded-md p-3 {% if competition == active %} bg-primary-light border-primary-dark {% else %} hover:bg-gray-100 {% endif %}">
                     <div class="font-bold">{{ competition }}</div>
                     <div class="text-sm">Branch administrator</div>
                 </div>
@@ -30,12 +25,7 @@
             {% for role in roles %}
                 <div hx-trigger="click"
                      hx-post="{% url "badmin:competition_switch" %}?competition={{ role.competition.id }}"
-                     class="cursor-pointer border rounded-md p-3
-                            {% if role.competition == active %}
-                                bg-primary-light border-primary-dark
-                            {% else %}
-                                hover:bg-gray-100
-                            {% endif %}">
+                     class="cursor-pointer border rounded-md p-3 {% if role.competition == active %} bg-primary-light border-primary-dark {% else %} hover:bg-gray-100 {% endif %}">
                     <div class="font-bold">{{ role.competition }}</div>
                     {% if role.countries %}
                         <div class="text-sm">Country administrator ({{ role.countries|join:", " }})</div>

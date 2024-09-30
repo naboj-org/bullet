@@ -4,11 +4,7 @@
        class="shrink-0">
         <img src="{% static 'img/'|add:branch.identifier|add:'/logo.svg' %}"
              alt="{{ branch.name }} logo"
-             class="{% if not primary %}
-                        md:w-24 w-20
-                    {% else %}
-                        w-32
-                    {% endif %}">
+             class="{% if not primary %} md:w-24 w-20 {% else %} w-32 {% endif %}">
     </a>
     <div class="ms-auto font-light space-x-6 text-lg hidden md:block">
         {% for item in menu %}
@@ -25,8 +21,7 @@
         <i class="fas fa-bars"></i>
     </button>
 </div>
-<div class="font-light space-y-4 text-lg mt-6 hidden js-mainnav-dropdown
-            {% if primary %}p-4 bg-white rounded-md border shadow-md{% endif %}">
+<div class="font-light space-y-4 text-lg mt-6 hidden js-mainnav-dropdown {% if primary %}p-4 bg-white rounded-md border shadow-md{% endif %}">
     {% for item in menu %}
         {% if item.is_external %}
             <a class="block"
