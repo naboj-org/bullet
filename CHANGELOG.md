@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.40 - 2024-09-30
+
+### Fixed
+
+- Some dynamic elements of the admin interface were broken after some internal code changes.
+
 ## 2024.39 - 2024-09-03
 
 ### Fixed
