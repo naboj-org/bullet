@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.43 - 2024-10-02
+
+### Added
+
+- Austrian primary school importer.
+
 ## 2024.42 - 2024-09-30
 
 ### Changed
