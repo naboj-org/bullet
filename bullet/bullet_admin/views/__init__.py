@@ -1,4 +1,5 @@
-from operator import attrgetter
+from functools import reduce
+from operator import attrgetter, or_
 
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -126,13 +127,13 @@ class GenericList:
         if allowed_countries is not None:
             for country in allowed_countries:
                 if "country" in fields:
-                    qss.append(qs.filter(country__in=[country]))
+                    qss.append(Q(country__in=[country]))
                 elif "countries" in fields:
-                    qss.append(qs.filter(countries__contains=[country]))
+                    qss.append(Q(countries__contains=[country]))
                 elif "team_countries" in fields:
-                    qss.append(qs.filter(team_countries__contains=[country]))
+                    qss.append(Q(team_countries__contains=[country]))
             if len(qss) > 0:
-                return qss[0].union(*qss)
+                return qs.filter(reduce(or_, qss))
 
         return qs
 
@@ -231,6 +232,8 @@ class GenericList:
                         "ManyToOneRel",
                         "ForeignKey",
                         "ManyToManyField",
+                        "ManyToManyRel",
+                        "OneToOneRel",
                     ]:
                         field__icontains = field.name + "__icontains"
                         query |= Q(**{field__icontains: word})

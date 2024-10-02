@@ -1,3 +1,4 @@
+from education.importers.at_zs import AustrianPrimarySchoolImporter
 from education.importers.be import BelgianSchoolImporter
 from education.importers.cz import CzechSchoolImporter
 from education.importers.es import (
@@ -14,7 +15,6 @@ from education.importers.pl import PolishSchoolImporter
 from education.importers.rs import SerbianSchoolImporter
 from education.importers.sk import SlovakSchoolImporter
 from education.importers.wales import WalesSchoolImporter
-from education.importers.at_zs import AustrianPrimarySchoolImporter
 
 IMPORTERS = {
     "sk": SlovakSchoolImporter,
