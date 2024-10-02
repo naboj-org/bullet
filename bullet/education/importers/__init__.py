@@ -14,6 +14,7 @@ from education.importers.pl import PolishSchoolImporter
 from education.importers.rs import SerbianSchoolImporter
 from education.importers.sk import SlovakSchoolImporter
 from education.importers.wales import WalesSchoolImporter
+from education.importers.at_zs import AustrianPrimarySchoolImporter
 
 IMPORTERS = {
     "sk": SlovakSchoolImporter,
@@ -30,4 +31,5 @@ IMPORTERS = {
     "wales": WalesSchoolImporter,
     "old_ro": RomanianSchoolImporter,
     "rs": SerbianSchoolImporter,
+    "at_zs": AustrianPrimarySchoolImporter,
 }
