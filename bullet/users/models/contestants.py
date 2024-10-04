@@ -270,7 +270,7 @@ class Contestant(models.Model):
 
 def get_spanish_upload(instance, filename):
     name, ext = os.path.splitext(filename)
-    uid = secrets.token_urlsafe(64)
+    uid = secrets.token_hex(32)
     return f"spain_registration/{instance.team_id}.{uid}{ext}"
 
 
@@ -280,6 +280,7 @@ class SpanishTeamData(models.Model):
     )
     agreement = models.FileField(
         upload_to=get_spanish_upload,
+        max_length=200,
         validators=[FileExtensionValidator(["pdf", "zip"])],
     )
     is_verified = models.BooleanField(default=False)
