@@ -8,6 +8,7 @@ from web.fields import BranchField, ChoiceArrayField, LanguageField
 class BranchCountry(models.Model):
     branch = BranchField()
     country = CountryField()
+    primary_language = LanguageField(blank=True)
     languages = ChoiceArrayField(LanguageField())
     timezone = TimeZoneField()
     email = models.EmailField()
