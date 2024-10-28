@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.46 - 2024-10-28
+
+### Added
+
+- A country now has a "primary language" that is used when invalid language is provided in the URL.
+
 ## 2024.45 - 2024-10-04
 
 ### Fixed
