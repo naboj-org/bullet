@@ -15,8 +15,7 @@
             <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1">
                 <div class="text-gray-600">{{ text|safe }}</div>
                 <div class="whitespace-nowrap text-right text-gray-800">
-                    {{ date|date }}
-                    {% if show_time %}, {{ date|time }}{% endif %}
+                    {# djlint:off #}{{ date|date }}{% if show_time %}, {{ date|time }}{% endif %}{# djlint:on #}
                 </div>
             </div>
         </div>

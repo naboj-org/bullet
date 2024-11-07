@@ -48,8 +48,7 @@
                                                 Added contestants:
                                                 <span class="text-black font-normal">
                                                     {% for user in record.added_members %}
-                                                        {{ user }}
-                                                        {% if not forloop.last %},{% endif %}
+                                                        {# djlint:off #}{{ user }}{% if not forloop.last %},{% endif %}{# djlint:on #}
                                                     {% endfor %}
                                                 </span>
                                             </li>
