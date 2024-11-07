@@ -10,7 +10,6 @@ from django.views.generic import (
     DetailView,
     FormView,
     ListView,
-    TemplateView,
     UpdateView,
 )
 from documents.generators.certificate import certificates_for_venue
@@ -177,11 +176,15 @@ class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
         return get_venue_waiting_list(self.venue)
 
 
-class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, TemplateView):
-    model = Venue
+class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, GenericForm, FormView):
+    form_class = Form
+    form_title = "Move waiting lists automatically"
+    form_submit_label = "Move automatically"
+    form_submit_color = "green"
+    form_submit_icon = "mdi:fast-forward"
     template_name = "bullet_admin/venues/waiting_list_automove.html"
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         move_eligible_teams(self.venue)
         return HttpResponseRedirect(self.get_redirect_url())
 

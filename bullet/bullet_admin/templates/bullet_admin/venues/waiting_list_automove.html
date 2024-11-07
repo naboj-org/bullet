@@ -1,22 +1,6 @@
-{% extends "bullet_admin/base.html" %}
-{% block title %}
-    Move all teams?
-{% endblock title %}
-{% block content %}
-    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
-            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
-                Move teams to competition?
-            </h2>
-        </header>
-        <form method="post"
-              class="p-4">
-            {% csrf_token %}
-            <p>
-                Are you sure you want to move all teams from the following venue from waiting list to competition?
-            </p>
-            <p class="font-bold">{{ venue.name }}</p>
-            {% #abtn button color="green" icon="mdi:fast-forward" label="Move automatically" %}
-        </form>
-    </article>
-{% endblock content %}
+{% extends "bullet_admin/generic/form.html" %}
+{% block before_form %}
+    <p>
+        This action will move all eligible teams from the waiting list based on current registration rules from the current venue.
+    </p>
+{% endblock before_form %}
