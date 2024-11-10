@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.47 - 2024-11-11
+
+### Changed
+
+- Tearoff generator now supports multi-language venues.
+- Tearoff source files are now uploaded (Edit Competition -> Upload tearoffs) and reused.
+
 ## 2024.46 - 2024-10-28
 
 ### Added
