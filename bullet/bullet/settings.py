@@ -218,6 +218,11 @@ if dsn:
 
 if DEBUG:
     SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
+
+    import socket
+
+    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + ["127.0.0.1"]
 else:
     SESSION_COOKIE_DOMAIN = env("PARENT_HOST", default="naboj.org")
     SESSION_COOKIE_SECURE = True
