@@ -1,5 +1,11 @@
+import os.path
+import zipfile
+from operator import itemgetter
+
 from competitions.models import Competition
+from django.conf import settings
 from django.contrib import messages
+from django.core.files.storage import default_storage
 from django.forms import Form
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -9,7 +15,7 @@ from problems.logic.stats import generate_stats
 from users.logic import move_all_eligible_teams
 
 from bullet_admin.access import BranchAdminAccess, UnlockedCompetitionMixin
-from bullet_admin.forms.competition import CompetitionForm
+from bullet_admin.forms.competition import CompetitionForm, TearoffUploadForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
@@ -81,3 +87,62 @@ class CompetitionAutomoveView(
             self.request, "The teams will be moved to the competition shortly."
         )
         return redirect("badmin:home")
+
+
+class CompetitionTearoffUploadView(
+    UnlockedCompetitionMixin, BranchAdminAccess, GenericForm, FormView
+):
+    form_class = TearoffUploadForm
+    form_title = "Tearoff upload"
+    form_multipart = True
+    template_name = "bullet_admin/competition/tearoff.html"
+
+    def get_upload_folder(self):
+        competition = get_active_competition(self.request)
+        return str(competition.secret_dir / "tearoffs")
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        path = self.get_upload_folder()
+        if not default_storage.exists(path):
+            ctx["available_langs"] = []
+        else:
+            ctx["available_langs"] = default_storage.listdir(path)[1]
+        return ctx
+
+    def is_valid_name(self, name):
+        return name in map(itemgetter(0), settings.LANGUAGES)
+
+    def upload_zip(self, problems):
+        target_dir = default_storage.path(self.get_upload_folder())
+
+        with zipfile.ZipFile(problems) as zipf:
+            for file in zipf.namelist():
+                name, extension = os.path.splitext(file)
+                if extension != ".pdf":
+                    continue
+
+                if not self.is_valid_name(name):
+                    continue
+
+                zipf.extract(file, target_dir)
+
+    def upload_pdf(self, problems):
+        name, extension = os.path.splitext(problems.name)
+        if not self.is_valid_name(name):
+            return
+        path = os.path.join(self.get_upload_folder(), problems.name)
+        if default_storage.exists(path):
+            default_storage.delete(path)
+        default_storage.save(path, problems)
+
+    def form_valid(self, form):
+        problems = form.cleaned_data["problems"]
+
+        if problems.name.endswith(".zip"):
+            self.upload_zip(problems)
+        else:
+            self.upload_pdf(problems)
+
+        messages.success(self.request, "Tearoffs uploaded successfully.")
+        return redirect("badmin:competition_upload_tearoffs")

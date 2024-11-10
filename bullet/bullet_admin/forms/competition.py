@@ -1,5 +1,6 @@
 from competitions.models import Competition
 from django import forms
+from django.core.validators import FileExtensionValidator
 from users.models import User
 
 
@@ -38,3 +39,14 @@ class CompetitionForm(forms.ModelForm):
 
     def __init__(self, user: User, **kwargs):
         super().__init__(**kwargs)
+
+
+class TearoffUploadForm(forms.Form):
+    problems = forms.FileField(
+        label="Tearoff file",
+        help_text="A ZIP file containing one PDF for every language, "
+        "or a single PDF file. The file names should be the 2-letter language code.",
+        validators=[
+            FileExtensionValidator(["pdf", "zip"]),
+        ],
+    )

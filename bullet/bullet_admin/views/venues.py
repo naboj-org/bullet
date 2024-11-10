@@ -1,7 +1,10 @@
+from pathlib import Path
+
 from competitions.models import Venue
 from django.contrib import messages
+from django.core.files.storage import default_storage
 from django.forms import Form
-from django.http import FileResponse, HttpResponseRedirect
+from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
@@ -14,7 +17,7 @@ from django.views.generic import (
 )
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
-from documents.generators.tearoff import TearoffGenerator
+from documents.generators.tearoff import TearoffGenerator, TearoffRequirementMissing
 from documents.models import TexJob
 from problems.logic.results import save_country_ranks, save_venue_ranks
 from problems.models import CategoryProblem, Problem
@@ -207,25 +210,48 @@ class TearoffView(VenueMixin, GenericForm, FormView):
             .first()
         )
         kw["problems"] = problem_count
+        kw["venue"] = self.venue
         kw["first_problem"] = first_problem.number if first_problem else 1
         return kw
 
     def form_valid(self, form):
-        t = TearoffGenerator(form.cleaned_data["problems"])
+        competition = self.venue.category.competition
+
+        try:
+            tearoff_dir = Path(
+                default_storage.path(competition.secret_dir / "tearoffs")
+            )
+            t = TearoffGenerator(tearoff_dir, form.cleaned_data["backup_team_language"])
+        except TearoffRequirementMissing as e:
+            return HttpResponse(str(e), status=500)
+
         teams = list(
             Team.objects.competing()
             .filter(venue=self.venue, number__isnull=False)
             .all()
         )
+
         for i in range(form.cleaned_data["backup_teams"]):
-            teams.append(Team(venue=self.venue, name="???", number=999 - i))
-        data = t.generate_pdf(
-            teams,
-            form.cleaned_data["first_problem"],
-            form.cleaned_data["ordering"],
-            form.cleaned_data["include_qr_codes"],
-        )
-        return FileResponse(data, filename="tearoffs.pdf")
+            teams.append(
+                Team(
+                    venue=self.venue,
+                    language=form.cleaned_data["backup_team_language"],
+                    name="???",
+                    number=999 - i,
+                )
+            )
+
+        try:
+            data = t.generate_pdf(
+                teams,
+                form.cleaned_data["first_problem"],
+                form._problem_count,
+                form.cleaned_data["ordering"],
+                form.cleaned_data["include_qr_codes"],
+            )
+            return FileResponse(data, filename="tearoffs.pdf")
+        except TearoffRequirementMissing as e:
+            return HttpResponse(str(e), status=500)
 
 
 class FinishReviewView(VenueMixin, RedirectBackMixin, GenericForm, FormView):

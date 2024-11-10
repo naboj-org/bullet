@@ -1,8 +1,8 @@
 from competitions.models import Competition, Venue
 from django import forms
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from documents.models import CertificateTemplate, TexTemplate
-from pikepdf import Pdf
 from users.models import User
 
 
@@ -59,12 +59,6 @@ class TeamListForm(forms.Form):
 
 
 class TearoffForm(forms.Form):
-    problems = forms.FileField(
-        label="Problem file",
-        help_text=(
-            "A PDF file containing one problem per page (including last empty page)."
-        ),
-    )
     first_problem = forms.IntegerField(
         label="First problem",
         initial=1,
@@ -75,6 +69,9 @@ class TearoffForm(forms.Form):
         initial=0,
         min_value=0,
     )
+    backup_team_language = forms.ChoiceField(
+        label="Backup team language",
+    )
     ordering = forms.ChoiceField(
         label="Problem ordering",
         choices=[("align", "Aligned"), ("seq", "Sequential")],
@@ -83,27 +80,11 @@ class TearoffForm(forms.Form):
         label="Include QR code", initial=True, required=False
     )
 
-    def __init__(self, *, problems, first_problem, **kwargs):
+    def __init__(self, *, problems, first_problem, venue, **kwargs):
         super().__init__(**kwargs)
 
         self.fields["first_problem"].initial = first_problem
+        self.fields["backup_team_language"].choices = list(
+            filter(lambda lang: lang[0] in venue.accepted_languages, settings.LANGUAGES)
+        )
         self._problem_count = problems
-
-    def clean_problems(self):
-        pdf = None
-        try:
-            pdf = Pdf.open(self.cleaned_data["problems"])
-        except Exception:
-            if pdf:
-                pdf.close()
-            raise ValidationError("The uploaded file is not a valid PDF.")
-
-        if len(pdf.pages) != self._problem_count + 1:
-            pdf.close()
-            raise ValidationError(
-                f"The uploaded file does not have the correct number of pages. "
-                f"Expected {self._problem_count} + 1."
-            )
-
-        pdf.close()
-        return self.cleaned_data["problems"]

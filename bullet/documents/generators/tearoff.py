@@ -1,5 +1,6 @@
 import io
 from dataclasses import dataclass
+from operator import attrgetter
 from pathlib import Path
 from typing import BinaryIO, Iterable, Sequence
 
@@ -20,31 +21,69 @@ class Tearoff:
     page_number: int
 
 
+class TearoffRequirementMissing(Exception):
+    pass
+
+
 class TearoffGenerator:
     stamp_width = 25
 
-    def __init__(self, problem_pdf: Path | BinaryIO):
-        self.problem_pdf = Pdf.open(problem_pdf)
-        statement_height = float(self.problem_pdf.pages[0].trimbox[3])
+    def __init__(self, problem_pdf_root: Path, primary_language: str):
+        self._problem_pdfs = {}
+        self.problem_pdf_root = problem_pdf_root
+        statement_height = float(
+            self.get_problem_pdf(primary_language).pages[0].trimbox[3]
+        )
         statement_height *= 0.35  # convert pt to mm
 
         self.statements_per_page = round(297 / statement_height)
         self.statement_height = 297 / self.statements_per_page
+        print(self.statement_height, self.statements_per_page)
 
         register_font("IBMPlexMono-Regular")
         register_font("IBMPlexMono-Bold")
         register_font("LinLibertine-Regular")
         register_font("LinLibertine-Bold")
 
+    def get_problem_pdf(self, language: str):
+        if language not in self._problem_pdfs:
+            try:
+                self._problem_pdfs[language] = Pdf.open(
+                    self.problem_pdf_root / f"{language}.pdf"
+                )
+            except FileNotFoundError:
+                raise TearoffRequirementMissing(
+                    f"Missing tearoff file for language {language}."
+                )
+        return self._problem_pdfs[language]
+
+    def close_problem_pdfs(self):
+        for pdf in self._problem_pdfs.values():
+            pdf.close()
+
+    def check_requirements(self, teams: Sequence[Team], problem_count: int):
+        languages = set(map(attrgetter("language"), teams))
+        for language in languages:
+            try:
+                problem_pdf = self.get_problem_pdf(language)
+            except TearoffRequirementMissing:
+                raise
+
+            if len(problem_pdf.pages) != problem_count + 1:
+                raise TearoffRequirementMissing(
+                    f"Wrong page count for language {language}: expected "
+                    f"{problem_count+1}, got {len(problem_pdf.pages)}."
+                )
+
     def sequential_tearoffs(
         self, teams: Sequence[Team], problem_count: int, offset: int
     ):
         out = []
         for team in teams:
-            for i in range(problem_count):
+            for i in range(problem_count + 1):
                 page = i + offset
                 problem = page + 1
-                if i == problem_count - 1:
+                if i == problem_count:
                     problem = 0
                 out.append(Tearoff(team, problem, page))
         return out
@@ -52,10 +91,10 @@ class TearoffGenerator:
     def aligned_tearoffs(self, teams: Sequence[Team], problem_count: int, offset: int):
         out = []
         for team_chunk in chunk_list(teams, self.statements_per_page):
-            for i in range(problem_count):
+            for i in range(problem_count + 1):
                 page = i + offset
                 problem = page + 1
-                if i == problem_count - 1:
+                if i == problem_count:
                     problem = 0
 
                 for team in team_chunk:
@@ -70,11 +109,14 @@ class TearoffGenerator:
         self,
         teams: Sequence[Team],
         first_problem: int,
+        problem_count: int,
         ordering: str,
         include_qr: bool = True,
     ) -> BinaryIO:
+        self.check_requirements(teams, problem_count)
+
         offset = first_problem - 1
-        problem_count = len(self.problem_pdf.pages) - offset
+        problem_count -= offset
 
         tearoffs = []
         if ordering == "seq":
@@ -104,7 +146,7 @@ class TearoffGenerator:
         final_stream = io.BytesIO()
         pdf.save(final_stream)
         final_stream.seek(0)
-        self.problem_pdf.close()
+        self.close_problem_pdfs()
         return final_stream
 
     def add_stamp_page(
@@ -131,7 +173,7 @@ class TearoffGenerator:
         max_height = (self.stamp_width - 2 - 5) * mm
 
         if max_width > 75 * mm:
-            start_x += (max_width - 75) / 2
+            start_x += (max_width - 75 * mm) / 2
             max_width = 75 * mm
 
         if not include_qr:
@@ -153,26 +195,51 @@ class TearoffGenerator:
             inverted = tearoff.team.venue.shortcode[-1] == "S"
 
         font_size = max_height - (bar_h + 0.5) * mm
-        canvas.setFillGray(0)
-        if inverted:
-            canvas.rect(
-                start_x,
-                start_y,
-                max_width - max_height - 2 * mm,
-                -font_size,
-                fill=True,
-                stroke=False,
-            )
-            canvas.setFillGray(1)
+        # canvas.setFillGray(0)
+        # if inverted:
+        #     canvas.rect(
+        #         start_x,
+        #         start_y,
+        #         max_width - max_height - 2 * mm,
+        #         -font_size,
+        #         fill=True,
+        #         stroke=False,
+        #     )
+        #     canvas.setFillGray(1)
+
+        spacing = 2 * mm if inverted else 1 * mm
 
         text = canvas.beginText()
         text.setTextOrigin(start_x, start_y - (bar_h + 0.5) * mm)
         text.setFont("IBMPlexMono-Regular", font_size * 0.5)
         text.textOut(barcode_string[:prefix_len])
+
+        inverted_start = text.getX()
+        where_am_i = text.getX() - text.getStartOfLine()[0]
+        text.setXPos(where_am_i + spacing)
+        if inverted:
+            text.setFillGray(1)
         text.setFont("IBMPlexMono-Bold", font_size)
         text.textOut(barcode_string[prefix_len : prefix_len + middle_len])
+        where_am_i = text.getX() - text.getStartOfLine()[0]
+        text.setXPos(where_am_i + spacing)
+        if inverted:
+            text.setFillGray(0)
+        inverted_end = text.getX()
+
         text.setFont("IBMPlexMono-Regular", font_size * 0.5)
         text.textOut(barcode_string[prefix_len + middle_len :])
+
+        if inverted:
+            canvas.rect(
+                inverted_start + 1 * mm,
+                start_y,
+                inverted_end - inverted_start - 2 * mm,
+                -font_size,
+                fill=True,
+                stroke=False,
+            )
+
         canvas.drawText(text)
 
         if include_qr:
@@ -189,7 +256,7 @@ class TearoffGenerator:
         canvas.restoreState()
 
         text = canvas.beginText()
-        text.setTextOrigin(10 * mm, (offset_y + 5) * mm)
+        text.setTextOrigin(12 * mm, (offset_y + 5) * mm)
         text.setFont("LinLibertine-Bold", 10)
         text.textOut(f"{tearoff.team.code}: ")
         text.setFont("LinLibertine-Regular", 10)
@@ -200,8 +267,9 @@ class TearoffGenerator:
         for i, tearoff in enumerate(tearoffs):
             if tearoff is None:
                 continue
+            pdf_file = self.get_problem_pdf(tearoff.team.language)
             page.add_underlay(
-                self.problem_pdf.pages[tearoff.page_number],
+                pdf_file.pages[tearoff.page_number],
                 Rectangle(
                     0,
                     self.statement_height * i * mm,

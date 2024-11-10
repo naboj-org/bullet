@@ -12,7 +12,7 @@ if TYPE_CHECKING:
     from competitions.models import Venue
 
 
-def get_active_competition(request: HttpRequest):
+def get_active_competition(request: HttpRequest) -> Competition:
     if not hasattr(request, "_badmin_competition"):
         session_key = f"badmin_{request.BRANCH.identifier}_competition"
         if session_key not in request.session:

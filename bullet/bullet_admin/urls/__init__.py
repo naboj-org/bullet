@@ -56,6 +56,11 @@ urlpatterns = [
         name="competition_finalize",
     ),
     path(
+        "competitions/tearoff_upload/",
+        competition.CompetitionTearoffUploadView.as_view(),
+        name="competition_upload_tearoffs",
+    ),
+    path(
         "competitions/automove/",
         competition.CompetitionAutomoveView.as_view(),
         name="competition_automove",
