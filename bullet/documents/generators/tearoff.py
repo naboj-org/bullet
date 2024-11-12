@@ -38,7 +38,6 @@ class TearoffGenerator:
 
         self.statements_per_page = round(297 / statement_height)
         self.statement_height = 297 / self.statements_per_page
-        print(self.statement_height, self.statements_per_page)
 
         register_font("IBMPlexMono-Regular")
         register_font("IBMPlexMono-Bold")
@@ -168,7 +167,7 @@ class TearoffGenerator:
 
         bar_h = 8
         start_x = (offset_y + 5) * mm
-        start_y = (-210 + self.stamp_width - 2) * mm
+        start_y = (-210 + self.stamp_width + 2) * mm
         max_width = (self.statement_height - 10) * mm
         max_height = (self.stamp_width - 2 - 5) * mm
 
@@ -195,18 +194,6 @@ class TearoffGenerator:
             inverted = tearoff.team.venue.shortcode[-1] == "S"
 
         font_size = max_height - (bar_h + 0.5) * mm
-        # canvas.setFillGray(0)
-        # if inverted:
-        #     canvas.rect(
-        #         start_x,
-        #         start_y,
-        #         max_width - max_height - 2 * mm,
-        #         -font_size,
-        #         fill=True,
-        #         stroke=False,
-        #     )
-        #     canvas.setFillGray(1)
-
         spacing = 2 * mm if inverted else 1 * mm
 
         text = canvas.beginText()
@@ -253,15 +240,13 @@ class TearoffGenerator:
                 start_y - max_height,
             )
 
-        canvas.restoreState()
-
         text = canvas.beginText()
-        text.setTextOrigin(12 * mm, (offset_y + 5) * mm)
-        text.setFont("LinLibertine-Bold", 10)
-        text.textOut(f"{tearoff.team.code}: ")
-        text.setFont("LinLibertine-Regular", 10)
+        text.setTextOrigin(start_x, start_y - max_height - 8)
+        text.setFont("IBMPlexMono-Regular", 6)
         text.textOut(tearoff.team.display_name_short)
         canvas.drawText(text)
+
+        canvas.restoreState()
 
     def add_statements_to_page(self, page: Page, tearoffs: Iterable[Tearoff | None]):
         for i, tearoff in enumerate(tearoffs):
