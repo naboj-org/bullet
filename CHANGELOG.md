@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.47 - 2024-11-12
+
+### Changed
+
+- Tearoff design improvements.
+
 ## 2024.47 - 2024-11-11
 
 ### Changed
