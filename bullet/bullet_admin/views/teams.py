@@ -353,7 +353,8 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
         for team in teams:
             if team.number is None:
                 team.number = ideal_numbers.pop()
-                team.save()
+
+        Team.objects.bulk_update(teams, ["number"])
 
     @transaction.atomic
     def assign_symbols(self, force):
@@ -385,12 +386,12 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
             # the team should not have a symbol
             if school_counts[team.school_id] == 1 and team.in_school_symbol:
                 team.in_school_symbol = None
-                team.save()
 
             # the team should have a symbol
             if school_counts[team.school_id] > 1 and not team.in_school_symbol:
                 team.in_school_symbol = school_unused_symbols[team.school_id].pop()
-                team.save()
+
+        Team.objects.bulk_update(teams, ["in_school_symbol"])
 
     @transaction.atomic
     def assign_passwords(self):
@@ -398,7 +399,8 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
         for team in teams:
             if not team.online_password:
                 team.generate_online_password()
-                team.save()
+
+        Team.objects.bulk_update(teams, ["online_password"])
 
     def post(self, request, *args, **kwargs):
         force = "force" in request.POST
