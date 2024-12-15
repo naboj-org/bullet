@@ -102,8 +102,8 @@ class Venue(models.Model):
 
     accepted_languages = ChoiceArrayField(LanguageField())
     local_start = models.DateTimeField(null=True, blank=True)
-    results_announced = models.BooleanField(default=False)
-    participants_hidden = models.BooleanField(default=False)
+    results_announced = models.BooleanField(default=False)  # unused
+    participants_hidden = models.BooleanField(default=False)  # unused
 
     is_online = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)

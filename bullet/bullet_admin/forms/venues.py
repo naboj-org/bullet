@@ -24,12 +24,14 @@ class VenueForm(ModelForm):
             "country",
             "accepted_languages",
             "local_start",
+            "is_online",
             "registration_flow_type",
         ]
         labels = {
             "shortcode": "Barcode prefix",
             "name": "Place",
             "category": "Category",
+            "is_online": "Online venue",
             "registration_flow_type": "Registration flow",
         }
         help_texts = {
