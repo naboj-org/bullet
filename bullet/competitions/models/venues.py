@@ -106,6 +106,7 @@ class Venue(models.Model):
     participants_hidden = models.BooleanField(default=False)  # unused
 
     is_online = models.BooleanField(default=False)
+    is_isolated = models.BooleanField(default=False)
     is_reviewed = models.BooleanField(default=False)
 
     registration_flow_type = models.IntegerField(
