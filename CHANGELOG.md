@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2024.51 - 2024-12-18
+
+### Added
+
+- Option to "isolate" results in a venue. This hides their teams from national and international results.
+
 ## 2024.50 - 2024-11-19
 
 ### Changed
