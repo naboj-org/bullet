@@ -41,7 +41,11 @@ def get_country_results(
     country: str | Country, category: Category, time: timedelta = None
 ) -> QuerySet[ResultRow]:
     return get_results(
-        Q(team__venue__category=category, team__school__country=country),
+        Q(
+            team__venue__category=category,
+            team__school__country=country,
+            team__venue__is_isolated=False,
+        ),
         time,
     )
 
@@ -50,7 +54,7 @@ def get_category_results(
     category: Category, time: timedelta = None
 ) -> QuerySet[ResultRow]:
     return get_results(
-        Q(team__venue__category=category),
+        Q(team__venue__category=category, team__venue__is_isolated=False),
         time,
     )
 

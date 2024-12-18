@@ -25,12 +25,14 @@ class VenueForm(ModelForm):
             "accepted_languages",
             "local_start",
             "is_online",
+            "is_isolated",
             "registration_flow_type",
         ]
         labels = {
             "shortcode": "Barcode prefix",
             "name": "Place",
             "category": "Category",
+            "is_isolated": "Isolated results",
             "is_online": "Online venue",
             "registration_flow_type": "Registration flow",
         }
@@ -44,6 +46,8 @@ class VenueForm(ModelForm):
             "accepted_languages": "These languages can be selected when teams "
             "register.",
             "registration_flow_type": "Only change if you know what you are doing.",
+            "is_isolated": "Teams from this venue won't be shown in country-wide "
+            "and international results.",
         }
 
         widgets = {
