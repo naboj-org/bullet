@@ -18,7 +18,7 @@
                 {% endif %}
             {% endslot %}
             {% slot buttons %}
-                {% query_replace back=request.get_full_path as back %}
+                {% query_replace next=request.get_full_path as back %}
                 {% if help_url %}
                     {% #abtn icon="mdi:help" label="Help" url=help_url|add:back %}
                 {% endif %}
@@ -162,13 +162,13 @@
                                     {% if forloop.first %}
                                         {% if view_url %}
                                             <a class="link absolute inset-0"
-                                               href="{{ view_url }}{% query_transform back=request.get_full_path %}"></a>
+                                               href="{{ view_url }}{% query_transform next=request.get_full_path %}"></a>
                                         {% elif edit_url %}
                                             <a class="link absolute inset-0"
-                                               href="{{ edit_url }}{% query_transform back=request.get_full_path %}"></a>
+                                               href="{{ edit_url }}{% query_transform next=request.get_full_path %}"></a>
                                         {% elif delete_url %}
                                             <a class="link absolute inset-0"
-                                               href="{{ delete_url }}{% query_transform back=request.get_full_path %}"></a>
+                                               href="{{ delete_url }}{% query_transform next=request.get_full_path %}"></a>
                                         {% endif %}
                                     {% endif %}
                                     {% if item or item == 0 %}{{ item }}{% endif %}

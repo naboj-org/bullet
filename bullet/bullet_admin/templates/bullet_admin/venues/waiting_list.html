@@ -90,7 +90,7 @@
                                     Edit
                                 </a>
                                 {% if not competition.results_public %}
-                                    <a href="{% url "badmin:team_to_competition" pk=team.id %}?back={{ request.get_full_path|urlencode }}"
+                                    <a href="{% url "badmin:team_to_competition" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
                                        class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2">
                                         <span class="iconify"
                                               data-icon="mdi:play"></span>
