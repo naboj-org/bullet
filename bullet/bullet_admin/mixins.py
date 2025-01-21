@@ -1,7 +1,8 @@
 from competitions.models import Venue
+from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import QuerySet
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponseNotFound
 from django.urls import reverse
 
 from bullet_admin.utils import get_active_competition, get_redirect_url, is_admin
@@ -14,7 +15,10 @@ class AccessMixin:
     def handle_fail(self):
         if self.request.user.is_authenticated:
             raise PermissionDenied("You don't have access to this page.")
-        return HttpResponseRedirect(reverse("badmin:login"))
+
+        return redirect_to_login(
+            self.request.get_full_path(), reverse("badmin:login"), "next"
+        )
 
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_anonymous or not self.can_access():
