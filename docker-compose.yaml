@@ -1,4 +1,4 @@
-version: '3.4'
+version: "3.4"
 services:
   db:
     image: postgres:14-alpine
@@ -53,10 +53,10 @@ services:
     env_file:
       - .env
     volumes:
-      -  geiop_data:/usr/share/GeoIP
+      - geiop_data:/usr/share/GeoIP
 
   meilisearch:
-    image: getmeili/meilisearch:v1.6.0
+    image: getmeili/meilisearch:v1.12.5
     volumes:
       - search_data:/meili_data
 
