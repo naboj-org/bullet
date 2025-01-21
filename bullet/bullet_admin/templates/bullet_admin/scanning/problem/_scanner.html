@@ -1,5 +1,5 @@
 <div class="mb-12">
-    <form hx-post="{% url "badmin:scanning_problems" %}"
+    <form hx-post="{% url "badmin:scanning_problems" %}{% querystring %}"
           hx-target="#js-scanner-status"
           hx-swap="outerHTML"
           hx-indicator="#scanner-indicator"
