@@ -9,7 +9,9 @@ from reportlab.platypus import Paragraph
 from documents.generators.reportlab_utils import prepare_pdf, render_table
 
 
-def team_list(teams: QuerySet, title: str) -> io.BytesIO:
+def team_list(
+    teams: QuerySet, title: str, include_contact=True, include_contestants=True
+) -> io.BytesIO:
     teams = (
         teams.order_by("number")
         .prefetch_related("contestants")
@@ -46,14 +48,15 @@ def team_list(teams: QuerySet, title: str) -> io.BytesIO:
     )
 
     data = []
-    data.append(
-        [
-            Paragraph("Number", style_bold),
-            Paragraph("School", style_bold),
-            Paragraph("Contact information", style_bold),
-            Paragraph("Contestants", style_bold),
-        ]
-    )
+    header = [
+        Paragraph("Number", style_bold),
+        Paragraph("School", style_bold),
+    ]
+    if include_contact:
+        header.append(Paragraph("Contact information", style_bold))
+    if include_contestants:
+        header.append(Paragraph("Contestants", style_bold))
+    data.append(header)
 
     for team in teams:
         contact = []
@@ -61,28 +64,40 @@ def team_list(teams: QuerySet, title: str) -> io.BytesIO:
             contact.append(team.contact_email)
         if team.contact_phone:
             contact.append(team.contact_phone_pretty)
-        data.append(
+
+        row: list = [
             [
-                [
-                    Paragraph(
-                        f"{team.venue.shortcode}<b>{team.number:03d}</b>", style_code
-                    ),
-                    Paragraph(team.id_display, style_code_small),
-                ],
-                [
-                    Paragraph(team.school.name, style_base),
-                    Paragraph(team.school.address, style_small),
-                ],
+                Paragraph(
+                    f"{team.venue.shortcode}<b>{team.number:03d}</b>", style_code
+                ),
+                Paragraph(team.id_display, style_code_small),
+            ],
+            [
+                Paragraph(
+                    f"{team.school.name}<b> {team.in_school_symbol or ''}</b>",
+                    style_base,
+                ),
+                Paragraph(team.school.address, style_small),
+            ],
+        ]
+
+        if include_contact:
+            row.append(
                 [
                     Paragraph(team.contact_name, style_base),
                     Paragraph("<br/>".join(contact), style_small),
-                ],
+                ]
+            )
+
+        if include_contestants:
+            row.append(
                 Paragraph(
                     "<br/>".join([c.full_name for c in team.contestants.all()]),
                     style_small,
-                ),
-            ]
-        )
+                )
+            )
+
+        data.append(row)
 
     story = []
     story.append(Paragraph(title, style_title))

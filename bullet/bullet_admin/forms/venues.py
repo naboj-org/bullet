@@ -76,3 +76,14 @@ class VenueForm(ModelForm):
         if not prefix_re.match(data):
             raise ValidationError("Barcode prefix must contain only capital letters.")
         return data
+
+
+class TeamListForm(forms.Form):
+    include_contact = forms.BooleanField(
+        required=False, label="Include contact information", initial=True
+    )
+    include_contestants = forms.BooleanField(
+        required=False,
+        label="Include contestants",
+        initial=True,
+    )
