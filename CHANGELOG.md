@@ -3,6 +3,20 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.1 - 2025-01-21
+
+### Added
+
+- User is now redirected to previous page after login.
+- Problem scanning keeps selected page active after scanning a barcode.
+- Team list PDF can be now generated without contestants and/or without contact information.
+
+### Fixed
+
+- Photo uploading no longer errors out.
+- School creation and editing no longer errors out.
+- Homepage link in Pages takes you to the homepage.
+
 ## 2024.51 - 2024-12-18
 
 ### Added
