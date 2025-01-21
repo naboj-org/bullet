@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
@@ -6,7 +7,6 @@ from education.models import School
 from bullet import search
 from bullet_admin.access import CountryAdminAccess, CountryAdminInAccess
 from bullet_admin.forms.education import SchoolForm
-from bullet_admin.mixins import RedirectBackMixin
 from bullet_admin.utils import get_allowed_countries
 from bullet_admin.views import GenericForm, GenericList
 
@@ -69,7 +69,6 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
 class SchoolUpdateView(
     CountryAdminInAccess,
     SchoolQuerySetMixin,
-    RedirectBackMixin,
     GenericForm,
     UpdateView,
 ):
@@ -77,30 +76,36 @@ class SchoolUpdateView(
     template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
     require_unlocked_competition = False
+    success_url = reverse_lazy("badmin:school_list")
 
     def get_permission_country(self):
         return self.get_object().country
 
     def form_valid(self, form):
         school: School = form.save(commit=False)
+        self.object = school
         school.importer_ignored = True
         school.save()
         form.save_m2m()
 
+        messages.success(self.request, "School saved.")
         return HttpResponseRedirect(self.get_success_url())
 
 
 class SchoolCreateView(
-    CountryAdminAccess, SchoolQuerySetMixin, RedirectBackMixin, GenericForm, CreateView
+    CountryAdminAccess, SchoolQuerySetMixin, GenericForm, CreateView
 ):
     require_unlocked_competition = False
     form_class = SchoolForm
     form_title = "New school"
+    success_url = reverse_lazy("badmin:school_list")
 
     def form_valid(self, form):
         school: School = form.save(commit=False)
+        self.object = school
         school.importer_ignored = True
         school.save()
         form.save_m2m()
 
+        messages.success(self.request, "School saved.")
         return HttpResponseRedirect(self.get_success_url())
