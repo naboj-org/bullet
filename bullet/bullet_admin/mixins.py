@@ -124,7 +124,7 @@ class IsOperatorContext:
 class RedirectBackMixin:
     default_success_url = None
 
-    def get_default_success_url(self):
+    def get_default_success_url(self) -> str:
         if self.default_success_url:
             return self.default_success_url
 

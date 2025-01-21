@@ -11,6 +11,7 @@ from PIL import Image
 
 from bullet_admin.access import PhotoUploadAccess
 from bullet_admin.forms.album import AlbumForm
+from bullet_admin.mixins import RedirectBackMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericDelete, GenericForm, GenericList
 
@@ -53,7 +54,7 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AlbumFormMixin(GenericForm):
+class AlbumFormMixin(RedirectBackMixin, GenericForm):
     form_class = AlbumForm
     form_multipart = True
 
@@ -80,7 +81,7 @@ class AlbumFormMixin(GenericForm):
             photo.save()
         return HttpResponseRedirect(self.get_success_url())
 
-    def get_success_url(self):
+    def get_default_success_url(self):
         return reverse("badmin:album_edit", kwargs={"pk": self.object.id})
 
 
@@ -105,9 +106,9 @@ class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
         return ret
 
 
-class AlbumDeleteView(PhotoUploadAccess, GenericDelete, DeleteView):
+class AlbumDeleteView(PhotoUploadAccess, RedirectBackMixin, GenericDelete, DeleteView):
     model = Album
-    success_url = reverse_lazy("badmin:album_list")
+    default_success_url = reverse_lazy("badmin:album_list")
 
     def form_valid(self, form):
         super().form_valid(form)
