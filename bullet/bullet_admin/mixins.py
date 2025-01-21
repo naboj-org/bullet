@@ -122,7 +122,12 @@ class IsOperatorContext:
 
 
 class RedirectBackMixin:
+    default_success_url = None
+
     def get_default_success_url(self):
+        if self.default_success_url:
+            return self.default_success_url
+
         raise ImproperlyConfigured(
             "No URL to redirect to. Provide a get_default_success_url."
         )
