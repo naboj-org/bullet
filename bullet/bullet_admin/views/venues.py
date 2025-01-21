@@ -26,7 +26,7 @@ from users.models import Team
 
 from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
 from bullet_admin.forms.documents import CertificateForm, TearoffForm
-from bullet_admin.forms.venues import VenueForm
+from bullet_admin.forms.venues import TeamListForm, VenueForm
 from bullet_admin.mixins import AdminRequiredMixin, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm, GenericList
@@ -160,13 +160,14 @@ class CertificateView(VenueMixin, GenericForm, FormView):
 
 class TeamListView(VenueMixin, GenericForm, FormView):
     require_unlocked_competition = False
-    form_class = Form
+    form_class = TeamListForm
 
     def form_valid(self, form):
         venue = self.venue
         data = team_list(
             Team.objects.competing().filter(venue=venue, number__isnull=False),
             f"Team list: {venue.name}",
+            **form.cleaned_data,
         )
         return FileResponse(data, as_attachment=True, filename="team_list.pdf")
 
