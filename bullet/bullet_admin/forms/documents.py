@@ -1,9 +1,8 @@
-from competitions.models import Competition, Venue
+from competitions.models import Competition
 from django import forms
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from documents.models import CertificateTemplate, TexTemplate
-from users.models import User
 
 
 class CertificateForm(forms.Form):
@@ -48,14 +47,6 @@ class CertificateForm(forms.Form):
             )
 
         return self.cleaned_data
-
-
-class TeamListForm(forms.Form):
-    venue = forms.ModelChoiceField(queryset=Venue.objects.none())
-
-    def __init__(self, competition: Competition, user: User, **kwargs):
-        super().__init__(**kwargs)
-        self.fields["venue"].queryset = Venue.objects.for_user(competition, user)
 
 
 class TearoffForm(forms.Form):
