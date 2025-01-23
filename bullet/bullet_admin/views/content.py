@@ -6,13 +6,12 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
-from web.models import ContentBlock, Logo, Menu, Page, PageBlock
+from web.models import ContentBlock, Menu, Page, PageBlock
 
 from bullet.views import FormAndFormsetMixin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
-    LogoForm,
     MenuItemForm,
     PageBlockCreateForm,
     PageBlockUpdateForm,
@@ -369,57 +368,6 @@ class ContentBlockCreateView(
                 },
             )
         )
-
-
-class LogoListView(TranslatorRequiredMixin, ListView):
-    template_name = "bullet_admin/content/logo_list.html"
-
-    def get_queryset(self):
-        return Logo.objects.filter(branch=self.request.BRANCH)
-
-
-class LogoEditView(TranslatorRequiredMixin, UpdateView):
-    template_name = "bullet_admin/content/logo_form.html"
-    form_class = LogoForm
-
-    def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
-        return kw
-
-    def get_queryset(self):
-        return Logo.objects.filter(branch=self.request.BRANCH)
-
-    def get_success_url(self):
-        return reverse("badmin:logo_list")
-
-
-class LogoCreateView(TranslatorRequiredMixin, CreateView):
-    template_name = "bullet_admin/content/logo_form.html"
-    form_class = LogoForm
-
-    def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
-        return kw
-
-    def get_success_url(self):
-        return reverse("badmin:logo_list")
-
-    def form_valid(self, form):
-        obj = form.save(commit=False)
-        obj.branch = self.request.BRANCH.id
-        obj.save()
-
-        return HttpResponseRedirect(reverse("badmin:logo_list"))
-
-
-class LogoDeleteView(TranslatorRequiredMixin, BDeleteView):
-    def get_queryset(self):
-        return Logo.objects.filter(branch=self.request.BRANCH)
-
-    def get_success_url(self):
-        return reverse("badmin:logo_list")
 
 
 class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):

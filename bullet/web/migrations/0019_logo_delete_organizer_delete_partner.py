@@ -42,7 +42,7 @@ class Migration(migrations.Migration):
                 ),
                 ("name", models.CharField(max_length=128)),
                 ("url", models.CharField(max_length=128)),
-                ("image", models.FileField(upload_to=web.models.logo_upload_path)),
+                ("image", models.FileField()),
                 (
                     "countries",
                     web.fields.ChoiceArrayField(
