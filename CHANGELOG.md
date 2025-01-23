@@ -3,6 +3,21 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.2 - 2025-01-23
+
+### Added
+
+- Added Portuguese translations.
+
+### Changed
+
+- The number of problems in a competition is now found in "Edit competition".
+- The first problem of a category is now found in the category itself.
+
+### Removed
+
+- The whole "Logos" section was removed as they were no longer used anywhere in the system.
+
 ## 2025.1 - 2025-01-21
 
 ### Added
