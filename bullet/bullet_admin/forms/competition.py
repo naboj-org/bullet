@@ -16,6 +16,7 @@ class CompetitionForm(forms.ModelForm):
             "competition_start",
             "competition_duration",
             "results_freeze",
+            "problem_count",
             "is_cancelled",
         ]
 

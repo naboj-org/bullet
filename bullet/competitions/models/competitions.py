@@ -91,6 +91,7 @@ class Competition(models.Model):
         help_text="How long before the competition end should we freeze the results.",
     )
     results_public = models.BooleanField(default=False)
+    problem_count = models.PositiveIntegerField(default=0)
 
     is_cancelled = models.BooleanField(default=False)
 
@@ -178,6 +179,8 @@ class Category(models.Model):
     max_teams_second_round = models.PositiveIntegerField()
     max_members_per_team = models.PositiveIntegerField()
 
+    first_problem = models.PositiveIntegerField(default=1)
+
     class Meta:
         constraints = (
             UniqueConstraint(
@@ -208,13 +211,6 @@ class Category(models.Model):
         if second_round_started:
             return self.max_teams_second_round
         return self.max_teams_per_school
-
-    @property
-    def first_problem(self):
-        first = self.problems.order_by("number").first()
-        if not first:
-            return None
-        return first.number
 
 
 class Wildcard(models.Model):

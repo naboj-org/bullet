@@ -109,7 +109,7 @@ def admin_sidebar(context):
             )
         if branch_role.is_admin:
             items.append(
-                ("fa-gear", "Edit Competition", reverse("badmin:competition_edit"))
+                ("fa-gear", "Edit competition", reverse("badmin:competition_edit"))
             )
             items.append(
                 ("fa-people-group", "Categories", reverse("badmin:category_list"))
@@ -126,9 +126,6 @@ def admin_sidebar(context):
                 )
             )
         if branch_role.is_admin:
-            items.append(
-                ("fa-book", "Problem settings", reverse("badmin:problems_generate"))
-            )
             items.append(
                 (
                     "fa-fast-forward",
