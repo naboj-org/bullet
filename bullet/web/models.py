@@ -1,11 +1,8 @@
-import os.path
-
 from competitions.branches import Branches
 from competitions.models import Competition
 from django.conf import settings
 from django.db import models
 from django.db.models import UniqueConstraint
-from django.utils.text import slugify
 from django_countries.fields import CountryField
 
 from web.fields import (
@@ -41,43 +38,6 @@ class Menu(models.Model):
 
     def __str__(self):
         return self.title
-
-
-def logo_upload_path(instance: "Logo", filename):
-    _, ext = os.path.splitext(filename)
-    return f"logos/{Branches[instance.branch].identifier}/{slugify(instance.name)}{ext}"
-
-
-class LogoQuerySet(models.QuerySet):
-    def partners(self):
-        return self.filter(type=Logo.Type.PARTNER)
-
-    def organizers(self):
-        return self.filter(type=Logo.Type.ORGANIZER)
-
-    def for_branch_country(self, branch, country):
-        return self.filter(branch=branch, countries__contains=[country.upper()])
-
-
-class Logo(models.Model):
-    class Type(models.IntegerChoices):
-        ORGANIZER = 0
-        PARTNER = 1
-
-    branch = BranchField()
-    type = models.IntegerField(choices=Type.choices)
-    name = models.CharField(max_length=128)
-    url = models.CharField(max_length=128)
-    image = models.FileField(upload_to=logo_upload_path)
-    countries = ChoiceArrayField(CountryField())
-
-    objects = LogoQuerySet.as_manager()
-
-    class Meta:
-        ordering = ("name",)
-
-    def __str__(self):
-        return f"{self.name} ({Branches[self.branch].name})"
 
 
 class ContentBlock(models.Model):

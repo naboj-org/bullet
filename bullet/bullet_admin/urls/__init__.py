@@ -136,26 +136,6 @@ urlpatterns = [
         name="contentblock_delete",
     ),
     path(
-        "content/logos/",
-        content.LogoListView.as_view(),
-        name="logo_list",
-    ),
-    path(
-        "content/logos/edit/<pk>/",
-        content.LogoEditView.as_view(),
-        name="logo_edit",
-    ),
-    path(
-        "content/logos/create/",
-        content.LogoCreateView.as_view(),
-        name="logo_create",
-    ),
-    path(
-        "content/logos/delete/<pk>/",
-        content.LogoDeleteView.as_view(),
-        name="logo_delete",
-    ),
-    path(
         "content/menu/",
         content.MenuItemListView.as_view(),
         name="menu_list",

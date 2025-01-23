@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.utils import translation
 from django.views.generic import RedirectView, TemplateView
 
-from web.models import Logo, Page
+from web.models import Page
 
 
 class BranchSpecificTemplateMixin:
@@ -30,17 +30,6 @@ class HomepageView(BranchSpecificTemplateMixin, TemplateView):
         context["competition"] = (
             competition
         ) = Competition.objects.get_current_competition(self.branch)
-
-        context["partners"] = (
-            Logo.objects.partners()
-            .for_branch_country(self.branch, self.request.COUNTRY_CODE)
-            .all()
-        )
-        context["organizers"] = (
-            Logo.objects.organizers()
-            .for_branch_country(self.branch, self.request.COUNTRY_CODE)
-            .all()
-        )
 
         page = Page.objects.filter(
             branch=self.request.BRANCH,

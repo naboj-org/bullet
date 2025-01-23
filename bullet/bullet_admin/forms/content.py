@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import get_language_info
 from django_countries import countries
 from django_countries.fields import Country
-from web.models import ContentBlock, Logo, Menu, Page, PageBlock
+from web.models import ContentBlock, Menu, Page, PageBlock
 
 
 class PageForm(forms.ModelForm):
@@ -154,33 +154,6 @@ class ContentBlockWithRefForm(ContentBlockForm):
             raise ValidationError("This content block already exists.")
 
         return cleaned_data
-
-
-class LogoForm(forms.ModelForm):
-    class Meta:
-        model = Logo
-        fields = ("type", "name", "url", "image", "countries")
-
-        widgets = {
-            "countries": forms.CheckboxSelectMultiple(),
-        }
-
-    def __init__(self, branch: Branch, **kwargs):
-        super().__init__(**kwargs)
-        available_countries = set()
-
-        for country in BranchCountry.objects.filter(branch=branch).all():
-            available_countries.add(country.country.code)
-
-        self.fields["countries"].choices = list(
-            sorted(
-                filter(
-                    lambda x: x[0] in available_countries,
-                    self.fields["countries"].choices,
-                ),
-                key=lambda x: x[1],
-            )
-        )
 
 
 class MenuItemForm(forms.ModelForm):
