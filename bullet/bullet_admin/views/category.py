@@ -39,6 +39,7 @@ class CategoryListView(GenericList, ListView):
     fields = [
         "identifier",
         "order",
+        "first_problem",
         "problems_per_team",
         "max_members_per_team",
         "max_teams_per_school",
