@@ -161,11 +161,9 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         if scanned_barcode.team.is_reviewed:
             raise ValueError("The team was already reviewed.")
 
-        problem_count = CategoryProblem.objects.filter(
-            category=scanned_barcode.team.venue.category
-        ).count()
+        max_problem_number = self.venue.category.competition.problem_count
         last = get_last_problem_for_team(scanned_barcode.team)
-        if last < problem_count:
+        if last < max_problem_number:
             if scanned_barcode.problem_number != last + 1:
                 raise ValueError(
                     f"Expected problem number {last + 1}, got "
