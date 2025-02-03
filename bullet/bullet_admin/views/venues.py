@@ -20,7 +20,7 @@ from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator, TearoffRequirementMissing
 from documents.models import TexJob
 from problems.logic.results import save_country_ranks, save_venue_ranks
-from problems.models import CategoryProblem, Problem
+from problems.models import Problem
 from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
@@ -205,14 +205,10 @@ class TearoffView(VenueMixin, GenericForm, FormView):
         kw = super().get_form_kwargs()
         competition = get_active_competition(self.request)
         problem_count = Problem.objects.filter(competition=competition).count()
-        first_problem = (
-            CategoryProblem.objects.filter(category=self.venue.category)
-            .order_by("number")
-            .first()
-        )
+
         kw["problems"] = problem_count
         kw["venue"] = self.venue
-        kw["first_problem"] = first_problem.number if first_problem else 1
+        kw["first_problem"] = self.venue.category.first_problem
         return kw
 
     def form_valid(self, form):
