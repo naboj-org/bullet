@@ -380,8 +380,7 @@ class ApiProblemSolveView(View):
                 continue
             problem = Problem.objects.filter(
                 competition=team.venue.category.competition,
-                category_problems__category=team.venue.category,
-                category_problems__number=solve["problem"],
+                number=solve["problem"],
             ).first()
             if not problem:
                 continue
