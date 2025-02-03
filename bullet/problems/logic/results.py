@@ -14,7 +14,7 @@ from problems.models import CategoryProblem, ResultRow, SolvedProblem
 
 def get_results(
     team_filter: Q,
-    time: timedelta = None,
+    time: timedelta | None = None,
 ) -> QuerySet[ResultRow]:
     rows = ResultRow.objects.filter(team__is_disqualified=False)
 
@@ -33,12 +33,14 @@ def get_results(
     )
 
 
-def get_venue_results(venue: Venue, time: timedelta = None) -> QuerySet[ResultRow]:
+def get_venue_results(
+    venue: Venue, time: timedelta | None = None
+) -> QuerySet[ResultRow]:
     return get_results(Q(team__venue=venue), time)
 
 
 def get_country_results(
-    country: str | Country, category: Category, time: timedelta = None
+    country: str | Country, category: Category, time: timedelta | None = None
 ) -> QuerySet[ResultRow]:
     return get_results(
         Q(
@@ -51,7 +53,7 @@ def get_country_results(
 
 
 def get_category_results(
-    category: Category, time: timedelta = None
+    category: Category, time: timedelta | None = None
 ) -> QuerySet[ResultRow]:
     return get_results(
         Q(team__venue__category=category, team__venue__is_isolated=False),
@@ -70,7 +72,7 @@ class ResultsTime:
 def results_time(
     competition: Competition,
     realtime: datetime,
-    start_time: datetime = None,
+    start_time: datetime | None = None,
     is_admin: bool = False,
 ) -> ResultsTime:
     if not start_time:
