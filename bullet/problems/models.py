@@ -39,6 +39,11 @@ class SolvedProblem(models.Model):
     problem = models.ForeignKey(Problem, on_delete=models.RESTRICT, related_name="+")
     competition_time = models.DurationField()
 
+    class Meta:
+        constraints = [
+            UniqueConstraint("team", "problem", name="solvedproblem__team_problem")
+        ]
+
 
 class ProblemStat(models.Model):
     team = models.ForeignKey("users.Team", on_delete=models.CASCADE, related_name="+")
