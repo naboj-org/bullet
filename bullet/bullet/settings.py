@@ -183,6 +183,9 @@ LANG_INFO["sk"]["name_local"] = "slovensky"
 
 
 def silky_intercept(request):
+    if DEBUG:
+        return False
+
     if request.path.startswith("/silk/"):
         return False
     return random.random() < 0.1
