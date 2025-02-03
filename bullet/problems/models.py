@@ -7,7 +7,7 @@ class Problem(models.Model):
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE, related_name="+"
     )
-    name = models.CharField(max_length=128)
+    number = models.PositiveIntegerField()
 
 
 class CategoryProblem(models.Model):

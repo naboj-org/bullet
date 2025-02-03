@@ -9,7 +9,7 @@ class ProblemFactory(DjangoModelFactory):
     class Meta:
         model = Problem
 
-    name = factory.Faker("sentence")
+    number = factory.Faker("random_int")
     competition = factory.Faker("random_element", elements=Competition.objects.all())
 
 
