@@ -5,7 +5,7 @@ from competitions.models import Category, Competition
 from django_rq import job
 from users.models import Team
 
-from problems.models import ProblemStat, SolvedProblem
+from problems.models import Problem, ProblemStat, SolvedProblem
 
 
 @job
@@ -19,12 +19,10 @@ def generate_stats(competition: Competition | int):
 
 
 def generate_stats_category(category: Category):
-    category_problems = category.problems.all()
+    problems = Problem.objects.filter(competition=category.competition).all()
     first_problem = category.first_problem
-    problem_number_map: dict[int, int] = {
-        p.problem.id: p.number for p in category_problems
-    }
-    problem_id_map: dict[int, int] = {p.number: p.problem.id for p in category_problems}
+    problem_number_map: dict[int, int] = {p.id: p.number for p in problems}
+    problem_id_map: dict[int, int] = {p.number: p.id for p in problems}
 
     solves = SolvedProblem.objects.filter(team__venue__category=category).order_by(
         "competition_time"
@@ -54,7 +52,7 @@ def generate_stats_category(category: Category):
     stats = []
     for team in teams:
         for number, received in receive_times[team.id].items():
-            if number > len(category_problems) + first_problem - 1:
+            if number > len(problems) + first_problem - 1:
                 continue
             solved = None
             if number in solve_times[team.id]:
