@@ -10,28 +10,6 @@ class Problem(models.Model):
     number = models.PositiveIntegerField()
 
 
-class CategoryProblem(models.Model):
-    problem = models.ForeignKey(
-        Problem, on_delete=models.CASCADE, related_name="category_problems"
-    )
-    category = models.ForeignKey(
-        "competitions.Category",
-        on_delete=models.CASCADE,
-        related_name="problems",
-    )
-    number = models.PositiveIntegerField()
-
-    class Meta:
-        constraints = (
-            UniqueConstraint(
-                "problem",
-                "category",
-                "number",
-                name="categoryproblem__problem_category_number",
-            ),
-        )
-
-
 class SolvedProblem(models.Model):
     team = models.ForeignKey(
         "users.Team", on_delete=models.CASCADE, related_name="solved_problems"
