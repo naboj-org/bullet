@@ -1,10 +1,11 @@
 from functools import reduce
 from operator import attrgetter, or_
+from typing import Any, Callable, Protocol
 
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import F, Func, Q
-from django.http import HttpResponseNotAllowed
+from django.http import HttpRequest, HttpResponseNotAllowed
 from django.template.loader import render_to_string
 from django.utils.functional import cached_property
 from django.utils.safestring import mark_safe
@@ -16,12 +17,20 @@ from bullet_admin.models import CompetitionRole
 from bullet_admin.utils import get_active_competition, get_allowed_countries
 
 
+class MixinProtocol(Protocol):
+    request: HttpRequest
+    get_context_data: Callable[..., dict]
+    get_object: Callable
+    get_queryset: Callable
+    get_model: Callable
+
+
 class DeleteView(BaseDeleteView):
     def get(self, request, *args, **kwargs):
         return HttpResponseNotAllowed(permitted_methods=["POST"])
 
 
-class GenericForm:
+class GenericForm(MixinProtocol):
     form_title = None
     form_submit_label = "Save"
     form_submit_icon = "mdi:content-save"
@@ -39,7 +48,7 @@ class GenericForm:
         return ctx
 
 
-class GenericDelete:
+class GenericDelete(MixinProtocol):
     template_name = "bullet_admin/generic/delete.html"
     model_name = None
     object_name = None
@@ -57,7 +66,120 @@ class GenericDelete:
         return ctx
 
 
-class GenericList:
+class ModelFiltering(MixinProtocol):
+    def get_model_fields(self):
+        return list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
+
+    def get_filter_q(self, filters: dict[str, Callable[[str], Q]], value: Any) -> Q:
+        fields = self.get_model_fields()
+
+        for field, q in filters.items():
+            if field in fields:
+                return q(value)
+
+        return Q()
+
+    def get_filter_options(
+        self, field: str, expansions: dict[str, Func | None]
+    ) -> list | None:
+        fields = self.get_model_fields()
+        qs = self.get_queryset()
+
+        annotated = False
+        for field_name, func in expansions.items():
+            if field_name in fields:
+                if func:
+                    qs = qs.annotate(**{field: func})
+                annotated = True
+                break
+        if not annotated:
+            return None
+
+        return list(qs.values_list(field, flat=True).order_by(field).distinct())
+
+
+class CountryNavigation(ModelFiltering, MixinProtocol):
+    COUNTRY_FILTERS = {
+        "country": lambda c: Q(country=c),
+        "countries": lambda c: Q(countries__contains=[c]),
+        "team_countries": lambda c: Q(team_countries__contains=[c]),
+    }
+    COUNTRY_EXPANSIONS = {
+        "country": None,
+        "countries": Func(F("countries"), function="unnest"),
+        "team_countries": Func(F("team_countries"), function="unnest"),
+    }
+
+    def apply_country_filter(self, qs):
+        country = self.request.GET.get("country")
+        if country:
+            qs = qs.filter(self.get_filter_q(self.COUNTRY_FILTERS, country))
+
+        # Permission handling
+        allowed_countries = get_allowed_countries(self.request)
+        if allowed_countries is not None:
+            filters = []
+            for country in allowed_countries:
+                filters.append(self.get_filter_q(self.COUNTRY_FILTERS, country))
+            qs = qs.filter(reduce(or_, filters, Q()))
+
+        return qs
+
+    def get_country_navigation(self):
+        countries = self.get_filter_options("country", self.COUNTRY_EXPANSIONS)
+        if not countries:
+            return None
+
+        # Permission handling
+        allowed_countries = get_allowed_countries(self.request)
+        if allowed_countries is not None:
+            countries = list(set(countries) & set(allowed_countries))
+
+        if len(countries) <= 1:
+            return None
+
+        countries.sort()
+        return countries
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["countries"] = self.get_country_navigation()
+        return ctx
+
+
+class LanguageNavigation(ModelFiltering, MixinProtocol):
+    LANGUAGE_FILTER = {
+        "language": lambda lang: Q(language=lang),
+        "languages": lambda lang: Q(languages__contains=[lang]),
+        "team_languages": lambda lang: Q(team_languages__contains=[lang]),
+        "accepted_languages": lambda lang: Q(accepted_languages__contains=[lang]),
+    }
+    LANGUAGE_EXPANSIONS = {
+        "language": None,
+        "languages": Func(F("languages"), function="unnest"),
+        "team_languages": Func(F("team_languages"), function="unnest"),
+        "accepted_languages": Func(F("accepted_languages"), function="unnest"),
+    }
+
+    def apply_language_filter(self, qs):
+        language = self.request.GET.get("language")
+        if language:
+            qs = qs.filter(self.get_filter_q(self.LANGUAGE_FILTER, language))
+        return qs
+
+    def get_language_navigation(self):
+        languages = self.get_filter_options("language", self.LANGUAGE_EXPANSIONS)
+        if not languages or len(languages) <= 1:
+            return None
+        return languages
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["languages"] = self.get_language_navigation()
+        return ctx
+
+
+class GenericList(CountryNavigation, LanguageNavigation, MixinProtocol):
     template_name = "bullet_admin/generic/list.html"
     paginate_by = 100
     list_title = None
@@ -82,16 +204,14 @@ class GenericList:
         qs = self.get_queryset()
         if object_list:
             qs = object_list
-        qs = self.get_country_queryset(qs)
-        qs = self.get_language_queryset(qs)
+        qs = self.apply_country_filter(qs)
+        qs = self.apply_language_filter(qs)
         qs = self.get_orderby_queryset(qs)
         ctx["count"] = qs.count()
         qs = self.get_search_queryset(qs)
 
         ctx |= super().get_context_data(object_list=qs, **kwargs)
 
-        ctx["countries"] = self.country_navigation()
-        ctx["languages"] = self.language_navigation()
         ctx["orderby"] = self.request.GET.get("orderby")
         ctx["table_row"] = map(self.create_row, ctx["object_list"])
         ctx["list_title"] = self.get_list_title()
@@ -107,113 +227,6 @@ class GenericList:
         ctx["view_type"] = self.view_type
 
         return ctx
-
-    def get_country_queryset(self, qs):
-        country = self.request.GET.get("country")
-        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
-
-        if country:
-            if "country" in fields:
-                qs = qs.filter(country=country)
-            elif "countries" in fields:
-                qs = qs.filter(countries__contains=[country]) | qs.filter(countries=[])
-            elif "team_countries" in fields:
-                qs = qs.filter(team_countries__contains=[country]) | qs.filter(
-                    team_countries=[]
-                )
-
-        allowed_countries = get_allowed_countries(self.request)
-        qss = []
-        if allowed_countries is not None:
-            for country in allowed_countries:
-                if "country" in fields:
-                    qss.append(Q(country__in=[country]))
-                elif "countries" in fields:
-                    qss.append(Q(countries__contains=[country]))
-                elif "team_countries" in fields:
-                    qss.append(Q(team_countries__contains=[country]))
-            if len(qss) > 0:
-                return qs.filter(reduce(or_, qss))
-
-        return qs
-
-    def country_navigation(self):
-        allowed_countries = get_allowed_countries(self.request)
-        countries = self.get_queryset()
-        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
-
-        if "country" in fields:
-            pass
-        elif "countries" in fields:
-            countries = countries.annotate(
-                country=Func(F("countries"), function="unnest")
-            )
-        elif "team_countries" in fields:
-            countries = countries.annotate(
-                country=Func(F("team_countries"), function="unnest")
-            )
-        else:
-            return None
-
-        countries = set(
-            countries.values_list("country", flat=True).order_by("country").distinct()
-        )
-
-        if allowed_countries is not None:
-            countries &= set(allowed_countries)
-
-        if len(countries) <= 1:
-            return None
-        return countries
-
-    def get_language_queryset(self, qs):
-        language = self.request.GET.get("language")
-        if language:
-            fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
-
-            if "language" in fields:
-                qs = qs.filter(language=language)
-            elif "languages" in fields:
-                qs = qs.filter(languages__contains=[language]) | qs.filter(languages=[])
-            elif "team_languages" in fields:
-                qs = qs.filter(team_languages__contains=[language]) | qs.filter(
-                    team_languages=[]
-                )
-            elif "accepted_languages" in fields:
-                qs = qs.filter(accepted_languages__contains=[language]) | qs.filter(
-                    accepted_languages=[]
-                )
-
-        return qs
-
-    def language_navigation(self):
-        languages = self.get_queryset()
-        fields = list(map(attrgetter("name"), self.get_model()._meta.get_fields()))
-
-        if "language" in fields:
-            languages = languages
-        elif "languages" in fields:
-            languages = languages.annotate(
-                language=Func(F("languages"), function="unnest")
-            )
-        elif "team_languages" in fields:
-            languages = languages.annotate(
-                language=Func(F("team_languages"), function="unnest")
-            )
-        elif "accepted_languages" in fields:
-            languages = languages.annotate(
-                language=Func(F("accepted_languages"), function="unnest")
-            )
-        else:
-            return None
-
-        languages = (
-            languages.values_list("language", flat=True).order_by("language").distinct()
-        )
-
-        if languages.count() <= 1:
-            return None
-        return languages
 
     def get_orderby_queryset(self, qs):
         orderby = self.request.GET.get("orderby")
