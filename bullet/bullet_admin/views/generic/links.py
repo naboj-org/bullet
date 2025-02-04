@@ -28,6 +28,11 @@ class ViewIcon(Icon):
     label = "View"
 
 
+class ExternalViewIcon(Icon):
+    icon = "mdi:launch"
+    label = "View"
+
+
 class EditIcon(Icon):
     icon = "mdi:pencil"
     label = "Edit"

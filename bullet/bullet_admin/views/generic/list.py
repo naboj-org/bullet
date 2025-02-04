@@ -165,10 +165,10 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
 
     table_fields: list[str] = []
     table_labels: dict[str, str] = {}
+    table_field_templates: dict[str, str] = {}
 
     # deprecated
     object_name = None
-    field_templates = {}
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = {}
@@ -287,13 +287,19 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
         return self._migrate_old_links(object)
 
     def get_row_fields(self, object) -> list[str]:
+        if hasattr(self, "field_templates"):
+            warnings.warn(f"field_templates is deprecated in {self.__class__.__name__}")
+            self.table_field_templates = self.field_templates
+
         fields = []
         for field in self.get_table_fields():
             data = getattr(object, field, None)
 
-            if field in self.field_templates:
+            if field in self.table_field_templates:
                 data = mark_safe(
-                    render_to_string(self.field_templates[field], {"object": object})
+                    render_to_string(
+                        self.table_field_templates[field], {"object": object}
+                    )
                 )
 
             fn_name = f"get_{field}_content"
