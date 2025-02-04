@@ -14,7 +14,9 @@ from documents.models import TexJob, TexTemplate
 from bullet_admin.access import AdminAccess
 from bullet_admin.forms.tex import LetterCallbackForm, TexRenderForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm, GenericList
+from bullet_admin.views import GenericForm
+from bullet_admin.views.generic.links import EditIcon, HelpLink, Link, NewLink
+from bullet_admin.views.generic.list import GenericList
 
 
 @method_decorator(csrf_exempt, name="dispatch")
@@ -58,25 +60,36 @@ class JobDetailView(LoginRequiredMixin, DetailView):
 
 class TemplateListView(AdminAccess, GenericList, ListView):
     require_unlocked_competition = False
-    fields = ["name", "type"]
-    create_url = reverse_lazy("badmin:tex_template_create")
-    help_url = reverse_lazy("badmin:documentation", args=["tex"])
+    list_title = "TeX templates"
+    table_fields = ["name", "type"]
+
+    list_links = [
+        HelpLink(reverse_lazy("badmin:documentation", args=["tex"])),
+        NewLink("template", reverse_lazy("badmin:tex_template_create")),
+    ]
 
     def get_queryset(self):
         return TexTemplate.objects.filter(
             competition=get_active_competition(self.request)
         )
 
-    def get_edit_url(self, template: TexTemplate) -> str:
-        return reverse("badmin:tex_template_update", args=[template.pk])
+    def get_row_links(self, object) -> list[Link]:
+        links = [
+            EditIcon(reverse("badmin:tex_template_update", args=[object.pk])),
+            Link("blue", "mdi:download", "Download sources", object.template.url),
+        ]
 
-    def get_download_url(self, template: TexTemplate) -> str:
-        return template.template.url
+        if object.type == object.Type.GENERIC:
+            links.append(
+                Link(
+                    "blue",
+                    "mdi:play",
+                    "Generate document",
+                    reverse("badmin:tex_template_render", args=[object.pk]),
+                )
+            )
 
-    def get_generate_url(self, template: TexTemplate) -> str | None:
-        if template.type == template.Type.GENERIC:
-            return reverse("badmin:tex_template_render", args=[template.pk])
-        return None
+        return links
 
 
 class TemplateCreateView(AdminAccess, GenericForm, CreateView):

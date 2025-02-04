@@ -23,6 +23,12 @@ class Icon(Link):
         super().__init__(self.color, self.icon, self.label, url)
 
 
+class HelpLink(Icon):
+    icon = "mdi:help"
+    label = "Help"
+    color = ""
+
+
 class ViewIcon(Icon):
     icon = "mdi:eye"
     label = "View"
