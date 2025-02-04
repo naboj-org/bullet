@@ -12,18 +12,3 @@ push = true
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-
-[tool.djlint]
-format_attribute_template_tags = false
-profile = "django"
-max_line_length = 88
-max_attribute_length = 4
-custom_blocks = "slot,asubheader,aheader,anav,aalert,anavitem,aemptystate,abreadcrumb,abreadcrumbs"
-ignore = "H006"                                                                                     # Ignore missing width and height in img tags
-
-[tool.djlint.per-file-ignores]
-"bullet/web/templates/web/base.html" = "D018"                 # Allow link other branches in base.html
-"bullet/countries/templates/countries/select.html" = "D018"   # Allow link all languages in country selector
-"bullet/web/templates/web/snippets/main_nav.html" = "D018"    # Allow link manu items in main nav
-"bullet/competitions/templates/register/thanks.html" = "T027" # Fix for djlint wrong parging
-"bullet/web/templates/mail/*" = "H005,H030,H031,H021,H006"    # Allow mail templates

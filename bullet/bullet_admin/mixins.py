@@ -1,14 +1,30 @@
+from typing import Callable, Protocol
+
 from competitions.models import Venue
 from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.db.models import QuerySet
-from django.http import HttpResponseNotFound
+from django.http import HttpRequest, HttpResponseNotFound
 from django.urls import reverse
+from users.models.organizers import User
 
 from bullet_admin.utils import get_active_competition, get_redirect_url, is_admin
 
 
-class AccessMixin:
+class MixinProtocol(Protocol):
+    request: HttpRequest
+    get_context_data: Callable[..., dict]
+    get_object: Callable
+    get_queryset: Callable
+    get_model: Callable
+    dispatch: Callable
+
+
+class AuthedHttpRequest(HttpRequest):
+    user: User  # type: ignore
+
+
+class AccessMixin(MixinProtocol):
     def can_access(self):
         raise NotImplementedError()
 

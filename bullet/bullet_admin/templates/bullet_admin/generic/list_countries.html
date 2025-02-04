@@ -1,0 +1,38 @@
+{% load countries utils %}
+
+{% anav class="-mt-4 mb-8" %}
+  {% query_transform country="" as url %}
+
+  {% if not request.GET.country %}
+    {% anavitem url=url active=True %}
+      (all)
+    {% endanavitem %}
+  {% else %}
+    {% anavitem url=url active=False %}
+      (all)
+    {% endanavitem %}
+  {% endif %}
+
+  {% for country in countries %}
+    {% get_country country as country_info %}
+    {% query_transform country=country as url %}
+
+    {% if request.GET.country == country %}
+      {% anavitem url=url active=True %}
+        <div class="flex gap-2 items-center flex-wrap">
+          <span class="iconify shrink-0 shadow-lg"
+                data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+          <span>{{ country_info.name }}</span>
+        </div>
+      {% endanavitem %}
+    {% else %}
+      {% anavitem url=url active=False %}
+        <div class="flex gap-2 items-center flex-wrap">
+          <span class="iconify shrink-0 shadow-lg"
+                data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+          <span>{{ country_info.name }}</span>
+        </div>
+      {% endanavitem %}
+    {% endif %}
+  {% endfor %}
+{% endanav %}
