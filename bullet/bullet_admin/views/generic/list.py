@@ -251,6 +251,9 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
         if hasattr(self, "get_labels"):
             warnings.warn(f"get_labels is deprecated in {self.__class__.__name__}")
             return self.get_labels()
+        if hasattr(self, "labels"):
+            warnings.warn(f"labels is deprecated in {self.__class__.__name__}")
+            self.table_labels = self.labels
 
         labels = []
         for field in self.get_table_fields():
