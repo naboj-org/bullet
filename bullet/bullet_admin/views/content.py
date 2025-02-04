@@ -401,11 +401,11 @@ class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
         lang = get_language_info(object.language)
         return lang["name"]
 
-    def get_edit_url(self, menu: Menu) -> str:
-        return reverse("badmin:menu_edit", args=[menu.pk])
-
-    def get_delete_url(self, menu: Menu) -> str:
-        return reverse("badmin:menu_delete", args=[menu.pk])
+    def get_row_links(self, object) -> list[Link]:
+        return [
+            EditIcon(reverse("badmin:menu_edit", args=[object.pk])),
+            DeleteIcon(reverse("badmin:menu_delete", args=[object.pk])),
+        ]
 
 
 class MenuItemEditView(TranslatorRequiredMixin, UpdateView):

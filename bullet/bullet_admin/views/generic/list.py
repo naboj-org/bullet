@@ -1,4 +1,3 @@
-import warnings
 from functools import reduce
 from operator import attrgetter, or_
 from typing import Any, Callable
@@ -10,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_allowed_countries
-from bullet_admin.views.generic.links import DeleteIcon, EditIcon, Link, ViewIcon
+from bullet_admin.views.generic.links import Link
 
 
 class ModelFiltering(MixinProtocol):
@@ -167,9 +166,6 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
     table_labels: dict[str, str] = {}
     table_field_templates: dict[str, str] = {}
 
-    # deprecated
-    object_name = None
-
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = {}
         qs = self.get_queryset()
@@ -184,23 +180,6 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
 
         ctx.update(super().get_context_data(object_list=qs, **kwargs))
 
-        ctx["object_name"] = self.get_object_name()
-
-        OLD_NAMES = [
-            "help_url",
-            "create_url",
-            "upload_url",
-            "export_url",
-            "new_folder_url",
-            "assign_numbers_url",
-        ]
-        for name in OLD_NAMES:
-            val = getattr(self, name, None)
-            ctx[name] = val
-            if val:
-                warnings.warn(f"{name} is deprecated in {self.__class__.__name__}.")
-
-        # NEW
         ctx["list_title"] = self.get_list_title()
         ctx["list_subtitle"] = self.get_list_subtitle()
         ctx["list_links"] = self.get_list_links()
@@ -223,38 +202,12 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
         return self.list_links
 
     def get_list_subtitle(self) -> str | None:
-        # TODO: Remove
-        if hasattr(self, "subtitle"):
-            warnings.warn(f"subtitle is deprecated in {self.__class__.__name__}")
-            return self.subtitle
         return self.list_subtitle
 
     def get_table_fields(self) -> list[str]:
-        # TODO: Remove
-        if hasattr(self, "get_fields"):
-            warnings.warn(f"get_fields is deprecated in {self.__class__.__name__}")
-            return self.get_fields()
-        if hasattr(self, "fields"):
-            warnings.warn(f"fields is deprecated in {self.__class__.__name__}")
-            return self.fields
         return self.table_fields
 
-    def get_object_name(self):
-        return (
-            self.object_name
-            if self.object_name
-            else self.get_list_title().split(" ")[-1].lower()[0:-1]
-        )
-
     def get_table_labels(self) -> list[tuple[str, str]]:
-        # TODO: Remove
-        if hasattr(self, "get_labels"):
-            warnings.warn(f"get_labels is deprecated in {self.__class__.__name__}")
-            return self.get_labels()
-        if hasattr(self, "labels"):
-            warnings.warn(f"labels is deprecated in {self.__class__.__name__}")
-            self.table_labels = self.labels
-
         labels = []
         for field in self.get_table_fields():
             label = field.replace("_", " ").capitalize()
@@ -265,35 +218,10 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
 
         return labels
 
-    def _migrate_old_links(self, object):
-        # TODO: Remove
-        links = []
-        MAPPING = {
-            "get_edit_url": EditIcon,
-            "get_view_url": ViewIcon,
-            "get_delete_url": DeleteIcon,
-            "get_download_url": None,
-            "get_generate": None,
-        }
-
-        for func, icon in MAPPING.items():
-            if hasattr(self, func):
-                warnings.warn(f"{func} is deprecated in {self.__class__.__name__}")
-                if not icon:
-                    continue
-                url = getattr(self, func)(object)
-                links.append(icon(url))
-
-        return links
-
     def get_row_links(self, object) -> list[Link]:
-        return self._migrate_old_links(object)
+        return []
 
     def get_row_fields(self, object) -> list[str]:
-        if hasattr(self, "field_templates"):
-            warnings.warn(f"field_templates is deprecated in {self.__class__.__name__}")
-            self.table_field_templates = self.field_templates
-
         fields = []
         for field in self.get_table_fields():
             data = getattr(object, field, None)
@@ -313,10 +241,6 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
         return fields
 
     def get_row_context(self, object):
-        # TODO: Remove
-        if hasattr(self, "create_row"):
-            warnings.warn(f"create_row is deprecated in {self.__class__.__name__}")
-
         return {
             "fields": self.get_row_fields(object),
             "links": self.get_row_links(object),
