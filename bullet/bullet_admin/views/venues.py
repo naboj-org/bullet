@@ -34,24 +34,26 @@ from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import TeamListForm, VenueForm
 from bullet_admin.mixins import AdminRequiredMixin, AuthedHttpRequest, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm, GenericList
-from bullet_admin.views.generic.links import Link, NewLink
+from bullet_admin.views import GenericForm
+from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
+from bullet_admin.views.generic.list import GenericList
 
 
 class VenueListView(AdminAccess, GenericList, ListView):
     request: AuthedHttpRequest  # type: ignore
     require_unlocked_competition = False
 
-    fields = ["name", "category", "team_count", "capacity", "local_start"]
-    labels = {
+    table_fields = ["name", "category", "team_count", "capacity", "local_start"]
+    table_labels = {
         "name": "Venue",
         "team_count": "Registered teams",
     }
-    field_templates = {
-        "name": "bullet_admin/venues/venue.html",
-        "category": "bullet_admin/venues/category.html",
+    table_field_templates = {
+        "name": "bullet_admin/venues/field__venue.html",
     }
-    view_type = "internal-view"
+
+    def get_category_content(self, object):
+        return object.category.identifier.title()
 
     def get_list_links(self) -> list[Link]:
         links = []
@@ -69,8 +71,8 @@ class VenueListView(AdminAccess, GenericList, ListView):
             Venue.objects.for_request(self.request).annotate_teamcount().natural_order()
         )
 
-    def get_view_url(self, venue: Venue) -> str:
-        return reverse("badmin:venue_detail", kwargs={"pk": venue.id})
+    def get_row_links(self, object) -> list[Link]:
+        return [ViewIcon(reverse("badmin:venue_detail", kwargs={"pk": object.id}))]
 
 
 class VenueFormMixin(GenericForm):
