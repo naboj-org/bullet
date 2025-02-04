@@ -18,7 +18,8 @@ from users.models import EmailCampaign, TeamStatus, User
 from bullet_admin.forms.emails import EmailCampaignForm
 from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericList
+from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
+from bullet_admin.views.generic.list import GenericList
 
 
 def can_edit_campaign(request, campaign: EmailCampaign):
@@ -56,17 +57,16 @@ def can_edit_campaign(request, campaign: EmailCampaign):
 
 
 class CampaignListView(AdminRequiredMixin, GenericList, ListView):
-    fields = ["subject", "last_sent"]
-    create_url = reverse_lazy("badmin:email_create")
-    view_type = "internal-view"
+    list_links = [NewLink("campaign", reverse_lazy("badmin:email_create"))]
+    table_fields = ["subject", "last_sent"]
 
     def get_queryset(self):
         return EmailCampaign.objects.filter(
             competition=get_active_competition(self.request)
         )
 
-    def get_view_url(self, campaign: EmailCampaign) -> str:
-        return reverse("badmin:email_detail", args=[campaign.pk])
+    def get_row_links(self, object) -> list[Link]:
+        return [ViewIcon(reverse("badmin:email_detail", args=[object.pk]))]
 
 
 class CampaignCreateView(AdminRequiredMixin, CreateView):
