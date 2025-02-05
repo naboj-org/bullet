@@ -2,7 +2,6 @@ from django.urls import include, path
 
 from bullet_admin.views import (
     CompetitionSwitchView,
-    albums,
     archive,
     auth,
     category,
@@ -276,16 +275,6 @@ urlpatterns = [
         education.SchoolCreateView.as_view(),
         name="school_create",
     ),
-    path("gallery/albums/", albums.AlbumListView.as_view(), name="album_list"),
-    path("gallery/albums/new/", albums.AlbumCreateView.as_view(), name="album_create"),
-    path(
-        "gallery/albums/<int:pk>/", albums.AlbumUpdateView.as_view(), name="album_edit"
-    ),
-    path(
-        "gallery/albums/<int:pk>/delete",
-        albums.AlbumDeleteView.as_view(),
-        name="album_delete",
-    ),
     path(
         "archive/import/",
         archive.ProblemImportView.as_view(),
@@ -296,6 +285,7 @@ urlpatterns = [
     path("wildcards/", include("bullet_admin.urls.wildcards")),
     path("documentation/", include("bullet_admin.urls.documentation")),
     path("tex/", include("bullet_admin.urls.tex")),
+    path("albums/", include("bullet_admin.urls.albums")),
     path(
         "archive/problem_upload/",
         archive.ProblemPDFUploadView.as_view(),
