@@ -1,5 +1,4 @@
-{% load static %}
-{% load i18n %}
+{% load i18n static %}
 <!DOCTYPE html>{% get_current_language_bidi as lang_bidi %}
 <html lang="{{ request.LANGUAGE_CODE }}"
       {% if lang_bidi %}dir="rtl"{% endif %}>
@@ -8,9 +7,9 @@
         <meta name="viewport"
               content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
         <meta name="description"
-              content="{% block description %} {% endblock description %}">
+              content="{% block description %} {% endblock %}">
         <meta name="keywords"
-              content="{% block keywords %} {{ branch.name }},Competition,STEM {% endblock keywords %}">
+              content="{% block keywords %} {{ branch.name }},Competition,STEM {% endblock %}">
         <meta http-equiv="X-UA-Compatible"
               content="ie=edge">
         <title>
@@ -65,7 +64,7 @@
                             <div onclick="this.parentNode.remove()"
                                  class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer"
                                  role="button"
-                                 title="{% trans "Close" %}">
+                                 title="{% translate "Close" %}">
                                 <i class="fas fa-xmark"></i>
                             </div>
                         </li>

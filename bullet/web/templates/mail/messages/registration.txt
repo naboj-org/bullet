@@ -1,4 +1,4 @@
-{% load i18n %}{% load country_url %}{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
+{% load country_url i18n %}{% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
 
 {% blocktranslate %}Please click on the following link to confirm your registration.{% endblocktranslate %}
 
@@ -10,5 +10,5 @@
 
 {% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}
 
-{% trans "Best regards," %}
+{% translate "Best regards," %}
 {{ branch.name }}

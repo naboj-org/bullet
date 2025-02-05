@@ -346,7 +346,7 @@
                                                 <div style="text-align: center">
                                                     <img src="{{ root_url }}/static/img/{{ branch.identifier }}/logo.png"
                                                          class="logo"
-                                                         alt="{% trans "Competition logo" %}" />
+                                                         alt="{% translate "Competition logo" %}" />
                                                 </div>
                                                 {% block body %}
                                                 {% endblock body %}
@@ -366,7 +366,7 @@
                                    cellspacing="0">
                                 <tr>
                                     <td class="content-block">
-                                        {% blocktrans with branch=branch.name %}You have received this message because you have registered for the competition {{ branch }}.{% endblocktrans %}
+                                        {% blocktranslate with branch=branch.name %}You have received this message because you have registered for the competition {{ branch }}.{% endblocktranslate %}
                                     </td>
                                 </tr>
                             </table>

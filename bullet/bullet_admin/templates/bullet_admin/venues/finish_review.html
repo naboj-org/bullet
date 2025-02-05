@@ -1,4 +1,5 @@
 {% extends "bullet_admin/generic/form.html" %}
+
 {% block before_form %}
     {% if venue.has_unreviewed_teams %}
         {% aalert color="red" class="mb-6" %}

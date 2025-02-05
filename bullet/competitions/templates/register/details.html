@@ -1,8 +1,5 @@
 {% extends "register/base.html" %}
-{% load content_blocks %}
-{% load bform %}
-{% load country_url %}
-{% load i18n %}
+{% load bform content_blocks country_url i18n %}
 {% block register_content %}
     {% load_blocks "register" %}
     {% include "register/partials/category.html" %}
@@ -15,17 +12,17 @@
     <form method="post"
           enctype="multipart/form-data">
         {% csrf_token %}
-        <h2 class="font-bold text-2xl mb-6 mt-4">{% trans "Contact information" %}</h2>
+        <h2 class="font-bold text-2xl mb-6 mt-4">{% translate "Contact information" %}</h2>
         {% bform form %}
-        <h2 class="font-bold text-2xl mb-1 mt-6">{% trans "Contestants" %}</h2>
+        <h2 class="font-bold text-2xl mb-1 mt-6">{% translate "Contestants" %}</h2>
         <div class="mb-6 text-gray-700">
-            {% trans "You can change the list of contestants at any time before the start of the competition." %}
+            {% translate "You can change the list of contestants at any time before the start of the competition." %}
         </div>
         {{ formset.management_form }}
         <div class="grid grid-cols-1 md:grid-cols-registration gap-2 mb-4">
             <div class="w-auto md:block hidden"></div>
-            <div class="hidden md:block">{% trans "Full name" %}</div>
-            <div class="hidden md:block">{% trans "Grade" %}</div>
+            <div class="hidden md:block">{% translate "Full name" %}</div>
+            <div class="hidden md:block">{% translate "Grade" %}</div>
             {% for form in formset %}
                 <div class="w-auto whitespace-nowrap text-xl {% if form.field.required %}font-bold{% endif %} mt-4 md:mt-0 md:py-3 md:text-base">
                     {% blocktranslate with number=forloop.counter %}Contestant {{ number }}{% endblocktranslate %}
@@ -33,30 +30,30 @@
                 <div>
                     <label class="md:hidden font-bold {% if form.full_name.errors %}text-red-600{% endif %}"
                            for="id_{{ form.full_name.html_name }}">
-                        {% trans "Full name" %}:
+                        {% translate "Full name" %}:
                     </label>
                     {% bfield form.full_name %}
                 </div>
                 <div>
                     <label class="md:hidden font-bold {% if form.graduation_year.errors %}text-red-600{% endif %}"
                            for="id_{{ form.graduation_year.html_name }}">
-                        {% trans "Grade" %}:
+                        {% translate "Grade" %}:
                     </label>
                     {% bfield form.grade %}
                 </div>
             {% endfor %}
         </div>
-        <div class="text-red-600 mb-4">* {% trans "Required field" %}</div>
+        <div class="text-red-600 mb-4">* {% translate "Required field" %}</div>
         {% if venue.registration_flow.get_post_registration_template %}
             {% include venue.registration_flow.get_post_registration_template %}
         {% endif %}
         <div class="mb-4 prose prose-sm max-w-none">
             {% country_url "page" slug="rules" as link %}
-            {% blocktrans trimmed with link=link %}
+            {% blocktranslate trimmed with link=link %}
                 By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to
                 the <a href="{{ link }}">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that
                 the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition.
-            {% endblocktrans %}
+            {% endblocktranslate %}
         </div>
         {% if not venue.is_online %}
             <div class="mb-4">
@@ -64,34 +61,34 @@
                     <input type="checkbox"
                            class="checkbox"
                            name="consent_photos">
-                    {% blocktrans trimmed %}
+                    {% blocktranslate trimmed %}
                         The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of
                         the registrant and/or the registered person is captured and their publication on the Competition's website, social networks
                         for marketing and promotional purposes of the Competition. <sup>[1]</sup>
-                    {% endblocktrans %}
+                    {% endblocktranslate %}
                 </label>
             </div>
         {% endif %}
         <div class="mb-8 prose prose-sm max-w-none">
             {% country_url "page" slug="gdpr" as link %}
-            {% blocktrans trimmed with link=link %}
+            {% blocktranslate trimmed with link=link %}
                 More information on the processing of personal data can be found <a href="{{ link }}">on this page</a>.
-            {% endblocktrans %}
+            {% endblocktranslate %}
         </div>
         <div class="mb-8 prose max-w-none">
             {% content_block "register:bottom_text" allow_empty=True %}
         </div>
         <button type="submit"
-                class="btn">{% trans "Register" %}</button>
+                class="btn">{% translate "Register" %}</button>
         {% if not venue.is_online %}
             <div class="mt-8 prose prose-sm max-w-none">
-                {% blocktrans trimmed with link=link %}
+                {% blocktranslate trimmed with link=link %}
                     <sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks.
                     This consent can be revoked at any time by sending an e-mail to the address <a href="mailto:gdpr@trojsten.sk">gdpr@trojsten.sk</a>.
                     Withdrawal of consent does not affect the legality of the processing before its withdrawal.
                     The affected person can request the deletion of personal data only if it is technically possible and the deletion
                     does not affect the rights of other affected persons.
-                {% endblocktrans %}
+                {% endblocktranslate %}
             </div>
         {% endif %}
     </form>

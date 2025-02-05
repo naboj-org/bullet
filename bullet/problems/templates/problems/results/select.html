@@ -1,25 +1,26 @@
 {% extends "web/base.html" %}
-{% load i18n %}
-{% load content_blocks %}
-{% load country_url %}
+{% load content_blocks country_url i18n %}
 {% block title %}
-    {% trans "Results" %}
+    {% translate "Results" %}
 {% endblock title %}
+
 {% block extrahead %}
     {{ block.super }}
     <link rel="canonical"
           href="{% country_url "archive_results" competition_number=competition.number %}">
 {% endblock extrahead %}
+
 {% block hero %}
     <div class="mt-8 md:mt-24 mb-4 md:mb-16">
-        <h1 class="text-4xl md:text-6xl font-bold">{% trans "Results" %}</h1>
+        <h1 class="text-4xl md:text-6xl font-bold">{% translate "Results" %}</h1>
         <h2 class="text-2xl md:text-4xl mt-4 font-bold">{{ competition.name }}</h2>
     </div>
 {% endblock hero %}
+
 {% block content %}
     <div class="mx-auto w-full max-w-4xl p-3 mt-10">
         {% load_blocks "category" %}
-        <h2 class="font-bold text-2xl mb-6">{% trans "Category" %}</h2>
+        <h2 class="font-bold text-2xl mb-6">{% translate "Category" %}</h2>
         {% for category in categories %}
             <a class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
                href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}">

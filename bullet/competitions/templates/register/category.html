@@ -1,11 +1,10 @@
 {% extends "register/base.html" %}
-{% load i18n %}
-{% load content_blocks %}
+{% load content_blocks i18n %}
 {% block register_content %}
     {% load_blocks "category" %}
     <form method="post">
         {% csrf_token %}
-        <h2 class="font-bold text-2xl mb-6">{% trans "Category" %}</h2>
+        <h2 class="font-bold text-2xl mb-6">{% translate "Category" %}</h2>
         {% for category in categories %}
             <button type="submit"
                     name="category"

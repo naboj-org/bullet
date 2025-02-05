@@ -1,15 +1,13 @@
-{% load tz %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n tz %}
 <footer class="text-gray-700 text-center md:mt-16 mt-10 mb-12">
     {% get_current_timezone as tz_name %}
     <p>
-        {% blocktrans with tz_name=tz_name tz_offset=tz_offset %}All times are in timezone {{ tz_name }} unless stated otherwise.{% endblocktrans %}
+        {% blocktranslate with tz_name=tz_name tz_offset=tz_offset %}All times are in timezone {{ tz_name }} unless stated otherwise.{% endblocktranslate %}
     </p>
     {% if request.COUNTRY_CODE %}
         <p>
             <a href="{% country_url "page" slug="gdpr" %}"
-               class="link-primary">{% trans "Data protection policy" %}</a>
+               class="link-primary">{% translate "Data protection policy" %}</a>
         </p>
     {% endif %}
     <p class="mt-2 text-sm">

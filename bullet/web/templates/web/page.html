@@ -1,9 +1,9 @@
 {% extends "web/base.html" %}
-{% load page_blocks %}
-{% load markdownify %}
+{% load markdownify page_blocks %}
 {% block title %}
     {{ page.title }}
 {% endblock title %}
+
 {% block hero %}
     {% if not page_blocks %}
         <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
@@ -11,12 +11,13 @@
         </h1>
     {% endif %}
 {% endblock hero %}
+
 {% block content %}
     {% for page_block in page_blocks %}
         {% render_page_block page_block %}
     {% empty %}
         <main class="px-2 py-4 prose mx-auto max-w-2xl">
-            {{ page.content | markdownify }}
+            {{ page.content|markdownify }}
         </main>
     {% endfor %}
     {% if page_blocks %}

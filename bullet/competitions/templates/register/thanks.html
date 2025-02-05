@@ -1,26 +1,26 @@
 {% extends "web/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block title %}
-    {% trans "Team registration" %}
+    {% translate "Team registration" %}
 {% endblock title %}
+
 {% block content %}
     <div class="mx-auto w-full max-w-4xl p-3 mt-10 text-center">
         <div class="w-28 h-28 flex items-center justify-center rounded-full bg-green-600 text-white mx-auto mb-8 text-5xl">
             <span class="iconify"
                   data-icon="mdi:email"></span>
         </div>
-        <h2 class="font-bold text-4xl mb-6">{% trans "Team successfully registered" %}</h2>
+        <h2 class="font-bold text-4xl mb-6">{% translate "Team successfully registered" %}</h2>
         <p class="prose mx-auto mb-10">
-            {% trans "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>" %}
+            {% translate "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>" %}
         </p>
         <p>
             <a href="{% country_url "register" %}"
-               class="btn inline-block">{% trans "Register another team" %}</a>
+               class="btn inline-block">{% translate "Register another team" %}</a>
         </p>
         <p class="mt-4">
             <a href="{% country_url "homepage" %}"
-               class="text-primary hover:underline">{% trans "Back to the homepage" %}</a>
+               class="text-primary hover:underline">{% translate "Back to the homepage" %}</a>
         </p>
     </div>
 {% endblock content %}

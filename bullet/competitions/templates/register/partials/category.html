@@ -1,8 +1,6 @@
-{% load i18n %}
-{% load country_url %}
-{% load content_blocks %}
+{% load content_blocks country_url i18n %}
 {% load_blocks "category" %}
-<h2 class="font-bold text-2xl mb-6">{% trans "Category" %}</h2>
+<h2 class="font-bold text-2xl mb-6">{% translate "Category" %}</h2>
 <div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
     <div>
         <div class="font-bold text-xl">
@@ -11,5 +9,5 @@
         <p>{% content_block "category:description_"|add:category.identifier %}</p>
     </div>
     <a href="{% country_url 'register' %}"
-       class="ms-auto shrink-0 text-primary hover:underline">{% trans "Change" %}</a>
+       class="ms-auto shrink-0 text-primary hover:underline">{% translate "Change" %}</a>
 </div>

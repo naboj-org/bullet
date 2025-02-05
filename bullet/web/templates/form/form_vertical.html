@@ -1,6 +1,4 @@
-{% load bform %}
-{% load widget_tweaks %}
-{% load i18n %}
+{% load bform i18n widget_tweaks %}
 {% if form.non_field_errors %}
     <ul class="text-red-600 mb-4">
         {% for err in form.non_field_errors %}<li>{{ err }}</li>{% endfor %}
@@ -17,7 +15,7 @@
                     {{ field.label }}
                     {% if field.field.required %}
                         <span class="text-red-600"
-                              title="{% trans "Required field" %}">*</span>
+                              title="{% translate "Required field" %}">*</span>
                     {% endif %}
                 </label>
             {% endif %}

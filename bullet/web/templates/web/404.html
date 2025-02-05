@@ -1,25 +1,25 @@
 {% extends "web/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block title %}
-    {% trans "Not found" %}
+    {% translate "Not found" %}
 {% endblock title %}
+
 {% block content %}
     <div class="mx-auto w-full max-w-4xl p-3 mt-10 text-center">
-        <h2 class="font-bold text-4xl mb-6">{% trans "Not found" %}</h2>
+        <h2 class="font-bold text-4xl mb-6">{% translate "Not found" %}</h2>
         <p class="prose mx-auto mb-10">
-            {% trans "The page you tried to access was not found." %}
+            {% translate "The page you tried to access was not found." %}
         </p>
         {% if request.COUNTRY_CODE %}
             <p>
                 <a href="{% country_url "homepage" %}"
-                   class="btn inline-block">{% trans "Home page" %}</a>
+                   class="btn inline-block">{% translate "Home page" %}</a>
             </p>
         {% else %}
             <p>
                 <a href="{% url "root" %}"
                    1
-                   class="btn inline-block">{% trans "Home page" %}</a>
+                   class="btn inline-block">{% translate "Home page" %}</a>
             </p>
         {% endif %}
     </div>

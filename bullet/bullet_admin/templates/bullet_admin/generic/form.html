@@ -1,9 +1,9 @@
 {% extends "bullet_admin/base.html" %}
-{% load static %}
-{% load badmin %}
+{% load badmin static %}
 {% block title %}
     {{ form_title }}
 {% endblock title %}
+
 {% block extrahead %}
     <link rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
@@ -12,6 +12,7 @@
     <script defer
             src="{% static 'js/markdown.js' %}"></script>
 {% endblock extrahead %}
+
 {% block content %}
     <div class="p-8 mx-auto max-w-3xl">
         {% aheader %}

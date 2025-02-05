@@ -10,14 +10,14 @@
             {% if venue.local_start %}
                 <span class="block mt-1 text-red-600 text-lg">
                     <i class="fas fa-exclamation-triangle"></i>
-                    {% blocktrans with time=venue.local_start|time usual=competition.competition_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time of {{ usual }}.{% endblocktrans %}
+                    {% blocktranslate with time=venue.local_start|time usual=competition.competition_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time of {{ usual }}.{% endblocktranslate %}
                 </span>
             {% endif %}
         </button>
     {% empty %}
         <div class="text-red-800">
             {# Translators: The user attempted to search for a venue, but we were unable to find any matching results. #}
-            <p class="text-lg font-bold">{% trans "No venues matched your query." %}</p>
+            <p class="text-lg font-bold">{% translate "No venues matched your query." %}</p>
         </div>
     {% endfor %}
 </div>

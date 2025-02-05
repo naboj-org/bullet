@@ -1,16 +1,15 @@
 {% extends "web/base.html" %}
-{% load bform %}
-{% load static %}
-{% load country_url %}
-{% load i18n %}
+{% load bform country_url i18n static %}
 {% block title %}
-    {% trans "Live signage" %}
+    {% translate "Live signage" %}
 {% endblock title %}
+
 {% block hero %}
     <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
-        {% trans "Live signage" %}
+        {% translate "Live signage" %}
     </h1>
 {% endblock hero %}
+
 {% block content %}
     <main class="max-w-2xl mx-auto px-2 mt-8 space-y-4">
         <form method="post">
@@ -18,7 +17,7 @@
             {% bform form %}
             <div class="flex justify-center mt-6">
                 <button type="submit"
-                        class="btn">{% trans "Start" %}</button>
+                        class="btn">{% translate "Start" %}</button>
             </div>
         </form>
     </main>

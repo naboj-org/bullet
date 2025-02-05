@@ -1,6 +1,5 @@
 {% extends "bullet_admin/base.html" %}
-{% load bform %}
-{% load static %}
+{% load bform static %}
 {% block title %}
     {% if create %}
         Create
@@ -9,6 +8,7 @@
     {% endif %}
     menu item
 {% endblock title %}
+
 {% block content %}
     <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
         <header class="px-4 py-3 bg-slate-100 border-b">

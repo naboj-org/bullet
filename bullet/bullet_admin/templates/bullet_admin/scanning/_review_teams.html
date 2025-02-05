@@ -1,5 +1,4 @@
-{% load access %}
-{% load utils %}
+{% load access utils %}
 {% if not venue.is_reviewed and not venue.has_unreviewed_teams %}
     {% is_venue_admin venue as can_finish %}
     {% aalert color="orange" class="mb-4" %}

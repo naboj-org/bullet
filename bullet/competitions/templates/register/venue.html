@@ -1,12 +1,11 @@
 {% extends "register/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block register_content %}
     {% include "register/partials/category.html" %}
-    <div class="font-bold text-2xl mb-6 mt-6">{% trans "Venue" %}</div>
+    <div class="font-bold text-2xl mb-6 mt-6">{% translate "Venue" %}</div>
     <input type="text"
            class="form-input input mb-4"
-           placeholder="{% trans "Search venues..." %}"
+           placeholder="{% translate "Search venues..." %}"
            name="q"
            hx-get="{% country_url 'register_venue' %}"
            hx-swap="outerHTML"

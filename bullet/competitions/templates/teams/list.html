@@ -1,25 +1,23 @@
 {% extends "web/base.html" %}
-{% load countries %}
-{% load content_blocks %}
-{% load country_url %}
-{% load static %}
-{% load i18n %}
+{% load content_blocks countries country_url i18n static %}
 {% block title %}
     {% if is_waitinglist %}
-        {% trans "Waiting list" %}
+        {% translate "Waiting list" %}
     {% else %}
-        {% trans "Team list" %}
+        {% translate "Team list" %}
     {% endif %}
 {% endblock title %}
+
 {% block hero %}
     <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
         {% if is_waitinglist %}
-            {% trans "Waiting list" %}
+            {% translate "Waiting list" %}
         {% else %}
-            {% trans "Team list" %}
+            {% translate "Team list" %}
         {% endif %}
     </h1>
 {% endblock hero %}
+
 {% block content %}
     {% load_blocks "category" %}
     <div class="container mx-auto px-2 mt-8">
@@ -37,10 +35,10 @@
         <div class="mb-4 text-center">
             {% if is_waitinglist %}
                 <a href="{% country_url "team_list" %}?country={{ country }}"
-                   class="link-primary">{% trans "Team list" %}</a>
+                   class="link-primary">{% translate "Team list" %}</a>
             {% else %}
                 <a href="{% country_url "waiting_list" %}?country={{ country }}"
-                   class="link-primary">{% trans "Waiting list" %}</a>
+                   class="link-primary">{% translate "Waiting list" %}</a>
             {% endif %}
         </div>
         {% for v in venues %}
@@ -52,7 +50,7 @@
                     </h2>
                     {% if not is_waitinglist %}
                         <div class="shrink-0 text-gray-600">
-                            {% blocktrans with teams=v.teams|length capacity=v.venue.capacity %}Teams: {{ teams }} / {{ capacity }}{% endblocktrans %}
+                            {% blocktranslate with teams=v.teams|length capacity=v.venue.capacity %}Teams: {{ teams }} / {{ capacity }}{% endblocktranslate %}
                         </div>
                     {% endif %}
                 </div>

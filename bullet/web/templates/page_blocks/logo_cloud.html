@@ -1,4 +1,5 @@
 {% extends "page_blocks/_base.html" %}
+
 {% block container %}
     {% include "page_blocks/_centered_header.html" %}
     <div class="flex flex-wrap gap-6 items-center {% if title or text %}mt-8{% endif %} {% if align == "center" %} justify-center {% elif align == "right" %} justify-end {% elif align == "spaced" %} justify-around {% endif %}">

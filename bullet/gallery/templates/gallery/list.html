@@ -1,13 +1,14 @@
 {% extends "web/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block title %}
-    {% trans "Albums" %}
+    {% translate "Albums" %}
 {% endblock title %}
+
 {% block hero %}
-    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">{% trans "Albums" %}</h1>
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">{% translate "Albums" %}</h1>
     <p class="text-2xl md:text-4xl mt-4 font-bold mb-4 md:mb-16">{{ competition.name }}</p>
 {% endblock hero %}
+
 {% block content %}
     <article class="max-w-3xl mx-auto mt-8 px-1 md:px-2 space-y-8">
         {% regroup object_list by country as countries %}

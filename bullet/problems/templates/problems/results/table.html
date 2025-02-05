@@ -1,17 +1,15 @@
-{% load utils %}
-{% load i18n %}
-{% load results %}
+{% load i18n results utils %}
 {% if not results_time.has_started %}
     <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
-        {% trans "The competition did not start yet." %}
+        {% translate "The competition did not start yet." %}
     </div>
 {% elif results_time.is_frozen %}
     <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
-        <b>{% trans "Results are frozen." %}</b> {% trans "These are not the final results yet." %}
+        <b>{% translate "Results are frozen." %}</b> {% translate "These are not the final results yet." %}
     </div>
 {% elif results_time.has_started and not results_time.is_final %}
     <div class="bg-blue-100 text-blue-800 border border-blue-800 p-4 mb-6 rounded-md">
-        <b>{% trans "Interim results." %}</b> {% trans "The competition is ongoing, the results may change." %}
+        <b>{% translate "Interim results." %}</b> {% translate "The competition is ongoing, the results may change." %}
     </div>
 {% endif %}
 <div class="overflow-x-auto">
@@ -65,7 +63,7 @@
         {% empty %}
             <tr>
                 <td class="p-2 text-center text-gray-700"
-                    colspan="5">{% trans "(No team has solved any problem yet)" %}</td>
+                    colspan="5">{% translate "(No team has solved any problem yet)" %}</td>
             </tr>
         {% endfor %}
     </tbody>

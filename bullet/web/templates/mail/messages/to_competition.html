@@ -1,6 +1,5 @@
 {% extends "mail/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block body %}
     <p>
         {% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
@@ -15,17 +14,17 @@
         {% blocktranslate %}You can edit team details by clicking the link below.{% endblocktranslate %}
     </p>
     {% country_url "team_edit" secret_link=team.secret_link as link %}
-    {% trans "Edit team" as link_text %}
+    {% translate "Edit team" as link_text %}
     {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
     <p>
-        {% trans "Best regards," %}
+        {% translate "Best regards," %}
         <br>
         {{ branch.name }}
     </p>
     <hr>
     <p>
         <small>
-            {% trans "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}
+            {% translate "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}
             <br>
             {{ root_url }}{{ link }}
         </small>

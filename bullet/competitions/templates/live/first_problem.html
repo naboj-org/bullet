@@ -1,10 +1,9 @@
 {% extends "web/root_base.html" %}
-{% load utils %}
-{% load content_blocks %}
-{% load i18n %}
+{% load content_blocks i18n utils %}
 {% block title %}
-    {% trans "Live signage" %}
+    {% translate "Live signage" %}
 {% endblock title %}
+
 {% block root_content %}
     {% load_blocks "category" %}
     <div class="min-h-screen h-screen grid grid-cols-2 divide-x"
@@ -12,7 +11,7 @@
          {% if not stop %} hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens" {% endif %}>
         {% for screen in screens %}
             <div class="p-4 flex flex-col items-center justify-center text-center">
-                <div class="text-4xl">{% trans "First solved problem" %}</div>
+                <div class="text-4xl">{% translate "First solved problem" %}</div>
                 <div class="text-2xl mb-6">
                     {% content_block "category:name_"|add:screen.category %}
                 </div>

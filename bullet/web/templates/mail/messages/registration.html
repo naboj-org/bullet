@@ -1,6 +1,5 @@
 {% extends "mail/base.html" %}
-{% load i18n %}
-{% load country_url %}
+{% load country_url i18n %}
 {% block body %}
     <p>
         {% blocktranslate with name=team.contact_name %}Hello, {{ name }}!{% endblocktranslate %}
@@ -12,7 +11,7 @@
         {% blocktranslate with contestants=team.contestants_names %}Current team members: {{ contestants }}{% endblocktranslate %}
     </p>
     {% country_url "team_edit" secret_link=team.secret_link as link %}
-    {% trans "Confirm registration" as link_text %}
+    {% translate "Confirm registration" as link_text %}
     {% include "mail/btn.html" with text=link_text href=root_url|add:link %}
     <p>
         {% blocktranslate %}You can also use that link to modify your team.{% endblocktranslate %}
@@ -21,14 +20,14 @@
         {% blocktranslate %}If you have any questions, please feel free to reply to this email.{% endblocktranslate %}
     </p>
     <p>
-        {% trans "Best regards," %}
+        {% translate "Best regards," %}
         <br>
         {{ branch.name }}
     </p>
     <hr>
     <p>
         <small>
-            {% trans "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}
+            {% translate "If you are having difficulty clicking on the button, you can paste this address into your browser:" %}
             <br>
             {{ root_url }}{{ link }}
         </small>
