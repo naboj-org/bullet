@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.3 - 2025-02-05
+
+### Changed
+
+- Width of page content is consistent with other sites.
+- Improved team lists and results.
+
+### Removed
+
+- Old system of managing problem counts.
+
 ## 2025.2 - 2025-01-23
 
 ### Added
