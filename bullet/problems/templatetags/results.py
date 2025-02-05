@@ -41,17 +41,6 @@ def squares(
     }
 
 
-@register.inclusion_tag("problems/results/squares.html")
-def big_squares(
-    obj: ResultRow,
-    problem_count: Optional[int] = None,
-    team_problem_count: Optional[int] = None,
-    first_problem: Optional[int] = None,
-):
-    ctx = squares(obj, problem_count, team_problem_count, first_problem, True)
-    return ctx
-
-
 @register.inclusion_tag("problems/results/timer.html")
 def venue_timer(venue: Venue | str, competition: Competition):
     if isinstance(venue, str):
