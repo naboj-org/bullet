@@ -6,7 +6,7 @@ from django.core.files.storage import default_storage
 from django.forms import Form
 from django.http import FileResponse, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils.functional import cached_property
 from django.views.generic import (
     CreateView,
@@ -24,24 +24,45 @@ from problems.models import CategoryProblem, Problem
 from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
-from bullet_admin.access import AdminAccess, CountryAdminAccess, VenueAccess
+from bullet_admin.access import (
+    AdminAccess,
+    CountryAdminAccess,
+    VenueAccess,
+    is_country_admin,
+)
 from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import TeamListForm, VenueForm
-from bullet_admin.mixins import AdminRequiredMixin, RedirectBackMixin
+from bullet_admin.mixins import AdminRequiredMixin, AuthedHttpRequest, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericForm, GenericList
+from bullet_admin.views import GenericForm
+from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
+from bullet_admin.views.generic.list import GenericList
 
 
 class VenueListView(AdminAccess, GenericList, ListView):
+    request: AuthedHttpRequest  # type: ignore
     require_unlocked_competition = False
-    fields = ["name", "category", "team_count", "capacity", "local_start"]
-    labels = {"name": "Venue", "team_count": "Registered teams"}
-    field_templates = {
-        "name": "bullet_admin/venues/venue.html",
-        "category": "bullet_admin/venues/category.html",
+
+    table_fields = ["name", "category", "team_count", "capacity", "local_start"]
+    table_labels = {
+        "name": "Venue",
+        "team_count": "Registered teams",
     }
-    view_type = "internal-view"
-    create_url = reverse_lazy("badmin:venue_create")
+    table_field_templates = {
+        "name": "bullet_admin/venues/field__venue.html",
+    }
+
+    def get_category_content(self, object):
+        return object.category.identifier.title()
+
+    def get_list_links(self) -> list[Link]:
+        links = []
+
+        competition = get_active_competition(self.request)
+        if is_country_admin(self.request.user, competition):
+            links.append(NewLink("venue", reverse("badmin:venue_create")))
+
+        return links
 
     def get_queryset(self):
         # For whatever reason, when you annotate the queryset, it loses
@@ -50,8 +71,8 @@ class VenueListView(AdminAccess, GenericList, ListView):
             Venue.objects.for_request(self.request).annotate_teamcount().natural_order()
         )
 
-    def get_view_url(self, venue: Venue) -> str:
-        return reverse("badmin:venue_detail", kwargs={"pk": venue.id})
+    def get_row_links(self, object) -> list[Link]:
+        return [ViewIcon(reverse("badmin:venue_detail", kwargs={"pk": object.id}))]
 
 
 class VenueFormMixin(GenericForm):

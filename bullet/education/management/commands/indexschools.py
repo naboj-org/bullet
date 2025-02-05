@@ -15,6 +15,15 @@ class Command(BaseCommand):
         search.client.index("schools").update_settings(
             {
                 "filterableAttributes": ["country", "is_hidden"],
+                "sortableAttributes": ["name", "address", "country"],
+                "rankingRules": [
+                    "words",
+                    "sort",
+                    "typo",
+                    "proximity",
+                    "attribute",
+                    "exactness",
+                ],
                 "synonyms": {
                     "zš": ["základná škola", "základní škola"],
                     "základná škola": ["zš"],

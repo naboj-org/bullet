@@ -19,16 +19,18 @@ from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserFo
 from bullet_admin.mixins import DelegateRequiredMixin
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericList
+from bullet_admin.views.generic.links import EditIcon, Link, NewLink
+from bullet_admin.views.generic.list import GenericList
 
 PASSWORD_ALPHABET = "346789ABCDEFGHJKLMNPQRTUVWXY"
 
 
 class UserListView(DelegateRequiredMixin, GenericList, ListView):
-    create_url = reverse_lazy("badmin:user_create")
-    fields = ["get_full_name", "email", "has_branch_role"]
-    labels = {"get_full_name": "Full Name", "has_branch_role": "Admin access"}
-    field_templates = {"has_branch_role": "bullet_admin/users/role.html"}
+    list_links = [NewLink("user", reverse_lazy("badmin:user_create"))]
+
+    table_fields = ["get_full_name", "email", "has_branch_role"]
+    table_labels = {"get_full_name": "Full Name", "has_branch_role": "Admin access"}
+    table_field_templates = {"has_branch_role": "bullet_admin/users/field__role.html"}
 
     def get_queryset(self):
         branch_role = BranchRole.objects.filter(
@@ -45,8 +47,8 @@ class UserListView(DelegateRequiredMixin, GenericList, ListView):
 
         return qs
 
-    def get_edit_url(self, user: User) -> str:
-        return reverse("badmin:user_edit", args=[user.pk])
+    def get_row_links(self, object) -> list[Link]:
+        return [EditIcon(reverse("badmin:user_edit", args=[object.pk]))]
 
 
 class UserFormsMixin:

@@ -5,6 +5,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
 from django.utils.functional import cached_property
+from django.utils.translation import get_language_info
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Menu, Page, PageBlock
 
@@ -20,7 +21,15 @@ from bullet_admin.forms.content import (
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView as BDeleteView
-from bullet_admin.views import GenericDelete, GenericForm, GenericList
+from bullet_admin.views import GenericDelete, GenericForm
+from bullet_admin.views.generic.links import (
+    DeleteIcon,
+    EditIcon,
+    ExternalViewIcon,
+    Link,
+    NewLink,
+)
+from bullet_admin.views.generic.list import GenericList
 
 
 class PageQuerySetMixin:
@@ -31,29 +40,33 @@ class PageQuerySetMixin:
 
 
 class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, GenericList, ListView):
-    create_url = reverse_lazy("badmin:page_create")
-    labels = {"slug": "URL"}
-    fields = ["title", "slug", "language", "countries"]
-    field_templates = {
-        "language": "bullet_admin/content/language.html",
-        "countries": "bullet_admin/content/countries.html",
+    list_links = [NewLink("page", reverse_lazy("badmin:page_create"))]
+
+    table_labels = {"slug": "URL"}
+    table_fields = ["title", "slug", "language", "countries"]
+    table_field_templates = {
+        "countries": "bullet_admin/content/field__countries.html",
     }
 
-    def get_edit_url(self, page: Page) -> str:
-        return reverse("badmin:page_edit", args=[page.pk])
+    def get_language_content(self, object):
+        lang = get_language_info(object.language)
+        return lang["name"]
 
-    def get_delete_url(self, page: Page) -> str:
-        return reverse("badmin:page_delete", args=[page.pk])
-
-    def get_view_url(self, page: Page) -> str:
-        return reverse(
+    def get_row_links(self, object) -> list[Link]:
+        view = reverse(
             "page",
             kwargs={
-                "b_country": page.countries[0].lower(),
-                "b_language": page.language,
-                "slug": page.slug,
+                "b_country": object.countries[0].lower(),
+                "b_language": object.language,
+                "slug": object.slug,
             },
         )
+
+        return [
+            EditIcon(reverse("badmin:page_edit", args=[object.pk])),
+            ExternalViewIcon(view),
+            DeleteIcon(reverse("badmin:page_delete", args=[object.pk])),
+        ]
 
 
 class PageCopyView(TranslatorRequiredMixin, PageQuerySetMixin, GenericForm, FormView):
@@ -371,11 +384,12 @@ class ContentBlockCreateView(
 
 
 class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
-    create_url = reverse_lazy("badmin:menu_create")
-    fields = ["title", "url", "order", "language", "countries"]
-    field_templates = {
-        "language": "bullet_admin/content/language.html",
-        "countries": "bullet_admin/content/countries.html",
+    list_links = [NewLink("menu item", reverse_lazy("badmin:menu_create"))]
+
+    table_labels = {"url": "URL"}
+    table_fields = ["title", "url", "order", "language", "countries"]
+    table_field_templates = {
+        "countries": "bullet_admin/content/field__countries.html",
     }
 
     def get_queryset(self):
@@ -383,11 +397,15 @@ class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
             "language", "order"
         )
 
-    def get_edit_url(self, menu: Menu) -> str:
-        return reverse("badmin:menu_edit", args=[menu.pk])
+    def get_language_content(self, object):
+        lang = get_language_info(object.language)
+        return lang["name"]
 
-    def get_delete_url(self, menu: Menu) -> str:
-        return reverse("badmin:menu_delete", args=[menu.pk])
+    def get_row_links(self, object) -> list[Link]:
+        return [
+            EditIcon(reverse("badmin:menu_edit", args=[object.pk])),
+            DeleteIcon(reverse("badmin:menu_delete", args=[object.pk])),
+        ]
 
 
 class MenuItemEditView(TranslatorRequiredMixin, UpdateView):

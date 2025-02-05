@@ -9,7 +9,9 @@ from bullet_admin.access import CountryAdminAccess, CountryAdminInAccess
 from bullet_admin.forms.education import SchoolForm
 from bullet_admin.mixins import RedirectBackMixin
 from bullet_admin.utils import get_allowed_countries
-from bullet_admin.views import GenericForm, GenericList
+from bullet_admin.views import GenericForm
+from bullet_admin.views.generic.links import EditIcon, Link, NewLink
+from bullet_admin.views.generic.list import GenericList
 
 
 class SchoolQuerySetMixin:
@@ -19,11 +21,12 @@ class SchoolQuerySetMixin:
 
 class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListView):
     require_unlocked_competition = False
-    fields = ["name", "address", "country"]
-    create_url = reverse_lazy("badmin:school_create")
-    field_templates = {
-        "name": "bullet_admin/education/school_name.html",
-        "country": "bullet_admin/partials/country.html",
+
+    list_links = [NewLink("school", reverse_lazy("badmin:school_create"))]
+    table_fields = ["name", "address", "country"]
+    table_field_templates = {
+        "name": "bullet_admin/education/field__school_name.html",
+        "country": "bullet_admin/partials/field__country.html",
     }
 
     def get_queryset(self):
@@ -43,14 +46,7 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
 
         return ctx
 
-    def country_navigation(self):
-        countries = School.objects.values_list("country", flat=True).distinct()
-        allowed_countries = get_allowed_countries(self.request)
-        if allowed_countries is not None:
-            countries = countries.filter(country__in=allowed_countries)
-        return countries
-
-    def get_search_queryset(self, qs):
+    def apply_search_filter(self, qs):
         allowed_countries = get_allowed_countries(self.request)
 
         search_query = self.request.GET.get("q")
@@ -59,12 +55,17 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
             if allowed_countries is not None:
                 country_filter = ",".join([f"'{c}'" for c in allowed_countries])
                 options["filter"] = f"country IN [{country_filter}]"
+            if order_by := self.request.GET.get("order_by"):
+                if order_by.startswith("-"):
+                    options["sort"] = [f"{order_by[1:]}:desc"]
+                else:
+                    options["sort"] = [f"{order_by}:asc"]
 
             qs = search.MeiliQuerySet(qs, "schools", search_query, options)
         return qs
 
-    def get_edit_url(self, school: School) -> str:
-        return reverse("badmin:school_update", args=[school.pk])
+    def get_row_links(self, object) -> list[Link]:
+        return [EditIcon(reverse("badmin:school_update", args=[object.pk]))]
 
 
 class SchoolUpdateView(

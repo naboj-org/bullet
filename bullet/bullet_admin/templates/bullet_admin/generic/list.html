@@ -1,203 +1,58 @@
 {% extends "bullet_admin/base.html" %}
-{% load countries %}
-{% load utils %}
-{% load i18n %}
-{% load badmin %}
-{% load access %}
+{% load access badmin countries i18n utils %}
 {% block title %}
     {{ list_title }}
 {% endblock title %}
+
 {% block content %}
-    {% get_active_competition as competition %}
-    <div class="p-8 mx-auto max-w-7xl">
-        {% aheader show_subtitle=subtitle is not None %}
-            {% slot title %}
-                {{ list_title }}
-                {% if count %}
-                    <span class="text-gray-400 font-normal">{{ count|floatformat:"g" }}</span>
-                {% endif %}
-            {% endslot %}
-            {% slot buttons %}
-                {% query_replace next=request.get_full_path as back %}
-                {% if help_url %}
-                    {% #abtn icon="mdi:help" label="Help" url=help_url|add:back %}
-                {% endif %}
-                {% if new_folder_url %}
-                    {% #abtn icon="mdi:folder-plus" label="New folder" url=new_folder_url|add:back %}
-                {% endif %}
-                {% if assign_numbers_url %}
-                    {% #abtn icon="mdi:numeric" label="Assign numbers" url=assign_numbers_url|add:back %}
-                {% endif %}
-                {% if export_url %}
-                    {% #abtn color="blue" icon="mdi:export" label="Export" url=export_url|add:back %}
-                {% endif %}
-                {% if create_url %}
-                    {% if object_name %}
-                        {% #abtn color="green" icon="mdi:plus" label="New "|add:object_name url=create_url|add:back %}
-                    {% else %}
-                        {% #abtn color="green" icon="mdi:plus" label="New" url=create_url|add:back %}
-                    {% endif %}
-                {% endif %}
-                {% if upload_url %}
-                    {% #abtn color="green" icon="mdi:upload" label="Upload File" url=upload_url|add:back %}
-                {% endif %}
-                {% comment %}
-                	Add buttons if needed.
-                {% endcomment %}
-            {% endslot %}
-            {{ subtitle }}
-        {% endaheader %}
-        {% block navigation %}
-            {% if countries %}
-                {% anav class="-mt-4 mb-8" %}
-                    {% query_transform country="" as url %}
-                    {% if not request.GET.country %}
-                        {% anavitem url=url active=True %}
-                            (all)
-                        {% endanavitem %}
-                    {% else %}
-                        {% anavitem url=url active=False %}
-                            (all)
-                        {% endanavitem %}
-                    {% endif %}
-                    {% for country in countries %}
-                        {% get_country country as country_info %}
-                        {% query_transform country=country as url %}
-                        {% if request.GET.country == country %}
-                            {% anavitem url=url active=True %}
-                                <div class="flex gap-2 items-center flex-wrap">
-                                    <span class="iconify shrink-0 shadow-lg"
-                                          data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
-                                    <span>{{ country_info.name }}</span>
-                                </div>
-                            {% endanavitem %}
-                        {% else %}
-                            {% anavitem url=url active=False %}
-                                <div class="flex gap-2 items-center flex-wrap">
-                                    <span class="iconify shrink-0 shadow-lg"
-                                          data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
-                                    <span>{{ country_info.name }}</span>
-                                </div>
-                            {% endanavitem %}
-                        {% endif %}
-                    {% endfor %}
-                {% endanav %}
-            {% endif %}
-            {% if languages %}
-                {% anav class="-mt-4 mb-8" %}
-                    {% query_transform language="" as url %}
-                    {% if not request.GET.language %}
-                        {% anavitem url=url active=True %}
-                            (all)
-                        {% endanavitem %}
-                    {% else %}
-                        {% anavitem url=url active=False %}
-                            (all)
-                        {% endanavitem %}
-                    {% endif %}
-                    {% for lang in languages %}
-                        {% get_language_info for lang as lang_info %}
-                        {% query_transform language=lang as url %}
-                        {% if request.GET.language == lang %}
-                            {% anavitem url=url active=True %}
-                                {{ lang_info.name }}
-                            {% endanavitem %}
-                        {% else %}
-                            {% anavitem url=url active=False %}
-                                {{ lang_info.name }}
-                            {% endanavitem %}
-                        {% endif %}
-                    {% endfor %}
-                {% endanav %}
-            {% endif %}
-        {% endblock navigation %}
-        {% block before_list %}
-            <form class="flex mb-4 items-center gap-2">
-                {% for name, list in request.GET.lists %}
-                    {% if name != "q" %}
-                        <input type="hidden"
-                               name="{{ name }}"
-                               value="{{ list.0 }}">
-                    {% endif %}
-                {% endfor %}
-                <input type="search"
-                       name="q"
-                       placeholder="Search {{ list_title|lower }}"
-                       class="input"
-                       value="{{ request.GET.q }}">
-            </form>
-        {% endblock before_list %}
-        <div class="overflow-x-auto">
-            <table class="w-full text-sm">
-                <thead class="text-left bg-gray-100 border-t border-b">
-                    <tr>
-                        {% for label, field in labels %}
-                            <th class="p-0 whitespace-nowrap">
-                                {% if orderby == field %}
-                                    {% query_transform orderby="-"|add:field as url %}
-                                {% else %}
-                                    {% query_transform orderby=field as url %}
-                                {% endif %}
-                                <a href="{{ url }}"
-                                   class="p-3 pr-1 flex items-center hover:bg-gray-200">
-                                    {{ label }}
-                                    {% if orderby == field %}
-                                        <span class="iconify w-5 h-5 shrink-0"
-                                              data-icon="mdi:arrow-down-drop"></span>
-                                    {% elif orderby == "-"|add:field %}
-                                        <span class="iconify w-5 h-5 shrink-0"
-                                              data-icon="mdi:arrow-drop-up"></span>
-                                    {% endif %}
-                                </a>
-                            </th>
-                        {% endfor %}
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y">
-                    {% for object, edit_url, delete_url, view_url, download_url, generate_url in table_row %}
-                        <tr class="even:bg-gray-50 relative hover:bg-gray-100">
-                            {% for item in object %}
-                                <td class="p-3">
-                                    {% if forloop.first %}
-                                        {% if view_url %}
-                                            <a class="link absolute inset-0"
-                                               href="{{ view_url }}{% query_transform next=request.get_full_path %}"></a>
-                                        {% elif edit_url %}
-                                            <a class="link absolute inset-0"
-                                               href="{{ edit_url }}{% query_transform next=request.get_full_path %}"></a>
-                                        {% elif delete_url %}
-                                            <a class="link absolute inset-0"
-                                               href="{{ delete_url }}{% query_transform next=request.get_full_path %}"></a>
-                                        {% endif %}
-                                    {% endif %}
-                                    {% if item or item == 0 %}{{ item }}{% endif %}
-                                </td>
-                            {% endfor %}
-                            <td class="p-3 whitespace-nowrap z-10 relative">
-                                <div class="flex items-center justify-end gap-2">
-                                    {% if edit_url %}
-                                        {% #alink type="edit" url=edit_url %}
-                                    {% endif %}
-                                    {% if delete_url %}
-                                        {% #alink type="delete" url=delete_url %}
-                                    {% endif %}
-                                    {% if view_url %}
-                                        {% #alink type=view_type url=view_url %}
-                                    {% endif %}
-                                    {% if download_url %}
-                                        {% #alink type="download" url=download_url %}
-                                    {% endif %}
-                                    {% if generate_url %}
-                                        {% #alink type="generate" url=generate_url %}
-                                    {% endif %}
-                                </div>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-        {% admin_paginator page_obj %}
-    </div>
+  {% get_active_competition as competition %}
+  <div class="p-8 mx-auto max-w-7xl">
+    {% aheader show_subtitle=list_subtitle is not None %}
+      {% slot title %}
+        {{ list_title }}
+
+        {% if count %}
+          <span class="text-gray-400 font-normal">{{ count|floatformat:"g" }}</span>
+        {% endif %}
+      {% endslot %}
+
+      {% slot buttons %}
+        {% query_replace next=request.get_full_path as back %}
+        {% for link in list_links %}
+          {% #abtn icon=link.icon label=link.label color=link.color url=link.url|add:back %}
+        {% endfor %}
+      {% endslot %}
+
+      {{ list_subtitle }}
+    {% endaheader %}
+
+      {% block navigation %}
+        {% if countries %}
+          {% include "bullet_admin/generic/list_countries.html" %}
+        {% endif %}
+        {% if languages %}
+          {% include "bullet_admin/generic/list_languages.html" %}
+        {% endif %}
+      {% endblock navigation %}
+
+      {% block before_list %}
+          <form class="flex mb-4 items-center gap-2">
+              {% for name, list in request.GET.lists %}
+                  {% if name != "q" %}
+                      <input type="hidden"
+                              name="{{ name }}"
+                              value="{{ list.0 }}">
+                  {% endif %}
+              {% endfor %}
+              <input type="search"
+                      name="q"
+                      placeholder="Search {{ list_title|lower }}"
+                      class="input"
+                      value="{{ request.GET.q }}">
+          </form>
+      {% endblock before_list %}
+
+      {% include "bullet_admin/generic/list_table.html" %}
+      {% admin_paginator page_obj %}
+  </div>
 {% endblock content %}

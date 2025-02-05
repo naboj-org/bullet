@@ -13,38 +13,50 @@ from bullet_admin.access import PhotoUploadAccess
 from bullet_admin.forms.album import AlbumForm
 from bullet_admin.mixins import RedirectBackMixin
 from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericDelete, GenericForm, GenericList
+from bullet_admin.views import GenericDelete, GenericForm
+from bullet_admin.views.generic.links import (
+    DeleteIcon,
+    EditIcon,
+    ExternalViewIcon,
+    Link,
+    NewLink,
+)
+from bullet_admin.views.generic.list import GenericList
 
 
 class AlbumListView(PhotoUploadAccess, GenericList, ListView):
-    create_url = reverse_lazy("badmin:album_create")
-    labels = {"slug": "URL suffix (slug)"}
-    fields = ["title", "slug", "country", "photos"]
-    field_templates = {
-        "country": "bullet_admin/partials/country.html",
-        "photos": "bullet_admin/albums/photos.html",
+    list_links = [
+        NewLink("album", reverse_lazy("badmin:album_create")),
+    ]
+
+    table_labels = {"slug": "URL suffix (slug)"}
+    table_fields = ["title", "slug", "country", "photos"]
+    table_field_templates = {
+        "country": "bullet_admin/partials/field__country.html",
+        "photos": "bullet_admin/albums/field__photos.html",
     }
 
     def get_queryset(self):
         return Album.objects.filter(competition=get_active_competition(self.request))
 
-    def get_edit_url(self, album: Album) -> str:
-        return reverse("badmin:album_edit", args=[album.pk])
-
-    def get_delete_url(self, album: Album) -> str:
-        return reverse("badmin:album_delete", args=[album.pk])
-
-    def get_view_url(self, album: Album) -> str:
+    def get_row_links(self, object) -> list[Link]:
+        assert self.detection
         country, language = self.detection
-        return reverse(
+        view = reverse(
             "archive_album",
             kwargs={
                 "b_country": country,
                 "b_language": language,
-                "competition_number": album.competition.number,
-                "slug": album.slug,
+                "competition_number": object.competition.number,
+                "slug": object.slug,
             },
         )
+
+        return [
+            EditIcon(reverse("badmin:album_edit", args=[object.pk])),
+            ExternalViewIcon(view),
+            DeleteIcon(reverse("badmin:album_delete", args=[object.pk])),
+        ]
 
     def dispatch(self, request, *args, **kwargs):
         self.detection = get_country_language_from_request(self.request)
