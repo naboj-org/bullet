@@ -15,6 +15,7 @@ def squares(
     problem_count: Optional[int] = None,
     team_problem_count: Optional[int] = None,
     first_problem: Optional[int] = None,
+    big: bool = False,
 ):
     category: Category = obj.team.venue.category
     if not team_problem_count:
@@ -24,9 +25,19 @@ def squares(
     if not problem_count:
         problem_count = category.competition.problem_count - first_problem + 1
 
+    squares = obj.get_squares(problem_count, team_problem_count, first_problem)
+    squares_grouped = []
+    for i in range(0, len(squares), 5):
+        group = []
+        for idx in range(i, i + 5):
+            if len(squares) <= idx:
+                continue
+            group.append({"problem": idx + first_problem, "state": squares[idx]})
+        squares_grouped.append(group)
+
     return {
-        "squares": obj.get_squares(problem_count, team_problem_count, first_problem),
-        "offset": first_problem - 1,
+        "squares": squares_grouped,
+        "big": big,
     }
 
 
@@ -37,8 +48,7 @@ def big_squares(
     team_problem_count: Optional[int] = None,
     first_problem: Optional[int] = None,
 ):
-    ctx = squares(obj, problem_count, team_problem_count, first_problem)
-    ctx["big"] = True
+    ctx = squares(obj, problem_count, team_problem_count, first_problem, True)
     return ctx
 
 
