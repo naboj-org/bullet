@@ -4,10 +4,8 @@ from django.conf import settings
 from django_rq import job
 from PIL import Image
 
+from gallery.constants import ORIGNAL_SIZE, THUMB_SIZES
 from gallery.models import Photo
-
-THUMB_SIZES = [300, 600, 1200]
-ORIGNAL_SIZE = 2400
 
 
 def resize_keep_aspect(img: Image.Image, width: int) -> Image.Image:
