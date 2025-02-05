@@ -1,26 +1,29 @@
-from collections import defaultdict
 from datetime import timedelta
 from typing import Iterable
 
+from competitions.models.competitions import Category
 from django import template
 
-from problems.models import CategoryProblem, ProblemStatement
+from problems.models import ProblemStatement
 
 register = template.Library()
 
 
-@register.filter()
-def problem_number(obj: ProblemStatement):
-    problems: Iterable[CategoryProblem] = obj.problem.category_problems.all()
-    numbers = set([cp.number for cp in problems])
-    if len(numbers) == 1:
-        return numbers.pop()
+@register.simple_tag()
+def problem_number(problem: ProblemStatement, categories: Iterable[Category]):
+    numbers = []
+    used_numbers = set()
 
-    number_category: dict[int, set[str]] = defaultdict(set)
-    for cp in problems:
-        number_category[cp.number].add(cp.category.identifier[0].upper())
+    for cat in categories:
+        prefix = cat.identifier[0].upper()
+        number = problem.problem.number + 1 - cat.first_problem
+        numbers.append((prefix, number))
+        used_numbers.add(number)
 
-    return " / ".join(f"{''.join(cat)}{n}" for n, cat in number_category.items())
+    if len(used_numbers) == 1:
+        return used_numbers.pop()
+
+    return " / ".join([f"{n[0]}{n[1]}" for n in numbers if n[1] >= 1])
 
 
 @register.filter()

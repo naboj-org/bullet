@@ -24,7 +24,8 @@
     {% for problem in object_list %}
         <article class="my-8 max-w-prose mx-auto px-2">
             <h2 class="font-bold text-lg">
-                {% blocktrans with n=problem|problem_number %}Problem {{ n }}{% endblocktrans %}
+                {% problem_number problem categories as problem_number %}
+                {% blocktrans with n=problem_number %}Problem {{ n }}{% endblocktrans %}
             </h2>
             <div class="prose prose-archive">
                 {{ problem.statement|safe }}

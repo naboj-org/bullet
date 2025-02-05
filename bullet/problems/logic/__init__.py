@@ -8,6 +8,9 @@ from problems.models import Problem, ResultRow, SolvedProblem
 
 
 def get_last_problem_for_team(team: Team):
+    """
+    Return the number of the highest problem the team should have on their table.
+    """
     return (
         SolvedProblem.objects.filter(team=team).count()
         + team.venue.category.problems_per_team

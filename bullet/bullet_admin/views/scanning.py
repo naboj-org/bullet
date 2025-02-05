@@ -23,7 +23,7 @@ from problems.logic import (
     mark_problem_unsolved,
 )
 from problems.logic.scanner import ScannedBarcode, parse_barcode, save_scan
-from problems.models import CategoryProblem, Problem, ScannerLog, SolvedProblem
+from problems.models import Problem, ScannerLog, SolvedProblem
 from users.models import Team
 
 from bullet_admin.forms.review import get_review_formset
@@ -161,11 +161,9 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         if scanned_barcode.team.is_reviewed:
             raise ValueError("The team was already reviewed.")
 
-        problem_count = CategoryProblem.objects.filter(
-            category=scanned_barcode.team.venue.category
-        ).count()
+        max_problem_number = self.venue.category.competition.problem_count
         last = get_last_problem_for_team(scanned_barcode.team)
-        if last < problem_count:
+        if last < max_problem_number:
             if scanned_barcode.problem_number != last + 1:
                 raise ValueError(
                     f"Expected problem number {last + 1}, got "
@@ -291,22 +289,22 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
         return get_review_formset(self.team)
 
     def get_initial(self):
-        category_problems = {
-            cp.number: cp.problem_id
-            for cp in CategoryProblem.objects.filter(
-                category=self.team.venue.category
-            ).order_by("number")
-        }
+        competition = get_active_competition(self.request)
+        problems = Problem.objects.filter(competition=competition)
+
         solved_timestamps = {
             sp.problem_id: sp.competition_time for sp in self.team.solved_problems.all()
         }
         initial = []
 
-        for num, id in category_problems.items():
-            row = {"number": num}
-            if id in solved_timestamps:
+        for problem in problems:
+            if problem.number < self.team.venue.category.first_problem:
+                continue
+
+            row = {"number": problem.number}
+            if problem.id in solved_timestamps:
                 row["is_solved"] = True
-                row["competition_time"] = solved_timestamps[id]
+                row["competition_time"] = solved_timestamps[problem.id]
 
             initial.append(row)
 
@@ -318,11 +316,9 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
         return ctx
 
     def form_valid(self, form):
-        category_problems: dict[int, Problem] = {
-            cp.number: cp.problem
-            for cp in CategoryProblem.objects.filter(category=self.team.venue.category)
-            .order_by("number")
-            .select_related("problem")
+        competition = get_active_competition(self.request)
+        problems: dict[int, Problem] = {
+            p.number: p for p in Problem.objects.filter(competition=competition)
         }
         solved: dict[int, SolvedProblem] = {
             sp.problem_id: sp for sp in self.team.solved_problems.all()
@@ -331,9 +327,10 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
         changed = False
         for row in form:
             num = row.cleaned_data.get("number")
-            if num not in category_problems:
+            if num not in problems or num < self.team.venue.category.first_problem:
                 continue
-            problem: Problem = category_problems[num]
+
+            problem: Problem = problems[num]
             is_solved: bool = row.cleaned_data.get("is_solved")
             competition_time: timedelta = row.cleaned_data.get("competition_time")
 
@@ -383,8 +380,7 @@ class ApiProblemSolveView(View):
                 continue
             problem = Problem.objects.filter(
                 competition=team.venue.category.competition,
-                category_problems__category=team.venue.category,
-                category_problems__number=solve["problem"],
+                number=solve["problem"],
             ).first()
             if not problem:
                 continue

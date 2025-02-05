@@ -63,16 +63,21 @@ def parse_barcode(
             f"Could not find team {match.group('team')} in {venue.shortcode}."
         )
 
-    if allow_endmark and int(match.group("problem")) == 0:
+    problem_number = int(match.group("problem"))
+    if problem_number < venue.category.first_problem:
+        raise ValueError(f"Problem {problem_number} is not valid for this category.")
+
+    if allow_endmark and problem_number == 0:
         problem = None
     else:
         problem = Problem.objects.filter(
             competition=competition,
-            category_problems__category=venue.category,
-            category_problems__number=match.group("problem"),
+            number=problem_number,
         ).first()
         if not problem:
-            raise ValueError(f"Could not find problem {match.group('problem')}.")
+            raise ValueError(
+                f"Problem {problem_number} is not valid for this category."
+            )
 
     return ScannedBarcode(venue, team, int(match.group("problem")), problem)
 

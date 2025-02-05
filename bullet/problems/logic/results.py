@@ -9,12 +9,12 @@ from django_countries.fields import Country
 from django_rq import job
 from users.models import Team
 
-from problems.models import CategoryProblem, ResultRow, SolvedProblem
+from problems.models import ResultRow, SolvedProblem
 
 
 def get_results(
     team_filter: Q,
-    time: timedelta = None,
+    time: timedelta | None = None,
 ) -> QuerySet[ResultRow]:
     rows = ResultRow.objects.filter(team__is_disqualified=False)
 
@@ -33,12 +33,14 @@ def get_results(
     )
 
 
-def get_venue_results(venue: Venue, time: timedelta = None) -> QuerySet[ResultRow]:
+def get_venue_results(
+    venue: Venue, time: timedelta | None = None
+) -> QuerySet[ResultRow]:
     return get_results(Q(team__venue=venue), time)
 
 
 def get_country_results(
-    country: str | Country, category: Category, time: timedelta = None
+    country: str | Country, category: Category, time: timedelta | None = None
 ) -> QuerySet[ResultRow]:
     return get_results(
         Q(
@@ -51,7 +53,7 @@ def get_country_results(
 
 
 def get_category_results(
-    category: Category, time: timedelta = None
+    category: Category, time: timedelta | None = None
 ) -> QuerySet[ResultRow]:
     return get_results(
         Q(team__venue__category=category, team__venue__is_isolated=False),
@@ -70,7 +72,7 @@ class ResultsTime:
 def results_time(
     competition: Competition,
     realtime: datetime,
-    start_time: datetime = None,
+    start_time: datetime | None = None,
     is_admin: bool = False,
 ) -> ResultsTime:
     if not start_time:
@@ -97,18 +99,13 @@ def _set_solved_problems(rr: ResultRow):
     problems = (
         SolvedProblem.objects.select_for_update()
         .filter(team=rr.team, competition_time__lte=rr.competition_time)
-        .values_list("problem")
-    )
-    solved_problems = set(
-        CategoryProblem.objects.filter(
-            problem__in=problems, category=rr.team.venue.category
-        ).values_list("number", flat=True)
+        .values_list("problem__number", flat=True)
     )
 
-    rr.solved_count = len(solved_problems)
+    rr.solved_count = len(problems)
 
     solved_bin = 0
-    for p in solved_problems:
+    for p in problems:
         solved_bin |= 1 << (p - 1)
 
     rr.solved_problems = solved_bin.to_bytes(16, "big")
@@ -139,35 +136,20 @@ def squash_results(competition: Competition | int):
 
     teams = Team.objects.filter(venue__category__competition=competition)
     for team in teams:
-        problems = (
-            SolvedProblem.objects.filter(team=team)
-            .values_list("problem")
-            .order_by("-competition_time")
-        )
         last_problem = (
             SolvedProblem.objects.filter(team=team)
             .order_by("-competition_time")
             .first()
         )
-        solved_problems = set(
-            CategoryProblem.objects.filter(
-                problem__in=problems, category=team.venue.category
-            ).values_list("number", flat=True)
-        )
 
         if not last_problem:
             continue
 
-        result_row = ResultRow()
-        result_row.team = team
-        result_row.solved_count = len(solved_problems)
-
-        solved_bin = 0
-        for p in solved_problems:
-            solved_bin |= 1 << (p - 1)
-        result_row.solved_problems = solved_bin.to_bytes(16, "big")
-
-        result_row.competition_time = last_problem.competition_time
+        result_row = ResultRow(
+            team=team,
+            competition_time=last_problem.competition_time,
+        )
+        _set_solved_problems(result_row)
         result_row.save()
 
 

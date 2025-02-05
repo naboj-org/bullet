@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import TYPE_CHECKING
 
 from bullet_admin.utils import get_active_competition
@@ -136,7 +137,7 @@ class Venue(models.Model):
         return self.email
 
     @property
-    def start_time(self):
+    def start_time(self) -> datetime:
         if self.local_start:
             return self.local_start
         return self.category.competition.competition_start
