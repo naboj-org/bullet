@@ -1,0 +1,20 @@
+{# django #}
+{% if team.school %}
+<div class="flex items-center gap-2">
+  {% if flag %}
+  <iconify-icon icon="flag:{{ team.school.country.code|lower }}-4x3" width="none" class="h-5"></iconify-icon>
+  {% endif %}
+  <div>
+    <div class="font-medium leading-4">
+      {{ team.school.name }}
+
+      {% if team.in_school_symbol %}
+        <span class="text-primary">{{ team.in_school_symbol }}</span>
+      {% endif %}
+    </div>
+    <div class="text-sm mt-0.5 leading-3">{{ team.school.address }}</div>
+  </div>
+</div>
+{% else %}
+<div class="font-medium leading-4">{{ team.name }}</div>
+{% endif %}

@@ -1,27 +1,27 @@
 {% extends "web/base.html" %}
-{% load content_blocks countries country_url i18n static %}
+{% load content_blocks countries country_url i18n static teams %}
 {% block title %}
-    {% if is_waitinglist %}
-        {% translate "Waiting list" %}
-    {% else %}
-        {% translate "Team list" %}
-    {% endif %}
+  {% if is_waitinglist %}
+    {% translate "Waiting list" %}
+  {% else %}
+    {% translate "Team list" %}
+  {% endif %}
 {% endblock title %}
 
 {% block hero %}
-    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
-        {% if is_waitinglist %}
-            {% translate "Waiting list" %}
-        {% else %}
-            {% translate "Team list" %}
-        {% endif %}
-    </h1>
+  <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24 mb-4 md:mb-16">
+    {% if is_waitinglist %}
+      {% translate "Waiting list" %}
+    {% else %}
+      {% translate "Team list" %}
+    {% endif %}
+  </h1>
 {% endblock hero %}
 
 {% block content %}
     {% load_blocks "category" %}
-    <div class="container mx-auto px-2 mt-8">
-        <div class="flex flex-wrap justify-center gap-1 mb-2">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-8">
+        <div class="flex flex-wrap gap-1 mb-2">
             {% for c in countries %}
                 <a href="?country={{ c }}"
                    class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
@@ -32,47 +32,45 @@
                 </a>
             {% endfor %}
         </div>
-        <div class="mb-4 text-center">
-            {% if is_waitinglist %}
-                <a href="{% country_url "team_list" %}?country={{ country }}"
-                   class="link-primary">{% translate "Team list" %}</a>
-            {% else %}
-                <a href="{% country_url "waiting_list" %}?country={{ country }}"
-                   class="link-primary">{% translate "Waiting list" %}</a>
-            {% endif %}
+
+        <div class="mb-4">
+          {% if is_waitinglist %}
+            <a href="{% country_url "team_list" %}?country={{ country }}" class="link-primary">{% translate "Team list" %}</a>
+          {% else %}
+            <a href="{% country_url "waiting_list" %}?country={{ country }}" class="link-primary">{% translate "Waiting list" %}</a>
+          {% endif %}
         </div>
+
+        <div class="mb-8">
+          <ul class="list-disc list-inside">
+            {% for v in venues %}
+            <li><a href="#{{ v.venue.shortcode }}" class="link-primary">{{ v.venue.name }} ({% content_block "category:name_"|add:v.venue.category.identifier %})</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+
         {% for v in venues %}
-            <div class="mb-8">
-                <div class="flex flex-col md:flex-row md:items-baseline md:justify-between px-4 py-2 rounded">
-                    <h2 class="font-bold text-2xl">
-                        {{ v.venue.name }}
-                        <span class="text-lg text-gray-600">({% content_block "category:name_"|add:v.venue.category.identifier %})</span>
-                    </h2>
-                    {% if not is_waitinglist %}
-                        <div class="shrink-0 text-gray-600">
-                            {% blocktranslate with teams=v.teams|length capacity=v.venue.capacity %}Teams: {{ teams }} / {{ capacity }}{% endblocktranslate %}
-                        </div>
-                    {% endif %}
-                </div>
-                {% for team in v.teams %}
-                    <div class="flex flex-col md:flex-row md:items-center px-4 py-2 {% cycle "bg-gray-50" "" %} rounded-md">
-                        <div class="md:w-1/2 mb-1 md:mb-0">
-                            {% if team.school %}
-                                <div class="text-primary font-bold">
-                                    {{ team.school.name }}
-                                    {% if team.in_school_symbol %}
-                                        <span class="text-white bg-primary rounded px-1.5 py-0.5 text-sm">{{ team.in_school_symbol }}</span>
-                                    {% endif %}
-                                </div>
-                                <div class="text-sm text-gray-600">{{ team.school.address }}</div>
-                            {% else %}
-                                <div class="text-primary font-bold">{{ team.name }}</div>
-                            {% endif %}
-                        </div>
-                        <div class="md:w-1/2 text-sm">{{ team.contestants.all|join:", " }}</div>
-                    </div>
-                {% endfor %}
+        <div class="mb-8">
+          <h2 class="font-bold text-2xl" id="{{ v.venue.shortcode }}">
+            {{ v.venue.name }}
+            <span class="text-lg text-gray-500">({% content_block "category:name_"|add:v.venue.category.identifier %})</span>
+          </h2>
+
+          {% if not is_waitinglist %}
+          <div class="shrink-0 text-gray-500">
+              {% blocktranslate with teams=v.teams|length capacity=v.venue.capacity %}Teams: {{ teams }} / {{ capacity }}{% endblocktranslate %}
+          </div>
+          {% endif %}
+
+          <div class="space-y-3 mt-4">
+            {% for team in v.teams %}
+            <div>
+              {% inline_team_name team %}
+              <div class="text-xs mt-0.5 text-gray-500">{{ team.contestants.all|join:", " }}</div>
             </div>
+            {% endfor %}
+          </div>
+        </div>
         {% endfor %}
     </div>
 {% endblock content %}

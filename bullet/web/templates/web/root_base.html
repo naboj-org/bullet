@@ -27,15 +27,16 @@
         <link rel="preconnect"
               href="https://fonts.gstatic.com"
               crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap"
-              rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
         <link rel="stylesheet"
               href="{% static 'app.css' %}?v={{ bullet_version }}"
               type="text/css" />
         {% block extrahead %}
         {% endblock extrahead %}
         <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
+        {# TODO: Remove iconify #}
         <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
+        <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>

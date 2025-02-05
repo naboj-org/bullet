@@ -1,8 +1,15 @@
-<div class="flex flex-wrap gap-0.5">
-    {% for sq in squares %}
-        <div title="{{ forloop.counter|add:offset }}"
-             class="shrink-0 rounded {% if big %} w-8 font-medium h-8 flex justify-center items-center {% else %} w-3 h-3 {% endif %} {% if forloop.counter|divisibleby:5 %} me-1 break-after-auto {% else %} break-after-avoid {% endif %} {% if sq == 2 %} bg-primary {% elif sq == 1 %} bg-white ring-inset ring-2 ring-primary {% else %} bg-gray-200 {% endif %}">
-            {% if big %}{{ forloop.counter|add:offset }}{% endif %}
-        </div>
+{# django #}
+<div class="flex flex-wrap {% if big %}gap-2{% else %}gap-1{% endif %}">
+  {% for group in squares %}
+  <div class="break-inside-avoid flex gap-0.5 shrink-0">
+    {% for sq in group %}
+    <div title="{{ sq.problem }}"
+        class="shrink-0
+          {% if big %}size-8 font-semibold flex justify-center items-center rounded{% else %}size-2 rounded-sm{% endif %}
+          {% if sq.state == 2 %}bg-primary text-white{% elif sq.state == 1 %}text-primary bg-white ring-inset {% if big %}ring-2{% else %}ring-1{% endif %} ring-primary{% else %}text-gray-600 bg-gray-200{% endif %}">
+        {% if big %}{{ sq.problem }}{% endif %}
+    </div>
     {% endfor %}
+  </div>
+  {% endfor %}
 </div>

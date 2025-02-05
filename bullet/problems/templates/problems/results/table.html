@@ -1,71 +1,61 @@
-{% load i18n results utils %}
+{% load i18n results teams utils %}
+
 {% if not results_time.has_started %}
-    <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
-        {% translate "The competition did not start yet." %}
-    </div>
+  <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
+    {% translate "The competition did not start yet." %}
+  </div>
 {% elif results_time.is_frozen %}
-    <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
-        <b>{% translate "Results are frozen." %}</b> {% translate "These are not the final results yet." %}
-    </div>
+  <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
+    <b>{% translate "Results are frozen." %}</b>
+    {% translate "These are not the final results yet." %}
+  </div>
 {% elif results_time.has_started and not results_time.is_final %}
-    <div class="bg-blue-100 text-blue-800 border border-blue-800 p-4 mb-6 rounded-md">
-        <b>{% translate "Interim results." %}</b> {% translate "The competition is ongoing, the results may change." %}
-    </div>
+  <div class="bg-blue-100 text-blue-800 border border-blue-800 p-4 mb-6 rounded-md">
+    <b>{% translate "Interim results." %}</b>
+    {% translate "The competition is ongoing, the results may change." %}
+  </div>
 {% endif %}
+
 <div class="overflow-x-auto">
-    <table class="w-full">
-        <tbody class="divide-y"
-               id="js-results-content">
-            {% for row in object_list %}
-                <tr class="flex flex-col md:table-row px-4 py-2 rounded-md hover:bg-gray-100 even:bg-gray-50" {% if forloop.last and page_obj.has_next %}hx-get="{{ request.path }}{% query_transform page=page_obj.next_page_number %}" hx-trigger="revealed" hx-swap="afterend" hx-select="#js-results-content > *"
-                {% endif %}
-                >
-                <td class="p-2 text-lg hidden md:table-cell">
-                    {{ forloop.counter0|add:start_index }}.
-                </td>
-                <td class="p-2 hidden md:table-cell">
-                    {% if row.team.school %}
-                        <span class="iconify h-4"
-                              data-icon="flag:{{ row.team.school.country.code|lower }}-4x3"></span>
-                    {% endif %}
-                </td>
-                <td class="p-2 flex items-center gap-3 md:table-cell">
-                    <div class="text-lg md:hidden">{{ forloop.counter0|add:start_index }}.</div>
-                    <span class="iconify h-4 shrink-0 shadow-lg md:hidden"
-                          data-icon="flag:{{ row.team.school.country.code|lower }}-4x3"></span>
-                    <div>
-                        {% if row.team.school %}
-                            <div class="text-primary font-bold">
-                                {{ row.team.school.name }}
-                                {% if row.team.in_school_symbol %}
-                                    <span class="text-white bg-primary rounded px-1.5 py-0.5 text-sm">{{ row.team.in_school_symbol }}</span>
-                                {% endif %}
-                            </div>
-                            <div class="text-sm text-gray-600">{{ row.team.school.address }}</div>
-                        {% else %}
-                            <div class="text-primary font-bold">{{ row.team.name }}</div>
-                        {% endif %}
-                    </div>
-                </td>
-                <td class="p-2 text-xs">
-                    <div class="flex justify-between gap-3 items-center">
-                        {% if not hide_squares %}
-                            {% squares row problem_count team_problem_count first_problem %}
-                        {% endif %}
-                        <div class="text-base md:hidden">{{ row.solved_count }}</div>
-                    </div>
-                    {% if not hide_contestants %}
-                        <div class="mt-1">{{ row.team.contestants.all|join:", " }}</div>
-                    {% endif %}
-                </td>
-                <td class="p-2 hidden md:table-cell">{{ row.solved_count }}</td>
-            </tr>
-        {% empty %}
-            <tr>
-                <td class="p-2 text-center text-gray-700"
-                    colspan="5">{% translate "(No team has solved any problem yet)" %}</td>
-            </tr>
-        {% endfor %}
+  <table class="w-full">
+    <tbody class="divide-y" id="js-results-content">
+      {% for row in object_list %}
+      <tr class="block md:table-row rounded-md hover:bg-gray-100 even:bg-gray-50"
+          {% if forloop.last and page_obj.has_next %}
+          hx-get="{{ request.path }}{% query_transform page=page_obj.next_page_number %}" hx-trigger="revealed"
+          hx-swap="afterend" hx-select="#js-results-content > *"{% endif %}>
+        <td class="p-2 text-lg hidden md:table-cell">
+          {{ forloop.counter0|add:start_index }}.
+        </td>
+        <td class="p-2 block md:table-cell">
+          <div class="flex items-center justify-between md:hidden text-lg gap-2">
+            <div class="text-lg">{{ forloop.counter0|add:start_index }}.</div>
+            <div class="text-lg">{{ row.solved_count }}</div>
+          </div>
+
+          {% full_team_name row.team flag=True %}
+
+          {% if not hide_squares %}
+          <div class="mt-1.5">
+            {% squares row problem_count team_problem_count first_problem %}
+          </div>
+          {% endif %}
+
+          {% if not hide_contestants %}
+          <div class="mt-0.5 text-xs leading-4 text-gray-500">{{ row.team.contestants.all|join:", " }}</div>
+          {% endif %}
+        </td>
+        <td class="p-2 hidden md:table-cell text-lg">
+          {{ row.solved_count }}
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td class="p-2 text-center text-gray-700" colspan="3">
+          {% translate "(No team has solved any problem yet)" %}
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 </div>

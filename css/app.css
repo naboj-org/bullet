@@ -170,3 +170,7 @@
 .prose-archive img:not(.math) {
     @apply mx-auto max-w-full w-2/3 max-h-40 object-contain;
 }
+
+.prose iframe {
+  max-width: 100%;
+}
