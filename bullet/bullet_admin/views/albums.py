@@ -30,10 +30,9 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
     ]
 
     table_labels = {"slug": "URL suffix (slug)"}
-    table_fields = ["title", "slug", "country", "photos"]
+    table_fields = ["title", "slug", "country"]
     table_field_templates = {
         "country": "bullet_admin/partials/field__country.html",
-        "photos": "bullet_admin/albums/field__photos.html",
     }
 
     def get_queryset(self):
