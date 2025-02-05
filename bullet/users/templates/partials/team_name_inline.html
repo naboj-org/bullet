@@ -1,0 +1,12 @@
+{# django #}
+{% if team.school %}
+<div>
+  <span class="font-medium">
+    {# This is on a single line in order to control whitespace around the comma. #}
+    {{ team.school.name }}{% if team.in_school_symbol %} <span class="text-primary">{{ team.in_school_symbol }}</span>{% endif %},
+  </span>
+  <span class="text-sm">{{ team.school.address }}</span>
+</div>
+{% else %}
+<div class="font-medium">{{ team.name }}</div>
+{% endif %}

@@ -1,0 +1,13 @@
+{# django #}
+{% if team.school %}
+<div class="font-medium">
+  {{ team.school.name }}
+
+  {% if team.in_school_symbol %}
+    <span class="text-primary">{{ team.in_school_symbol }}</span>
+  {% endif %}
+</div>
+<div class="text-sm -mt-1">{{ team.school.address }}</div>
+{% else %}
+<div class="font-medium">{{ team.name }}</div>
+{% endif %}
