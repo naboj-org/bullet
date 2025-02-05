@@ -1,7 +1,6 @@
 from django.db import models
 from django.db.models import UniqueConstraint
 from django_countries.fields import CountryField
-from pictures.models import PictureField
 
 
 class Album(models.Model):
@@ -36,7 +35,7 @@ class Photo(models.Model):
     album_id: int
     image_width = models.PositiveIntegerField()
     image_height = models.PositiveIntegerField()
-    image = PictureField(
+    image = models.ImageField(
         upload_to="photos", width_field="image_width", height_field="image_height"
     )
     taken_at = models.DateTimeField(blank=True, null=True)
