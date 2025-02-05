@@ -1,14 +1,17 @@
 import os
 import secrets
+from datetime import datetime, timezone
 from pathlib import Path
 
 from django.core.files.storage import default_storage
 from django.db import models
 from django.db.models import UniqueConstraint
-from django_countries.fields import CountryField
+from django_countries.fields import Country, CountryField
+from PIL import Image
 
 from gallery.constants import (
     BREAKPOINT_SM_PX,
+    EXIF_DATES,
     MAX_IMAGE_HEIGHT_REM,
     ORIGNAL_SIZE,
     THUMB_SIZES,
@@ -25,7 +28,7 @@ class Album(models.Model):
         related_name="albums",
     )
     competition_id: int
-    country = CountryField()
+    country: Country = CountryField()  # type:ignore
 
     def __str__(self):
         return self.title
@@ -60,19 +63,25 @@ class Photo(models.Model):
     )
     taken_at = models.DateTimeField(blank=True, null=True)
 
-    @property
-    def image_srcset(self):
+    def image_for_size(self, width):
         base_path = Path(self.image.name)
         base_name = base_path.with_suffix("").name
+        name = base_path.with_name(f"{base_name}_{width}.webp")
+        return default_storage.url(str(name))
+
+    @property
+    def image_smallest(self):
+        return self.image_for_size(min(THUMB_SIZES))
+
+    @property
+    def image_srcset(self):
         srcset = []
 
         for width in THUMB_SIZES:
-            name = base_path.with_name(f"{base_name}_{width}.webp")
-            url = default_storage.url(str(name))
+            url = self.image_for_size(width)
             srcset.append(f"{url} {width}w")
 
         srcset.append(f"{self.image.url} {ORIGNAL_SIZE}w")
-
         return ", ".join(srcset)
 
     @property
@@ -81,3 +90,17 @@ class Photo(models.Model):
         width_rem = scaling * self.image_width
 
         return f"(max-width: {BREAKPOINT_SM_PX}px) 100vw, {width_rem:.2f}rem"
+
+    def read_taken_at(self):
+        im = Image.open(self.image)
+        exif = im.getexif()
+
+        for exif_id in EXIF_DATES:
+            date = exif.get(exif_id)
+            if not date:
+                continue
+
+            self.taken_at = datetime.strptime(date, "%Y:%m:%d %H:%M:%S").replace(
+                tzinfo=timezone.utc
+            )
+            break
