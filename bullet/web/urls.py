@@ -14,7 +14,7 @@ urlpatterns = [
         r"^(?P<b_country>[a-z]{2})/(?P<b_language>[a-z\-]+)/",
         include(
             [
-                path("", views.HomepageView.as_view(), name="homepage"),
+                path("", page.PageView.as_view(), name="homepage"),
                 path("", include("competitions.urls")),
                 path("", include("problems.urls")),
                 path("", include("gallery.urls")),

@@ -12,7 +12,7 @@ class PageView(TemplateView):
     template_name = "web/page.html"
 
     def get(self, request, *args, **kwargs):
-        if kwargs["slug"] == "_homepage_":
+        if kwargs.get("slug") == "_homepage_":
             return HttpResponseRedirect(country_reverse("homepage"))
         return super().get(request, *args, **kwargs)
 
@@ -27,7 +27,7 @@ class PageView(TemplateView):
             branch=self.request.BRANCH,
             language=translation.get_language(),
             countries__contains=[self.request.COUNTRY_CODE.upper()],
-            slug=kwargs["slug"],
+            slug=kwargs.get("slug", "_homepage_"),
         )
         context["page"] = page
 
