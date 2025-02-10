@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.4 - 2025-02-10
+
+### Fixed
+
+- Czech messages
+- Email text color
+
 ## 2025.3 - 2025-02-05
 
 ### Changed
