@@ -250,12 +250,22 @@ class SchoolSelectView(RegistrationMixin, FormView):
         ctx["schools"] = []
         query = self.request.GET.get("q")
 
+        allowed_types = set(
+            self.category.educations.values_list(
+                "grades__school_type_id", flat=True
+            ).distinct()
+        )
+        allowed_types = ",".join(map(str, allowed_types))
+
         if query:
             result = search.client.index("schools").search(
                 query,
                 {
-                    "filter": f"country = '{self.request.COUNTRY_CODE.upper()}' "
-                    f"AND is_hidden = false"
+                    "filter": [
+                        f"country = '{self.request.COUNTRY_CODE.upper()}'",
+                        "is_hidden = false",
+                        f"types IN [{allowed_types}]",
+                    ]
                 },
             )
             ctx["schools"] = result["hits"]

@@ -14,7 +14,7 @@ class Command(BaseCommand):
 
         search.client.index("schools").update_settings(
             {
-                "filterableAttributes": ["country", "is_hidden"],
+                "filterableAttributes": ["country", "is_hidden", "types"],
                 "sortableAttributes": ["name", "address", "country"],
                 "rankingRules": [
                     "words",

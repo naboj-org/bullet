@@ -90,5 +90,6 @@ class School(models.Model):
             "address": self.address,
             "search": self.search,
             "country": self.country.code,
+            "types": [t.id for t in self.types.all()],
             "is_hidden": self.is_hidden,
         }
