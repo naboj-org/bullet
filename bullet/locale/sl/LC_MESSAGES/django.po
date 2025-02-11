@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Tekmovanje Naboj Slovenija\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-08-20 19:07+0000\n"
-"PO-Revision-Date: 2024-08-23 10:44+0200\n"
+"PO-Revision-Date: 2025-02-11 11:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sl_SI\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100>=3 && n%100<=4 ? 2 : 3);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 #: competitions/branches.py:72
 msgid "Náboj Math"
@@ -95,7 +95,7 @@ msgstr "(Prosimo, izberite)"
 
 #: competitions/forms/registration.py:126
 msgid "This grade can't compete in the chosen category."
-msgstr "Ta razred ne more tekmovati v izbrani kategoriji."
+msgstr "Ta letnik ne more tekmovati v izbrani kategoriji."
 
 #: competitions/forms/registration.py:133
 msgid "The uploaded file is too large."
@@ -178,7 +178,7 @@ msgstr "Nobeno prizorišče se ne ujema z vašim iskanjem."
 #: competitions/templates/register/base.html:9
 #: competitions/templates/register/thanks.html:5
 msgid "Team registration"
-msgstr "Registracija skupine"
+msgstr "Registracija ekipe"
 
 #: competitions/templates/register/category.html:8
 #: competitions/templates/register/partials/category.html:5
@@ -207,7 +207,7 @@ msgstr "Seznam tekmovalcev lahko spremenite kadarkoli do začetka tekmovanja."
 #: competitions/templates/teams/edit.html:89
 #: competitions/templates/teams/edit.html:146
 msgid "Grade"
-msgstr "Ocena"
+msgstr "Letnik"
 
 #: competitions/templates/register/details.html:33
 #: competitions/templates/teams/edit.html:74
@@ -514,7 +514,7 @@ msgstr "Potrdite registracijo"
 #: web/templates/mail/messages/registration.html:18
 #: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
-msgstr "Ta povezava vam omogoča tudi, da spremenite svojo ekipo."
+msgstr "Ta povezava vam omogoča tudi, da lahko urejate podatke svoje ekipe."
 
 #: web/templates/mail/messages/registration.html:21
 #: web/templates/mail/messages/registration.txt:11
