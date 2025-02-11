@@ -3,6 +3,16 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.5 - 2025-02-11
+
+### Added
+
+- Schools during registrations are filtered by their types.
+
+### Changed
+
+- Updated Slovenian messages.
+
 ## 2025.4 - 2025-02-10
 
 ### Fixed
