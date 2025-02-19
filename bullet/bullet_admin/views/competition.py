@@ -20,16 +20,8 @@ from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
 
-class CompetitionFormMixin(GenericForm):
+class CompetitionUpdateView(BranchAdminAccess, UpdateView):
     form_class = CompetitionForm
-
-    def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["user"] = self.request.user
-        return kw
-
-
-class CompetitionUpdateView(BranchAdminAccess, CompetitionFormMixin, UpdateView):
     form_title = "Edit competition"
     template_name = "bullet_admin/competition/form.html"
 
@@ -40,7 +32,8 @@ class CompetitionUpdateView(BranchAdminAccess, CompetitionFormMixin, UpdateView)
         return reverse("badmin:competition_switch")
 
 
-class CompetitionCreateView(BranchAdminAccess, CompetitionFormMixin, CreateView):
+class CompetitionCreateView(BranchAdminAccess, CreateView):
+    form_class = CompetitionForm
     form_title = "New competition"
 
     def form_valid(self, form):

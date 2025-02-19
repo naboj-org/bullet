@@ -1,7 +1,7 @@
 from competitions.models import Competition
 from django import forms
 from django.core.validators import FileExtensionValidator
-from users.models import User
+from problems.models import Problem
 
 
 class CompetitionForm(forms.ModelForm):
@@ -38,8 +38,20 @@ class CompetitionForm(forms.ModelForm):
             "competition_start": forms.DateTimeInput(attrs={"type": "datetime"}),
         }
 
-    def __init__(self, user: User, **kwargs):
-        super().__init__(**kwargs)
+    def save(self, commit: bool = True):
+        obj = super().save(commit=True)
+
+        current_problems = Problem.objects.filter(competition=obj)
+        current_count = current_problems.count()
+        requested_count = self.cleaned_data["problem_count"]
+        if current_count != requested_count:
+            if current_count > requested_count:
+                current_problems.filter(number__gt=requested_count).delete()
+            else:
+                for i in range(current_count + 1, requested_count + 1):
+                    Problem.objects.create(competition=obj, number=i)
+
+        return obj
 
 
 class TearoffUploadForm(forms.Form):
