@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.6 - 2025-02-19
+
+### Fixed
+
+- Problem objects are now created when set in "Edit competition".
+
 ## 2025.5 - 2025-02-11
 
 ### Added
