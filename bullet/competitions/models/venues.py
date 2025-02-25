@@ -125,7 +125,10 @@ class Venue(models.Model):
 
     @property
     def remaining_capacity(self):
-        return self.capacity - Team.objects.competing().filter(venue=self).count()
+        return max(
+            0,
+            self.capacity - Team.objects.competing().filter(venue=self).count(),
+        )
 
     @property
     def contact_email(self):
