@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.7 - 2025-02-25
+
+### Fixed
+
+- Negative remaining capacity in automatic team move.
+
 ## 2025.6 - 2025-02-19
 
 ### Fixed
