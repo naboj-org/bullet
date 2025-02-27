@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.8 - 2025-02-27
+
+### Changed
+
+- Country administrators can now upload tearoff files.
+
 ## 2025.7 - 2025-02-25
 
 ### Fixed
