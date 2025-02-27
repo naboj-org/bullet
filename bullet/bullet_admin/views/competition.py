@@ -14,7 +14,11 @@ from problems.logic.results import save_all_ranks, squash_results
 from problems.logic.stats import generate_stats
 from users.logic import move_all_eligible_teams
 
-from bullet_admin.access import BranchAdminAccess, UnlockedCompetitionMixin
+from bullet_admin.access import (
+    BranchAdminAccess,
+    CountryAdminAccess,
+    UnlockedCompetitionMixin,
+)
 from bullet_admin.forms.competition import CompetitionForm, TearoffUploadForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -82,9 +86,8 @@ class CompetitionAutomoveView(
         return redirect("badmin:home")
 
 
-class CompetitionTearoffUploadView(
-    UnlockedCompetitionMixin, BranchAdminAccess, GenericForm, FormView
-):
+class CompetitionTearoffUploadView(CountryAdminAccess, GenericForm, FormView):
+    require_unlocked_competition = True
     form_class = TearoffUploadForm
     form_title = "Tearoff upload"
     form_multipart = True

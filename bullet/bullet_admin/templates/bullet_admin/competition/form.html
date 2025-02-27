@@ -19,8 +19,6 @@
                 {% if not object.results_public %}
                     {% url "badmin:competition_finalize" as finalize_url %}
                     {% #abtn label="Finalize results" icon="mdi:check" url=finalize_url %}
-                    {% url "badmin:competition_upload_tearoffs" as upload_url %}
-                    {% #abtn label="Upload tearoffs" icon="mdi:upload" url=upload_url %}
                 {% endif %}
             </div>
         </form>

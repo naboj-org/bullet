@@ -120,10 +120,18 @@ def admin_sidebar(context):
             items.append(
                 (
                     "fa-upload",
-                    "Upload problems",
+                    "Upload solutions PDF",
                     reverse("badmin:archive_problem_upload"),
                 )
             )
+            if not competition.results_public:
+                items.append(
+                    (
+                        "fa-upload",
+                        "Upload tearoffs",
+                        reverse("badmin:competition_upload_tearoffs"),
+                    )
+                )
         if branch_role.is_admin:
             items.append(
                 (
