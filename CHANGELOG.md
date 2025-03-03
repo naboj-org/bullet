@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.9 - 2025-03-03
+
+### Added
+
+- New UZ, RU translations.
+
 ## 2025.8 - 2025-02-27
 
 ### Changed
