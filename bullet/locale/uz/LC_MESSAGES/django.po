@@ -1,0 +1,592 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <fka1988@gmail.com>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-10 18:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <fka1988@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: competitions/branches.py:72
+msgid "Naboj Math"
+msgstr "Naboj Matematika"
+
+#: competitions/branches.py:72
+msgctxt "branch name"
+msgid "Math"
+msgstr "Matematika"
+
+#: competitions/branches.py:76
+msgid "Naboj Physics"
+msgstr "Naboj Fizika"
+
+#: competitions/branches.py:77
+msgctxt "branch name"
+msgid "Physics"
+msgstr "Fizika"
+
+#: competitions/branches.py:83
+msgid "Naboj Junior"
+msgstr "Naboj Junior"
+
+#: competitions/branches.py:84
+msgctxt "branch name"
+msgid "Junior"
+msgstr "Junior"
+
+#: competitions/branches.py:90
+msgid "Naboj Chemistry"
+msgstr "Naboj Kimyo"
+
+#: competitions/branches.py:91
+msgctxt "branch name"
+msgid "Chemistry"
+msgstr "Kimyo"
+
+#. Translators: This is a rare error that occurs when the user selects
+#. a school that we don't have in our database.
+#: competitions/forms/registration.py:54
+msgid "Selected school is not valid."
+msgstr "Tanlangan maktab topilmadi."
+
+#: competitions/forms/registration.py:80
+#: competitions/templates/register/details.html:24
+#: competitions/templates/register/details.html:33
+#: competitions/templates/teams/edit.html:44
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:77
+#: competitions/templates/teams/edit.html:137
+msgid "Full name"
+msgstr "To'liq ism"
+
+#: competitions/forms/registration.py:81
+#: competitions/templates/teams/edit.html:47
+msgid "Email"
+msgstr "Elektron pochta"
+
+#: competitions/forms/registration.py:82
+#: competitions/templates/teams/edit.html:51
+msgid "Phone number"
+msgstr "Telefon raqami"
+
+#: competitions/forms/registration.py:83
+msgid "Language"
+msgstr "Til"
+
+#: competitions/forms/registration.py:87
+msgid "You will receive problem statements in the language you choose."
+msgstr "Tanlagan tilingizda masalalar bayonotlarini olasiz."
+
+#: competitions/forms/registration.py:109
+msgid "(Please select)"
+msgstr "(Iltimos, tanlang)"
+
+#: competitions/forms/registration.py:126
+msgid "This grade can't compete in the chosen category."
+msgstr "Ushbu sinf tanlangan toifada qatnasha olmaydi."
+
+#: competitions/forms/registration.py:133
+msgid "The uploaded file is too large."
+msgstr "Yuklangan fayl hajmi juda katta."
+
+#: competitions/templates/archive/list.html:4
+#: competitions/templates/archive/list.html:9
+msgid "Archive"
+msgstr "Arxiv"
+
+#: competitions/templates/archive/list.html:29
+#: problems/templates/problems/results.html:4
+#: problems/templates/problems/results.html:20
+#: problems/templates/problems/results/embed.html:4
+#: problems/templates/problems/results/select.html:4
+#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/venue.html:4
+#: problems/templates/problems/results/venue.html:16
+msgid "Results"
+msgstr "Natijalar"
+
+#: competitions/templates/archive/list.html:31
+#: problems/templates/archive/problems.html:4
+#: problems/templates/archive/problems.html:9
+msgid "Problems and solutions"
+msgstr "Masalalar va yechimlar"
+
+#: competitions/templates/archive/list.html:34
+#: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
+msgid "Albums"
+msgstr "Albomlar"
+
+#: competitions/templates/archive/list.html:42
+msgid "Older competitions"
+msgstr "Eski musobaqalar"
+
+#: competitions/templates/live/countdown.html:4
+#: competitions/templates/live/first_problem.html:4
+#: competitions/templates/live/results.html:4
+#: competitions/templates/live/setup.html:4
+#: competitions/templates/live/setup.html:9
+#: competitions/templates/live/view.html:4
+msgid "Live signage"
+msgstr "Jonli ko'rsatkich"
+
+#: competitions/templates/live/countdown.html:16
+msgid "Do not open the problems until the competition starts."
+msgstr "Musobaqa boshlanishigacha masalalarni ochmang."
+
+#: competitions/templates/live/first_problem.html:14
+msgid "First solved problem"
+msgstr "Birinchi yechilgan masala"
+
+#: competitions/templates/live/setup.html:20
+msgid "Start"
+msgstr "Boshlash"
+
+#. Translators: The user attempted to search for a school, but we were unable to find any matching results.
+#: competitions/templates/register/_school.html:15
+msgid "No schools matched your query."
+msgstr "So'rovingizga mos maktab topilmadi."
+
+#: competitions/templates/register/_school.html:16
+msgid "If you believe this is an error, contact us."
+msgstr "Agar bu xato deb hisoblasangiz, biz bilan bog'laning."
+
+#: competitions/templates/register/_venue.html:13
+#: competitions/templates/register/partials/venue.html:10
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
+msgstr "Ushbu manzilda musobaqa odatdagi boshlanish vaqti %(usual)s o'rniga %(time)s da boshlanadi."
+
+#. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
+#: competitions/templates/register/_venue.html:20
+msgid "No venues matched your query."
+msgstr "So'rovingizga mos manzil topilmadi."
+
+#: competitions/templates/register/base.html:5
+#: competitions/templates/register/base.html:10
+#: competitions/templates/register/thanks.html:4
+msgid "Team registration"
+msgstr "Jamoa ro'yxatdan o'tkazish"
+
+#: competitions/templates/register/category.html:7
+#: competitions/templates/register/partials/category.html:3
+#: problems/templates/problems/results/select.html:23
+msgid "Category"
+msgstr "Toifa"
+
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:42
+msgid "Contact information"
+msgstr "Aloqa ma'lumotlari"
+
+#: competitions/templates/register/details.html:17
+#: competitions/templates/teams/edit.html:56
+msgid "Contestants"
+msgstr "Ishtirokchilar"
+
+#: competitions/templates/register/details.html:19
+#: competitions/templates/teams/edit.html:58
+msgid "You can change the list of contestants at any time before the start of the competition."
+msgstr "Musobaqa boshlanishidan oldin ishtirokchilar ro'yxatini istalgan vaqtda o'zgartirishingiz mumkin."
+
+#: competitions/templates/register/details.html:25
+#: competitions/templates/register/details.html:40
+#: competitions/templates/teams/edit.html:67
+#: competitions/templates/teams/edit.html:84
+#: competitions/templates/teams/edit.html:141
+msgid "Grade"
+msgstr "Sinf"
+
+#: competitions/templates/register/details.html:28
+#: competitions/templates/teams/edit.html:71
+#: competitions/templates/teams/edit.html:134
+#, python-format
+msgid "Contestant %(number)s"
+msgstr "Ishtirokchi %(number)s"
+
+#: competitions/templates/register/details.html:46
+#: web/templates/form/form.html:16 web/templates/form/form_vertical.html:18
+msgid "Required field"
+msgstr "Majburiy maydon"
+
+#: competitions/templates/register/details.html:52
+#, python-format
+msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
+msgstr "Musobaqaga ro'yxatdan o'tish orqali ro'yxatdan o'tganlar (ayniqsa, o'qituvchilar yoki ro'yxatdan o'tgan o'quvchilarning qonuniy vakillari) <a href=\"%(link)s\">musobaqa qoidalari</a>ga rozi bo'lishadi va ularga rioya qilishni o'z zimmalariga oladilar. Shu bilan birga, ro'yxatdan o'tgan shaxs ro'yxatdan o'tish shaklida ko'rsatilgan shaxsiy ma'¼lumotlar musobaqaning to'g'ri ishlashi uchun zarur ekanligini tan oladi."
+
+#: competitions/templates/register/details.html:64
+#: competitions/templates/teams/edit.html:103
+msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
+msgstr "Ro'yxatdan o'tgan shaxs musobaqa davomida tashkilotchiga ro'yxatdan o'tgan shaxsning tasviri va/yoki ro'yxatdan o'tgan shaxsning tasviri va ularning musobaqaning veb-sayti, ijtimoiy tarmoqlarda marketing va targ'ibot maqsadlarida nashr etilishiga ruxsat berishga rozi bo'ladi. <sup>[1]</sup>"
+
+#: competitions/templates/register/details.html:74
+#, python-format
+msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
+msgstr "Shaxsiy ma'¼lumotlarni qayta ishlash haqida qo'shimcha ma'¼lumotni <a href=\"%(link)s\">ushbu sahifada</a> topishingiz mumkin."
+
+#: competitions/templates/register/details.html:82
+msgid "Register"
+msgstr "Ro'yxatdan o'tish"
+
+#: competitions/templates/register/details.html:85
+#: competitions/templates/teams/edit.html:119
+msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
+msgstr "<sup>[1]</sup> Rozilik musobaqaning veb-sayti va ijtimoiy tarmoqlardagi hisoblarining faoliyati davomida beriladi. Ushbu rozilikni istalgan vaqtda <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a> manziliga elektron pochta orqali yuborish orqali bekor qilish mumkin. Rozilikni bekor qilish, uni bekor qilishdan oldin amalga oshirilgan qayta ishlashning qonuniyligiga taÊsir qilmaydi. Ta'sirlangan shaxs shaxsiy ma'¼lumotlarni faqat texnik jihatdan mumkin bo'lgan va o'chirish boshqa taÊ¼sirlangan shaxslarning huquqlariga ta'sir qilmasa, o'chirishni so'rashi mumkin."
+
+#: competitions/templates/register/partials/category.html:12
+#: competitions/templates/register/partials/competition.html:8
+#: competitions/templates/register/partials/school.html:9
+#: competitions/templates/register/partials/venue.html:15
+msgid "Change"
+msgstr "O'zgartirish"
+
+#: competitions/templates/register/partials/competition.html:2
+#: competitions/templates/register/partials/venue.html:2
+#: competitions/templates/register/venue.html:5
+#: competitions/templates/teams/edit.html:34
+msgid "Venue"
+msgstr "Manzil"
+
+#: competitions/templates/register/partials/school.html:2
+#: competitions/templates/register/school.html:6
+#: competitions/templates/teams/edit.html:27
+msgid "School"
+msgstr "Maktab"
+
+#: competitions/templates/register/school.html:9
+msgid "Search schools..."
+msgstr "Maktablarni qidirish..."
+
+#: competitions/templates/register/thanks.html:13
+msgid "Team successfully registered"
+msgstr "Jamoa muvaffaqiyatli ro'yxatdan o'tkazildi"
+
+#: competitions/templates/register/thanks.html:15
+msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
+msgstr "Sizga tasdiqlash havolasini yubordik. Iltimos, pochta qutingizni va spam jildini tekshiring. <b>Tasdiqlash havolasini bosmaguningizcha jamoa ro'yxatdan o'tmagan hisoblanadi.</b>"
+
+#: competitions/templates/register/thanks.html:19
+msgid "Register another team"
+msgstr "Boshqa jamoa ro'yxatdan o'tkazish"
+
+#: competitions/templates/register/thanks.html:23
+msgid "Back to the homepage"
+msgstr "Bosh sahifaga qaytish"
+
+#: competitions/templates/register/venue.html:8
+msgid "Search venues..."
+msgstr "Manzillarni qidirish..."
+
+#: competitions/templates/teams/delete.html:4
+#: competitions/templates/teams/delete.html:9
+#: competitions/templates/teams/edit.html:115
+msgid "Unregister team"
+msgstr "Jamoa ro'yxatdan o'chirish"
+
+#: competitions/templates/teams/delete.html:18
+msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
+msgstr "Jamoangizni musobaqadan olib tashlashni istaysizmi? Bu harakatni qaytarib bo'lmaydi."
+
+#: competitions/templates/teams/delete.html:21
+msgid "Unregister"
+msgstr "Ro'yxatdan o'chirish"
+
+#: competitions/templates/teams/edit.html:4
+#: competitions/templates/teams/edit.html:9
+#: web/templates/mail/messages/to_competition.html:17
+msgid "Edit team"
+msgstr "Jamoani tahrirlash"
+
+#: competitions/templates/teams/edit.html:16
+msgid "Team information"
+msgstr "Jamoa ma'lumotlari"
+
+#: competitions/templates/teams/edit.html:22
+msgid "Your team is in the waiting list."
+msgstr "Sizning jamoangiz kutish ro'yxatida."
+
+#: competitions/templates/teams/edit.html:23
+msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
+msgstr "Manzil sig'imi tugagan yoki sizning maktabingizda allaqachon etarli jamoa ro'yxatdan o'tgan. Agar bu holat o'zgarsa, siz bilan bog'lanamiz."
+
+#: competitions/templates/teams/edit.html:39
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "Ushbu manzilda musobaqa odatdagi boshlanish vaqti o'rniga %(time)s da boshlanadi."
+
+#: competitions/templates/teams/edit.html:68
+#: competitions/templates/teams/edit.html:92
+msgid "Delete?"
+msgstr "O'chirilsinmi?"
+
+#: competitions/templates/teams/edit.html:113
+msgid "Update"
+msgstr "Yangilash"
+
+#: competitions/templates/teams/edit.html:156
+msgid "Certificate"
+msgstr "Sertifikat"
+
+#: competitions/templates/teams/edit.html:158
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "Quyidagi tugmani bosish orqali jamoangiz uchun sertifikatni yuklab olishingiz mumkin."
+
+#: competitions/templates/teams/edit.html:162
+msgid "Download certificate"
+msgstr "Sertifikatni yuklab olish"
+
+#: competitions/templates/teams/list.html:5
+#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:40
+msgid "Waiting list"
+msgstr "Kutish ro'yxati"
+
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:16
+#: competitions/templates/teams/list.html:38
+msgid "Team list"
+msgstr "Jamoa ro'yxati"
+
+#: competitions/templates/teams/list.html:61
+#, python-format
+msgid "Teams: %(teams)s / %(capacity)s"
+msgstr "Jamoalar: %(teams)s / %(capacity)s"
+
+#: competitions/views/register.py:54
+msgid "Registration did not start yet."
+msgstr "Ro'yxatdan o'tish hali boshlanmadi."
+
+#: competitions/views/register.py:56
+msgid "Registration is over."
+msgstr "Ro'yxatdan o'tish tugadi."
+
+#: competitions/views/teams.py:61
+msgid "Team successfully edited."
+msgstr "Jamoa muvaffaqiyatli tahrirlandi."
+
+#: competitions/views/teams.py:107
+msgid "Registration successfully confirmed."
+msgstr "Ro'yxatdan o'tish muvaffaqiyatli tasdiqlandi."
+
+#: competitions/views/teams.py:212
+msgid "Team was unregistered."
+msgstr "Jamoa ro'yxatdan o'chirildi."
+
+#: gallery/templates/gallery/album.html:4
+#: gallery/templates/gallery/album.html:14
+msgid "Album"
+msgstr "Albom"
+
+#: problems/templates/archive/problems.html:20
+msgid "Download as PDF"
+msgstr "PDF sifatida yuklab olish"
+
+#: problems/templates/archive/problems.html:28
+#, python-format
+msgid "Problem %(n)s"
+msgstr "Masala %(n)s"
+
+#: problems/templates/archive/problems.html:33
+msgid "Solution"
+msgstr "Yechim"
+
+#: problems/templates/archive/problems.html:37
+msgid "Answer"
+msgstr "Javob"
+
+#: problems/templates/archive/problems.html:46
+msgid "Statistics"
+msgstr "Statistika"
+
+#. Translators: This sentence is prefixed with the number of teams that received given problem.
+#: problems/templates/archive/problems.html:53
+msgid "team received"
+msgid_plural "teams received"
+msgstr[0] "jamoa oldi"
+msgstr[1] "jamoalar oldi"
+
+#. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
+#: problems/templates/archive/problems.html:65
+msgid "teams solved"
+msgstr "jamoalar yechdi"
+
+#. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
+#: problems/templates/archive/problems.html:72
+msgid "average solving time"
+msgstr "o'rtacha yechish vaqti"
+
+#: problems/templates/problems/results.html:32 problems/views/results.py:157
+msgid "International"
+msgstr "Xalqaro"
+
+#: problems/templates/problems/results/table.html:5
+msgid "The competition did not start yet."
+msgstr "Musobaqa hali boshlanmadi."
+
+#: problems/templates/problems/results/table.html:9
+msgid "Results are frozen."
+msgstr "Natijalar muzlatilgan."
+
+#: problems/templates/problems/results/table.html:10
+msgid "These are not the final results yet."
+msgstr "Bu hali yakuniy natijalar emas."
+
+#: problems/templates/problems/results/table.html:14
+msgid "Interim results."
+msgstr "Vaqtincha natijalar."
+
+#: problems/templates/problems/results/table.html:15
+msgid "The competition is ongoing, the results may change."
+msgstr "Musobaqa davom etmoqda, natijalar o'zgarishi mumkin."
+
+#: problems/templates/problems/results/table.html:55
+msgid "(No team has solved any problem yet)"
+msgstr "(Hech qanday jamoa hali hech qanday masalani yechmadi)"
+
+#: users/emails/teams.py:34
+msgid "Confirm your team registration"
+msgstr "Jamoangiz ro'yxatdan o'tishini tasdiqlang"
+
+#: users/emails/teams.py:49
+msgid "Team moved from waiting list"
+msgstr "Jamoa kutish ro'yxatidan olindi"
+
+#: users/emails/teams.py:64
+msgid "Your team has been deleted"
+msgstr "Sizning jamoangiz o'chirildi"
+
+#: web/templates/mail/base.html:351
+msgid "Competition logo"
+msgstr "Musobaqa logotipi"
+
+#: web/templates/mail/base.html:371
+#, python-format
+msgid "You have received this message because you have registered for the competition %(branch)s."
+msgstr "Siz bu xabarni %(branch)s musobaqasiga ro'yxatdan o'tganingiz uchun oldingiz."
+
+#: web/templates/mail/messages/registration.html:5
+#: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/team_delete.html:5
+#: web/templates/mail/messages/team_delete.txt:1
+#: web/templates/mail/messages/to_competition.html:5
+#: web/templates/mail/messages/to_competition.txt:1
+#, python-format
+msgid "Hello, %(name)s!"
+msgstr "Salom, %(name)s!"
+
+#: web/templates/mail/messages/registration.html:8
+#: web/templates/mail/messages/registration.txt:3
+msgid "Please click on the following link to confirm your registration."
+msgstr "Iltimos, ro'yxatdan o'tishni tasdiqlash uchun quyidagi havolani bosing."
+
+#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:11
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Joriy jamoa a'zolari: %(contestants)s"
+
+#: web/templates/mail/messages/registration.html:14
+msgid "Confirm registration"
+msgstr "Ro'yxatdan o'tishni tasdiqlash"
+
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:9
+msgid "You can also use that link to modify your team."
+msgstr "Shuningdek, ushbu havoladan foydalanib jamoangizni o'zgartirishingiz mumkin."
+
+#: web/templates/mail/messages/registration.html:20
+#: web/templates/mail/messages/registration.txt:11
+msgid "If you have any questions, please feel free to reply to this email."
+msgstr "Agar savollaringiz bo'lsa, ushbu elektron pochtaga javob yozishingiz mumkin."
+
+#: web/templates/mail/messages/registration.html:23
+#: web/templates/mail/messages/registration.txt:13
+#: web/templates/mail/messages/team_delete.html:14
+#: web/templates/mail/messages/team_delete.txt:7
+#: web/templates/mail/messages/to_competition.html:20
+#: web/templates/mail/messages/to_competition.txt:10
+msgid "Best regards,"
+msgstr "Hurmat bilan,"
+
+#: web/templates/mail/messages/registration.html:30
+#: web/templates/mail/messages/to_competition.html:27
+msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
+msgstr "Agar tugmani bosishda qiyinchilik yuzaga kelsa, ushbu manzilni brauzeringizga joylashtirishingiz mumkin:"
+
+#: web/templates/mail/messages/team_delete.html:8
+#: web/templates/mail/messages/team_delete.txt:3
+msgid "Your team was unregistered from the competition."
+msgstr "Sizning jamoangiz musobaqadan ro'yxatdan o'chirildi."
+
+#: web/templates/mail/messages/team_delete.html:11
+#: web/templates/mail/messages/team_delete.txt:5
+#, python-format
+msgid "Team members: %(contestants)s"
+msgstr "Jamoa a'zolari: %(contestants)s"
+
+#: web/templates/mail/messages/to_competition.html:8
+#: web/templates/mail/messages/to_competition.txt:3
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr "Sizning jamoangiz kutish ro'yxatidan musobaqa jamoalari ro'yxatiga ko'chirildi."
+
+#: web/templates/mail/messages/to_competition.html:14
+#: web/templates/mail/messages/to_competition.txt:7
+msgid "You can edit team details by clicking the link below."
+msgstr "Quyidagi havolani bosish orqali jamoa tafsilotlarini tahrirlashingiz mumkin."
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:10
+msgid "Registration start"
+msgstr "Ro'yxatdan o'tish boshlanishi"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:14
+msgid "Second registration round start"
+msgstr "Ikkinchi ro'yxatdan o'tish boshlanishi"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:18
+msgid "Registration end"
+msgstr "Ro'yxatdan o'tish tugashi"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+msgid "Competition day"
+msgstr "Musobaqa kuni"
+
+#: web/templates/web/404.html:4 web/templates/web/404.html:9
+msgid "Not found"
+msgstr "Topilmadi"
+
+#: web/templates/web/404.html:11
+msgid "The page you tried to access was not found."
+msgstr "Siz kirishga urgan sahifa topilmadi."
+
+#: web/templates/web/404.html:16 web/templates/web/404.html:22
+msgid "Home page"
+msgstr "Bosh sahifa"
+
+#: web/templates/web/root_base.html:68
+msgid "Close"
+msgstr "Yopish"
+
+#: web/templates/web/snippets/copyright.html:5
+#, python-format
+msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+msgstr "Aks holda ko'rsatilmaganda, barcha vaqtlar %(tz_name)s vaqt mintaqasida."
+
+#: web/templates/web/snippets/copyright.html:10
+msgid "Data protection policy"
+msgstr "Ma'¼lumotlarni himoya qilish siyosati"

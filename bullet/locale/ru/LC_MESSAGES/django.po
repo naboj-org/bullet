@@ -1,0 +1,592 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Igor Kizik <ikizik@mailfence.com>, 2025.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-02-10 18:21+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: competitions/branches.py:72
+msgid "Náboj Math"
+msgstr "Náboj по Математике"
+
+#: competitions/branches.py:72
+msgctxt "branch name"
+msgid "Math"
+msgstr "Математика"
+
+#: competitions/branches.py:76
+msgid "Náboj Physics"
+msgstr "Náboj по Физике"
+
+#: competitions/branches.py:77
+msgctxt "branch name"
+msgid "Physics"
+msgstr "Физика"
+
+#: competitions/branches.py:83
+msgid "Náboj Junior"
+msgstr "Náboj Юниор"
+
+#: competitions/branches.py:84
+msgctxt "branch name"
+msgid "Junior"
+msgstr "Юниор"
+
+#: competitions/branches.py:90
+msgid "Náboj Chemistry"
+msgstr "Náboj по Химии"
+
+#: competitions/branches.py:91
+msgctxt "branch name"
+msgid "Chemistry"
+msgstr "Химия"
+
+#. Translators: This is a rare error that occurs when the user selects
+#. a school that we don't have in our database.
+#: competitions/forms/registration.py:54
+msgid "Selected school is not valid."
+msgstr "Выбранная школа не найдена."
+
+#: competitions/forms/registration.py:80
+#: competitions/templates/register/details.html:24
+#: competitions/templates/register/details.html:33
+#: competitions/templates/teams/edit.html:44
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:77
+#: competitions/templates/teams/edit.html:137
+msgid "Full name"
+msgstr "Полное ФИО"
+
+#: competitions/forms/registration.py:81
+#: competitions/templates/teams/edit.html:47
+msgid "Email"
+msgstr "Электронная почта"
+
+#: competitions/forms/registration.py:82
+#: competitions/templates/teams/edit.html:51
+msgid "Phone number"
+msgstr "Номер телефона"
+
+#: competitions/forms/registration.py:83
+msgid "Language"
+msgstr "Язык"
+
+#: competitions/forms/registration.py:87
+msgid "You will receive problem statements in the language you choose."
+msgstr "На Олимпиаде команда получит задания на выбранном Вами языке."
+
+#: competitions/forms/registration.py:109
+msgid "(Please select)"
+msgstr "(Пожалуйста, выбирете)"
+
+#: competitions/forms/registration.py:126
+msgid "This grade can't compete in the chosen category."
+msgstr "Ученик(и) данного класса не могут принимать участие в выбранной категории."
+
+#: competitions/forms/registration.py:133
+msgid "The uploaded file is too large."
+msgstr "Загружаемый файл слишком большой."
+
+#: competitions/templates/archive/list.html:4
+#: competitions/templates/archive/list.html:9
+msgid "Archive"
+msgstr "Архив"
+
+#: competitions/templates/archive/list.html:29
+#: problems/templates/problems/results.html:4
+#: problems/templates/problems/results.html:20
+#: problems/templates/problems/results/embed.html:4
+#: problems/templates/problems/results/select.html:4
+#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/venue.html:4
+#: problems/templates/problems/results/venue.html:16
+msgid "Results"
+msgstr "Результаты"
+
+#: competitions/templates/archive/list.html:31
+#: problems/templates/archive/problems.html:4
+#: problems/templates/archive/problems.html:9
+msgid "Problems and solutions"
+msgstr "Задания и решения"
+
+#: competitions/templates/archive/list.html:34
+#: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
+msgid "Albums"
+msgstr "Альбомы"
+
+#: competitions/templates/archive/list.html:42
+msgid "Older competitions"
+msgstr "Прошедшие олимпиады"
+
+#: competitions/templates/live/countdown.html:4
+#: competitions/templates/live/first_problem.html:4
+#: competitions/templates/live/results.html:4
+#: competitions/templates/live/setup.html:4
+#: competitions/templates/live/setup.html:9
+#: competitions/templates/live/view.html:4
+msgid "Live signage"
+msgstr "Текущий показатель"
+
+#: competitions/templates/live/countdown.html:16
+msgid "Do not open the problems until the competition starts."
+msgstr "Не открывайте задания до начала Олимпиады."
+
+#: competitions/templates/live/first_problem.html:14
+msgid "First solved problem"
+msgstr "Первая решённая задача"
+
+#: competitions/templates/live/setup.html:20
+msgid "Start"
+msgstr "Начать"
+
+#. Translators: The user attempted to search for a school, but we were unable to find any matching results.
+#: competitions/templates/register/_school.html:15
+msgid "No schools matched your query."
+msgstr "Школ, соответствующих Вашему запросу, не найдено."
+
+#: competitions/templates/register/_school.html:16
+msgid "If you believe this is an error, contact us."
+msgstr "Пожалуйста, свяжитесь с нами, если считаете, что произошла ошибка."
+
+#: competitions/templates/register/_venue.html:13
+#: competitions/templates/register/partials/venue.html:10
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
+msgstr "На площадке проведение, Олимпиада начнётся %(time)s вместо унифицированного времени начала в %(usual)s."
+
+#. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
+#: competitions/templates/register/_venue.html:20
+msgid "No venues matched your query."
+msgstr "Площадок проведения, соответствующих Вашему запросу, не найдено."
+
+#: competitions/templates/register/base.html:5
+#: competitions/templates/register/base.html:10
+#: competitions/templates/register/thanks.html:4
+msgid "Team registration"
+msgstr "Регистрация команды"
+
+#: competitions/templates/register/category.html:7
+#: competitions/templates/register/partials/category.html:3
+#: problems/templates/problems/results/select.html:23
+msgid "Category"
+msgstr "Категория"
+
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:42
+msgid "Contact information"
+msgstr "Контактная информация"
+
+#: competitions/templates/register/details.html:17
+#: competitions/templates/teams/edit.html:56
+msgid "Contestants"
+msgstr "Участники"
+
+#: competitions/templates/register/details.html:19
+#: competitions/templates/teams/edit.html:58
+msgid "You can change the list of contestants at any time before the start of the competition."
+msgstr "Список членов команды доступен для редакции в любое время до начала олимпиады."
+
+#: competitions/templates/register/details.html:25
+#: competitions/templates/register/details.html:40
+#: competitions/templates/teams/edit.html:67
+#: competitions/templates/teams/edit.html:84
+#: competitions/templates/teams/edit.html:141
+msgid "Grade"
+msgstr "Класс обучения"
+
+#: competitions/templates/register/details.html:28
+#: competitions/templates/teams/edit.html:71
+#: competitions/templates/teams/edit.html:134
+#, python-format
+msgid "Contestant %(number)s"
+msgstr "Участник %(number)s"
+
+#: competitions/templates/register/details.html:46
+#: web/templates/form/form.html:16 web/templates/form/form_vertical.html:18
+msgid "Required field"
+msgstr "Обязательное для заполнения поле"
+
+#: competitions/templates/register/details.html:52
+#, python-format
+msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
+msgstr "Регистрируясь на Олимпиаду, участники (в особенности учителя и законные представители зарегистрированных учеников) соглашаются с <a href=\"%(link)s\"> правилами участия в Олимпиаде </a> и обязуются их соблюдать. Регистрант принимает во внимание и согласен с тем, что указанные в форме персональные данные необходимы для обеспечения надлежащего проведения Олимпиады."
+
+#: competitions/templates/register/details.html:64
+#: competitions/templates/teams/edit.html:103
+msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
+msgstr "Регистрант соглашается на видео- и/или аудиозапись со стороны организатора во время проведения Олимпиады, а так же их публикацию на сайте Олимпиады и в социальных сетях в маркетинговых целях Олимпиады. <sup>[1]</sup>"
+
+#: competitions/templates/register/details.html:74
+#, python-format
+msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
+msgstr "Подробная информацию об обработке и использовании персональных данных доступна <a href=\"%(link)s\">на данной странице</a>."
+
+#: competitions/templates/register/details.html:82
+msgid "Register"
+msgstr "Зарегистрировать"
+
+#: competitions/templates/register/details.html:85
+#: competitions/templates/teams/edit.html:119
+msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
+msgstr "<sup>[1]</sup> Согласие предоставляется на время существования сайта Олимпиады и каналов социальных сетей посвещённых Олимпиаде. Участник имеет право отозвать данное согласие в любое время, отправив письмо с запрсом на адрес электронной почты <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Отзыв согласия не влияет на законность обработки данных, произведённых до отзыв согласия. Заинтересованное лицо вправе потребовать удаление персональных данных, если это технически возможно и не затрагивает права других лиц."
+
+#: competitions/templates/register/partials/category.html:12
+#: competitions/templates/register/partials/competition.html:8
+#: competitions/templates/register/partials/school.html:9
+#: competitions/templates/register/partials/venue.html:15
+msgid "Change"
+msgstr "Изменить"
+
+#: competitions/templates/register/partials/competition.html:2
+#: competitions/templates/register/partials/venue.html:2
+#: competitions/templates/register/venue.html:5
+#: competitions/templates/teams/edit.html:34
+msgid "Venue"
+msgstr "Место проведения"
+
+#: competitions/templates/register/partials/school.html:2
+#: competitions/templates/register/school.html:6
+#: competitions/templates/teams/edit.html:27
+msgid "School"
+msgstr "Школа"
+
+#: competitions/templates/register/school.html:9
+msgid "Search schools..."
+msgstr "Поиск школ..."
+
+#: competitions/templates/register/thanks.html:13
+msgid "Team successfully registered"
+msgstr "Команда успешно зарегистрирована"
+
+#: competitions/templates/register/thanks.html:15
+msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
+msgstr "На Ваш адрес электронной почты была отправлена ссылка для подтверждения регистрации. Пожалуйста, проверьте папку «Входящие» и «Спам». <b>Регистрация команды будет завершена только после того, как вы откроете ссылку подтверждения.</b>"
+
+#: competitions/templates/register/thanks.html:19
+msgid "Register another team"
+msgstr "Зарегистрировать ещё одну команду"
+
+#: competitions/templates/register/thanks.html:23
+msgid "Back to the homepage"
+msgstr "Вернуться на главную страницу"
+
+#: competitions/templates/register/venue.html:8
+msgid "Search venues..."
+msgstr "Поиск площадок проведения..."
+
+#: competitions/templates/teams/delete.html:4
+#: competitions/templates/teams/delete.html:9
+#: competitions/templates/teams/edit.html:115
+msgid "Unregister team"
+msgstr "Незарегистрированная команда"
+
+#: competitions/templates/teams/delete.html:18
+msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
+msgstr "Вы уверены, что Вы хотите отменить регистрацию команды? Это действие не подлежит возврату."
+
+#: competitions/templates/teams/delete.html:21
+msgid "Unregister"
+msgstr "Отменить регистрацию"
+
+#: competitions/templates/teams/edit.html:4
+#: competitions/templates/teams/edit.html:9
+#: web/templates/mail/messages/to_competition.html:17
+msgid "Edit team"
+msgstr "Редактировать команду"
+
+#: competitions/templates/teams/edit.html:16
+msgid "Team information"
+msgstr "Информация о команде"
+
+#: competitions/templates/teams/edit.html:22
+msgid "Your team is in the waiting list."
+msgstr "Ваша команда находится в списке ожидания."
+
+#: competitions/templates/teams/edit.html:23
+msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
+msgstr "На выбранной площадке проведения не осталось свободных мест для регистрации команды, или Ваша школа уже зарегистрировала достаточно команд. Мы свяжемся с Вами в случае изменения ситуации."
+
+#: competitions/templates/teams/edit.html:39
+#, python-format
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "На данной площадке проведения, олимпиада начнётся в %(time)s вместо времени по умолчанию."
+
+#: competitions/templates/teams/edit.html:68
+#: competitions/templates/teams/edit.html:92
+msgid "Delete?"
+msgstr "Удалить?"
+
+#: competitions/templates/teams/edit.html:113
+msgid "Update"
+msgstr "Обновить"
+
+#: competitions/templates/teams/edit.html:156
+msgid "Certificate"
+msgstr "Сертификат"
+
+#: competitions/templates/teams/edit.html:158
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "Вы можете скачать сертификат Вашей команды, нажав на кнопку ниже."
+
+#: competitions/templates/teams/edit.html:162
+msgid "Download certificate"
+msgstr "Скачать сертификат"
+
+#: competitions/templates/teams/list.html:5
+#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:40
+msgid "Waiting list"
+msgstr "Список ожидания"
+
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:16
+#: competitions/templates/teams/list.html:38
+msgid "Team list"
+msgstr "Список команд"
+
+#: competitions/templates/teams/list.html:61
+#, python-format
+msgid "Teams: %(teams)s / %(capacity)s"
+msgstr "Команды: %(teams)s / %(capacity)s"
+
+#: competitions/views/register.py:54
+msgid "Registration did not start yet."
+msgstr "Регистрация ещё не началась."
+
+#: competitions/views/register.py:56
+msgid "Registration is over."
+msgstr "Регистрация окончена."
+
+#: competitions/views/teams.py:61
+msgid "Team successfully edited."
+msgstr "Параметры регистрации команды успешно изменены."
+
+#: competitions/views/teams.py:107
+msgid "Registration successfully confirmed."
+msgstr "Регистрация успешно подтверждена."
+
+#: competitions/views/teams.py:212
+msgid "Team was unregistered."
+msgstr "Команда не была зарегистрирована."
+
+#: gallery/templates/gallery/album.html:4
+#: gallery/templates/gallery/album.html:14
+msgid "Album"
+msgstr "Альбом"
+
+#: problems/templates/archive/problems.html:20
+msgid "Download as PDF"
+msgstr "Скачать как PDF-файл"
+
+#: problems/templates/archive/problems.html:28
+#, python-format
+msgid "Problem %(n)s"
+msgstr "Задача %(n)s"
+
+#: problems/templates/archive/problems.html:33
+msgid "Solution"
+msgstr "Решение"
+
+#: problems/templates/archive/problems.html:37
+msgid "Answer"
+msgstr "Ответ"
+
+#: problems/templates/archive/problems.html:46
+msgid "Statistics"
+msgstr "Статистика"
+
+#. Translators: This sentence is prefixed with the number of teams that received given problem.
+#: problems/templates/archive/problems.html:53
+msgid "team received"
+msgid_plural "teams received"
+msgstr[0] "команда, получившаяя"
+msgstr[1] "команды, получившие"
+
+#. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
+#: problems/templates/archive/problems.html:65
+msgid "teams solved"
+msgstr "команды, решившие"
+
+#. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
+#: problems/templates/archive/problems.html:72
+msgid "average solving time"
+msgstr "среднее время решения"
+
+#: problems/templates/problems/results.html:32 problems/views/results.py:157
+msgid "International"
+msgstr "Международный"
+
+#: problems/templates/problems/results/table.html:5
+msgid "The competition did not start yet."
+msgstr "Олимпиада ещё не началась."
+
+#: problems/templates/problems/results/table.html:9
+msgid "Results are frozen."
+msgstr "Ведение результатов приостановлено."
+
+#: problems/templates/problems/results/table.html:10
+msgid "These are not the final results yet."
+msgstr "Данные результаты не являются итоговыми."
+
+#: problems/templates/problems/results/table.html:14
+msgid "Interim results."
+msgstr "Текущие результаты."
+
+#: problems/templates/problems/results/table.html:15
+msgid "The competition is ongoing, the results may change."
+msgstr "Олимпиада не завершилась, результаты могут измениться."
+
+#: problems/templates/problems/results/table.html:55
+msgid "(No team has solved any problem yet)"
+msgstr "(Ни одна из команд не решила ни одну из задач)"
+
+#: users/emails/teams.py:34
+msgid "Confirm your team registration"
+msgstr "Подтвердите регистрацию Вашей команды"
+
+#: users/emails/teams.py:49
+msgid "Team moved from waiting list"
+msgstr "Команда переместилась из списка ожидания"
+
+#: users/emails/teams.py:64
+msgid "Your team has been deleted"
+msgstr "Ваша команда была удалена"
+
+#: web/templates/mail/base.html:351
+msgid "Competition logo"
+msgstr "Логотип Олимпиады"
+
+#: web/templates/mail/base.html:371
+#, python-format
+msgid "You have received this message because you have registered for the competition %(branch)s."
+msgstr "Вы получили данное сообщение, так как Вы зарегистрировались на Олимпиаду %(branch)s."
+
+#: web/templates/mail/messages/registration.html:5
+#: web/templates/mail/messages/registration.txt:1
+#: web/templates/mail/messages/team_delete.html:5
+#: web/templates/mail/messages/team_delete.txt:1
+#: web/templates/mail/messages/to_competition.html:5
+#: web/templates/mail/messages/to_competition.txt:1
+#, python-format
+msgid "Hello, %(name)s!"
+msgstr "Добрый день,%(name)s!"
+
+#: web/templates/mail/messages/registration.html:8
+#: web/templates/mail/messages/registration.txt:3
+msgid "Please click on the following link to confirm your registration."
+msgstr "Пожалуйста, перейдите по данной ссылке для подтверждения регистрации команды."
+
+#: web/templates/mail/messages/registration.html:11
+#: web/templates/mail/messages/registration.txt:5
+#: web/templates/mail/messages/to_competition.html:11
+#: web/templates/mail/messages/to_competition.txt:5
+#, python-format
+msgid "Current team members: %(contestants)s"
+msgstr "Текущее количество членов команды: %(contestants)s"
+
+#: web/templates/mail/messages/registration.html:14
+msgid "Confirm registration"
+msgstr "Подтвердить регистрацию"
+
+#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.txt:9
+msgid "You can also use that link to modify your team."
+msgstr "Для внесения изменений в информацию о команде используйте предоставленную ссылку."
+
+#: web/templates/mail/messages/registration.html:20
+#: web/templates/mail/messages/registration.txt:11
+msgid "If you have any questions, please feel free to reply to this email."
+msgstr "Если у Вам возникли вопросы, пожалуйста, ответьте на данное электронное письмо."
+
+#: web/templates/mail/messages/registration.html:23
+#: web/templates/mail/messages/registration.txt:13
+#: web/templates/mail/messages/team_delete.html:14
+#: web/templates/mail/messages/team_delete.txt:7
+#: web/templates/mail/messages/to_competition.html:20
+#: web/templates/mail/messages/to_competition.txt:10
+msgid "Best regards,"
+msgstr "С наилучшими пожеланиями,"
+
+#: web/templates/mail/messages/registration.html:30
+#: web/templates/mail/messages/to_competition.html:27
+msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
+msgstr "Если у Вас возникли трудности с использованием гиперссылки по кнопке, вставьте её в строку адреса Вашего интернет-браузера:"
+
+#: web/templates/mail/messages/team_delete.html:8
+#: web/templates/mail/messages/team_delete.txt:3
+msgid "Your team was unregistered from the competition."
+msgstr "Регистрация Вашей команды успешно отменена."
+
+#: web/templates/mail/messages/team_delete.html:11
+#: web/templates/mail/messages/team_delete.txt:5
+#, python-format
+msgid "Team members: %(contestants)s"
+msgstr "Члены команды: %(contestants)s"
+
+#: web/templates/mail/messages/to_competition.html:8
+#: web/templates/mail/messages/to_competition.txt:3
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr "Ваша команда была перемещена из списка ожидания в список приглашённых команд."
+
+#: web/templates/mail/messages/to_competition.html:14
+#: web/templates/mail/messages/to_competition.txt:7
+msgid "You can edit team details by clicking the link below."
+msgstr "Для изменения команды перейдите по ссылке ниже."
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:10
+msgid "Registration start"
+msgstr "Начало регистрации"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:14
+msgid "Second registration round start"
+msgstr "Начало второго тура регистрации"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:18
+msgid "Registration end"
+msgstr "Окончание регистрации"
+
+#. Translators: Used on the homepage timeline
+#: web/templates/page_blocks/competition_timeline.html:21
+msgid "Competition day"
+msgstr "День соревнования"
+
+#: web/templates/web/404.html:4 web/templates/web/404.html:9
+msgid "Not found"
+msgstr "Не найдено"
+
+#: web/templates/web/404.html:11
+msgid "The page you tried to access was not found."
+msgstr "Запрашеваемая страница не найдена."
+
+#: web/templates/web/404.html:16 web/templates/web/404.html:22
+msgid "Home page"
+msgstr "Главная страница"
+
+#: web/templates/web/root_base.html:68
+msgid "Close"
+msgstr "Закрыть"
+
+#: web/templates/web/snippets/copyright.html:5
+#, python-format
+msgid "All times are in timezone %(tz_name)s unless stated otherwise."
+msgstr "По умолчанию время в расписании указано в часовом поясе %(tz_name)s."
+
+#: web/templates/web/snippets/copyright.html:10
+msgid "Data protection policy"
+msgstr "Политика конфиденциальности"
