@@ -180,6 +180,7 @@ PROBLEM_SOLVE_KEY = env("PROBLEM_SOLVE_KEY", default="")
 # TODO: Remove after merging upstream:
 # https://github.com/django/django/pull/18017
 LANG_INFO["sk"]["name_local"] = "slovensky"
+LANG_INFO["uz"]["name_local"] = "Oʻzbek tili"
 
 
 def silky_intercept(request):
