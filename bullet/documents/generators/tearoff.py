@@ -71,7 +71,7 @@ class TearoffGenerator:
             if len(problem_pdf.pages) != problem_count + 1:
                 raise TearoffRequirementMissing(
                     f"Wrong page count for language {language}: expected "
-                    f"{problem_count+1}, got {len(problem_pdf.pages)}."
+                    f"{problem_count + 1}, got {len(problem_pdf.pages)}."
                 )
 
     def sequential_tearoffs(
@@ -198,7 +198,7 @@ class TearoffGenerator:
 
         text = canvas.beginText()
         text.setTextOrigin(start_x, start_y - (bar_h + 0.5) * mm)
-        text.setFont("IBMPlexMono-Regular", font_size * 0.5)
+        text.setFont("IBMPlexMono-Regular", font_size * 0.45)
         text.textOut(barcode_string[:prefix_len])
 
         inverted_start = text.getX()
@@ -214,7 +214,7 @@ class TearoffGenerator:
             text.setFillGray(0)
         inverted_end = text.getX()
 
-        text.setFont("IBMPlexMono-Regular", font_size * 0.5)
+        text.setFont("IBMPlexMono-Regular", font_size * 0.45)
         text.textOut(barcode_string[prefix_len + middle_len :])
 
         if inverted:
