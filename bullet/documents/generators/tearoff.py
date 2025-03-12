@@ -170,13 +170,16 @@ class TearoffGenerator:
         start_y = (-210 + self.stamp_width + 2) * mm
         max_width = (self.statement_height - 10) * mm
         max_height = (self.stamp_width - 2 - 5) * mm
+        school_length = max_width
 
         if max_width > 75 * mm:
             start_x += (max_width - 75 * mm) / 2
             max_width = 75 * mm
+            school_length = max_width
 
         if not include_qr:
             start_x += max_height / 2
+            school_length -= max_height
 
         canvas.setFillGray(0)
         code = code128.Code128(
@@ -243,7 +246,10 @@ class TearoffGenerator:
         text = canvas.beginText()
         text.setTextOrigin(start_x, start_y - max_height - 8)
         text.setFont("IBMPlexMono-Regular", 6)
-        text.textOut(tearoff.team.display_name_short)
+        school_chars = (
+            int(school_length / mm * 0.77) - 1
+        )  # 0.77 is how many characters fit in a mm of space
+        text.textOut(tearoff.team.get_shortened_display_name(school_chars))
         canvas.drawText(text)
 
         canvas.restoreState()

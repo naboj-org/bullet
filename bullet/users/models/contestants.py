@@ -118,11 +118,14 @@ class Team(models.Model):
 
     @property
     def display_name_short(self):
+        return self.get_shortened_display_name()
+
+    def get_shortened_display_name(self, chars=55):
         if self.name:
-            return shorten(self.name, 55)
+            return shorten(self.name, chars)
         if self.in_school_symbol:
-            return f"{shorten(str(self.school), 55)} {self.in_school_symbol}"
-        return shorten(str(self.school), 55)
+            return f"{shorten(str(self.school), chars)} {self.in_school_symbol}"
+        return shorten(str(self.school), chars)
 
     @property
     def contact_phone_pretty(self):
