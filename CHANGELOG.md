@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.11 - 2025-03-12
+
+### Changed
+
+- Improved chool name shortening on tearoffs.
+- TeX based certificates can now be generated before review is complete.
+
 ## 2025.10 - 2025-03-08
 
 ### Changed
