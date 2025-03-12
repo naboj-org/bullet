@@ -19,7 +19,11 @@ from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
 from documents.generators.tearoff import TearoffGenerator, TearoffRequirementMissing
 from documents.models import TexJob
-from problems.logic.results import save_country_ranks, save_venue_ranks
+from problems.logic.results import (
+    get_venue_results,
+    save_country_ranks,
+    save_venue_ranks,
+)
 from problems.models import Problem
 from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
@@ -148,19 +152,30 @@ class CertificateView(VenueMixin, GenericForm, FormView):
 
     def form_valid(self, form):
         if template := form.cleaned_data.get("tex_template"):
-            teams = (
-                Team.objects.competing()
-                .filter(venue=self.venue)
-                .order_by("rank_venue")
-                .select_related(
-                    "school",
-                    "venue",
-                    "venue__category",
+            if self.venue.is_reviewed:
+                teams = (
+                    Team.objects.competing()
+                    .filter(venue=self.venue)
+                    .order_by("rank_venue")
+                    .select_related(
+                        "school",
+                        "venue",
+                        "venue__category",
+                    )
+                    .prefetch_related("contestants", "contestants__grade")
                 )
-                .prefetch_related("contestants", "contestants__grade")
-            )
-            if count := form.cleaned_data.get("count"):
-                teams = teams.filter(rank_venue__lte=count)
+                if count := form.cleaned_data.get("count"):
+                    teams = teams.filter(rank_venue__lte=count)
+            else:
+                results = get_venue_results(self.venue)
+                if count := form.cleaned_data.get("count"):
+                    results = results[:count]
+
+                teams = []
+                for rank_i, row in enumerate(results):
+                    team = row.team
+                    team.rank_venue = rank_i + 1
+                    teams.append(team)
 
             job = TexJob.objects.create(
                 template=template,
