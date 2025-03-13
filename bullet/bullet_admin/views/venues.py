@@ -167,15 +167,26 @@ class CertificateView(VenueMixin, GenericForm, FormView):
                 if count := form.cleaned_data.get("count"):
                     teams = teams.filter(rank_venue__lte=count)
             else:
-                results = get_venue_results(self.venue)
                 if count := form.cleaned_data.get("count"):
+                    results = get_venue_results(self.venue)
                     results = results[:count]
 
-                teams = []
-                for rank_i, row in enumerate(results):
-                    team = row.team
-                    team.rank_venue = rank_i + 1
-                    teams.append(team)
+                    teams = []
+                    for rank_i, row in enumerate(results):
+                        team = row.team
+                        team.rank_venue = rank_i + 1
+                        teams.append(team)
+                else:
+                    teams = (
+                        Team.objects.competing()
+                        .filter(venue=self.venue)
+                        .select_related(
+                            "school",
+                            "venue",
+                            "venue__category",
+                        )
+                        .prefetch_related("contestants", "contestants__grade")
+                    )
 
             job = TexJob.objects.create(
                 template=template,
