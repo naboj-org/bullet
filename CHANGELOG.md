@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.12 - 2025-03-13
+
+### Fixed
+
+- Fix TeX certificates before review with team count of 0.
+
 ## 2025.11 - 2025-03-12
 
 ### Changed
