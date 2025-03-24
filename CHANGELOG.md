@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.13 - 2025-03-24
+
+### Fixed
+
+- Fix gallery ordering.
+- Fix results page performance bug.
+
 ## 2025.12 - 2025-03-13
 
 ### Fixed
