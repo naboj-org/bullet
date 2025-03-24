@@ -41,8 +41,4 @@ class AlbumListView(GalleryCompetitionMixin, ListView):
     template_name = "gallery/list.html"
 
     def get_queryset(self):
-        qs = Album.objects.filter(competition=self.competition)
-        country = self.request.COUNTRY_CODE.upper()
-        local = qs.filter(country=country)
-        other = qs.exclude(country=country)
-        return local.union(other)
+        return Album.objects.filter(competition=self.competition)
