@@ -70,7 +70,7 @@ def _import_problem(competition: "Competition", language: str, problem_dir: Path
     - solution.html
     """
     problem = Problem.objects.filter(
-        competition=competition, name=problem_dir.name
+        competition=competition, number=problem_dir.name
     ).first()
     if not problem:
         raise ProblemImportError(f"Could not find related problem for {problem_dir}.")
