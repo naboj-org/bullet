@@ -15,7 +15,11 @@
             }
 
             document.getElementById("js-title-"+i).innerText = screens[i].title
-            htmx.ajax("GET", screens[i].url, "#js-screen-"+i)
+            try {
+                htmx.ajax("GET", screens[i].url, "#js-screen-"+i)
+            } catch (e) {
+                console.log(`Unable to load screen #${i}: ${e}`)
+            }
         }
 
         setTimeout(scrollMore, 5000)
@@ -36,6 +40,11 @@
         const oldScroll = document.scrollingElement.scrollTop
 
         const row = document.querySelector("#js-results-content tr")
+        if (!row) {
+            console.error("No results are loaded, trying to reload results in 1s")
+            setTimeout(nextScreen, 1000)
+            return;
+        }
         const offset = Math.max(Math.round(row.clientHeight / 40), 1)
         const divided = row.clientHeight / offset
         document.scrollingElement.scrollTop += offset

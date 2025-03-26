@@ -25,7 +25,7 @@
             {% for c in countries %}
                 <a href="?country={{ c }}"
                    class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
-                    <span class="iconify shrink-0 shadow-lg"
+                    <span class="iconify shrink-0 shadow-lg h-4 aspect-4/3"
                           data-icon="flag:{{ c|lower }}-4x3"></span>
                     {% get_country c as country_data %}
                     {{ country_data.name }}
