@@ -35,7 +35,7 @@
       {% for c in countries %}
         <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
            class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded flex gap-2 items-center flex-wrap">
-          <iconify-icon icon="flag:{{ c.code|lower }}-4x3" width="none" class="h-4"></iconify-icon>
+          <iconify-icon icon="flag:{{ c.code|lower }}-4x3" width="none" class="h-4 aspect-4/3"></iconify-icon>
           {{ c.name }}
         </a>
       {% endfor %}
