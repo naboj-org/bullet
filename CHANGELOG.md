@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.14 - 2025-04-15
+
+### Fixed
+
+- Archive upload.
+- Problem number display in archive.
+
+### Changed
+
+- Minor improvements to results announcement.
+
 ## 2025.13 - 2025-03-24
 
 ### Fixed
