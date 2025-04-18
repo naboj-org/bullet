@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.15 - 2025-04-18
+
+### Fixed
+
+- Problem statistics in offset category.
+
 ## 2025.14 - 2025-04-15
 
 ### Fixed
