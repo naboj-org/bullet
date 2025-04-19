@@ -40,7 +40,8 @@ def timedelta_format(td: timedelta):
 
 @register.filter()
 def problem_solve_percentage(stats):
-    if not stats["received"]: return "-"
+    if not stats["received"]:
+    	return "-"
     per = stats["solved"] / stats["received"]
     per = round(per * 100, 1)
     return f"{per:0.1f}"
