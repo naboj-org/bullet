@@ -68,7 +68,9 @@ class ProblemStatementView(ArchiveCompetitionMixin, ListView):
 
         new_list = []
         for obj in object_list:
-            obj.stats = stats.get(obj.problem.id)
+            obj.stats = stats.get(
+                obj.problem.id, {"received": 0, "solved": 0, "avg_time": None}
+            )
             new_list.append(obj)
 
         return new_list
