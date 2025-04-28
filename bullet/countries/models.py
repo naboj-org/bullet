@@ -1,13 +1,13 @@
 from django.db import models
 from django.db.models import CheckConstraint, F, Q, UniqueConstraint
-from django_countries.fields import CountryField
+from django_countries.fields import Country, CountryField
 from timezone_field import TimeZoneField
 from web.fields import BranchField, ChoiceArrayField, LanguageField
 
 
 class BranchCountry(models.Model):
     branch = BranchField()
-    country = CountryField()
+    country: Country = CountryField()  # type:ignore
     primary_language = LanguageField(blank=True)
     languages = ChoiceArrayField(LanguageField())
     timezone = TimeZoneField()
