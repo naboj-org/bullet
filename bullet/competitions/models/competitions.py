@@ -50,7 +50,11 @@ class CompetitionQuerySet(models.QuerySet):
         roles = CompetitionRole.objects.filter(
             user=user, competition__branch=branch
         ).values("competition")
-        return qs.filter(id__in=roles)
+        competitions = roles.union(
+            qs.filter(results_public=True)
+            .values("id")
+        )
+        return qs.filter(id__in=competitions)
 
     def for_photos(self, user: "User", branch: "Branch"):
         """
@@ -68,7 +72,11 @@ class CompetitionQuerySet(models.QuerySet):
         roles = CompetitionRole.objects.filter(
             user=user, competition__branch=branch
         ).values("competition")
-        return qs.filter(id__in=roles)
+        competitions = roles.union(
+            qs.filter(results_public=True)
+            .values("id")
+        )
+        return qs.filter(id__in=competitions)
 
 
 class Competition(models.Model):
