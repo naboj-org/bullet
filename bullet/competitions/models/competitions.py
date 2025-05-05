@@ -50,10 +50,26 @@ class CompetitionQuerySet(models.QuerySet):
         roles = CompetitionRole.objects.filter(
             user=user, competition__branch=branch
         ).values("competition")
-        competitions = roles.union(
-            qs.filter(results_public=True)
-            .values("id")
-        )
+        competitions = roles.union(qs.filter(results_public=True).values("id"))
+        return qs.filter(id__in=competitions)
+
+    def for_photos(self, user: "User", branch: "Branch"):
+        """
+        Filters competitions that should be visible for a given user.
+        """
+        qs = self.filter(branch=branch).order_by("-web_start")
+
+        if not user.is_authenticated:
+            return qs.filter(results_public=True)
+
+        branch_role = user.get_branch_role(branch)
+        if branch_role.is_admin or branch_role.is_photographer:
+            return qs
+
+        roles = CompetitionRole.objects.filter(
+            user=user, competition__branch=branch
+        ).values("competition")
+        competitions = roles.union(qs.filter(results_public=True).values("id"))
         return qs.filter(id__in=competitions)
 
 
