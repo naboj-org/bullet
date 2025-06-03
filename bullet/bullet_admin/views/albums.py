@@ -119,6 +119,9 @@ class AlbumPhotoListView(PhotoUploadAccess, GenericList, ListView):
     table_fields = ["image"]
     table_field_templates = {"image": "bullet_admin/albums/field__image.html"}
 
+    def get_list_title(self):
+        return f"Photos in {self.album.title}"
+
     def get_list_links(self) -> list[Link]:
         return [
             Link(
