@@ -64,7 +64,7 @@ def parse_barcode(
         )
 
     problem_number = int(match.group("problem"))
-    if problem_number < venue.category.first_problem:
+    if problem_number != 0 and problem_number < venue.category.first_problem:
         raise ValueError(f"Problem {problem_number} is not valid for this category.")
 
     if allow_endmark and problem_number == 0:
