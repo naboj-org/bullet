@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.17 - 2025-06-18
+
+### Fixed
+
+- Venue review no longer fails when scanning the last "no more problems" card.
+- Fixed competition creation.
+
 ## 2025.16 - 2025-04-21
 
 ### Fixed
