@@ -36,7 +36,7 @@ class CompetitionUpdateView(BranchAdminAccess, UpdateView):
         return reverse("badmin:competition_switch")
 
 
-class CompetitionCreateView(BranchAdminAccess, CreateView):
+class CompetitionCreateView(BranchAdminAccess, GenericForm, CreateView):
     form_class = CompetitionForm
     form_title = "New competition"
 
