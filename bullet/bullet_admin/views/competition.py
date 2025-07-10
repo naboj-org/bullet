@@ -35,17 +35,23 @@ class CompetitionUpdateView(BranchAdminAccess, UpdateView):
     def get_success_url(self):
         return reverse("badmin:competition_switch")
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["branch"] = self.request.BRANCH
+        return kwargs
+
 
 class CompetitionCreateView(BranchAdminAccess, GenericForm, CreateView):
     form_class = CompetitionForm
     form_title = "New competition"
 
-    def form_valid(self, form):
-        competition: Competition = form.save(commit=False)
-        competition.branch = self.request.BRANCH
-        competition.save()
+    def get_success_url(self):
+        return reverse("badmin:competition_switch")
 
-        return redirect("badmin:competition_switch")
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["branch"] = self.request.BRANCH
+        return kwargs
 
 
 class CompetitionFinalizeView(UnlockedCompetitionMixin, BranchAdminAccess, FormView):

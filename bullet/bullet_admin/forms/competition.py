@@ -38,8 +38,14 @@ class CompetitionForm(forms.ModelForm):
             "competition_start": forms.DateTimeInput(attrs={"type": "datetime"}),
         }
 
+    def __init__(self, branch, **kwargs):
+        self.branch = branch
+        super().__init__(**kwargs)
+
     def save(self, commit: bool = True):
-        obj = super().save(commit=True)
+        obj = super()
+        obj.branch = self.branch
+        obj.save(commit=True)
 
         current_problems = Problem.objects.filter(competition=obj)
         current_count = current_problems.count()
