@@ -43,9 +43,9 @@ class CompetitionForm(forms.ModelForm):
         super().__init__(**kwargs)
 
     def save(self, commit: bool = True):
-        obj = super()
+        obj = super().save(commit=False)
         obj.branch = self.branch
-        obj.save(commit=True)
+        obj.save()
 
         current_problems = Problem.objects.filter(competition=obj)
         current_count = current_problems.count()
