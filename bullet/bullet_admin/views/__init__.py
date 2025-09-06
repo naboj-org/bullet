@@ -1,3 +1,5 @@
+from typing import Any, Callable
+
 from competitions.models import Competition
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
@@ -24,6 +26,12 @@ class GenericForm(MixinProtocol):
     form_multipart = False
     template_name = "bullet_admin/generic/form.html"
 
+    get_form_kwargs: Callable
+    get_form_initial: Callable
+    object: Any
+    form_valid: Callable
+    form_invalid: Callable
+
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["form_title"] = self.form_title
@@ -38,6 +46,8 @@ class GenericDelete(MixinProtocol):
     template_name = "bullet_admin/generic/delete.html"
     model_name = None
     object_name = None
+
+    form_valid: Callable
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)

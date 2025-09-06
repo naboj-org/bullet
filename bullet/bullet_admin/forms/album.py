@@ -1,6 +1,8 @@
+from operator import itemgetter
+
+from competitions.models.competitions import Competition
 from countries.models import BranchCountry
 from django import forms
-from django.forms import ModelForm
 from gallery.models import Album
 
 
@@ -22,31 +24,51 @@ class MultipleFileField(forms.FileField):
         return result
 
 
-class AlbumForm(ModelForm):
-    photo_files = MultipleFileField(required=False)
+class AlbumUploadForm(forms.Form):
+    photo_files = MultipleFileField(required=False, label="Photos")
 
+
+class AlbumForm(forms.ModelForm):
     class Meta:
         model = Album
+        fields = ("title", "slug", "country")
+        labels = {"slug": "URL suffix"}
+        help_texts = {
+            "title": "You don't need to include year here.",
+            "slug": "You don't need to include year here.",
+        }
 
-        labels = {"photo_files": "Photos"}
-        fields = ("competition", "title", "slug", "country")
-
-    def __init__(self, **kwargs):
-        branch = kwargs.pop("branch", None)
+    def __init__(self, competition: Competition, **kwargs):
         super().__init__(**kwargs)
-        self.fields.pop("competition")
+        self.competition = competition
 
         available_countries = set()
-
-        for country in BranchCountry.objects.filter(branch=branch).all():
+        for country in BranchCountry.objects.filter(branch=competition.branch).all():
             available_countries.add(country.country.code)
 
-        self.fields["country"].choices = list(
-            sorted(
-                filter(
-                    lambda x: x[0] in available_countries,
-                    self.fields["country"].choices,
-                ),
-                key=lambda x: x[1],
-            )
-        )
+        countries = []
+        for code, name in self.fields["country"].choices:
+            if code in available_countries:
+                countries.append((code, name))
+        countries.sort(key=itemgetter(1))
+        self.fields["country"].choices = countries
+
+    def clean_slug(self):
+        slug = self.cleaned_data["slug"]
+
+        qs = Album.objects.filter(slug=slug, competition=self.competition)
+        if self.instance.id:
+            qs = qs.exclude(id=self.instance.id)
+
+        if qs.exists():
+            raise forms.ValidationError("This URL is already in use.")
+
+        return slug
+
+    def save(self, commit: bool = True):
+        obj = super().save(False)
+        obj.competition = self.competition
+
+        if commit:
+            obj.save()
+        return obj
