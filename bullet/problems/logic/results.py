@@ -27,7 +27,12 @@ def get_results(
 
     return (
         ResultRow.objects.filter(id__in=rows)
-        .order_by("-solved_count", "-solved_problems", "competition_time")
+        .order_by(
+            "-solved_count",
+            "-solved_problems",
+            "competition_time",
+            "team__rank_international",
+        )
         .select_related("team", "team__school", "team__venue", "team__venue__category")
         .prefetch_related("team__contestants", "team__contestants__grade")
     )
