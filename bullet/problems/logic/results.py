@@ -31,7 +31,7 @@ def get_results(
             "-solved_count",
             "-solved_problems",
             "competition_time",
-            "team__rank_international"
+            "team__rank_international",
         )
         .select_related("team", "team__school", "team__venue", "team__venue__category")
         .prefetch_related("team__contestants", "team__contestants__grade")
