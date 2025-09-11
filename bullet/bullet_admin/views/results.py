@@ -30,6 +30,7 @@ class ResultsHomeView(PermissionCheckMixin, TemplateView):
         assert self.detection
         ctx = super().get_context_data(**kwargs)
         competition = get_active_competition(self.request)
+        ctx["competition"] = competition
         ctx["country"], ctx["language"] = self.detection
         ctx["venues"] = Venue.objects.for_competition(competition)
         ctx["my_venues"] = Venue.objects.for_request(self.request)
