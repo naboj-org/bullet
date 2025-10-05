@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.20 - 2025-10-05
+
+### Added
+
+- 🇺🇦 messages.
+
 ## 2025.19 - 2025-07-10
 
 ### Fixed
