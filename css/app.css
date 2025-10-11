@@ -1,6 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: ["Work Sans", "sans-serif"];
+  
+  --aspect-ratio-4/3: 4 / 3;
+  
+  --grid-template-columns-registration: min-content 3fr 2fr;
+  --grid-template-columns-contestants-edit: min-content 3fr 2fr min-content;
+  
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-lighter: var(--gradient-dark);
+  --color-primary-dark: var(--primary-dark);
+  
+  --typography-max-width: 75ch;
+}
 
 .branch-math {
     --primary: #27C349;
@@ -84,7 +98,7 @@
 }
 
 .cb-edit {
-    @apply bg-yellow-400 bg-opacity-50 hover:bg-opacity-100 transition-colors;
+    @apply bg-yellow-400/50 hover:bg-yellow-400 transition-colors;
 }
 
 .bold-primary b, .bold-primary strong {

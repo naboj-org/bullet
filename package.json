@@ -1,12 +1,13 @@
 {
   "name": "bullet",
   "scripts": {
-    "css-dev": "tailwindcss -i css/app.css -o bullet/web/static/app.css --watch",
-    "css-prod": "tailwindcss -i css/app.css -o bullet/web/static/app.css --minify"
+    "watch": "tailwindcss -i css/app.css -o bullet/web/static/app.css --watch",
+    "build": "tailwindcss -i css/app.css -o bullet/web/static/app.css --minify"
   },
   "dependencies": {
-    "@tailwindcss/forms": "^0.5.7",
-    "@tailwindcss/typography": "^0.5.14",
-    "tailwindcss": "^3.4.10"
+    "@tailwindcss/cli": "^4.1.14",
+    "@tailwindcss/forms": "^0.5.10",
+    "@tailwindcss/typography": "^0.5.16",
+    "tailwindcss": "^4.1.7"
   }
 }

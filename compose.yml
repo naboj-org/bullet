@@ -1,4 +1,3 @@
-version: "3.4"
 services:
   db:
     image: postgres:14-alpine
@@ -10,8 +9,6 @@ services:
       - POSTGRES_DB=bullet
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - "5433:5432"
 
   web:
     build:
@@ -28,14 +25,14 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./bullet/:/app/
+      - ./bullet/:/app/bullet/
       - geiop_data:/geoip/
       - ./CHANGELOG.md:/app/CHANGELOG.md:ro
     depends_on:
       - db
       - geoip
       - meilisearch
-    command: "./entrypoint.sh dev"
+    command: "/app/start.sh dev"
 
   tailwind:
     build:
@@ -44,8 +41,8 @@ services:
     volumes:
       - ./bullet/:/app/bullet/
       - ./css:/app/css/
-      - ./tailwind.config.js:/app/tailwind.config.js
       - ./package.json:/app/package.json
+      - ./pnpm-lock.yaml:/app/pnpm-lock.yaml
     tty: true
 
   geoip:

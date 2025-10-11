@@ -1,42 +1,33 @@
-FROM node:22.5.1-alpine AS cssbuild
+FROM node:24-alpine AS cssbuild
 
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm install
+COPY package.json pnpm-lock.yaml ./
+RUN npm install -g pnpm && \
+    pnpm install
 
-COPY . .
-RUN npm run css-prod
-CMD ["npm", "run", "css-dev"]
+COPY bullet ./bullet
+COPY css ./css
+RUN pnpm run build
+CMD ["pnpm", "run", "watch"]
 
-FROM python:3.12-slim-bookworm
-WORKDIR /app
+FROM ghcr.io/trojsten/django-docker:v6
 
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-ENV DEBUG 0
-
+USER root
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
-    && apt -y upgrade \
-    && apt -y install libmaxminddb0 gettext librsvg2-bin build-essential caddy \
+    && apt install -y libmaxminddb0 gettext librsvg2-bin build-essential \
     && apt -y clean \
     && rm -rf /var/lib/apt/lists/*
+USER appuser
 
-ARG MULTIRUN_VERSION=1.1.3
-ADD https://github.com/nicolas-van/multirun/releases/download/${MULTIRUN_VERSION}/multirun-x86_64-linux-gnu-${MULTIRUN_VERSION}.tar.gz /tmp
-RUN tar -xf /tmp/multirun-x86_64-linux-gnu-${MULTIRUN_VERSION}.tar.gz \
-    && mv multirun /bin \
-    && rm /tmp/*
+COPY pyproject.toml uv.lock ./
+RUN uv sync --frozen
 
-RUN pip install --upgrade pipenv
-COPY Pipfile Pipfile.lock ./
-RUN pipenv install --system --dev --deploy
+COPY --chown=appuser:appuser . .
+COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css /app/bullet/web/static/
+WORKDIR /app/bullet
 
-COPY ./bullet .
-COPY ./CHANGELOG.md .
-COPY --from=cssbuild /app/bullet/web/static/app.css ./web/static/app.css
+RUN SECRET_KEY=none python manage.py collectstatic --no-input
 
-ENV WEB_CONCURRENCY=4
-RUN DATABASE_URL=sqlite://:memory: python manage.py collectstatic --no-input
-CMD ["/app/entrypoint.sh"]
+ENV BASE_START=/app/start.sh
