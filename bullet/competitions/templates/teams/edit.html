@@ -12,7 +12,7 @@
 
 {% block content %}
     <main class="mx-auto w-full max-w-4xl p-3">
-        <section class="py-5 my-5 border-b">
+        <section class="py-5 my-5 border-b border-gray-200">
             <h2 class="font-bold text-2xl mb-6">{% translate "Team information" %}</h2>
             {% if team.venue.registration_flow.get_pre_edit_template %}
                 {% include team.venue.registration_flow.get_pre_edit_template %}
@@ -27,7 +27,7 @@
                 <strong>{% translate "School" %}:</strong>
                 {{ team.school.name }}, {{ team.school.address }}
                 {% if team.in_school_symbol %}
-                    <span class="text-white bg-primary py-0.5 px-2 rounded">{{ team.in_school_symbol }}</span>
+                    <span class="text-white bg-primary py-0.5 px-2 rounded-sm">{{ team.in_school_symbol }}</span>
                 {% endif %}
             </p>
             <p>

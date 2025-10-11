@@ -22,7 +22,7 @@
         {% load_blocks "category" %}
         <h2 class="font-bold text-2xl mb-6">{% translate "Category" %}</h2>
         {% for category in categories %}
-            <a class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
+            <a class="px-8 py-4 bg-gray-50 text-left rounded-md border border-gray-200 gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
                href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}">
                 <span class="block font-bold text-xl">{% content_block "category:name_"|add:category.identifier %}</span>
                 <span>{% content_block "category:description_"|add:category.identifier %}</span>

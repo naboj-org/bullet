@@ -7,14 +7,14 @@
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-            <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+        <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+            <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
                 <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
             </header>
             <div class="p-4">
                 <table class="w-full text-sm">
                     <thead>
-                        <tr class="bg-gray-100 text-left border-b">
+                        <tr class="bg-gray-100 text-left border-b border-gray-200">
                             <th class="p-2">Exclude?</th>
                             <th class="p-2">ID</th>
                             <th class="p-2">Name</th>

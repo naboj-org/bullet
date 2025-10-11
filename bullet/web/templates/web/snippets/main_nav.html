@@ -21,7 +21,7 @@
         <i class="fas fa-bars"></i>
     </button>
 </div>
-<div class="font-light space-y-4 text-lg mt-6 hidden js-mainnav-dropdown {% if primary %}p-4 bg-white rounded-md border shadow-md{% endif %}">
+<div class="font-light space-y-4 text-lg mt-6 hidden js-mainnav-dropdown {% if primary %}p-4 bg-white rounded-md border border-gray-200 shadow-md{% endif %}">
     {% for item in menu %}
         {% if item.is_external %}
             <a class="block"

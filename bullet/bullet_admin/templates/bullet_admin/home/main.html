@@ -26,7 +26,7 @@
         </div>
         <div class="mt-4 grid grid-cols-2 gap-4">
             {% for v in venues %}
-                <div class="bg-gray-100 border rounded-md p-3">
+                <div class="bg-gray-100 border border-gray-200 rounded-md p-3">
                     <div class="font-semibold">{{ v }}</div>
                     {% if competition.state >= competition.state.REGISTRATION %}
                         <div class="rounded bg-white w-full h-2 overflow-hidden my-1">

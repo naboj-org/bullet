@@ -5,8 +5,8 @@
 {% endblock title %}
 
 {% block content %}
-    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Block list</h2>
             <a href="{% url "badmin:contentblock_create" %}"
                class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i> New block</a>
@@ -19,7 +19,7 @@
             </div>
             <table class="w-full mb-4">
                 <thead>
-                    <tr class="bg-gray-100 text-left border-b">
+                    <tr class="bg-gray-100 text-left border-b border-gray-200">
                         <th class="p-3">Group</th>
                         <th class="p-3">Reference</th>
                     </tr>

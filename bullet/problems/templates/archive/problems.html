@@ -28,7 +28,7 @@
             </h2>
             <div class="prose prose-archive">
                 {{ problem.statement|safe }}
-                <details class="border px-4 py-2 rounded mt-4">
+                <details class="border border-gray-200 px-4 py-2 rounded-sm mt-4">
                     <summary class="text-primary cursor-pointer">{% translate "Solution" %}</summary>
                     <div class="mt-2">
                         {# Translators: This is a label for numerical answer of a problem used in problem archive. #}
@@ -41,7 +41,7 @@
                 </details>
             </div>
             {% if problem.stats %}
-                <details class="border px-4 py-2 rounded mt-4">
+                <details class="border border-gray-200 px-4 py-2 rounded-sm mt-4">
                     <summary class="text-primary cursor-pointer">{% translate "Statistics" %}</summary>
                     <div class="mt-2">
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">

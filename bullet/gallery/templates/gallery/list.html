@@ -20,7 +20,7 @@
                     {{ country.grouper.name }}
                 </h2>
                 {% for album in country.list %}
-                    <a class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
+                    <a class="px-8 py-4 bg-gray-50 text-left rounded-md border border-gray-200 gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 block"
                        href="{% country_url "archive_album" slug=album.slug competition_number=competition_number %}">
                         <span class="block font-bold text-xl">{{ album.title }}</span>
                     </a>

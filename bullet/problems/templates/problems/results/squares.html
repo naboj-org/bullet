@@ -5,7 +5,7 @@
     {% for sq in group %}
     <div title="{{ sq.problem }}"
         class="shrink-0
-          {% if big %}size-8 font-semibold flex justify-center items-center rounded{% else %}size-2 rounded-sm{% endif %}
+          {% if big %}size-8 font-semibold flex justify-center items-center rounded-sm{% else %}size-2 rounded-xs{% endif %}
           {% if sq.state == 2 %}bg-primary text-white{% elif sq.state == 1 %}text-primary bg-white ring-inset {% if big %}ring-2{% else %}ring-1{% endif %} ring-primary{% else %}text-gray-600 bg-gray-200{% endif %}">
         {% if big %}{{ sq.problem }}{% endif %}
     </div>

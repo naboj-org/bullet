@@ -49,7 +49,7 @@
             {% if messages %}
                 <ul class="fixed right-0 top-0 z-20 m-6 max-w-prose space-y-4">
                     {% for message in messages %}
-                        <li class="border p-4 rounded relative bg-white shadow-xl flex items-center gap-3">
+                        <li class="border border-gray-200 p-4 rounded-sm relative bg-white shadow-xl flex items-center gap-3">
                             <div class="shrink-0 text-xl">
                                 {% if message.tags == "info" %}
                                     <i class="fas fa-circle-info text-cyan-500"></i>

@@ -26,7 +26,7 @@
          hx-target="#js-school-input"
          hx-swap="outerHTML">
         {% for school in schools %}
-            <div class="p-2 hover:bg-gray-100 rounded cursor-pointer"
+            <div class="p-2 hover:bg-gray-100 rounded-sm cursor-pointer"
                  hx-post="{% url "badmin:school_input" %}"
                  hx-vals='{"school": {{ school.id }} }'>
                 <div>{{ school.name }}</div>

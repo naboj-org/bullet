@@ -5,8 +5,8 @@
 {% endblock title %}
 
 {% block content %}
-    <article class="m-8 border rounded-md bg-white shadow-lg overflow-hidden">
-        <header class="px-4 py-3 bg-slate-100 border-b flex justify-between items-baseline">
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team list</h2>
             {% if not is_operator %}
                 <div class="flex gap-1">
@@ -20,7 +20,7 @@
             {% endif %}
         </header>
         <form method="get">
-            <div class="p-4 border-b flex items-center gap-2">
+            <div class="p-4 border-b border-gray-200 flex items-center gap-2">
                 <input type="search"
                        name="q"
                        placeholder="Search teams"
@@ -36,7 +36,7 @@
                     <i class="fas fa-filter md:mr-1"></i> <span class="hidden md:inline">Filter</span>
                 </a>
             </div>
-            <div class="p-4 border-b grid grid-cols-1 md:grid-cols-3 gap-2 hidden"
+            <div class="p-4 border-b border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-2 hidden"
                  id="js-filter">
                 <div>
                     <b>Countries:</b>
@@ -62,7 +62,7 @@
             <div class="overflow-x-auto">
                 <table class="w-full mb-4">
                     <thead>
-                        <tr class="bg-gray-100 text-left border-b">
+                        <tr class="bg-gray-100 text-left border-b border-gray-200">
                             <th class="p-2">Number</th>
                             <th class="p-2">School</th>
                             <th class="p-2">Contact information</th>
@@ -122,20 +122,20 @@
                                 {% endif %}
                                 <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
                                     {% if team.status == team.status.UNCONFIRMED %}
-                                        <span class="bg-gray-500 px-2 py-1 rounded">Unconfirmed</span>
+                                        <span class="bg-gray-500 px-2 py-1 rounded-sm">Unconfirmed</span>
                                     {% elif team.status == team.status.WAITINGLIST %}
-                                        <span class="bg-amber-600 px-2 py-1 rounded">Waiting list</span>
+                                        <span class="bg-amber-600 px-2 py-1 rounded-sm">Waiting list</span>
                                     {% elif team.status == team.status.CHECKEDIN %}
-                                        <span class="bg-purple-600 px-2 py-1 rounded">Checked in</span>
+                                        <span class="bg-purple-600 px-2 py-1 rounded-sm">Checked in</span>
                                     {% elif team.status == team.status.REVIEWED %}
-                                        <span class="bg-blue-600 px-2 py-1 rounded">Reviewed</span>
+                                        <span class="bg-blue-600 px-2 py-1 rounded-sm">Reviewed</span>
                                     {% elif team.status == team.status.REGISTERED %}
-                                        <span class="bg-green-600 px-2 py-1 rounded">Registered</span>
+                                        <span class="bg-green-600 px-2 py-1 rounded-sm">Registered</span>
                                     {% elif team.status == team.status.DISQUALIFIED %}
-                                        <span class="bg-red-600 px-2 py-1 rounded">Disqualified</span>
+                                        <span class="bg-red-600 px-2 py-1 rounded-sm">Disqualified</span>
                                     {% endif %}
                                     {% if not team.venue.is_online %}
-                                        <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded">
+                                        <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded-sm">
                                             <i class="fas fa-camera"></i>
                                         </span>
                                     {% endif %}

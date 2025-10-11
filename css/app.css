@@ -1,7 +1,9 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
 
-@theme {
-  --font-family-sans: ["Work Sans", "sans-serif"];
+@theme inline {
+  --font-sans: "Work Sans", "sans-serif";
   
   --aspect-ratio-4/3: 4 / 3;
   
@@ -86,11 +88,11 @@
 }
 
 .btn {
-    @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
+    @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow-sm leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
 }
 
 .hero-btn {
-    @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow hover:bg-white hover:text-primary transition-colors border border-primary;
+    @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow-sm hover:bg-white hover:text-primary transition-colors border border-primary;
 }
 
 .cb-missing {

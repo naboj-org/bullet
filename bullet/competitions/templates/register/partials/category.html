@@ -1,7 +1,7 @@
 {% load content_blocks country_url i18n %}
 {% load_blocks "category" %}
 <h2 class="font-bold text-2xl mb-6">{% translate "Category" %}</h2>
-<div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border">
+<div class="px-8 py-4 bg-gray-100 flex items-center rounded-md border border-gray-200">
     <div>
         <div class="font-bold text-xl">
             {% content_block "category:name_"|add:category.identifier %}

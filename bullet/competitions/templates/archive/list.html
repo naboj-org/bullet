@@ -13,7 +13,7 @@
 {% block content %}
     <div class="max-w-2xl mx-auto px-2 mt-8 space-y-4">
         {% for competition in object_list %}
-            <div class="rounded-md p-4 border shadow">
+            <div class="rounded-md p-4 border border-gray-200 shadow-sm">
                 {% if competition.state <= competition.State.COMPETITION %}
                     {# This is deliberately not translated, even though it appears on the "front-page". #}
                     <div class="-mt-4 -mx-4 p-4 bg-gray-100 mb-4 text-xs text-gray-600">
