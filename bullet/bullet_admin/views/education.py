@@ -5,22 +5,26 @@ from django.views.generic import CreateView, ListView, UpdateView
 from education.models import School
 
 from bullet import search
-from bullet_admin.access import CountryAdminAccess, CountryAdminInAccess
+from bullet_admin.access_v2 import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.education import SchoolForm
-from bullet_admin.mixins import RedirectBackMixin
-from bullet_admin.utils import get_allowed_countries
+from bullet_admin.mixins import MixinProtocol, RedirectBackMixin
+from bullet_admin.utils import get_active_competition, get_allowed_countries
 from bullet_admin.views import GenericForm
 from bullet_admin.views.generic.links import EditIcon, Link, NewLink
 from bullet_admin.views.generic.list import GenericList
 
 
-class SchoolQuerySetMixin:
+class SchoolQuerySetMixin(MixinProtocol):
     def get_queryset(self):
-        return School.objects.filter(is_legacy=False)
+        qs = School.objects.filter(is_legacy=False)
+        allowed_countries = get_allowed_countries(self.request)
+        if allowed_countries is not None:
+            qs = qs.filter(country__in=allowed_countries)
+        return qs
 
 
-class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListView):
-    require_unlocked_competition = False
+class SchoolListView(PermissionCheckMixin, SchoolQuerySetMixin, GenericList, ListView):
+    required_permissions = [is_country_admin]
 
     list_links = [NewLink("school", reverse_lazy("badmin:school_create"))]
     table_fields = ["name", "address", "country"]
@@ -31,11 +35,6 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
 
     def get_queryset(self):
         qs = super().get_queryset()
-
-        allowed_countries = get_allowed_countries(self.request)
-        if allowed_countries is not None:
-            qs = qs.filter(country__in=allowed_countries)
-
         qs = qs.order_by("country", "name", "address")
         return qs
 
@@ -69,20 +68,24 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
 
 
 class SchoolUpdateView(
-    CountryAdminInAccess,
+    PermissionCheckMixin,
     SchoolQuerySetMixin,
     RedirectBackMixin,
     GenericForm,
     UpdateView,
 ):
+    required_permissions = [is_country_admin]
     form_class = SchoolForm
     template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
     require_unlocked_competition = False
     default_success_url = reverse_lazy("badmin:school_list")
 
-    def get_permission_country(self):
-        return self.get_object().country
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
+        return kw
 
     def form_valid(self, form):
         school: School = form.save(commit=False)
@@ -96,12 +99,23 @@ class SchoolUpdateView(
 
 
 class SchoolCreateView(
-    CountryAdminAccess, SchoolQuerySetMixin, RedirectBackMixin, GenericForm, CreateView
+    PermissionCheckMixin,
+    SchoolQuerySetMixin,
+    RedirectBackMixin,
+    GenericForm,
+    CreateView,
 ):
+    required_permissions = [is_country_admin]
     require_unlocked_competition = False
     form_class = SchoolForm
     form_title = "New school"
     default_success_url = reverse_lazy("badmin:school_list")
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
+        return kw
 
     def form_valid(self, form):
         school: School = form.save(commit=False)

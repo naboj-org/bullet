@@ -1,6 +1,8 @@
 from django import forms
 from education.models import School
 
+from bullet_admin.forms.utils import get_country_choices
+
 
 class SchoolForm(forms.ModelForm):
     class Meta:
@@ -16,3 +18,7 @@ class SchoolForm(forms.ModelForm):
             "search": "You can add any extra words or phrases that won't be shown, but "
             "will get used by the search engine.",
         }
+
+    def __init__(self, competition, user, **kwargs):
+        super().__init__(**kwargs)
+        self.fields["country"].choices = get_country_choices(competition, user)
