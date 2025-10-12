@@ -10,6 +10,8 @@ from django.utils.translation import get_language_info
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Menu, Page, PageBlock
 
+from bullet.views import FormAndFormsetMixin
+from bullet_admin.access_v2 import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
@@ -19,7 +21,11 @@ from bullet_admin.forms.content import (
     PageCopyForm,
     PageForm,
 )
-from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
+from bullet_admin.mixins import (
+    MixinProtocol,
+    RedirectBackMixin,
+)
+from bullet_admin.utils import get_active_branch
 from bullet_admin.views import DeleteView as BDeleteView
 from bullet_admin.views import GenericDeleteView, GenericForm
 from bullet_admin.views.generic.links import (
@@ -32,14 +38,15 @@ from bullet_admin.views.generic.links import (
 from bullet_admin.views.generic.list import GenericList
 
 
-class PageQuerySetMixin:
+class PageQuerySetMixin(MixinProtocol):
     def get_queryset(self):
-        return Page.objects.filter(branch=self.request.BRANCH).order_by(
+        return Page.objects.filter(branch=get_active_branch(self.request)).order_by(
             "slug", "language"
         )
 
 
-class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, GenericList, ListView):
+class PageListView(PermissionCheckMixin, PageQuerySetMixin, GenericList, ListView):
+    required_permissions = [is_country_admin]
     list_links = [NewLink("page", reverse_lazy("badmin:page_create"))]
 
     table_labels = {"slug": "URL"}
@@ -69,7 +76,8 @@ class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, GenericList, List
         ]
 
 
-class PageCopyView(TranslatorRequiredMixin, PageQuerySetMixin, GenericForm, FormView):
+class PageCopyView(PermissionCheckMixin, PageQuerySetMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/page_copy.html"
     form_title = "Copy content"
     form_class = PageCopyForm
@@ -106,18 +114,19 @@ class PageCopyView(TranslatorRequiredMixin, PageQuerySetMixin, GenericForm, Form
 
 
 class PageEditView(
-    TranslatorRequiredMixin,
+    PermissionCheckMixin,
     PageQuerySetMixin,
     RedirectBackMixin,
     GenericForm,
     UpdateView,
 ):
+    required_permissions = [is_country_admin]
     form_class = PageForm
     template_name = "bullet_admin/content/page_edit.html"
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def get_default_success_url(self):
@@ -125,18 +134,19 @@ class PageEditView(
 
 
 class PageCreateView(
-    TranslatorRequiredMixin,
+    PermissionCheckMixin,
     PageQuerySetMixin,
     RedirectBackMixin,
     GenericForm,
     CreateView,
 ):
+    required_permissions = [is_country_admin]
     form_title = "Create page"
     form_class = PageForm
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def get_initial(self):
@@ -150,22 +160,24 @@ class PageCreateView(
 
     def form_valid(self, form):
         page = form.save(commit=False)
-        page.branch = self.request.BRANCH
+        page.branch = get_active_branch(self.request)
         page.save()
 
         return HttpResponseRedirect(self.get_success_url())
 
 
 class PageDeleteView(
-    TranslatorRequiredMixin, PageQuerySetMixin, RedirectBackMixin, DeleteView
+    PermissionCheckMixin, PageQuerySetMixin, RedirectBackMixin, DeleteView
 ):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/page_delete.html"
 
     def get_default_success_url(self):
         return reverse("badmin:page_list")
 
 
-class PageBlockListView(TranslatorRequiredMixin, ListView):
+class PageBlockListView(PermissionCheckMixin, ListView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/page_block_list.html"
 
     def get_queryset(self):
@@ -179,8 +191,9 @@ class PageBlockListView(TranslatorRequiredMixin, ListView):
 
 
 class PageBlockUpdateView(
-    TranslatorRequiredMixin, FormAndFormsetMixin, GenericForm, FormView
+    PermissionCheckMixin, FormAndFormsetMixin, GenericForm, FormView
 ):
+    required_permissions = [is_country_admin]
     form_title = "Page block content"
 
     @cached_property
@@ -200,7 +213,7 @@ class PageBlockUpdateView(
     def save_forms(self, form, formset):
         block = self.page_block
         if block.data is None:
-            block.data = {}
+            block.data = {}  # type:ignore
         block.data.update(form.cleaned_data)
         if formset is not None:
             items = []
@@ -214,7 +227,7 @@ class PageBlockUpdateView(
             block.data["items"] = items
         block.save()
 
-    def get_initial(self):
+    def get_initial(self):  # type:ignore
         return self.page_block.data
 
     def get_formset_kwargs(self):
@@ -229,7 +242,8 @@ class PageBlockUpdateView(
         )
 
 
-class PageBlockSettingsView(TranslatorRequiredMixin, GenericForm, UpdateView):
+class PageBlockSettingsView(PermissionCheckMixin, GenericForm, UpdateView):
+    required_permissions = [is_country_admin]
     form_title = "Page block settings"
     form_class = PageBlockUpdateForm
 
@@ -246,7 +260,8 @@ class PageBlockSettingsView(TranslatorRequiredMixin, GenericForm, UpdateView):
         )
 
 
-class PageBlockCreateView(TranslatorRequiredMixin, GenericForm, CreateView):
+class PageBlockCreateView(PermissionCheckMixin, GenericForm, CreateView):
+    required_permissions = [is_country_admin]
     form_title = "New page block"
     form_class = PageBlockCreateForm
 
@@ -264,7 +279,8 @@ class PageBlockCreateView(TranslatorRequiredMixin, GenericForm, CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class PageBlockDeleteView(TranslatorRequiredMixin, DeleteView):
+class PageBlockDeleteView(PermissionCheckMixin, DeleteView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/page_block_delete.html"
 
     def get_object(self, queryset=None):
@@ -280,28 +296,30 @@ class PageBlockDeleteView(TranslatorRequiredMixin, DeleteView):
         )
 
 
-class ContentBlockQuerySetMixin:
+class ContentBlockQuerySetMixin(MixinProtocol):
     def get_queryset(self):
-        return ContentBlock.objects.filter(branch=self.request.BRANCH).order_by(
-            "group", "reference", "language"
-        )
+        return ContentBlock.objects.filter(
+            branch=get_active_branch(self.request)
+        ).order_by("group", "reference", "language")
 
 
-class ContentBlockListView(TranslatorRequiredMixin, ListView):
+class ContentBlockListView(PermissionCheckMixin, ListView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/contentblock_list.html"
     paginate_by = 50
 
-    def get_queryset(self):
+    def get_queryset(self):  # type:ignore
         return (
             ContentBlock.objects.filter(
-                Q(branch=self.request.BRANCH) | Q(branch__isnull=True)
+                Q(branch=get_active_branch(self.request)) | Q(branch__isnull=True)
             )
             .values("group", "reference")
             .distinct()
         )
 
 
-class ContentBlockTranslationListView(TranslatorRequiredMixin, ListView):
+class ContentBlockTranslationListView(PermissionCheckMixin, ListView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/contentblock_trans.html"
 
     def get_context_data(self, *args, **kwargs):
@@ -315,22 +333,22 @@ class ContentBlockTranslationListView(TranslatorRequiredMixin, ListView):
     def get_queryset(self):
         return (
             ContentBlock.objects.filter(
-                Q(branch=self.request.BRANCH) | Q(branch__isnull=True)
+                Q(branch=get_active_branch(self.request)) | Q(branch__isnull=True)
             )
             .filter(group=self.kwargs["group"], reference=self.kwargs["reference"])
             .order_by("branch", "language", "country")
         )
 
 
-class ContentBlockEditView(
-    TranslatorRequiredMixin, ContentBlockQuerySetMixin, UpdateView
-):
+class ContentBlockEditView(PermissionCheckMixin, ContentBlockQuerySetMixin, UpdateView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/contentblock_form.html"
     form_class = ContentBlockForm
+    object: ContentBlock
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def get_success_url(self):
@@ -341,8 +359,11 @@ class ContentBlockEditView(
 
 
 class ContentBlockDeleteView(
-    TranslatorRequiredMixin, ContentBlockQuerySetMixin, BDeleteView
+    PermissionCheckMixin, ContentBlockQuerySetMixin, BDeleteView
 ):
+    required_permissions = [is_country_admin]
+    object: ContentBlock
+
     def get_success_url(self):
         return reverse(
             "badmin:contentblock_trans",
@@ -351,14 +372,15 @@ class ContentBlockDeleteView(
 
 
 class ContentBlockCreateView(
-    TranslatorRequiredMixin, ContentBlockQuerySetMixin, CreateView
+    PermissionCheckMixin, ContentBlockQuerySetMixin, CreateView
 ):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/contentblock_form.html"
     form_class = ContentBlockWithRefForm
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def get_initial(self):
@@ -369,7 +391,7 @@ class ContentBlockCreateView(
 
     def form_valid(self, form):
         content_block = form.save(commit=False)
-        content_block.branch = self.request.BRANCH
+        content_block.branch = get_active_branch(self.request)
         content_block.save()
 
         return HttpResponseRedirect(
@@ -383,7 +405,8 @@ class ContentBlockCreateView(
         )
 
 
-class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
+class MenuItemListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_country_admin]
     list_links = [NewLink("menu item", reverse_lazy("badmin:menu_create"))]
 
     table_labels = {"url": "URL"}
@@ -393,7 +416,7 @@ class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
     }
 
     def get_queryset(self):
-        return Menu.objects.filter(branch=self.request.BRANCH).order_by(
+        return Menu.objects.filter(branch=get_active_branch(self.request)).order_by(
             "language", "order"
         )
 
@@ -408,34 +431,36 @@ class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
         ]
 
 
-class MenuItemEditView(TranslatorRequiredMixin, UpdateView):
+class MenuItemUpdateView(PermissionCheckMixin, UpdateView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/menu_form.html"
     form_class = MenuItemForm
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def get_queryset(self):
-        return Menu.objects.filter(branch=self.request.BRANCH)
+        return Menu.objects.filter(branch=get_active_branch(self.request))
 
     def get_success_url(self):
         return reverse("badmin:menu_list")
 
 
-class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
+class MenuItemCreateView(PermissionCheckMixin, CreateView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/content/menu_form.html"
     form_class = MenuItemForm
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def form_valid(self, form):
         obj = form.save(commit=False)
-        obj.branch = self.request.BRANCH.id
+        obj.branch = get_active_branch(self.request)
         obj.save()
 
         return HttpResponseRedirect(self.get_success_url())
@@ -444,5 +469,6 @@ class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
         return reverse("badmin:menu_list")
 
 
-class MenuItemDeleteView(TranslatorRequiredMixin, RedirectBackMixin, GenericDeleteView):
+class MenuItemDeleteView(PermissionCheckMixin, RedirectBackMixin, GenericDeleteView):
+    required_permissions = [is_country_admin]
     model = Menu

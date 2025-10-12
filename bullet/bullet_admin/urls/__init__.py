@@ -141,7 +141,7 @@ urlpatterns = [
     ),
     path(
         "content/menu/edit/<pk>/",
-        content.MenuItemEditView.as_view(),
+        content.MenuItemUpdateView.as_view(),
         name="menu_edit",
     ),
     path(

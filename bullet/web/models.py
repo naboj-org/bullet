@@ -1,3 +1,5 @@
+from typing import TYPE_CHECKING
+
 from competitions.branches import Branches
 from competitions.models import Competition
 from django.conf import settings
@@ -13,14 +15,20 @@ from web.fields import (
 )
 from web.page_blocks.types import PAGE_BLOCK_TYPES, get_page_block_choices
 
+if TYPE_CHECKING:
+    from django.db.models.manager import RelatedManager
+
 
 class Page(models.Model):
+    id: int
     slug = models.SlugField(max_length=128)
     branch = BranchField()
     language = LanguageField()
     countries = ChoiceArrayField(CountryField())
     title = models.CharField(max_length=128)
     content = models.TextField(blank=True)
+
+    pageblock_set: "RelatedManager[PageBlock]"
 
     def __str__(self):
         return self.title
