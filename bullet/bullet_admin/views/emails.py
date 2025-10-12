@@ -15,8 +15,8 @@ from django.views.generic import (
 )
 from users.models import EmailCampaign, TeamStatus, User
 
+from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
 from bullet_admin.forms.emails import EmailCampaignForm
-from bullet_admin.mixins import AdminRequiredMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
 from bullet_admin.views.generic.list import GenericList
@@ -56,7 +56,8 @@ def can_edit_campaign(request, campaign: EmailCampaign):
     return True
 
 
-class CampaignListView(AdminRequiredMixin, GenericList, ListView):
+class CampaignListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
     list_links = [NewLink("campaign", reverse_lazy("badmin:email_create"))]
     table_fields = ["subject", "last_sent"]
 
@@ -69,7 +70,8 @@ class CampaignListView(AdminRequiredMixin, GenericList, ListView):
         return [ViewIcon(reverse("badmin:email_detail", args=[obj.pk]))]
 
 
-class CampaignCreateView(AdminRequiredMixin, CreateView):
+class CampaignCreateView(PermissionCheckMixin, CreateView):
+    required_permissions = [is_admin]
     form_class = EmailCampaignForm
     template_name = "bullet_admin/emails/form.html"
 
@@ -90,7 +92,8 @@ class CampaignCreateView(AdminRequiredMixin, CreateView):
         )
 
 
-class CampaignUpdateView(AdminRequiredMixin, UpdateView):
+class CampaignUpdateView(PermissionCheckMixin, UpdateView):
+    required_permissions = [is_admin]
     form_class = EmailCampaignForm
     template_name = "bullet_admin/emails/form.html"
 
@@ -115,7 +118,8 @@ class CampaignUpdateView(AdminRequiredMixin, UpdateView):
         return reverse("badmin:email_detail", kwargs={"pk": self.object.id})
 
 
-class CampaignDetailView(AdminRequiredMixin, DetailView):
+class CampaignDetailView(PermissionCheckMixin, DetailView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/emails/detail.html"
 
     def get_queryset(self):
@@ -137,7 +141,8 @@ class CampaignDetailView(AdminRequiredMixin, DetailView):
         return ctx
 
 
-class CampaignTeamListView(AdminRequiredMixin, TemplateView):
+class CampaignTeamListView(PermissionCheckMixin, TemplateView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/emails/teams.html"
 
     def dispatch(self, request, *args, **kwargs):
@@ -176,7 +181,9 @@ class CampaignTeamListView(AdminRequiredMixin, TemplateView):
         )
 
 
-class CampaignSendTestView(AdminRequiredMixin, View):
+class CampaignSendTestView(PermissionCheckMixin, View):
+    required_permissions = [is_admin]
+
     def post(self, request, *args, **kwargs):
         campaign = get_object_or_404(
             EmailCampaign,
@@ -194,7 +201,9 @@ class CampaignSendTestView(AdminRequiredMixin, View):
         )
 
 
-class CampaignSendView(AdminRequiredMixin, View):
+class CampaignSendView(PermissionCheckMixin, View):
+    required_permissions = [is_admin]
+
     def post(self, request, *args, **kwargs):
         campaign = get_object_or_404(
             EmailCampaign,
