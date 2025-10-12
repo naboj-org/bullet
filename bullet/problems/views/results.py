@@ -1,5 +1,8 @@
-from bullet_admin.access import is_any_admin
+from bullet_admin.access_v2 import is_operator
+from bullet_admin.mixins import MixinProtocol
+from bullet_admin.utils import get_active_branch
 from competitions.models import Category, Competition, Venue
+from django.core.exceptions import ImproperlyConfigured
 from django.http import Http404, HttpRequest
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -8,6 +11,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.views.generic import ListView, TemplateView
 from django_countries.fields import Country
+from users.models.organizers import User
 
 from problems.logic.results import (
     ResultsTime,
@@ -18,13 +22,18 @@ from problems.logic.results import (
 )
 
 
-class CompetitionMixin:
+class CompetitionMixin(MixinProtocol):
+    _competition: Competition
+
     @property
     def competition(self) -> Competition:
         if not hasattr(self, "_competition"):
-            self._competition = Competition.objects.get_current_competition(
-                self.request.BRANCH
+            competition = Competition.objects.get_current_competition(
+                get_active_branch(self.request)
             )
+            if not competition:
+                raise ImproperlyConfigured("No active competition.")
+            self._competition = competition
         return self._competition
 
     def get_context_data(self, **kwargs):
@@ -62,9 +71,8 @@ class ResultsViewMixin(CompetitionMixin):
     def get_results_time(self) -> ResultsTime:
         admin = False
         if self.request.GET.get("admin") == "1" and self.request.user.is_authenticated:
-            admin = is_any_admin(
-                self.request.user, self.competition, allow_operator=True
-            )
+            assert isinstance(self.request.user, User)
+            admin = is_operator(self.request.user, self.competition)
 
         start_time = None
         venue = self.get_venue_timer()

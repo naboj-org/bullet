@@ -101,6 +101,36 @@ type VenuePermissionCallable = Callable[[User, Venue], bool]
 type PermissionCallable = CompetitionPermissionCallable | VenuePermissionCallable
 
 
+def check_access(
+    user: User,
+    permissions: list[PermissionCallable],
+    *,
+    competition: Competition,
+    venue: Venue | None = None,
+    checked_permissions: list[tuple[str, bool]] | None = None,
+) -> bool:
+    allowed = True
+
+    for perm in permissions:
+        sig = signature(perm)
+        if "venue" in sig.parameters:
+            if not venue:
+                raise ImproperlyConfigured(
+                    "Did not receive a venue for permission check, "
+                    "but checking requires one."
+                )
+            returned = perm(user, venue)  # type:ignore
+        else:
+            returned = perm(user, competition)  # type:ignore
+
+        name = perm.__doc__ or perm.__name__
+        if checked_permissions is not None:
+            checked_permissions.append((name, returned))
+        allowed = allowed and returned
+
+    return allowed
+
+
 class PermissionCheckMixin(MixinProtocol):
     required_permissions: PermissionCallable | list[PermissionCallable] = []
     _checked_permissions: list[tuple[str, bool]]
@@ -119,26 +149,13 @@ class PermissionCheckMixin(MixinProtocol):
 
     def check_access(self, user: User) -> bool:
         self._checked_permissions = []
-        allowed = True
-
-        for perm in self.get_required_permissions():
-            sig = signature(perm)
-            if "venue" in sig.parameters:
-                venue = self.get_permission_venue()
-                if not venue:
-                    raise ImproperlyConfigured(
-                        f"{self.__class__.__name__} does not have valid"
-                        " permission venue."
-                    )
-                returned = perm(user, venue)  # type:ignore
-            else:
-                returned = perm(user, self.get_permission_competition())  # type:ignore
-
-            name = perm.__doc__ or perm.__name__
-            self._checked_permissions.append((name, returned))
-            allowed = allowed and returned
-
-        return allowed
+        return check_access(
+            user,
+            self.get_required_permissions(),
+            competition=self.get_permission_competition(),
+            venue=self.get_permission_venue(),
+            checked_permissions=self._checked_permissions,
+        )
 
     def check_custom_permission(self, user: User) -> bool | None:
         return None

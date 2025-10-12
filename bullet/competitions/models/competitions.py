@@ -18,7 +18,7 @@ def get_random_string():
 
 
 class CompetitionQuerySet(models.QuerySet):
-    def get_current_competition(self, branch):
+    def get_current_competition(self, branch) -> "Competition|None":
         return (
             self.filter(branch=branch, web_start__lt=timezone.now())
             .order_by("-web_start")
