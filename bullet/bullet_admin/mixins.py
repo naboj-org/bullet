@@ -1,4 +1,4 @@
-from typing import Callable, Protocol
+from typing import Any, Callable, Protocol
 
 from competitions.models import Venue
 from django.core.exceptions import ImproperlyConfigured
@@ -12,6 +12,7 @@ from bullet_admin.utils import get_active_competition, get_redirect_url
 class MixinProtocol(Protocol):
     request: HttpRequest
     get_context_data: Callable[..., dict]
+    kwargs: dict[str, Any]
     get_object: Callable
     get_queryset: Callable
     get_model: Callable

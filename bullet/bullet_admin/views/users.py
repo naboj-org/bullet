@@ -36,7 +36,7 @@ class UserListView(PermissionCheckMixin, GenericList, ListView):
     def get_queryset(self):
         branch_role = BranchRole.objects.filter(
             branch=self.request.BRANCH, user=OuterRef("pk")
-        ).filter(Q(is_admin=True) | Q(is_translator=True))
+        ).filter(is_admin=True)
         competition_role = CompetitionRole.objects.filter(
             competition=get_active_competition(self.request), user=OuterRef("pk")
         ).filter(Q(venue_objects__isnull=False) | Q(countries__len__gt=0))

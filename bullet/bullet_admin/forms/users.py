@@ -17,13 +17,13 @@ class UserForm(forms.ModelForm):
 class BranchRoleForm(forms.ModelForm):
     class Meta:
         model = BranchRole
-        fields = ("is_translator", "is_photographer", "is_admin")
+        fields = ("is_admin",)
 
 
 class CompetitionRoleForm(forms.ModelForm):
     class Meta:
         model = CompetitionRole
-        fields = ("venue_objects", "countries", "can_delegate", "is_operator")
+        fields = ("venue_objects", "countries", "is_operator")
         widgets = {
             "countries": forms.CheckboxSelectMultiple(),
             "venue_objects": forms.CheckboxSelectMultiple(),
