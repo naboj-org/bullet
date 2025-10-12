@@ -9,8 +9,7 @@
         <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
             <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team review</h2>
         </header>
-        <form method="post"
-              class="divide-y">
+        <form method="post">
             <div class="p-4">
                 {% csrf_token %}
                 {{ form.management_form }}
@@ -27,7 +26,7 @@
                         <th class="px-4 py-2">Time</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y">
+                <tbody>
                     {% for f in form %}
                         <tr class="even:bg-gray-50 grid sm:table-row">
                             <td class="px-4 py-2 font-bold sm:font-normal">

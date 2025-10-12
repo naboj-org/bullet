@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+from typing import Any
 
 from django.conf import settings
 from django.contrib import messages
@@ -12,6 +13,7 @@ from django.template.response import TemplateResponse
 from django.urls import reverse
 from django.utils import timezone
 from django.utils.decorators import method_decorator
+from django.utils.functional import cached_property
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, TemplateView
@@ -25,13 +27,17 @@ from problems.logic import (
 from problems.logic.scanner import ScannedBarcode, parse_barcode, save_scan
 from problems.models import Problem, ScannerLog, SolvedProblem
 from users.models import Team
+from users.models.organizers import User
 
+from bullet_admin.access_v2 import PermissionCheckMixin, is_operator, is_operator_in
 from bullet_admin.forms.review import get_review_formset
-from bullet_admin.mixins import OperatorRequiredMixin, VenueMixin
-from bullet_admin.utils import can_access_venue, get_active_competition
+from bullet_admin.mixins import VenueMixin
+from bullet_admin.utils import get_active_competition
 
 
-class ProblemScanView(OperatorRequiredMixin, View):
+class ProblemScanView(PermissionCheckMixin, View):
+    required_permissions = [is_operator]
+
     def dispatch(self, request, *args, **kwargs):
         self.competition = get_active_competition(request)
         return super().dispatch(request, *args, **kwargs)
@@ -56,9 +62,11 @@ class ProblemScanView(OperatorRequiredMixin, View):
             self.get_context_data(),
         )
 
-    def scan(self, barcode) -> tuple[ScannerLog, ScannedBarcode]:
+    def scan(self, barcode) -> tuple[ScannerLog, ScannedBarcode | None]:
+        user = self.request.user
+        assert isinstance(user, User)
         ts = timezone.now()
-        log = ScannerLog(timestamp=ts, user=self.request.user, barcode=barcode)
+        log = ScannerLog(timestamp=ts, user=user, barcode=barcode)
         try:
             scanned_barcode = parse_barcode(self.competition, barcode)
         except ValueError as e:
@@ -67,7 +75,7 @@ class ProblemScanView(OperatorRequiredMixin, View):
             log.save()
             return log, None
 
-        if not can_access_venue(self.request, scanned_barcode.venue):
+        if not is_operator_in(user, scanned_barcode.venue):
             log.result = ScannerLog.Result.SCAN_ERR
             log.message = (
                 f"You don't have the required permissions to scan "
@@ -113,7 +121,7 @@ class ProblemScanView(OperatorRequiredMixin, View):
 
         log, barcode = self.scan(barcode)
         template = "bullet_admin/scanning/problem.html"
-        if self.request.htmx:
+        if getattr(self.request, "htmx", False):
             template = "bullet_admin/scanning/problem/_response.html"
 
         ctx = self.get_context_data()
@@ -123,7 +131,8 @@ class ProblemScanView(OperatorRequiredMixin, View):
         return trigger_client_event(response, "scan-complete", {"result": log.result})
 
 
-class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
+class VenueReviewView(PermissionCheckMixin, VenueMixin, TemplateView):
+    required_permissions = [is_operator]
     template_name = "bullet_admin/scanning/review.html"
 
     def get_teams(self):
@@ -201,7 +210,8 @@ class VenueReviewView(OperatorRequiredMixin, VenueMixin, TemplateView):
         )
 
 
-class UndoScanView(OperatorRequiredMixin, TemplateView):
+class UndoScanView(PermissionCheckMixin, TemplateView):
+    required_permissions = [is_operator]
     template_name = "bullet_admin/scanning/undo.html"
 
     def redirect(self, team: Team | None = None):
@@ -212,6 +222,8 @@ class UndoScanView(OperatorRequiredMixin, TemplateView):
         )
 
     def post(self, request, *args, **kwargs):
+        user = request.user
+        assert isinstance(user, User)
         try:
             scanned_barcode = parse_barcode(
                 get_active_competition(request),
@@ -221,7 +233,7 @@ class UndoScanView(OperatorRequiredMixin, TemplateView):
             messages.error(request, str(e))
             return self.redirect()
 
-        if not can_access_venue(request, scanned_barcode.venue):
+        if not is_operator_in(user, scanned_barcode.venue):
             raise PermissionDenied()
 
         if scanned_barcode.team.is_reviewed:
@@ -231,7 +243,7 @@ class UndoScanView(OperatorRequiredMixin, TemplateView):
         mark_problem_unsolved(scanned_barcode.team, scanned_barcode.problem)
 
         ScannerLog.objects.create(
-            user=request.user,
+            user=user,
             barcode=f"*{request.GET.get('barcode')}",
             result=ScannerLog.Result.OK,
             message="Scan undone.",
@@ -241,14 +253,16 @@ class UndoScanView(OperatorRequiredMixin, TemplateView):
         return self.redirect(scanned_barcode.team)
 
 
-class TeamToggleReviewedView(OperatorRequiredMixin, VenueMixin, View):
+class TeamToggleReviewedView(PermissionCheckMixin, View):
+    required_permissions = [is_operator]
+
     def post(self, request, *args, **kwargs):
         team: Team = get_object_or_404(Team, id=kwargs["pk"])
 
         if team.venue.is_reviewed:
             raise PermissionDenied()
 
-        if not can_access_venue(request, team.venue):
+        if not is_operator_in(request.user, team.venue):
             raise PermissionDenied()
 
         team.is_reviewed = not team.is_reviewed
@@ -267,28 +281,31 @@ class TeamToggleReviewedView(OperatorRequiredMixin, VenueMixin, View):
         )
 
 
-class TeamReviewView(OperatorRequiredMixin, FormView):
+class TeamReviewView(PermissionCheckMixin, FormView):
+    required_permissions = [is_operator_in]
     model = Team
     template_name = "bullet_admin/scanning/review_team.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        self.team: Team = (
-            Team.objects.select_related("venue", "venue__category")
-            .prefetch_related("solved_problems")
-            .get(pk=kwargs["pk"])
+    @cached_property
+    def team(self) -> Team:
+        return get_object_or_404(
+            Team.objects.select_related("venue", "venue__category").prefetch_related(
+                "solved_problems"
+            ),
+            pk=self.kwargs["pk"],
         )
-        if not can_access_venue(request, self.team.venue):
-            raise PermissionDenied()
 
-        if self.team.is_reviewed:
-            raise PermissionDenied()
+    def get_permission_venue(self):
+        return self.team.venue
 
-        return super().dispatch(request, *args, **kwargs)
+    def check_custom_permission(self, user: User) -> bool | None:
+        """The team and its venue cannot be reviewed."""
+        return not self.team.is_reviewed and not self.team.venue.is_reviewed
 
     def get_form_class(self):
         return get_review_formset(self.team)
 
-    def get_initial(self):
+    def get_initial(self):  # type:ignore
         competition = get_active_competition(self.request)
         problems = Problem.objects.filter(competition=competition)
 
@@ -301,7 +318,7 @@ class TeamReviewView(OperatorRequiredMixin, FormView):
             if problem.number < self.team.venue.category.first_problem:
                 continue
 
-            row = {"number": problem.number}
+            row: dict[str, Any] = {"number": problem.number}
             if problem.id in solved_timestamps:
                 row["is_solved"] = True
                 row["competition_time"] = solved_timestamps[problem.id]
