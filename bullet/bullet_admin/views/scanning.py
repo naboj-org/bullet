@@ -29,7 +29,7 @@ from problems.models import Problem, ScannerLog, SolvedProblem
 from users.models import Team
 from users.models.organizers import User
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_operator, is_operator_in
+from bullet_admin.access import PermissionCheckMixin, is_operator, is_operator_in
 from bullet_admin.forms.review import get_review_formset
 from bullet_admin.mixins import VenueMixin
 from bullet_admin.utils import get_active_competition

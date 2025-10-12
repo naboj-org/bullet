@@ -14,7 +14,7 @@ from problems.logic.results import save_all_ranks, squash_results
 from problems.logic.stats import generate_stats
 from users.logic import move_all_eligible_teams
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     PermissionCheckMixin,
     is_branch_admin,
     is_competition_unlocked,

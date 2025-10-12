@@ -3,7 +3,7 @@ from django.http import Http404
 from django.views.generic import TemplateView
 from users.models.organizers import User
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     is_admin,
     is_branch_admin,
     is_country_admin,

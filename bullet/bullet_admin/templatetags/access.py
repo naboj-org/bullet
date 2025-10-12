@@ -1,6 +1,6 @@
 from typing import Callable
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     CompetitionPermissionCallable,
     VenuePermissionCallable,
     is_admin,

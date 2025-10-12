@@ -15,7 +15,7 @@ from django_countries.fields import Country
 from users.emails.users import send_onboarding_email
 from users.models import User
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
+from bullet_admin.access import PermissionCheckMixin, is_admin
 from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserForm
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition

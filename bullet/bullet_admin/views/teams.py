@@ -40,7 +40,7 @@ from bullet import search, settings
 from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import AdminAccess
 from bullet.views import FormAndFormsetMixin
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     PermissionCheckMixin,
     is_admin,
     is_admin_in,

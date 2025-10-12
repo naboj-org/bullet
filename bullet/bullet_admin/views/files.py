@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_country_admin
+from bullet_admin.access import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.files import (
     FileDeleteForm,
     FileUploadForm,

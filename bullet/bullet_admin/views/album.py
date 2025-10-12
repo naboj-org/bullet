@@ -10,7 +10,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
 from PIL import Image
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
+from bullet_admin.access import PermissionCheckMixin, is_admin
 from bullet_admin.forms.album import AlbumForm
 from bullet_admin.mixins import RedirectBackMixin
 from bullet_admin.utils import get_active_branch, get_active_competition

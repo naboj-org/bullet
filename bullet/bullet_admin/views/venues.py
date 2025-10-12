@@ -31,7 +31,7 @@ from problems.models import Problem
 from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     PermissionCheckMixin,
     is_admin,
     is_admin_in,

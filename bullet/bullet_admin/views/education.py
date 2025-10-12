@@ -5,7 +5,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from education.models import School
 
 from bullet import search
-from bullet_admin.access_v2 import PermissionCheckMixin, is_country_admin
+from bullet_admin.access import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.education import SchoolForm
 from bullet_admin.mixins import MixinProtocol, RedirectBackMixin
 from bullet_admin.utils import get_active_competition, get_allowed_countries

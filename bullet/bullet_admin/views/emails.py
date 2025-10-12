@@ -15,7 +15,7 @@ from django.views.generic import (
 )
 from users.models import EmailCampaign, TeamStatus, User
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
+from bullet_admin.access import PermissionCheckMixin, is_admin
 from bullet_admin.forms.emails import EmailCampaignForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views.generic.links import Link, NewLink, ViewIcon

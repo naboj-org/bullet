@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views.generic import CreateView, ListView, UpdateView
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_branch_admin
+from bullet_admin.access import PermissionCheckMixin, is_branch_admin
 from bullet_admin.forms.category import CategoryForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm

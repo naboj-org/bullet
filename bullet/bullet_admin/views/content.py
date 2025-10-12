@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DeleteView, FormView, ListView, Upd
 from web.models import ContentBlock, Menu, Page, PageBlock
 
 from bullet.views import FormAndFormsetMixin
-from bullet_admin.access_v2 import PermissionCheckMixin, is_country_admin
+from bullet_admin.access import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,

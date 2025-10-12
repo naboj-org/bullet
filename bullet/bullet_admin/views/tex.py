@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 from django_htmx.http import HTMX_STOP_POLLING
 from documents.models import TexJob, TexTemplate
 
-from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
+from bullet_admin.access import PermissionCheckMixin, is_admin
 from bullet_admin.forms.tex import LetterCallbackForm, TexRenderForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm

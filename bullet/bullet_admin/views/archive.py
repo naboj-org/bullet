@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from problems.logic.upload import ProblemImportError
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     PermissionCheckMixin,
     is_branch_admin,
     is_country_admin,

@@ -1,4 +1,4 @@
-from bullet_admin.access_v2 import is_operator
+from bullet_admin.access import is_operator
 from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_active_branch
 from competitions.models import Category, Competition, Venue

@@ -2,7 +2,7 @@ from competitions.models import Wildcard
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView
 
-from bullet_admin.access_v2 import (
+from bullet_admin.access import (
     PermissionCheckMixin,
     is_competition_unlocked,
     is_country_admin,

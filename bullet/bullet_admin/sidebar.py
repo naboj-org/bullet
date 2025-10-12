@@ -4,7 +4,7 @@ from competitions.models.competitions import Competition
 from django.urls import reverse_lazy
 from users.models.organizers import User
 
-from bullet_admin.access_v2 import PermissionCallable, check_access
+from bullet_admin.access import PermissionCallable, check_access
 from bullet_admin.views.album import AlbumListView
 from bullet_admin.views.archive import ProblemImportView, ProblemPDFUploadView
 from bullet_admin.views.category import CategoryListView
