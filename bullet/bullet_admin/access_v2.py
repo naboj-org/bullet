@@ -62,7 +62,7 @@ def is_branch_admin_in(user: User, venue: Venue) -> bool:
 
 def is_country_admin_in(user: User, venue: Venue) -> bool:
     """You must be a contry administrator or higher of the venue."""
-    if is_branch_admin_in(user, venue.category.competition):
+    if is_branch_admin_in(user, venue):
         return True
 
     crole = user.get_competition_role(venue.category.competition)
@@ -103,7 +103,7 @@ type PermissionCallable = CompetitionPermissionCallable | VenuePermissionCallabl
 
 class PermissionCheckMixin(MixinProtocol):
     required_permissions: PermissionCallable | list[PermissionCallable] = []
-    checked_permissions: list[tuple[str, bool]]
+    _checked_permissions: list[tuple[str, bool]]
 
     def get_required_permissions(self) -> list[PermissionCallable]:
         if isinstance(self.required_permissions, list):
@@ -118,7 +118,7 @@ class PermissionCheckMixin(MixinProtocol):
         return get_active_competition(self.request)
 
     def check_access(self, user: User) -> bool:
-        self.checked_permissions = []
+        self._checked_permissions = []
         allowed = True
 
         for perm in self.get_required_permissions():
@@ -135,17 +135,20 @@ class PermissionCheckMixin(MixinProtocol):
                 returned = perm(user, self.get_permission_competition())  # type:ignore
 
             name = perm.__doc__ or perm.__name__
-            self.checked_permissions.append((name, returned))
+            self._checked_permissions.append((name, returned))
             allowed = allowed and returned
 
         return allowed
+
+    def check_custom_permission(self, user: User) -> bool | None:
+        return None
 
     def permission_denied_response(self) -> HttpResponse:
         return render(
             self.request,
             "bullet_admin/generic/denied.html",
             {
-                "checked_permissions": self.checked_permissions,
+                "checked_permissions": self._checked_permissions,
                 "perm_competition": self.get_permission_competition(),
                 "perm_venue": self.get_permission_venue(),
             },
@@ -156,7 +159,18 @@ class PermissionCheckMixin(MixinProtocol):
             return redirect_to_login(
                 self.request.get_full_path(), reverse("badmin:login"), "next"
             )
-        elif not self.check_access(request.user):
-            return self.permission_denied_response()
+        else:
+            access = self.check_access(request.user)
+            custom = self.check_custom_permission(request.user)
+            if custom is not None:
+                custom_name = (
+                    self.check_custom_permission.__doc__ or "check_custom_permission"
+                )
+                self._checked_permissions.append((custom_name, custom))
+            else:
+                custom = True
+
+            if not access or not custom:
+                return self.permission_denied_response()
 
         return super().dispatch(request, *args, **kwargs)

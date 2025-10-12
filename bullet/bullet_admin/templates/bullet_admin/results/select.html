@@ -21,7 +21,7 @@
                 {{ category.grouper|title }} results
             {% endasubheader %}
             <table class="w-full text-sm">
-                <tbody class="divide-y">
+                <tbody>
                     <tr class="relative hover:bg-gray-100 even:bg-gray-50">
                         {% get_country country_results.country as c %}
                         <td class="p-3 whitespace-nowrap">International</td>
@@ -67,7 +67,7 @@
             Venue results
         {% endasubheader %}
         <table class="w-full text-sm">
-            <tbody class="divide-y">
+            <tbody>
                 {% for v in venues %}
                     <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         <td class="p-3 whitespace-nowrap">{{ v }}</td>

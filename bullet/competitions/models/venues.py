@@ -114,7 +114,7 @@ class Venue(models.Model):
         choices=RegistrationFlowType.choices, default=RegistrationFlowType.DEFAULT
     )
 
-    objects = VenueManager.from_queryset(VenueQuerySet)()
+    objects: VenueQuerySet = VenueManager.from_queryset(VenueQuerySet)()  # type:ignore
 
     class Meta:
         unique_together = ("category", "shortcode")
