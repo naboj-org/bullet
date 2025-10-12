@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
 
+from competitions.branches import Branch
 from competitions.models import Competition
+from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Q
 from django.http import HttpRequest
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -13,19 +15,31 @@ if TYPE_CHECKING:
 
 
 def get_active_competition(request: HttpRequest) -> Competition:
+    """Gets the currently active competition in admin interface."""
     if not hasattr(request, "_badmin_competition"):
-        session_key = f"badmin_{request.BRANCH.identifier}_competition"
+        branch = get_active_branch(request)
+        session_key = f"badmin_{branch.identifier}_competition"
         if session_key not in request.session:
-            request._badmin_competition = Competition.objects.get_current_competition(
-                request.BRANCH
-            )
+            competition = Competition.objects.get_current_competition(branch)
         else:
             stored_id = request.session.get(session_key)
-            request._badmin_competition = Competition.objects.filter(
-                branch=request.BRANCH, id=stored_id
+            competition = Competition.objects.filter(
+                branch=branch, id=stored_id
             ).first()
+        setattr(request, "_badmin_competition", competition)
+    return getattr(request, "_badmin_competition")
 
-    return request._badmin_competition
+
+def get_active_branch(request: HttpRequest) -> Branch:
+    """
+    Gets the branch of the request.
+
+    Use instead of request.BRANCH to avoid getting yelled at by the type checker.
+    """
+    if not hasattr(request, "BRANCH"):
+        raise ImproperlyConfigured("The request does not have an associated branch.")
+
+    return getattr(request, "BRANCH")
 
 
 def get_allowed_countries(request: HttpRequest):

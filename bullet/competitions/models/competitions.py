@@ -72,6 +72,7 @@ class CompetitionQuerySet(models.QuerySet):
 
 
 class Competition(models.Model):
+    id: int
     branch = BranchField()
     number = models.IntegerField(
         null=True, blank=True
@@ -95,7 +96,7 @@ class Competition(models.Model):
 
     is_cancelled = models.BooleanField(default=False)
 
-    objects = CompetitionQuerySet.as_manager()
+    objects: CompetitionQuerySet = CompetitionQuerySet.as_manager()  # type:ignore
 
     class Meta:
         constraints = [
