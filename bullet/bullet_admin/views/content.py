@@ -21,7 +21,7 @@ from bullet_admin.forms.content import (
 )
 from bullet_admin.mixins import RedirectBackMixin, TranslatorRequiredMixin
 from bullet_admin.views import DeleteView as BDeleteView
-from bullet_admin.views import GenericDelete, GenericForm
+from bullet_admin.views import GenericDeleteView, GenericForm
 from bullet_admin.views.generic.links import (
     DeleteIcon,
     EditIcon,
@@ -444,7 +444,5 @@ class MenuItemCreateView(TranslatorRequiredMixin, CreateView):
         return reverse("badmin:menu_list")
 
 
-class MenuItemDeleteView(
-    TranslatorRequiredMixin, RedirectBackMixin, GenericDelete, DeleteView
-):
+class MenuItemDeleteView(TranslatorRequiredMixin, RedirectBackMixin, GenericDeleteView):
     model = Menu

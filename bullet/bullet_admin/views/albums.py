@@ -1,19 +1,20 @@
 from datetime import datetime, timezone
 
 from countries.logic.detection import get_country_language_from_request
+from countries.utils import country_reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, ListView, UpdateView
+from django.views.generic import CreateView, ListView, UpdateView
 from gallery.models import Album, Photo
 from PIL import Image
 
-from bullet_admin.access import PhotoUploadAccess
+from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
 from bullet_admin.forms.album import AlbumForm
 from bullet_admin.mixins import RedirectBackMixin
-from bullet_admin.utils import get_active_competition
-from bullet_admin.views import GenericDelete, GenericForm
+from bullet_admin.utils import get_active_branch, get_active_competition
+from bullet_admin.views import GenericDeleteView, GenericForm
 from bullet_admin.views.generic.links import (
     DeleteIcon,
     EditIcon,
@@ -24,7 +25,8 @@ from bullet_admin.views.generic.links import (
 from bullet_admin.views.generic.list import GenericList
 
 
-class AlbumListView(PhotoUploadAccess, GenericList, ListView):
+class AlbumListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
     list_links = [
         NewLink("album", reverse_lazy("badmin:album_create")),
     ]
@@ -40,13 +42,9 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
         return Album.objects.filter(competition=get_active_competition(self.request))
 
     def get_row_links(self, obj) -> list[Link]:
-        assert self.detection
-        country, language = self.detection
-        view = reverse(
+        view = country_reverse(
             "archive_album",
             kwargs={
-                "b_country": country,
-                "b_language": language,
                 "competition_number": obj.competition.number,
                 "slug": obj.slug,
             },
@@ -71,8 +69,8 @@ class AlbumFormMixin(RedirectBackMixin, GenericForm):
     form_multipart = True
 
     def get_form_kwargs(self):
-        kw = super().get_form_kwargs()
-        kw["branch"] = self.request.BRANCH
+        kw = super().get_form_kwargs()  # type:ignore
+        kw["branch"] = get_active_branch(self.request)
         return kw
 
     def form_valid(self, form):
@@ -97,11 +95,12 @@ class AlbumFormMixin(RedirectBackMixin, GenericForm):
         return reverse("badmin:album_edit", kwargs={"pk": self.object.id})
 
 
-class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
+class AlbumUpdateView(PermissionCheckMixin, AlbumFormMixin, UpdateView):
+    required_permissions = [is_admin]
     form_title = "Edit album"
 
     def get_queryset(self):
-        return Album.objects.filter(competition__branch=self.request.BRANCH)
+        return Album.objects.filter(competition=get_active_competition(self.request))
 
     def form_valid(self, form):
         ret = super().form_valid(form)
@@ -109,7 +108,8 @@ class AlbumUpdateView(PhotoUploadAccess, AlbumFormMixin, UpdateView):
         return ret
 
 
-class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
+class AlbumCreateView(PermissionCheckMixin, AlbumFormMixin, CreateView):
+    required_permissions = [is_admin]
     form_title = "New album"
 
     def form_valid(self, form):
@@ -118,7 +118,8 @@ class AlbumCreateView(PhotoUploadAccess, AlbumFormMixin, CreateView):
         return ret
 
 
-class AlbumDeleteView(PhotoUploadAccess, RedirectBackMixin, GenericDelete, DeleteView):
+class AlbumDeleteView(PermissionCheckMixin, RedirectBackMixin, GenericDeleteView):
+    required_permissions = [is_admin]
     model = Album
     default_success_url = reverse_lazy("badmin:album_list")
 
