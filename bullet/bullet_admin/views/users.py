@@ -15,8 +15,8 @@ from django_countries.fields import Country
 from users.emails.users import send_onboarding_email
 from users.models import User
 
+from bullet_admin.access_v2 import PermissionCheckMixin, is_admin
 from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserForm
-from bullet_admin.mixins import DelegateRequiredMixin
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views.generic.links import EditIcon, Link, NewLink
@@ -25,7 +25,8 @@ from bullet_admin.views.generic.list import GenericList
 PASSWORD_ALPHABET = "346789ABCDEFGHJKLMNPQRTUVWXY"
 
 
-class UserListView(DelegateRequiredMixin, GenericList, ListView):
+class UserListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
     list_links = [NewLink("user", reverse_lazy("badmin:user_create"))]
 
     table_fields = ["get_full_name", "email", "has_branch_role"]
@@ -93,7 +94,9 @@ class UserFormsMixin:
         return form, bform, cform
 
 
-class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
+class UserCreateView(PermissionCheckMixin, UserFormsMixin, View):
+    required_permissions = [is_admin]
+
     def get(self, request, *args, **kwargs):
         form, bform, cform = self.get_forms(request)
 
@@ -144,7 +147,9 @@ class UserCreateView(DelegateRequiredMixin, UserFormsMixin, View):
         return HttpResponseRedirect(reverse("badmin:user_list"))
 
 
-class UserEditView(DelegateRequiredMixin, UserFormsMixin, View):
+class UserEditView(PermissionCheckMixin, UserFormsMixin, View):
+    required_permissions = [is_admin]
+
     def can_edit_user(self, target: User):
         user: User = self.request.user
         competition = get_active_competition(self.request)
