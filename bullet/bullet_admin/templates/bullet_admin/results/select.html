@@ -48,14 +48,12 @@
                                    class="link-primary">Admin results</a>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {% is_country_operator_in c as can_open %}
-                                {% if can_open %}
-                                    {% if not country_results.unreviewed %}
-                                        <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden"
-                                           class="link-primary">Results announcement</a>
-                                    {% else %}
-                                        <span>Unfinished review</span>
-                                    {% endif %}
+                                {# TODO: Custom permission check #}
+                                {% if not country_results.unreviewed %}
+                                    <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden"
+                                        class="link-primary">Results announcement</a>
+                                {% else %}
+                                    <span>Unfinished review</span>
                                 {% endif %}
                             </td>
                         </tr>

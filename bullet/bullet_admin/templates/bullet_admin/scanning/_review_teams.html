@@ -1,6 +1,6 @@
 {% load access utils %}
 {% if not venue.is_reviewed and not venue.has_unreviewed_teams %}
-    {% is_venue_admin venue as can_finish %}
+    {% is_admin_in venue as can_finish %}
     {% aalert color="orange" class="mb-4" %}
         {% if can_finish %}
             {% url "badmin:scanning_review" as back_url %}
@@ -42,8 +42,7 @@
                     <button hx-post="{% url "badmin:scanning_review_toggle_team" pk=team.id %}"
                             class="btn-admin-sm {% if team.is_reviewed %} bg-red-500 hover:bg-red-600 {% else %} bg-green-500 hover:bg-green-600 {% endif %}">
                         <i class="fas {% if team.is_reviewed %} fa-times {% else %} fa-check {% endif %}"></i> Mark as
-                        {% if team.is_reviewed %}un{% endif %}
-                        reviewed
+                        {% if team.is_reviewed %}un{% endif %}reviewed
                     </button>
                 </div>
             {% endif %}

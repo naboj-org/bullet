@@ -1,7 +1,7 @@
 from enum import IntEnum
 from functools import partial
 
-from bullet_admin.utils import is_admin
+from bullet_admin.access_v2 import is_admin
 from countries.utils import country_reverse
 from django.contrib import messages
 from django.db import transaction
