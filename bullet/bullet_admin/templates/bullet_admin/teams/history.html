@@ -20,10 +20,9 @@
                             <th class="p-2">User</th>
                             <th class="p-2">Time</th>
                             <th class="p-2">Changes</th>
-                            <th class="p-2"></th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y">
+                    <tbody class="divide-y divide-gray-200">
                         {% for record in object_list %}
                             <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                                 <td class="p-2 font-mono tracking-wider">
@@ -83,12 +82,6 @@
                                             {% endfor %}
                                         {% endif %}
                                     </ul>
-                                </td>
-                                <td class="p-2 whitespace-nowrap text-right">
-                                    <a href="{% url "badmin:team_revert" pk=team.id team_time=record.t1 contestant_time=record.t2 %}"
-                                       class="btn-admin-sm bg-gray-500 hover:bg-gray-600">
-                                        <i class="fas fa-history"></i> Revert
-                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}

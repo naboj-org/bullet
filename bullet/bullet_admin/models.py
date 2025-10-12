@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Iterable
+from typing import TYPE_CHECKING, Collection
 
 from django.db import models
 from django_countries.fields import CountryField
@@ -41,7 +41,7 @@ class CompetitionRole(models.Model):
     is_operator = models.BooleanField(default=False)
 
     @property
-    def venues(self) -> "Iterable[Venue]":
+    def venues(self) -> "Collection[Venue]":
         if not self.id:
             return []
         return self.venue_objects.all()

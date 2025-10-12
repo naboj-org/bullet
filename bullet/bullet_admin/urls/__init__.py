@@ -164,11 +164,6 @@ urlpatterns = [
     path("teams/create/", teams.TeamCreateView.as_view(), name="team_create"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
     path(
-        "teams/<int:pk>/restore",
-        teams.TeamRestoreView.as_view(),
-        name="team_restore",
-    ),
-    path(
         "teams/recently_deleted",
         teams.RecentlyDeletedTeamsView.as_view(),
         name="recently_deleted",
@@ -197,11 +192,6 @@ urlpatterns = [
         "teams/<int:pk>/delete/",
         teams.TeamDeleteView.as_view(),
         name="team_delete",
-    ),
-    path(
-        "teams/<int:pk>/revert/<team_time>/<contestant_time>",
-        teams.TeamRevertView.as_view(),
-        name="team_revert",
     ),
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),

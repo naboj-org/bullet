@@ -67,12 +67,12 @@
                             <th class="p-2">School</th>
                             <th class="p-2">Contact information</th>
                             <th class="p-2">Contestants</th>
-                            {% if not hide_venue %}<th class="p-2">Venue / Category</th>{% endif %}
+                            <th class="p-2">Venue</th>
                             <th class="p-2">Status</th>
                             <th class="p-2"></th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y">
+                    <tbody class="divide-y divide-gray-200">
                         {% for team in object_list %}
                             <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                                 <td class="p-2 font-mono tracking-wider">
@@ -114,12 +114,10 @@
                                         {% endfor %}
                                     </ul>
                                 </td>
-                                {% if not hide_venue %}
-                                    <td class="p-2">
-                                        <div>{{ team.venue.name }}</div>
-                                        <div class="text-sm">{{ team.venue.category.identifier|title }}</div>
-                                    </td>
-                                {% endif %}
+                                <td class="p-2">
+                                    <div>{{ team.venue.name }}</div>
+                                    <div class="text-sm">{{ team.venue.category.identifier|title }}</div>
+                                </td>
                                 <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
                                     {% if team.status == team.status.UNCONFIRMED %}
                                         <span class="bg-gray-500 px-2 py-1 rounded-sm">Unconfirmed</span>
