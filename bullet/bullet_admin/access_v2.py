@@ -14,7 +14,7 @@ from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_active_competition
 
 
-def competition_is_unlocked(user: User, competition: Competition) -> bool:
+def is_competition_unlocked(user: User, competition: Competition) -> bool:
     """The competition must be unlocked."""
     return not competition.results_public
 
