@@ -165,10 +165,12 @@ class Competition(models.Model):
 
 
 class Category(models.Model):
+    id: int
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
     )
+    competition_id: int
 
     identifier = models.SlugField()
     order = models.IntegerField(default=0)
