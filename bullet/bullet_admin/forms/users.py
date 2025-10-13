@@ -72,5 +72,7 @@ class CompetitionRoleForm(forms.ModelForm):
                 "The user cannot be both a venue and a country administrator."
             )
 
-        if self.cleaned_data["can_delegate"] and self.cleaned_data["is_operator"]:
-            raise ValidationError("Operator cannot have delegate permission.")
+        if countries and self.cleaned_data["is_operator"]:
+            raise ValidationError(
+                "Operator with countries is unsupported permission configuration."
+            )

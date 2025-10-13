@@ -13,8 +13,6 @@ class BranchRole(models.Model):
     user = models.ForeignKey("users.User", on_delete=models.CASCADE)
     user_id: int
     branch = BranchField()
-    is_translator = models.BooleanField(default=False)
-    is_photographer = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
 
     class Meta:
@@ -37,7 +35,6 @@ class CompetitionRole(models.Model):
         related_name="+",
         blank=True,
     )
-    can_delegate = models.BooleanField(default=False)
     is_operator = models.BooleanField(default=False)
 
     @property
