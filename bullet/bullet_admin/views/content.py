@@ -10,7 +10,6 @@ from django.utils.translation import get_language_info
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Menu, Page, PageBlock
 
-from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.content import (
     ContentBlockForm,

@@ -37,9 +37,6 @@ from users.models import Contestant, Team
 from users.models.organizers import User
 
 from bullet import search, settings
-from bullet.views import FormAndFormsetMixin
-from bullet_admin.access import AdminAccess
-from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import (
     PermissionCheckMixin,
     is_admin,
