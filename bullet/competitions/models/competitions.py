@@ -107,7 +107,7 @@ class Competition(models.Model):
         ]
 
     def __str__(self):
-        return f'{self.name}{" (Cancelled)" if self.is_cancelled else ""}'
+        return f"{self.name}{' (Cancelled)' if self.is_cancelled else ''}"
 
     @property
     def name(self):

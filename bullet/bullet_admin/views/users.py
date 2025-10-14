@@ -47,8 +47,8 @@ class UserListView(DelegateRequiredMixin, GenericList, ListView):
 
         return qs
 
-    def get_row_links(self, object) -> list[Link]:
-        return [EditIcon(reverse("badmin:user_edit", args=[object.pk]))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [EditIcon(reverse("badmin:user_edit", args=[obj.pk]))]
 
 
 class UserFormsMixin:

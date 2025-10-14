@@ -26,7 +26,6 @@ class LetterCallbackView(View):
 
         form = LetterCallbackForm(self.request.POST, self.request.FILES)
         if not form.is_valid():
-            print(form.errors)
             return HttpResponse("invalid data", status=400)
 
         job.output_log = form.cleaned_data.get("tectonic_output", "")
@@ -73,19 +72,19 @@ class TemplateListView(AdminAccess, GenericList, ListView):
             competition=get_active_competition(self.request)
         )
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         links = [
-            EditIcon(reverse("badmin:tex_template_update", args=[object.pk])),
-            Link("blue", "mdi:download", "Download sources", object.template.url),
+            EditIcon(reverse("badmin:tex_template_update", args=[obj.pk])),
+            Link("blue", "mdi:download", "Download sources", obj.template.url),
         ]
 
-        if object.type == object.Type.GENERIC:
+        if obj.type == obj.Type.GENERIC:
             links.append(
                 Link(
                     "blue",
                     "mdi:play",
                     "Generate document",
-                    reverse("badmin:tex_template_render", args=[object.pk]),
+                    reverse("badmin:tex_template_render", args=[obj.pk]),
                 )
             )
 

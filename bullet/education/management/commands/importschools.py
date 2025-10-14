@@ -25,7 +25,7 @@ class Command(BaseCommand):
 
         res = importer.import_schools()
         self.stderr.write(
-            self.style.SUCCESS(f"Imported {res.created+res.updated} schools.")
+            self.style.SUCCESS(f"Imported {res.created + res.updated} schools.")
         )
         self.stderr.write(f"Created: {res.created} Updated: {res.updated}")
         self.stderr.write(f"Lost: {len(res.lost_identifiers)}")

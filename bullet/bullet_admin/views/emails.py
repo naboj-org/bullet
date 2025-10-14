@@ -65,8 +65,8 @@ class CampaignListView(AdminRequiredMixin, GenericList, ListView):
             competition=get_active_competition(self.request)
         )
 
-    def get_row_links(self, object) -> list[Link]:
-        return [ViewIcon(reverse("badmin:email_detail", args=[object.pk]))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [ViewIcon(reverse("badmin:email_detail", args=[obj.pk]))]
 
 
 class CampaignCreateView(AdminRequiredMixin, CreateView):

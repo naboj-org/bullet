@@ -1,3 +1,4 @@
+from bullet.views import FormAndFormsetMixin
 from competitions.models import Competition
 from django.db import transaction
 from django.db.models import Q
@@ -9,7 +10,6 @@ from django.utils.translation import get_language_info
 from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from web.models import ContentBlock, Menu, Page, PageBlock
 
-from bullet.views import FormAndFormsetMixin
 from bullet_admin.forms.content import (
     ContentBlockForm,
     ContentBlockWithRefForm,
@@ -48,24 +48,24 @@ class PageListView(TranslatorRequiredMixin, PageQuerySetMixin, GenericList, List
         "countries": "bullet_admin/content/field__countries.html",
     }
 
-    def get_language_content(self, object):
-        lang = get_language_info(object.language)
+    def get_language_content(self, obj):
+        lang = get_language_info(obj.language)
         return lang["name"]
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         view = reverse(
             "page",
             kwargs={
-                "b_country": object.countries[0].lower(),
-                "b_language": object.language,
-                "slug": object.slug,
+                "b_country": obj.countries[0].lower(),
+                "b_language": obj.language,
+                "slug": obj.slug,
             },
         )
 
         return [
-            EditIcon(reverse("badmin:page_edit", args=[object.pk])),
+            EditIcon(reverse("badmin:page_edit", args=[obj.pk])),
             ExternalViewIcon(view),
-            DeleteIcon(reverse("badmin:page_delete", args=[object.pk])),
+            DeleteIcon(reverse("badmin:page_delete", args=[obj.pk])),
         ]
 
 
@@ -397,14 +397,14 @@ class MenuItemListView(TranslatorRequiredMixin, GenericList, ListView):
             "language", "order"
         )
 
-    def get_language_content(self, object):
-        lang = get_language_info(object.language)
+    def get_language_content(self, obj):
+        lang = get_language_info(obj.language)
         return lang["name"]
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         return [
-            EditIcon(reverse("badmin:menu_edit", args=[object.pk])),
-            DeleteIcon(reverse("badmin:menu_delete", args=[object.pk])),
+            EditIcon(reverse("badmin:menu_edit", args=[obj.pk])),
+            DeleteIcon(reverse("badmin:menu_delete", args=[obj.pk])),
         ]
 
 

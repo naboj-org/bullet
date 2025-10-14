@@ -21,7 +21,7 @@ class Tearoff:
     page_number: int
 
 
-class TearoffRequirementMissing(Exception):
+class TearoffRequirementMissingError(Exception):
     pass
 
 
@@ -51,7 +51,7 @@ class TearoffGenerator:
                     self.problem_pdf_root / f"{language}.pdf"
                 )
             except FileNotFoundError:
-                raise TearoffRequirementMissing(
+                raise TearoffRequirementMissingError(
                     f"Missing tearoff file for language {language}."
                 )
         return self._problem_pdfs[language]
@@ -65,11 +65,11 @@ class TearoffGenerator:
         for language in languages:
             try:
                 problem_pdf = self.get_problem_pdf(language)
-            except TearoffRequirementMissing:
+            except TearoffRequirementMissingError:
                 raise
 
             if len(problem_pdf.pages) != problem_count + 1:
-                raise TearoffRequirementMissing(
+                raise TearoffRequirementMissingError(
                     f"Wrong page count for language {language}: expected "
                     f"{problem_count + 1}, got {len(problem_pdf.pages)}."
                 )

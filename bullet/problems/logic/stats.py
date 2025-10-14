@@ -41,9 +41,9 @@ def generate_stats_category(category: Category):
         }
 
     for solve in solves:
-        solve_times[solve.team_id][
-            problem_number_map[solve.problem_id]
-        ] = solve.competition_time
+        solve_times[solve.team_id][problem_number_map[solve.problem_id]] = (
+            solve.competition_time
+        )
 
         # The team just received their next problem
         received_problem = len(receive_times[solve.team_id]) + first_problem

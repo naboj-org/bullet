@@ -22,7 +22,7 @@ repos:
     hooks:
       - id: check-migrations
         name: check migrations
-        entry: uv run manage.py makemigrations --check
+        entry: uv run bullet/manage.py makemigrations --check
         language: system
         types: [python]
         pass_filenames: false

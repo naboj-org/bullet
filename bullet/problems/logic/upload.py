@@ -15,12 +15,12 @@ class ProblemImportError(Exception):
 
 
 def handle_upload(competition: "Competition", file: IO[bytes]):
-    with ZipFile(file) as zip:
-        _handle_statements(competition, zip)
-        _handle_assets(competition, Path(zip) / "assets")
+    with ZipFile(file) as zipf:
+        _handle_statements(competition, zipf)
+        _handle_assets(competition, Path(zipf) / "assets")
 
 
-def _handle_statements(competition: "Competition", zip: ZipFile):
+def _handle_statements(competition: "Competition", zipf: ZipFile):
     """
     Imports statements from the zip file.
 
@@ -32,7 +32,7 @@ def _handle_statements(competition: "Competition", zip: ZipFile):
                 - solution.html
                 - answer.html
     """
-    statement_dir = Path(zip) / "statements"
+    statement_dir = Path(zipf) / "statements"
     if not statement_dir.exists():
         return
 

@@ -40,17 +40,17 @@ class CountrySelectView(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        Countries = []
+        countries = []
         for bc in BranchCountry.objects.filter(branch=self.request.BRANCH):
             languages = set(bc.languages) - set(bc.hidden_languages)
             if languages:
-                Countries.append(
+                countries.append(
                     {
                         "country": bc.country,
                         "languages": languages,
                     }
                 )
 
-        ctx["countries"] = Countries
+        ctx["countries"] = countries
         ctx["redirect"] = get_redirect_url(self.request, "/")
         return ctx

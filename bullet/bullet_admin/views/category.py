@@ -63,12 +63,12 @@ class CategoryListView(GenericList, ListView):
     def get_queryset(self):
         return Category.objects.filter(competition=get_active_competition(self.request))
 
-    def get_max_teams_per_school_content(self, object):
+    def get_max_teams_per_school_content(self, obj):
         return mark_safe(
-            f"{object.max_teams_per_school}"
+            f"{obj.max_teams_per_school}"
             " <span class='text-black/70 font-normal'>"
-            f"({object.max_teams_second_round})</span>"
+            f"({obj.max_teams_second_round})</span>"
         )
 
-    def get_row_links(self, object) -> list[Link]:
-        return [EditIcon(reverse("badmin:category_edit", args=[object.pk]))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [EditIcon(reverse("badmin:category_edit", args=[obj.pk]))]

@@ -30,13 +30,13 @@ class WildcardListView(
     list_links = [NewLink("wildcard", reverse_lazy("badmin:wildcard_create"))]
     table_fields = ["category", "school", "note"]
 
-    def get_category_content(self, object):
-        if not object.category:
+    def get_category_content(self, obj):
+        if not obj.category:
             return "(none)"
-        return object.category.identifier.title()
+        return obj.category.identifier.title()
 
-    def get_row_links(self, object) -> list[Link]:
-        return [DeleteIcon(reverse("badmin:wildcard_delete", args=[object.pk]))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [DeleteIcon(reverse("badmin:wildcard_delete", args=[obj.pk]))]
 
 
 class WildcardCreateView(

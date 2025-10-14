@@ -24,7 +24,7 @@ def register_font(name: str):
     pdfmetrics.registerFont(TTFont(name, font_dir / f"{name}.ttf"))
 
 
-def prepare_pdf(footer_str: str) -> (io.BytesIO, BaseDocTemplate):
+def prepare_pdf(footer_str: str) -> tuple[io.BytesIO, BaseDocTemplate]:
     font_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "fonts")
     pdfmetrics.registerFont(
         TTFont("IBMPlexSans-Regular", os.path.join(font_dir, "IBMPlexSans-Regular.ttf"))
@@ -45,7 +45,7 @@ def prepare_pdf(footer_str: str) -> (io.BytesIO, BaseDocTemplate):
     pdfmetrics.registerFontFamily(
         "IBMPlexMono", normal="IBMPlexMono-Regular", bold="IBMPlexMono-Bold"
     )
-    footerStyle = ParagraphStyle(
+    footer_style = ParagraphStyle(
         name="footer",
         alignment=TA_CENTER,
         fontSize=8,
@@ -55,13 +55,13 @@ def prepare_pdf(footer_str: str) -> (io.BytesIO, BaseDocTemplate):
 
     def footer(canvas, doc):
         canvas.saveState()
-        P = Paragraph(
+        para = Paragraph(
             f"{footer_str}<br/>Page {canvas._pageNumber}",
-            footerStyle,
+            footer_style,
         )
-        w, h = P.wrap(doc.width, 0)
+        w, h = para.wrap(doc.width, 0)
         m = 5 * mm
-        P.drawOn(canvas, doc.leftMargin, m + 0.5 * mm)
+        para.drawOn(canvas, doc.leftMargin, m + 0.5 * mm)
         canvas.setLineWidth(1)
         canvas.line(doc.leftMargin, m, doc.width + doc.leftMargin, m)
         canvas.line(doc.leftMargin, m + mm + h, doc.width + doc.leftMargin, m + mm + h)

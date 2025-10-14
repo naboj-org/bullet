@@ -36,10 +36,10 @@ class CroatianSchoolImporter(BaseSchoolImporter):
             types = [x.strip() for x in row["TipUstanove"].split(",")]
 
             our_types = []
-            for type in types:
-                if type not in self.type_map:
+            for type_ in types:
+                if type_ not in self.type_map:
                     continue
-                our_types.append(self.type_map[type])
+                our_types.append(self.type_map[type_])
 
             yield ImportedSchool(
                 row["Naziv"],

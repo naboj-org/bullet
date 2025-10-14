@@ -39,7 +39,7 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
     def get_queryset(self):
         return Album.objects.filter(competition=get_active_competition(self.request))
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         assert self.detection
         country, language = self.detection
         view = reverse(
@@ -47,15 +47,15 @@ class AlbumListView(PhotoUploadAccess, GenericList, ListView):
             kwargs={
                 "b_country": country,
                 "b_language": language,
-                "competition_number": object.competition.number,
-                "slug": object.slug,
+                "competition_number": obj.competition.number,
+                "slug": obj.slug,
             },
         )
 
         return [
-            EditIcon(reverse("badmin:album_edit", args=[object.pk])),
+            EditIcon(reverse("badmin:album_edit", args=[obj.pk])),
             ExternalViewIcon(view),
-            DeleteIcon(reverse("badmin:album_delete", args=[object.pk])),
+            DeleteIcon(reverse("badmin:album_delete", args=[obj.pk])),
         ]
 
     def dispatch(self, request, *args, **kwargs):

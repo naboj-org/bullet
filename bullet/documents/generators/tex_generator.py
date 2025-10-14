@@ -24,9 +24,10 @@ def render_zip(
         autoescape=False,
     )
 
-    with zipfile.ZipFile(template_zip) as template, zipfile.ZipFile(
-        output_zip, "w"
-    ) as output:
+    with (
+        zipfile.ZipFile(template_zip) as template,
+        zipfile.ZipFile(output_zip, "w") as output,
+    ):
         for file in template.namelist():
             with template.open(file) as f:
                 if not file.endswith(".j2"):

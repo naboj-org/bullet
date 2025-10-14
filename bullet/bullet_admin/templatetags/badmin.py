@@ -1,3 +1,4 @@
+from bullet.search import DumbPage
 from bullet_admin.access import is_country_admin
 from bullet_admin.utils import get_active_competition
 from competitions.branches import Branch
@@ -8,8 +9,6 @@ from django.urls import reverse
 from django.utils.html import escape
 from django.utils.safestring import mark_safe
 from users.models import User
-
-from bullet.search import DumbPage
 
 register = template.Library()
 

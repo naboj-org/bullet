@@ -218,30 +218,28 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
 
         return labels
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         return []
 
-    def get_row_fields(self, object) -> list[str]:
+    def get_row_fields(self, obj) -> list[str]:
         fields = []
         for field in self.get_table_fields():
-            data = getattr(object, field, None)
+            data = getattr(obj, field, None)
 
             if field in self.table_field_templates:
                 data = mark_safe(
-                    render_to_string(
-                        self.table_field_templates[field], {"object": object}
-                    )
+                    render_to_string(self.table_field_templates[field], {"object": obj})
                 )
 
             fn_name = f"get_{field}_content"
             if hasattr(self, fn_name):
-                data = getattr(self, fn_name)(object)
+                data = getattr(self, fn_name)(obj)
 
             fields.append(data)
         return fields
 
-    def get_row_context(self, object):
+    def get_row_context(self, obj):
         return {
-            "fields": self.get_row_fields(object),
-            "links": self.get_row_links(object),
+            "fields": self.get_row_fields(obj),
+            "links": self.get_row_links(obj),
         }

@@ -1,3 +1,4 @@
+from bullet.utils.email import send_email
 from competitions.branches import Branches
 from countries.utils import country_reverse
 from django.contrib.postgres.fields import ArrayField
@@ -8,7 +9,6 @@ from django_countries.fields import CountryField
 from django_rq import job
 from web.fields import ChoiceArrayField, LanguageField
 
-from bullet.utils.email import send_email
 from users.emails.teams import TeamCountry
 from users.models import Team, TeamStatus
 

@@ -220,9 +220,8 @@ if dsn:
         release=bullet.VERSION,
     )
 
+SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
 if DEBUG:
-    SILENCED_SYSTEM_CHECKS = ["django_recaptcha.recaptcha_test_key_error"]
-
     import socket
 
     hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())

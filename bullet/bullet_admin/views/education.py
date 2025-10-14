@@ -64,8 +64,8 @@ class SchoolListView(CountryAdminAccess, SchoolQuerySetMixin, GenericList, ListV
             qs = search.MeiliQuerySet(qs, "schools", search_query, options)
         return qs
 
-    def get_row_links(self, object) -> list[Link]:
-        return [EditIcon(reverse("badmin:school_update", args=[object.pk]))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [EditIcon(reverse("badmin:school_update", args=[obj.pk]))]
 
 
 class SchoolUpdateView(

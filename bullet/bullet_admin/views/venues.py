@@ -17,7 +17,10 @@ from django.views.generic import (
 )
 from documents.generators.certificate import certificates_for_venue
 from documents.generators.team_list import team_list
-from documents.generators.tearoff import TearoffGenerator, TearoffRequirementMissing
+from documents.generators.tearoff import (
+    TearoffGenerator,
+    TearoffRequirementMissingError,
+)
 from documents.models import TexJob
 from problems.logic.results import (
     get_venue_results,
@@ -56,8 +59,8 @@ class VenueListView(AdminAccess, GenericList, ListView):
         "name": "bullet_admin/venues/field__venue.html",
     }
 
-    def get_category_content(self, object):
-        return object.category.identifier.title()
+    def get_category_content(self, obj):
+        return obj.category.identifier.title()
 
     def get_list_links(self) -> list[Link]:
         links = []
@@ -75,8 +78,8 @@ class VenueListView(AdminAccess, GenericList, ListView):
             Venue.objects.for_request(self.request).annotate_teamcount().natural_order()
         )
 
-    def get_row_links(self, object) -> list[Link]:
-        return [ViewIcon(reverse("badmin:venue_detail", kwargs={"pk": object.id}))]
+    def get_row_links(self, obj) -> list[Link]:
+        return [ViewIcon(reverse("badmin:venue_detail", kwargs={"pk": obj.id}))]
 
 
 class VenueFormMixin(GenericForm):
@@ -266,7 +269,7 @@ class TearoffView(VenueMixin, GenericForm, FormView):
                 default_storage.path(competition.secret_dir / "tearoffs")
             )
             t = TearoffGenerator(tearoff_dir, form.cleaned_data["backup_team_language"])
-        except TearoffRequirementMissing as e:
+        except TearoffRequirementMissingError as e:
             return HttpResponse(str(e), status=500)
 
         teams = list(
@@ -294,7 +297,7 @@ class TearoffView(VenueMixin, GenericForm, FormView):
                 form.cleaned_data["include_qr_codes"],
             )
             return FileResponse(data, filename="tearoffs.pdf")
-        except TearoffRequirementMissing as e:
+        except TearoffRequirementMissingError as e:
             return HttpResponse(str(e), status=500)
 
 

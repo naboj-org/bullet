@@ -7,9 +7,9 @@ and announce results.
 
 You can view results for every venue you have access to.
 
-* **Public results:** Shows the results in the same way they are shown to the public. This includes the freeze that 
+* **Public results:** Shows the results in the same way they are shown to the public. This includes the freeze that
 happens some time before the competition ends.
-* **Admin results:** Shows the real results at this time. This means that admin results are not frozen and always show 
+* **Admin results:** Shows the real results at this time. This means that admin results are not frozen and always show
 current data.
 
 Links on the results page will lead to the country-language combination you last accessed.

@@ -1,6 +1,6 @@
 # Problem Scanning
 
-The [“Problem scanning” page](/admin/scanning/problems/) of the administration interface is used to scan solved 
+The [“Problem scanning” page](/admin/scanning/problems/) of the administration interface is used to scan solved
 problems during the competition.
 
 We recommend using a hardware barcode scanner that supports keyboard emulation (that is most of them).
@@ -11,7 +11,7 @@ When a team solves a problem, you scan the barcode into this page. After scannin
 appear on screen, this result will also be added to the scanning history (newest entries are at the top).
 The result is colored to indicate status, and an error message is shown if available.
 
-If you scan a problem by accident, you can undo the scan by clicking on the undo button in the history log. You can 
+If you scan a problem by accident, you can undo the scan by clicking on the undo button in the history log. You can
 also retry any failed scan by clicking on the retry button.
 
 ## Green
@@ -23,9 +23,9 @@ Green status means that the scanning was successful.
 The yellow color indicates one of the following errors:
 
 * **Barcode format is invalid.** The scanned barcode does not contain the required information. Try scanning again.
-* **Check digit on the scanned barcode is not correct.** The scanned barcode does not contain valid check digit. 
+* **Check digit on the scanned barcode is not correct.** The scanned barcode does not contain valid check digit.
 Try scanning again.
-* **Could not find venue XXX.** / **Could not find team XXX in XXX.** / **Could not find problem XXX.** 
+* **Could not find venue XXX.** / **Could not find team XXX in XXX.** / **Could not find problem XXX.**
 The scanned barcode is malformed, try scanning again. If problem persists, contact IT.
 * **You don't have the required permissions to scan problems in XXX.**
 The scanned barcode belongs to another venue that you don’t have access to.

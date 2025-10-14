@@ -5,6 +5,7 @@ from datetime import datetime, timedelta
 from functools import partial
 
 import yaml
+from bullet.views import FormAndFormsetMixin
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -35,7 +36,6 @@ from users.logic import get_school_symbol
 from users.models import Contestant, Team
 
 from bullet import search, settings
-from bullet.views import FormAndFormsetMixin
 from bullet_admin.access import AdminAccess
 from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm, TeamForm
 from bullet_admin.forms.tex import TexTeamRenderForm
@@ -268,9 +268,9 @@ class TeamEditView(
         country = str(ctx["object"].venue.country.code).lower()
         language = ctx["object"].language
         branch = self.request.BRANCH
-        ctx[
-            "root_url"
-        ] = f"https://{branch.identifier}.{settings.PARENT_HOST}/{country}/{language}/teams/"
+        ctx["root_url"] = (
+            f"https://{branch.identifier}.{settings.PARENT_HOST}/{country}/{language}/teams/"
+        )
         return ctx
 
     def post(self, request, *args, **kwargs):
@@ -559,7 +559,6 @@ class TeamRestoreView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
         time = team.history_date
 
         previous_members = get_team_members(prev, time)
-        print(previous_members)
         for member in previous_members:
             member.instance.save()
 
