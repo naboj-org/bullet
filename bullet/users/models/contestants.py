@@ -151,6 +151,10 @@ class Team(models.Model):
         return ", ".join([c.full_name for c in self.contestants.all()])
 
     @property
+    def abbreviated_names(self):
+        return ", ".join([c.abbreviated_name for c in self.contestants.all()])
+
+    @property
     def id_display(self):
         return f"#{self.id:06d}"
 
@@ -248,6 +252,7 @@ class Team(models.Model):
             "contestants": self.contestants_names
             if str_only
             else [c.full_name for c in self.contestants.all()],
+            "abbreviated_contestants": self.abbreviated_names,
             "online_password": self.online_password,
             "rank_venue": self.rank_venue or "",
             "rank_country": self.rank_country or "",
@@ -279,6 +284,16 @@ class Contestant(models.Model):
         if self.grade:
             name += f" ({self.grade.name})"
         return name
+
+    @property
+    def abbreviated_name(self):
+        parts = self.full_name.split()
+        if not parts:
+            return ""
+        if len(parts) == 1:
+            return parts[0]
+
+        return f"{parts[0]} {parts[-1][0]}."
 
 
 def get_spanish_upload(instance, filename):

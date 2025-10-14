@@ -42,7 +42,13 @@
           {% endif %}
 
           {% if not hide_contestants %}
-          <div class="mt-0.5 text-xs leading-4 text-gray-500">{{ row.team.contestants.all|join:", " }}</div>
+          <div class="mt-0.5 text-xs leading-4 text-gray-500">
+            {% if row.team.venue.abbreviate_names %}
+              {{ row.team.abbreviated_names }}
+            {% else %}
+              {{ row.team.contestants_names }}
+            {% endif %}
+          </div>
           {% endif %}
         </td>
         <td class="p-2 hidden md:table-cell text-lg">
