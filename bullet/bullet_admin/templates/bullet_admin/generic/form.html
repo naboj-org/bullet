@@ -31,8 +31,9 @@
                 <hr class="my-6">
                 {% admin_form2 form %}
             {% endfor %}
-            <div class="mt-6">
+            <div class="mt-6 flex flex-wrap gap-2">
                 {% #abtn button label=form_submit_label icon=form_submit_icon color=form_submit_color %}
+                {% block after_submit %}{% endblock %}
             </div>
         </form>
         {% block after_form %}

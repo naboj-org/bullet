@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.utils.safestring import mark_safe
 from django.views.generic import CreateView, ListView, UpdateView
 
-from bullet_admin.access import BranchAdminAccess
+from bullet_admin.access import PermissionCheckMixin, is_branch_admin
 from bullet_admin.forms.category import CategoryForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -12,7 +12,8 @@ from bullet_admin.views.generic.links import EditIcon, Link, NewLink
 from bullet_admin.views.generic.list import GenericList
 
 
-class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):
+class CategoryUpdateView(PermissionCheckMixin, GenericForm, UpdateView):
+    required_permissions = [is_branch_admin]
     form_title = "Edit category"
     form_class = CategoryForm
 
@@ -24,7 +25,8 @@ class CategoryUpdateView(BranchAdminAccess, GenericForm, UpdateView):
         return reverse("badmin:category_list")
 
 
-class CategoryCreateView(BranchAdminAccess, GenericForm, CreateView):
+class CategoryCreateView(PermissionCheckMixin, GenericForm, CreateView):
+    required_permissions = [is_branch_admin]
     form_title = "New category"
     form_class = CategoryForm
 
@@ -32,11 +34,13 @@ class CategoryCreateView(BranchAdminAccess, GenericForm, CreateView):
         category: Category = form.save(commit=False)
         category.competition = get_active_competition(self.request)
         category.save()
+        form.save_m2m()
 
         return redirect("badmin:category_list")
 
 
-class CategoryListView(GenericList, ListView):
+class CategoryListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_branch_admin]
     list_title = "Categories"
     list_links = [
         NewLink("category", reverse_lazy("badmin:category_create")),

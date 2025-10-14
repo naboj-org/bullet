@@ -1,68 +1,78 @@
+from typing import Callable
+
 from bullet_admin.access import (
-    can_access_venue,
-    is_any_admin,
+    CompetitionPermissionCallable,
+    VenuePermissionCallable,
+    is_admin,
+    is_admin_in,
     is_branch_admin,
+    is_branch_admin_in,
     is_country_admin,
     is_country_admin_in,
+    is_operator,
+    is_operator_in,
 )
 from bullet_admin.utils import get_active_competition
+from competitions.models.venues import Venue
 from django import template
+from django.http import HttpRequest
+from users.models.organizers import User
 
 register = template.Library()
 
 
-@register.simple_tag(takes_context=True, name="is_any_admin")
-def is_any_admin_tag(context):
-    request = context["request"]
-    return is_any_admin(request.user, get_active_competition(request))
+def competition_check(perm: CompetitionPermissionCallable) -> Callable:
+    def fn(context):
+        request: HttpRequest = context["request"]
+
+        user = request.user
+        assert isinstance(user, User)
+        competition = get_active_competition(request)
+
+        return perm(user, competition)
+
+    return fn
 
 
-@register.simple_tag(takes_context=True, name="is_country_admin")
-def is_country_admin_tag(context):
-    request = context["request"]
-    return is_country_admin(request.user, get_active_competition(request))
+def venue_check(perm: VenuePermissionCallable) -> Callable:
+    def fn(context, venue: Venue | None = None):
+        request: HttpRequest = context["request"]
+
+        if not venue:
+            if "venue" in context:
+                venue = context["venue"]
+            else:
+                raise ValueError(f"{perm.__name__} called without venue")
+
+        user = request.user
+        assert isinstance(user, User)
+
+        return perm(user, venue)  # type:ignore
+
+    return fn
 
 
-@register.simple_tag(takes_context=True, name="is_country_admin_in")
-def is_country_admin_in_tag(context, country):
-    request = context["request"]
-    return is_country_admin_in(request.user, get_active_competition(request), country)
+register.simple_tag(
+    competition_check(is_branch_admin), takes_context=True, name="is_branch_admin"
+)
+register.simple_tag(
+    competition_check(is_country_admin), takes_context=True, name="is_country_admin"
+)
+register.simple_tag(competition_check(is_admin), takes_context=True, name="is_admin")
+register.simple_tag(
+    competition_check(is_operator), takes_context=True, name="is_operator"
+)
 
-
-@register.simple_tag(takes_context=True, name="is_venue_admin")
-def is_venue_admin_tag(context, venue):
-    request = context["request"]
-    return can_access_venue(request.user, venue)
-
-
-@register.simple_tag(takes_context=True, name="is_branch_admin")
-def is_branch_admin_tag(context):
-    request = context["request"]
-    return is_branch_admin(request.user, request.BRANCH)
-
-
-@register.simple_tag(takes_context=True, name="is_any_operator")
-def is_any_operator_tag(context):
-    request = context["request"]
-    return is_any_admin(
-        request.user, get_active_competition(request), allow_operator=True
-    )
-
-
-@register.simple_tag(takes_context=True, name="is_country_operator")
-def is_country_operator_tag(context):
-    request = context["request"]
-    return is_country_admin(
-        request.user, get_active_competition(request), allow_operator=True
-    )
-
-
-@register.simple_tag(takes_context=True, name="is_country_operator_in")
-def is_country_operator_in_tag(context, country):
-    request = context["request"]
-    return is_country_admin_in(
-        request.user, get_active_competition(request), country, allow_operator=True
-    )
+register.simple_tag(
+    venue_check(is_branch_admin_in), takes_context=True, name="is_branch_admin_in"
+)
+register.simple_tag(
+    venue_check(is_country_admin_in), takes_context=True, name="is_country_admin_in"
+)
+register.simple_tag(venue_check(is_admin_in), takes_context=True, name="is_admin_in")
+register.simple_tag(
+    venue_check(is_operator_in), takes_context=True, name="is_operator_in"
+)
 
 
 @register.simple_tag(takes_context=True, name="get_active_competition")

@@ -5,6 +5,7 @@ from pictures.models import PictureField
 
 
 class Album(models.Model):
+    id: int
     title = models.CharField(max_length=256)
     slug = models.SlugField(max_length=256)
     competition = models.ForeignKey(
@@ -12,6 +13,7 @@ class Album(models.Model):
         on_delete=models.CASCADE,
         related_name="albums",
     )
+    competition_id: int
     country = CountryField()
 
     def __str__(self):
@@ -25,11 +27,13 @@ class Album(models.Model):
 
 
 class Photo(models.Model):
+    id: int
     album = models.ForeignKey(
         "gallery.Album",
         on_delete=models.CASCADE,
         related_name="photos",
     )
+    album_id: int
     image_width = models.PositiveIntegerField()
     image_height = models.PositiveIntegerField()
     image = PictureField(

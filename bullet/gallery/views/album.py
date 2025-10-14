@@ -1,3 +1,5 @@
+from bullet_admin.access import MixinProtocol
+from bullet_admin.utils import get_active_branch
 from competitions.models import Competition
 from django.shortcuts import get_object_or_404
 from django.utils.functional import cached_property
@@ -7,11 +9,11 @@ from problems.views.archive import ArchiveCompetitionMixin
 from gallery.models import Album, Photo
 
 
-class GalleryCompetitionMixin(ArchiveCompetitionMixin):
+class GalleryCompetitionMixin(ArchiveCompetitionMixin, MixinProtocol):
     @cached_property
     def competition(self):
         return get_object_or_404(
-            Competition.objects.for_photos(self.request.user, self.request.BRANCH),
+            Competition.objects.filter(branch=get_active_branch(self.request)),
             number=self.kwargs["competition_number"],
         )
 

@@ -1,5 +1,5 @@
 from competitions.models import Category
-from django.forms import ModelForm
+from django.forms import CheckboxSelectMultiple, ModelForm
 
 
 class CategoryForm(ModelForm):
@@ -14,6 +14,7 @@ class CategoryForm(ModelForm):
             "max_members_per_team",
             "max_teams_per_school",
             "max_teams_second_round",
+            "educations",
         ]
 
         labels = {
@@ -21,6 +22,7 @@ class CategoryForm(ModelForm):
             "max_members_per_team": "Max. number of team members",
             "max_teams_per_school": "Max. number of teams per school",
             "max_teams_second_round": "Max. number of teams per school (2nd round)",
+            "educations": "Allowed school grades",
         }
 
         help_texts = {
@@ -33,6 +35,10 @@ class CategoryForm(ModelForm):
             "waiting list. This only applies during the 1st round of registration.",
             "max_teams_second_round": "See above. This only applies during the 2nd "
             "round of registration.",
+        }
+
+        widgets = {
+            "educations": CheckboxSelectMultiple,
         }
 
     def __init__(self, **kwargs):

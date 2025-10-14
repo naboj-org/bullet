@@ -2,7 +2,7 @@ from django.urls import include, path
 
 from bullet_admin.views import (
     CompetitionSwitchView,
-    albums,
+    album,
     archive,
     auth,
     category,
@@ -141,7 +141,7 @@ urlpatterns = [
     ),
     path(
         "content/menu/edit/<pk>/",
-        content.MenuItemEditView.as_view(),
+        content.MenuItemUpdateView.as_view(),
         name="menu_edit",
     ),
     path(
@@ -163,11 +163,6 @@ urlpatterns = [
     path("teams/export/", teams.TeamExportView.as_view(), name="team_export"),
     path("teams/create/", teams.TeamCreateView.as_view(), name="team_create"),
     path("teams/<int:pk>/", teams.TeamEditView.as_view(), name="team_edit"),
-    path(
-        "teams/<int:pk>/restore",
-        teams.TeamRestoreView.as_view(),
-        name="team_restore",
-    ),
     path(
         "teams/recently_deleted",
         teams.RecentlyDeletedTeamsView.as_view(),
@@ -197,11 +192,6 @@ urlpatterns = [
         "teams/<int:pk>/delete/",
         teams.TeamDeleteView.as_view(),
         name="team_delete",
-    ),
-    path(
-        "teams/<int:pk>/revert/<team_time>/<contestant_time>",
-        teams.TeamRevertView.as_view(),
-        name="team_revert",
     ),
     path("_school_input", teams.SchoolInputView.as_view(), name="school_input"),
     path("users/", users.UserListView.as_view(), name="user_list"),
@@ -276,14 +266,14 @@ urlpatterns = [
         education.SchoolCreateView.as_view(),
         name="school_create",
     ),
-    path("gallery/albums/", albums.AlbumListView.as_view(), name="album_list"),
-    path("gallery/albums/new/", albums.AlbumCreateView.as_view(), name="album_create"),
+    path("gallery/albums/", album.AlbumListView.as_view(), name="album_list"),
+    path("gallery/albums/new/", album.AlbumCreateView.as_view(), name="album_create"),
     path(
-        "gallery/albums/<int:pk>/", albums.AlbumUpdateView.as_view(), name="album_edit"
+        "gallery/albums/<int:pk>/", album.AlbumUpdateView.as_view(), name="album_edit"
     ),
     path(
         "gallery/albums/<int:pk>/delete",
-        albums.AlbumDeleteView.as_view(),
+        album.AlbumDeleteView.as_view(),
         name="album_delete",
     ),
     path(

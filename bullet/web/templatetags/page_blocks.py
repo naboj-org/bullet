@@ -1,5 +1,8 @@
 from typing import TYPE_CHECKING
 
+from bullet_admin.access import is_admin
+from bullet_admin.utils import get_active_branch
+from competitions.models.competitions import Competition
 from django import template
 from django.conf import settings
 
@@ -22,8 +25,13 @@ def page_block(context, block: "PageBlock"):
     user = context.request.user
     ctx["can_edit_block"] = False
     if user.is_authenticated:
-        is_translator = user.get_branch_role(request.BRANCH).is_translator
-        if user.is_superuser or is_translator:
-            ctx["can_edit_block"] = True
+        if context["competition"]:
+            competition = context["competition"]
+        else:
+            competition = Competition.objects.get_current_competition(
+                get_active_branch(request)
+            )
+
+        ctx["can_edit_block"] = is_admin(user, competition)  # type:ignore
 
     return block.block.render(context.request, ctx)

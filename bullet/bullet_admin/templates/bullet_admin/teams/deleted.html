@@ -21,10 +21,9 @@
                             <th class="p-2">Contact information</th>
                             {% if not hide_venue %}<th class="p-2">Venue / Category</th>{% endif %}
                             <th class="p-2">Deleted</th>
-                            <th class="p-2"></th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y">
+                    <tbody class="divide-y divide-gray-200">
                         {% for team in object_list %}
                             <tr class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100">
                                 <td class="p-2 font-mono tracking-wider">
@@ -67,12 +66,6 @@
                                 {% endif %}
                                 <td>
                                     <div>{{ team.history_date }}</div>
-                                </td>
-                                <td class="p-2 whitespace-nowrap text-right">
-                                    <a href="{% url "badmin:team_restore" pk=team.id %}"
-                                       class="btn-admin-sm bg-gray-500 hover:bg-gray-600">
-                                        <i class="fas fa-history"></i> Restore
-                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}

@@ -92,6 +92,7 @@ class Venue(models.Model):
         DEFAULT = 0, "Default"
         NJ_SPAIN = 1, "Spain (NJ)"
 
+    id: int
     name = models.CharField(max_length=256)
     shortcode = models.CharField(max_length=6)
     email = models.EmailField(blank=True, default="")
@@ -99,6 +100,7 @@ class Venue(models.Model):
     country = CountryField()
 
     category = models.ForeignKey("competitions.Category", on_delete=models.CASCADE)
+    category_id: int
     capacity = models.PositiveIntegerField(default=0)
 
     accepted_languages = ChoiceArrayField(LanguageField())
@@ -114,7 +116,7 @@ class Venue(models.Model):
         choices=RegistrationFlowType.choices, default=RegistrationFlowType.DEFAULT
     )
 
-    objects = VenueManager.from_queryset(VenueQuerySet)()
+    objects: VenueQuerySet = VenueManager.from_queryset(VenueQuerySet)()  # type:ignore
 
     class Meta:
         unique_together = ("category", "shortcode")

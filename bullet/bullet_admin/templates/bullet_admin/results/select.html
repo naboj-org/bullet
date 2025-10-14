@@ -21,7 +21,7 @@
                 {{ category.grouper|title }} results
             {% endasubheader %}
             <table class="w-full text-sm">
-                <tbody class="divide-y">
+                <tbody>
                     <tr class="relative hover:bg-gray-100 even:bg-gray-50">
                         {% get_country country_results.country as c %}
                         <td class="p-3 whitespace-nowrap">International</td>
@@ -48,14 +48,12 @@
                                    class="link-primary">Admin results</a>
                             </td>
                             <td class="p-3 whitespace-nowrap">
-                                {% is_country_operator_in c as can_open %}
-                                {% if can_open %}
-                                    {% if not country_results.unreviewed %}
-                                        <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden"
-                                           class="link-primary">Results announcement</a>
-                                    {% else %}
-                                        <span>Unfinished review</span>
-                                    {% endif %}
+                                {# TODO: Custom permission check #}
+                                {% if not country_results.unreviewed %}
+                                    <a href="{% url "badmin:results_announce_country" category=country_results.category_id country=c %}?hidden"
+                                        class="link-primary">Results announcement</a>
+                                {% else %}
+                                    <span>Unfinished review</span>
                                 {% endif %}
                             </td>
                         </tr>
@@ -67,7 +65,7 @@
             Venue results
         {% endasubheader %}
         <table class="w-full text-sm">
-            <tbody class="divide-y">
+            <tbody>
                 {% for v in venues %}
                     <tr class="{% cycle "" "bg-gray-50" %} relative hover:bg-gray-100">
                         <td class="p-3 whitespace-nowrap">{{ v }}</td>

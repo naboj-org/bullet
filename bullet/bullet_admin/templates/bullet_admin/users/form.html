@@ -53,20 +53,6 @@
                 <div class="divide-y">
                     <div class="p-4">
                         <label class="flex items-center gap-2">
-                            {% bcheckbox bform.is_translator %} Allow access to content management
-                        </label>
-                        <span class="text-gray-700 text-sm">
-                            This lets the user go to the "Content" section in the admin sidebar. The user can manage the pages, blocks and other content options.
-                        </span>
-                    </div>
-                    <div class="p-4">
-                        <label class="flex items-center gap-2">
-                            {% bcheckbox bform.is_photographer %} Photo management
-                        </label>
-                        <span class="text-gray-700 text-sm">This will allow the user to upload and manage photo albums.</span>
-                    </div>
-                    <div class="p-4">
-                        <label class="flex items-center gap-2">
                             {% bcheckbox bform.is_admin %} Is branch administrator
                         </label>
                         <span class="text-gray-700 text-sm">This will allow the user to manage everything in this branch of Náboj.</span>
@@ -104,14 +90,6 @@
                             </p>
                         </div>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield cform.countries %}</div>
-                    </div>
-                    <div class="p-4">
-                        <label class="flex items-center gap-2">
-                            {% bcheckbox cform.can_delegate %} Can delegate permissions
-                        </label>
-                        <span class="text-gray-700 text-sm">
-                            This will allow the user to create new users with the same or lower permissions than themselves. Additionally, the user can grant those permissions to existing users.
-                        </span>
                     </div>
                     <div class="p-4">
                         <label class="flex items-center gap-2">

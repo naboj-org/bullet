@@ -4,17 +4,22 @@ from web.fields import LanguageField
 
 
 class Problem(models.Model):
+    id: int
     competition = models.ForeignKey(
         "competitions.Competition", on_delete=models.CASCADE, related_name="+"
     )
+    competition_id: int
     number = models.PositiveIntegerField()
 
 
 class SolvedProblem(models.Model):
+    id: int
     team = models.ForeignKey(
         "users.Team", on_delete=models.CASCADE, related_name="solved_problems"
     )
+    team_id: int
     problem = models.ForeignKey(Problem, on_delete=models.RESTRICT, related_name="+")
+    problem_id: int
     competition_time = models.DurationField()
 
     class Meta:

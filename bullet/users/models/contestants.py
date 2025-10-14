@@ -1,7 +1,7 @@
 import os
 import secrets
 import string
-from typing import Iterable
+from typing import TYPE_CHECKING, Iterable
 
 from bullet.utils.string import shorten
 from django.conf import settings
@@ -13,6 +13,10 @@ from phonenumbers import PhoneNumberFormat
 from simple_history.models import HistoricalRecords
 
 from bullet import search
+
+if TYPE_CHECKING:
+    from django.db.models.manager import RelatedManager
+    from problems.models import SolvedProblem
 
 
 class TeamStatus(models.TextChoices):
@@ -60,6 +64,7 @@ class TeamQuerySet(models.QuerySet):
 
 
 class Team(models.Model):
+    id: int
     contact_name = models.CharField(max_length=256)
     contact_email = models.EmailField()
     contact_phone = PhoneNumberField(null=True, blank=True)
@@ -69,6 +74,7 @@ class Team(models.Model):
     school = models.ForeignKey(
         "education.School", on_delete=models.CASCADE, blank=True, null=True
     )
+    school_id: int
     name = models.CharField(max_length=128, blank=True, null=True)
     language = models.TextField(choices=settings.LANGUAGES)
 
@@ -76,6 +82,7 @@ class Team(models.Model):
     confirmed_at = models.DateTimeField(null=True, blank=True)
 
     venue = models.ForeignKey("competitions.Venue", on_delete=models.CASCADE)
+    venue_id: int
     number = models.IntegerField(null=True, blank=True)
     in_school_symbol = models.CharField(max_length=3, null=True, blank=True)
 
@@ -89,8 +96,11 @@ class Team(models.Model):
     rank_country = models.IntegerField(null=True, blank=True)
     rank_international = models.IntegerField(null=True, blank=True)
 
-    objects = TeamQuerySet.as_manager()
+    objects: TeamQuerySet = TeamQuerySet.as_manager()  # type:ignore
     history = HistoricalRecords()
+    _change_reason: str
+
+    solved_problems: "RelatedManager[SolvedProblem]"
 
     class Meta:
         unique_together = [

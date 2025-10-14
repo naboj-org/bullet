@@ -9,15 +9,15 @@ from django.views.generic import TemplateView
 from django_countries.fields import Country
 from problems.models import ResultRow
 from users.models import Team
+from users.models.organizers import User
 
-from bullet_admin.access import AdminAccess, CountryAdminInAccess, VenueAccess
+from bullet_admin.access import PermissionCheckMixin, is_operator, is_operator_in
 from bullet_admin.utils import get_active_competition
 
 
-class ResultsHomeView(AdminAccess, TemplateView):
+class ResultsHomeView(PermissionCheckMixin, TemplateView):
+    required_permissions = [is_operator]
     template_name = "bullet_admin/results/select.html"
-    allow_operator = True
-    require_unlocked_competition = False
 
     def dispatch(self, request, *args, **kwargs):
         self.detection = get_country_language_from_request(self.request)
@@ -27,6 +27,7 @@ class ResultsHomeView(AdminAccess, TemplateView):
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
+        assert self.detection
         ctx = super().get_context_data(**kwargs)
         competition = get_active_competition(self.request)
         ctx["country"], ctx["language"] = self.detection
@@ -52,6 +53,7 @@ class ResultsHomeView(AdminAccess, TemplateView):
 
 class ResultsAnnouncementView(TemplateView):
     template_name = "bullet_admin/results/announce.html"
+    url: str
 
     def get_team(self, position):
         raise NotImplementedError()
@@ -86,25 +88,24 @@ class ResultsAnnouncementView(TemplateView):
         return ctx
 
 
-class VenueResultsAnnouncementView(VenueAccess, ResultsAnnouncementView):
-    allow_operator = True
-    require_unlocked_competition = False
+class VenueResultsAnnouncementView(PermissionCheckMixin, ResultsAnnouncementView):
+    required_permissions = [is_operator_in]
     url = "badmin:results_announce"
 
     @cached_property
     def venue(self):
         return get_object_or_404(Venue, id=self.kwargs["venue"])
 
-    def get_permission_venue(self) -> "Venue":
-        return self.venue
+    def check_custom_permission(self, user: User) -> bool | None:
+        """The venue must be reviewed."""
+        return self.venue.is_reviewed
 
     def get_team(self, position):
         return Team.objects.filter(venue=self.venue, rank_venue=position).first()
 
 
-class CountryResultsAnnouncementView(CountryAdminInAccess, ResultsAnnouncementView):
-    allow_operator = True
-    require_unlocked_competition = False
+class CountryResultsAnnouncementView(PermissionCheckMixin, ResultsAnnouncementView):
+    required_permissions = [is_operator]
     url = "badmin:results_announce_country"
 
     @cached_property
@@ -115,8 +116,20 @@ class CountryResultsAnnouncementView(CountryAdminInAccess, ResultsAnnouncementVi
     def category(self):
         return get_object_or_404(Category.objects.filter(id=self.kwargs["category"]))
 
-    def get_permission_country(self) -> "Country":
-        return self.country
+    def check_custom_permission(self, user: User) -> bool:
+        """
+        You must be a country administrator in the selected country,
+        or at least a venue operator of a venue inside the selected country.
+        """
+        # TODO: The country should be reviewed.
+        crole = user.get_competition_role(get_active_competition(self.request))
+        if crole.countries:
+            return self.country in crole.countries
+        if crole.venues:
+            return any(filter(lambda v: v.country == self.country, crole.venues))  # type:ignore
+        # The fallback here is True -> you don't have neither countries or venues,
+        # therefore you must be a higher admin.
+        return True
 
     def get_team(self, position):
         return Team.objects.filter(

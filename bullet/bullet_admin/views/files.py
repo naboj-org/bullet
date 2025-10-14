@@ -8,12 +8,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views.generic import FormView, TemplateView
 
+from bullet_admin.access import PermissionCheckMixin, is_country_admin
 from bullet_admin.forms.files import (
     FileDeleteForm,
     FileUploadForm,
     FolderCreateForm,
 )
-from bullet_admin.mixins import TranslatorRequiredMixin
 from bullet_admin.views import GenericForm
 
 
@@ -27,7 +27,8 @@ def get_path(request, path):
     return branch_root, abs_path
 
 
-class FileTreeView(TranslatorRequiredMixin, TemplateView):
+class FileTreeView(PermissionCheckMixin, TemplateView):
+    required_permissions = [is_country_admin]
     template_name = "bullet_admin/files/tree.html"
 
     def get_parents(self):
@@ -77,7 +78,8 @@ class FileTreeView(TranslatorRequiredMixin, TemplateView):
         return ctx
 
 
-class FolderCreateView(TranslatorRequiredMixin, GenericForm, FormView):
+class FolderCreateView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin]
     form_title = "Create new folder"
     form_class = FolderCreateForm
 
@@ -100,7 +102,8 @@ class FolderCreateView(TranslatorRequiredMixin, GenericForm, FormView):
         )
 
 
-class FileUploadView(TranslatorRequiredMixin, GenericForm, FormView):
+class FileUploadView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin]
     form_title = "Upload file"
     form_multipart = True
     form_class = FileUploadForm
@@ -130,7 +133,8 @@ class FileUploadView(TranslatorRequiredMixin, GenericForm, FormView):
         )
 
 
-class FileDeleteView(TranslatorRequiredMixin, GenericForm, FormView):
+class FileDeleteView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin]
     form_title = "Delete file"
     form_class = FileDeleteForm
 

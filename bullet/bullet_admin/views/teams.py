@@ -1,21 +1,21 @@
 import csv
 import json
 from collections import defaultdict
-from datetime import datetime, timedelta
+from datetime import datetime
 from functools import partial
 
 import yaml
 from bullet.views import FormAndFormsetMixin
 from competitions.forms.registration import ContestantForm
 from django.contrib import messages
-from django.core.exceptions import PermissionDenied
 from django.db import transaction
 from django.db.models import Count
 from django.forms import inlineformset_factory
-from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.template.response import TemplateResponse
 from django.urls import reverse
+from django.utils.functional import cached_property
 from django.views import View
 from django.views.generic import (
     CreateView,
@@ -34,36 +34,48 @@ from users.emails.teams import (
 )
 from users.logic import get_school_symbol
 from users.models import Contestant, Team
+from users.models.organizers import User
 
 from bullet import search, settings
-from bullet_admin.access import AdminAccess
+from bullet_admin.access import (
+    PermissionCheckMixin,
+    is_admin,
+    is_admin_in,
+    is_competition_unlocked,
+    is_operator,
+    is_operator_in,
+)
 from bullet_admin.forms.teams import TeamExportForm, TeamFilterForm, TeamForm
 from bullet_admin.forms.tex import TexTeamRenderForm
 from bullet_admin.mixins import (
-    AdminRequiredMixin,
     IsOperatorContext,
-    OperatorRequiredMixin,
     RedirectBackMixin,
     VenueMixin,
 )
-from bullet_admin.utils import can_access_venue, get_active_competition
+from bullet_admin.utils import (
+    get_active_branch,
+    get_active_competition,
+)
 from bullet_admin.views import GenericForm
 
 
-class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
+class TeamListView(PermissionCheckMixin, IsOperatorContext, ListView):
+    required_permissions = [is_operator]
     template_name = "bullet_admin/teams/list.html"
     paginate_by = 100
 
     def get_form(self):
+        assert isinstance(self.request.user, User)
         return TeamFilterForm(
             get_active_competition(self.request),
             self.request.user,
             data=self.request.GET,
         )
 
-    def get_queryset(self):
+    def get_queryset(self):  # type:ignore
         competition = get_active_competition(self.request)
         qs = Team.objects.filter(venue__category__competition=competition)
+        ids = []
 
         if self.request.GET.get("q"):
             ids = search.client.index("teams").search(
@@ -96,19 +108,14 @@ class TeamListView(OperatorRequiredMixin, IsOperatorContext, ListView):
         return qs
 
     def get_context_data(self, *args, **kwargs):
+        assert isinstance(self.request.user, User)
         ctx = super().get_context_data(*args, **kwargs)
-        brole = self.request.user.get_branch_role(self.request.BRANCH)
-        crole = self.request.user.get_competition_role(
-            get_active_competition(self.request)
-        )
-        ctx["hide_venue"] = (
-            not brole.is_admin and not crole.countries and len(crole.venues) < 2
-        )
         ctx["search_form"] = self.get_form()
         return ctx
 
 
-class TeamExportView(AdminRequiredMixin, FormView):
+class TeamExportView(PermissionCheckMixin, FormView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/teams/export.html"
     form_class = TeamExportForm
 
@@ -138,7 +145,7 @@ class TeamExportView(AdminRequiredMixin, FormView):
             for team in qs
         ]
 
-        response = None
+        response = HttpResponse()
         if form.cleaned_data["format"] == TeamExportForm.Format.JSON:
             response = HttpResponse(content_type="application/json")
             json.dump(data, response)
@@ -154,29 +161,40 @@ class TeamExportView(AdminRequiredMixin, FormView):
         return response
 
 
-class TeamToCompetitionView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
+class TeamToCompetitionView(PermissionCheckMixin, RedirectBackMixin, TemplateView):
+    required_permissions = [is_admin_in, is_competition_unlocked]
     model = Team
     template_name = "bullet_admin/teams/to_competition.html"
+
+    def get_permission_venue(self):
+        return self.team.venue
+
+    @cached_property
+    def team(self) -> Team:
+        return get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
 
     def get_default_success_url(self):
         return reverse("badmin:team_edit", kwargs={"pk": self.kwargs["pk"]})
 
     def post(self, request, *args, **kwargs):
-        team = get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
-        if not can_access_venue(request, team.venue):
-            return HttpResponseForbidden()
+        self.team.to_competition()
+        self.team.save()
 
-        team.to_competition()
-        team.save()
-
-        send_to_competition_email.delay(team.id)
+        send_to_competition_email.delay(self.team.id)
         return HttpResponseRedirect(self.get_success_url())
 
 
-class TeamGenerateDocumentView(AdminAccess, GenericForm, FormView):
-    require_unlocked_competition = False
+class TeamGenerateDocumentView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_operator_in]
     form_class = TexTeamRenderForm
-    form_title = "Generate TeX Document"
+    form_title = "Generate TeX document"
+
+    def get_permission_venue(self):
+        return self.team.venue
+
+    @cached_property
+    def team(self) -> Team:
+        return get_object_or_404(Team, id=self.kwargs["pk"])
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
@@ -184,7 +202,7 @@ class TeamGenerateDocumentView(AdminAccess, GenericForm, FormView):
         return kw
 
     def form_valid(self, form):
-        team = get_object_or_404(Team, id=self.kwargs["pk"]).to_export()
+        team = self.team.to_export()
         job = TexJob.objects.create(
             creator=self.request.user,
             template=form.cleaned_data["template"],
@@ -195,34 +213,40 @@ class TeamGenerateDocumentView(AdminAccess, GenericForm, FormView):
         return redirect("badmin:tex_job_detail", pk=job.id)
 
 
-class TeamResendConfirmationView(AdminRequiredMixin, View):
-    def post(self, request, *args, **kwargs):
-        team = get_object_or_404(Team, id=self.kwargs["pk"], confirmed_at__isnull=True)
-        if not can_access_venue(request, team.venue):
-            return HttpResponseForbidden()
+class TeamResendConfirmationView(PermissionCheckMixin, View):
+    required_permissions = [is_admin_in, is_competition_unlocked]
 
-        send_confirmation_email.delay(team.id)
+    def get_permission_venue(self):
+        return self.team.venue
+
+    @cached_property
+    def team(self) -> Team:
+        return get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
+
+    def post(self, request, *args, **kwargs):
+        send_confirmation_email.delay(self.team.id)
         messages.success(request, "The confirmation email was re-sent.")
-        return HttpResponseRedirect(reverse("badmin:team_edit", kwargs={"pk": team.id}))
+        return HttpResponseRedirect(
+            reverse("badmin:team_edit", kwargs={"pk": self.team.id})
+        )
 
 
 class TeamEditView(
-    OperatorRequiredMixin,
+    PermissionCheckMixin,
     IsOperatorContext,
     RedirectBackMixin,
     FormAndFormsetMixin,
     UpdateView,
 ):
+    required_permissions = [is_operator_in]
     template_name = "bullet_admin/teams/edit.html"
     model = Team
 
-    def get_object(self, queryset=None):
-        obj = super().get_object(queryset)
-        if not can_access_venue(self.request, obj.venue):
-            raise PermissionDenied()
-        return obj
+    def get_permission_venue(self):
+        return self.get_object().venue
 
     def get_form_class(self):
+        assert isinstance(self.request.user, User)
         competition = get_active_competition(self.request)
         crole = self.request.user.get_competition_role(competition)
 
@@ -267,7 +291,7 @@ class TeamEditView(
         ctx = super().get_context_data(*args, **kwargs)
         country = str(ctx["object"].venue.country.code).lower()
         language = ctx["object"].language
-        branch = self.request.BRANCH
+        branch = get_active_branch(self.request)
         ctx["root_url"] = (
             f"https://{branch.identifier}.{settings.PARENT_HOST}/{country}/{language}/teams/"
         )
@@ -292,15 +316,17 @@ class TeamEditView(
         return reverse("badmin:team_list")
 
 
-class TeamDeleteView(AdminRequiredMixin, DeleteView):
+class TeamDeleteView(PermissionCheckMixin, DeleteView):
+    required_permissions = [is_admin_in, is_competition_unlocked]
     model = Team
     template_name = "bullet_admin/teams/delete.html"
+
+    def get_permission_venue(self):
+        return self.get_object().venue
 
     def post(self, request, *args, **kwargs):
         send_mail = "send_mail" in self.request.POST
         obj = self.get_object()
-        if not can_access_venue(request, obj.venue):
-            return HttpResponseForbidden()
 
         if send_mail:
             send_deletion_email.delay(obj)
@@ -311,7 +337,9 @@ class TeamDeleteView(AdminRequiredMixin, DeleteView):
         return reverse("badmin:team_list")
 
 
-class SchoolInputView(AdminRequiredMixin, View):
+class SchoolInputView(PermissionCheckMixin, View):
+    required_permissions = [is_admin]
+
     def get(self, request, *args, **kwargs):
         schools = []
         if "q" in request.GET:
@@ -335,7 +363,8 @@ class SchoolInputView(AdminRequiredMixin, View):
         )
 
 
-class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
+class AssignTeamNumbersView(PermissionCheckMixin, VenueMixin, TemplateView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/teams/assign_numbers.html"
 
     @transaction.atomic
@@ -415,16 +444,10 @@ class AssignTeamNumbersView(AdminRequiredMixin, VenueMixin, TemplateView):
         return HttpResponseRedirect(f"{u}?venue={self.venue.id}")
 
 
-class TeamCreateView(AdminAccess, CreateView):
+class TeamCreateView(PermissionCheckMixin, CreateView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/teams/create.html"
-
-    def get_form_class(self):
-        competition = get_active_competition(self.request)
-        crole = self.request.user.get_competition_role(competition)
-
-        if crole.is_operator:
-            return HttpResponseForbidden()
-        return TeamForm
+    form_class = TeamForm
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()
@@ -448,14 +471,22 @@ def get_team_members(team, time):
     return Contestant.history.as_of(time).filter(team=team)
 
 
-class TeamHistoryView(AdminAccess, ListView):
+class TeamHistoryView(PermissionCheckMixin, ListView):
+    required_permissions = [is_admin_in]
     model = Team
     template_name = "bullet_admin/teams/history.html"
     paginate_by = 20
 
+    def get_permission_venue(self):
+        return self.team.venue
+
+    @cached_property
+    def team(self) -> Team:
+        return get_object_or_404(Team, id=self.kwargs["pk"])
+
     def get_queryset(self, *args, **kwargs):
         qs = []
-        team = Team.objects.get(id=self.kwargs["pk"])
+        team = self.team
         current = team.history.first()
 
         prev_members = get_team_members(team, datetime.now())
@@ -512,58 +543,23 @@ class TeamHistoryView(AdminAccess, ListView):
         return ctx
 
 
-class TeamRevertView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
-    model = Team
-    template_name = "bullet_admin/teams/revert_team.html"
-
-    def get_default_success_url(self):
-        return reverse("badmin:team_history", kwargs={"pk": self.kwargs["pk"]})
-
-    def post(self, request, *args, **kwargs):
-        team = get_object_or_404(Team, id=self.kwargs["pk"])
-        team_time, contestant_time = kwargs["team_time"], kwargs["contestant_time"]
-        team.history.filter(history_date__lte=team_time).first().instance.save()
-        current_members = get_team_members(team, datetime.now())
-        previous_members = get_team_members(team, contestant_time)
-
-        for member in current_members:
-            if member not in previous_members:
-                member.delete()
-        for member in previous_members:
-            member.history.as_of(contestant_time).save()
-
-        return HttpResponseRedirect(self.get_success_url())
-
-
-class RecentlyDeletedTeamsView(AdminAccess, ListView):
+class RecentlyDeletedTeamsView(PermissionCheckMixin, ListView):
+    required_permissions = [is_admin]
     template_name = "bullet_admin/teams/deleted.html"
     paginate_by = 20
 
     def get_queryset(self, *args, **kwargs):
+        assert isinstance(self.request.user, User)
+        competition = get_active_competition(self.request)
         qs = Team.history.filter(
-            history_type="-", history_date__gte=datetime.now() - timedelta(days=100)
+            history_type="-",
+            venue__category__competition=competition,
         ).order_by("-history_date")
+
+        crole = self.request.user.get_competition_role(competition)
+        if crole.venues:
+            qs = qs.filter(venue__in=crole.venues)
+        if crole.countries:
+            qs = qs.filter(venue__country__in=crole.countries)
+
         return qs
-
-
-class TeamRestoreView(AdminRequiredMixin, RedirectBackMixin, TemplateView):
-    model = Team
-    template_name = "bullet_admin/teams/restore.html"
-
-    def get_default_success_url(self):
-        return reverse("badmin:recently_deleted")
-
-    def post(self, request, *args, **kwargs):
-        team = Team.history.filter(id=kwargs["pk"]).first()
-        prev = team.prev_record.instance
-        time = team.history_date
-
-        previous_members = get_team_members(prev, time)
-        for member in previous_members:
-            member.instance.save()
-
-        team.delete()
-        prev.save()
-        prev.history.first().prev_record.delete()
-
-        return HttpResponseRedirect(self.get_success_url())

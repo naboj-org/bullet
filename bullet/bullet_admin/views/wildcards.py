@@ -2,7 +2,11 @@ from competitions.models import Wildcard
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, ListView
 
-from bullet_admin.access import CountryAdminAccess
+from bullet_admin.access import (
+    PermissionCheckMixin,
+    is_competition_unlocked,
+    is_country_admin,
+)
 from bullet_admin.forms.teams import WildcardForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -10,7 +14,9 @@ from bullet_admin.views.generic.links import DeleteIcon, Link, NewLink
 from bullet_admin.views.generic.list import GenericList
 
 
-class WildcardQuerySetMixin:
+class WildcardViewMixin(PermissionCheckMixin):
+    required_permissions = [is_country_admin, is_competition_unlocked]
+
     def get_queryset(self):
         competition = get_active_competition(self.request)
         qs = Wildcard.objects.filter(competition=competition).order_by(
@@ -19,9 +25,7 @@ class WildcardQuerySetMixin:
         return qs
 
 
-class WildcardListView(
-    CountryAdminAccess, WildcardQuerySetMixin, GenericList, ListView
-):
+class WildcardListView(WildcardViewMixin, GenericList, ListView):
     list_subtitle = (
         "Wildcards allow schools to register additional teams during "
         "the first round of the registration."
@@ -39,9 +43,7 @@ class WildcardListView(
         return [DeleteIcon(reverse("badmin:wildcard_delete", args=[obj.pk]))]
 
 
-class WildcardCreateView(
-    CountryAdminAccess, WildcardQuerySetMixin, GenericForm, CreateView
-):
+class WildcardCreateView(WildcardViewMixin, GenericForm, CreateView):
     form_title = "New wildcard"
     form_class = WildcardForm
 
@@ -54,7 +56,7 @@ class WildcardCreateView(
         return reverse("badmin:wildcard_list")
 
 
-class WildcardDeleteView(CountryAdminAccess, WildcardQuerySetMixin, DeleteView):
+class WildcardDeleteView(WildcardViewMixin, DeleteView):
     template_name = "bullet_admin/wildcards/delete.html"
 
     def get_success_url(self):

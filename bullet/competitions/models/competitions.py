@@ -18,7 +18,7 @@ def get_random_string():
 
 
 class CompetitionQuerySet(models.QuerySet):
-    def get_current_competition(self, branch):
+    def get_current_competition(self, branch) -> "Competition|None":
         return (
             self.filter(branch=branch, web_start__lt=timezone.now())
             .order_by("-web_start")
@@ -52,26 +52,9 @@ class CompetitionQuerySet(models.QuerySet):
         ).values("competition")
         return qs.filter(id__in=roles)
 
-    def for_photos(self, user: "User", branch: "Branch"):
-        """
-        Filters competitions that should be visible for a given user.
-        """
-        qs = self.filter(branch=branch).order_by("-web_start")
-
-        if not user.is_authenticated:
-            return qs.filter(results_public=True)
-
-        branch_role = user.get_branch_role(branch)
-        if branch_role.is_admin or branch_role.is_photographer:
-            return qs
-
-        roles = CompetitionRole.objects.filter(
-            user=user, competition__branch=branch
-        ).values("competition")
-        return qs.filter(id__in=roles)
-
 
 class Competition(models.Model):
+    id: int
     branch = BranchField()
     number = models.IntegerField(
         null=True, blank=True
@@ -95,7 +78,7 @@ class Competition(models.Model):
 
     is_cancelled = models.BooleanField(default=False)
 
-    objects = CompetitionQuerySet.as_manager()
+    objects: CompetitionQuerySet = CompetitionQuerySet.as_manager()  # type:ignore
 
     class Meta:
         constraints = [
@@ -164,10 +147,12 @@ class Competition(models.Model):
 
 
 class Category(models.Model):
+    id: int
     competition = models.ForeignKey(
         "competitions.Competition",
         on_delete=models.CASCADE,
     )
+    competition_id: int
 
     identifier = models.SlugField()
     order = models.IntegerField(default=0)

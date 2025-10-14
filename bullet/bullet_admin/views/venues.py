@@ -32,23 +32,24 @@ from users.logic import get_venue_waiting_list, move_eligible_teams
 from users.models import Team
 
 from bullet_admin.access import (
-    AdminAccess,
-    CountryAdminAccess,
-    VenueAccess,
+    PermissionCheckMixin,
+    is_admin,
+    is_admin_in,
+    is_competition_unlocked,
     is_country_admin,
 )
 from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import TeamListForm, VenueForm
-from bullet_admin.mixins import AdminRequiredMixin, AuthedHttpRequest, RedirectBackMixin
+from bullet_admin.mixins import AuthedHttpRequest, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
 from bullet_admin.views.generic.list import GenericList
 
 
-class VenueListView(AdminAccess, GenericList, ListView):
+class VenueListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
     request: AuthedHttpRequest  # type: ignore
-    require_unlocked_competition = False
 
     table_fields = ["name", "category", "team_count", "capacity", "local_start"]
     table_labels = {
@@ -92,7 +93,8 @@ class VenueFormMixin(GenericForm):
         return kw
 
 
-class VenueDetailView(VenueAccess, DetailView):
+class VenueDetailView(PermissionCheckMixin, DetailView):
+    required_permissions = [is_admin_in]
     require_unlocked_competition = False
     template_name = "bullet_admin/venues/detail.html"
 
@@ -103,7 +105,8 @@ class VenueDetailView(VenueAccess, DetailView):
         return Venue.objects.for_request(self.request)
 
 
-class VenueUpdateView(VenueAccess, VenueFormMixin, UpdateView):
+class VenueUpdateView(PermissionCheckMixin, VenueFormMixin, UpdateView):
+    required_permissions = [is_admin_in, is_competition_unlocked]
     form_title = "Edit venue"
     template_name = "bullet_admin/venues/form.html"
 
@@ -118,7 +121,8 @@ class VenueUpdateView(VenueAccess, VenueFormMixin, UpdateView):
         return reverse("badmin:venue_list")
 
 
-class VenueCreateView(CountryAdminAccess, VenueFormMixin, CreateView):
+class VenueCreateView(PermissionCheckMixin, VenueFormMixin, CreateView):
+    required_permissions = [is_country_admin]
     form_title = "New venue"
 
     def get_success_url(self):
@@ -126,7 +130,8 @@ class VenueCreateView(CountryAdminAccess, VenueFormMixin, CreateView):
         return reverse("badmin:venue_list")
 
 
-class VenueMixin(VenueAccess):
+class VenueMixin(PermissionCheckMixin):
+    required_permissions = [is_admin_in]
     template_name = "bullet_admin/venues/form.html"
 
     def get_permission_venue(self) -> "Venue":
@@ -145,7 +150,6 @@ class VenueMixin(VenueAccess):
 
 
 class CertificateView(VenueMixin, GenericForm, FormView):
-    require_unlocked_competition = False
     form_class = CertificateForm
 
     def get_form_kwargs(self):
@@ -209,7 +213,6 @@ class CertificateView(VenueMixin, GenericForm, FormView):
 
 
 class TeamListView(VenueMixin, GenericForm, FormView):
-    require_unlocked_competition = False
     form_class = TeamListForm
 
     def form_valid(self, form):
@@ -222,15 +225,15 @@ class TeamListView(VenueMixin, GenericForm, FormView):
         return FileResponse(data, as_attachment=True, filename="team_list.pdf")
 
 
-class WaitingListView(AdminRequiredMixin, VenueMixin, ListView):
-    require_unlocked_competition = False
+class WaitingListView(VenueMixin, ListView):
     template_name = "bullet_admin/venues/waiting_list.html"
 
     def get_queryset(self):
         return get_venue_waiting_list(self.venue)
 
 
-class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, GenericForm, FormView):
+class WaitingListAutomoveView(VenueMixin, GenericForm, FormView):
+    required_permissions = [is_admin_in, is_competition_unlocked]
     form_class = Form
     form_title = "Move waiting lists automatically"
     form_submit_label = "Move automatically"
@@ -248,7 +251,6 @@ class WaitingListAutomoveView(AdminRequiredMixin, VenueMixin, GenericForm, FormV
 
 class TearoffView(VenueMixin, GenericForm, FormView):
     form_class = TearoffForm
-    form_multipart = True
     template_name = "bullet_admin/venues/tearoffs.html"
 
     def get_form_kwargs(self):

@@ -1,279 +1,193 @@
-from typing import TYPE_CHECKING
+from inspect import signature
+from typing import Callable
 
-from competitions.branches import Branch
+from competitions.models.competitions import Competition
+from competitions.models.venues import Venue
+from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import ImproperlyConfigured
-from django_countries.fields import Country
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.urls import reverse
+from users.models.organizers import User
 
-from bullet_admin.mixins import AccessMixin
+from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_active_competition
 
-if TYPE_CHECKING:
-    from competitions.models import Competition, Venue
-    from users.models import User
+
+def is_competition_unlocked(user: User, competition: Competition) -> bool:
+    """The competition must be unlocked."""
+    return not competition.results_public
 
 
-def can_access_venue(
-    user: "User", venue: "Venue", allow_operator: bool = False
-) -> bool:
-    """
-    Checks whether the given user has access to the given venue.
-    This check does not pass for operators unless allow_operator is True.
-    """
-    if not user.is_authenticated:
-        return False
-
-    # Superuser has all permissions
+def is_branch_admin(user: User, competition: Competition) -> bool:
+    """You must be a branch administrator of the competition."""
     if user.is_superuser:
         return True
 
-    competition = venue.category.competition
-    branch = competition.branch
+    brole = user.get_branch_role(competition.branch)
+    return brole.is_admin
 
-    # Branch admin can access any venue
-    if user.get_branch_role(branch).is_admin:
+
+def is_country_admin(user: User, competition: Competition) -> bool:
+    """You must be a country administrator or higher in the competition."""
+    if is_branch_admin(user, competition):
         return True
 
     crole = user.get_competition_role(competition)
-
-    if crole.is_operator and not allow_operator:
-        return False
-
-    # Country admin can access veunes in his country
-    if crole.countries:
-        return venue.country in crole.countries
-
-    # Venue admin can access his venues
-    if crole.venues:
-        return venue in crole.venues
-
-    return False
+    return not crole.is_operator and bool(crole.countries)
 
 
-def is_any_admin(
-    user: "User", competition: "Competition", allow_operator: bool = False
-) -> bool:
-    """
-    Checks whether the user is any admin in the competition.
-    """
-    if not user.is_authenticated:
-        return False
-
-    # Superuser has all permissions
-    if user.is_superuser:
-        return True
-
-    # Branch admin is, obviously an admin
-    if user.get_branch_role(competition.branch).is_admin:
+def is_admin(user: User, competition: Competition) -> bool:
+    """You must be a venue administrator or higher in the competition."""
+    if is_country_admin(user, competition):
         return True
 
     crole = user.get_competition_role(competition)
-    if crole.is_operator and not allow_operator:
-        return False
-
-    # Country admin and venue admins are admins, too
-    return bool(crole.venues) or bool(crole.countries)
+    return not crole.is_operator and bool(crole.venues)
 
 
-def is_country_admin(
-    user: "User", competition: "Competition", allow_operator: bool = False
-) -> bool:
-    """
-    Checks whether the user is country admin (or better) in the competition.
-    """
-    if not user.is_authenticated:
-        return False
-
-    # Superuser has all permissions
-    if user.is_superuser:
-        return True
-
-    # Branch admin is, obviously an admin
-    if user.get_branch_role(competition.branch).is_admin:
+def is_operator(user: User, competition: Competition) -> bool:
+    """You must be a operator or higher in the competition."""
+    if is_admin(user, competition):
         return True
 
     crole = user.get_competition_role(competition)
-    if crole.is_operator and not allow_operator:
+    return crole.is_operator
+
+
+def is_branch_admin_in(user: User, venue: Venue) -> bool:
+    """You must be a branch administrator of the venue."""
+    return is_branch_admin(user, venue.category.competition)
+
+
+def is_country_admin_in(user: User, venue: Venue) -> bool:
+    """You must be a contry administrator or higher of the venue."""
+    if is_branch_admin_in(user, venue):
+        return True
+
+    crole = user.get_competition_role(venue.category.competition)
+    if crole.is_operator:
         return False
 
-    # Country admin and venue admins are admins, too
-    return bool(crole.countries)
+    if not crole.countries:
+        return False
+
+    return venue.country in crole.countries
 
 
-def is_country_admin_in(
-    user: "User",
-    competition: "Competition",
-    country: "Country",
-    allow_operator: bool = False,
+def is_admin_in(user: User, venue: Venue) -> bool:
+    """You must be a venue administrator or higher of the venue."""
+    if is_country_admin_in(user, venue):
+        return True
+
+    crole = user.get_competition_role(venue.category.competition)
+    if crole.is_operator:
+        return False
+
+    return venue in crole.venues
+
+
+def is_operator_in(user: User, venue: Venue) -> bool:
+    """You must be a operator or higher of the venue."""
+    if is_admin_in(user, venue):
+        return True
+
+    crole = user.get_competition_role(venue.category.competition)
+    return venue in crole.venues
+
+
+type CompetitionPermissionCallable = Callable[[User, Competition], bool]
+type VenuePermissionCallable = Callable[[User, Venue], bool]
+type PermissionCallable = CompetitionPermissionCallable | VenuePermissionCallable
+
+
+def check_access(
+    user: User,
+    permissions: list[PermissionCallable],
+    *,
+    competition: Competition,
+    venue: Venue | None = None,
+    checked_permissions: list[tuple[str, bool]] | None = None,
 ) -> bool:
-    """
-    Checks whether the user is country admin (or better) in the competition in a given
-    country.
-    """
-    if not user.is_authenticated:
-        return False
+    allowed = True
 
-    # Superuser has all permissions
-    if user.is_superuser:
-        return True
+    for perm in permissions:
+        sig = signature(perm)
+        if "venue" in sig.parameters:
+            if not venue:
+                raise ImproperlyConfigured(
+                    "Did not receive a venue for permission check, "
+                    "but checking requires one."
+                )
+            returned = perm(user, venue)  # type:ignore
+        else:
+            returned = perm(user, competition)  # type:ignore
 
-    # Branch admin is, obviously an admin
-    if user.get_branch_role(competition.branch).is_admin:
-        return True
+        name = perm.__doc__ or perm.__name__
+        if checked_permissions is not None:
+            checked_permissions.append((name, returned))
+        allowed = allowed and returned
 
-    crole = user.get_competition_role(competition)
-    if crole.is_operator and not allow_operator:
-        return False
-
-    # Country admin and venue admins are admins, too
-    return country in crole.countries
-
-
-def is_branch_admin(user: "User", branch: "Branch") -> bool:
-    """
-    Checks whether the user is country admin (or better) in the competition.
-    """
-    if not user.is_authenticated:
-        return False
-
-    # Superuser has all permissions
-    if user.is_superuser:
-        return True
-
-    # Branch admin is, obviously an admin
-    return user.get_branch_role(branch).is_admin
+    return allowed
 
 
-class VenueAccess(AccessMixin):
-    """
-    Permission check mixin, uses `get_permission_venue` to check users' access to the
-    venue.
+class PermissionCheckMixin(MixinProtocol):
+    required_permissions: PermissionCallable | list[PermissionCallable] = []
+    _checked_permissions: list[tuple[str, bool]]
 
-    `require_unlocked_competition` - whether to require the competition to be unlocked
-    to allow access (the competition cannot have results_public)
-    `allow_operator` - whether to allow operators to access this view
-    """
+    def get_required_permissions(self) -> list[PermissionCallable]:
+        if isinstance(self.required_permissions, list):
+            return self.required_permissions
+        return [self.required_permissions]
 
-    require_unlocked_competition = True
-    allow_operator = False
+    def get_permission_venue(self) -> Venue | None:
+        if hasattr(self, "venue"):
+            return getattr(self, "venue")
 
-    def get_permission_venue(self) -> "Venue":
-        raise ImproperlyConfigured(
-            "Override get_permission_venue to use VenueAdminMixin."
-        )
-
-    def can_access(self):
-        venue = self.get_permission_venue()
-        if (
-            self.require_unlocked_competition
-            and venue.category.competition.results_public
-        ):
-            return False
-
-        return can_access_venue(self.request.user, venue, self.allow_operator)
-
-
-class AdminAccess(AccessMixin):
-    """
-    Permission check mixin, uses `get_permission_competition` to check users' access
-    to the competition. Allows any admin (branch, venue, country) to acces the view.
-
-    `require_unlocked_competition` - whether to require the competition to be unlocked
-    to allow access (the competition cannot have results_public)
-    `allow_operator` - whether to allow operators to access this view
-    """
-
-    require_unlocked_competition = True
-    allow_operator = False
-
-    def get_permission_competition(self) -> "Competition":
+    def get_permission_competition(self) -> Competition:
         return get_active_competition(self.request)
 
-    def can_access(self):
-        competition = self.get_permission_competition()
-        if self.require_unlocked_competition and competition.results_public:
-            return False
-
-        return is_any_admin(self.request.user, competition, self.allow_operator)
-
-
-class CountryAdminAccess(AdminAccess):
-    """
-    Permission check mixin, uses `get_permission_competition` to check users'
-    access to the competition. Allows country admin (branch, country) to acces the view.
-
-    `require_unlocked_competition` - whether to require the competition to be unlocked
-    to allow access (the competition cannot have results_public)
-    `allow_operator` - whether to allow operators to access this view
-    """
-
-    def can_access(self):
-        competition = self.get_permission_competition()
-        if self.require_unlocked_competition and competition.results_public:
-            return False
-
-        return is_country_admin(self.request.user, competition, self.allow_operator)
-
-
-class CountryAdminInAccess(AdminAccess):
-    """
-    Permission check mixin, uses `get_permission_competition` to check users'
-    access to the competition. Allows country admin of a given country to acces the
-    view.
-
-    `require_unlocked_competition` - whether to require the competition to be unlocked
-    to allow access (the competition cannot have results_public)
-    `allow_operator` - whether to allow operators to access this view
-    """
-
-    def get_permission_country(self) -> "Country":
-        raise ImproperlyConfigured(
-            "Override get_permission_country to use CountryAdminInAccess."
+    def check_access(self, user: User) -> bool:
+        self._checked_permissions = []
+        return check_access(
+            user,
+            self.get_required_permissions(),
+            competition=self.get_permission_competition(),
+            venue=self.get_permission_venue(),
+            checked_permissions=self._checked_permissions,
         )
 
-    def can_access(self):
-        competition = self.get_permission_competition()
-        if self.require_unlocked_competition and competition.results_public:
-            return False
+    def check_custom_permission(self, user: User) -> bool | None:
+        return None
 
-        return is_country_admin_in(
-            self.request.user,
-            competition,
-            self.get_permission_country(),
-            self.allow_operator,
+    def permission_denied_response(self) -> HttpResponse:
+        return render(
+            self.request,
+            "bullet_admin/generic/denied.html",
+            {
+                "checked_permissions": self._checked_permissions,
+                "perm_competition": self.get_permission_competition(),
+                "perm_venue": self.get_permission_venue(),
+            },
         )
 
+    def dispatch(self, request, *args, **kwargs) -> HttpResponse:
+        if not request.user.is_authenticated:
+            return redirect_to_login(
+                self.request.get_full_path(), reverse("badmin:login"), "next"
+            )
+        else:
+            access = self.check_access(request.user)
+            custom = self.check_custom_permission(request.user)
+            if custom is not None:
+                custom_name = (
+                    self.check_custom_permission.__doc__ or "check_custom_permission"
+                )
+                self._checked_permissions.append((custom_name, custom))
+            else:
+                custom = True
 
-class BranchAdminAccess(AdminAccess):
-    """
-    Permission check mixin, uses `get_permission_competition` to check users'
-    access to the competition. Allows branch admin to access the view.
-    """
+            if not access or not custom:
+                return self.permission_denied_response()
 
-    def can_access(self):
-        return is_branch_admin(self.request.user, self.request.BRANCH)
-
-
-class UnlockedCompetitionMixin:
-    def can_access(self):
-        can = super().can_access()
-        if not can:
-            return False
-
-        competition = get_active_competition(self.request)
-        return not competition.results_public
-
-
-class PhotoUploadAccess(AccessMixin):
-    """
-    Allows access only to Album & Gallery editing
-    """
-
-    def can_access(self):
-        if not self.request.user.is_authenticated:
-            return False
-
-        if self.request.user.is_superuser:
-            return True
-
-        brole = self.request.user.get_branch_role(self.request.BRANCH)
-        return brole.is_photographer or brole.is_admin
+        return super().dispatch(request, *args, **kwargs)

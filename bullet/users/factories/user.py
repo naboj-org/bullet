@@ -33,8 +33,7 @@ class CompetitionRoleFactory(DjangoModelFactory):
         venues = list(Venue.objects.all())
         seed = ord(self.user.email[0].upper()) - ord("A")
         random.seed(seed)
-        self.can_delegate = random.random() > 0.5
-        self.is_operator = not self.can_delegate
+        self.is_operator = random.random() > 0.5
         if random.random() > 0.5:
             self.venue_objects.set(
                 random.sample(venues, random.randint(0, len(venues)))
@@ -53,7 +52,6 @@ class BranchRoleFactory(DjangoModelFactory):
         model = BranchRole
         django_get_or_create = ["user", "branch"]
 
-    is_translator = factory.Faker("boolean")
     is_admin = factory.Faker("boolean")
     branch = factory.Faker("random_element", elements=[b.id for b in Branches])
     user = factory.Faker("random_element", elements=User.objects.all())

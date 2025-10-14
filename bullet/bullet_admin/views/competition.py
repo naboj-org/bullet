@@ -15,16 +15,18 @@ from problems.logic.stats import generate_stats
 from users.logic import move_all_eligible_teams
 
 from bullet_admin.access import (
-    BranchAdminAccess,
-    CountryAdminAccess,
-    UnlockedCompetitionMixin,
+    PermissionCheckMixin,
+    is_branch_admin,
+    is_competition_unlocked,
+    is_country_admin,
 )
 from bullet_admin.forms.competition import CompetitionForm, TearoffUploadForm
-from bullet_admin.utils import get_active_competition
+from bullet_admin.utils import get_active_branch, get_active_competition
 from bullet_admin.views import GenericForm
 
 
-class CompetitionUpdateView(BranchAdminAccess, UpdateView):
+class CompetitionUpdateView(PermissionCheckMixin, GenericForm, UpdateView):
+    required_permissions = [is_branch_admin]
     form_class = CompetitionForm
     form_title = "Edit competition"
     template_name = "bullet_admin/competition/form.html"
@@ -37,11 +39,12 @@ class CompetitionUpdateView(BranchAdminAccess, UpdateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs["branch"] = self.request.BRANCH
+        kwargs["branch"] = get_active_branch(self.request)
         return kwargs
 
 
-class CompetitionCreateView(BranchAdminAccess, GenericForm, CreateView):
+class CompetitionCreateView(PermissionCheckMixin, GenericForm, CreateView):
+    required_permissions = [is_branch_admin]
     form_class = CompetitionForm
     form_title = "New competition"
 
@@ -50,13 +53,18 @@ class CompetitionCreateView(BranchAdminAccess, GenericForm, CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs["branch"] = self.request.BRANCH
+        kwargs["branch"] = get_active_branch(self.request)
         return kwargs
 
 
-class CompetitionFinalizeView(UnlockedCompetitionMixin, BranchAdminAccess, FormView):
+class CompetitionFinalizeView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_branch_admin, is_competition_unlocked]
     form_class = Form
-    template_name = "bullet_admin/competition/confirm.html"
+    form_title = "Finalize competition?"
+    form_submit_label = "Finalize"
+    form_submit_color = "red"
+    form_submit_icon = "mdi:check"
+    template_name = "bullet_admin/competition/finalize.html"
 
     def form_valid(self, form):
         competition = get_active_competition(self.request)
@@ -73,9 +81,8 @@ class CompetitionFinalizeView(UnlockedCompetitionMixin, BranchAdminAccess, FormV
         competition.save()
 
 
-class CompetitionAutomoveView(
-    UnlockedCompetitionMixin, BranchAdminAccess, GenericForm, FormView
-):
+class CompetitionAutomoveView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_branch_admin, is_competition_unlocked]
     form_class = Form
     form_title = "Move waiting lists automatically"
     form_submit_label = "Move automatically"
@@ -92,7 +99,8 @@ class CompetitionAutomoveView(
         return redirect("badmin:home")
 
 
-class CompetitionTearoffUploadView(CountryAdminAccess, GenericForm, FormView):
+class CompetitionTearoffUploadView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin, is_competition_unlocked]
     require_unlocked_competition = True
     form_class = TearoffUploadForm
     form_title = "Tearoff upload"

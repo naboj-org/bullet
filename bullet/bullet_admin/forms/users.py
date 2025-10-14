@@ -17,13 +17,13 @@ class UserForm(forms.ModelForm):
 class BranchRoleForm(forms.ModelForm):
     class Meta:
         model = BranchRole
-        fields = ("is_translator", "is_photographer", "is_admin")
+        fields = ("is_admin",)
 
 
 class CompetitionRoleForm(forms.ModelForm):
     class Meta:
         model = CompetitionRole
-        fields = ("venue_objects", "countries", "can_delegate", "is_operator")
+        fields = ("venue_objects", "countries", "is_operator")
         widgets = {
             "countries": forms.CheckboxSelectMultiple(),
             "venue_objects": forms.CheckboxSelectMultiple(),
@@ -72,5 +72,7 @@ class CompetitionRoleForm(forms.ModelForm):
                 "The user cannot be both a venue and a country administrator."
             )
 
-        if self.cleaned_data["can_delegate"] and self.cleaned_data["is_operator"]:
-            raise ValidationError("Operator cannot have delegate permission.")
+        if countries and self.cleaned_data["is_operator"]:
+            raise ValidationError(
+                "Operator with countries is unsupported permission configuration."
+            )

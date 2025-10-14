@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseNotAllowed
 from django.views.generic import TemplateView
 from django.views.generic.edit import BaseDeleteView
+from django.views.generic.edit import DeleteView as DjDeleteView
 from django_htmx.http import HttpResponseClientRefresh
 
 from bullet_admin.mixins import MixinProtocol
@@ -34,7 +35,7 @@ class GenericForm(MixinProtocol):
         return ctx
 
 
-class GenericDelete(MixinProtocol):
+class GenericDeleteView(DjDeleteView):
     template_name = "bullet_admin/generic/delete.html"
     model_name = None
     object_name = None

@@ -1,28 +1,34 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import Http404
 from django.views.generic import TemplateView
+from users.models.organizers import User
 
+from bullet_admin.access import (
+    is_admin,
+    is_branch_admin,
+    is_country_admin,
+    is_operator,
+)
 from bullet_admin.documentation import Access, get_page, get_pages
+from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_active_competition
 
 
-class DocumentationAccessMixin:
+class DocumentationAccessMixin(MixinProtocol):
     def get_user_access(self) -> Access:
         access = Access(0)
         user = self.request.user
+        assert isinstance(user, User)
         competition = get_active_competition(self.request)
 
-        brole = user.get_branch_role(self.request.BRANCH)
-        if brole.is_admin:
+        if is_branch_admin(user, competition):
             access |= Access.BRANCH
-
-        crole = user.get_competition_role(competition)
-        if crole.is_operator:
-            access |= Access.OPERATOR
-        if bool(crole.venues):
-            access |= Access.VENUE
-        if bool(crole.countries):
+        if is_country_admin(user, competition):
             access |= Access.COUNTRY
+        if is_admin(user, competition):
+            access |= Access.VENUE
+        if is_operator(user, competition):
+            access |= Access.OPERATOR
 
         return access
 

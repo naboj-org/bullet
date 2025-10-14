@@ -3,13 +3,18 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 from problems.logic.upload import ProblemImportError
 
-from bullet_admin.access import BranchAdminAccess, CountryAdminAccess
+from bullet_admin.access import (
+    PermissionCheckMixin,
+    is_branch_admin,
+    is_country_admin,
+)
 from bullet_admin.forms.archive import ProblemImportForm, ProblemUploadForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
 
 
-class ProblemImportView(BranchAdminAccess, GenericForm, FormView):
+class ProblemImportView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_branch_admin]
     form_class = ProblemImportForm
     template_name = "bullet_admin/archive/import.html"
 
@@ -23,11 +28,12 @@ class ProblemImportView(BranchAdminAccess, GenericForm, FormView):
             form.save()
             messages.success(self.request, "Successfully imported problems.")
         except ProblemImportError as e:
-            messages.error(self.request, e)
+            messages.error(self.request, str(e))
         return redirect("badmin:archive_import")
 
 
-class ProblemPDFUploadView(CountryAdminAccess, GenericForm, FormView):
+class ProblemPDFUploadView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin]
     form_class = ProblemUploadForm
     form_title = "Upload problems"
     form_multipart = True

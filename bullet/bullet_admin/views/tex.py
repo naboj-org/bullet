@@ -11,7 +11,7 @@ from django.views.generic import CreateView, DetailView, FormView, ListView, Upd
 from django_htmx.http import HTMX_STOP_POLLING
 from documents.models import TexJob, TexTemplate
 
-from bullet_admin.access import AdminAccess
+from bullet_admin.access import PermissionCheckMixin, is_admin
 from bullet_admin.forms.tex import LetterCallbackForm, TexRenderForm, TexTemplateForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
@@ -38,7 +38,7 @@ class LetterCallbackView(View):
 
 
 class JobDetailView(LoginRequiredMixin, DetailView):
-    require_unlocked_competition = False
+    object: TexJob
 
     def get_queryset(self):
         return TexJob.objects.filter(Q(creator=self.request.user) | Q(creator=None))
@@ -46,19 +46,19 @@ class JobDetailView(LoginRequiredMixin, DetailView):
     def render_to_response(self, context, **response_kwargs):
         resp = super().render_to_response(context, **response_kwargs)
 
-        if self.request.htmx and self.object.completed:
+        if getattr(self.request, "htmx") and self.object.completed:
             resp.status_code = HTMX_STOP_POLLING
 
         return resp
 
     def get_template_names(self):
-        if self.request.htmx:
+        if getattr(self.request, "htmx"):
             return ["bullet_admin/tex/job_output.html"]
         return ["bullet_admin/tex/job.html"]
 
 
-class TemplateListView(AdminAccess, GenericList, ListView):
-    require_unlocked_competition = False
+class TemplateListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
     list_title = "TeX templates"
     table_fields = ["name", "type"]
 
@@ -91,11 +91,11 @@ class TemplateListView(AdminAccess, GenericList, ListView):
         return links
 
 
-class TemplateCreateView(AdminAccess, GenericForm, CreateView):
-    form_title = "Create TeX Template"
+class TemplateCreateView(PermissionCheckMixin, GenericForm, CreateView):
+    required_permissions = [is_admin]
+    form_title = "Create TeX template"
     form_class = TexTemplateForm
     form_multipart = True
-    require_unlocked_competition = False
 
     def form_valid(self, form):
         self.object = form.save(commit=False)
@@ -105,11 +105,11 @@ class TemplateCreateView(AdminAccess, GenericForm, CreateView):
         return redirect("badmin:tex_template_list")
 
 
-class TemplateUpdateView(AdminAccess, GenericForm, UpdateView):
-    form_title = "Update TeX Template"
+class TemplateUpdateView(PermissionCheckMixin, GenericForm, UpdateView):
+    required_permissions = [is_admin]
+    form_title = "Update TeX template"
     form_class = TexTemplateForm
     form_multipart = True
-    require_unlocked_competition = False
 
     def get_queryset(self):
         competition = get_active_competition(self.request)
@@ -119,10 +119,10 @@ class TemplateUpdateView(AdminAccess, GenericForm, UpdateView):
         return reverse("badmin:tex_template_list")
 
 
-class TemplateRenderView(AdminAccess, GenericForm, FormView):
-    form_title = "Generate TeX Document"
+class TemplateRenderView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_admin]
+    form_title = "Generate TeX document"
     form_class = TexRenderForm
-    require_unlocked_competition = False
 
     @cached_property
     def tex_template(self):
