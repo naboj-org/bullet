@@ -1,0 +1,43 @@
+{% extends "bullet_admin/generic/form.html" %}
+{% load badmin %}
+
+{% block after_form %}
+  {% if preview_data is not None %}
+  <div class="mt-8">
+    <h3 class="text-lg font-semibold mb-4">Preview</h3>
+    <div class="bg-blue-50 border border-blue-200 rounded-md p-4 mb-4">
+        <p class="text-sm text-blue-800">
+          This is a preview. No schools have been imported yet.
+          Uncheck "Preview only" and submit again to perform the actual import.
+        </p>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Identifier</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Types</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+            {% for school in preview_data %}
+                <tr class="{% cycle "bg-white" "bg-gray-50" %}">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ school.identifier }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ school.name }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">{{ school.address }}</td>
+                  <td class="px-6 py-4 text-sm text-gray-900">
+                    {% for type in school.types %}
+                      <span class="inline-block bg-gray-100 rounded-full px-2 py-1 text-xs font-medium text-gray-800 mr-1 mb-1">{{ type }}</span>
+                    {% endfor %}
+                  </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+{% endblock after_form %}

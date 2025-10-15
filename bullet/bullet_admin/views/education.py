@@ -1,12 +1,12 @@
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView
+from django.views.generic import CreateView, FormView, ListView, UpdateView
 from education.models import School
 
 from bullet import search
 from bullet_admin.access import PermissionCheckMixin, is_country_admin
-from bullet_admin.forms.education import SchoolForm
+from bullet_admin.forms.education import SchoolCSVImportForm, SchoolForm
 from bullet_admin.mixins import MixinProtocol, RedirectBackMixin
 from bullet_admin.utils import get_active_competition, get_allowed_countries
 from bullet_admin.views import GenericForm
@@ -26,7 +26,10 @@ class SchoolQuerySetMixin(MixinProtocol):
 class SchoolListView(PermissionCheckMixin, SchoolQuerySetMixin, GenericList, ListView):
     required_permissions = [is_country_admin]
 
-    list_links = [NewLink("school", reverse_lazy("badmin:school_create"))]
+    list_links = [
+        NewLink("school", reverse_lazy("badmin:school_create")),
+        Link("green", "mdi:upload", "Import", reverse_lazy("badmin:school_csv_import")),
+    ]
     table_fields = ["name", "address", "country"]
     table_field_templates = {
         "name": "bullet_admin/education/field__school_name.html",
@@ -78,7 +81,6 @@ class SchoolUpdateView(
     form_class = SchoolForm
     template_name = "bullet_admin/education/school_form.html"
     form_title = "Edit school"
-    require_unlocked_competition = False
     default_success_url = reverse_lazy("badmin:school_list")
 
     def get_form_kwargs(self):
@@ -106,7 +108,6 @@ class SchoolCreateView(
     CreateView,
 ):
     required_permissions = [is_country_admin]
-    require_unlocked_competition = False
     form_class = SchoolForm
     form_title = "New school"
     default_success_url = reverse_lazy("badmin:school_list")
@@ -126,3 +127,64 @@ class SchoolCreateView(
 
         messages.success(self.request, "School saved.")
         return HttpResponseRedirect(self.get_success_url())
+
+
+class SchoolCSVImportView(
+    PermissionCheckMixin,
+    RedirectBackMixin,
+    GenericForm,
+    FormView,
+):
+    required_permissions = [is_country_admin]
+    form_class = SchoolCSVImportForm
+    form_title = "Import schools"
+    form_multipart = True
+    template_name = "bullet_admin/education/school_csv_import.html"
+    default_success_url = reverse_lazy("badmin:school_list")
+
+    def get_form_kwargs(self):
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
+        kw["user"] = self.request.user
+        return kw
+
+    def form_valid(self, form):
+        if form.cleaned_data["preview"]:
+            try:
+                schools_data = form.parse_csv()
+                return self.render_to_response(
+                    self.get_context_data(
+                        form=form,
+                        preview_data=schools_data[:10],
+                    )
+                )
+            except Exception as e:
+                messages.error(self.request, str(e))
+                return self.form_invalid(form)
+        else:
+            try:
+                result = form.import_schools()
+
+                if result["errors"]:
+                    messages.warning(
+                        self.request,
+                        f"Import completed with {len(result['errors'])} errors. "
+                        f"Created: {result['created']}, Updated: {result['updated']}",
+                    )
+                    for error in result["errors"][:5]:  # Show first 5 errors
+                        messages.error(self.request, error)
+                    if len(result["errors"]) > 5:
+                        messages.error(
+                            self.request,
+                            f"... and {len(result['errors']) - 5} more errors",
+                        )
+                else:
+                    messages.success(
+                        self.request,
+                        f"Successfully imported {result['created']} new schools and updated {result['updated']} existing schools.",
+                    )
+
+                return HttpResponseRedirect(self.get_success_url())
+            except Exception as e:
+                messages.error(self.request, str(e))
+                return self.form_invalid(form)
