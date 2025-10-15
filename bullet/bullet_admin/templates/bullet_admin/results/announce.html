@@ -28,7 +28,13 @@
           <div class="text-5xl font-bold mb-6">{{ team.name }}</div>
         {% endif %}
 
-        <div class="text-3xl">{{ team.contestants_names }}</div>
+        <div class="text-3xl">
+          {% if team.venue.abbreviate_names %}
+            {{ team.abbreviated_names }}
+          {% else %}
+            {{ team.contestants_names }}
+          {% endif %}
+        </div>
         <div class="flex justify-center">{% squares result_row big=True %}</div>
         <div class="text-4xl mt-4">{{ result_row.solved_count }}</div>
       {% endif %}

@@ -24,5 +24,5 @@ class VenueFactory(DjangoModelFactory):
         "random_elements", elements=[x[0] for x in settings.LANGUAGES]
     )
     results_announced = factory.Faker("boolean")
-    participants_hidden = factory.Faker("boolean")
+    abbreviate_names = factory.Faker("boolean")
     email = factory.Faker("email")
