@@ -33,11 +33,18 @@
       </a>
 
       {% for c in countries %}
+        {% if c != "__" %}{# __ is the legacy OPEN category #}
         <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
-           class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm flex gap-2 items-center flex-wrap">
+          class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm flex gap-2 items-center flex-wrap">
           <iconify-icon icon="flag:{{ c.code|lower }}-4x3" width="none" class="h-4 aspect-4/3"></iconify-icon>
           {{ c.name }}
         </a>
+        {% else %}
+        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
+          class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm flex gap-2 items-center flex-wrap">
+          Open
+        </a>
+        {% endif %}
       {% endfor %}
     </div>
     {% include "problems/results/table.html" %}
