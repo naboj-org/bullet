@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.22 - 2025-10-17
+
+### Added
+
+- Admin UI to import schools via CSV upload.
+
 ## 2025.21 - 2025-10-16
 
 ### Added
