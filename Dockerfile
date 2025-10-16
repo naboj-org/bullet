@@ -24,9 +24,9 @@ USER appuser
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen
 
-COPY --chown=appuser:appuser . .
-COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css /app/bullet/web/static/
-WORKDIR /app/bullet
+COPY --chown=appuser:appuser ./bullet .
+COPY --chown=appuser:appuser ./CHANGELOG.md .
+COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css ./web/static/
 
 RUN SECRET_KEY=none python manage.py collectstatic --no-input
 

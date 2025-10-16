@@ -25,9 +25,17 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./bullet/:/app/bullet/
       - geiop_data:/geoip/
-      - ./CHANGELOG.md:/app/CHANGELOG.md:ro
+    develop:
+      watch:
+        - action: sync
+          path: ./bullet
+          target: /app
+          ignore:
+            - .venv
+        - action: rebuild
+          path: ./pyproject.toml
+
     depends_on:
       - db
       - geoip
