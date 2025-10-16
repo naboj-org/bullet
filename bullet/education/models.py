@@ -5,6 +5,7 @@ from bullet import search
 
 
 class SchoolType(models.Model):
+    id: int
     name = models.CharField(max_length=64)
     note = models.CharField(
         max_length=32, help_text="shown in admin interface", blank=True
@@ -48,6 +49,7 @@ class Education(models.Model):
 
 
 class School(models.Model):
+    id: int
     name = models.CharField(max_length=256)
     types = models.ManyToManyField(SchoolType)
     address = models.CharField(max_length=256, blank=True, null=True)
@@ -74,13 +76,17 @@ class School(models.Model):
     def __str__(self):
         return f"{self.name}, {self.address}"
 
-    def save(self, send_to_search=True, **kwargs):
-        x = super().save(**kwargs)
-        if send_to_search and search.enabled and not self.is_legacy:
+    def send_to_search(self):
+        if search.enabled and not self.is_legacy:
             search.client.index("schools").add_documents(
                 [self.for_search()],
                 "id",
             )
+
+    def save(self, send_to_search=True, **kwargs):
+        x = super().save(**kwargs)
+        if send_to_search:
+            self.send_to_search()
         return x
 
     def for_search(self):

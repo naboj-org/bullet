@@ -266,6 +266,11 @@ urlpatterns = [
         education.SchoolCreateView.as_view(),
         name="school_create",
     ),
+    path(
+        "education/schools/import/",
+        education.SchoolCSVImportView.as_view(),
+        name="school_csv_import",
+    ),
     path("gallery/albums/", album.AlbumListView.as_view(), name="album_list"),
     path("gallery/albums/new/", album.AlbumCreateView.as_view(), name="album_create"),
     path(
