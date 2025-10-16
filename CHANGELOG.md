@@ -3,6 +3,23 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.21 - 2025-10-16
+
+### Added
+
+- Option to abbreviate names in public views (team lists and results).
+- Results sorting by ranks when problem squares are not available (legacy results).
+- New access denied page that shows which permissions were checked and why access
+  was denied.
+
+### Changed
+
+- Updated 🇺🇦 Ukrainian translations.
+- Refined admin interface navigation permission checking.
+- Simplified permission system. "Can delegate permissions" and "Photo management"
+  was merged into venue admin or higher. "Content management" was merged into
+  country admin or higher.
+
 ## 2025.20 - 2025-10-05
 
 ### Added
