@@ -221,7 +221,7 @@ class TeamResendConfirmationView(PermissionCheckMixin, View):
 
     @cached_property
     def team(self) -> Team:
-        return get_object_or_404(Team, id=self.kwargs["pk"], is_waiting=True)
+        return get_object_or_404(Team, id=self.kwargs["pk"], confirmed_at__isnull=True)
 
     def post(self, request, *args, **kwargs):
         send_confirmation_email.delay(self.team.id)
