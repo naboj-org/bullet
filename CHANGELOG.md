@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.23 - 2025-11-01
+
+### Fixed
+
+- Fixed resend confirmation email throwing 404.
+
 ## 2025.22 - 2025-10-17
 
 ### Added
