@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.24 - 2025-11-03
+
+### Fixed
+
+- Fixed email campaign permission check.
+
 ## 2025.23 - 2025-11-01
 
 ### Fixed
