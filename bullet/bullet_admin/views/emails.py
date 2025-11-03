@@ -1,3 +1,5 @@
+from functools import cached_property
+
 from competitions.branches import Branch
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
@@ -145,19 +147,21 @@ class CampaignTeamListView(PermissionCheckMixin, TemplateView):
     required_permissions = [is_admin]
     template_name = "bullet_admin/emails/teams.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        if not self.can_access():
-            return self.handle_fail()
-
-        self.campaign = get_object_or_404(
+    @cached_property
+    def campaign(self):
+        return get_object_or_404(
             EmailCampaign,
             competition=get_active_competition(self.request),
             pk=kwargs["pk"],
         )
-        if not can_edit_campaign(self.request, self.campaign):
-            return self.handle_fail()
 
-        return super().dispatch(request, *args, **kwargs)
+    def check_custom_permission(self, user: User) -> bool | None:
+        """
+        You must be branch admin to edit global emails,
+        or country admin to edit emails targeting your countries,
+        or venue admin to edit emails targeting your venues.
+        """
+        return can_edit_campaign(self.request, self.campaign)
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
