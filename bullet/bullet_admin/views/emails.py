@@ -152,7 +152,7 @@ class CampaignTeamListView(PermissionCheckMixin, TemplateView):
         return get_object_or_404(
             EmailCampaign,
             competition=get_active_competition(self.request),
-            pk=kwargs["pk"],
+            pk=self.kwargs["pk"],
         )
 
     def check_custom_permission(self, user: User) -> bool | None:
