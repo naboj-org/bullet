@@ -260,6 +260,7 @@ class Team(models.Model):
             "solved_problems": self.solved_problem_count
             if hasattr(self, "solved_problem_count")
             else "",
+            "consent_photos": self.consent_photos,
         }
 
 
