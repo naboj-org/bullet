@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2025.16 - 2025-11-21
+
+### Fixed
+
+- Problem scanning would sometimes cause deadlock of the database.
+
 ## 2025.25 - 2025-11-19
 
 ### Added

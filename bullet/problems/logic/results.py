@@ -107,6 +107,8 @@ def _set_solved_problems(rr: ResultRow):
         .values_list("id", flat=True)
     )
 
+    # These two queries are separated in order to prevent
+    # locking the Problem table.
     problems = SolvedProblem.objects.filter(id__in=problems).values_list(
         "problem__number", flat=True
     )
