@@ -101,10 +101,14 @@ def results_time(
 
 
 def _set_solved_problems(rr: ResultRow):
-    problems = (
+    problems = list(
         SolvedProblem.objects.select_for_update()
         .filter(team=rr.team, competition_time__lte=rr.competition_time)
-        .values_list("problem__number", flat=True)
+        .values_list("id", flat=True)
+    )
+
+    problems = SolvedProblem.objects.filter(id__in=problems).values_list(
+        "problem__number", flat=True
     )
 
     rr.solved_count = len(problems)
