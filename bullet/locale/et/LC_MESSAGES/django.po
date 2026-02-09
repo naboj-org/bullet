@@ -121,7 +121,7 @@ msgstr "Tulemused"
 #: problems/templates/archive/problems.html:6
 #: problems/templates/archive/problems.html:10
 msgid "Problems and solutions"
-msgstr "Ülesannete tekstid"
+msgstr "Ülesanded ja lahendused"
 
 #: competitions/templates/archive/list.html:24
 #: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
@@ -137,7 +137,7 @@ msgstr "Varasemad võistlused"
 #: competitions/templates/live/first_problem.html:6
 #: competitions/templates/live/results.html:6
 msgid "Live signage"
-msgstr ""
+msgstr "Jooksev pingerida"
 
 #: competitions/templates/live/countdown.html:13
 msgid "Do not open the problems until the competition starts."
@@ -266,7 +266,7 @@ msgstr "Otsi koole..."
 
 #: competitions/templates/register/thanks.html:13
 msgid "Team successfully registered"
-msgstr "Võistkond on edukalt registreeritud"
+msgstr "Palun kinnitage registreering"
 
 #: competitions/templates/register/thanks.html:16
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
