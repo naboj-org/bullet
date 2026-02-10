@@ -93,8 +93,9 @@ class SchoolUpdateView(
         school: School = form.save(commit=False)
         self.object = school
         school.importer_ignored = True
-        school.save()
+        school.save(send_to_search=False)
         form.save_m2m()
+        school.send_to_search()
 
         messages.success(self.request, "School saved.")
         return HttpResponseRedirect(self.get_success_url())
@@ -122,8 +123,9 @@ class SchoolCreateView(
         school: School = form.save(commit=False)
         self.object = school
         school.importer_ignored = True
-        school.save()
+        school.save(send_to_search=False)
         form.save_m2m()
+        school.send_to_search()
 
         messages.success(self.request, "School saved.")
         return HttpResponseRedirect(self.get_success_url())
