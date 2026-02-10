@@ -3,7 +3,19 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
-## 2025.16 - 2025-11-21
+## 2026.2 - 2026-02-10
+
+### Fixed
+
+- Fixed schools manually added via admin not being properly indexed for search.
+
+## 2026.1 - 2026-02-09
+
+### Changed
+
+- Updated 🇪🇪 Estonian translations.
+
+## 2025.26 - 2025-11-21
 
 ### Fixed
 
