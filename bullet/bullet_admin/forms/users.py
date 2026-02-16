@@ -13,6 +13,12 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ("first_name", "last_name", "email")
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        if self.instance.pk:
+            self.fields.pop("email")
+
 
 class BranchRoleForm(forms.ModelForm):
     class Meta:
