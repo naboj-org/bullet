@@ -136,10 +136,10 @@ class AlbumPhotoListView(PermissionCheckMixin, GenericList, ListView):
             )
         ]
 
-    def get_row_links(self, object) -> list[Link]:
+    def get_row_links(self, obj) -> list[Link]:
         return [
             DeleteIcon(
-                reverse("badmin:album_photo_delete", args=[self.album.id, object.id])
+                reverse("badmin:album_photo_delete", args=[self.album.id, obj.id])
             )
         ]
 
