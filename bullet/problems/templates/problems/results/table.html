@@ -1,16 +1,16 @@
 {% load i18n results teams utils %}
 
 {% if not results_time.has_started %}
-  <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md">
+  <div class="bg-red-100 text-red-800 border border-red-800 p-4 mb-6 rounded-md sticky {% if embed %}top-[160px]{% else %}top-[100px]{% endif %}">
     {% translate "The competition did not start yet." %}
   </div>
 {% elif results_time.is_frozen %}
-  <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md">
+  <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-6 rounded-md sticky {% if embed %}top-[160px]{% else %}top-[100px]{% endif %}">
     <b>{% translate "Results are frozen." %}</b>
     {% translate "These are not the final results yet." %}
   </div>
 {% elif results_time.has_started and not results_time.is_final %}
-  <div class="bg-blue-100 text-blue-800 border border-blue-800 p-4 mb-6 rounded-md">
+  <div class="bg-blue-100 text-blue-800 border border-blue-800 p-4 mb-6 rounded-md sticky {% if embed %}top-[160px]{% else %}top-[100px]{% endif %}">
     <b>{% translate "Interim results." %}</b>
     {% translate "The competition is ongoing, the results may change." %}
   </div>
