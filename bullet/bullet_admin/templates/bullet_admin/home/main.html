@@ -1,5 +1,5 @@
 {% extends "bullet_admin/base.html" %}
-{% load badmin %}
+{% load badmin countries %}
 {% block title %}
     Dashboard
 {% endblock title %}
@@ -24,47 +24,56 @@
         <div class="border-b border-gray-200 pb-4 mt-8">
             <h2 class="text-base font-semibold text-gray-900">Your venues</h2>
         </div>
-        <div class="mt-4 grid grid-cols-2 gap-4">
-            {% for v in venues %}
-                <div class="bg-gray-100 border border-gray-200 rounded-md p-3">
-                    <div class="font-semibold">{{ v }}</div>
-                    {% if competition.state >= competition.state.REGISTRATION %}
-                        <div class="rounded bg-white w-full h-2 overflow-hidden my-1">
-                            <div class="h-full bg-green-600"
-                                 style="width: {% percent v.competing v.capacity %}%">
-                            </div>
-                        </div>
-                    {% endif %}
-                    <div class="text-sm text-gray-800">
-                        {% if competition.state < competition.state.REGISTRATION %}
-                            {{ v.capacity }} teams capacity
-                        {% else %}
-                            {{ v.competing }} / {{ v.capacity }} teams registered
-                            {% if v.waiting %}(+ {{ v.waiting }} on the waiting list){% endif %}
-                        {% endif %}
-                    </div>
-                    {% if competition.state >= competition.state.AFTER_REGISTRATION %}
-                        {% if competition.state < competition.state.AFTER_COMPETITION %}
-                            <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
-                                <div class="h-full bg-purple-600"
-                                     style="width: {% percent v.checked_in v.competing %}%">
-                                </div>
-                            </div>
-                            <div class="text-sm text-gray-800">
-                                {{ v.checked_in }} / {{ v.competing }} teams checked in
-                            </div>
-                        {% else %}
-                            <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
-                                <div class="h-full bg-blue-600"
-                                     style="width: {% percent v.reviewed v.competing %}%">
-                                </div>
-                            </div>
-                            <div class="text-sm text-gray-800">
-                                {{ v.reviewed }} / {{ v.competing }} teams reviewed
-                            </div>
-                        {% endif %}
-                    {% endif %}
+        <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {% regroup venues by country as venues_by_country %}
+            {% for country, venues in venues_by_country %}
+                <div class="font-semibold p-3 border-b border-gray-200 sm:col-span-2">
+                    {% get_country country as country_info %}
+                    {% #country name=country_info.name code=country_info.code %}
                 </div>
+                {% for v in venues %}
+                    <a href="{% url "badmin:venue_detail" v.id %}">
+                        <div class="bg-gray-100 border border-gray-200 rounded-md p-3">
+                            <div class="font-semibold">{{ v }}</div>
+                            {% if competition.state >= competition.state.REGISTRATION %}
+                                <div class="rounded bg-white w-full h-2 overflow-hidden my-1">
+                                    <div class="h-full bg-green-600"
+                                         style="width: {% percent v.competing v.capacity %}%">
+                                    </div>
+                                </div>
+                            {% endif %}
+                            <div class="text-sm text-gray-800">
+                                {% if competition.state < competition.state.REGISTRATION %}
+                                    {{ v.capacity }} teams capacity
+                                {% else %}
+                                    {{ v.competing }} / {{ v.capacity }} teams registered
+                                    {% if v.waiting %}(+ {{ v.waiting }} on the waiting list){% endif %}
+                                {% endif %}
+                            </div>
+                            {% if competition.state >= competition.state.AFTER_REGISTRATION %}
+                                {% if competition.state < competition.state.AFTER_COMPETITION %}
+                                    <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
+                                        <div class="h-full bg-purple-600"
+                                             style="width: {% percent v.checked_in v.competing %}%">
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-800">
+                                        {{ v.checked_in }} / {{ v.competing }} teams checked in
+                                    </div>
+                                {% else %}
+                                    <div class="rounded bg-white w-full h-2 overflow-hidden mb-1 mt-3">
+                                        <div class="h-full bg-blue-600"
+                                             style="width: {% percent v.reviewed v.competing %}%">
+                                        </div>
+                                    </div>
+                                    <div class="text-sm text-gray-800">
+                                        {{ v.reviewed }} / {{ v.competing }} teams reviewed
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </a>
+                {% endfor %}
             {% endfor %}
         </div>
     </div>
