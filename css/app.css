@@ -73,9 +73,7 @@
     .branch-chemistry .bg-hero-image {
         background-image: url('/static/img/chemistry/hero.png');
     }
-}
 
-@layer components {
     .input {
         @apply block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0;
     }
@@ -87,7 +85,9 @@
     .radio {
         @apply rounded-full bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-primary focus:ring-1 focus:ring-offset-2 focus:ring-gray-500;
     }
+}
 
+@layer components {
     .btn {
         @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow-sm leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
     }

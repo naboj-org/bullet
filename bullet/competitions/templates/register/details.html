@@ -5,7 +5,7 @@
     {% include "register/partials/category.html" %}
     {% include "register/partials/venue.html" %}
     {% include "register/partials/school.html" %}
-    <hr class="my-6">
+    <hr class="my-6 border-gray-300">
     {% if venue.registration_flow.get_pre_registration_template %}
         {% include venue.registration_flow.get_pre_registration_template %}
     {% endif %}
