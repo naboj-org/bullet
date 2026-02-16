@@ -19,6 +19,14 @@
 {% if venue.is_reviewed %}
     {% aalert color="green" class="mb-4" %}
         <p>This venue was marked as reviewed.</p>
+        {% is_country_admin_in venue as can_unreview %}
+        {% if can_unreview and not venue.category.competition.results_public %}
+            {% url "badmin:scanning_review" as back_url %}
+            {% add_query back_url venue=venue.id as back_url %}
+            <p>
+                <a class="link" href="{% url "badmin:venue_unreview" venue.id %}?next={{ back_url|urlencode }}">Click here</a> to mark the venue as unreviewed if you want to make changes to teams or problems.
+            </p>
+        {% endif %}
     {% endaalert %}
 {% endif %}
 <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">

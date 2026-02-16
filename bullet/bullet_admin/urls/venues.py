@@ -35,4 +35,9 @@ urlpatterns = [
         venues.FinishReviewView.as_view(),
         name="venue_finish_review",
     ),
+    path(
+        "<int:pk>/unreview/",
+        venues.UnreviewView.as_view(),
+        name="venue_unreview",
+    ),
 ]
