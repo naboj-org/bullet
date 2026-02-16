@@ -77,6 +77,25 @@ class VenueForm(ModelForm):
             raise ValidationError("Barcode prefix must contain only capital letters.")
         return data
 
+    def clean(self):
+        cleaned_data = super().clean()
+
+        if "shortcode" in cleaned_data and "category" in cleaned_data:
+            venue_qs = Venue.objects.filter(
+                category__competition=cleaned_data["category"].competition,
+                shortcode=cleaned_data["shortcode"],
+            )
+            if self.instance.pk:
+                venue_qs = venue_qs.exclude(pk=self.instance.pk)
+            if venue_qs.exists():
+                raise ValidationError(
+                    {
+                        "shortcode": "Barcode prefix must be unique within the competition."
+                    }
+                )
+
+        return cleaned_data
+
 
 class TeamListForm(forms.Form):
     include_contact = forms.BooleanField(
