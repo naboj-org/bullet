@@ -24,7 +24,7 @@
       <a href="{{ photo.image.url }}"
           class="rounded-md overflow-hidden grow h-full sm:h-56"
           data-fancybox="gallery">
-        <img src="{{ photo.image.url }}" srcset="{{ photo.image_srcset }}" sizes="{{ photo.image_sizes }}" class="w-full h-full object-cover" alt="">
+        <img src="{{ photo.image.url }}" srcset="{{ photo.image_srcset }}" width="{{ photo.image_width }}" height="{{ photo.image_height }}" sizes="{{ photo.image_sizes }}" class="w-full h-full object-cover" alt="" loading="lazy">
       </a>
     {% endfor %}
     <div class="grow-[10]"></div>
