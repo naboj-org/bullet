@@ -23,7 +23,7 @@
                     Personal information
                 </h2>
             </header>
-            <div class="divide-y">
+            <div class="divide-y divide-gray-200">
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <label for="{{ form.first_name.id_for_label }}">First name</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.first_name %}</div>
@@ -54,7 +54,7 @@
                         Branch permissions
                     </h2>
                 </header>
-                <div class="divide-y">
+                <div class="divide-y divide-gray-200">
                     <div class="p-4">
                         <label class="flex items-center gap-2">
                             {% bcheckbox bform.is_admin %} Is branch administrator
@@ -71,7 +71,7 @@
                         Competition permissions
                     </h2>
                 </header>
-                <div class="divide-y">
+                <div class="divide-y divide-gray-200">
                     {% if cform.non_field_errors %}
                         <div class="p-4 text-red-600 bg-red-100">
                             {{ cform.non_field_errors|first|escape }}

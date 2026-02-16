@@ -12,7 +12,7 @@
             {% endslot %}
             User manuals and an explanation of the administration interface.
         {% endaheader %}
-        <div class="divide-y">
+        <div class="divide-y divide-gray-200">
             {% for page in pages %}
                 <a href="{% url "badmin:documentation" page.slug %}"
                    class="p-4 block hover:bg-gray-50 rounded-sm">
