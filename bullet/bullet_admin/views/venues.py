@@ -37,6 +37,7 @@ from bullet_admin.access import (
     is_admin_in,
     is_competition_unlocked,
     is_country_admin,
+    is_country_admin_in,
 )
 from bullet_admin.forms.documents import CertificateForm, TearoffForm
 from bullet_admin.forms.venues import TeamListForm, VenueForm
@@ -330,4 +331,22 @@ class FinishReviewView(VenueMixin, RedirectBackMixin, GenericForm, FormView):
         if not unreviewed_venue:
             save_country_ranks.delay(self.venue.category.id, self.venue.country)
 
+        return super().form_valid(form)
+
+
+class UnreviewView(VenueMixin, RedirectBackMixin, GenericForm, FormView):
+    required_permissions = [is_country_admin_in]
+    form_class = Form
+    form_title = "Unreview venue"
+    form_submit_color = "red"
+    form_submit_label = "Mark as unreviewed"
+    form_submit_icon = "mdi:close"
+    template_name = "bullet_admin/venues/unreview.html"
+
+    def get_default_success_url(self):
+        return reverse("badmin:venue_detail", kwargs={"pk": self.venue.id})
+
+    def form_valid(self, form):
+        self.venue.is_reviewed = False
+        self.venue.save()
         return super().form_valid(form)
