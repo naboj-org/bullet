@@ -2,10 +2,12 @@ from pathlib import Path
 
 from django.conf import settings
 from django_rq import job
-from PIL import Image
+from PIL import Image, ImageFile
 
 from gallery.constants import ORIGNAL_SIZE, THUMB_SIZES
 from gallery.models import Photo
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def resize_keep_aspect(img: Image.Image, width: int) -> Image.Image:
