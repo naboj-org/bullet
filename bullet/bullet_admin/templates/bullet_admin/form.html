@@ -1,5 +1,5 @@
 {% load bform %}
-<div class="divide-y">
+<div class="divide-y divide-gray-200">
     {% if form.non_field_errors %}
         <div class="text-red-600 p-4">
             {% for err in form.non_field_errors %}<p>{{ err }}</p>{% endfor %}

@@ -19,7 +19,7 @@
         {% query_replace field=request.GET.field path=request.GET.initial selected=1 as query %}
         {% #abtn color="red" label="Cancel" url=field_url|add:query %}
     </div>
-    <div class="divide-y">
+    <div class="divide-y divide-gray-200">
         {% for file in files %}
             <a class="{% cycle "" "bg-gray-50" %} hover:bg-gray-100 p-3 flex items-center justify-between"
                hx-get="{{ home }}{% if file.is_dir %}{% query_transform path=file.path %}{% else %}{% query_transform path=file.path selected=1 %}{% endif %}">

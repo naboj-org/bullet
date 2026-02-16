@@ -6,7 +6,7 @@
 
 {% block root_content %}
     {% load_blocks "category" %}
-    <div class="min-h-screen h-screen grid grid-cols-2 divide-x"
+    <div class="min-h-screen h-screen grid grid-cols-2 divide-x divide-gray-200"
          id="js-screens"
          {% if not stop %} hx-get="{% query_transform %}" hx-trigger="every 15s" hx-swap="outerHTML" hx-select="#js-screens" {% endif %}>
         {% for screen in screens %}
