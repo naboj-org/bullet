@@ -291,6 +291,7 @@ urlpatterns = [
     path("wildcards/", include("bullet_admin.urls.wildcards")),
     path("documentation/", include("bullet_admin.urls.documentation")),
     path("tex/", include("bullet_admin.urls.tex")),
+    path("albums/", include("bullet_admin.urls.albums")),
     path(
         "archive/problem_upload/",
         archive.ProblemPDFUploadView.as_view(),

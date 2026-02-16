@@ -1,32 +1,34 @@
 {% extends "web/base.html" %}
-{% load country_url i18n pictures %}
+{% load country_url i18n %}
+
 {% block title %}
-    {% translate "Album" %} – {{ album.title }}
+  {% translate "Album" %} – {{ album.title }}
 {% endblock title %}
 
 {% block extrahead %}
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
 {% endblock extrahead %}
 
 {% block hero %}
-    <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">{% translate "Album" %}</h1>
-    <h2 class="text-2xl md:text-4xl mt-4 font-bold mb-4 md:mb-16">
-        {{ album.title }}, {{ competition.name }}
-    </h2>
+  <h1 class="text-4xl md:text-6xl font-bold mt-8 md:mt-24">{% translate "Album" %}</h1>
+  <h2 class="text-2xl md:text-4xl mt-4 font-semibold mb-4 md:mb-16">
+    {{ album.title }}, {{ competition.name }}
+  </h2>
 {% endblock hero %}
 
 {% block content %}
-    <article class="container mx-auto mt-8 px-1 md:px-2 flex flex-wrap gap-1 md:gap-2">
-        {% for photo in object_list %}
-            <a href="{{ photo.image.url }}"
-               class="rounded-md overflow-hidden grow h-full sm:h-56"
-               data-fancybox="gallery">
-                {% picture photo.image img_loading="lazy" img_class="object-cover w-full h-full" %}
-            </a>
-        {% endfor %}
-        <div class="grow-[10]"></div>
-    </article>
-    <script>Fancybox.bind("[data-fancybox]", {});</script>
+  <article class="max-w-7xl mx-auto mt-8 px-6 lg:px-8 flex flex-wrap gap-1 md:gap-2">
+    {% for photo in object_list %}
+      <a href="{{ photo.image.url }}"
+          class="rounded-md overflow-hidden grow h-full sm:h-56"
+          data-fancybox="gallery">
+        <img src="{{ photo.image.url }}" srcset="{{ photo.image_srcset }}" width="{{ photo.image_width }}" height="{{ photo.image_height }}" sizes="{{ photo.image_sizes }}" class="w-full h-full object-cover" alt="" loading="lazy">
+      </a>
+    {% endfor %}
+    <div class="grow-[10]"></div>
+  </article>
+
+  <script>Fancybox.bind("[data-fancybox]", {});</script>
 {% endblock content %}

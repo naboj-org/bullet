@@ -1,19 +1,16 @@
-from datetime import datetime, timezone
-
 from countries.logic.detection import get_country_language_from_request
-from countries.utils import country_reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView
+from django.utils.functional import cached_property
+from django.views.generic import CreateView, DeleteView, FormView, ListView, UpdateView
 from gallery.models import Album, Photo
-from PIL import Image
 
 from bullet_admin.access import PermissionCheckMixin, is_admin
-from bullet_admin.forms.album import AlbumForm
+from bullet_admin.forms.album import AlbumForm, AlbumUploadForm
 from bullet_admin.mixins import RedirectBackMixin
-from bullet_admin.utils import get_active_branch, get_active_competition
+from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericDeleteView, GenericForm
 from bullet_admin.views.generic.links import (
     DeleteIcon,
@@ -31,27 +28,35 @@ class AlbumListView(PermissionCheckMixin, GenericList, ListView):
         NewLink("album", reverse_lazy("badmin:album_create")),
     ]
 
-    table_labels = {"slug": "URL suffix (slug)"}
-    table_fields = ["title", "slug", "country", "photos"]
+    table_labels = {"slug": "URL suffix"}
+    table_fields = ["title", "slug", "country"]
     table_field_templates = {
         "country": "bullet_admin/partials/field__country.html",
-        "photos": "bullet_admin/albums/field__photos.html",
     }
 
     def get_queryset(self):
         return Album.objects.filter(competition=get_active_competition(self.request))
 
     def get_row_links(self, obj) -> list[Link]:
-        view = country_reverse(
+        assert self.detection
+        view = reverse(
             "archive_album",
             kwargs={
+                "b_country": self.detection[0],
+                "b_language": self.detection[1],
                 "competition_number": obj.competition.number,
                 "slug": obj.slug,
             },
         )
 
         return [
-            EditIcon(reverse("badmin:album_edit", args=[obj.pk])),
+            Link(
+                "blue",
+                "mdi:image-outline",
+                "Photos",
+                reverse("badmin:album_photo_list", args=[obj.pk]),
+            ),
+            EditIcon(reverse("badmin:album_update", args=[obj.pk])),
             ExternalViewIcon(view),
             DeleteIcon(reverse("badmin:album_delete", args=[obj.pk])),
         ]
@@ -64,43 +69,26 @@ class AlbumListView(PermissionCheckMixin, GenericList, ListView):
         return super().dispatch(request, *args, **kwargs)
 
 
-class AlbumFormMixin(RedirectBackMixin, GenericForm):
+class AlbumFormMixin(GenericForm):
     form_class = AlbumForm
-    form_multipart = True
 
     def get_form_kwargs(self):
-        kw = super().get_form_kwargs()  # type:ignore
-        kw["branch"] = get_active_branch(self.request)
+        kw = super().get_form_kwargs()
+        kw["competition"] = get_active_competition(self.request)
         return kw
 
-    def form_valid(self, form):
-        album: Album = form.save(commit=False)
-        self.object = album
-        album.competition = get_active_competition(self.request)
-        album.save()
-        for file in form.cleaned_data["photo_files"]:
-            photo = Photo(album=album, image=file)
 
-            im = Image.open(file)
-            taken_at: str | None = im.getexif().get(36867)
-            if taken_at:
-                photo.taken_at = datetime.strptime(
-                    taken_at, "%Y:%m:%d %H:%M:%S"
-                ).replace(tzinfo=timezone.utc)
-
-            photo.save()
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_default_success_url(self):
-        return reverse("badmin:album_edit", kwargs={"pk": self.object.id})
-
-
-class AlbumUpdateView(PermissionCheckMixin, AlbumFormMixin, UpdateView):
+class AlbumUpdateView(
+    PermissionCheckMixin, AlbumFormMixin, RedirectBackMixin, UpdateView
+):
     required_permissions = [is_admin]
     form_title = "Edit album"
 
+    def get_default_success_url(self):
+        return reverse("badmin:album_update", kwargs={"pk": self.object.id})
+
     def get_queryset(self):
-        return Album.objects.filter(competition=get_active_competition(self.request))
+        return Album.objects.filter(competition__branch=self.request.BRANCH)  # type:ignore
 
     def form_valid(self, form):
         ret = super().form_valid(form)
@@ -111,6 +99,9 @@ class AlbumUpdateView(PermissionCheckMixin, AlbumFormMixin, UpdateView):
 class AlbumCreateView(PermissionCheckMixin, AlbumFormMixin, CreateView):
     required_permissions = [is_admin]
     form_title = "New album"
+
+    def get_success_url(self):
+        return reverse("badmin:album_photo_list", kwargs={"pk": self.object.id})
 
     def form_valid(self, form):
         ret = super().form_valid(form)
@@ -126,4 +117,76 @@ class AlbumDeleteView(PermissionCheckMixin, RedirectBackMixin, GenericDeleteView
     def form_valid(self, form):
         super().form_valid(form)
         messages.success(self.request, "Album deleted successfully.")
+        return HttpResponseRedirect(self.get_success_url())
+
+
+class AlbumPhotoListView(PermissionCheckMixin, GenericList, ListView):
+    required_permissions = [is_admin]
+    table_fields = ["image"]
+    table_field_templates = {"image": "bullet_admin/albums/field__image.html"}
+
+    def get_list_title(self):
+        return f"Photos in {self.album.title}"
+
+    def get_list_links(self) -> list[Link]:
+        return [
+            Link(
+                "green",
+                "mdi:upload",
+                "Upload photos",
+                reverse("badmin:album_upload", args=[self.album.id]),
+            )
+        ]
+
+    def get_row_links(self, obj) -> list[Link]:
+        return [
+            DeleteIcon(
+                reverse("badmin:album_photo_delete", args=[self.album.id, obj.id])
+            )
+        ]
+
+    @cached_property
+    def album(self):
+        return get_object_or_404(Album, id=self.kwargs["pk"])
+
+    def get_queryset(self):
+        return Photo.objects.filter(album=self.album)
+
+
+class AlbumPhotoDeleteView(PermissionCheckMixin, GenericDeleteView, DeleteView):
+    required_permissions = [is_admin]
+
+    @cached_property
+    def album(self):
+        return get_object_or_404(Album, id=self.kwargs["album_pk"])
+
+    def get_queryset(self):
+        return Photo.objects.filter(album=self.album)
+
+    def get_success_url(self):
+        return reverse("badmin:album_photo_list", kwargs={"pk": self.album.id})
+
+
+class AlbumUploadView(PermissionCheckMixin, GenericForm, FormView):
+    required_permissions = [is_admin]
+    form_class = AlbumUploadForm
+    form_title = "Upload photos"
+    form_multipart = True
+    form_submit_label = "Upload"
+    form_submit_icon = "mdi:upload"
+
+    def get_success_url(self):
+        return reverse("badmin:album_photo_list", kwargs={"pk": self.album.id})
+
+    @cached_property
+    def album(self):
+        return get_object_or_404(Album, id=self.kwargs["pk"])
+
+    def form_valid(self, form):
+        for file in form.cleaned_data["photo_files"]:
+            photo = Photo(album=self.album, image=file)
+            photo.read_taken_at()
+            photo.save()
+
+        messages.success(self.request, "Photos uploaded successfully.")
         return HttpResponseRedirect(self.get_success_url())

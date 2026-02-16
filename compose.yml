@@ -26,6 +26,7 @@ services:
       - "8000:8000"
     volumes:
       - geiop_data:/geoip/
+      - ./uploads:/app/uploads
     develop:
       watch:
         - action: sync

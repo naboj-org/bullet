@@ -53,7 +53,8 @@ INSTALLED_APPS = [
     "countries",
     "problems",
     "documents",
-    #
+    "gallery",
+    # 3rd-party
     "django_countries",
     "django_recaptcha",
     "django_minify_html",
@@ -65,8 +66,6 @@ INSTALLED_APPS = [
     "django_rq",
     "django_probes",
     "debug_toolbar",
-    "pictures",
-    "gallery",
     #
     "django_cleanup.apps.CleanupConfig",
 ]
@@ -230,23 +229,6 @@ if DEBUG:
 else:
     SESSION_COOKIE_DOMAIN = env("PARENT_HOST", default="naboj.org")
     SESSION_COOKIE_SECURE = True
-
-PICTURES = {
-    "BREAKPOINTS": {
-        "xs": 576,
-        "s": 768,
-        "m": 992,
-        "l": 1200,
-        "xl": 1400,
-    },
-    "GRID_COLUMNS": 4,
-    "CONTAINER_WIDTH": 1200,
-    "FILE_TYPES": ["WEBP"],
-    "PIXEL_DENSITIES": [1, 2],
-    "USE_PLACEHOLDERS": False,
-    "QUEUE_NAME": "default",
-    "PROCESSOR": "pictures.tasks.process_picture",
-}
 
 LETTER_URL = env("LETTER_URL", default="")
 LETTER_TOKEN = env("LETTER_TOKEN", default="")
