@@ -3,6 +3,29 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.3 - 2026-02-16
+
+### Added
+
+- Accepted school types are shown on the school import page.
+- Team review page now contains time format example.
+- Photos can be removed from albums.
+- Venues on the admin dashboard are now grouped by country.
+
+### Changed
+
+- Administrators can no longer change email addresses.
+- Country administrators can now mark venue as unreviewed.
+- Alerts in results (frozen, ...) are now sticked to top while scrolling.
+
+### Fixed
+
+- Two venues can no longer share the same shortcode.
+- Removed redundant move icon in waiting list.
+- Minor design inconsistencies.
+- Phone scanner can be closed.
+- Admin result links now point to the right competition instead of the current one.
+
 ## 2026.2 - 2026-02-10
 
 ### Fixed
