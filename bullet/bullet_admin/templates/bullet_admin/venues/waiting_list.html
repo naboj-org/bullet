@@ -92,19 +92,16 @@
                                     Edit
                                 </a>
                                 {% if not competition.results_public %}
-                                    <a href="{% url "badmin:team_to_competition" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
-                                       class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2">
-                                        <form action="{% url "badmin:team_to_competition" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
-                                              method="post">
-                                            {% csrf_token %}
-                                            <button type="submit"
-                                                    class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2 cursor-pointer">
-                                                <span class="iconify"
-                                                      data-icon="mdi:play"></span>
-                                                Move
-                                            </button>
-                                        </form>
-                                    </a>
+                                    <form action="{% url "badmin:team_to_competition" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
+                                          method="post">
+                                        {% csrf_token %}
+                                        <button type="submit"
+                                                class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2 cursor-pointer">
+                                            <span class="iconify"
+                                                  data-icon="mdi:play"></span>
+                                            Move
+                                        </button>
+                                    </form>
                                 {% endif %}
                             </div>
                         </td>
