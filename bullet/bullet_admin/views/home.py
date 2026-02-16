@@ -34,7 +34,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
                     filter=Q(team__is_reviewed=True),
                 ),
             )
-            .natural_order()
+            .order_by("country", "name", "category__identifier")
         )
 
         return ctx
