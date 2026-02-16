@@ -1,5 +1,4 @@
 from countries.logic.detection import get_country_language_from_request
-from countries.utils import country_reverse
 from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
@@ -39,9 +38,12 @@ class AlbumListView(PermissionCheckMixin, GenericList, ListView):
         return Album.objects.filter(competition=get_active_competition(self.request))
 
     def get_row_links(self, obj) -> list[Link]:
-        view = country_reverse(
+        assert self.detection
+        view = reverse(
             "archive_album",
             kwargs={
+                "b_country": self.detection[0],
+                "b_language": self.detection[1],
                 "competition_number": obj.competition.number,
                 "slug": obj.slug,
             },
