@@ -10,11 +10,11 @@ register = template.Library()
 @register.inclusion_tag("web/snippets/main_nav.html", takes_context=True)
 def main_nav(context, primary=False):
     if "request" not in context:
-        return {}
+        return context
 
     request = context["request"]
     if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
-        return {}
+        return context
 
     if not hasattr(request, "_menu_cache"):
         request._menu_cache = Menu.objects.filter(
