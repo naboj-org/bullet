@@ -1,29 +1,10 @@
 {% extends "web/root_base.html" %}
-{% load static %}
+{% load bullet static %}
 {% block root_content %}
     {% block main %}
         <div class="border-b-4 border-primary bg-gray-900">
             <div class="flex flex-wrap align-baseline gap-1 max-w-7xl mx-auto py-4 px-6 lg:px-8 justify-between">
-                {% if branches %}
-                    <div class="relative">
-                        <button type="button"
-                                class="font-medium cursor-pointer text-white text-left whitespace-nowrap"
-                                id="js-branch-button"
-                                aria-expanded="true"
-                                aria-haspopup="true">
-                            {{ branch.name }} <i class="fas fa-caret-down"></i>
-                        </button>
-                         <nav id="js-branch-menu"
-                              class="absolute bg-white border border-gray-200 shadow-lg rounded-md p-2 space-y-1 w-48 hidden"
-                              aria-labelledby="js-branch-button"
-                              tabindex="-1">
-                            {% for b in branches %}
-                                <a class="{% if branch == b %} bg-primary text-white {% else %} hover:bg-gray-200 {% endif %} block px-2 py-1 rounded-sm"
-                                   href="//{{ b.domain }}">{{ b.name }}</a>
-                            {% endfor %}
-                        </nav>
-                    </div>
-                {% endif %}
+                {% branch_selector %}
                 <div>
                     {% if user.is_authenticated %}
                         <a href="{% url "badmin:home" %}"
@@ -40,7 +21,7 @@
         <header class="bg-hero">
             <div class="max-w-7xl mx-auto py-6 md:py-12 px-6 lg:px-8 {% block heroclass %} {% endblock %}">
                 <div id="default-nav">
-                    {% include "web/snippets/main_nav.html" with primary=True %}
+                    {% main_nav True %}
                 </div>
                 {% block hero %}
                 {% endblock hero %}
@@ -49,7 +30,7 @@
         <div class="border-b-2 border-primary shadow-lg transition-transform fixed bg-white top-0 transform-gpu -translate-y-full w-full z-10"
              id="backup-nav">
             <div class="mx-auto max-w-7xl px-6 lg:px-8 py-4">
-                {% include "web/snippets/main_nav.html" %}
+                {% main_nav %}
             </div>
         </div>
         {% block content %}
