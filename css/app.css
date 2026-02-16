@@ -50,11 +50,11 @@
     --primary-light: #f6eeff;
 }
 
-.bg-hero {
-    background: linear-gradient(265.04deg, var(--gradient-light) -5.34%, var(--gradient-dark) 110.03%);
-}
-
 @layer utilities {
+    .bg-hero {
+        background: linear-gradient(265.04deg, var(--gradient-light) -5.34%, var(--gradient-dark) 110.03%);
+    }
+
     .bg-hero-image {
         background-repeat: no-repeat;
         background-position: right bottom;
@@ -75,118 +75,120 @@
     }
 }
 
-.input {
-    @apply block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0;
-}
+@layer components {
+    .input {
+        @apply block w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:ring-0;
+    }
 
-.checkbox {
-    @apply rounded bg-gray-200 border-transparent focus:border-transparent focus:ring-1 focus:ring-offset-2 focus:ring-gray-500 checked:bg-primary;
-}
+    .checkbox {
+        @apply rounded bg-gray-200 border-transparent focus:border-transparent focus:ring-1 focus:ring-offset-2 focus:ring-gray-500 checked:bg-primary;
+    }
 
-.radio {
-    @apply rounded-full bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-primary focus:ring-1 focus:ring-offset-2 focus:ring-gray-500;
-}
+    .radio {
+        @apply rounded-full bg-gray-200 border-transparent focus:border-transparent focus:bg-gray-200 text-primary focus:ring-1 focus:ring-offset-2 focus:ring-gray-500;
+    }
 
-.btn {
-    @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow-sm leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
-}
+    .btn {
+        @apply bg-primary text-white font-medium rounded-full px-8 py-4 shadow-sm leading-none hover:bg-white hover:text-primary transition-colors border border-primary;
+    }
 
-.hero-btn {
-    @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow-sm hover:bg-white hover:text-primary transition-colors border border-primary;
-}
+    .hero-btn {
+        @apply bg-primary text-white text-lg md:text-2xl font-medium rounded-full px-6 py-3 md:px-10 md:py-5 shadow-sm hover:bg-white hover:text-primary transition-colors border border-primary;
+    }
 
-.cb-missing {
-    @apply bg-red-500 text-white;
-}
+    .cb-missing {
+        @apply bg-red-500 text-white;
+    }
 
-.cb-edit {
-    @apply bg-yellow-400/50 hover:bg-yellow-400 transition-colors;
-}
+    .cb-edit {
+        @apply bg-yellow-400/50 hover:bg-yellow-400 transition-colors;
+    }
 
-.bold-primary b, .bold-primary strong {
-    @apply text-primary;
-    font-weight: inherit;
-}
+    .bold-primary b, .bold-primary strong {
+        @apply text-primary;
+        font-weight: inherit;
+    }
 
-.btn-admin {
-    @apply rounded-md inline-block text-white py-2 px-3 font-bold whitespace-nowrap;
-}
+    .btn-admin {
+        @apply rounded-md inline-block text-white py-2 px-3 font-bold whitespace-nowrap;
+    }
 
-.btn-admin-sm {
-    @apply rounded-md inline-block text-white font-bold text-sm py-1 px-2.5 whitespace-nowrap;
-}
+    .btn-admin-sm {
+        @apply rounded-md inline-block text-white font-bold text-sm py-1 px-2.5 whitespace-nowrap;
+    }
 
-.link-primary {
-    @apply underline text-primary hover:text-primary-dark;
-}
+    .link-primary {
+        @apply underline text-primary hover:text-primary-dark;
+    }
 
-.link {
-    @apply underline text-blue-600 hover:text-blue-700;
-}
+    .link {
+        @apply underline text-blue-600 hover:text-blue-700;
+    }
 
-/* timeline */
-.timeline {
-    position: relative;
-}
+    /* timeline */
+    .timeline {
+        position: relative;
+    }
 
-.timeline::after {
-    content: '';
-    position: absolute;
-    width: 6px;
-    background-color: rgb(255, 255, 255);
-    border: rgb(218, 218, 218) solid 2px;
-    border-radius: 10px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-}
+    .timeline::after {
+        content: '';
+        position: absolute;
+        width: 6px;
+        background-color: rgb(255, 255, 255);
+        border: rgb(218, 218, 218) solid 2px;
+        border-radius: 10px;
+        top: 0;
+        bottom: 0;
+        left: 0;
+    }
 
-.timeline .container {
-    padding: 10px 0 10px 40px;
-    position: relative;
-    width: 100%;
-}
+    .timeline .container {
+        padding: 10px 0 10px 40px;
+        position: relative;
+        width: 100%;
+    }
 
-.timeline .container::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 25px;
-    left: -9px;
-    border: solid 4px var(--primary);
-    background-color: white;
-    top: 15px;
-    border-radius: 50%;
-    z-index: 1;
-}
+    .timeline .container::after {
+        content: '';
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        left: -9px;
+        border: solid 4px var(--primary);
+        background-color: white;
+        top: 15px;
+        border-radius: 50%;
+        z-index: 1;
+    }
 
-.timeline .content {
-    position: relative;
-    text-align: left;
-    left: 0;
-}
+    .timeline .content {
+        position: relative;
+        text-align: left;
+        left: 0;
+    }
 
-.timeline .content::after {
-    left: -3px;
-}
+    .timeline .content::after {
+        left: -3px;
+    }
 
-.timeline .container.gray-border::after {
-    border-color: #9ca3af;
-}
+    .timeline .container.gray-border::after {
+        border-color: #9ca3af;
+    }
 
-/* TeX equations */
-.prose-archive img.math.inline {
-    margin: 0;
-}
+    /* TeX equations */
+    .prose-archive img.math.inline {
+        margin: 0;
+    }
 
-.prose-archive img.math.display {
-    @apply mx-auto my-4;
-}
+    .prose-archive img.math.display {
+        @apply mx-auto my-4;
+    }
 
-.prose-archive img:not(.math) {
-    @apply mx-auto max-w-full w-2/3 max-h-40 object-contain;
-}
+    .prose-archive img:not(.math) {
+        @apply mx-auto max-w-full w-2/3 max-h-40 object-contain;
+    }
 
-.prose iframe {
-  max-width: 100%;
+    .prose iframe {
+        max-width: 100%;
+    }
 }
