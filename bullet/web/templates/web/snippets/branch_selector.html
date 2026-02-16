@@ -1,0 +1,23 @@
+{% if branches %}
+  <div class="relative">
+    <button type="button"
+      class="font-medium cursor-pointer text-white text-left whitespace-nowrap"
+      id="js-branch-button"
+      aria-expanded="true"
+      aria-haspopup="true">
+      {{ branch.name }}
+      <i class="fas fa-caret-down"></i>
+    </button>
+    <nav id="js-branch-menu"
+      class="absolute bg-white border border-gray-200 shadow-lg rounded-md p-2 space-y-1 w-48 hidden"
+      aria-labelledby="js-branch-button"
+      tabindex="-1">
+      {% for b in branches %}
+        <a class="{% if branch == b %} bg-primary text-white {% else %} hover:bg-gray-200 {% endif %} block px-2 py-1 rounded-sm"
+          href="//{{ b.domain }}">
+          {{ b.name }}
+        </a>
+      {% endfor %}
+    </nav>
+  </div>
+{% endif %}
