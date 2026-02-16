@@ -21,9 +21,6 @@
             <div>{% include "./dates.html" %}</div>
             <div>{% include "./help.html" %}</div>
         </div>
-        <div class="border-b border-gray-200 pb-4 mt-8">
-            <h2 class="text-base font-semibold text-gray-900">Your venues</h2>
-        </div>
         <div class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             {% regroup venues by country as venues_by_country %}
             {% for country, venues in venues_by_country %}
