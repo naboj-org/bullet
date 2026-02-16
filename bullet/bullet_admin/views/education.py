@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView, ListView, UpdateView
-from education.models import School
+from education.models import School, SchoolType
 
 from bullet import search
 from bullet_admin.access import PermissionCheckMixin, is_country_admin
@@ -149,6 +149,11 @@ class SchoolCSVImportView(
         kw["competition"] = get_active_competition(self.request)
         kw["user"] = self.request.user
         return kw
+
+    def get_context_data(self, *args, **kwargs):
+        ctx = super().get_context_data(*args, **kwargs)
+        ctx["types"] = SchoolType.objects.all()
+        return ctx
 
     def form_valid(self, form):
         if form.cleaned_data["preview"]:

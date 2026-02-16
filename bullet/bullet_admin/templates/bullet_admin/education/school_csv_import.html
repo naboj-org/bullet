@@ -39,5 +39,14 @@
       </table>
     </div>
   </div>
+  {% else %}
+  <div class="mt-8">
+    <p class="mb-2">Available school types:</p>
+    <ul class="list-disc list-inside">
+      {% for type in types %}
+      <li>{{ type }}: <code class="bg-gray-100 py-0.5 px-1 rounded">{{ type.identifier }}</code></li>
+      {% endfor %}
+    </ul>
+  </div>
   {% endif %}
 {% endblock after_form %}
