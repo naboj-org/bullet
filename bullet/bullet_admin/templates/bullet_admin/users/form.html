@@ -32,15 +32,19 @@
                     <label for="{{ form.last_name.id_for_label }}">Last name</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.last_name %}</div>
                 </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <div>
-                        <label for="{{ form.email.id_for_label }}">
-                            Email <span class="text-red-600">*</span>
-                        </label>
-                        <p class="text-gray-700 text-sm">A password will be sent to this email address.</p>
+                {% if form.email %}
+                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                        <div>
+                            <label for="{{ form.email.id_for_label }}">
+                                Email <span class="text-red-600">*</span>
+                            </label>
+                            <p class="text-gray-700 text-sm">A password will be sent to this email address.</p>
+                        </div>
+                        <div class="mt-1 sm:mt-0 sm:col-span-2">
+                            {% bfield form.email %}
+                        </div>
                     </div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.email %}</div>
-                </div>
+                {% endif %}
             </div>
         </article>
         {% if bform %}
