@@ -124,7 +124,9 @@ class Migration(migrations.Migration):
         migrations.AddConstraint(
             model_name="branchcountry",
             constraint=models.CheckConstraint(
-                check=models.Q(("languages__contains", models.F("hidden_languages"))),
+                condition=models.Q(
+                    ("languages__contains", models.F("hidden_languages"))
+                ),
                 name="hidden_languages_in_languages",
             ),
         ),

@@ -18,7 +18,7 @@ class BranchCountry(models.Model):
         constraints = [
             UniqueConstraint("branch", "country", name="branch_country_unique"),
             CheckConstraint(
-                check=Q(languages__contains=F("hidden_languages")),
+                condition=Q(languages__contains=F("hidden_languages")),
                 name="hidden_languages_in_languages",
             ),
         ]
