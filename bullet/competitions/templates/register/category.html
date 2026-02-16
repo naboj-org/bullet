@@ -9,7 +9,7 @@
             <button type="submit"
                     name="category"
                     value="{{ category.id }}"
-                    class="px-8 py-4 bg-gray-50 text-left rounded-md border gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 w-full">
+                    class="px-8 py-4 bg-gray-50 text-left rounded-md border border-gray-300 gap-4 hover:bg-primary-lighter transition-colors hover:border-primary shadow-md mb-3 w-full">
                 <span class="block font-bold text-xl">{% content_block "category:name_"|add:category.identifier %}</span>
                 <span>{% content_block "category:description_"|add:category.identifier %}</span>
             </button>
