@@ -56,9 +56,7 @@ class CompetitionQuerySet(models.QuerySet):
 class Competition(models.Model):
     id: int
     branch = BranchField()
-    number = models.IntegerField(
-        null=True, blank=True
-    )  # TODO: remove null when migrated on production
+    number = models.IntegerField()
     secret_key = models.CharField(max_length=64, default=get_random_string)
 
     web_start = models.DateTimeField()

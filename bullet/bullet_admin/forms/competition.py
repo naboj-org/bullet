@@ -42,6 +42,18 @@ class CompetitionForm(forms.ModelForm):
         self.branch = branch
         super().__init__(**kwargs)
 
+    def clean_number(self):
+        number = self.cleaned_data["number"]
+        if (
+            Competition.objects.filter(branch=self.branch, number=number)
+            .exclude(id=self.instance.id)
+            .exists()
+        ):
+            raise forms.ValidationError(
+                "A competition with this number already exists."
+            )
+        return number
+
     def save(self, commit: bool = True):
         obj = super().save(commit=False)
         obj.branch = self.branch
