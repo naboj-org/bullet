@@ -506,10 +506,11 @@ class TeamHistoryView(PermissionCheckMixin, ListView):
 
                     changes = cur_member.diff_against(prev_member).changes
                     if changes:
+                        changes = [change.__dict__ for change in changes]
                         for change in changes:
-                            if change.field == "grade":
-                                change.old = Grade.objects.get(id=change.old)
-                                change.new = Grade.objects.get(id=change.new)
+                            if change["field"] == "grade":
+                                change["old"] = Grade.objects.get(id=change["old"])
+                                change["new"] = Grade.objects.get(id=change["new"])
                         members_changes.append({"member": member, "changes": changes})
 
             changes = current.diff_against(current.prev_record).changes
