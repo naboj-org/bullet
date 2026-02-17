@@ -44,9 +44,9 @@
                                            class="sm:hidden">Time</label>
                                     {% bfield f.competition_time %}
                                 </div>
-                                {% if f.errors %}
+                                {% if f.non_field_errors %}
                                     <ul class="text-red-600 text-sm mt-1">
-                                        {% for err in f.errors.values %}<li>{{ err }}</li>{% endfor %}
+                                        {% for err in f.non_field_errors.values %}<li>{{ err }}</li>{% endfor %}
                                     </ul>
                                 {% endif %}
                             </td>
