@@ -5,7 +5,7 @@ from users.models import Team
 
 
 class ReviewForm(forms.Form):
-    number = forms.IntegerField(widget=forms.HiddenInput())
+    number = forms.IntegerField(widget=forms.HiddenInput(), disabled=True)
     is_solved = forms.BooleanField(required=False)
     competition_time = forms.DurationField(required=False)
 
