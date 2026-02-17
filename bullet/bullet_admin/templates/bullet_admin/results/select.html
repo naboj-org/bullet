@@ -23,7 +23,6 @@
             <table class="w-full text-sm">
                 <tbody>
                     <tr class="relative hover:bg-gray-100 even:bg-gray-50">
-                        {% get_country country_results.country as c %}
                         <td class="p-3 whitespace-nowrap">International</td>
                         <td class="p-3 whitespace-nowrap">
                             <a href="{% url "archive_results_category" b_country=country b_language=language category=category.grouper competition_number=competition.number %}"
