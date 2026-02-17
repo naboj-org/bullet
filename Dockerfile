@@ -11,24 +11,24 @@ COPY css ./css
 RUN pnpm run build
 CMD ["pnpm", "run", "watch"]
 
-FROM ghcr.io/trojsten/django-docker:v6
+FROM ghcr.io/trojsten/django-docker:v7
 
 USER root
 RUN export DEBIAN_FRONTEND=noninteractive \
     && apt update \
-    && apt install -y libmaxminddb0 gettext librsvg2-bin build-essential \
+    && apt install -y libmaxminddb0 gettext librsvg2-bin \
     && apt -y clean \
     && rm -rf /var/lib/apt/lists/*
 USER appuser
 
 COPY pyproject.toml uv.lock ./
-RUN uv sync --frozen
+RUN uv sync --frozen --no-cache
 
 COPY --chown=appuser:appuser ./bullet ./bullet
 COPY --chown=appuser:appuser ./CHANGELOG.md ./bullet/CHANGELOG.md
 COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css ./bullet/web/static/
 
 WORKDIR /app/bullet
-RUN SECRET_KEY=none python manage.py collectstatic --no-input
+RUN SECRET_KEY=none python manage.py collectstatic --no-input --link
 
 ENV BASE_START=/app/bullet/start.sh
