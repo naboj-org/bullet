@@ -165,7 +165,6 @@ dependencies = [
     { name = "django-ipware" },
     { name = "django-minify-html" },
     { name = "django-phonenumber-field" },
-    { name = "django-pictures" },
     { name = "django-probes" },
     { name = "django-recaptcha" },
     { name = "django-rq" },
@@ -213,7 +212,6 @@ requires-dist = [
     { name = "django-ipware", specifier = ">=7.0.1" },
     { name = "django-minify-html", specifier = ">=1.11.0" },
     { name = "django-phonenumber-field", specifier = ">=8.0.0" },
-    { name = "django-pictures", specifier = ">=1.4.0" },
     { name = "django-probes", specifier = ">=1.7.0" },
     { name = "django-recaptcha", specifier = ">=4.0.0" },
     { name = "django-rq", specifier = ">=3.0.0" },
@@ -523,19 +521,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/87/bf/8aa60c9834773b955dff1ddea842e361e8daaf6b0945d5bfc29fc66d53ab/django_phonenumber_field-8.4.0.tar.gz", hash = "sha256:2b83e843dac35eec6a69880a166487235b737a71a1e38c9a52e5ad67d6996083", size = 45512, upload-time = "2025-11-24T15:09:51.904Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/a3/f6b85a9246e22cf719752ad83f5e95aa9ba12419b2f9eff70f20d30e55df/django_phonenumber_field-8.4.0-py3-none-any.whl", hash = "sha256:7a1cb3a6456edb54d879f11ffa0acb227ded08c93b587035d0f28093f0e46511", size = 69528, upload-time = "2025-11-24T15:09:45.479Z" },
-]
-
-[[package]]
-name = "django-pictures"
-version = "1.7.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-    { name = "pillow" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/fb/07/4daf1c12889a1b6eb6e5147315df558dbba7dfa31622c1abcecc8c3847e2/django_pictures-1.7.1.tar.gz", hash = "sha256:4a6f4759dfecbab7f7a8a67e7d87d5106051539cca433a561bb1399877bcf68c", size = 23082, upload-time = "2026-01-07T10:49:28.089Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/bf/3f/d2bed42424b47e8c896eca6f05344399c4edb4c3553340f7a83774a887b2/django_pictures-1.7.1-py3-none-any.whl", hash = "sha256:10cceb9b2deb5f46b66e560ca2c6468863ee78f5be7a71e85f9302d08a59b1ff", size = 22612, upload-time = "2026-01-07T10:49:25.6Z" },
 ]
 
 [[package]]

@@ -28,7 +28,6 @@ dependencies = [
     "django-web-components>=0.2.0",
     "django-rq>=3.0.0",
     "beautifulsoup4>=4.12.3",
-    "django-pictures>=1.4.0",
     "django-probes>=1.7.0",
     "django-environ>=0.12.0",
     "pyyaml>=6.0.2",
