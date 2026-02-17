@@ -10,8 +10,12 @@ class ReviewForm(forms.Form):
     competition_time = forms.DurationField(required=False)
 
     def clean(self):
-        if self.cleaned_data["is_solved"] and not self.cleaned_data["competition_time"]:
-            raise ValidationError("Time must be specified when changing to solved.")
+        if "competition_time" in self.cleaned_data:
+            if (
+                self.cleaned_data["is_solved"]
+                and not self.cleaned_data["competition_time"]
+            ):
+                raise ValidationError("Time must be specified when changing to solved.")
 
         return self.cleaned_data
 
