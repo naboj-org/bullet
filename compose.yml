@@ -26,22 +26,13 @@ services:
       - "8000:8000"
     volumes:
       - geiop_data:/geoip/
-      - ./uploads:/app/uploads
-    develop:
-      watch:
-        - action: sync
-          path: ./bullet
-          target: /app
-          ignore:
-            - .venv
-        - action: rebuild
-          path: ./pyproject.toml
+      - ./bullet:/app/bullet
 
     depends_on:
       - db
       - geoip
       - meilisearch
-    command: "/app/start.sh dev"
+    command: "/app/bullet/start.sh dev"
 
   tailwind:
     build:

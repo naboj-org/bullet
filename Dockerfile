@@ -24,10 +24,11 @@ USER appuser
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen
 
-COPY --chown=appuser:appuser ./bullet .
-COPY --chown=appuser:appuser ./CHANGELOG.md .
-COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css ./web/static/
+COPY --chown=appuser:appuser ./bullet ./bullet
+COPY --chown=appuser:appuser ./CHANGELOG.md ./bullet/CHANGELOG.md
+COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css ./bullet/web/static/
 
+WORKDIR /app/bullet
 RUN SECRET_KEY=none python manage.py collectstatic --no-input
 
-ENV BASE_START=/app/start.sh
+ENV BASE_START=/app/bullet/start.sh
