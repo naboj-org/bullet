@@ -4,7 +4,8 @@ from functools import partial
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.db.models import Exists, OuterRef, Q
+from django.db.models import Exists, F, OuterRef, Q, Value
+from django.db.models.functions import Concat
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
@@ -44,6 +45,7 @@ class UserListView(PermissionCheckMixin, GenericList, ListView):
         qs = User.objects.order_by("email").annotate(
             has_branch_role=Exists(branch_role),
             has_competition_role=Exists(competition_role),
+            get_full_name=Concat(F("first_name"), Value(" "), F("last_name")),
         )
 
         return qs
