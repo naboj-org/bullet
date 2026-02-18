@@ -52,7 +52,7 @@
                                 {% if block.branch %}
                                     <a href="{% url "badmin:contentblock_edit" pk=block.id %}"
                                        class="btn-admin-sm bg-primary hover:bg-primary-dark flex items-center gap-2">
-                                        <iconify-icon icon="mdi:edit" width="none" class="size-5"></iconify-icon> Edit
+                                        <b-icon icon="mdi:edit" class="size-5"></b-icon> Edit
                                     </a>
                                 {% endif %}
                             </td>
@@ -62,7 +62,7 @@
             </table>
             <a href="{% url "badmin:contentblock_create" %}?group={{ group|iriencode }}&reference={{ reference|iriencode }}"
                class="btn-admin bg-green-500 hover:bg-green-600 flex w-fit items-center gap-2">
-                <iconify-icon icon="mdi:add-bold" width="none" class="size-5"></iconify-icon> New translation
+                <b-icon icon="mdi:add-bold" class="size-5"></b-icon> New translation
             </a>
         </div>
     </article>

@@ -35,9 +35,9 @@
             <div class="flex flex-col">
             <div class="text-lg flex items-center gap-2">
                 {% if team.is_reviewed %}
-                    <iconify-icon icon="mdi:check-circle" width="none" class="size-6 text-green-600"></iconify-icon>
+                    <b-icon icon="mdi:check-circle" class="size-6 text-green-600"></b-icon>
                 {% else %}
-                    <iconify-icon icon="mdi:cross-circle" width="none" class="size-6 text-red-600"></iconify-icon>
+                    <b-icon icon="mdi:cross-circle" class="size-6 text-red-600"></b-icon>
                 {% endif %}
                 <span class="font-mono">{{ team.code }}</span>
             </div>
@@ -47,11 +47,11 @@
                 <div class="mt-1 flex flex-wrap gap-1">
                     {% if not team.is_reviewed %}
                         <a href="{% url "badmin:scanning_review_team" pk=team.id %}"
-                           class="btn-admin-sm bg-blue-500 hover:bg-blue-600 flex items-center gap-2"><iconify-icon icon="mdi:edit" width="none" class="size-5"></iconify-icon> Edit problems</a>
+                           class="btn-admin-sm bg-blue-500 hover:bg-blue-600 flex items-center gap-2"><b-icon icon="mdi:edit" class="size-5"></b-icon> Edit problems</a>
                     {% endif %}
                     <button hx-post="{% url "badmin:scanning_review_toggle_team" pk=team.id %}"
                             class="btn-admin-sm {% if team.is_reviewed %} bg-red-500 hover:bg-red-600 {% else %} bg-green-500 hover:bg-green-600 {% endif %} flex items-center gap-2">
-                        <iconify-icon icon="mdi:{% if team.is_reviewed %}close{% else %}check{% endif %}" width="none" class="size-5"></iconify-icon> Mark as
+                        <b-icon icon="mdi:{% if team.is_reviewed %}close{% else %}check{% endif %}" class="size-5"></b-icon> Mark as
                         {% if team.is_reviewed %}un{% endif %}reviewed
                     </button>
                 </div>

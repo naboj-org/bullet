@@ -15,7 +15,7 @@
                     <a href="{% url "badmin:team_export" %}"
                        class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Export</a>
                     <a href="{% url "badmin:team_create" %}"
-                       class="btn-admin-sm bg-green-500 hover:bg-green-600 flex items-center gap-1"><iconify-icon icon="mdi:plus" width="none" class="size-5"></iconify-icon>New team</a>
+                       class="btn-admin-sm bg-green-500 hover:bg-green-600 flex items-center gap-1"><b-icon icon="mdi:plus" class="size-5"></b-icon>New team</a>
                 </div>
             {% endif %}
         </header>
@@ -28,13 +28,13 @@
                        value="{{ request.GET.q }}">
                 <button type="submit"
                         class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600 flex items-center gap-2">
-                    <iconify-icon icon="mdi:search" width="none" class="size-5"></iconify-icon>
+                    <b-icon icon="mdi:search" class="size-5"></b-icon>
                     <span class="hidden md:inline">Search</span>
                 </button>
                 <a href="#"
                    class="shrink-0 btn-admin bg-green-500 hover:bg-green-600 flex items-center gap-2"
                    id="js-filter-button">
-                    <iconify-icon icon="mdi:filter" width="none" class="size-5"></iconify-icon>
+                    <b-icon icon="mdi:filter" class="size-5"></b-icon>
                     <span class="hidden md:inline">Filter</span>
                 </a>
             </div>
@@ -137,7 +137,7 @@
                                         {% endif %}
                                         {% if not team.venue.is_online %}
                                             <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded-sm flex items-center">
-                                                <iconify-icon icon="mdi:camera" width="none" class="size-5"></iconify-icon>
+                                                <b-icon icon="mdi:camera" class="size-5"></b-icon>
                                             </span>
                                         {% endif %}
                                         {% if team.venue.registration_flow.get_admin_row_template %}
@@ -148,7 +148,7 @@
                                 <td class="p-2 whitespace-nowrap text-right">
                                     <a href="{% url "badmin:team_edit" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
                                        class="btn-admin-sm bg-primary hover:bg-primary-dark flex items-center gap-2 w-fit">
-                                        <iconify-icon icon="mdi:edit" width="none" class="size-5"></iconify-icon> Edit
+                                        <b-icon icon="mdi:edit" class="size-5"></b-icon> Edit
                                     </a>
                                 </td>
                             </tr>

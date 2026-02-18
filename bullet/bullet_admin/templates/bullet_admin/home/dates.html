@@ -11,8 +11,8 @@
         <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
             {{ competition.web_start|date:"d.m.Y H:i" }}
             {% if competition.state > competition.state.BEFORE_WEB_START %}
-                <iconify-icon class="text-green-600 w-4 h-4 ml-1"
-                      icon="mdi:check"></iconify-icon>
+                <b-icon class="text-green-600 w-4 h-4 ml-1"
+                      icon="mdi:check"></b-icon>
             {% endif %}
         </dd>
     </div>
@@ -21,8 +21,8 @@
         <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
             {{ competition.registration_start|date:"d.m.Y H:i" }}
             {% if competition.state > competition.state.BEFORE_REGISTRATION %}
-                <iconify-icon class="text-green-600 w-4 h-4 ml-1"
-                      icon="mdi:check"></iconify-icon>
+                <b-icon class="text-green-600 w-4 h-4 ml-1"
+                      icon="mdi:check"></b-icon>
             {% endif %}
         </dd>
     </div>
@@ -31,8 +31,8 @@
         <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
             {{ competition.registration_end|date:"d.m.Y H:i" }}
             {% if competition.state > competition.state.REGISTRATION %}
-                <iconify-icon class="text-green-600 w-4 h-4 ml-1"
-                      icon="mdi:check"></iconify-icon>
+                <b-icon class="text-green-600 w-4 h-4 ml-1"
+                      icon="mdi:check"></b-icon>
             {% endif %}
         </dd>
     </div>
@@ -41,8 +41,8 @@
         <dd class="mt-1 text-sm text-gray-700 sm:mt-0 flex items-center tabular-nums">
             {{ competition.competition_start|date:"d.m.Y H:i" }}
             {% if competition.state >= competition.state.COMPETITION %}
-                <iconify-icon class="text-green-600 w-4 h-4 ml-1"
-                      icon="mdi:check"></iconify-icon>
+                <b-icon class="text-green-600 w-4 h-4 ml-1"
+                      icon="mdi:check"></b-icon>
             {% endif %}
         </dd>
     </div>

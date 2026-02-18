@@ -19,7 +19,7 @@
             {% endif %}
             {% if team.is_waiting %}
                 <div class="bg-amber-100 text-amber-800 border border-amber-800 p-4 mb-4 rounded-md">
-                    <iconify-icon icon="mdi:warning" width="none" class="size-5 align-middle mx-1"></iconify-icon> <b>{% translate "Your team is in the waiting list." %}</b>
+                    <b-icon icon="mdi:warning" class="size-5 align-middle mx-1"></b-icon> <b>{% translate "Your team is in the waiting list." %}</b>
                     {% translate "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes." %}
                 </div>
             {% endif %}
@@ -35,7 +35,7 @@
             </p>
             {% if team.venue.local_start %}
                 <p class="text-red-600">
-                    <iconify-icon icon="mdi:warning" width="none" class="size-5 align-middle"></iconify-icon>
+                    <b-icon icon="mdi:warning" class="size-5 align-middle"></b-icon>
                     {% blocktranslate with time=team.venue.local_start|time %}At this venue, the competition will begin at {{ time }} instead of the usual start time.{% endblocktranslate %}
                 </p>
             {% endif %}
@@ -159,7 +159,7 @@
                     </p>
                     <button type="submit"
                             class="btn">
-                        <iconify-icon icon="mdi:download" width="none" class="size-5 align-middle mr-1 -ml-2"></iconify-icon> {% translate "Download certificate" %}
+                        <b-icon icon="mdi:download" class="size-5 align-middle mr-1 -ml-2"></b-icon> {% translate "Download certificate" %}
                     </button>
                 </form>
             {% endif %}

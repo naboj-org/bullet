@@ -87,7 +87,7 @@
                             <div class="flex flex-col items-end gap-2">
                                 <a href="{% url 'badmin:team_edit' pk=team.id %}"
                                    class="text-gray-400 hover:text-gray-600 flex items-center gap-2">
-                                    <iconify-icon icon="mdi:edit"></iconify-icon>
+                                    <b-icon icon="mdi:edit"></b-icon>
                                     Edit
                                 </a>
                                 {% if not competition.results_public %}
@@ -96,7 +96,7 @@
                                         {% csrf_token %}
                                         <button type="submit"
                                                 class="text-gray-400 hover:text-red-600 text-left flex items-center gap-2 cursor-pointer">
-                                            <iconify-icon icon="mdi:play"></iconify-icon>
+                                            <b-icon icon="mdi:play"></b-icon>
                                             Move
                                         </button>
                                     </form>

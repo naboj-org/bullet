@@ -15,8 +15,8 @@
         {% for country in countries %}
             <div>
                 <h2 class="flex items-center text-3xl font-bold mb-4">
-                    <iconify-icon class="h-5 aspect-4/3 mr-2"
-                          icon="flag:{{ country.grouper.code|lower }}-4x3"></iconify-icon>
+                    <b-icon class="h-5 aspect-4/3 mr-2"
+                          icon="flag:{{ country.grouper.code|lower }}-4x3"></b-icon>
                     {{ country.grouper.name }}
                 </h2>
                 {% for album in country.list %}

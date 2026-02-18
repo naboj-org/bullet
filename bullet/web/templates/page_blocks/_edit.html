@@ -1,6 +1,6 @@
 {% if can_edit_block %}
     <a href="{% url "badmin:page_block_update" page_id=block.page_id pk=block.id %}"
        class="absolute right-0 bottom-0 p-2 hover:text-gray-900 text-gray-900/40">
-        <iconify-icon icon="mdi:pencil"></iconify-icon>
+        <b-icon icon="mdi:pencil"></b-icon>
     </a>
 {% endif %}
