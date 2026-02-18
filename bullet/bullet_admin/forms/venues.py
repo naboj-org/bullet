@@ -79,20 +79,52 @@ class VenueForm(ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
+        shortcode = cleaned_data.get("shortcode")
+        category = cleaned_data.get("category")
+        country = cleaned_data.get("country")
 
-        if "shortcode" in cleaned_data and "category" in cleaned_data:
-            venue_qs = Venue.objects.filter(
-                category__competition=cleaned_data["category"].competition,
-                shortcode=cleaned_data["shortcode"],
-            )
-            if self.instance.pk:
-                venue_qs = venue_qs.exclude(pk=self.instance.pk)
-            if venue_qs.exists():
-                raise ValidationError(
-                    {
-                        "shortcode": "Barcode prefix must be unique within the competition."
-                    }
+        if shortcode:
+            if country:
+                # Check shortcode prefix.
+                if not shortcode.startswith(country):
+                    raise ValidationError(
+                        {
+                            "shortcode": f"Barcode prefix must start with country code ({country})."
+                        }
+                    )
+
+            if category:
+                # Check shortcode uniqueness.
+                venue_qs = Venue.objects.filter(
+                    category__competition=category.competition, shortcode=shortcode
                 )
+                if self.instance.pk:
+                    venue_qs = venue_qs.exclude(pk=self.instance.pk)
+                if venue_qs.exists():
+                    raise ValidationError(
+                        {
+                            "shortcode": "Barcode prefix must be unique within the competition."
+                        }
+                    )
+
+                # Check shortcode suffix.
+                if category.identifier != "nj":
+                    suffix = category.identifier[0].upper()
+                    if not shortcode.endswith(suffix):
+                        raise ValidationError(
+                            {
+                                "shortcode": f"Barcode prefix should end with category identifier ({suffix})."
+                            }
+                        )
+
+                # Check shortcode length.
+                exp_length = 4 if category.identifier == "nj" else 5
+                if len(shortcode) != exp_length:
+                    raise ValidationError(
+                        {
+                            "shortcode": f"Barcode prefix should be {exp_length} characters long."
+                        }
+                    )
 
         return cleaned_data
 
