@@ -11,6 +11,9 @@
                 Results
             {% endslot %}
             {% slot buttons %}
+                {% url "live" b_country=country b_language=language as live_url %}
+                {% #abtn icon="mdi:projector-screen" color="blue" label="Live view" url=live_url %}
+
                 {% url "badmin:documentation" "results" as help_url %}
                 {% #abtn icon="mdi:help" label="Help" url=help_url %}
             {% endslot %}
