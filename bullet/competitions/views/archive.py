@@ -17,34 +17,16 @@ class ArchiveListView(ListView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
 
-        ctx["native"] = list(
-            ProblemStatement.objects.filter(
-                problem__competition__in=ctx["object_list"], language=get_language()
-            )
+        qs = (
+            ProblemStatement.objects.filter(problem__competition__in=ctx["object_list"])
             .values_list("problem__competition", flat=True)
             .distinct()
         )
-        ctx["english"] = list(
-            ProblemStatement.objects.filter(
-                problem__competition__in=ctx["object_list"], language="en"
-            )
-            .values_list("problem__competition", flat=True)
-            .distinct()
-        )
-        ctx["slovak"] = list(
-            ProblemStatement.objects.filter(
-                problem__competition__in=ctx["object_list"], language="sk"
-            )
-            .values_list("problem__competition", flat=True)
-            .distinct()
-        )
-        ctx["czech"] = list(
-            ProblemStatement.objects.filter(
-                problem__competition__in=ctx["object_list"], language="cs"
-            )
-            .values_list("problem__competition", flat=True)
-            .distinct()
-        )
+
+        ctx["native"] = list(qs.filter(language=get_language()))
+        ctx["english"] = list(qs.filter(language="en"))
+        ctx["slovak"] = list(qs.filter(language="sk"))
+        ctx["czech"] = list(qs.filter(language="cs"))
 
         for competition in ctx["object_list"]:
             if default_storage.exists(
