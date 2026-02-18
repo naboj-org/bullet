@@ -1,11 +1,11 @@
 :8000 {
     handle_path /static/* {
-        root * /app/static
+        root * /app/bullet/static
         file_server
     }
 
     handle_path /uploads/* {
-        root * /app/uploads
+        root * /app/bullet/uploads
         file_server
     }
 
