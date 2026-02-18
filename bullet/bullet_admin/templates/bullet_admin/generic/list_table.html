@@ -5,24 +5,28 @@
       <tr>
         {% for label, field in table_labels %}
           <th class="p-0 whitespace-nowrap">
-            {% if request.GET.order_by == field %}
-              {% query_transform order_by="-"|add:field as url %}
+            {% if field in unsortable_fields %}
+              <span class="p-3 pr-1 flex items-center">{{ label }}</span>
             {% else %}
-              {% query_transform order_by=field as url %}
-            {% endif %}
-
-            <a href="{{ url }}"
-                class="p-3 pr-1 flex items-center hover:bg-gray-200">
-              {{ label }}
-
               {% if request.GET.order_by == field %}
-                <b-icon class="w-5 h-5 shrink-0"
-                      icon="mdi:arrow-down-drop"></b-icon>
-              {% elif request.GET.order_by == "-"|add:field %}
-                <b-icon class="w-5 h-5 shrink-0"
-                      icon="mdi:arrow-drop-up"></b-icon>
+                {% query_transform order_by="-"|add:field as url %}
+              {% else %}
+                {% query_transform order_by=field as url %}
               {% endif %}
-            </a>
+
+              <a href="{{ url }}"
+                  class="p-3 pr-1 flex items-center hover:bg-gray-200">
+                {{ label }}
+
+                {% if request.GET.order_by == field %}
+                  <b-icon class="w-5 h-5 shrink-0"
+                        icon="mdi:arrow-down-drop"></b-icon>
+                {% elif request.GET.order_by == "-"|add:field %}
+                  <b-icon class="w-5 h-5 shrink-0"
+                        icon="mdi:arrow-drop-up"></b-icon>
+                {% endif %}
+              </a>
+            {% endif %}
           </th>
         {% endfor %}
         <th></th>

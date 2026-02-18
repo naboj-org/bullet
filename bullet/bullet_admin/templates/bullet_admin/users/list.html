@@ -1,0 +1,7 @@
+{% extends "bullet_admin/generic/list.html" %}
+
+{% block before_list %}
+    {% include "bullet_admin/generic/list_permission_filters.html" %}
+
+    {{ block.super }}
+{% endblock before_list %}
