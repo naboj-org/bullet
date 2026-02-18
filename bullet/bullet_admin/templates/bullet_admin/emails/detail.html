@@ -21,7 +21,7 @@
                     <div class="p-4">
                         <a href="{% url "badmin:email_edit" pk=object.pk %}"
                            class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2 w-fit">
-                            <iconify-icon icon="mdi:edit" width="none" class="size-5"></iconify-icon> Edit
+                            <b-icon icon="mdi:edit" class="size-5"></b-icon> Edit
                         </a>
                     </div>
                 {% endif %}
@@ -100,11 +100,11 @@
                     <div class="p-4 flex gap-2">
                         <a href="{% url "badmin:email_edit" pk=object.pk %}"
                            class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
-                            <iconify-icon icon="mdi:edit" width="none" class="size-5"></iconify-icon> Edit
+                            <b-icon icon="mdi:edit" class="size-5"></b-icon> Edit
                         </a>
                         <a href="{% url "badmin:email_teams" pk=object.pk %}"
                            class="btn-admin bg-blue-500 hover:bg-blue-600 flex items-center gap-2">
-                            <iconify-icon icon="mdi:people-group" width="none" class="size-5"></iconify-icon> List teams
+                            <b-icon icon="mdi:people-group" class="size-5"></b-icon> List teams
                         </a>
                     </div>
                 {% endif %}
@@ -125,7 +125,7 @@
                             {% csrf_token %}
                             <button type="submit"
                                     class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
-                                <iconify-icon icon="mdi:test-tube" width="none" class="size-5"></iconify-icon> Send testing email
+                                <b-icon icon="mdi:test-tube" class="size-5"></b-icon> Send testing email
                             </button>
                         </form>
                     {% else %}
@@ -149,7 +149,7 @@
                             {% csrf_token %}
                             <button type="submit"
                                     class="btn-admin bg-red-500 hover:bg-red-600 flex items-center gap-2">
-                                <iconify-icon icon="mdi:send" width="none" class="size-5"></iconify-icon> Send campaign
+                                <b-icon icon="mdi:send" class="size-5"></b-icon> Send campaign
                             </button>
                         </form>
                     {% else %}

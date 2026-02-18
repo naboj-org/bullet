@@ -37,8 +37,8 @@
                                             <li class="flex items-center gap-x-1">
                                                 {{ change.field }}:
                                                 <span class="text-red-500">{{ change.old }}</span>
-                                                <span class="iconify -ml-0.5 w-5 h-5"
-                                                      data-icon="mdi:arrow-right-thin"></span>
+                                                <b-icon class="-ml-0.5 w-5 h-5"
+                                                      icon="mdi:arrow-right-thin"></b-icon>
                                                 <span class="text-green-500">{{ change.new }}</span>
                                             </li>
                                         {% endfor %}
@@ -72,8 +72,7 @@
                                                             <li class="flex items-center gap-x-1 font-normal">
                                                                 {{ change.field }}:
                                                                 <span class="text-red-500">{{ change.old }}</span>
-                                                                <span class="iconify -ml-0.5 w-5 h-5"
-                                                                      data-icon="mdi:arrow-right-thin"></span>
+                                                                <b-icon class="-ml-0.5 w-5 h-5" icon="mdi:arrow-right-thin"></b-icon>
                                                                 <span class="text-green-500">{{ change.new }}</span>
                                                             </li>
                                                         {% endfor %}

@@ -15,7 +15,7 @@
                         {% csrf_token %}
                         <button type="submit"
                                 class="mt-2 btn-admin-sm bg-red-500 hover:bg-red-600 flex items-center gap-2">
-                            <iconify-icon icon="mdi:email" width="none" class="size-5"></iconify-icon> Re-send confirmation email
+                            <b-icon icon="mdi:email" class="size-5"></b-icon> Re-send confirmation email
                         </button>
                     </form>
                 </div>
@@ -25,7 +25,7 @@
                     <div>
                         <a href="{% url "badmin:team_to_competition" pk=team.id %}"
                            class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark flex items-center gap-2 w-fit">
-                            <iconify-icon icon="mdi:fast-forward" width="none" class="size-5"></iconify-icon> Move to competition
+                            <b-icon icon="mdi:fast-forward" class="size-5"></b-icon> Move to competition
                         </a>
                     </div>
                 </div>
@@ -226,22 +226,22 @@
             <button type="submit"
                     form="editform"
                     class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
-                <iconify-icon icon="mdi:content-save" width="none" class="size-5"></iconify-icon> Save
+                <b-icon icon="mdi:content-save" class="size-5"></b-icon> Save
             </button>
             {% if object and not is_operator %}
                 <a href="{% url "badmin:team_tex_document" pk=object.id %}"
                    class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
-                    <iconify-icon icon="mdi:file-text" width="none" class="size-5"></iconify-icon>
+                    <b-icon icon="mdi:file-text" class="size-5"></b-icon>
                     Generate document
                 </a>
                 <a href="{% url "badmin:team_history" pk=object.id %}"
                    class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
-                    <iconify-icon icon="mdi:history" width="none" class="size-5"></iconify-icon>
+                    <b-icon icon="mdi:history" class="size-5"></b-icon>
                     View team history
                 </a>
                 <a href="{% url "badmin:team_delete" pk=object.id %}"
                    class="btn-admin bg-red-500 hover:bg-red-600 flex items-center gap-2">
-                    <iconify-icon icon="mdi:delete" width="none" class="size-5"></iconify-icon>
+                    <b-icon icon="mdi:delete" class="size-5"></b-icon>
                     Delete team
                 </a>
             {% endif %}

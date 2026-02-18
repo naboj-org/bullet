@@ -2,7 +2,7 @@
 {% if team.school %}
 <div class="flex items-center gap-2">
   {% if flag %}
-  <iconify-icon icon="flag:{{ team.school.country.code|lower }}-4x3" width="none" class="h-5 aspect-4/3"></iconify-icon>
+  <b-icon icon="flag:{{ team.school.country.code|lower }}-4x3" class="h-5 aspect-4/3"></b-icon>
   {% endif %}
   <div>
     <div class="font-medium leading-4">

@@ -33,9 +33,22 @@
               type="text/css" />
         {% block extrahead %}
         {% endblock extrahead %}
-        {# TODO: Remove iconify #}
-        <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
-        <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+        <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+        <script>
+            let originalIconifyIcon = window.customElements.get("iconify-icon");
+            class CustomIconifyIcon extends originalIconifyIcon {
+                constructor() {
+                    super();
+                    if (!this.hasAttribute("height") && !this.hasAttribute("width")) {
+                        setTimeout(() => {
+                            this.setAttribute("height", "none");
+                            this.setAttribute("width", "none");
+                        }, 0);
+                    }
+                }
+            }
+            window.customElements.define("b-icon", CustomIconifyIcon);
+        </script>
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -52,13 +65,13 @@
                             <div class="flex items-center gap-3">
                                 <div class="shrink-0 flex items-center">
                                     {% if message.tags == "info" %}
-                                        <iconify-icon icon="mdi:info" width="none" class="size-5 text-cyan-500"></iconify-icon>
+                                        <b-icon icon="mdi:info" class="size-5 text-cyan-500"></b-icon>
                                     {% elif message.tags == "success" %}
-                                        <iconify-icon icon="mdi:check-circle" width="none" class="size-5 text-green-600"></iconify-icon>
+                                        <b-icon icon="mdi:check-circle" class="size-5 text-green-600"></b-icon>
                                     {% elif message.tags == "warning" %}
-                                        <iconify-icon icon="mdi:warning" width="none" class="size-5 text-amber-600"></iconify-icon>
+                                        <b-icon icon="mdi:warning" class="size-5 text-amber-600"></b-icon>
                                     {% elif message.tags == "error" %}
-                                        <iconify-icon icon="mdi:cross-circle" width="none" class="size-5 text-red-600"></iconify-icon>
+                                        <b-icon icon="mdi:cross-circle" class="size-5 text-red-600"></b-icon>
                                     {% endif %}
                                 </div>
                                 <span>{{ message }}</span>
@@ -67,14 +80,13 @@
                                  class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer"
                                  role="button"
                                  title="{% translate "Close" %}">
-                                <iconify-icon icon="mdi:close" width="none" class="size-5"></iconify-icon>
+                                <b-icon icon="mdi:close" class="size-5"></b-icon>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
             {% endif %}
         {% endblock messages %}
-        <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
         <script src="https://unpkg.com/htmx.org@1.8.0"
                 defer></script>
         <script>

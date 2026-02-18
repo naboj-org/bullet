@@ -18,9 +18,9 @@
     {% for perm in checked_permissions %}
     <li class="flex gap-2 items-center">
       {% if perm.1 %}
-      <iconify-icon icon="mdi:check-bold" class="text-green-600 shrink-0"></iconify-icon>
+      <b-icon icon="mdi:check-bold" class="text-green-600 shrink-0"></b-icon>
       {% else %}
-      <iconify-icon icon="mdi:close-bold" class="text-red-600 shrink-0"></iconify-icon>
+      <b-icon icon="mdi:close-bold" class="text-red-600 shrink-0"></b-icon>
       {% endif %}
       {{ perm.0 }}
     </li>
