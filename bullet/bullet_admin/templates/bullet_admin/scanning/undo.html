@@ -15,8 +15,8 @@
             <p>Are you sure you want to undo the following scan?</p>
             <p class="font-bold">{{ request.GET.barcode }}</p>
             <button type="submit"
-                    class="btn-admin bg-red-500 hover:bg-red-600 mt-4">
-                <i class="fas fa-undo"></i> Undo scan
+                    class="btn-admin bg-red-500 hover:bg-red-600 mt-4 flex items-center gap-2">
+                <iconify-icon icon="mdi:undo" width="none" class="size-5"></iconify-icon> Undo scan
             </button>
         </form>
     </article>

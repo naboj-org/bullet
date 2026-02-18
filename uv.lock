@@ -175,7 +175,6 @@ dependencies = [
     { name = "django-types" },
     { name = "django-web-components" },
     { name = "django-widget-tweaks" },
-    { name = "fontawesomefree" },
     { name = "geoip2" },
     { name = "gunicorn" },
     { name = "jinja2" },
@@ -223,7 +222,6 @@ requires-dist = [
     { name = "django-types", specifier = ">=0.20.0" },
     { name = "django-web-components", specifier = ">=0.2.0" },
     { name = "django-widget-tweaks", specifier = ">=1.5.0" },
-    { name = "fontawesomefree", specifier = ">=6.6.0" },
     { name = "geoip2", specifier = ">=4.8.1" },
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "jinja2", specifier = ">=3.1.5" },
@@ -681,14 +679,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/02/a8/dae62680be63cbb3ff87cfa2f51cf766269514ea5488479d42fec5aa6f3a/filelock-3.24.2.tar.gz", hash = "sha256:c22803117490f156e59fafce621f0550a7a853e2bbf4f87f112b11d469b6c81b", size = 37601, upload-time = "2026-02-16T02:50:45.614Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e7/04/a94ebfb4eaaa08db56725a40de2887e95de4e8641b9e902c311bfa00aa39/filelock-3.24.2-py3-none-any.whl", hash = "sha256:667d7dc0b7d1e1064dd5f8f8e80bdac157a6482e8d2e02cd16fd3b6b33bd6556", size = 24152, upload-time = "2026-02-16T02:50:44Z" },
-]
-
-[[package]]
-name = "fontawesomefree"
-version = "6.6.0"
-source = { registry = "https://pypi.org/simple" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/bb/e9/d43f5133b73e7ef9047bda28daaa6905e00b7d39f093b547f7e78ee2fc40/fontawesomefree-6.6.0-py3-none-any.whl", hash = "sha256:599b574431c9bd92ed5fc054d1045a07c42335da36c17884f2b934755eef9089", size = 25645298, upload-time = "2024-07-16T18:35:44.818Z" },
 ]
 
 [[package]]

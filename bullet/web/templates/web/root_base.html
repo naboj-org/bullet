@@ -33,7 +33,6 @@
               type="text/css" />
         {% block extrahead %}
         {% endblock extrahead %}
-        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
         {# TODO: Remove iconify #}
         <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
         <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
@@ -49,24 +48,26 @@
             {% if messages %}
                 <ul class="fixed right-0 top-0 z-20 m-6 max-w-prose space-y-4">
                     {% for message in messages %}
-                        <li class="border border-gray-200 p-4 rounded-sm relative bg-white shadow-xl flex items-center gap-3">
-                            <div class="shrink-0 text-xl">
-                                {% if message.tags == "info" %}
-                                    <i class="fas fa-circle-info text-cyan-500"></i>
-                                {% elif message.tags == "success" %}
-                                    <i class="fas fa-circle-check text-green-600"></i>
-                                {% elif message.tags == "warning" %}
-                                    <i class="fas fa-exclamation-triangle text-amber-600"></i>
-                                {% elif message.tags == "error" %}
-                                    <i class="fas fa-circle-xmark text-red-600"></i>
-                                {% endif %}
+                        <li class="border border-gray-200 p-4 rounded-sm relative bg-white shadow-xl flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="shrink-0 flex items-center">
+                                    {% if message.tags == "info" %}
+                                        <iconify-icon icon="mdi:info" width="none" class="size-5 text-cyan-500"></iconify-icon>
+                                    {% elif message.tags == "success" %}
+                                        <iconify-icon icon="mdi:check-circle" width="none" class="size-5 text-green-600"></iconify-icon>
+                                    {% elif message.tags == "warning" %}
+                                        <iconify-icon icon="mdi:warning" width="none" class="size-5 text-amber-600"></iconify-icon>
+                                    {% elif message.tags == "error" %}
+                                        <iconify-icon icon="mdi:cross-circle" width="none" class="size-5 text-red-600"></iconify-icon>
+                                    {% endif %}
+                                </div>
+                                <span>{{ message }}</span>
                             </div>
-                            <span>{{ message }}</span>
                             <div onclick="this.parentNode.remove()"
                                  class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer"
                                  role="button"
                                  title="{% translate "Close" %}">
-                                <i class="fas fa-xmark"></i>
+                                <iconify-icon icon="mdi:close" width="none" class="size-5"></iconify-icon>
                             </div>
                         </li>
                     {% endfor %}
