@@ -1,0 +1,60 @@
+{% load utils %}
+
+{% anav class="-mt-4 mb-8" %}
+  {% query_transform branch_admin='' country_admin='' venue_admin='' as clear_url %}
+
+  {% if not permission_filters.branch_admin and not permission_filters.country_admin and not permission_filters.venue_admin %}
+    {% anavitem url=clear_url active=True %}
+      (all)
+    {% endanavitem %}
+  {% else %}
+    {% anavitem url=clear_url active=False %}
+      (all)
+    {% endanavitem %}
+  {% endif %}
+
+  {% query_transform branch_admin='on' as branch_url %}
+  {% if permission_filters.branch_admin %}
+    {% query_transform branch_admin='' as branch_url %}
+  {% endif %}
+
+  {% if permission_filters.branch_admin %}
+    {% anavitem url=branch_url active=True %}
+      Branch admins
+    {% endanavitem %}
+  {% else %}
+    {% anavitem url=branch_url active=False %}
+      Branch admins
+    {% endanavitem %}
+  {% endif %}
+
+  {% query_transform country_admin='on' as country_url %}
+  {% if permission_filters.country_admin %}
+    {% query_transform country_admin='' as country_url %}
+  {% endif %}
+
+  {% if permission_filters.country_admin %}
+    {% anavitem url=country_url active=True %}
+      Country admins
+    {% endanavitem %}
+  {% else %}
+    {% anavitem url=country_url active=False %}
+      Country admins
+    {% endanavitem %}
+  {% endif %}
+
+  {% query_transform venue_admin='on' as venue_url %}
+  {% if permission_filters.venue_admin %}
+    {% query_transform venue_admin='' as venue_url %}
+  {% endif %}
+
+  {% if permission_filters.venue_admin %}
+    {% anavitem url=venue_url active=True %}
+      Venue admins
+    {% endanavitem %}
+  {% else %}
+    {% anavitem url=venue_url active=False %}
+      Venue admins
+    {% endanavitem %}
+  {% endif %}
+{% endanav %}

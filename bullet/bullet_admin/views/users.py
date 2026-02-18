@@ -4,12 +4,13 @@ from functools import partial
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
 from django.db import transaction
-from django.db.models import Exists, F, OuterRef, Q, Value
+from django.db.models import Exists, F, OuterRef, Prefetch, Q, Value
 from django.db.models.functions import Concat
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
+from django.utils.safestring import mark_safe
 from django.views import View
 from django.views.generic import ListView
 from django_countries.fields import Country
@@ -21,34 +22,138 @@ from bullet_admin.forms.users import BranchRoleForm, CompetitionRoleForm, UserFo
 from bullet_admin.models import BranchRole, CompetitionRole
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views.generic.links import EditIcon, Link, NewLink
-from bullet_admin.views.generic.list import GenericList
+from bullet_admin.views.generic.list import GenericList, MixinProtocol
 
 PASSWORD_ALPHABET = "346789ABCDEFGHJKLMNPQRTUVWXY"
 
 
-class UserListView(PermissionCheckMixin, GenericList, ListView):
+class PermissionFiltering(MixinProtocol):
+    """Mixin for filtering by user permissions (branch admin, country admin, venue admin)."""
+
+    def apply_permission_filter(self, qs):
+        """Apply permission filters to the queryset."""
+        branch_admin = self.request.GET.get("branch_admin")
+        country_admin = self.request.GET.get("country_admin")
+        venue_admin = self.request.GET.get("venue_admin")
+
+        # If no permission filters are set, return queryset as-is
+        if not (branch_admin or country_admin or venue_admin):
+            return qs
+
+        # Build filters for users with specific permissions
+        filters = Q()
+
+        if branch_admin:
+            branch_role_exists = BranchRole.objects.filter(
+                branch=self.request.BRANCH, user=OuterRef("pk"), is_admin=True
+            )
+            filters |= Q(Exists(branch_role_exists))
+
+        if country_admin or venue_admin:
+            competition = get_active_competition(self.request)
+            competition_role_exists = CompetitionRole.objects.filter(
+                competition=competition, user=OuterRef("pk")
+            )
+
+            if country_admin:
+                competition_role_exists = competition_role_exists.filter(
+                    countries__len__gt=0
+                )
+            if venue_admin:
+                competition_role_exists = competition_role_exists.filter(
+                    venue_objects__isnull=False
+                )
+
+            filters |= Q(Exists(competition_role_exists))
+
+        return qs.filter(filters)
+
+    def get_permission_filters(self) -> dict[str, bool]:
+        """Return the active permission filters as a dictionary."""
+        return {
+            "branch_admin": self.request.GET.get("branch_admin") == "on",
+            "country_admin": self.request.GET.get("country_admin") == "on",
+            "venue_admin": self.request.GET.get("venue_admin") == "on",
+        }
+
+
+class UserListView(PermissionCheckMixin, PermissionFiltering, GenericList, ListView):
     required_permissions = [is_admin]
     list_links = [NewLink("user", reverse_lazy("badmin:user_create"))]
+    template_name = "bullet_admin/users/list.html"
 
-    table_fields = ["get_full_name", "email", "has_branch_role"]
-    table_labels = {"get_full_name": "Full Name", "has_branch_role": "Admin access"}
-    table_field_templates = {"has_branch_role": "bullet_admin/users/field__role.html"}
+    table_fields = ["get_full_name", "email", "competition_permissions"]
+    table_labels = {
+        "get_full_name": "Full Name",
+        "competition_permissions": "Permissions",
+    }
+    unsortable_fields = ["competition_permissions"]
 
     def get_queryset(self):
-        branch_role = BranchRole.objects.filter(
-            branch=self.request.BRANCH, user=OuterRef("pk")
-        ).filter(is_admin=True)
-        competition_role = CompetitionRole.objects.filter(
-            competition=get_active_competition(self.request), user=OuterRef("pk")
-        ).filter(Q(venue_objects__isnull=False) | Q(countries__len__gt=0))
-
-        qs = User.objects.order_by("email").annotate(
-            has_branch_role=Exists(branch_role),
-            has_competition_role=Exists(competition_role),
-            get_full_name=Concat(F("first_name"), Value(" "), F("last_name")),
+        qs = (
+            User.objects.order_by("email")
+            .annotate(
+                get_full_name=Concat(F("first_name"), Value(" "), F("last_name")),
+            )
+            .prefetch_related(
+                Prefetch(
+                    "branchrole_set",
+                    queryset=BranchRole.objects.filter(branch=self.request.BRANCH),
+                    to_attr="branch_role_for_list",
+                ),
+                Prefetch(
+                    "competitionrole_set",
+                    queryset=CompetitionRole.objects.filter(
+                        competition=get_active_competition(self.request)
+                    ).prefetch_related("venue_objects"),
+                    to_attr="competition_role_for_list",
+                ),
+            )
         )
 
-        return qs
+        return self.apply_permission_filter(qs)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx["permission_filters"] = self.get_permission_filters()
+        return ctx
+
+    def get_competition_permissions_content(self, obj):
+        permissions = []
+
+        # Get branch role from prefetched data
+        branch_roles = getattr(obj, "branch_role_for_list", [])
+        if branch_roles and branch_roles[0].is_admin:
+            permissions.append("Branch admin")
+
+        # Get competition role from prefetched data
+        competition_roles = getattr(obj, "competition_role_for_list", [])
+        if competition_roles:
+            crole = competition_roles[0]
+
+            if crole.countries:
+                countries = [str(c) for c in crole.countries]
+                if len(countries) <= 2:
+                    permissions.append(f"Country admin: {', '.join(countries)}")
+                else:
+                    permissions.append(
+                        f"Country admin: {', '.join(countries[:2])} +{len(countries) - 2}"
+                    )
+
+            if crole.venues:
+                venues = [str(v) for v in crole.venues]
+                if len(venues) <= 2:
+                    permissions.append(f"Venue admin: {', '.join(venues)}")
+                else:
+                    permissions.append(
+                        f"Venue admin: {', '.join(venues[:2])} +{len(venues) - 2}"
+                    )
+
+        return (
+            mark_safe("<br>".join(permissions))
+            if permissions
+            else mark_safe('<span class="text-gray-400">-</span>')
+        )
 
     def get_row_links(self, obj) -> list[Link]:
         return [EditIcon(reverse("badmin:user_edit", args=[obj.pk]))]
