@@ -20,16 +20,16 @@
     {% if request.GET.country == country %}
       {% anavitem url=url active=True %}
         <div class="flex gap-2 items-center flex-wrap">
-          <span class="iconify shrink-0 shadow-lg h-4 aspect-4/3"
-                data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+          <iconify-icon class="shrink-0 shadow-lg h-4 aspect-4/3"
+                icon="flag:{{ country_info.code|lower }}-4x3"></iconify-icon>
           <span>{{ country_info.name }}</span>
         </div>
       {% endanavitem %}
     {% else %}
       {% anavitem url=url active=False %}
         <div class="flex gap-2 items-center flex-wrap">
-          <span class="iconify shrink-0 shadow-lg h-4 aspect-4/3"
-                data-icon="flag:{{ country_info.code|lower }}-4x3"></span>
+          <iconify-icon class="shrink-0 shadow-lg h-4 aspect-4/3"
+                icon="flag:{{ country_info.code|lower }}-4x3"></iconify-icon>
           <span>{{ country_info.name }}</span>
         </div>
       {% endanavitem %}

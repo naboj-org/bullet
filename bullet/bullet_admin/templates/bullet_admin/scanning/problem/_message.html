@@ -1,13 +1,10 @@
 <div class="flex items-center gap-1">
     {% if log.result == log.Result.OK %}
-        <span data-icon="mdi:check"
-              class="iconify w-5 h-5"></span>
+        <iconify-icon icon="mdi:check" class="w-5 h-5"></iconify-icon>
     {% elif log.result == log.Result.SCAN_ERR %}
-        <span data-icon="mdi:alert"
-              class="iconify w-5 h-5"></span>
+        <iconify-icon icon="mdi:alert" class="w-5 h-5"></iconify-icon>
     {% elif log.result == log.Result.INTEGRITY_ERR %}
-        <span data-icon="mdi:close-circle"
-              class="iconify w-5 h-5"></span>
+        <iconify-icon icon="mdi:close-circle" class="w-5 h-5"></iconify-icon>
     {% endif %}
     {{ log.message }}
 </div>

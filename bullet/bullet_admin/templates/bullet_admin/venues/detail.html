@@ -48,11 +48,9 @@
             <dt class="text-sm font-medium text-gray-900">Reviewed?</dt>
             <dd class="mt-1 text-sm text-gray-700 col-span-2 sm:mt-0">
                 {% if venue.is_reviewed %}
-                    <span class="iconify text-green-600 w-4 h-4"
-                          data-icon="mdi:check"></span>
+                    <iconify-icon class="text-green-600 w-4 h-4" icon="mdi:check"></iconify-icon>
                 {% else %}
-                    <span class="iconify text-red-600 w-4 h-4"
-                          data-icon="mdi:close"></span>
+                    <iconify-icon class="text-red-600 w-4 h-4" icon="mdi:close"></iconify-icon>
                 {% endif %}
             </dd>
         </div>

@@ -41,11 +41,9 @@
                                {% if not file.is_dir %}target="_blank"{% endif %}
                                class="flex items-center gap-2">
                                 {% if file.is_dir %}
-                                    <span class="iconify"
-                                          data-icon="mdi:folder"></span>
+                                    <iconify-icon icon="mdi:folder"></iconify-icon>
                                 {% else %}
-                                    <span class="iconify"
-                                          data-icon="mdi:file"></span>
+                                    <iconify-icon icon="mdi:file"></iconify-icon>
                                 {% endif %}
                                 {{ file.name }}
                             </a>
@@ -57,8 +55,7 @@
                             <div class="flex items-center justify-end gap-2">
                                 <a href="{% url "badmin:file_delete" %}{% query_replace path=file.path %}"
                                    class="text-red-400 hover:text-red-600 p-2 -m-2">
-                                    <span class="iconify"
-                                          data-icon="mdi:delete"></span>
+                                    <iconify-icon icon="mdi:delete"></iconify-icon>
                                 </a>
                             </div>
                         </td>
