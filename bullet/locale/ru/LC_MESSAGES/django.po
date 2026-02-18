@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 18:21+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -112,22 +112,25 @@ msgstr "Архив"
 #: problems/templates/problems/results/select.html:4
 #: problems/templates/problems/results/select.html:15
 #: problems/templates/problems/results/venue.html:4
-#: problems/templates/problems/results/venue.html:16
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Результаты"
 
-#: competitions/templates/archive/list.html:31
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
 #: problems/templates/archive/problems.html:4
 #: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Задания и решения"
 
-#: competitions/templates/archive/list.html:34
+#: competitions/templates/archive/list.html:45
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Альбомы"
 
-#: competitions/templates/archive/list.html:42
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Прошедшие олимпиады"
 
@@ -267,19 +270,19 @@ msgstr "Школа"
 msgid "Search schools..."
 msgstr "Поиск школ..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Команда успешно зарегистрирована"
 
-#: competitions/templates/register/thanks.html:15
+#: competitions/templates/register/thanks.html:14
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
 msgstr "На Ваш адрес электронной почты была отправлена ссылка для подтверждения регистрации. Пожалуйста, проверьте папку «Входящие» и «Спам». <b>Регистрация команды будет завершена только после того, как вы откроете ссылку подтверждения.</b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Зарегистрировать ещё одну команду"
 
-#: competitions/templates/register/thanks.html:23
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Вернуться на главную страницу"
 
@@ -362,6 +365,11 @@ msgstr "Список команд"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Команды: %(teams)s / %(capacity)s"
 
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Международный"
+
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
 msgstr "Регистрация ещё не началась."
@@ -382,8 +390,8 @@ msgstr "Регистрация успешно подтверждена."
 msgid "Team was unregistered."
 msgstr "Команда не была зарегистрирована."
 
-#: gallery/templates/gallery/album.html:4
-#: gallery/templates/gallery/album.html:14
+#: gallery/templates/gallery/album.html:5
+#: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Альбом"
 
@@ -391,43 +399,39 @@ msgstr "Альбом"
 msgid "Download as PDF"
 msgstr "Скачать как PDF-файл"
 
-#: problems/templates/archive/problems.html:28
+#: problems/templates/archive/problems.html:27
 #, python-format
 msgid "Problem %(n)s"
 msgstr "Задача %(n)s"
 
-#: problems/templates/archive/problems.html:33
+#: problems/templates/archive/problems.html:32
 msgid "Solution"
 msgstr "Решение"
 
-#: problems/templates/archive/problems.html:37
+#: problems/templates/archive/problems.html:36
 msgid "Answer"
 msgstr "Ответ"
 
-#: problems/templates/archive/problems.html:46
+#: problems/templates/archive/problems.html:45
 msgid "Statistics"
 msgstr "Статистика"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:53
+#: problems/templates/archive/problems.html:52
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "команда, получившаяя"
 msgstr[1] "команды, получившие"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:65
+#: problems/templates/archive/problems.html:64
 msgid "teams solved"
 msgstr "команды, решившие"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:72
+#: problems/templates/archive/problems.html:71
 msgid "average solving time"
 msgstr "среднее время решения"
-
-#: problems/templates/problems/results.html:32 problems/views/results.py:157
-msgid "International"
-msgstr "Международный"
 
 #: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
@@ -449,9 +453,13 @@ msgstr "Текущие результаты."
 msgid "The competition is ongoing, the results may change."
 msgstr "Олимпиада не завершилась, результаты могут измениться."
 
-#: problems/templates/problems/results/table.html:55
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Ни одна из команд не решила ни одну из задач)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Все площадки"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -578,7 +586,7 @@ msgstr "Запрашеваемая страница не найдена."
 msgid "Home page"
 msgstr "Главная страница"
 
-#: web/templates/web/root_base.html:68
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Закрыть"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 18:21+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <fka1988@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,7 +19,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: competitions/branches.py:72
-msgid "Naboj Math"
+#, fuzzy
+#| msgid "Naboj Math"
+msgid "Náboj Math"
 msgstr "Naboj Matematika"
 
 #: competitions/branches.py:72
@@ -28,7 +30,9 @@ msgid "Math"
 msgstr "Matematika"
 
 #: competitions/branches.py:76
-msgid "Naboj Physics"
+#, fuzzy
+#| msgid "Naboj Physics"
+msgid "Náboj Physics"
 msgstr "Naboj Fizika"
 
 #: competitions/branches.py:77
@@ -37,7 +41,9 @@ msgid "Physics"
 msgstr "Fizika"
 
 #: competitions/branches.py:83
-msgid "Naboj Junior"
+#, fuzzy
+#| msgid "Naboj Junior"
+msgid "Náboj Junior"
 msgstr "Naboj Junior"
 
 #: competitions/branches.py:84
@@ -46,7 +52,9 @@ msgid "Junior"
 msgstr "Junior"
 
 #: competitions/branches.py:90
-msgid "Naboj Chemistry"
+#, fuzzy
+#| msgid "Naboj Chemistry"
+msgid "Náboj Chemistry"
 msgstr "Naboj Kimyo"
 
 #: competitions/branches.py:91
@@ -112,22 +120,25 @@ msgstr "Arxiv"
 #: problems/templates/problems/results/select.html:4
 #: problems/templates/problems/results/select.html:15
 #: problems/templates/problems/results/venue.html:4
-#: problems/templates/problems/results/venue.html:16
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Natijalar"
 
-#: competitions/templates/archive/list.html:31
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
 #: problems/templates/archive/problems.html:4
 #: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Masalalar va yechimlar"
 
-#: competitions/templates/archive/list.html:34
+#: competitions/templates/archive/list.html:45
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Albomlar"
 
-#: competitions/templates/archive/list.html:42
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Eski musobaqalar"
 
@@ -267,19 +278,19 @@ msgstr "Maktab"
 msgid "Search schools..."
 msgstr "Maktablarni qidirish..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Jamoa muvaffaqiyatli ro'yxatdan o'tkazildi"
 
-#: competitions/templates/register/thanks.html:15
+#: competitions/templates/register/thanks.html:14
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
 msgstr "Sizga tasdiqlash havolasini yubordik. Iltimos, pochta qutingizni va spam jildini tekshiring. <b>Tasdiqlash havolasini bosmaguningizcha jamoa ro'yxatdan o'tmagan hisoblanadi.</b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Boshqa jamoa ro'yxatdan o'tkazish"
 
-#: competitions/templates/register/thanks.html:23
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Bosh sahifaga qaytish"
 
@@ -362,6 +373,11 @@ msgstr "Jamoa ro'yxati"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Jamoalar: %(teams)s / %(capacity)s"
 
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Xalqaro"
+
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
 msgstr "Ro'yxatdan o'tish hali boshlanmadi."
@@ -382,8 +398,8 @@ msgstr "Ro'yxatdan o'tish muvaffaqiyatli tasdiqlandi."
 msgid "Team was unregistered."
 msgstr "Jamoa ro'yxatdan o'chirildi."
 
-#: gallery/templates/gallery/album.html:4
-#: gallery/templates/gallery/album.html:14
+#: gallery/templates/gallery/album.html:5
+#: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Albom"
 
@@ -391,43 +407,39 @@ msgstr "Albom"
 msgid "Download as PDF"
 msgstr "PDF sifatida yuklab olish"
 
-#: problems/templates/archive/problems.html:28
+#: problems/templates/archive/problems.html:27
 #, python-format
 msgid "Problem %(n)s"
 msgstr "Masala %(n)s"
 
-#: problems/templates/archive/problems.html:33
+#: problems/templates/archive/problems.html:32
 msgid "Solution"
 msgstr "Yechim"
 
-#: problems/templates/archive/problems.html:37
+#: problems/templates/archive/problems.html:36
 msgid "Answer"
 msgstr "Javob"
 
-#: problems/templates/archive/problems.html:46
+#: problems/templates/archive/problems.html:45
 msgid "Statistics"
 msgstr "Statistika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:53
+#: problems/templates/archive/problems.html:52
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "jamoa oldi"
 msgstr[1] "jamoalar oldi"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:65
+#: problems/templates/archive/problems.html:64
 msgid "teams solved"
 msgstr "jamoalar yechdi"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:72
+#: problems/templates/archive/problems.html:71
 msgid "average solving time"
 msgstr "o'rtacha yechish vaqti"
-
-#: problems/templates/problems/results.html:32 problems/views/results.py:157
-msgid "International"
-msgstr "Xalqaro"
 
 #: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
@@ -449,9 +461,13 @@ msgstr "Vaqtincha natijalar."
 msgid "The competition is ongoing, the results may change."
 msgstr "Musobaqa davom etmoqda, natijalar o'zgarishi mumkin."
 
-#: problems/templates/problems/results/table.html:55
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Hech qanday jamoa hali hech qanday masalani yechmadi)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Barcha joylar"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -578,7 +594,7 @@ msgstr "Siz kirishga urgan sahifa topilmadi."
 msgid "Home page"
 msgstr "Bosh sahifa"
 
-#: web/templates/web/root_base.html:68
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Yopish"
 
