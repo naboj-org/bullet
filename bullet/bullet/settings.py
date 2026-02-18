@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     "django_countries",
     "django_recaptcha",
     "django_minify_html",
-    "fontawesomefree",
     "django_htmx",
     "silk",
     "simple_history",
