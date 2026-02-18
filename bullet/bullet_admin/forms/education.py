@@ -33,6 +33,7 @@ class SchoolCSVImportForm(forms.Form):
     def get_importer(self) -> SchoolCSVImporter:
         return SchoolCSVImporter(
             csv_file=self.cleaned_data["csv_file"],
+            country=self.cleaned_data["country"],
         )
 
 
