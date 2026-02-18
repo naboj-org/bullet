@@ -14,8 +14,8 @@
                           method="post">
                         {% csrf_token %}
                         <button type="submit"
-                                class="mt-2 btn-admin-sm bg-red-500 hover:bg-red-600">
-                            <i class="fas fa-envelope"></i> Re-send confirmation email
+                                class="mt-2 btn-admin-sm bg-red-500 hover:bg-red-600 flex items-center gap-2">
+                            <iconify-icon icon="mdi:email" width="none" class="size-5"></iconify-icon> Re-send confirmation email
                         </button>
                     </form>
                 </div>
@@ -24,8 +24,8 @@
                     <b>This team is on the waiting list.</b> You can move it to the competition to override the waiting list.
                     <div>
                         <a href="{% url "badmin:team_to_competition" pk=team.id %}"
-                           class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark">
-                            <i class="fas fa-angles-right"></i> Move to competition
+                           class="mt-2 btn-admin-sm bg-primary hover:bg-primary-dark flex items-center gap-2 w-fit">
+                            <iconify-icon icon="mdi:fast-forward" width="none" class="size-5"></iconify-icon> Move to competition
                         </a>
                     </div>
                 </div>
@@ -225,23 +225,23 @@
         <div class="my-8 text-center flex flex-row gap-4 justify-center">
             <button type="submit"
                     form="editform"
-                    class="btn-admin bg-primary hover:bg-primary-dark">
-                <i class="fas fa-save"></i> Save
+                    class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
+                <iconify-icon icon="mdi:content-save" width="none" class="size-5"></iconify-icon> Save
             </button>
             {% if object and not is_operator %}
                 <a href="{% url "badmin:team_tex_document" pk=object.id %}"
-                   class="btn-admin bg-primary hover:bg-primary-dark">
-                    <i class="fas fa-file-text"></i>
+                   class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
+                    <iconify-icon icon="mdi:file-text" width="none" class="size-5"></iconify-icon>
                     Generate document
                 </a>
                 <a href="{% url "badmin:team_history" pk=object.id %}"
-                   class="btn-admin bg-primary hover:bg-primary-dark">
-                    <i class="fas fa-history"></i>
+                   class="btn-admin bg-primary hover:bg-primary-dark flex items-center gap-2">
+                    <iconify-icon icon="mdi:history" width="none" class="size-5"></iconify-icon>
                     View team history
                 </a>
                 <a href="{% url "badmin:team_delete" pk=object.id %}"
-                   class="btn-admin bg-red-500 hover:bg-red-600">
-                    <i class="fas fa-trash"></i>
+                   class="btn-admin bg-red-500 hover:bg-red-600 flex items-center gap-2">
+                    <iconify-icon icon="mdi:delete" width="none" class="size-5"></iconify-icon>
                     Delete team
                 </a>
             {% endif %}
