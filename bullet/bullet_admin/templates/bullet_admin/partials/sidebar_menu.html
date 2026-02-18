@@ -4,10 +4,10 @@
     <div class="text-white text-xs opacity-80">{{ request.user.email }}</div>
   </div>
   <a href="{% url "badmin:competition_switch" %}" class="ml-auto text-white text-sm p-2 hover:bg-primary-dark rounded-md flex items-center">
-    <iconify-icon icon="mdi:swap-horizontal" class="shrink-0 size-5" width="none"></iconify-icon>
+    <b-icon icon="mdi:swap-horizontal" class="shrink-0 size-5" width="none"></b-icon>
   </a>
   <div class="text-white text-sm md:hidden px-4 py-2 hover:bg-primary-dark rounded-md cursor-pointer flex items-center" onclick="document.getElementById('nav').classList.toggle('hidden')">
-    <iconify-icon icon="mdi:menu" class="shrink-0 size-5" width="none"></iconify-icon>
+    <b-icon icon="mdi:menu" class="shrink-0 size-5" width="none"></b-icon>
   </div>
 </header>
 
@@ -19,7 +19,7 @@
 <div id="nav" class="hidden md:block overflow-y-auto">
   <nav class="p-4 flex flex-col gap-1 border-b border-gray-700">
     <a href="{% url "badmin:home" %}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded-sm gap-2 flex items-center">
-      <iconify-icon icon="mdi:home" class="shrink-0 size-5" width="none"></iconify-icon>
+      <b-icon icon="mdi:home" class="shrink-0 size-5" width="none"></b-icon>
       Dashboard
     </a>
   </nav>
@@ -31,7 +31,7 @@
     </header>
     {% for item in group.items %}
       <a href="{{ item.link }}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded-sm gap-2 flex items-center">
-        <iconify-icon icon="{{ item.icon }}" class="shrink-0 size-5" width="none"></iconify-icon>
+        <b-icon icon="{{ item.icon }}" class="shrink-0 size-5" width="none"></b-icon>
         {{ item.name }}
       </a>
     {% endfor %}
@@ -44,15 +44,15 @@
 
   <nav class="p-4 flex flex-col gap-1 border-gray-700">
       <a href="{% url "badmin:documentation" %}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded-sm gap-2 flex items-center">
-        <iconify-icon icon="mdi:book" class="shrink-0 size-5" width="none"></iconify-icon>
+        <b-icon icon="mdi:book" class="shrink-0 size-5" width="none"></b-icon>
         Documentation
       </a>
       <a href="{% url "badmin:password_change" %}" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded-sm gap-2 flex items-center">
-        <iconify-icon icon="mdi:key" class="shrink-0 size-5" width="none"></iconify-icon>
+        <b-icon icon="mdi:key" class="shrink-0 size-5" width="none"></b-icon>
         Change password
       </a>
       <a href="#" onclick="document.getElementById('js-logout-form').submit()" class="font-medium text-gray-200 px-2 py-1 hover:bg-gray-900 rounded-sm gap-2 flex items-center">
-        <iconify-icon icon="mdi:exit-run" class="shrink-0 size-5" width="none"></iconify-icon>
+        <b-icon icon="mdi:exit-run" class="shrink-0 size-5" width="none"></b-icon>
         Log out
       </a>
   </nav>

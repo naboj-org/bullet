@@ -5,14 +5,14 @@
         <div class="border-b-4 border-primary bg-gray-900">
             <div class="flex flex-wrap align-baseline gap-1 max-w-7xl mx-auto py-4 px-6 lg:px-8 justify-between">
                 {% branch_selector %}
-                <div>
+                <div class="flex items-center gap-4">
                     {% if user.is_authenticated %}
                         <a href="{% url "badmin:home" %}"
-                           class="text-gray-500 hover:text-gray-300 mr-4 text-lg">Admin</a>
+                           class="text-gray-500 hover:text-gray-300 text-lg">Admin</a>
                     {% endif %}
                     <a href="{% url "country_selector" %}"
-                       class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap">
-                        <i class="fas fa-globe"></i>
+                       class="text-gray-500 hover:text-gray-300 ms-auto text-right whitespace-nowrap flex items-center gap-2">
+                        <b-icon icon="mdi:globe" class="size-5"></b-icon>
                         Change language
                     </a>
                 </div>

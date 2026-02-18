@@ -15,7 +15,7 @@
                     <a href="{% url "badmin:team_export" %}"
                        class="btn-admin-sm bg-gray-500 hover:bg-gray-600">Export</a>
                     <a href="{% url "badmin:team_create" %}"
-                       class="btn-admin-sm bg-green-500 hover:bg-green-600"><i class="fas fa-plus mr-1"></i>New team</a>
+                       class="btn-admin-sm bg-green-500 hover:bg-green-600 flex items-center gap-1"><b-icon icon="mdi:plus" class="size-5"></b-icon>New team</a>
                 </div>
             {% endif %}
         </header>
@@ -27,13 +27,15 @@
                        class="input"
                        value="{{ request.GET.q }}">
                 <button type="submit"
-                        class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600">
-                    <i class="fas fa-search md:mr-1"></i> <span class="hidden md:inline">Search</span>
+                        class="shrink-0 btn-admin bg-blue-500 hover:bg-blue-600 flex items-center gap-2">
+                    <b-icon icon="mdi:search" class="size-5"></b-icon>
+                    <span class="hidden md:inline">Search</span>
                 </button>
                 <a href="#"
-                   class="shrink-0 btn-admin bg-green-500 hover:bg-green-600"
+                   class="shrink-0 btn-admin bg-green-500 hover:bg-green-600 flex items-center gap-2"
                    id="js-filter-button">
-                    <i class="fas fa-filter md:mr-1"></i> <span class="hidden md:inline">Filter</span>
+                    <b-icon icon="mdi:filter" class="size-5"></b-icon>
+                    <span class="hidden md:inline">Filter</span>
                 </a>
             </div>
             <div class="p-4 border-b border-gray-200 grid grid-cols-1 md:grid-cols-3 gap-2 hidden"
@@ -119,32 +121,34 @@
                                     <div class="text-sm">{{ team.venue.category.identifier|title }}</div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap text-xs tracking-wide font-bold text-white">
-                                    {% if team.status == team.status.UNCONFIRMED %}
-                                        <span class="bg-gray-500 px-2 py-1 rounded-sm">Unconfirmed</span>
-                                    {% elif team.status == team.status.WAITINGLIST %}
-                                        <span class="bg-amber-600 px-2 py-1 rounded-sm">Waiting list</span>
-                                    {% elif team.status == team.status.CHECKEDIN %}
-                                        <span class="bg-purple-600 px-2 py-1 rounded-sm">Checked in</span>
-                                    {% elif team.status == team.status.REVIEWED %}
-                                        <span class="bg-blue-600 px-2 py-1 rounded-sm">Reviewed</span>
-                                    {% elif team.status == team.status.REGISTERED %}
-                                        <span class="bg-green-600 px-2 py-1 rounded-sm">Registered</span>
-                                    {% elif team.status == team.status.DISQUALIFIED %}
-                                        <span class="bg-red-600 px-2 py-1 rounded-sm">Disqualified</span>
-                                    {% endif %}
-                                    {% if not team.venue.is_online %}
-                                        <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded-sm">
-                                            <i class="fas fa-camera"></i>
-                                        </span>
-                                    {% endif %}
-                                    {% if team.venue.registration_flow.get_admin_row_template %}
-                                        {% include team.venue.registration_flow.get_admin_row_template %}
-                                    {% endif %}
+                                    <div class="flex gap-1">
+                                        {% if team.status == team.status.UNCONFIRMED %}
+                                            <span class="bg-gray-500 px-2 py-1 rounded-sm">Unconfirmed</span>
+                                        {% elif team.status == team.status.WAITINGLIST %}
+                                            <span class="bg-amber-600 px-2 py-1 rounded-sm">Waiting list</span>
+                                        {% elif team.status == team.status.CHECKEDIN %}
+                                            <span class="bg-purple-600 px-2 py-1 rounded-sm">Checked in</span>
+                                        {% elif team.status == team.status.REVIEWED %}
+                                            <span class="bg-blue-600 px-2 py-1 rounded-sm">Reviewed</span>
+                                        {% elif team.status == team.status.REGISTERED %}
+                                            <span class="bg-green-600 px-2 py-1 rounded-sm">Registered</span>
+                                        {% elif team.status == team.status.DISQUALIFIED %}
+                                            <span class="bg-red-600 px-2 py-1 rounded-sm">Disqualified</span>
+                                        {% endif %}
+                                        {% if not team.venue.is_online %}
+                                            <span class="{% if team.consent_photos %} bg-green-500 {% else %} bg-red-600 {% endif %} px-2 py-1 rounded-sm flex items-center">
+                                                <b-icon icon="mdi:camera" class="size-5"></b-icon>
+                                            </span>
+                                        {% endif %}
+                                        {% if team.venue.registration_flow.get_admin_row_template %}
+                                            {% include team.venue.registration_flow.get_admin_row_template %}
+                                        {% endif %}
+                                    </div>
                                 </td>
                                 <td class="p-2 whitespace-nowrap text-right">
                                     <a href="{% url "badmin:team_edit" pk=team.id %}?next={{ request.get_full_path|urlencode }}"
-                                       class="btn-admin-sm bg-primary hover:bg-primary-dark">
-                                        <i class="fas fa-edit"></i> Edit
+                                       class="btn-admin-sm bg-primary hover:bg-primary-dark flex items-center gap-2 w-fit">
+                                        <b-icon icon="mdi:edit" class="size-5"></b-icon> Edit
                                     </a>
                                 </td>
                             </tr>

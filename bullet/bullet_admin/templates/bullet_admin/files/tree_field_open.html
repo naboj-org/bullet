@@ -25,23 +25,21 @@
                hx-get="{{ home }}{% if file.is_dir %}{% query_transform path=file.path %}{% else %}{% query_transform path=file.path selected=1 %}{% endif %}">
                 <div class="flex items-center gap-2">
                     {% if file.is_dir %}
-                        <span class="iconify"
-                              data-icon="mdi:folder"></span>
+                        <b-icon icon="mdi:folder"></b-icon>
                     {% else %}
-                        <span class="iconify"
-                              data-icon="mdi:file"></span>
+                        <b-icon icon="mdi:file"></b-icon>
                     {% endif %}
                     {{ file.name }}
                 </div>
                 {% if file.is_dir %}
                     <div title="Open folder">
-                        <span class="iconify text-gray-400"
-                              data-icon="mdi:chevron-right"></span>
+                        <b-icon class="text-gray-400"
+                              icon="mdi:chevron-right"></b-icon>
                     </div>
                 {% else %}
                     <div title="Select this file">
-                        <span class="iconify text-gray-400"
-                              data-icon="mdi:check"></span>
+                        <b-icon class="text-gray-400"
+                              icon="mdi:check"></b-icon>
                     </div>
                 {% endif %}
             </a>

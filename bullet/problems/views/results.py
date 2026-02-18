@@ -165,13 +165,11 @@ class CategoryResultsView(ResultsViewMixin, ListView):
             Country(self.country).name if self.country else _("International")
         )
         ctx["country"] = self.country.upper() if self.country else None
-        ctx["countries"] = [
-            Country(c)
-            for c in Venue.objects.filter(category__competition=self.competition)
-            .order_by("country")
-            .distinct("country")
-            .values_list("country", flat=True)
-        ]
+
+        # For non-archive results, competition_number is not in kwargs
+        if "competition_number" not in ctx:
+            ctx["competition_number"] = None
+
         return ctx
 
 
@@ -199,4 +197,7 @@ class VenueResultsView(ResultsViewMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = super().get_context_data(object_list=object_list, **kwargs)
         ctx["venue"] = self.venue
+        # For non-archive results, competition_number is not in kwargs
+        if "competition_number" not in ctx:
+            ctx["competition_number"] = None
         return ctx

@@ -10,13 +10,13 @@
                hx-target="#js-school-list">
         {% if default %}
             <a href="#"
-               class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0"
+               class="btn-admin-sm bg-primary hover:bg-primary-dark shrink-0 flex items-center"
                hx-post="{% url "badmin:school_input" %}"
                hx-vals='{"school": {{ default }} }'
                hx-target="#js-school-input"
                hx-swap="outerHTML"
                hx-params="school">
-                <i class="fas fa-times"></i>
+                <b-icon icon="mdi:close" class="size-5"></b-icon>
             </a>
         {% endif %}
     </div>

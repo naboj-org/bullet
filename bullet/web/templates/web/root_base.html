@@ -33,10 +33,22 @@
               type="text/css" />
         {% block extrahead %}
         {% endblock extrahead %}
-        <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-        {# TODO: Remove iconify #}
-        <script src="https://code.iconify.design/2/2.0.0/iconify.min.js"></script>
-        <script src="https://code.iconify.design/iconify-icon/2.3.0/iconify-icon.min.js"></script>
+        <script src="https://code.iconify.design/iconify-icon/3.0.0/iconify-icon.min.js"></script>
+        <script>
+            let originalIconifyIcon = window.customElements.get("iconify-icon");
+            class CustomIconifyIcon extends originalIconifyIcon {
+                constructor() {
+                    super();
+                    if (!this.hasAttribute("height") && !this.hasAttribute("width")) {
+                        setTimeout(() => {
+                            this.setAttribute("height", "none");
+                            this.setAttribute("width", "none");
+                        }, 0);
+                    }
+                }
+            }
+            window.customElements.define("b-icon", CustomIconifyIcon);
+        </script>
         <link rel="stylesheet"
               href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -49,31 +61,32 @@
             {% if messages %}
                 <ul class="fixed right-0 top-0 z-20 m-6 max-w-prose space-y-4">
                     {% for message in messages %}
-                        <li class="border border-gray-200 p-4 rounded-sm relative bg-white shadow-xl flex items-center gap-3">
-                            <div class="shrink-0 text-xl">
-                                {% if message.tags == "info" %}
-                                    <i class="fas fa-circle-info text-cyan-500"></i>
-                                {% elif message.tags == "success" %}
-                                    <i class="fas fa-circle-check text-green-600"></i>
-                                {% elif message.tags == "warning" %}
-                                    <i class="fas fa-exclamation-triangle text-amber-600"></i>
-                                {% elif message.tags == "error" %}
-                                    <i class="fas fa-circle-xmark text-red-600"></i>
-                                {% endif %}
+                        <li class="border border-gray-200 p-4 rounded-sm relative bg-white shadow-xl flex items-center justify-between gap-3">
+                            <div class="flex items-center gap-3">
+                                <div class="shrink-0 flex items-center">
+                                    {% if message.tags == "info" %}
+                                        <b-icon icon="mdi:info" class="size-5 text-cyan-500"></b-icon>
+                                    {% elif message.tags == "success" %}
+                                        <b-icon icon="mdi:check-circle" class="size-5 text-green-600"></b-icon>
+                                    {% elif message.tags == "warning" %}
+                                        <b-icon icon="mdi:warning" class="size-5 text-amber-600"></b-icon>
+                                    {% elif message.tags == "error" %}
+                                        <b-icon icon="mdi:cross-circle" class="size-5 text-red-600"></b-icon>
+                                    {% endif %}
+                                </div>
+                                <span>{{ message }}</span>
                             </div>
-                            <span>{{ message }}</span>
                             <div onclick="this.parentNode.remove()"
                                  class="shrink-0 text-gray-600 hover:text-gray-900 cursor-pointer"
                                  role="button"
                                  title="{% translate "Close" %}">
-                                <i class="fas fa-xmark"></i>
+                                <b-icon icon="mdi:close" class="size-5"></b-icon>
                             </div>
                         </li>
                     {% endfor %}
                 </ul>
             {% endif %}
         {% endblock messages %}
-        <script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
         <script src="https://unpkg.com/htmx.org@1.8.0"
                 defer></script>
         <script>

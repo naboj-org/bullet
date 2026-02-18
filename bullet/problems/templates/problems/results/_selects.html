@@ -1,0 +1,44 @@
+{% load content_blocks i18n %}
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+  <select id="category-select" class="form-control input" autocomplete="off">
+    {% for link, display_name, selected in category_options %}
+    <option value="{{ link }}" {% if selected %}selected{% endif %}>
+    {% content_block "category:name_"|add:display_name %}
+    </option>
+    {% endfor %}
+  </select>
+
+  <select id="country-select" class="form-control input" autocomplete="off">
+    {% for link, display_name, selected in country_options %}
+    <option value="{{ link }}" {% if selected %}selected{% endif %}>
+    {{ display_name }}
+    </option>
+    {% endfor %}
+  </select>
+
+  {% if venue_options %}
+  <select id="venue-select" class="form-control input" autocomplete="off">
+    {% for link, display_name, selected in venue_options %}
+    <option value="{{ link }}" {% if selected %}selected{% endif %}>
+    {{ display_name }}
+    </option>
+    {% endfor %}
+  </select>
+  {% endif %}
+</div>
+
+<script>
+  document.getElementById('category-select').addEventListener('change', function() {
+    window.location.href = this.value;
+  });
+  document.getElementById('country-select').addEventListener('change', function() {
+    window.location.href = this.value;
+  });
+  const venueSelect = document.getElementById('venue-select');
+  if (venueSelect) {
+    venueSelect.addEventListener('change', function() {
+      window.location.href = this.value;
+    });
+  }
+</script>

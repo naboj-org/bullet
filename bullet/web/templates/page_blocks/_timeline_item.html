@@ -8,8 +8,7 @@
             {% now "Y-m-d" as today %}
             <div>
                 <span class="h-8 w-8 rounded-full {% if date >= date|date:"Y-m-d" %} bg-primary {% else %} bg-gray-400 {% endif %} flex items-center justify-center ring-8 ring-white text-white">
-                    <span class="iconify w-4 h-4"
-                          data-icon="{{ icon }}"></span>
+                    <b-icon class="w-4 h-4" icon="{{ icon }}"></b-icon>
                 </span>
             </div>
             <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1">

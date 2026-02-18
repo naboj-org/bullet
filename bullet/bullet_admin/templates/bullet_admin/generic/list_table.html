@@ -19,11 +19,11 @@
                 {{ label }}
 
                 {% if request.GET.order_by == field %}
-                  <span class="iconify w-5 h-5 shrink-0"
-                        data-icon="mdi:arrow-down-drop"></span>
+                  <b-icon class="w-5 h-5 shrink-0"
+                        icon="mdi:arrow-down-drop"></b-icon>
                 {% elif request.GET.order_by == "-"|add:field %}
-                  <span class="iconify w-5 h-5 shrink-0"
-                        data-icon="mdi:arrow-drop-up"></span>
+                  <b-icon class="w-5 h-5 shrink-0"
+                        icon="mdi:arrow-drop-up"></b-icon>
                 {% endif %}
               </a>
             {% endif %}

@@ -3,7 +3,7 @@
 Schools are imported by custom command.
 
 ```shell
-./helper.py cmd importschools
+docker compose run --rm web ./manage.py importschools
 ```
 
 First argument is importer, usually country code like `sk`. Second argument is file with data in correct format,
@@ -29,13 +29,16 @@ located in `bullet` sub-directory.
 To index schools in meilisearch (required to working registration) you need to run
 
 ```shell
-./helper.py cmd indexschools
+docker compose run --rm web ./manage.py indexschools
 ```
 
 
 ### Full example to import and index slovak schools
 
+Don't forget to put the file with data into the `bullet` sub-directory in the project root.
+This will automatically mount the file into the container and make it available for import.
+
 ```shell
-./helper.py cmd importschools sk sk.csv
-./helper.py cmd indexschools
+docker compose run --rm web ./manage.py importschools sk sk.csv
+docker compose run --rm web ./manage.py indexschools
 ```

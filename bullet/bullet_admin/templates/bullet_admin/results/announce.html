@@ -43,20 +43,20 @@
 
     <div class="p-2 fixed bottom-0 right-0 space-x-1">
       <span>{{ position }}.</span>
-      <button class="btn-admin-sm bg-primary hover:bg-primary-dark"
+      <button class="btn-admin-sm p-1 align-middle bg-primary hover:bg-primary-dark"
               hx-get="{{ links.prev }}"
               hx-trigger="click, keyup[key=='ArrowDown'||key=='ArrowLeft'||key=='PageUp'||key=='Backspace'] from:body">
-        <i class="fas fa-arrow-down"></i>
+        <b-icon icon="mdi:arrow-down" class="size-5 inline"></b-icon>
       </button>
-      <button class="btn-admin-sm bg-primary hover:bg-primary-dark"
+      <button class="btn-admin-sm p-1 align-middle bg-primary hover:bg-primary-dark"
               hx-get="{{ links.hide }}"
               hx-trigger="click, keyup[key=='h'||key=='b'||key=='.'] from:body">
-        <i class="fas fa-eye-slash"></i>
+        <b-icon icon="mdi:eye-off" class="size-5 inline"></b-icon>
       </button>
-      <button class="btn-admin-sm bg-primary hover:bg-primary-dark"
+      <button class="btn-admin-sm p-1 align-middle bg-primary hover:bg-primary-dark"
               hx-get="{{ links.next }}"
               hx-trigger="click, keyup[key=='ArrowUp'||key=='ArrowRight'||key=='PageDown'||key==' '] from:body">
-        <i class="fas fa-arrow-up"></i>
+        <b-icon icon="mdi:arrow-up" class="size-5 inline"></b-icon>
       </button>
     </div>
   </div>

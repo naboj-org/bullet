@@ -20,8 +20,8 @@
             {% for block in object_list %}
                 <div class="border border-gray-200 rounded-md p-4 flex items-center gap-4">
                     <div class="w-16 h-16 rounded bg-gray-200 flex shrink-0 items-center justify-center">
-                        <span class="iconify w-10 h-10 text-gray-700"
-                              data-icon="{{ block.block.icon }}"></span>
+                        <b-icon class="w-10 h-10 text-gray-700"
+                              icon="{{ block.block.icon }}"></b-icon>
                     </div>
                     <div>
                         <div>
@@ -32,11 +32,11 @@
                             {% for state in states %}
                                 <div>
                                     {% if state in block.states %}
-                                        <span class="iconify text-green-600 inline"
-                                              data-icon="mdi:check"></span>
+                                        <b-icon class="text-green-600 inline"
+                                              icon="mdi:check"></b-icon>
                                     {% else %}
-                                        <span class="iconify text-red-600 inline"
-                                              data-icon="mdi:close"></span>
+                                        <b-icon class="text-red-600 inline"
+                                              icon="mdi:close"></b-icon>
                                     {% endif %}
                                     {{ state.label }}
                                 </div>

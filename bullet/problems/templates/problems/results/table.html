@@ -23,6 +23,7 @@
       <tr class="block md:table-row rounded-md hover:bg-gray-100 even:bg-gray-50"
           {% if forloop.last and page_obj.has_next %}
           hx-get="{{ request.path }}{% query_transform page=page_obj.next_page_number %}" hx-trigger="revealed"
+          hx-indicator="#js-loading-indicator"
           hx-swap="afterend" hx-select="#js-results-content > *"{% endif %}>
         <td class="p-2 text-lg hidden md:table-cell">
           {{ forloop.counter0|add:start_index }}.
@@ -64,4 +65,10 @@
       {% endfor %}
     </tbody>
   </table>
+
+  <div class="htmx-indicator text-center py-8 text-gray-500" id="js-loading-indicator">
+    <div class="inline-flex animate-spin">
+      <b-icon icon="mdi:loading" class="size-6" width="none"></b-icon>
+    </div>
+  </div>
 </div>
