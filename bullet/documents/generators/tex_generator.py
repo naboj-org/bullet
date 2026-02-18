@@ -49,6 +49,9 @@ def send_to_letter(
     output_zip = io.BytesIO()
     try:
         render_zip(template_zip, output_zip, context)
+    except zipfile.BadZipFile as e:
+        output_zip.close()
+        raise ValueError("Invalid template ZIP file") from e
     finally:
         if hasattr(template_zip, "close"):
             template_zip.close()

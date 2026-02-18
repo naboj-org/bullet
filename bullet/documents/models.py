@@ -99,12 +99,19 @@ class TexJob(models.Model):
     completed = models.BooleanField(default=False)
 
     def render(self):
-        send_to_letter(
-            self.template.template.path,
-            self.template.entrypoint,
-            self.context,
-            reverse("badmin:tex_letter_callback", kwargs={"pk": self.id}),
-        )
+        try:
+            send_to_letter(
+                self.template.template.path,
+                self.template.entrypoint,
+                self.context,
+                reverse("badmin:tex_letter_callback", kwargs={"pk": self.id}),
+            )
+        except ValueError as e:
+            self.output_log = ""
+            self.output_file = None
+            self.output_error = e.args[0]
+            self.completed = True
+            self.save()
 
     def __str__(self):
         return str(self.id)

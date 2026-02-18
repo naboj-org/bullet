@@ -1,3 +1,5 @@
+import zipfile
+
 from competitions.models import Competition
 from django import forms
 from django.core.exceptions import ValidationError
@@ -15,6 +17,9 @@ class TexTemplateForm(forms.ModelForm):
     class Meta:
         model = TexTemplate
         fields = ["name", "type", "entrypoint", "template"]
+        widgets = {
+            "template": forms.FileInput(attrs={"accept": "application/zip"}),
+        }
 
         labels = {
             "name": "Name",
@@ -27,6 +32,12 @@ class TexTemplateForm(forms.ModelForm):
             "template": "A ZIP archive containing everything needed to build the "
             "document.",
         }
+
+    def clean_template(self):
+        try:
+            zipfile.ZipFile(self.cleaned_data["template"])
+        except zipfile.BadZipFile:
+            raise ValidationError("This file is not a valid ZIP archive.")
 
 
 class TexRenderForm(forms.Form):
