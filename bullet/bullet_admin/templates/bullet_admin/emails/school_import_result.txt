@@ -1,0 +1,22 @@
+SCHOOL IMPORT RESULTS
+======================
+
+Summary
+-------
+Created: {{ result.created }}
+Updated: {{ result.updated }}
+Total:   {{ result.total }}
+
+{% if result.errors %}
+Errors ({{ result.errors|length }})
+--------------------------
+{% for error in result.errors %}
+- {{ error }}
+{% endfor %}
+
+{% if result.errors|length > 10 %}
+...and {{ result.errors|length|add:"-10" }} more.
+{% endif %}
+{% else %}
+Import completed successfully!
+{% endif %}

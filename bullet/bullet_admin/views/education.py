@@ -3,9 +3,12 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, FormView, ListView, UpdateView
 from education.models import School, SchoolType
+from education.tasks import import_schools_async
+from users.models.organizers import User
 
 from bullet import search
 from bullet_admin.access import PermissionCheckMixin, is_country_admin
+from bullet_admin.csv_import import save_csv_file
 from bullet_admin.forms.education import SchoolCSVImportForm, SchoolForm
 from bullet_admin.mixins import MixinProtocol, RedirectBackMixin
 from bullet_admin.utils import get_active_competition, get_allowed_countries
@@ -156,40 +159,35 @@ class SchoolCSVImportView(
         return ctx
 
     def form_valid(self, form):
+        assert isinstance(self.request.user, User)
         if form.cleaned_data["preview"]:
+            # Preview mode: show first 10 entries only
             try:
-                schools_data = form.parse_csv()
+                schools_data = form.get_data(max_rows=10)
                 return self.render_to_response(
                     self.get_context_data(
                         form=form,
-                        preview_data=schools_data[:10],
+                        preview_data=schools_data,
                     )
                 )
             except Exception as e:
                 messages.error(self.request, str(e))
                 return self.form_invalid(form)
         else:
+            # Non-preview mode: save file and process asynchronously
             try:
-                result = form.import_schools()
+                csv_file = form.cleaned_data["csv_file"]
+                country = form.cleaned_data["country"]
+                user_email = self.request.user.email
 
-                if result["errors"]:
-                    messages.warning(
-                        self.request,
-                        f"Import completed with {len(result['errors'])} errors. "
-                        f"Created: {result['created']}, Updated: {result['updated']}",
-                    )
-                    for error in result["errors"][:5]:  # Show first 5 errors
-                        messages.error(self.request, error)
-                    if len(result["errors"]) > 5:
-                        messages.error(
-                            self.request,
-                            f"... and {len(result['errors']) - 5} more errors",
-                        )
-                else:
-                    messages.success(
-                        self.request,
-                        f"Successfully imported {result['created']} new schools and updated {result['updated']} existing schools.",
-                    )
+                saved_path = save_csv_file(csv_file)
+                import_schools_async.delay(saved_path, country, user_email)
+
+                messages.success(
+                    self.request,
+                    "Your CSV file has been uploaded and is being processed. "
+                    "You will receive an email with the import results when it's complete.",
+                )
 
                 return HttpResponseRedirect(self.get_success_url())
             except Exception as e:
