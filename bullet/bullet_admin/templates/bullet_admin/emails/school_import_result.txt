@@ -10,7 +10,7 @@ Total:   {{ result.total }}
 {% if result.errors %}
 Errors ({{ result.errors|length }})
 --------------------------
-{% for error in result.errors %}
+{% for error in result.errors|slice:":10" %}
 - {{ error }}
 {% endfor %}
 
