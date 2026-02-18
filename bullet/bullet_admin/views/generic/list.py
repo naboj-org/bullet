@@ -165,6 +165,7 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
     table_fields: list[str] = []
     table_labels: dict[str, str] = {}
     table_field_templates: dict[str, str] = {}
+    unsortable_fields: list[str] = []
 
     def get_context_data(self, *, object_list=None, **kwargs):
         ctx = {}
@@ -185,6 +186,7 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
         ctx["list_links"] = self.get_list_links()
 
         ctx["table_labels"] = self.get_table_labels()
+        ctx["unsortable_fields"] = self.get_unsortable_fields()
         ctx["table_rows"] = map(self.get_row_context, ctx["object_list"])
 
         return ctx
@@ -217,6 +219,9 @@ class GenericList(CountryNavigation, LanguageNavigation, OrderedSearch, MixinPro
             labels.append((label, field))
 
         return labels
+
+    def get_unsortable_fields(self) -> set[str]:
+        return set(self.unsortable_fields)
 
     def get_row_links(self, obj) -> list[Link]:
         return []
