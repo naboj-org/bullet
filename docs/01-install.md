@@ -3,46 +3,64 @@
 ## Windows
 
 System requirements:
-- [Python 3.11](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
-- [Pipenv](https://pypi.org/project/pipenv/)
+- [Python 3.12](https://www.python.org/downloads/) or newer (I strongly recommend checking "Add Python to PATH" when installing)
+- [UV](https://docs.astral.sh/uv/)
 - [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Linux
 
 System requirements:
-- Python 3.11 or newer
-- [Pipenv](https://pypi.org/project/pipenv/)
+- Python 3.12 or newer
+- [UV](https://docs.astral.sh/uv/)
 - [Docker](https://docs.docker.com/engine/install/)
 - [docker-compose](https://docs.docker.com/compose/install/)
 
-## Running
+## Installing virtual environment
 
-Now, you can update and start the development server:
+First, we need to set up the virtual environment, for which we use UV. To create the virtual environment, simply run:
 
 ```shell
-./helper.py update
-./helper.py start
+uv sync --dev
+```
+
+## Running
+
+Now, you can start the docker containers with:
+
+```shell
+docker compose up
 ```
 
 You can now visit bullet on http://localhost:8000 or http://math.localhost:8000.
 You can also log in as admin with email `admin@naboj.org` and password `admin`.
 
-You should run the commands above whenever you pull new commits from our repository.
-
-## Running arbitrary `manage.py` commands
-
-If you need to run a `manage.py` command, you can use this "shortcut":
+In case you want to update the containers (e.g. after changing packages), you can use:
 
 ```shell
-./helper.py cmd migrate
+docker compose up --build
+```
+
+## Running `manage.py` commands
+
+If you need to run a `manage.py` commands, you can do so with:
+
+```shell
+docker compose run --rm web ./manage.py migrate
 ```
 
 ## Pre-commit hooks
 
-We use `pre-commit` to run some code checks (black + isort) before commiting. Install them using:
+We use `pre-commit` to run some code checks (black + isort) before commiting.
+If you have `pre-commit` installed system-wide, you can install the git hooks with:
 
 ```shell
-pipenv run pre-commit install
+pre-commit install
+```
+
+If you don't have `pre-commit` installed system-wide, you can use the one from UV with:
+
+```shell
+uv run pre-commit install
 ```
 
 Now, let's look at your [code editor](02-ide.md).
