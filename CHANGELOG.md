@@ -3,6 +3,26 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.4 - 2026-02-18
+
+### Added
+
+- Viewed competition category can be switched in results.
+- Admin results page now links to live results page.
+- If problems in the archive are unavailable in the current language but available in en/sk/cs, those are shown.
+- Results now show a spinner while loading next positions.
+
+### Changed
+
+- Schools are imported asynchronously in the background, delivering results by email.
+- More detailed permissions in user list.
+- Standard format of venue code is now enforced.
+
+### Fixed
+
+- Logged-in users can see all public events in archive.
+- Invalid ZIPs cannot be uploaded as templates anymore.
+
 ## 2026.3 - 2026-02-16
 
 ### Added
