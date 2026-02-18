@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Tekmovanje Naboj Slovenija\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-20 19:07+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: 2025-02-11 11:47+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -62,22 +62,22 @@ msgid "Selected school is not valid."
 msgstr "Izbrana šola ni veljavna."
 
 #: competitions/forms/registration.py:80
-#: competitions/templates/register/details.html:27
-#: competitions/templates/register/details.html:39
-#: competitions/templates/teams/edit.html:45
-#: competitions/templates/teams/edit.html:67
-#: competitions/templates/teams/edit.html:81
-#: competitions/templates/teams/edit.html:142
+#: competitions/templates/register/details.html:24
+#: competitions/templates/register/details.html:33
+#: competitions/templates/teams/edit.html:44
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:77
+#: competitions/templates/teams/edit.html:137
 msgid "Full name"
 msgstr "Ime in priimek"
 
 #: competitions/forms/registration.py:81
-#: competitions/templates/teams/edit.html:48
+#: competitions/templates/teams/edit.html:47
 msgid "Email"
 msgstr "E-pošta"
 
 #: competitions/forms/registration.py:82
-#: competitions/templates/teams/edit.html:52
+#: competitions/templates/teams/edit.html:51
 msgid "Phone number"
 msgstr "Telefonska številka"
 
@@ -101,56 +101,58 @@ msgstr "Ta letnik ne more tekmovati v izbrani kategoriji."
 msgid "The uploaded file is too large."
 msgstr "Naložena datoteka je prevelika."
 
-#: competitions/templates/archive/list.html:5
+#: competitions/templates/archive/list.html:4
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
 msgstr "Arhiv"
 
-#: competitions/templates/archive/list.html:28
-#: problems/templates/problems/results.html:7
-#: problems/templates/problems/results.html:22
+#: competitions/templates/archive/list.html:29
+#: problems/templates/problems/results.html:4
+#: problems/templates/problems/results.html:20
 #: problems/templates/problems/results/embed.html:4
-#: problems/templates/problems/results/select.html:6
+#: problems/templates/problems/results/select.html:4
 #: problems/templates/problems/results/select.html:15
-#: problems/templates/problems/results/venue.html:6
-#: problems/templates/problems/results/venue.html:16
-#: web/templates/web/snippets/home_hero_buttons.html:25
+#: problems/templates/problems/results/venue.html:4
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Rezultati"
 
-#: competitions/templates/archive/list.html:30
-#: problems/templates/archive/problems.html:6
-#: problems/templates/archive/problems.html:10
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
+#: problems/templates/archive/problems.html:4
+#: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Naloge in rešitve"
 
-#: competitions/templates/archive/list.html:33
-#: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:8
+#: competitions/templates/archive/list.html:45
+#: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Albumi"
 
-#: competitions/templates/archive/list.html:41
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Pretekla tekmovanja"
 
-#: competitions/templates/live/countdown.html:6
-#: competitions/templates/live/first_problem.html:6
-#: competitions/templates/live/results.html:6
-#: competitions/templates/live/setup.html:7
-#: competitions/templates/live/setup.html:11
-#: competitions/templates/live/view.html:7
+#: competitions/templates/live/countdown.html:4
+#: competitions/templates/live/first_problem.html:4
+#: competitions/templates/live/results.html:4
+#: competitions/templates/live/setup.html:4
+#: competitions/templates/live/setup.html:9
+#: competitions/templates/live/view.html:4
 msgid "Live signage"
 msgstr "Rezultati v živo"
 
-#: competitions/templates/live/countdown.html:17
+#: competitions/templates/live/countdown.html:16
 msgid "Do not open the problems until the competition starts."
 msgstr "Ne odpirajte nalog, dokler se tekmovanje ne začne."
 
-#: competitions/templates/live/first_problem.html:17
+#: competitions/templates/live/first_problem.html:14
 msgid "First solved problem"
 msgstr "Prva rešena naloga"
 
-#: competitions/templates/live/setup.html:21
+#: competitions/templates/live/setup.html:20
 msgid "Start"
 msgstr "Start"
 
@@ -164,7 +166,7 @@ msgid "If you believe this is an error, contact us."
 msgstr "Če menite, da gre za napako, nas kontaktirajte."
 
 #: competitions/templates/register/_venue.html:13
-#: competitions/templates/register/partials/venue.html:11
+#: competitions/templates/register/partials/venue.html:10
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
 msgstr "Na tem prizorišču se bo tekmovanje začelo ob %(time)s namesto običajnega začetka ob %(usual)s."
@@ -175,195 +177,199 @@ msgid "No venues matched your query."
 msgstr "Nobeno prizorišče se ne ujema z vašim iskanjem."
 
 #: competitions/templates/register/base.html:5
-#: competitions/templates/register/base.html:9
-#: competitions/templates/register/thanks.html:5
+#: competitions/templates/register/base.html:10
+#: competitions/templates/register/thanks.html:4
 msgid "Team registration"
 msgstr "Registracija ekipe"
 
-#: competitions/templates/register/category.html:8
-#: competitions/templates/register/partials/category.html:5
-#: problems/templates/problems/results/select.html:22
+#: competitions/templates/register/category.html:7
+#: competitions/templates/register/partials/category.html:3
+#: problems/templates/problems/results/select.html:23
 msgid "Category"
 msgstr "Kategorija"
 
-#: competitions/templates/register/details.html:18
-#: competitions/templates/teams/edit.html:43
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Kontaktne informacije"
 
-#: competitions/templates/register/details.html:20
-#: competitions/templates/teams/edit.html:57
+#: competitions/templates/register/details.html:17
+#: competitions/templates/teams/edit.html:56
 msgid "Contestants"
 msgstr "Tekmovalci"
 
-#: competitions/templates/register/details.html:22
-#: competitions/templates/teams/edit.html:59
+#: competitions/templates/register/details.html:19
+#: competitions/templates/teams/edit.html:58
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Seznam tekmovalcev lahko spremenite kadarkoli do začetka tekmovanja."
 
-#: competitions/templates/register/details.html:28
-#: competitions/templates/register/details.html:47
-#: competitions/templates/teams/edit.html:68
-#: competitions/templates/teams/edit.html:89
-#: competitions/templates/teams/edit.html:146
+#: competitions/templates/register/details.html:25
+#: competitions/templates/register/details.html:40
+#: competitions/templates/teams/edit.html:67
+#: competitions/templates/teams/edit.html:84
+#: competitions/templates/teams/edit.html:141
 msgid "Grade"
 msgstr "Letnik"
 
-#: competitions/templates/register/details.html:33
-#: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:139
+#: competitions/templates/register/details.html:28
+#: competitions/templates/teams/edit.html:71
+#: competitions/templates/teams/edit.html:134
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Tekmovalec %(number)s"
 
-#: competitions/templates/register/details.html:53
-#: web/templates/form/form.html:19 web/templates/form/form_vertical.html:20
+#: competitions/templates/register/details.html:46
+#: web/templates/form/form.html:16 web/templates/form/form_vertical.html:18
 msgid "Required field"
 msgstr "Obvezno polje"
 
-#: competitions/templates/register/details.html:59
+#: competitions/templates/register/details.html:52
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Z registracijo na tekmovanje se sodelujoči (oziroma učitelji ali zakoniti zastopniki registriranih dijakov) strinjajo s <a href=\"%(link)s\">pravili tekmovanja</a> in se zavezujejo, da jih bodo upoštevali. Hkrati se prijavljeni zavedajo, da so osebni podatki, navedeni v prijavnem obrazcu, potrebni za zagotovitev pravilne izvedbe tekmovanja."
 
-#: competitions/templates/register/details.html:71
-#: competitions/templates/teams/edit.html:108
+#: competitions/templates/register/details.html:64
+#: competitions/templates/teams/edit.html:103
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "Prijavitelj organizatorju dovoli snemanje video in/ali avdio posnetkov med tekmovanjem, na katerih je zajeta podoba prijaviteljev in/ali sodelujočih, ter soglaša z njihovo objavo na spletni strani tekmovanja in na družbenih omrežjih za tržne in promocijske namene tekmovanja.<sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:81
+#: competitions/templates/register/details.html:74
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Več informacij o obdelavi osebnih podatkov je na voljo <a href=\"%(link)s\">na tej strani</a>."
 
-#: competitions/templates/register/details.html:89
-#: web/templates/web/snippets/home_timeline.html:61
+#: competitions/templates/register/details.html:82
 msgid "Register"
 msgstr "Registracija"
 
-#: competitions/templates/register/details.html:92
-#: competitions/templates/teams/edit.html:124
+#: competitions/templates/register/details.html:85
+#: competitions/templates/teams/edit.html:119
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Soglasje velja za čas delovanja spletne strani tekmovanja in povezanih računov na družbenih omrežjih. To soglasje lahko kadarkoli prekličete tako, da pošljete e-pošto na naslov\"<a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Umik soglasja ne vpliva na zakonitost obdelave pred njegovim umikom. Oseba, na katero se nanašajo podatki, lahko zahteva izbris osebnih podatkov le, če je to tehnično mogoče in če izbris ne vpliva na pravice drugih oseb, na katere se nanašajo podatki."
 
-#: competitions/templates/register/partials/category.html:14
-#: competitions/templates/register/partials/competition.html:9
-#: competitions/templates/register/partials/school.html:10
-#: competitions/templates/register/partials/venue.html:16
+#: competitions/templates/register/partials/category.html:12
+#: competitions/templates/register/partials/competition.html:8
+#: competitions/templates/register/partials/school.html:9
+#: competitions/templates/register/partials/venue.html:15
 msgid "Change"
 msgstr "Sprememba"
 
-#: competitions/templates/register/partials/competition.html:3
-#: competitions/templates/register/partials/venue.html:3
-#: competitions/templates/register/venue.html:6
-#: competitions/templates/teams/edit.html:35
+#: competitions/templates/register/partials/competition.html:2
+#: competitions/templates/register/partials/venue.html:2
+#: competitions/templates/register/venue.html:5
+#: competitions/templates/teams/edit.html:34
 msgid "Venue"
 msgstr "Prizorišče"
 
-#: competitions/templates/register/partials/school.html:3
-#: competitions/templates/register/school.html:7
-#: competitions/templates/teams/edit.html:28
+#: competitions/templates/register/partials/school.html:2
+#: competitions/templates/register/school.html:6
+#: competitions/templates/teams/edit.html:27
 msgid "School"
 msgstr "Šola"
 
-#: competitions/templates/register/school.html:10
+#: competitions/templates/register/school.html:9
 msgid "Search schools..."
 msgstr "Išči šole..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Ekipa je uspešno registrirana"
 
-#: competitions/templates/register/thanks.html:15
+#: competitions/templates/register/thanks.html:14
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
 msgstr "Poslali smo vam potrditveno povezavo. Prosimo, preverite svoj e-poštni nabiralnik in mapo z neželeno pošto.<b>Registracija ekipe ne bo dokončana, dokler ne kliknete na potrditveno povezavo.</b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Registrirajte še eno ekipo"
 
-#: competitions/templates/register/thanks.html:23
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Nazaj na domačo stran"
 
-#: competitions/templates/register/venue.html:9
+#: competitions/templates/register/venue.html:8
 msgid "Search venues..."
 msgstr "Išči prizorišča..."
 
 #: competitions/templates/teams/delete.html:4
-#: competitions/templates/teams/delete.html:8
-#: competitions/templates/teams/edit.html:120
+#: competitions/templates/teams/delete.html:9
+#: competitions/templates/teams/edit.html:115
 msgid "Unregister team"
 msgstr "Odjavite ekipo"
 
-#: competitions/templates/teams/delete.html:16
+#: competitions/templates/teams/delete.html:18
 msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
 msgstr "Ali ste prepričani, da želite odstraniti svojo ekipo iz tekmovanja? Odjave ni mogoče razveljaviti."
 
-#: competitions/templates/teams/delete.html:19
+#: competitions/templates/teams/delete.html:21
 msgid "Unregister"
 msgstr "Odjava"
 
-#: competitions/templates/teams/edit.html:7
-#: competitions/templates/teams/edit.html:11
-#: web/templates/mail/messages/to_competition.html:18
+#: competitions/templates/teams/edit.html:4
+#: competitions/templates/teams/edit.html:9
+#: web/templates/mail/messages/to_competition.html:17
 msgid "Edit team"
 msgstr "Uredi ekipo"
 
-#: competitions/templates/teams/edit.html:17
+#: competitions/templates/teams/edit.html:16
 msgid "Team information"
 msgstr "Informacije o ekipi"
 
-#: competitions/templates/teams/edit.html:23
+#: competitions/templates/teams/edit.html:22
 msgid "Your team is in the waiting list."
 msgstr "Vaša ekipa je na čakalnem seznamu."
 
-#: competitions/templates/teams/edit.html:24
+#: competitions/templates/teams/edit.html:23
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
 msgstr "Število prijavljenih ekip presega kapaciteto prizorišča ali pa ima vaša šola že dovolj registriranih ekip. Če se bo situacija spremenila, vas bomo kontaktirali."
 
-#: competitions/templates/teams/edit.html:40
+#: competitions/templates/teams/edit.html:39
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
 msgstr "Na tem prizorišču se bo tekmovanje začelo ob %(time)s namesto običajnega začetka."
 
-#: competitions/templates/teams/edit.html:69
-#: competitions/templates/teams/edit.html:97
+#: competitions/templates/teams/edit.html:68
+#: competitions/templates/teams/edit.html:92
 msgid "Delete?"
 msgstr "Izbriši?"
 
-#: competitions/templates/teams/edit.html:118
+#: competitions/templates/teams/edit.html:113
 msgid "Update"
 msgstr "Posodobi"
 
-#: competitions/templates/teams/edit.html:161
+#: competitions/templates/teams/edit.html:156
 msgid "Certificate"
 msgstr "Priznanje"
 
-#: competitions/templates/teams/edit.html:163
+#: competitions/templates/teams/edit.html:158
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Priznanje za vašo ekipo lahko prenesete s klikom na gumb spodaj."
 
-#: competitions/templates/teams/edit.html:167
+#: competitions/templates/teams/edit.html:162
 msgid "Download certificate"
 msgstr "Prenesi priznanje"
 
-#: competitions/templates/teams/list.html:9
-#: competitions/templates/teams/list.html:17
-#: competitions/templates/teams/list.html:48
+#: competitions/templates/teams/list.html:5
+#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:40
 msgid "Waiting list"
 msgstr "Čakalni seznam"
 
-#: competitions/templates/teams/list.html:11
-#: competitions/templates/teams/list.html:19
-#: competitions/templates/teams/list.html:45
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:16
+#: competitions/templates/teams/list.html:38
 msgid "Team list"
 msgstr "Seznam ekip"
 
-#: competitions/templates/teams/list.html:60
+#: competitions/templates/teams/list.html:61
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Ekipe: %(teams)s / %(capacity)s"
+
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Mednarodno"
 
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
@@ -385,8 +391,8 @@ msgstr "Registracija je uspešno potrjena."
 msgid "Team was unregistered."
 msgstr "Ekipa je bila odjavljena."
 
-#: gallery/templates/gallery/album.html:6
-#: gallery/templates/gallery/album.html:14
+#: gallery/templates/gallery/album.html:5
+#: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Album"
 
@@ -430,15 +436,11 @@ msgstr "ekipe so rešile"
 msgid "average solving time"
 msgstr "povprečen čas reševanja"
 
-#: problems/templates/problems/results.html:38 problems/views/results.py:136
-msgid "International"
-msgstr "Mednarodno"
-
-#: problems/templates/problems/results/table.html:6
+#: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
 msgstr "Tekmovanje se še ni začelo."
 
-#: problems/templates/problems/results/table.html:10
+#: problems/templates/problems/results/table.html:9
 msgid "Results are frozen."
 msgstr "Rezultati so zamrznjeni."
 
@@ -450,13 +452,17 @@ msgstr "To še niso končni rezultati."
 msgid "Interim results."
 msgstr "Vmesni rezultati."
 
-#: problems/templates/problems/results/table.html:14
+#: problems/templates/problems/results/table.html:15
 msgid "The competition is ongoing, the results may change."
 msgstr "Tekmovanje še poteka, rezultati se lahko spremenijo."
 
-#: problems/templates/problems/results/table.html:68
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Nobena ekipa še ni rešila nobene naloge)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Vsi prizorišči"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -470,68 +476,63 @@ msgstr "Ekipa je bila premaknjena s čakalnega seznama"
 msgid "Your team has been deleted"
 msgstr "Vaša ekipa je bila izbrisana"
 
-#: web/templates/junior/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:22 web/templates/web/homepage.html:5
-msgid "Home page"
-msgstr "Domača stran"
-
-#: web/templates/mail/base.html:349
+#: web/templates/mail/base.html:351
 msgid "Competition logo"
 msgstr "Logotip tekmovanja"
 
-#: web/templates/mail/base.html:369
+#: web/templates/mail/base.html:371
 #, python-format
 msgid "You have received this message because you have registered for the competition %(branch)s."
 msgstr "To sporočilo ste prejeli, ker ste se registrirali na tekmovanje %(branch)s."
 
-#: web/templates/mail/messages/registration.html:6
+#: web/templates/mail/messages/registration.html:5
 #: web/templates/mail/messages/registration.txt:1
 #: web/templates/mail/messages/team_delete.html:5
 #: web/templates/mail/messages/team_delete.txt:1
-#: web/templates/mail/messages/to_competition.html:6
+#: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
 msgstr "Pozdravljeni, %(name)s!"
 
-#: web/templates/mail/messages/registration.html:9
+#: web/templates/mail/messages/registration.html:8
 #: web/templates/mail/messages/registration.txt:3
 msgid "Please click on the following link to confirm your registration."
 msgstr "Kliknite na naslednjo povezavo, da potrdite svojo registracijo."
 
-#: web/templates/mail/messages/registration.html:12
+#: web/templates/mail/messages/registration.html:11
 #: web/templates/mail/messages/registration.txt:5
-#: web/templates/mail/messages/to_competition.html:12
+#: web/templates/mail/messages/to_competition.html:11
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
 msgstr "Trenutni člani ekipe: %(contestants)s"
 
-#: web/templates/mail/messages/registration.html:15
+#: web/templates/mail/messages/registration.html:14
 msgid "Confirm registration"
 msgstr "Potrdite registracijo"
 
-#: web/templates/mail/messages/registration.html:18
+#: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "Ta povezava vam omogoča tudi, da lahko urejate podatke svoje ekipe."
 
-#: web/templates/mail/messages/registration.html:21
+#: web/templates/mail/messages/registration.html:20
 #: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Če imate kakršnakoli vprašanja, nam lahko pišete na ta e-naslov."
 
-#: web/templates/mail/messages/registration.html:24
+#: web/templates/mail/messages/registration.html:23
 #: web/templates/mail/messages/registration.txt:13
 #: web/templates/mail/messages/team_delete.html:14
 #: web/templates/mail/messages/team_delete.txt:7
-#: web/templates/mail/messages/to_competition.html:21
+#: web/templates/mail/messages/to_competition.html:20
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
 msgstr "Lep pozdrav,"
 
-#: web/templates/mail/messages/registration.html:31
-#: web/templates/mail/messages/to_competition.html:28
+#: web/templates/mail/messages/registration.html:30
+#: web/templates/mail/messages/to_competition.html:27
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Če imate težave s klikom na gumb, lahko kopirate v svoj brskalnik to povezavo:"
 
@@ -546,39 +547,37 @@ msgstr "Vaša ekipa je bila odjavljena s tekmovanja."
 msgid "Team members: %(contestants)s"
 msgstr "Člani ekipe: %(contestants)s"
 
-#: web/templates/mail/messages/to_competition.html:9
+#: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "Vaša ekipa je bila premaknjena s čakalnega seznama na seznam tekmujočih ekip."
 
-#: web/templates/mail/messages/to_competition.html:15
+#: web/templates/mail/messages/to_competition.html:14
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
 msgstr "Podrobnosti o ekipi lahko uredite s klikom na spodnjo povezavo."
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:12
+#: web/templates/page_blocks/competition_timeline.html:10
 msgid "Registration start"
 msgstr "Začetek registracije"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:16
+#: web/templates/page_blocks/competition_timeline.html:14
 msgid "Second registration round start"
 msgstr "Začetek drugega prijavnega kroga"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:20
-#: web/templates/web/snippets/home_timeline.html:45
+#: web/templates/page_blocks/competition_timeline.html:18
 msgid "Registration end"
 msgstr "Konec registracije"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:23
-#: web/templates/web/snippets/home_timeline.html:54
+#: web/templates/page_blocks/competition_timeline.html:21
 msgid "Competition day"
 msgstr "Tekmovalni dan"
 
-#: web/templates/web/404.html:5 web/templates/web/404.html:9
+#: web/templates/web/404.html:4 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Ni najdeno"
 
@@ -586,55 +585,49 @@ msgstr "Ni najdeno"
 msgid "The page you tried to access was not found."
 msgstr "Stran, do katere ste poskušali dostopati, ni bila najdena."
 
-#: web/templates/web/root_base.html:71
+#: web/templates/web/404.html:16 web/templates/web/404.html:22
+msgid "Home page"
+msgstr "Domača stran"
+
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Zapri"
 
-#: web/templates/web/snippets/copyright.html:7
+#: web/templates/web/snippets/copyright.html:5
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
 msgstr "Vsi časi so v časovnem pasu %(tz_name)s, razen če ni navedeno drugače."
 
-#: web/templates/web/snippets/copyright.html:12
+#: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politika varstva podatkov"
 
-#: web/templates/web/snippets/home_footer.html:5
-msgid "Organizers"
-msgstr "Organizatorji"
+#~ msgid "Organizers"
+#~ msgstr "Organizatorji"
 
-#: web/templates/web/snippets/home_footer.html:19
-msgid "Our partners"
-msgstr "Naši partnerji"
+#~ msgid "Our partners"
+#~ msgstr "Naši partnerji"
 
-#: web/templates/web/snippets/home_hero_buttons.html:5
 #, python-format
-msgid "Registration starts on %(start)s."
-msgstr "Registracija se začne %(start)s."
+#~ msgid "Registration starts on %(start)s."
+#~ msgstr "Registracija se začne %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:8
-#: web/templates/web/snippets/home_hero_buttons.html:19
 #, python-format
-msgid "The competition will take place on %(start)s."
-msgstr "Tekmovanje bo potekalo %(start)s."
+#~ msgid "The competition will take place on %(start)s."
+#~ msgstr "Tekmovanje bo potekalo %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Registracija"
+#~ msgid "Registration"
+#~ msgstr "Registracija"
 
-#: web/templates/web/snippets/home_hero_buttons.html:16
 #, python-format
-msgid "Registration ends on %(end)s."
-msgstr "Registracija se konča %(end)s."
+#~ msgid "Registration ends on %(end)s."
+#~ msgstr "Registracija se konča %(end)s."
 
-#: web/templates/web/snippets/home_timeline.html:6
-msgid "Important dates"
-msgstr "Pomembni datumi"
+#~ msgid "Important dates"
+#~ msgstr "Pomembni datumi"
 
-#: web/templates/web/snippets/home_timeline.html:19
-msgid "Registration starts"
-msgstr "Registracija se začne"
+#~ msgid "Registration starts"
+#~ msgstr "Registracija se začne"
 
-#: web/templates/web/snippets/home_timeline.html:32
-msgid "Second round of registration"
-msgstr "Drugi krog registracij"
+#~ msgid "Second round of registration"
+#~ msgstr "Drugi krog registracij"

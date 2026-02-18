@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 21:51+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: 2024-01-10 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -61,22 +61,22 @@ msgid "Selected school is not valid."
 msgstr "Valitud kooli ei leidu."
 
 #: competitions/forms/registration.py:80
+#: competitions/templates/register/details.html:24
 #: competitions/templates/register/details.html:33
-#: competitions/templates/register/details.html:39
-#: competitions/templates/teams/edit.html:47
-#: competitions/templates/teams/edit.html:64
-#: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:126
+#: competitions/templates/teams/edit.html:44
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:77
+#: competitions/templates/teams/edit.html:137
 msgid "Full name"
 msgstr "Ees- ja perekonnanimi"
 
 #: competitions/forms/registration.py:81
-#: competitions/templates/teams/edit.html:48
+#: competitions/templates/teams/edit.html:47
 msgid "Email"
 msgstr "Meiliaadress"
 
 #: competitions/forms/registration.py:82
-#: competitions/templates/teams/edit.html:50
+#: competitions/templates/teams/edit.html:51
 msgid "Phone number"
 msgstr "Telefoninumber"
 
@@ -100,46 +100,50 @@ msgstr "See klass ei saa osaleda valitud vanuserühmas."
 msgid "The uploaded file is too large."
 msgstr "Üleslaetud fail on liiga suur."
 
-#: competitions/templates/archive/list.html:5
+#: competitions/templates/archive/list.html:4
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
 msgstr "Arhiiv"
 
-#: competitions/templates/archive/list.html:22
-#: problems/templates/problems/results.html:6
-#: problems/templates/problems/results.html:21
+#: competitions/templates/archive/list.html:29
+#: problems/templates/problems/results.html:4
+#: problems/templates/problems/results.html:20
 #: problems/templates/problems/results/embed.html:4
-#: problems/templates/problems/results/select.html:6
-#: problems/templates/problems/results/select.html:16
-#: problems/templates/problems/results/venue.html:6
-#: problems/templates/problems/results/venue.html:17
-#: web/templates/web/snippets/home_hero_buttons.html:25
+#: problems/templates/problems/results/select.html:4
+#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/venue.html:4
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Tulemused"
 
-#: competitions/templates/archive/list.html:23
-#: problems/templates/archive/problems.html:6
-#: problems/templates/archive/problems.html:10
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
+#: problems/templates/archive/problems.html:4
+#: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Ülesanded ja lahendused"
 
-#: competitions/templates/archive/list.html:24
-#: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
+#: competitions/templates/archive/list.html:45
+#: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Pildialbumid"
 
-#: competitions/templates/archive/list.html:30
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Varasemad võistlused"
 
-#: competitions/templates/live.html:7
-#: competitions/templates/live/countdown.html:6
-#: competitions/templates/live/first_problem.html:6
-#: competitions/templates/live/results.html:6
+#: competitions/templates/live/countdown.html:4
+#: competitions/templates/live/first_problem.html:4
+#: competitions/templates/live/results.html:4
+#: competitions/templates/live/setup.html:4
+#: competitions/templates/live/setup.html:9
+#: competitions/templates/live/view.html:4
 msgid "Live signage"
 msgstr "Jooksev pingerida"
 
-#: competitions/templates/live/countdown.html:13
+#: competitions/templates/live/countdown.html:16
 msgid "Do not open the problems until the competition starts."
 msgstr "Ärge avage ülesannete ümbrikut enne võistluse algust."
 
@@ -147,17 +151,21 @@ msgstr "Ärge avage ülesannete ümbrikut enne võistluse algust."
 msgid "First solved problem"
 msgstr "Lahendas ülesande esimesena ära"
 
+#: competitions/templates/live/setup.html:20
+msgid "Start"
+msgstr ""
+
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
-#: competitions/templates/register/_school.html:14
+#: competitions/templates/register/_school.html:15
 msgid "No schools matched your query."
 msgstr "Teie päringule ei vastanud ükski kool."
 
-#: competitions/templates/register/_school.html:15
+#: competitions/templates/register/_school.html:16
 msgid "If you believe this is an error, contact us."
 msgstr "Kui usute, et tegemist on veaga, võtke meiega ühendust."
 
 #: competitions/templates/register/_venue.html:13
-#: competitions/templates/register/partials/venue.html:17
+#: competitions/templates/register/partials/venue.html:10
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
 msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja %(usual)s asemel kell %(time)s."
@@ -167,140 +175,138 @@ msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja %(usual)s 
 msgid "No venues matched your query."
 msgstr "Teie päringule ei vastanud ükski võistluskeskus."
 
-#. Translators: Registration page title
 #: competitions/templates/register/base.html:5
-#: competitions/templates/register/base.html:8
-#: competitions/templates/register/thanks.html:5
+#: competitions/templates/register/base.html:10
+#: competitions/templates/register/thanks.html:4
 msgid "Team registration"
 msgstr "Võistkonna registreerimine"
 
-#: competitions/templates/register/category.html:9
-#: competitions/templates/register/partials/category.html:6
-#: problems/templates/problems/results/select.html:25
+#: competitions/templates/register/category.html:7
+#: competitions/templates/register/partials/category.html:3
+#: problems/templates/problems/results/select.html:23
 msgid "Category"
 msgstr "Vanuserühm"
 
-#: competitions/templates/register/details.html:22
-#: competitions/templates/teams/edit.html:46
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Kontaktandmed"
 
-#: competitions/templates/register/details.html:25
-#: competitions/templates/teams/edit.html:54
+#: competitions/templates/register/details.html:17
+#: competitions/templates/teams/edit.html:56
 msgid "Contestants"
 msgstr "Võistlejad"
 
-#: competitions/templates/register/details.html:27
-#: competitions/templates/teams/edit.html:55
+#: competitions/templates/register/details.html:19
+#: competitions/templates/teams/edit.html:58
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Võistlejate nimekirja saab muuta igal ajal enne võistluse algust."
 
-#: competitions/templates/register/details.html:34
-#: competitions/templates/register/details.html:43
-#: competitions/templates/teams/edit.html:65
-#: competitions/templates/teams/edit.html:78
-#: competitions/templates/teams/edit.html:130
+#: competitions/templates/register/details.html:25
+#: competitions/templates/register/details.html:40
+#: competitions/templates/teams/edit.html:67
+#: competitions/templates/teams/edit.html:84
+#: competitions/templates/teams/edit.html:141
 msgid "Grade"
 msgstr "Klass"
 
-#: competitions/templates/register/details.html:37
-#: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:123
+#: competitions/templates/register/details.html:28
+#: competitions/templates/teams/edit.html:71
+#: competitions/templates/teams/edit.html:134
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "Võistleja %(number)s"
 
-#: competitions/templates/register/details.html:49
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
+#: competitions/templates/register/details.html:46
+#: web/templates/form/form.html:16 web/templates/form/form_vertical.html:18
 msgid "Required field"
 msgstr "Kohustuslik väli"
 
-#: competitions/templates/register/details.html:57
+#: competitions/templates/register/details.html:52
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "Võistlusele registreerudes nõustuvad registreerijad (eriti õpetajad või registreeritud õpilaste seaduslikud esindajad) <a href=\"%(link)s\">võistlusreeglitega</a> ja kohustuvad neid järgima. Samal ajal teadvustab registreerija, et registreerimisvormil esitatud isikuandmed on vajalikud võistluse nõuetekohase toimimise tagamiseks."
 
-#: competitions/templates/register/details.html:68
-#: competitions/templates/teams/edit.html:92
+#: competitions/templates/register/details.html:64
+#: competitions/templates/teams/edit.html:103
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "Registreerija nõustub lubama korraldajal teha võistluse ajal video- ja/või helisalvestusi, millel jäädvustatakse registreerija ja/või registreeritava isiku pilt, ning avaldada neid võistluse veebilehel ja sotsiaalvõrgustikes võistluse turunduse ja reklaami eesmärgil. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:79
+#: competitions/templates/register/details.html:74
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "Lisateavet isikuandmete töötlemise kohta leiate <a href=\"%(link)s\">sellel leheküljel</a>."
 
-#: competitions/templates/register/details.html:88
-#: web/templates/web/snippets/home_timeline.html:51
+#: competitions/templates/register/details.html:82
 msgid "Register"
 msgstr "Registreeru"
 
-#: competitions/templates/register/details.html:92
-#: competitions/templates/teams/edit.html:108
+#: competitions/templates/register/details.html:85
+#: competitions/templates/teams/edit.html:119
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup> Nõusolek antakse võistluse veebilehe ja sotsiaalvõrgustike kontode toimimise ajaks. Selle nõusoleku võib igal ajal tühistada, kirjutades inglise keeles meiliaadressile <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Nõusoleku tagasivõtmine ei mõjuta töötlemise seaduslikkust enne selle tagasivõtmist. Mõjutatud isik võib nõuda isikuandmete kustutamist ainult siis, kui see on tehniliselt võimalik ja kustutamine ei mõjuta teiste mõjutatud isikute õigusi."
 
-#: competitions/templates/register/partials/category.html:18
-#: competitions/templates/register/partials/competition.html:13
-#: competitions/templates/register/partials/school.html:16
-#: competitions/templates/register/partials/venue.html:22
+#: competitions/templates/register/partials/category.html:12
+#: competitions/templates/register/partials/competition.html:8
+#: competitions/templates/register/partials/school.html:9
+#: competitions/templates/register/partials/venue.html:15
 msgid "Change"
 msgstr "Muuda"
 
-#: competitions/templates/register/partials/competition.html:4
-#: competitions/templates/register/partials/venue.html:4
-#: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:37
+#: competitions/templates/register/partials/competition.html:2
+#: competitions/templates/register/partials/venue.html:2
+#: competitions/templates/register/venue.html:5
+#: competitions/templates/teams/edit.html:34
 msgid "Venue"
 msgstr "Võistluskeskus"
 
-#: competitions/templates/register/partials/school.html:4
-#: competitions/templates/register/school.html:9
-#: competitions/templates/teams/edit.html:30
+#: competitions/templates/register/partials/school.html:2
+#: competitions/templates/register/school.html:6
+#: competitions/templates/teams/edit.html:27
 msgid "School"
 msgstr "Kool"
 
-#: competitions/templates/register/school.html:11
+#: competitions/templates/register/school.html:9
 msgid "Search schools..."
 msgstr "Otsi koole..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Palun kinnitage registreering"
 
-#: competitions/templates/register/thanks.html:16
+#: competitions/templates/register/thanks.html:14
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
 msgstr "Saatsime teile kinnituslingi. Palun kontrollige oma postkasti ja rämpsposti kausta. <b>Võistkonna registreerimine ei ole lõpetatud enne, kui klõpsate kinnituslingile.</b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Registreeri veel üks võistkond"
 
-#: competitions/templates/register/thanks.html:20
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Tagasi kodulehele"
 
-#: competitions/templates/register/venue.html:10
+#: competitions/templates/register/venue.html:8
 msgid "Search venues..."
 msgstr "Otsi võistluskeskusi..."
 
 #: competitions/templates/teams/delete.html:4
-#: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:103
+#: competitions/templates/teams/delete.html:9
+#: competitions/templates/teams/edit.html:115
 msgid "Unregister team"
 msgstr "Tühista registreering"
 
-#: competitions/templates/teams/delete.html:14
+#: competitions/templates/teams/delete.html:18
 msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
 msgstr "Kas olete kindel, et soovite tühistada oma võistkonna registreeringu? Seda tegevust ei saa tagasi pöörata."
 
-#: competitions/templates/teams/delete.html:16
+#: competitions/templates/teams/delete.html:21
 msgid "Unregister"
 msgstr "Tühista registreering"
 
-#: competitions/templates/teams/edit.html:7
+#: competitions/templates/teams/edit.html:4
 #: competitions/templates/teams/edit.html:9
-#: web/templates/mail/messages/to_competition.html:14
+#: web/templates/mail/messages/to_competition.html:17
 msgid "Edit team"
 msgstr "Muuda võistkonda"
 
@@ -308,56 +314,61 @@ msgstr "Muuda võistkonda"
 msgid "Team information"
 msgstr "Võistkonna andmed"
 
-#: competitions/templates/teams/edit.html:24
+#: competitions/templates/teams/edit.html:22
 msgid "Your team is in the waiting list."
 msgstr "Teie võistkond on ootenimekirjas."
 
-#: competitions/templates/teams/edit.html:25
+#: competitions/templates/teams/edit.html:23
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
 msgstr "Võistluskeskuse mahutavus on ületatud või on teie koolist juba piisavalt võistkondi registreeritud. Kui olukord muutub, võtame teiega ühendust."
 
-#: competitions/templates/teams/edit.html:42
+#: competitions/templates/teams/edit.html:39
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
 msgstr "Selles võistluskeskuses algab võistlus tavapärase algusaja asemel kell %(time)s."
 
-#: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:83
+#: competitions/templates/teams/edit.html:68
+#: competitions/templates/teams/edit.html:92
 msgid "Delete?"
 msgstr "Kustutada?"
 
-#: competitions/templates/teams/edit.html:102
+#: competitions/templates/teams/edit.html:113
 msgid "Update"
 msgstr "Uuenda"
 
-#: competitions/templates/teams/edit.html:145
+#: competitions/templates/teams/edit.html:156
 msgid "Certificate"
 msgstr "Sertifikaat"
 
-#: competitions/templates/teams/edit.html:146
+#: competitions/templates/teams/edit.html:158
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Saate oma võistkonna sertifikaadi alla laadida, klõpsates alloleval nupul."
 
-#: competitions/templates/teams/edit.html:147
+#: competitions/templates/teams/edit.html:162
 msgid "Download certificate"
 msgstr "Lae alla sertifikaat"
 
-#: competitions/templates/teams/list.html:8
-#: competitions/templates/teams/list.html:13
-#: competitions/templates/teams/list.html:37
+#: competitions/templates/teams/list.html:5
+#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:40
 msgid "Waiting list"
 msgstr "Ootenimekiri"
 
-#: competitions/templates/teams/list.html:8
-#: competitions/templates/teams/list.html:15
-#: competitions/templates/teams/list.html:35
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:16
+#: competitions/templates/teams/list.html:38
 msgid "Team list"
 msgstr "Võistkondade nimekiri"
 
-#: competitions/templates/teams/list.html:50
+#: competitions/templates/teams/list.html:61
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Võistkondi: %(teams)s / %(capacity)s"
+
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Rahvusvahelised"
 
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
@@ -367,19 +378,19 @@ msgstr "Registreerumine pole veel alanud."
 msgid "Registration is over."
 msgstr "Registreerumine on lõppenud."
 
-#: competitions/views/teams.py:57
+#: competitions/views/teams.py:61
 msgid "Team successfully edited."
 msgstr "Võistkond on edukalt muudetud."
 
-#: competitions/views/teams.py:102
+#: competitions/views/teams.py:107
 msgid "Registration successfully confirmed."
 msgstr "Registreering on edukalt kinnitatud."
 
-#: competitions/views/teams.py:219
+#: competitions/views/teams.py:212
 msgid "Team was unregistered."
 msgstr "Võistkonna registreering tühistati."
 
-#: gallery/templates/gallery/album.html:6
+#: gallery/templates/gallery/album.html:5
 #: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Pildialbum"
@@ -397,41 +408,36 @@ msgstr "Ülesanne %(n)s"
 msgid "Solution"
 msgstr "Lahendus"
 
-#. Translators: This is a label for numerical answer of a problem used in problem archive.
 #: problems/templates/archive/problems.html:36
 msgid "Answer"
 msgstr "Vastus"
 
-#: problems/templates/archive/problems.html:47
+#: problems/templates/archive/problems.html:45
 msgid "Statistics"
 msgstr "Statistika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:55
+#: problems/templates/archive/problems.html:52
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "võistkond sai kätte"
 msgstr[1] "võistkonda sai kätte"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:65
+#: problems/templates/archive/problems.html:64
 msgid "teams solved"
 msgstr "võistkonda lahendas ära"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:70
+#: problems/templates/archive/problems.html:71
 msgid "average solving time"
 msgstr "keskmine lahendamise aeg"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:116
-msgid "International"
-msgstr "Rahvusvahelised"
-
-#: problems/templates/problems/results/table.html:6
+#: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
 msgstr "Võistlus pole veel alanud."
 
-#: problems/templates/problems/results/table.html:10
+#: problems/templates/problems/results/table.html:9
 msgid "Results are frozen."
 msgstr "Tulemused on külmutatud."
 
@@ -440,24 +446,20 @@ msgid "These are not the final results yet."
 msgstr "Need tulemused pole veel lõplikud."
 
 #: problems/templates/problems/results/table.html:14
-msgid "Final results."
-msgstr "Lõplikud tulemused."
-
-#: problems/templates/problems/results/table.html:14
-msgid "Showing official results."
-msgstr "Näidatakse ametlikke tulemusi."
-
-#: problems/templates/problems/results/table.html:18
 msgid "Interim results."
 msgstr "Vahepealsed tulemused."
 
-#: problems/templates/problems/results/table.html:18
+#: problems/templates/problems/results/table.html:15
 msgid "The competition is ongoing, the results may change."
 msgstr "Võistlus on käimas, tulemused võivad muutuda."
 
-#: problems/templates/problems/results/table.html:71
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Ükski võistkond ei ole veel ühtegi ülesannet ära lahendanud)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Kõik võistluskeskusi"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -471,26 +473,20 @@ msgstr "Võistkond lubati võistlusele"
 msgid "Your team has been deleted"
 msgstr "Teie võistkond kustutati"
 
-#: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
-msgid "Home page"
-msgstr "Kodulehekülg"
-
-#: web/templates/mail/base.html:336
+#: web/templates/mail/base.html:351
 msgid "Competition logo"
 msgstr "Võistluse logo"
 
-#: web/templates/mail/base.html:355
+#: web/templates/mail/base.html:371
 #, python-format
 msgid "You have received this message because you have registered for the competition %(branch)s."
 msgstr "Te olete saanud selle teate, sest olete registreerunud võistlusele %(branch)s."
 
-#: web/templates/mail/messages/registration.html:6
+#: web/templates/mail/messages/registration.html:5
 #: web/templates/mail/messages/registration.txt:1
 #: web/templates/mail/messages/team_delete.html:5
 #: web/templates/mail/messages/team_delete.txt:1
-#: web/templates/mail/messages/to_competition.html:6
+#: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
@@ -501,48 +497,48 @@ msgstr "Tere, %(name)s!"
 msgid "Please click on the following link to confirm your registration."
 msgstr "Et viia registreerumine lõpule, palun vajutage sellele lingile."
 
-#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.html:11
 #: web/templates/mail/messages/registration.txt:5
-#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.html:11
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
 msgstr "Praegused võistkonna liikmed: %(contestants)s"
 
-#: web/templates/mail/messages/registration.html:13
+#: web/templates/mail/messages/registration.html:14
 msgid "Confirm registration"
 msgstr "Kinnita registreering"
 
-#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "Selle lingi abil saate ka oma tiimi muuta."
 
-#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.html:20
 #: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Kui teil on küsimusi, vastake julgelt sellele kirjale."
 
-#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.html:23
 #: web/templates/mail/messages/registration.txt:13
-#: web/templates/mail/messages/team_delete.html:12
+#: web/templates/mail/messages/team_delete.html:14
 #: web/templates/mail/messages/team_delete.txt:7
-#: web/templates/mail/messages/to_competition.html:18
+#: web/templates/mail/messages/to_competition.html:20
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
 msgstr "Parimate soovidega,"
 
-#: web/templates/mail/messages/registration.html:27
-#: web/templates/mail/messages/to_competition.html:26
+#: web/templates/mail/messages/registration.html:30
+#: web/templates/mail/messages/to_competition.html:27
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Kui teil on raskusi nupule vajutamisega, võite kopeerida selle aadressi oma brauserisse:"
 
-#: web/templates/mail/messages/team_delete.html:7
+#: web/templates/mail/messages/team_delete.html:8
 #: web/templates/mail/messages/team_delete.txt:3
 msgid "Your team was unregistered from the competition."
 msgstr "Teie võistkonna registreering tühistati."
 
-#: web/templates/mail/messages/team_delete.html:9
+#: web/templates/mail/messages/team_delete.html:11
 #: web/templates/mail/messages/team_delete.txt:5
 #, python-format
 msgid "Team members: %(contestants)s"
@@ -553,90 +549,88 @@ msgstr "Võistkonna liikmed: %(contestants)s"
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "Teie võistkond on eemaldatud ootenimekirjast ja lisatud osalevate võistkondade nimekirja."
 
-#: web/templates/mail/messages/to_competition.html:12
+#: web/templates/mail/messages/to_competition.html:14
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
 msgstr "Te saate võistkonna andmeid muuta, klõpsates alloleval lingil."
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:11
+#: web/templates/page_blocks/competition_timeline.html:10
 msgid "Registration start"
 msgstr "Registreerumine algus"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:16
+#: web/templates/page_blocks/competition_timeline.html:14
 msgid "Second registration round start"
 msgstr "Registreerumise teine voor"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:21
-#: web/templates/web/snippets/home_timeline.html:35
+#: web/templates/page_blocks/competition_timeline.html:18
 msgid "Registration end"
 msgstr "Registreerumise lõpp"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:25
-#: web/templates/web/snippets/home_timeline.html:43
+#: web/templates/page_blocks/competition_timeline.html:21
 msgid "Competition day"
 msgstr "Võistluse kuupäev"
 
-#: web/templates/web/404.html:5 web/templates/web/404.html:9
+#: web/templates/web/404.html:4 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Ei leitud"
 
-#: web/templates/web/404.html:12
+#: web/templates/web/404.html:11
 msgid "The page you tried to access was not found."
 msgstr "Lehekülge ei leitud."
 
-#: web/templates/web/root_base.html:47
+#: web/templates/web/404.html:16 web/templates/web/404.html:22
+msgid "Home page"
+msgstr "Kodulehekülg"
+
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Sulge"
 
-#: web/templates/web/snippets/copyright.html:6
+#: web/templates/web/snippets/copyright.html:5
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
 msgstr "Kõik kellaajad on ajavööndis %(tz_name)s, kui ei ole öeldud teisiti."
 
-#: web/templates/web/snippets/copyright.html:8
+#: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Andmekaitsetingimused"
 
-#: web/templates/web/snippets/home_footer.html:5
-msgid "Organizers"
-msgstr "Korraldajad"
+#~ msgid "Final results."
+#~ msgstr "Lõplikud tulemused."
 
-#: web/templates/web/snippets/home_footer.html:16
-msgid "Our partners"
-msgstr "Meie partnerid"
+#~ msgid "Showing official results."
+#~ msgstr "Näidatakse ametlikke tulemusi."
 
-#: web/templates/web/snippets/home_hero_buttons.html:6
+#~ msgid "Organizers"
+#~ msgstr "Korraldajad"
+
+#~ msgid "Our partners"
+#~ msgstr "Meie partnerid"
+
 #, python-format
-msgid "Registration starts on %(start)s."
-msgstr "Registreerumine algus: %(start)s."
+#~ msgid "Registration starts on %(start)s."
+#~ msgstr "Registreerumine algus: %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:9
-#: web/templates/web/snippets/home_hero_buttons.html:20
 #, python-format
-msgid "The competition will take place on %(start)s."
-msgstr "Võistluse kuupäev: %(start)s."
+#~ msgid "The competition will take place on %(start)s."
+#~ msgstr "Võistluse kuupäev: %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Registreerumine"
+#~ msgid "Registration"
+#~ msgstr "Registreerumine"
 
-#: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
-msgid "Registration ends on %(end)s."
-msgstr "Registreerumise lõpp: %(end)s."
+#~ msgid "Registration ends on %(end)s."
+#~ msgstr "Registreerumise lõpp: %(end)s."
 
-#: web/templates/web/snippets/home_timeline.html:7
-msgid "Important dates"
-msgstr "Olulised kuupäevad"
+#~ msgid "Important dates"
+#~ msgstr "Olulised kuupäevad"
 
-#: web/templates/web/snippets/home_timeline.html:17
-msgid "Registration starts"
-msgstr "Registreerumine algus"
+#~ msgid "Registration starts"
+#~ msgstr "Registreerumine algus"
 
-#: web/templates/web/snippets/home_timeline.html:26
-msgid "Second round of registration"
-msgstr "Registreerumise teine voor"
+#~ msgid "Second round of registration"
+#~ msgstr "Registreerumise teine voor"

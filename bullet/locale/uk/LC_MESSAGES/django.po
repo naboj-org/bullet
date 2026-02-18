@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj-Ua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-24 19:24+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: 2025-10-15 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -16,8 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 "X-Generator: Poedit 3.7\n"
 
 #: competitions/branches.py:72
@@ -114,22 +113,25 @@ msgstr "Архів"
 #: problems/templates/problems/results/select.html:4
 #: problems/templates/problems/results/select.html:15
 #: problems/templates/problems/results/venue.html:4
-#: problems/templates/problems/results/venue.html:16
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Результати"
 
-#: competitions/templates/archive/list.html:31
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
 #: problems/templates/archive/problems.html:4
 #: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Задачі та розв'язання"
 
-#: competitions/templates/archive/list.html:34
+#: competitions/templates/archive/list.html:45
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Альбоми"
 
-#: competitions/templates/archive/list.html:42
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Старіші турніри"
 
@@ -166,12 +168,8 @@ msgstr "Якщо Ви вважаєте, що це помилка, контакт
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:10
 #, python-format
-msgid ""
-"At this venue, the competition will begin at %(time)s instead of the usual "
-"start time of %(usual)s."
-msgstr ""
-"У цьому місці проведення турнір розпочнеться о %(time)s замість звичайного "
-"часу о %(usual)s."
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
+msgstr "У цьому місці проведення турнір розпочнеться о %(time)s замість звичайного часу о %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -202,9 +200,7 @@ msgstr "Учасники"
 
 #: competitions/templates/register/details.html:19
 #: competitions/templates/teams/edit.html:58
-msgid ""
-"You can change the list of contestants at any time before the start of the "
-"competition."
+msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "Ви можете змінити список учасників у будь-який час до початку турніру."
 
 #: competitions/templates/register/details.html:25
@@ -229,44 +225,18 @@ msgstr "Обов'язкове поле"
 
 #: competitions/templates/register/details.html:52
 #, python-format
-msgid ""
-"By registering for the Competition, the registrants (especially teachers or "
-"legal representatives of registered students) agree to the <a "
-"href=\"%(link)s\">competition rules</a> and undertake to follow them. At the "
-"same time, the registrant acknowledges that the personal data provided in "
-"the registration form are necessary to ensure the proper functioning of the "
-"Competition."
-msgstr ""
-"Реєструючись для участі у турнірі, особа, що здійснює реєстрацію (учитель "
-"або законний представник учасників-учнів), підтверджує ознайомлення з <a "
-"href=\"%(link)s\">правилами турніру</a> та погоджується їх дотримуватися. "
-"Надані у формі персональні дані використовуються лише для організації та "
-"проведення турніру відповідно до чинного законодавства про захист "
-"персональних даних."
+msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
+msgstr "Реєструючись для участі у турнірі, особа, що здійснює реєстрацію (учитель або законний представник учасників-учнів), підтверджує ознайомлення з <a href=\"%(link)s\">правилами турніру</a> та погоджується їх дотримуватися. Надані у формі персональні дані використовуються лише для організації та проведення турніру відповідно до чинного законодавства про захист персональних даних."
 
 #: competitions/templates/register/details.html:64
 #: competitions/templates/teams/edit.html:103
-msgid ""
-"The registrant agrees to allow the organizer to make video and/or audio "
-"recordings during the Competition, on which the image of the registrant and/"
-"or the registered person is captured and their publication on the "
-"Competition's website, social networks for marketing and promotional "
-"purposes of the Competition. <sup>[1]</sup>"
-msgstr ""
-"Особа, що здійснює реєстрацію, надає згоду місцевим організаторам на "
-"створення фото- та/або відеозаписів під час проведення турніру, на яких може "
-"бути зображена вона або зареєстровані учасники, а також на публікацію таких "
-"матеріалів на офіційному сайті турніру, вебресурсах організаторів та у "
-"соціальних мережах з метою популяризації заходу. <sup>[1]</sup>"
+msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
+msgstr "Особа, що здійснює реєстрацію, надає згоду місцевим організаторам на створення фото- та/або відеозаписів під час проведення турніру, на яких може бути зображена вона або зареєстровані учасники, а також на публікацію таких матеріалів на офіційному сайті турніру, вебресурсах організаторів та у соціальних мережах з метою популяризації заходу. <sup>[1]</sup>"
 
 #: competitions/templates/register/details.html:74
 #, python-format
-msgid ""
-"More information on the processing of personal data can be found <a "
-"href=\"%(link)s\">on this page</a>."
-msgstr ""
-"Більше інформації про обробку персональних даних можна знайти <a "
-"href=\"%(link)s\">на цій сторінці</a>."
+msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
+msgstr "Більше інформації про обробку персональних даних можна знайти <a href=\"%(link)s\">на цій сторінці</a>."
 
 #: competitions/templates/register/details.html:82
 msgid "Register"
@@ -274,24 +244,8 @@ msgstr "Зареєструвати"
 
 #: competitions/templates/register/details.html:85
 #: competitions/templates/teams/edit.html:119
-msgid ""
-"<sup>[1]</sup> Consent is granted for the duration of the operation of the "
-"Competition's website and it's accounts on social networks. This consent can "
-"be revoked at any time by sending an e-mail to the address <a "
-"href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent "
-"does not affect the legality of the processing before its withdrawal. The "
-"affected person can request the deletion of personal data only if it is "
-"technically possible and the deletion does not affect the rights of other "
-"affected persons."
-msgstr ""
-"<sup>[1]</sup> Згода діє протягом усього часу роботи вебсайту Турніру та "
-"його облікових записів у соціальних мережах. Цю згоду можна відкликати в "
-"будь‑який час, надіславши електронного листа на адресу <a "
-"href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Відкликання згоди не "
-"впливає на законність обробки персональних даних до моменту її відкликання. "
-"Особа, щодо якої здійснюється обробка, може вимагати видалення персональних "
-"даних лише якщо це технічно можливо та видалення не порушує прав інших осіб, "
-"яких це стосується."
+msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
+msgstr "<sup>[1]</sup> Згода діє протягом усього часу роботи вебсайту Турніру та його облікових записів у соціальних мережах. Цю згоду можна відкликати в будь‑який час, надіславши електронного листа на адресу <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Відкликання згоди не впливає на законність обробки персональних даних до моменту її відкликання. Особа, щодо якої здійснюється обробка, може вимагати видалення персональних даних лише якщо це технічно можливо та видалення не порушує прав інших осіб, яких це стосується."
 
 #: competitions/templates/register/partials/category.html:12
 #: competitions/templates/register/partials/competition.html:8
@@ -317,25 +271,19 @@ msgstr "Школа"
 msgid "Search schools..."
 msgstr "Пошук шкіл..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Команда успішно зареєстрована"
 
-#: competitions/templates/register/thanks.html:15
-msgid ""
-"We've sent you a confirmation link. Please check your inbox and junk mail "
-"folder. <b>The team's registration won't be complete until you click on the "
-"confirmation link.</b>"
-msgstr ""
-"Ми надіслали вам посилання для підтвердження. Будь ласка, перевірте свою "
-"електронну пошту (включно з папкою небажаної пошти). <b>Реєстрація команди "
-"не буде завершена, доки ви не натиснете на посилання для підтвердження.</b>"
+#: competitions/templates/register/thanks.html:14
+msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
+msgstr "Ми надіслали вам посилання для підтвердження. Будь ласка, перевірте свою електронну пошту (включно з папкою небажаної пошти). <b>Реєстрація команди не буде завершена, доки ви не натиснете на посилання для підтвердження.</b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Зареєструвати ще одну команду"
 
-#: competitions/templates/register/thanks.html:23
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Повернутися на головну сторінку"
 
@@ -350,11 +298,8 @@ msgid "Unregister team"
 msgstr "Скасувати реєстрацію команди"
 
 #: competitions/templates/teams/delete.html:18
-msgid ""
-"Are you certain you want to remove your team from the competition? This "
-"action is irreversible."
-msgstr ""
-"Ви справді хочете зняти свою команду з турніру? Цю дію неможливо скасувати."
+msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
+msgstr "Ви справді хочете зняти свою команду з турніру? Цю дію неможливо скасувати."
 
 #: competitions/templates/teams/delete.html:21
 msgid "Unregister"
@@ -375,22 +320,13 @@ msgid "Your team is in the waiting list."
 msgstr "Ваша команда в списку очікування."
 
 #: competitions/templates/teams/edit.html:23
-msgid ""
-"The capacity of the venue was exceeded, or your school has already enough "
-"teams registered. We will reach out to you if this situation changes."
-msgstr ""
-"Кількість місць у цьому місці проведення перевищена або у вашій школі вже "
-"зареєстровано достатню кількість команд. Ми повідомимо Вас, якщо ситуація "
-"зміниться."
+msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
+msgstr "Кількість місць у цьому місці проведення перевищена або у вашій школі вже зареєстровано достатню кількість команд. Ми повідомимо Вас, якщо ситуація зміниться."
 
 #: competitions/templates/teams/edit.html:39
 #, python-format
-msgid ""
-"At this venue, the competition will begin at %(time)s instead of the usual "
-"start time."
-msgstr ""
-"У цьому місці проведення турнір розпочнеться о %(time)s замість звичайного "
-"часу."
+msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+msgstr "У цьому місці проведення турнір розпочнеться о %(time)s замість звичайного часу."
 
 #: competitions/templates/teams/edit.html:68
 #: competitions/templates/teams/edit.html:92
@@ -406,10 +342,8 @@ msgid "Certificate"
 msgstr "Сертифікат"
 
 #: competitions/templates/teams/edit.html:158
-msgid ""
-"You can download certificate for your team by clicking on the button below."
-msgstr ""
-"Ви можете завантажити сертифікат для своєї команди, натиснувши кнопку нижче."
+msgid "You can download certificate for your team by clicking on the button below."
+msgstr "Ви можете завантажити сертифікат для своєї команди, натиснувши кнопку нижче."
 
 #: competitions/templates/teams/edit.html:162
 msgid "Download certificate"
@@ -432,6 +366,11 @@ msgstr "Список команд"
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Команд: %(teams)s із %(capacity)s"
 
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Міжнародне"
+
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
 msgstr "Реєстрація ще не розпочалася."
@@ -452,8 +391,8 @@ msgstr "Реєстрацію успішно підтверджено."
 msgid "Team was unregistered."
 msgstr "Команду знято з реєстрації."
 
-#: gallery/templates/gallery/album.html:4
-#: gallery/templates/gallery/album.html:14
+#: gallery/templates/gallery/album.html:5
+#: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Альбом"
 
@@ -496,10 +435,6 @@ msgstr "команд вирішило"
 msgid "average solving time"
 msgstr "середній час розв’язання"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:157
-msgid "International"
-msgstr "Міжнародне"
-
 #: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
 msgstr "Турнір ще не розпочався."
@@ -520,9 +455,13 @@ msgstr "Проміжні результати."
 msgid "The competition is ongoing, the results may change."
 msgstr "Турнір триває, результати можуть змінитися."
 
-#: problems/templates/problems/results/table.html:55
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Жодна команда ще не вирішила жодної задачі)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Всі майданчики"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -542,11 +481,8 @@ msgstr "Логотип турніру"
 
 #: web/templates/mail/base.html:371
 #, python-format
-msgid ""
-"You have received this message because you have registered for the "
-"competition %(branch)s."
-msgstr ""
-"Ви отримали це повідомлення, тому що зареєструвалися на турнір %(branch)s."
+msgid "You have received this message because you have registered for the competition %(branch)s."
+msgstr "Ви отримали це повідомлення, тому що зареєструвалися на турнір %(branch)s."
 
 #: web/templates/mail/messages/registration.html:5
 #: web/templates/mail/messages/registration.txt:1
@@ -561,9 +497,7 @@ msgstr "Привіт, %(name)s!"
 #: web/templates/mail/messages/registration.html:8
 #: web/templates/mail/messages/registration.txt:3
 msgid "Please click on the following link to confirm your registration."
-msgstr ""
-"Будь ласка, перейдіть за наступним посиланням, щоб підтвердити свою "
-"реєстрацію."
+msgstr "Будь ласка, перейдіть за наступним посиланням, щоб підтвердити свою реєстрацію."
 
 #: web/templates/mail/messages/registration.html:11
 #: web/templates/mail/messages/registration.txt:5
@@ -585,8 +519,7 @@ msgstr "Ви також можете скористатися цим посил�
 #: web/templates/mail/messages/registration.html:20
 #: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
-msgstr ""
-"Якщо маєте запитання, будь ласка, дайте відповідь на цей електронний лист."
+msgstr "Якщо маєте запитання, будь ласка, дайте відповідь на цей електронний лист."
 
 #: web/templates/mail/messages/registration.html:23
 #: web/templates/mail/messages/registration.txt:13
@@ -599,12 +532,8 @@ msgstr "З повагою,"
 
 #: web/templates/mail/messages/registration.html:30
 #: web/templates/mail/messages/to_competition.html:27
-msgid ""
-"If you are having difficulty clicking on the button, you can paste this "
-"address into your browser:"
-msgstr ""
-"Якщо вам не вдається натиснути кнопку, ви можете вставити цю адресу у свій "
-"браузер:"
+msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
+msgstr "Якщо вам не вдається натиснути кнопку, ви можете вставити цю адресу у свій браузер:"
 
 #: web/templates/mail/messages/team_delete.html:8
 #: web/templates/mail/messages/team_delete.txt:3
@@ -619,16 +548,13 @@ msgstr "Члени команди: %(contestants)s"
 
 #: web/templates/mail/messages/to_competition.html:8
 #: web/templates/mail/messages/to_competition.txt:3
-msgid ""
-"Your team was moved from the waiting list to the list of competing teams."
-msgstr ""
-"Вашу команду перемістили зі списку очікування до списку команд-учасниць."
+msgid "Your team was moved from the waiting list to the list of competing teams."
+msgstr "Вашу команду перемістили зі списку очікування до списку команд-учасниць."
 
 #: web/templates/mail/messages/to_competition.html:14
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
-msgstr ""
-"Ви можете редагувати інформацію про команду, натиснувши на посилання нижче."
+msgstr "Ви можете редагувати інформацію про команду, натиснувши на посилання нижче."
 
 #. Translators: Used on the homepage timeline
 #: web/templates/page_blocks/competition_timeline.html:10
@@ -662,7 +588,7 @@ msgstr "Сторінку, яку ви намагалися відкрити, н�
 msgid "Home page"
 msgstr "Головна сторінка"
 
-#: web/templates/web/root_base.html:68
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Закрити"
 

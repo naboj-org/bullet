@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-01 21:51+0000\n"
+"POT-Creation-Date: 2026-02-18 17:05+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -56,22 +56,22 @@ msgid "Selected school is not valid."
 msgstr "A kiválasztott iskola nem megfelelő."
 
 #: competitions/forms/registration.py:80
+#: competitions/templates/register/details.html:24
 #: competitions/templates/register/details.html:33
-#: competitions/templates/register/details.html:39
-#: competitions/templates/teams/edit.html:47
-#: competitions/templates/teams/edit.html:64
-#: competitions/templates/teams/edit.html:74
-#: competitions/templates/teams/edit.html:126
+#: competitions/templates/teams/edit.html:44
+#: competitions/templates/teams/edit.html:66
+#: competitions/templates/teams/edit.html:77
+#: competitions/templates/teams/edit.html:137
 msgid "Full name"
 msgstr "Teljes név"
 
 #: competitions/forms/registration.py:81
-#: competitions/templates/teams/edit.html:48
+#: competitions/templates/teams/edit.html:47
 msgid "Email"
 msgstr "E-mail cím"
 
 #: competitions/forms/registration.py:82
-#: competitions/templates/teams/edit.html:50
+#: competitions/templates/teams/edit.html:51
 msgid "Phone number"
 msgstr "Telefonszám"
 
@@ -95,46 +95,50 @@ msgstr "A megadott osztály nem versenyezhet a kiválasztott kategóriában."
 msgid "The uploaded file is too large."
 msgstr "A feltöltött file túl nagy."
 
-#: competitions/templates/archive/list.html:5
+#: competitions/templates/archive/list.html:4
 #: competitions/templates/archive/list.html:9
 msgid "Archive"
 msgstr "Archívum"
 
-#: competitions/templates/archive/list.html:22
-#: problems/templates/problems/results.html:6
-#: problems/templates/problems/results.html:21
+#: competitions/templates/archive/list.html:29
+#: problems/templates/problems/results.html:4
+#: problems/templates/problems/results.html:20
 #: problems/templates/problems/results/embed.html:4
-#: problems/templates/problems/results/select.html:6
-#: problems/templates/problems/results/select.html:16
-#: problems/templates/problems/results/venue.html:6
-#: problems/templates/problems/results/venue.html:17
-#: web/templates/web/snippets/home_hero_buttons.html:25
+#: problems/templates/problems/results/select.html:4
+#: problems/templates/problems/results/select.html:15
+#: problems/templates/problems/results/venue.html:4
+#: problems/templates/problems/results/venue.html:15
 msgid "Results"
 msgstr "Eredmények"
 
-#: competitions/templates/archive/list.html:23
-#: problems/templates/archive/problems.html:6
-#: problems/templates/archive/problems.html:10
+#: competitions/templates/archive/list.html:32
+#: competitions/templates/archive/list.html:35
+#: competitions/templates/archive/list.html:38
+#: competitions/templates/archive/list.html:41
+#: problems/templates/archive/problems.html:4
+#: problems/templates/archive/problems.html:9
 msgid "Problems and solutions"
 msgstr "Feladatok"
 
-#: competitions/templates/archive/list.html:24
-#: gallery/templates/gallery/list.html:5 gallery/templates/gallery/list.html:9
+#: competitions/templates/archive/list.html:45
+#: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Albumok"
 
-#: competitions/templates/archive/list.html:30
+#: competitions/templates/archive/list.html:53
 msgid "Older competitions"
 msgstr "Régebbi versenyek"
 
-#: competitions/templates/live.html:7
-#: competitions/templates/live/countdown.html:6
-#: competitions/templates/live/first_problem.html:6
-#: competitions/templates/live/results.html:6
+#: competitions/templates/live/countdown.html:4
+#: competitions/templates/live/first_problem.html:4
+#: competitions/templates/live/results.html:4
+#: competitions/templates/live/setup.html:4
+#: competitions/templates/live/setup.html:9
+#: competitions/templates/live/view.html:4
 msgid "Live signage"
 msgstr "Élő vetítés"
 
-#: competitions/templates/live/countdown.html:13
+#: competitions/templates/live/countdown.html:16
 msgid "Do not open the problems until the competition starts."
 msgstr "A verseny kezdetéig még ne nyissátok ki a borítékot."
 
@@ -142,17 +146,21 @@ msgstr "A verseny kezdetéig még ne nyissátok ki a borítékot."
 msgid "First solved problem"
 msgstr "Első megoldott feladat"
 
+#: competitions/templates/live/setup.html:20
+msgid "Start"
+msgstr ""
+
 #. Translators: The user attempted to search for a school, but we were unable to find any matching results.
-#: competitions/templates/register/_school.html:14
+#: competitions/templates/register/_school.html:15
 msgid "No schools matched your query."
 msgstr "Nincs olyan iskola, amely megfelelt volna a keresésnek."
 
-#: competitions/templates/register/_school.html:15
+#: competitions/templates/register/_school.html:16
 msgid "If you believe this is an error, contact us."
 msgstr "Ha úgy gondolja, hogy ez hibás, lépjen kapcsolatba velünk."
 
 #: competitions/templates/register/_venue.html:13
-#: competitions/templates/register/partials/venue.html:17
+#: competitions/templates/register/partials/venue.html:10
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
 msgstr "Ezen a helyszínen a verseny kezdete %(time)s, ami eltér a szokásos %(usual)s időponttól."
@@ -162,140 +170,138 @@ msgstr "Ezen a helyszínen a verseny kezdete %(time)s, ami eltér a szokásos %(
 msgid "No venues matched your query."
 msgstr "Nincs olyan helyszín, amely megfelelt volna a keresésnek."
 
-#. Translators: Registration page title
 #: competitions/templates/register/base.html:5
-#: competitions/templates/register/base.html:8
-#: competitions/templates/register/thanks.html:5
+#: competitions/templates/register/base.html:10
+#: competitions/templates/register/thanks.html:4
 msgid "Team registration"
 msgstr "Csapatok regisztrációja"
 
-#: competitions/templates/register/category.html:9
-#: competitions/templates/register/partials/category.html:6
-#: problems/templates/problems/results/select.html:25
+#: competitions/templates/register/category.html:7
+#: competitions/templates/register/partials/category.html:3
+#: problems/templates/problems/results/select.html:23
 msgid "Category"
 msgstr "Kategória"
 
-#: competitions/templates/register/details.html:22
-#: competitions/templates/teams/edit.html:46
+#: competitions/templates/register/details.html:15
+#: competitions/templates/teams/edit.html:42
 msgid "Contact information"
 msgstr "Elérhetőségek"
 
-#: competitions/templates/register/details.html:25
-#: competitions/templates/teams/edit.html:54
+#: competitions/templates/register/details.html:17
+#: competitions/templates/teams/edit.html:56
 msgid "Contestants"
 msgstr "Versenyzők"
 
-#: competitions/templates/register/details.html:27
-#: competitions/templates/teams/edit.html:55
+#: competitions/templates/register/details.html:19
+#: competitions/templates/teams/edit.html:58
 msgid "You can change the list of contestants at any time before the start of the competition."
 msgstr "A versenyzők névsorát a verseny kezdete előtt bármikor megváltoztathatja."
 
-#: competitions/templates/register/details.html:34
-#: competitions/templates/register/details.html:43
-#: competitions/templates/teams/edit.html:65
-#: competitions/templates/teams/edit.html:78
-#: competitions/templates/teams/edit.html:130
+#: competitions/templates/register/details.html:25
+#: competitions/templates/register/details.html:40
+#: competitions/templates/teams/edit.html:67
+#: competitions/templates/teams/edit.html:84
+#: competitions/templates/teams/edit.html:141
 msgid "Grade"
 msgstr "Osztály"
 
-#: competitions/templates/register/details.html:37
-#: competitions/templates/teams/edit.html:70
-#: competitions/templates/teams/edit.html:123
+#: competitions/templates/register/details.html:28
+#: competitions/templates/teams/edit.html:71
+#: competitions/templates/teams/edit.html:134
 #, python-format
 msgid "Contestant %(number)s"
 msgstr "%(number)s. versenyző"
 
-#: competitions/templates/register/details.html:49
-#: web/templates/form/form.html:18 web/templates/form/form_vertical.html:23
+#: competitions/templates/register/details.html:46
+#: web/templates/form/form.html:16 web/templates/form/form_vertical.html:18
 msgid "Required field"
 msgstr "Kötelező mező"
 
-#: competitions/templates/register/details.html:57
+#: competitions/templates/register/details.html:52
 #, python-format
 msgid "By registering for the Competition, the registrants (especially teachers or legal representatives of registered students) agree to the <a href=\"%(link)s\">competition rules</a> and undertake to follow them. At the same time, the registrant acknowledges that the personal data provided in the registration form are necessary to ensure the proper functioning of the Competition."
 msgstr "A versenyre való regisztrációval a regisztrálók (különösen a regisztrált diákok tanárai vagy törvényes képviselői) elfogadják a <a href=\"%(link)s\">versenyszabályzatot</a>, és vállalják annak betartását. A regisztráló egyúttal tudomásul veszi, hogy a regisztrációs űrlapon megadott személyes adatok szükségesek a Verseny megfelelő működéséhez."
 
-#: competitions/templates/register/details.html:68
-#: competitions/templates/teams/edit.html:92
+#: competitions/templates/register/details.html:64
+#: competitions/templates/teams/edit.html:103
 msgid "The registrant agrees to allow the organizer to make video and/or audio recordings during the Competition, on which the image of the registrant and/or the registered person is captured and their publication on the Competition's website, social networks for marketing and promotional purposes of the Competition. <sup>[1]</sup>"
 msgstr "A regisztráló beleegyezik, hogy a szervező a verseny során olyan videó- és/vagy hangfelvételeket készítsen, amelyeken a regisztráló és/vagy a regisztrált személy látható, valamint ezek közzétételébe a verseny weboldalán, a közösségi médiában, valamint a verseny marketing- és promóciós céljaira. <sup>[1]</sup>"
 
-#: competitions/templates/register/details.html:79
+#: competitions/templates/register/details.html:74
 #, python-format
 msgid "More information on the processing of personal data can be found <a href=\"%(link)s\">on this page</a>."
 msgstr "A személyes adatok feldolgozásával kapcsolatos további információk megtalálhatóak a <a href=\"%(link)s\"> oldalon</a> ."
 
-#: competitions/templates/register/details.html:88
-#: web/templates/web/snippets/home_timeline.html:51
+#: competitions/templates/register/details.html:82
 msgid "Register"
 msgstr "Regisztráljon"
 
-#: competitions/templates/register/details.html:92
-#: competitions/templates/teams/edit.html:108
+#: competitions/templates/register/details.html:85
+#: competitions/templates/teams/edit.html:119
 msgid "<sup>[1]</sup> Consent is granted for the duration of the operation of the Competition's website and it's accounts on social networks. This consent can be revoked at any time by sending an e-mail to the address <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a>. Withdrawal of consent does not affect the legality of the processing before its withdrawal. The affected person can request the deletion of personal data only if it is technically possible and the deletion does not affect the rights of other affected persons."
 msgstr "<sup>[1]</sup>A hozzájárulás a verseny weboldalának és a közösségi hálózatokon létrehozott fiókjainak működési időtartamára szól. A hozzájárulás bármikor visszavonható a <a href=\"mailto:gdpr@trojsten.sk\">gdpr@trojsten.sk</a> címre küldött e-mailben. A hozzájárulás visszavonása nem érinti a visszavonás előtti feldolgozás jogszerűségét. Az érintett személy csak akkor kérheti a személyes adatok törlését, ha ez technikailag lehetséges, és a törlés nem érinti más érintett személyek jogait."
 
-#: competitions/templates/register/partials/category.html:18
-#: competitions/templates/register/partials/competition.html:13
-#: competitions/templates/register/partials/school.html:16
-#: competitions/templates/register/partials/venue.html:22
+#: competitions/templates/register/partials/category.html:12
+#: competitions/templates/register/partials/competition.html:8
+#: competitions/templates/register/partials/school.html:9
+#: competitions/templates/register/partials/venue.html:15
 msgid "Change"
 msgstr "Változtatás"
 
-#: competitions/templates/register/partials/competition.html:4
-#: competitions/templates/register/partials/venue.html:4
-#: competitions/templates/register/venue.html:8
-#: competitions/templates/teams/edit.html:37
+#: competitions/templates/register/partials/competition.html:2
+#: competitions/templates/register/partials/venue.html:2
+#: competitions/templates/register/venue.html:5
+#: competitions/templates/teams/edit.html:34
 msgid "Venue"
 msgstr "Helyszín"
 
-#: competitions/templates/register/partials/school.html:4
-#: competitions/templates/register/school.html:9
-#: competitions/templates/teams/edit.html:30
+#: competitions/templates/register/partials/school.html:2
+#: competitions/templates/register/school.html:6
+#: competitions/templates/teams/edit.html:27
 msgid "School"
 msgstr "Iskola"
 
-#: competitions/templates/register/school.html:11
+#: competitions/templates/register/school.html:9
 msgid "Search schools..."
 msgstr "Iskola keresése..."
 
-#: competitions/templates/register/thanks.html:13
+#: competitions/templates/register/thanks.html:12
 msgid "Team successfully registered"
 msgstr "Sikeres regisztráció"
 
-#: competitions/templates/register/thanks.html:16
+#: competitions/templates/register/thanks.html:14
 msgid "We've sent you a confirmation link. Please check your inbox and junk mail folder. <b>The team's registration won't be complete until you click on the confirmation link.</b>"
 msgstr "Küldtünk Önnek egy megerősítő linket. Ellenőrizze a beérkező üzeneteit és a spam mappát. <b> A csapat regisztrációja nem teljes, amíg nem kattint a megerősítő linkre. </b>"
 
-#: competitions/templates/register/thanks.html:19
+#: competitions/templates/register/thanks.html:18
 msgid "Register another team"
 msgstr "Másik csapat regisztrálása"
 
-#: competitions/templates/register/thanks.html:20
+#: competitions/templates/register/thanks.html:22
 msgid "Back to the homepage"
 msgstr "Vissza a honlapra"
 
-#: competitions/templates/register/venue.html:10
+#: competitions/templates/register/venue.html:8
 msgid "Search venues..."
 msgstr "Helyszín keresése..."
 
 #: competitions/templates/teams/delete.html:4
-#: competitions/templates/teams/delete.html:7
-#: competitions/templates/teams/edit.html:103
+#: competitions/templates/teams/delete.html:9
+#: competitions/templates/teams/edit.html:115
 msgid "Unregister team"
 msgstr "Csapat regisztrációjának visszavonása"
 
-#: competitions/templates/teams/delete.html:14
+#: competitions/templates/teams/delete.html:18
 msgid "Are you certain you want to remove your team from the competition? This action is irreversible."
 msgstr "Biztos benne, hogy törli a csapatot a versenyből? Ez a lépés visszafordíthatatlan."
 
-#: competitions/templates/teams/delete.html:16
+#: competitions/templates/teams/delete.html:21
 msgid "Unregister"
 msgstr "Regisztráció visszavonása"
 
-#: competitions/templates/teams/edit.html:7
+#: competitions/templates/teams/edit.html:4
 #: competitions/templates/teams/edit.html:9
-#: web/templates/mail/messages/to_competition.html:14
+#: web/templates/mail/messages/to_competition.html:17
 msgid "Edit team"
 msgstr "Csapat adatainak szerkesztése"
 
@@ -303,56 +309,61 @@ msgstr "Csapat adatainak szerkesztése"
 msgid "Team information"
 msgstr "Csapat információ"
 
-#: competitions/templates/teams/edit.html:24
+#: competitions/templates/teams/edit.html:22
 msgid "Your team is in the waiting list."
 msgstr "A csapat várólistára került."
 
-#: competitions/templates/teams/edit.html:25
+#: competitions/templates/teams/edit.html:23
 msgid "The capacity of the venue was exceeded, or your school has already enough teams registered. We will reach out to you if this situation changes."
 msgstr "A helyszín betelt, vagy az iskolája már elegendő csapatot regisztrált. Ha a helyzet megváltozik, felvesszük Önnel a kapcsolatot."
 
-#: competitions/templates/teams/edit.html:42
+#: competitions/templates/teams/edit.html:39
 #, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
 msgstr "Ezen a helyszínen a szokásos időponttól eltérően a verseny kezdete %(time)s."
 
-#: competitions/templates/teams/edit.html:66
-#: competitions/templates/teams/edit.html:83
+#: competitions/templates/teams/edit.html:68
+#: competitions/templates/teams/edit.html:92
 msgid "Delete?"
 msgstr "Biztosan törli?"
 
-#: competitions/templates/teams/edit.html:102
+#: competitions/templates/teams/edit.html:113
 msgid "Update"
 msgstr "Frissítés"
 
-#: competitions/templates/teams/edit.html:145
+#: competitions/templates/teams/edit.html:156
 msgid "Certificate"
 msgstr "Emléklap"
 
-#: competitions/templates/teams/edit.html:146
+#: competitions/templates/teams/edit.html:158
 msgid "You can download certificate for your team by clicking on the button below."
 msgstr "Az alábbi gombra kattintva letöltheti a csapatának szóló emléklapot."
 
-#: competitions/templates/teams/edit.html:147
+#: competitions/templates/teams/edit.html:162
 msgid "Download certificate"
 msgstr "Emléklap letöltése"
 
-#: competitions/templates/teams/list.html:8
-#: competitions/templates/teams/list.html:13
-#: competitions/templates/teams/list.html:37
+#: competitions/templates/teams/list.html:5
+#: competitions/templates/teams/list.html:14
+#: competitions/templates/teams/list.html:40
 msgid "Waiting list"
 msgstr "Várólista"
 
-#: competitions/templates/teams/list.html:8
-#: competitions/templates/teams/list.html:15
-#: competitions/templates/teams/list.html:35
+#: competitions/templates/teams/list.html:7
+#: competitions/templates/teams/list.html:16
+#: competitions/templates/teams/list.html:38
 msgid "Team list"
 msgstr "Csapatok listája"
 
-#: competitions/templates/teams/list.html:50
+#: competitions/templates/teams/list.html:61
 #, python-format
 msgid "Teams: %(teams)s / %(capacity)s"
 msgstr "Csapatok: %(teams)s / %(capacity)s"
+
+#: competitions/views/live.py:168 problems/templatetags/results_selects.py:55
+#: problems/views/results.py:165
+msgid "International"
+msgstr "Nemzetközi"
 
 #: competitions/views/register.py:54
 msgid "Registration did not start yet."
@@ -362,19 +373,19 @@ msgstr "A regisztráció még nem kezdődött el."
 msgid "Registration is over."
 msgstr "A regisztráció lezárult."
 
-#: competitions/views/teams.py:57
+#: competitions/views/teams.py:61
 msgid "Team successfully edited."
 msgstr "A csapat adatait sikeresen módosította."
 
-#: competitions/views/teams.py:102
+#: competitions/views/teams.py:107
 msgid "Registration successfully confirmed."
 msgstr "Regisztráció sikeresen megerősítve."
 
-#: competitions/views/teams.py:219
+#: competitions/views/teams.py:212
 msgid "Team was unregistered."
 msgstr "A csapat nem volt regisztrálva."
 
-#: gallery/templates/gallery/album.html:6
+#: gallery/templates/gallery/album.html:5
 #: gallery/templates/gallery/album.html:15
 msgid "Album"
 msgstr "Album"
@@ -392,41 +403,36 @@ msgstr "%(n)s. feladat"
 msgid "Solution"
 msgstr "Megoldás"
 
-#. Translators: This is a label for numerical answer of a problem used in problem archive.
 #: problems/templates/archive/problems.html:36
 msgid "Answer"
 msgstr "Eredmény"
 
-#: problems/templates/archive/problems.html:47
+#: problems/templates/archive/problems.html:45
 msgid "Statistics"
 msgstr "Statisztika"
 
 #. Translators: This sentence is prefixed with the number of teams that received given problem.
-#: problems/templates/archive/problems.html:55
+#: problems/templates/archive/problems.html:52
 msgid "team received"
 msgid_plural "teams received"
 msgstr[0] "csapat kapta meg a feladatot"
 msgstr[1] "csapat kapta meg a feladatot"
 
 #. Translators: This sentence is prefixed with the percentage amount of teams that solved given problem.
-#: problems/templates/archive/problems.html:65
+#: problems/templates/archive/problems.html:64
 msgid "teams solved"
 msgstr "csapat oldotta meg a feladatot"
 
 #. Translators: This sentence is prefixed with the average solving time in HH:MM:SS format.
-#: problems/templates/archive/problems.html:70
+#: problems/templates/archive/problems.html:71
 msgid "average solving time"
 msgstr "átlagos megoldási idő"
 
-#: problems/templates/problems/results.html:32 problems/views/results.py:116
-msgid "International"
-msgstr "Nemzetközi"
-
-#: problems/templates/problems/results/table.html:6
+#: problems/templates/problems/results/table.html:5
 msgid "The competition did not start yet."
 msgstr "A verseny még nem kezdődött el."
 
-#: problems/templates/problems/results/table.html:10
+#: problems/templates/problems/results/table.html:9
 msgid "Results are frozen."
 msgstr "Az eredmények be vannak fagyasztva."
 
@@ -435,24 +441,20 @@ msgid "These are not the final results yet."
 msgstr "Ezek még nem a végleges eredmények."
 
 #: problems/templates/problems/results/table.html:14
-msgid "Final results."
-msgstr "Végleges eredmények."
-
-#: problems/templates/problems/results/table.html:14
-msgid "Showing official results."
-msgstr "Hivatalos eredmények mutatása."
-
-#: problems/templates/problems/results/table.html:18
 msgid "Interim results."
 msgstr "Nem végleges eredmények."
 
-#: problems/templates/problems/results/table.html:18
+#: problems/templates/problems/results/table.html:15
 msgid "The competition is ongoing, the results may change."
 msgstr "A verseny még tart, az eredmények változhatnak."
 
-#: problems/templates/problems/results/table.html:71
+#: problems/templates/problems/results/table.html:62
 msgid "(No team has solved any problem yet)"
 msgstr "(Egy csapat sem oldott még meg feladatot)"
+
+#: problems/templatetags/results_selects.py:97
+msgid "All venues"
+msgstr "Minden helyszín"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -466,26 +468,20 @@ msgstr "A csapat lekerült a várólistáról"
 msgid "Your team has been deleted"
 msgstr "A csapat törlésre került"
 
-#: web/templates/junior/web/homepage.html:7
-#: web/templates/math/web/homepage.html:7 web/templates/web/404.html:16
-#: web/templates/web/404.html:18 web/templates/web/homepage.html:5
-msgid "Home page"
-msgstr "Kezdőoldal"
-
-#: web/templates/mail/base.html:336
+#: web/templates/mail/base.html:351
 msgid "Competition logo"
 msgstr "Verseny logó"
 
-#: web/templates/mail/base.html:355
+#: web/templates/mail/base.html:371
 #, python-format
 msgid "You have received this message because you have registered for the competition %(branch)s."
 msgstr "Azért kapta ezt az üzenetet mert regisztrált a %(branch)s  versenyre."
 
-#: web/templates/mail/messages/registration.html:6
+#: web/templates/mail/messages/registration.html:5
 #: web/templates/mail/messages/registration.txt:1
 #: web/templates/mail/messages/team_delete.html:5
 #: web/templates/mail/messages/team_delete.txt:1
-#: web/templates/mail/messages/to_competition.html:6
+#: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
 #, python-format
 msgid "Hello, %(name)s!"
@@ -496,48 +492,48 @@ msgstr "Helló %(name)s!"
 msgid "Please click on the following link to confirm your registration."
 msgstr "Kérjük kattintson az alábbi linkre a regisztráció megerősítéséhez."
 
-#: web/templates/mail/messages/registration.html:10
+#: web/templates/mail/messages/registration.html:11
 #: web/templates/mail/messages/registration.txt:5
-#: web/templates/mail/messages/to_competition.html:10
+#: web/templates/mail/messages/to_competition.html:11
 #: web/templates/mail/messages/to_competition.txt:5
 #, python-format
 msgid "Current team members: %(contestants)s"
 msgstr "Aktuális csapattagok: %(contestants)s"
 
-#: web/templates/mail/messages/registration.html:13
+#: web/templates/mail/messages/registration.html:14
 msgid "Confirm registration"
 msgstr "Erősítse meg a regisztrációt"
 
-#: web/templates/mail/messages/registration.html:16
+#: web/templates/mail/messages/registration.html:17
 #: web/templates/mail/messages/registration.txt:9
 msgid "You can also use that link to modify your team."
 msgstr "Ezt a linket használhatja a csapat adatainak módosításához is."
 
-#: web/templates/mail/messages/registration.html:17
+#: web/templates/mail/messages/registration.html:20
 #: web/templates/mail/messages/registration.txt:11
 msgid "If you have any questions, please feel free to reply to this email."
 msgstr "Ha bármilyen kérdése van, kérjük, válaszoljon erre az e-mailre."
 
-#: web/templates/mail/messages/registration.html:19
+#: web/templates/mail/messages/registration.html:23
 #: web/templates/mail/messages/registration.txt:13
-#: web/templates/mail/messages/team_delete.html:12
+#: web/templates/mail/messages/team_delete.html:14
 #: web/templates/mail/messages/team_delete.txt:7
-#: web/templates/mail/messages/to_competition.html:18
+#: web/templates/mail/messages/to_competition.html:20
 #: web/templates/mail/messages/to_competition.txt:10
 msgid "Best regards,"
 msgstr "Üdvözlettel,"
 
-#: web/templates/mail/messages/registration.html:27
-#: web/templates/mail/messages/to_competition.html:26
+#: web/templates/mail/messages/registration.html:30
+#: web/templates/mail/messages/to_competition.html:27
 msgid "If you are having difficulty clicking on the button, you can paste this address into your browser:"
 msgstr "Ha nem működik a gomb, beillesztheti ezt a címet a böngészőjébe:"
 
-#: web/templates/mail/messages/team_delete.html:7
+#: web/templates/mail/messages/team_delete.html:8
 #: web/templates/mail/messages/team_delete.txt:3
 msgid "Your team was unregistered from the competition."
 msgstr "A csapat visszavonta a regisztrációját."
 
-#: web/templates/mail/messages/team_delete.html:9
+#: web/templates/mail/messages/team_delete.html:11
 #: web/templates/mail/messages/team_delete.txt:5
 #, python-format
 msgid "Team members: %(contestants)s"
@@ -548,90 +544,88 @@ msgstr "Csapat tagok: %(contestants)s"
 msgid "Your team was moved from the waiting list to the list of competing teams."
 msgstr "A csapat a várólistáról a versenyző csapatok listájára került."
 
-#: web/templates/mail/messages/to_competition.html:12
+#: web/templates/mail/messages/to_competition.html:14
 #: web/templates/mail/messages/to_competition.txt:7
 msgid "You can edit team details by clicking the link below."
 msgstr "Módosíthatja a csapat adatait az alábbi linken."
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:11
+#: web/templates/page_blocks/competition_timeline.html:10
 msgid "Registration start"
 msgstr "A regisztráció elkezdődik"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:16
+#: web/templates/page_blocks/competition_timeline.html:14
 msgid "Second registration round start"
 msgstr "A regisztráció második fordulója"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:21
-#: web/templates/web/snippets/home_timeline.html:35
+#: web/templates/page_blocks/competition_timeline.html:18
 msgid "Registration end"
 msgstr "A regisztráció lezárul"
 
 #. Translators: Used on the homepage timeline
-#: web/templates/page_blocks/competition_timeline.html:25
-#: web/templates/web/snippets/home_timeline.html:43
+#: web/templates/page_blocks/competition_timeline.html:21
 msgid "Competition day"
 msgstr "A verseny napja"
 
-#: web/templates/web/404.html:5 web/templates/web/404.html:9
+#: web/templates/web/404.html:4 web/templates/web/404.html:9
 msgid "Not found"
 msgstr "Nem található"
 
-#: web/templates/web/404.html:12
+#: web/templates/web/404.html:11
 msgid "The page you tried to access was not found."
 msgstr "Az elérni kívánt oldal nem található."
 
-#: web/templates/web/root_base.html:47
+#: web/templates/web/404.html:16 web/templates/web/404.html:22
+msgid "Home page"
+msgstr "Kezdőoldal"
+
+#: web/templates/web/root_base.html:82
 msgid "Close"
 msgstr "Bezár"
 
-#: web/templates/web/snippets/copyright.html:6
+#: web/templates/web/snippets/copyright.html:5
 #, python-format
 msgid "All times are in timezone %(tz_name)s unless stated otherwise."
 msgstr "Minden időpont a %(tz_name)s időzónában van megadja."
 
-#: web/templates/web/snippets/copyright.html:8
+#: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Adatvédelmi szabályzat"
 
-#: web/templates/web/snippets/home_footer.html:5
-msgid "Organizers"
-msgstr "Szervezők"
+#~ msgid "Final results."
+#~ msgstr "Végleges eredmények."
 
-#: web/templates/web/snippets/home_footer.html:16
-msgid "Our partners"
-msgstr "Partnereink"
+#~ msgid "Showing official results."
+#~ msgstr "Hivatalos eredmények mutatása."
 
-#: web/templates/web/snippets/home_hero_buttons.html:6
+#~ msgid "Organizers"
+#~ msgstr "Szervezők"
+
+#~ msgid "Our partners"
+#~ msgstr "Partnereink"
+
 #, python-format
-msgid "Registration starts on %(start)s."
-msgstr "A regisztráció kezdete %(start)s."
+#~ msgid "Registration starts on %(start)s."
+#~ msgstr "A regisztráció kezdete %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:9
-#: web/templates/web/snippets/home_hero_buttons.html:20
 #, python-format
-msgid "The competition will take place on %(start)s."
-msgstr "A verseny napja %(start)s."
+#~ msgid "The competition will take place on %(start)s."
+#~ msgstr "A verseny napja %(start)s."
 
-#: web/templates/web/snippets/home_hero_buttons.html:14
-msgid "Registration"
-msgstr "Regisztráció"
+#~ msgid "Registration"
+#~ msgstr "Regisztráció"
 
-#: web/templates/web/snippets/home_hero_buttons.html:17
 #, python-format
-msgid "Registration ends on %(end)s."
-msgstr "A regisztráció lezárul %(end)s múlva."
+#~ msgid "Registration ends on %(end)s."
+#~ msgstr "A regisztráció lezárul %(end)s múlva."
 
-#: web/templates/web/snippets/home_timeline.html:7
-msgid "Important dates"
-msgstr "Fontos dátumok"
+#~ msgid "Important dates"
+#~ msgstr "Fontos dátumok"
 
-#: web/templates/web/snippets/home_timeline.html:17
-msgid "Registration starts"
-msgstr "A regisztráció elkezdődik"
+#~ msgid "Registration starts"
+#~ msgstr "A regisztráció elkezdődik"
 
-#: web/templates/web/snippets/home_timeline.html:26
-msgid "Second round of registration"
-msgstr "A regisztráció második fordulója"
+#~ msgid "Second round of registration"
+#~ msgstr "A regisztráció második fordulója"
