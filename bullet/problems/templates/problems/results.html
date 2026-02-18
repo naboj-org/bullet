@@ -1,5 +1,5 @@
 {% extends "web/base.html" %}
-{% load content_blocks country_url i18n utils %}
+{% load content_blocks country_url i18n results_selects utils %}
 {% block title %}
   {% translate "Results" %}
 {% endblock title %}
@@ -26,27 +26,7 @@
 
 {% block content %}
   <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-8">
-    <div class="flex flex-wrap gap-1 mb-8">
-      <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number %}{% else %}{% country_url "results_category" category=category.identifier %}{% endif %}{% query_transform %}"
-          class="{% if not country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm">
-        {% translate "International" %}
-      </a>
-
-      {% for c in countries %}
-        {% if c != "__" %}{# __ is the legacy OPEN category #}
-        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
-          class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm flex gap-2 items-center flex-wrap">
-          <iconify-icon icon="flag:{{ c.code|lower }}-4x3" width="none" class="h-4 aspect-4/3"></iconify-icon>
-          {{ c.name }}
-        </a>
-        {% else %}
-        <a href="{% if competition_number %}{% country_url "archive_results_category" category=category.identifier competition_number=competition_number country=c.code|lower %}{% else %}{% country_url "results_category" category=category.identifier country=c.code|lower %}{% endif %}{% query_transform %}"
-          class="{% if c == country %} bg-primary text-white font-bold {% else %} bg-gray-100 {% endif %} whitespace-nowrap py-1 px-2 rounded-sm flex gap-2 items-center flex-wrap">
-          Open
-        </a>
-        {% endif %}
-      {% endfor %}
-    </div>
+    {% results_selects competition=competition category=category country=country competition_number=competition_number %}
     {% include "problems/results/table.html" %}
   </div>
 {% endblock content %}
