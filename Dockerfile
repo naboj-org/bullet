@@ -24,6 +24,7 @@ USER appuser
 COPY pyproject.toml uv.lock ./
 RUN uv sync --frozen --no-cache
 
+COPY --chown=appuser:appuser bullet/Caddyfile /base/Caddyfile
 COPY --chown=appuser:appuser ./bullet ./bullet
 COPY --chown=appuser:appuser ./CHANGELOG.md ./bullet/CHANGELOG.md
 COPY --chown=appuser:appuser --from=cssbuild /app/bullet/web/static/app.css ./bullet/web/static/
