@@ -27,8 +27,19 @@
                 <div class="flex items-baseline gap-4 mt-2 text-lg flex-wrap">
                     <a href="{% country_url "archive_results" competition_number=competition.number %}"
                        class="link-primary">{% translate "Results" %}</a>
-                    <a href="{% country_url "archive_problems" competition_number=competition.number %}"
-                       class="link-primary">{% translate "Problems and solutions" %}</a>
+                    {% if competition.id in native %}
+                        <a href="{% country_url "archive_problems" competition_number=competition.number %}"
+                           class="link-primary">{% translate "Problems and solutions" %}</a>
+                    {% elif competition.id in english %}
+                        <a href="{% url "archive_problems" competition_number=competition.number b_country='gb' b_language='en' %}"
+                           class="link-primary">{% translate "Problems and solutions" %} (EN)</a>
+                    {% elif competition.id in slovak %}
+                        <a href="{% url "archive_problems" competition_number=competition.number b_country='sk' b_language='sk' %}"
+                           class="link-primary">{% translate "Problems and solutions" %} (SK)</a>
+                    {% elif competition.id in czech %}
+                        <a href="{% url "archive_problems" competition_number=competition.number b_country='cz' b_language='cs' %}"
+                           class="link-primary">{% translate "Problems and solutions" %} (CS)</a>
+                    {% endif %}
                     {% if competition.albums.count %}
                         <a href="{% country_url "archive_album_list" competition_number=competition.number %}"
                            class="link-primary">{% translate "Albums" %}</a>
