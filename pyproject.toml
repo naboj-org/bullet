@@ -39,7 +39,7 @@ dependencies = [
 ]
 
 [tool.bumpver]
-current_version = "2026.6"
+current_version = "2026.7"
 version_pattern = "YYYY.[INC1]"
 commit_message = "🎉 Release {new_version}"
 commit = true
