@@ -96,7 +96,6 @@ class VenueFormMixin(GenericForm):
 
 class VenueDetailView(PermissionCheckMixin, DetailView):
     required_permissions = [is_admin_in]
-    require_unlocked_competition = False
     template_name = "bullet_admin/venues/detail.html"
 
     def get_permission_venue(self) -> Venue:
