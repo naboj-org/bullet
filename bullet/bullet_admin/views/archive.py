@@ -37,7 +37,6 @@ class ProblemPDFUploadView(PermissionCheckMixin, GenericForm, FormView):
     form_class = ProblemUploadForm
     form_title = "Upload problems"
     form_multipart = True
-    require_unlocked_competition = False
 
     def get_form_kwargs(self):
         kw = super().get_form_kwargs()

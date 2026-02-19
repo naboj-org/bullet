@@ -101,7 +101,6 @@ class CompetitionAutomoveView(PermissionCheckMixin, GenericForm, FormView):
 
 class CompetitionTearoffUploadView(PermissionCheckMixin, GenericForm, FormView):
     required_permissions = [is_country_admin, is_competition_unlocked]
-    require_unlocked_competition = True
     form_class = TearoffUploadForm
     form_title = "Tearoff upload"
     form_multipart = True
