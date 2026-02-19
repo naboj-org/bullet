@@ -8,9 +8,9 @@
     <div class="m-8">
         <form method="post"
               id="createform">
-            {% if form.errors %}
+            {% if form.non_field_errors %}
                 <div class="text-red-600 mb-4">
-                    {% for err in form.errors %}<p>{{ err }}</p>{% endfor %}
+                    {% for err in form.non_field_errors %}<p>{{ err }}</p>{% endfor %}
                 </div>
             {% endif %}
             {% csrf_token %}
