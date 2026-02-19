@@ -3,6 +3,8 @@ from django import forms
 from django.forms import formset_factory
 from django.utils.safestring import mark_safe
 
+from web.widgets import MarkdownWidget
+
 BackgroundField = forms.ChoiceField(
     label="Background", choices=[("white", "White"), ("color", "Branch color")]
 )
@@ -50,7 +52,7 @@ class MarkdownForm(BackgroundMixin, TitleTextMixin, forms.Form):
         label="Content",
         help_text="Supports Markdown syntax.",
         required=False,
-        widget=forms.Textarea(attrs={"rows": 20}),
+        widget=MarkdownWidget(attrs={"rows": 20}),
     )
 
     field_order = ["title", "text", "content", "background"]
