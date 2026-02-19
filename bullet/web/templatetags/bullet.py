@@ -39,9 +39,13 @@ def branch_selector(context):
         return {}
     request = context["request"]
 
-    if request.BRANCH is None or not hasattr(request, "COUNTRY_CODE"):
+    if request.BRANCH is None:
+        return {}
+
+    if not hasattr(request, "COUNTRY_CODE"):
         return {
             "branch": request.BRANCH,
+            "branches": list(Branches),
         }
 
     return {
