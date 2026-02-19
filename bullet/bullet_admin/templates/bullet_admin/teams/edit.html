@@ -102,7 +102,9 @@
                     </header>
                     <div>
                         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                            <label for="{{ form.school.id_for_label }}">School</label>
+                            <label for="{{ form.school.id_for_label }}">
+                                School <span class="text-red-600">*</span>
+                            </label>
                             <div class="mt-1 sm:mt-0 sm:col-span-2">
                                 {% if form.school %}
                                     {% include "bullet_admin/partials/_school_input_filled.html" with school=team.school %}
