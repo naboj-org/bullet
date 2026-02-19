@@ -1,104 +1,107 @@
 {% extends "bullet_admin/base.html" %}
 {% load bform %}
 {% block title %}
-    {% if object %}
-        Edit
-    {% else %}
-        New
-    {% endif %}
-    email campaign
+  {% if object %}
+    Edit
+  {% else %}
+    New
+  {% endif %}
+  email campaign
 {% endblock title %}
 
+{% block extrahead %}
+  {% include "bullet_admin/components/markdown_scripts.html" %}
+{% endblock extrahead %}
+
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
-            <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
-                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
-                    Team selection
-                </h2>
-            </header>
-            <div class="divide-y divide-gray-200">
-                <div class="p-4">
-                    Some options can be left blank, which will mean that the option will not apply.
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.team_countries.id_for_label }}">Country</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_countries %}</div>
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.team_languages.id_for_label }}">Language</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_languages %}</div>
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.team_venues.id_for_label }}">Venue</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_venues %}</div>
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.team_statuses.id_for_label }}">Status</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_statuses %}</div>
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.team_contestants.id_for_label }}">Number of contestants</label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_contestants %}</div>
-                </div>
-            </div>
-        </article>
-        <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
-            <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
-                <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Message</h2>
-            </header>
-            <div class="divide-y divide-gray-200">
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <label for="{{ form.subject.id_for_label }}">
-                        Subject <span class="text-red-600">*</span>
-                    </label>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.subject %}</div>
-                </div>
-                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                    <div>
-                        <label for="{{ form.template.id_for_label }}">Message template</label>
-                        <p class="text-gray-700 text-sm">
-                            Templates support <a href="https://docs.djangoproject.com/en/4.1/ref/templates/language/"
-    target="_blank"
-    class="link-primary">Django templates syntax</a> and Markdown.
-                            Useful variables:
-                        </p>
-                        <ul class="text-gray-700 text-sm">
-                            {% verbatim %}
-                                <li>
-                                    <code>{{ team.school }}</code> - team school
-                                </li>
-                                <li>
-                                    <code>{{ team.display_name }}</code> - full team name
-                                </li>
-                                <li>
-                                    <code>{{ team.contestants_names }}</code> - contestants
-                                </li>
-                                <li>
-                                    <code>{{ edit_link }}</code> - team edit link
-                                </li>
-                                <li>
-                                    <code>{{ team.code }}</code> - team shortcode
-                                </li>
-                                <li>
-                                    <code>{{ team.id }}</code> - team ID
-                                </li>
-                                <li>
-                                    <code>{{ team.online_password }}</code> - team password (online)
-                                </li>
-                            {% endverbatim %}
-                        </ul>
-                    </div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.template %}</div>
-                </div>
-            </div>
-        </article>
-        <div class="my-8 text-center">
-            <button type="submit"
-                    class="btn-admin bg-primary hover:bg-primary-dark mx-auto flex items-center gap-2">
-                <b-icon icon="mdi:content-save" class="size-5" width="none"></b-icon> Save without sending
-            </button>
+  <form method="post">
+    {% csrf_token %}
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+      <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
+        <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">
+          Team selection
+        </h2>
+      </header>
+      <div class="divide-y divide-gray-200">
+        <div class="p-4">
+          Some options can be left blank, which will mean that the option will not apply.
         </div>
-    </form>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.team_countries.id_for_label }}">Country</label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_countries %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.team_languages.id_for_label }}">Language</label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_languages %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.team_venues.id_for_label }}">Venue</label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_venues %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.team_statuses.id_for_label }}">Status</label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_statuses %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.team_contestants.id_for_label }}">Number of contestants</label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_contestants %}</div>
+        </div>
+      </div>
+    </article>
+
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+      <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
+        <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Message</h2>
+      </header>
+      <div class="divide-y divide-gray-200">
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.subject.id_for_label }}">
+            Subject <span class="text-red-600">*</span>
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.subject %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <div>
+            <label for="{{ form.template.id_for_label }}">Message template</label>
+            <p class="text-gray-700 text-sm">
+              Templates support <a href="https://docs.djangoproject.com/en/4.1/ref/templates/language/" target="_blank" class="link-primary">Django templates syntax</a> and Markdown.
+              Useful variables:
+            </p>
+            <ul class="text-gray-700 text-sm">
+              {% verbatim %}
+                <li>
+                  <code>{{ team.school }}</code> - team school
+                </li>
+                <li>
+                  <code>{{ team.display_name }}</code> - full team name
+                </li>
+                <li>
+                  <code>{{ team.contestants_names }}</code> - contestants
+                </li>
+                <li>
+                  <code>{{ edit_link }}</code> - team edit link
+                </li>
+                <li>
+                  <code>{{ team.code }}</code> - team shortcode
+                </li>
+                <li>
+                  <code>{{ team.id }}</code> - team ID
+                </li>
+                <li>
+                  <code>{{ team.online_password }}</code> - team password (online)
+                </li>
+              {% endverbatim %}
+            </ul>
+          </div>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.template %}</div>
+        </div>
+      </div>
+    </article>
+
+    <div class="my-8 text-center">
+      <button type="submit" class="btn-admin bg-primary hover:bg-primary-dark mx-auto flex items-center gap-2">
+        <b-icon icon="mdi:content-save" class="size-5" width="none"></b-icon> Save without sending
+      </button>
+    </div>
+  </form>
 {% endblock content %}

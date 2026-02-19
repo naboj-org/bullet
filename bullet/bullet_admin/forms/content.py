@@ -6,6 +6,7 @@ from django.utils.translation import get_language_info
 from django_countries import countries
 from django_countries.fields import Country
 from web.models import ContentBlock, Menu, Page, PageBlock
+from web.widgets import MarkdownWidget
 
 
 class PageForm(forms.ModelForm):
@@ -15,7 +16,7 @@ class PageForm(forms.ModelForm):
 
         widgets = {
             "countries": forms.CheckboxSelectMultiple(),
-            "content": forms.Textarea(attrs={"rows": 30}),
+            "content": MarkdownWidget(attrs={"rows": 30}),
         }
 
         labels = {

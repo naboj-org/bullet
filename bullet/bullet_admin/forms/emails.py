@@ -1,6 +1,7 @@
 from competitions.models import Competition, Venue
 from django import forms
 from users.models import EmailCampaign, User
+from web.widgets import MarkdownWidget
 
 from bullet_admin.forms.utils import get_country_choices, get_language_choices
 
@@ -24,7 +25,7 @@ class EmailCampaignForm(forms.ModelForm):
             "team_languages": forms.CheckboxSelectMultiple(),
             "team_venues": forms.CheckboxSelectMultiple(),
             "team_statuses": forms.CheckboxSelectMultiple(),
-            "template": forms.Textarea(attrs={"rows": 30}),
+            "template": MarkdownWidget(attrs={"rows": 30}),
         }
 
         help_texts = {
