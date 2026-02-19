@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.6 - 2026-02-18
+
+_No user-facing changes._
+
+## 2026.5 - 2026-02-18
+
+_No user-facing changes._
+
 ## 2026.4 - 2026-02-18
 
 ### Added
@@ -22,6 +30,8 @@ and this project uses the `YYYY.N` version format.
 
 - Logged-in users can see all public events in archive.
 - Invalid ZIPs cannot be uploaded as templates anymore.
+- User list can be ordered by full name.
+- Team change history does not error out when showing member grade changes.
 
 ## 2026.3 - 2026-02-16
 
