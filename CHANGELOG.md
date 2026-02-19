@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.7 - 2026-02-19
+
+### Changed
+
+- Email campaigns now have a markdown editor.
+- Branch selector is now available in country selector.
+
+### Fixed
+
+- School validation message in team edit.
+
 ## 2026.6 - 2026-02-18
 
 _No user-facing changes._
