@@ -1,11 +1,10 @@
+from competitions.models import Category, Competition, Venue
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
-from competitions.models import Competition, Category, Venue
-from countries.models import BranchCountry
 
 
 class Command(BaseCommand):
-    help = "Copy venues from one competition to another, using categories from the new competition"
+    help = "Copy venues from one competition to another, using categories from the new competition"  # noqa: E501
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -30,7 +29,7 @@ class Command(BaseCommand):
             raise CommandError(f"Competition not found: {e}")
 
         self.stdout.write(
-            f"Copying venues from '{source_competition.name}' to '{target_competition.name}'"
+            f"Copying venues from '{source_competition.name}' to '{target_competition.name}'"  # noqa: E501
         )
 
         # Get all venues from source competition
@@ -75,7 +74,7 @@ class Command(BaseCommand):
                     self.stdout.write(
                         self.style.WARNING(
                             f"Skipping venue '{source_venue.name}': "
-                            f"No matching category found for '{source_category.identifier}'"
+                            f"No matching category found for '{source_category.identifier}'"  # noqa: E501
                         )
                     )
                     skipped_count += 1
@@ -84,11 +83,12 @@ class Command(BaseCommand):
                 source_venue.category = target_category
                 source_venue.id = None
                 source_venue.local_start = None
+                source_venue.is_reviewed = False
                 source_venue.save()
                 copied_count += 1
 
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"Copy completed: {copied_count} venues copied, {skipped_count} venues skipped"
+                    f"Copy completed: {copied_count} venues copied, {skipped_count} venues skipped"  # noqa: E501
                 )
             )
