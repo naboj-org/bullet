@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.8 - 2026-03-02
+
+### Changed
+
+- Updated 🇪🇪 Estonian translations.
+
+### Fixed
+
+- Tex templates zip upload not working.
+- Team status Reviewed priority.
+
 ## 2026.7 - 2026-02-19
 
 ### Changed
