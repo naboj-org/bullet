@@ -39,6 +39,8 @@ class TexTemplateForm(forms.ModelForm):
         except zipfile.BadZipFile:
             raise ValidationError("This file is not a valid ZIP archive.")
 
+        return self.cleaned_data["template"]
+
 
 class TexRenderForm(forms.Form):
     context = forms.JSONField(
