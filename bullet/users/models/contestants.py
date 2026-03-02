@@ -166,10 +166,10 @@ class Team(models.Model):
             return TeamStatus.WAITINGLIST
         if self.is_disqualified:
             return TeamStatus.DISQUALIFIED
-        if self.is_checked_in:
-            return TeamStatus.CHECKEDIN
         if self.is_reviewed:
             return TeamStatus.REVIEWED
+        if self.is_checked_in:
+            return TeamStatus.CHECKEDIN
         return TeamStatus.REGISTERED
 
     def for_search(self):
