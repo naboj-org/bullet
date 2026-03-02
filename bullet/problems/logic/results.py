@@ -104,6 +104,7 @@ def _set_solved_problems(rr: ResultRow):
     problems = list(
         SolvedProblem.objects.select_for_update()
         .filter(team=rr.team, competition_time__lte=rr.competition_time)
+        .order_by("id")
         .values_list("id", flat=True)
     )
 
