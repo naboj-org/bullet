@@ -459,7 +459,7 @@ msgstr "(Ükski võistkond ei ole veel ühtegi ülesannet ära lahendanud)"
 
 #: problems/templatetags/results_selects.py:97
 msgid "All venues"
-msgstr "Kõik võistluskeskusi"
+msgstr "Kõik võistluskeskused"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
