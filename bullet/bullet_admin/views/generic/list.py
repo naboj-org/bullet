@@ -55,6 +55,7 @@ class CountryNavigation(ModelFiltering, MixinProtocol):
         "countries": Func(F("countries"), function="unnest"),
         "team_countries": Func(F("team_countries"), function="unnest"),
     }
+    filter_country_permissions = True
 
     def apply_country_filter(self, qs):
         country = self.request.GET.get("country")
@@ -62,12 +63,13 @@ class CountryNavigation(ModelFiltering, MixinProtocol):
             qs = qs.filter(self.get_filter_q(self.COUNTRY_FILTERS, country))
 
         # Permission handling
-        allowed_countries = get_allowed_countries(self.request)
-        if allowed_countries is not None:
-            filters = []
-            for country in allowed_countries:
-                filters.append(self.get_filter_q(self.COUNTRY_FILTERS, country))
-            qs = qs.filter(reduce(or_, filters, Q()))
+        if self.filter_country_permissions:
+            allowed_countries = get_allowed_countries(self.request)
+            if allowed_countries is not None:
+                filters = []
+                for country in allowed_countries:
+                    filters.append(self.get_filter_q(self.COUNTRY_FILTERS, country))
+                qs = qs.filter(reduce(or_, filters, Q()))
 
         return qs
 

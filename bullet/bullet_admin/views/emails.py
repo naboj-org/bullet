@@ -76,6 +76,7 @@ class CampaignListView(PermissionCheckMixin, GenericList, ListView):
     required_permissions = [is_admin]
     list_links = [NewLink("campaign", reverse_lazy("badmin:email_create"))]
     table_fields = ["subject", "last_sent"]
+    filter_country_permissions = False
 
     def get_queryset(self):
         return EmailCampaign.objects.filter(
