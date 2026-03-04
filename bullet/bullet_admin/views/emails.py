@@ -2,6 +2,7 @@ from functools import cached_property
 
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -79,9 +80,37 @@ class CampaignListView(PermissionCheckMixin, GenericList, ListView):
     filter_country_permissions = False
 
     def get_queryset(self):
-        return EmailCampaign.objects.filter(
-            competition=get_active_competition(self.request)
-        )
+        competition = get_active_competition(self.request)
+        qs = EmailCampaign.objects.filter(competition=competition)
+
+        # Branch admins see all campaigns
+        if is_branch_admin(self.request.user, competition):
+            return qs
+
+        crole = self.request.user.get_competition_role(competition)
+
+        # Country admins see campaigns targeting their countries or venues in their countries
+        if crole.countries:
+            # Campaigns with countries in the user's scope
+            campaigns_with_matching_countries = Q(
+                team_countries__overlap=crole.countries
+            )
+
+            # Campaigns with venues in the user's countries
+            campaigns_with_venues_in_user_countries = Q(
+                team_venues__country__in=crole.countries
+            )
+
+            qs = qs.filter(
+                campaigns_with_matching_countries
+                | campaigns_with_venues_in_user_countries
+            )
+
+        # Venue admins (without country admin) see campaigns targeting their venues only
+        elif crole.venues:
+            qs = qs.filter(team_venues__id=crole.venues, team_countries__isempty=True)
+
+        return qs.distinct()
 
     def get_row_links(self, obj) -> list[Link]:
         return [ViewIcon(reverse("badmin:email_detail", args=[obj.pk]))]
