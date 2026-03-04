@@ -26,6 +26,11 @@
         <div class="p-4">
           Some options can be left blank, which will mean that the option will not apply.
         </div>
+        {% if form.non_field_errors %}
+        <div class="p-4 text-red-600">
+          {{ form.non_field_errors|first }}
+        </div>
+        {% endif %}
         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
           <label for="{{ form.team_countries.id_for_label }}">Country</label>
           <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.team_countries %}</div>
