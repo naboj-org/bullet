@@ -106,10 +106,10 @@ class TexJob(models.Model):
                 self.context,
                 reverse("badmin:tex_letter_callback", kwargs={"pk": self.id}),
             )
-        except ValueError as e:
+        except Exception as e:
             self.output_log = ""
             self.output_file = None
-            self.output_error = e.args[0]
+            self.output_error = str(e)
             self.completed = True
             self.save()
 
