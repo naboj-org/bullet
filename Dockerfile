@@ -11,7 +11,7 @@ COPY css ./css
 RUN pnpm run build
 CMD ["pnpm", "run", "watch"]
 
-FROM ghcr.io/trojsten/django-docker:v7
+FROM ghcr.io/trojsten/django-docker:v8
 
 USER root
 RUN export DEBIAN_FRONTEND=noninteractive \

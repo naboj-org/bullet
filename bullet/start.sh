@@ -14,5 +14,5 @@ python manage.py migrate
 if [ "$env" = "dev" ]; then
   exec python manage.py runserver 0.0.0.0:8000
 else
-  exec /base/gunicorn.sh bullet.wsgi
+  exec /base/gunicorn.sh --timeout 90 bullet.wsgi
 fi

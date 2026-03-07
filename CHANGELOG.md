@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.9 - 2026-02-18
+
+_No user-facing changes._
+
 ## 2026.8 - 2026-03-02
 
 ### Changed
@@ -11,8 +15,8 @@ and this project uses the `YYYY.N` version format.
 
 ### Fixed
 
-- Tex templates zip upload not working.
-- Team status Reviewed priority.
+- TeX templates ZIP upload not working.
+- Reviewed teams are shown as reviewed in team list.
 
 ## 2026.7 - 2026-02-19
 
