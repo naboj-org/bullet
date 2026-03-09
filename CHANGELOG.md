@@ -3,7 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
-## 2026.9 - 2026-02-18
+## 2026.10 - 2026-03-09
+
+### Added
+
+- Errors during jinja2 templating in TeX documents are shown to user.
+
+### Fixed
+
+- Email campaign display rules.
+
+## 2026.9 - 2026-03-07
 
 _No user-facing changes._
 
