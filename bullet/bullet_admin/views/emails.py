@@ -1,8 +1,9 @@
 from functools import cached_property
 
-from competitions.branches import Branch
+from competitions.models.venues import Venue
 from django.contrib import messages
 from django.core.exceptions import PermissionDenied
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -17,7 +18,7 @@ from django.views.generic import (
 )
 from users.models import EmailCampaign, TeamStatus, User
 
-from bullet_admin.access import PermissionCheckMixin, is_admin
+from bullet_admin.access import PermissionCheckMixin, is_admin, is_branch_admin
 from bullet_admin.forms.emails import EmailCampaignForm
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
@@ -26,33 +27,48 @@ from bullet_admin.views.generic.list import GenericList
 
 def can_edit_campaign(request, campaign: EmailCampaign):
     user: User = request.user
-    branch: Branch = request.BRANCH
-    if user.get_branch_role(branch).is_admin:
+    competition = get_active_competition(request)
+
+    # Branch admins can edit all campaigns
+    if is_branch_admin(user, competition):
         return True
 
-    # Only branch admin can edit global emails
+    # Only branch admin can edit global emails (no country/venue filters)
     if not campaign.team_countries and not campaign.team_venues.exists():
         return False
 
-    competition = get_active_competition(request)
     crole = user.get_competition_role(competition)
 
-    # Country admin can only edit campaigns from his countries
+    # Country admin can edit campaigns targeting ANY of their countries
     if crole.countries:
-        if not set(crole.countries).issuperset(set(campaign.team_countries)):
+        user_countries = set(crole.countries)
+        campaign_countries = set(campaign.team_countries)
+
+        # Campaign must target at least one of the user's countries
+        if campaign_countries and not user_countries.issuperset(campaign_countries):
             return False
 
-        if not set(crole.countries).issuperset(
-            set(campaign.team_venues.values_list("country", flat=True))
+        # Any venues in the campaign must be in the user's countries
+        campaign_venue_countries = set(
+            campaign.team_venues.values_list("country", flat=True)
+        )
+        if campaign_venue_countries and not user_countries.issuperset(
+            campaign_venue_countries
         ):
             return False
 
-    # Venue admin can only edit campaigns targeting his venues
+    # Venue admin can edit campaigns targeting ANY of their venues
     venues = crole.venues
     if venues:
+        # Venue admins cannot edit country-targeted campaigns
         if campaign.team_countries:
             return False
-        if not set(venues).issuperset(set(campaign.team_venues.all())):
+
+        user_venues = set(venues)
+        campaign_venues = set(campaign.team_venues.all())
+
+        # Campaign must target at least one of the user's venues
+        if campaign_venues and not user_venues.issuperset(campaign_venues):
             return False
 
     return True
@@ -62,11 +78,50 @@ class CampaignListView(PermissionCheckMixin, GenericList, ListView):
     required_permissions = [is_admin]
     list_links = [NewLink("campaign", reverse_lazy("badmin:email_create"))]
     table_fields = ["subject", "last_sent"]
+    filter_country_permissions = False
 
     def get_queryset(self):
-        return EmailCampaign.objects.filter(
-            competition=get_active_competition(self.request)
-        )
+        assert isinstance(self.request.user, User)
+        competition = get_active_competition(self.request)
+        qs = EmailCampaign.objects.filter(competition=competition)
+
+        # Branch admins see all campaigns
+        if is_branch_admin(self.request.user, competition):
+            return qs
+
+        crole = self.request.user.get_competition_role(competition)
+
+        # Country admins see campaigns targeting their countries or venues in their countries
+        if crole.countries:
+            # Campaigns with countries in the user's scope
+            campaigns_with_matching_countries = Q(
+                team_countries__contained_by=crole.countries
+            ) & ~Q(team_countries=[])
+
+            # Campaigns with venues in the user's countries
+            venues_in_other_countries = Venue.objects.filter(
+                category__competition=competition
+            ).exclude(country__in=crole.countries)
+            campaigns_with_venues_in_user_countries = Q(
+                team_venues__country__in=crole.countries
+            )
+
+            qs = qs.filter(
+                campaigns_with_matching_countries
+                | campaigns_with_venues_in_user_countries
+            ).exclude(team_venues__in=venues_in_other_countries)
+
+        # Venue admins (without country admin) see campaigns targeting their venues only
+        elif crole.venues:
+            all_other_venues = Venue.objects.filter(
+                category__competition=competition
+            ).exclude(id__in=crole.venues)
+
+            qs = qs.filter(team_venues__in=crole.venues, team_countries=[]).exclude(
+                team_venues__in=all_other_venues
+            )
+
+        return qs.distinct()
 
     def get_row_links(self, obj) -> list[Link]:
         return [ViewIcon(reverse("badmin:email_detail", args=[obj.pk]))]
@@ -157,9 +212,9 @@ class CampaignTeamListView(PermissionCheckMixin, TemplateView):
 
     def check_custom_permission(self, user: User) -> bool | None:
         """
-        You must be branch admin to edit global emails,
-        or country admin to edit emails targeting your countries,
-        or venue admin to edit emails targeting your venues.
+        Branch admins can edit all campaigns.
+        Country admins can edit campaigns targeting at least one of their countries.
+        Venue admins can edit campaigns targeting at least one of their venues (but not country-targeted campaigns).
         """
         return can_edit_campaign(self.request, self.campaign)
 
