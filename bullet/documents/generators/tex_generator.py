@@ -3,6 +3,7 @@ import typing
 import zipfile
 from os import PathLike
 
+import jinja2
 import requests
 from django.conf import settings
 from jinja2.sandbox import SandboxedEnvironment
@@ -24,20 +25,45 @@ def render_zip(
         autoescape=False,
     )
 
-    with (
-        zipfile.ZipFile(template_zip) as template,
-        zipfile.ZipFile(output_zip, "w") as output,
-    ):
-        for file in template.namelist():
-            with template.open(file) as f:
-                if not file.endswith(".j2"):
-                    output.writestr(file, f.read())
-                    continue
+    try:
+        with (
+            zipfile.ZipFile(template_zip) as template,
+            zipfile.ZipFile(output_zip, "w") as output,
+        ):
+            for file in template.namelist():
+                with template.open(file) as f:
+                    if not file.endswith(".j2"):
+                        output.writestr(file, f.read())
+                        continue
 
-                j2_template = f.read().decode()
-                rendered = env.from_string(j2_template).render(**context)
-                target_filename = file.removesuffix(".j2")
-                output.writestr(target_filename, rendered)
+                    j2_template = f.read().decode()
+                    try:
+                        rendered = env.from_string(j2_template).render(**context)
+                    except jinja2.TemplateSyntaxError as e:
+                        raise ValueError(
+                            f"Jinja2 syntax error in '{file}': {e.message} (line {e.lineno})"
+                        ) from e
+                    except jinja2.UndefinedError as e:
+                        raise ValueError(
+                            f"Jinja2 undefined variable in '{file}': {e.message}"
+                        ) from e
+                    except jinja2.TemplateRuntimeError as e:
+                        raise ValueError(
+                            f"Jinja2 runtime error in '{file}': {e.message}"
+                        ) from e
+                    except jinja2.TemplateError as e:
+                        raise ValueError(
+                            f"Jinja2 template error in '{file}': {e.message}"
+                        ) from e
+                    except Exception as e:
+                        raise ValueError(
+                            f"Error rendering '{file}': {type(e).__name__}: {str(e)}"
+                        ) from e
+
+                    target_filename = file.removesuffix(".j2")
+                    output.writestr(target_filename, rendered)
+    except zipfile.BadZipFile as e:
+        raise ValueError("Invalid template ZIP file") from e
 
 
 def send_to_letter(
@@ -49,9 +75,9 @@ def send_to_letter(
     output_zip = io.BytesIO()
     try:
         render_zip(template_zip, output_zip, context)
-    except zipfile.BadZipFile as e:
+    except:
         output_zip.close()
-        raise ValueError("Invalid template ZIP file") from e
+        raise
     finally:
         if hasattr(template_zip, "close"):
             template_zip.close()
