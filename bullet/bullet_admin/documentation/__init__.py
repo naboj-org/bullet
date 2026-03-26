@@ -37,6 +37,12 @@ class Page:
 
 pages = [
     Page(
+        "competition-init",
+        "Creating new competition",
+        "Learn about creating and configuring a competition.",
+        Access.BRANCH,
+    ),
+    Page(
         "teams",
         "Teams",
         'Learn more about viewing and managing teams using the "Teams" page.',
