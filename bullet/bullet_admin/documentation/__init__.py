@@ -43,6 +43,12 @@ pages = [
         Access.BRANCH,
     ),
     Page(
+        "venues",
+        "Creating new venue",
+        "Learn about creating and configuring a venue.",
+        Access.COUNTRY | Access.BRANCH,
+    ),
+    Page(
         "teams",
         "Teams",
         'Learn more about viewing and managing teams using the "Teams" page.',
