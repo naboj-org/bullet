@@ -41,3 +41,5 @@ Once you have this new competition, switch to it and configure categories.
   be using the second round.
 - **Allowed school grades:** The school grades that can participate in this category
   (select multiple options).
+
+Continue with creating your [venues](/admin/documentation/venues/).
