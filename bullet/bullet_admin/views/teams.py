@@ -27,6 +27,7 @@ from django.views.generic import (
 )
 from documents.models import TexJob
 from education.models import Grade, School
+from problems.logic.results import save_venue_ranks
 from users.emails.teams import (
     send_confirmation_email,
     send_deletion_email,
@@ -311,6 +312,9 @@ class TeamEditView(
         obj.save()
         formset.save()
         messages.success(self.request, "Team saved.")
+
+        if "is_disqualified" in form.changed_data and obj.venue.is_reviewed:
+            save_venue_ranks(obj.venue)
 
     def get_default_success_url(self):
         return reverse("badmin:team_list")
