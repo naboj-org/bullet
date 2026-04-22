@@ -27,7 +27,6 @@ from django.views.generic import (
 )
 from documents.models import TexJob
 from education.models import Grade, School
-from problems.logic.results import save_venue_ranks
 from users.emails.teams import (
     send_confirmation_email,
     send_deletion_email,

@@ -46,7 +46,9 @@ class TeamForm(forms.ModelForm):
 
             if kwargs["instance"].venue.is_reviewed:
                 self.fields["is_disqualified"].disabled = True
-                self.fields["is_disqualified"].help_text = "Venue review must be reopened to modify team's disqualified status."
+                self.fields[
+                    "is_disqualified"
+                ].help_text = "Venue review must be reopened to modify team's disqualified status."
 
         else:
             self.fields["language"].choices = get_language_choices(competition.branch)
