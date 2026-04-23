@@ -4,6 +4,7 @@ from competitions.models import Venue
 from django.db.models import Q
 from pikepdf import Pdf
 from problems.logic.results import get_venue_results
+from problems.models import ResultRow
 from users.models import Team
 from web.models import ContentBlock
 
@@ -52,11 +53,14 @@ def certificates_for_venue(
     buffer = io.BytesIO()
 
     if not empty:
-        results = get_venue_results(venue).prefetch_related("team__contestants")
         if count:
-            results = results[:count]
+            results = get_venue_results(venue).prefetch_related("team__contestants")[
+                :count
+            ]
         else:
-            results = results.all()
+            results = [
+                ResultRow(team=t) for t in Team.objects.filter(venue=venue).competing()
+            ]
     else:
         results = range(count)
 
