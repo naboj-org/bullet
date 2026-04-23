@@ -53,11 +53,8 @@ def certificates_for_venue(
     buffer = io.BytesIO()
 
     if not empty:
-        if count:
-            results = get_venue_results(venue).prefetch_related("team__contestants")[
-                :count
-            ]
-        else:
+        results = get_venue_results(venue).prefetch_related("team__contestants")[:count]
+        if not results and not count:
             results = [
                 ResultRow(team=t) for t in Team.objects.filter(venue=venue).competing()
             ]
