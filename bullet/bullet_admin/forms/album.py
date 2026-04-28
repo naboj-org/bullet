@@ -10,7 +10,7 @@ class MultipleFileInput(forms.ClearableFileInput):
     allow_multiple_selected = True
 
 
-class MultipleFileField(forms.FileField):
+class MultipleImageField(forms.ImageField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault("widget", MultipleFileInput(attrs={"accept": "image/*"}))
         super().__init__(*args, **kwargs)
@@ -25,7 +25,7 @@ class MultipleFileField(forms.FileField):
 
 
 class AlbumUploadForm(forms.Form):
-    photo_files = MultipleFileField(required=False, label="Photos")
+    photo_files = MultipleImageField(required=True, label="Photos")
 
 
 class AlbumForm(forms.ModelForm):
