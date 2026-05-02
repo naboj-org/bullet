@@ -7,8 +7,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.forms import Form
+from django.http import FileResponse, HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views import View
 from django.views.generic import CreateView, FormView, UpdateView
 from problems.logic.results import save_all_ranks, squash_results
 from problems.logic.stats import generate_stats
@@ -97,6 +99,24 @@ class CompetitionAutomoveView(PermissionCheckMixin, GenericForm, FormView):
             self.request, "The teams will be moved to the competition shortly."
         )
         return redirect("badmin:home")
+
+
+class CompetitionTearoffUploadFileView(PermissionCheckMixin, View):
+    def get(self, request, *args, **kwargs):
+        tearoff_filename = self.kwargs["tearoff_filename"]
+
+        if not tearoff_filename.lower().endswith(".pdf"):
+            return HttpResponse("Not a PDF.", status=400)
+
+        competition = get_active_competition(request)
+        file_path = competition.secret_dir / "tearoffs" / tearoff_filename
+
+        try:
+            pdf_file = default_storage.open(file_path, "rb")
+        except FileNotFoundError:
+            return HttpResponse(f"File '{tearoff_filename}' not found", status=404)
+
+        return FileResponse(pdf_file, filename=tearoff_filename)
 
 
 class CompetitionTearoffUploadView(PermissionCheckMixin, GenericForm, FormView):

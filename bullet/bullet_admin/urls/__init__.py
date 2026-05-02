@@ -60,6 +60,11 @@ urlpatterns = [
         name="competition_upload_tearoffs",
     ),
     path(
+        "competitions/tearoff_upload/<str:tearoff_filename>",
+        competition.CompetitionTearoffUploadFileView.as_view(),
+        name="competition_upload_tearoffs_file",
+    ),
+    path(
         "competitions/automove/",
         competition.CompetitionAutomoveView.as_view(),
         name="competition_automove",
