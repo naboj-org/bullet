@@ -276,25 +276,26 @@ class TearoffView(VenueMixin, GenericForm, FormView):
         except TearoffRequirementMissingError as e:
             return HttpResponse(str(e), status=500)
 
-        # if len (form.cleaned_data["teams_selected"]) != 0:
+        team_query = Team.objects.competing().filter(
+            venue=self.venue, number__isnull=False
+        )
+
+        #   Selected teams
+        if len(form.cleaned_data["teams_selected"]) != 0:
+            team_query = team_query.filter(
+                number__in=form.cleaned_data["teams_selected"]
+            )
 
         if form.cleaned_data["mono_or_bil"] == "mono":
-            teams = list(
-                Team.objects.competing()
-                .filter(
-                    venue=self.venue,
-                    number__isnull=False,
-                    language=form.cleaned_data["primary_tearoff_language"],
-                )
-                .all()
-            )
+            team_query = team_query.filter(
+                language=form.cleaned_data["primary_tearoff_language"]
+            ).all()
         else:
-            teams = list(
-                Team.objects.competing()
-                .filter(venue=self.venue, number__isnull=False)
-                .exclude(language=form.cleaned_data["primary_tearoff_language"])
-                .all()
-            )
+            team_query = team_query.exclude(
+                language=form.cleaned_data["primary_tearoff_language"]
+            ).all()
+
+        teams = list(team_query)
 
         for i in range(form.cleaned_data["backup_teams"]):
             teams.append(
@@ -313,7 +314,7 @@ class TearoffView(VenueMixin, GenericForm, FormView):
                     form.cleaned_data["first_problem"],
                     form._problem_count,
                     form.cleaned_data["ordering"],
-                    True,
+                    False,
                     form.cleaned_data["include_qr_codes"],
                 )
             else:
