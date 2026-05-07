@@ -270,15 +270,31 @@ class TearoffView(VenueMixin, GenericForm, FormView):
             tearoff_dir = Path(
                 default_storage.path(competition.secret_dir / "tearoffs")
             )
-            t = TearoffGenerator(tearoff_dir, form.cleaned_data["backup_team_language"])
+            t = TearoffGenerator(
+                tearoff_dir, form.cleaned_data["primary_tearoff_language"]
+            )
         except TearoffRequirementMissingError as e:
             return HttpResponse(str(e), status=500)
 
-        teams = list(
-            Team.objects.competing()
-            .filter(venue=self.venue, number__isnull=False)
-            .all()
-        )
+        # if len (form.cleaned_data["teams_selected"]) != 0:
+
+        if form.cleaned_data["mono_or_bil"] == "mono":
+            teams = list(
+                Team.objects.competing()
+                .filter(
+                    venue=self.venue,
+                    number__isnull=False,
+                    language=form.cleaned_data["primary_tearoff_language"],
+                )
+                .all()
+            )
+        else:
+            teams = list(
+                Team.objects.competing()
+                .filter(venue=self.venue, number__isnull=False)
+                .exclude(language=form.cleaned_data["primary_tearoff_language"])
+                .all()
+            )
 
         for i in range(form.cleaned_data["backup_teams"]):
             teams.append(
@@ -291,13 +307,24 @@ class TearoffView(VenueMixin, GenericForm, FormView):
             )
 
         try:
-            data = t.generate_pdf(
-                teams,
-                form.cleaned_data["first_problem"],
-                form._problem_count,
-                form.cleaned_data["ordering"],
-                form.cleaned_data["include_qr_codes"],
-            )
+            if form.cleaned_data["mono_or_bil"] == "mono":
+                data = t.generate_pdf(
+                    teams,
+                    form.cleaned_data["first_problem"],
+                    form._problem_count,
+                    form.cleaned_data["ordering"],
+                    True,
+                    form.cleaned_data["include_qr_codes"],
+                )
+            else:
+                data = t.generate_bilingual_pdf(
+                    teams,
+                    form.cleaned_data["first_problem"],
+                    form._problem_count,
+                    form.cleaned_data["ordering"],
+                    form.cleaned_data["include_qr_codes"],
+                )
+
             return FileResponse(data, filename="tearoffs.pdf")
         except TearoffRequirementMissingError as e:
             return HttpResponse(str(e), status=500)

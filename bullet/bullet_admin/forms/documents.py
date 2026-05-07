@@ -50,19 +50,38 @@ class CertificateForm(forms.Form):
 
 
 class TearoffForm(forms.Form):
+    primary_tearoff_language = forms.ChoiceField(
+        label="Primary language of the Venue",
+        required=True,
+    )
+
+    # TODO custom validator for this field
+    teams_selected = forms.CharField(
+        label="Selected teams",
+        help_text="Empty for all, seq 1-4 etc.",
+        required=False,
+    )
+
     first_problem = forms.IntegerField(
         label="First problem",
         initial=1,
         min_value=1,
     )
     backup_teams = forms.IntegerField(
-        label="Number of backup teams",
+        label="Number of Backup teams",
         initial=0,
         min_value=0,
     )
     backup_team_language = forms.ChoiceField(
         label="Backup team language",
     )
+
+    mono_or_bil = forms.ChoiceField(
+        label="Print tearoffs for Monolingual or Bilingual teams",
+        choices=[("mono", "Monolingual"), ("bil", "Bilingual")],
+        help_text="Tearoffs of teams whose language doesn't match primary tearoff language are to be printed separately as a double-sided document.",
+    )
+
     ordering = forms.ChoiceField(
         label="Problem ordering",
         choices=[("align", "Aligned"), ("seq", "Sequential")],
@@ -75,7 +94,11 @@ class TearoffForm(forms.Form):
         super().__init__(**kwargs)
 
         self.fields["first_problem"].initial = first_problem
-        self.fields["backup_team_language"].choices = list(
+        accepted_languages = list(
             filter(lambda lang: lang[0] in venue.accepted_languages, settings.LANGUAGES)
         )
+        self.fields["primary_tearoff_language"].choices = [
+            ("", "---------")
+        ] + accepted_languages
+        self.fields["backup_team_language"].choices = accepted_languages
         self._problem_count = problems
