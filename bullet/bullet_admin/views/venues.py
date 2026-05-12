@@ -286,11 +286,11 @@ class TearoffView(VenueMixin, GenericForm, FormView):
                 number__in=form.cleaned_data["teams_selected"]
             )
 
-        if form.cleaned_data["mono_or_bil"] == "mono":
+        if form.cleaned_data["language_print_options"] == "mono":
             team_query = team_query.filter(
                 language=form.cleaned_data["primary_tearoff_language"]
             ).all()
-        else:
+        elif form.cleaned_data["language_print_options"] == "bil":
             team_query = team_query.exclude(
                 language=form.cleaned_data["primary_tearoff_language"]
             ).all()
@@ -308,21 +308,21 @@ class TearoffView(VenueMixin, GenericForm, FormView):
             )
 
         try:
-            if form.cleaned_data["mono_or_bil"] == "mono":
+            if form.cleaned_data["language_print_options"] == "bil":
+                data = t.generate_bilingual_pdf(
+                    teams,
+                    form.cleaned_data["first_problem"],
+                    form._problem_count,
+                    form.cleaned_data["ordering"],
+                    form.cleaned_data["include_qr_codes"],
+                )
+            else:
                 data = t.generate_pdf(
                     teams,
                     form.cleaned_data["first_problem"],
                     form._problem_count,
                     form.cleaned_data["ordering"],
                     False,
-                    form.cleaned_data["include_qr_codes"],
-                )
-            else:
-                data = t.generate_bilingual_pdf(
-                    teams,
-                    form.cleaned_data["first_problem"],
-                    form._problem_count,
-                    form.cleaned_data["ordering"],
                     form.cleaned_data["include_qr_codes"],
                 )
 

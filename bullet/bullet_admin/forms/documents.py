@@ -94,7 +94,6 @@ class TearoffForm(forms.Form):
         required=True,
     )
 
-    # TODO custom validator for this field
     teams_selected = SequenceListField(
         label="Selected teams",
         help_text='Teams to be included in the printed tearoffs. Syntax example: "1-4, 5, 7" (teams with numbers 1 to 4, 5 and 7). Leave empty to include all available teams',
@@ -116,10 +115,9 @@ class TearoffForm(forms.Form):
         label="Backup team language",
     )
 
-    mono_or_bil = forms.ChoiceField(
-        label="Print tearoffs for Monolingual or Bilingual teams",
-        choices=[("mono", "Monolingual"), ("bil", "Bilingual")],
-        help_text="Tearoffs of teams whose language doesn't match primary tearoff language are to be printed separately as a double-sided document.",
+    language_print_options = forms.ChoiceField(
+        label="Language print options",
+        choices=[("mixed", "Mixed"), ("mono", "Monolingual"), ("bil", "Bilingual")],
     )
 
     ordering = forms.ChoiceField(
