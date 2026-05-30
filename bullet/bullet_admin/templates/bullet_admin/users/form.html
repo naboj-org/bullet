@@ -36,9 +36,9 @@
                     <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                         <div>
                             <label for="{{ form.email.id_for_label }}">
-                                Email <span class="text-red-600">*</span>
+                                Email {% if user_create_flag %}<span class="text-red-600">*</span>{% endif %}
                             </label>
-                            <p class="text-gray-700 text-sm">A password will be sent to this email address.</p>
+                            {% if user_create_flag %}<p class="text-gray-700 text-sm">A password will be sent to this email address.</p>{% endif %}
                         </div>
                         <div class="mt-1 sm:mt-0 sm:col-span-2">
                             {% bfield form.email %}
