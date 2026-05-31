@@ -60,7 +60,7 @@ urlpatterns = [
         name="competition_upload_tearoffs",
     ),
     path(
-        "competitions/tearoff_upload/<str:tearoff_filename>",
+        "competitions/tearoff_upload/<str:tearoff_filename>/",
         competition.CompetitionTearoffUploadFileView.as_view(),
         name="competition_upload_tearoffs_file",
     ),

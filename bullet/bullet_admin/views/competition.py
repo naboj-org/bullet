@@ -7,7 +7,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.forms import Form
-from django.http import FileResponse, HttpResponse
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.views import View
@@ -23,7 +23,7 @@ from bullet_admin.access import (
     is_country_admin,
 )
 from bullet_admin.forms.competition import CompetitionForm, TearoffUploadForm
-from bullet_admin.utils import get_active_branch, get_active_competition
+from bullet_admin.utils import get_active_branch, get_active_competition, sendfile
 from bullet_admin.views import GenericForm
 
 
@@ -111,12 +111,10 @@ class CompetitionTearoffUploadFileView(PermissionCheckMixin, View):
         competition = get_active_competition(request)
         file_path = competition.secret_dir / "tearoffs" / tearoff_filename
 
-        try:
-            pdf_file = default_storage.open(file_path, "rb")
-        except FileNotFoundError:
+        if not default_storage.exists(file_path):
             return HttpResponse(f"File '{tearoff_filename}' not found", status=404)
 
-        return FileResponse(pdf_file, filename=tearoff_filename)
+        return sendfile(default_storage.path(file_path), as_attachment=True)
 
 
 class CompetitionTearoffUploadView(PermissionCheckMixin, GenericForm, FormView):
