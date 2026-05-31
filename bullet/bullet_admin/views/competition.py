@@ -7,8 +7,10 @@ from django.conf import settings
 from django.contrib import messages
 from django.core.files.storage import default_storage
 from django.forms import Form
+from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse
+from django.views import View
 from django.views.generic import CreateView, FormView, UpdateView
 from problems.logic.results import save_all_ranks, squash_results
 from problems.logic.stats import generate_stats
@@ -21,7 +23,7 @@ from bullet_admin.access import (
     is_country_admin,
 )
 from bullet_admin.forms.competition import CompetitionForm, TearoffUploadForm
-from bullet_admin.utils import get_active_branch, get_active_competition
+from bullet_admin.utils import get_active_branch, get_active_competition, sendfile
 from bullet_admin.views import GenericForm
 
 
@@ -97,6 +99,22 @@ class CompetitionAutomoveView(PermissionCheckMixin, GenericForm, FormView):
             self.request, "The teams will be moved to the competition shortly."
         )
         return redirect("badmin:home")
+
+
+class CompetitionTearoffUploadFileView(PermissionCheckMixin, View):
+    def get(self, request, *args, **kwargs):
+        tearoff_filename = self.kwargs["tearoff_filename"]
+
+        if not tearoff_filename.lower().endswith(".pdf"):
+            return HttpResponse("Not a PDF.", status=400)
+
+        competition = get_active_competition(request)
+        file_path = competition.secret_dir / "tearoffs" / tearoff_filename
+
+        if not default_storage.exists(file_path):
+            return HttpResponse(f"File '{tearoff_filename}' not found", status=404)
+
+        return sendfile(default_storage.path(file_path), as_attachment=True)
 
 
 class CompetitionTearoffUploadView(PermissionCheckMixin, GenericForm, FormView):

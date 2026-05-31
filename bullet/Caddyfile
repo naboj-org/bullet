@@ -11,5 +11,12 @@
 
     reverse_proxy 127.0.0.1:8001 {
         trusted_proxies private_ranges
+
+        @sendfile header X-Sendfile *
+        handle_response @sendfile {
+            root * /
+            rewrite {rp.header.X-Sendfile}
+            file_server
+        }
     }
 }

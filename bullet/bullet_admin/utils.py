@@ -1,16 +1,31 @@
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from competitions.branches import Branch
 from competitions.models import Competition
+from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models import Q
-from django.http import HttpRequest
+from django.http import FileResponse, HttpRequest, HttpResponse
 from django.utils.http import url_has_allowed_host_and_scheme
 
 from bullet_admin.models import CompetitionRole
 
 if TYPE_CHECKING:
     from competitions.models import Venue
+
+
+def sendfile(filename: str | Path, as_attachment: bool = False):
+    filename = str(filename)
+
+    if settings.DEBUG:
+        return FileResponse(open(filename, "rb"), as_attachment=as_attachment)
+
+    response = HttpResponse()
+    response["X-Sendfile"] = filename
+    if as_attachment:
+        response["X-Sendfile-As-Attachment"] = True
+    return response
 
 
 def get_active_competition(request: HttpRequest) -> Competition:
