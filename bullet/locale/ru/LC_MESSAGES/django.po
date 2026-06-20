@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -472,6 +472,10 @@ msgstr "Команда переместилась из списка ожидан
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Ваша команда была удалена"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Неверный адрес электронной почты."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "PO-Revision-Date: 2024-02-09 19:27+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -474,6 +474,10 @@ msgstr "Echipa a fost mutată din lista de așteptare"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Echipa ta a fost ștearsă"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Adresă de e-mail invalidă."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"

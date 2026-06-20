@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj 2023\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "PO-Revision-Date: 2024-01-10 11:46+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -472,6 +472,10 @@ msgstr "Võistkond lubati võistlusele"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Teie võistkond kustutati"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Kehtetu e-posti aadress."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"
