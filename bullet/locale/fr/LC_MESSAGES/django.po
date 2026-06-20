@@ -122,10 +122,8 @@ msgid "Albums"
 msgstr ""
 
 #: competitions/templates/archive/list.html:53
-#, fuzzy
-#| msgid "Competition day"
 msgid "Older competitions"
-msgstr "Jour du concours"
+msgstr "Concours précédents"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
@@ -159,10 +157,9 @@ msgstr "Si vous pensez qu'il s'agit d'une erreur, veuillez nous contacter."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:10
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "Dans cette salle, la compétition commencera à %(time)s à la place de l'heure de départ usuelle."
+msgstr "Dans cette salle, le concours commencera à %(time)s au lieu de l'heure de départ habituelle de %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -453,7 +450,7 @@ msgstr "(Aucune équipe n'a résolu aucun problème pour l'instant)"
 
 #: problems/templatetags/results_selects.py:97
 msgid "All venues"
-msgstr ""
+msgstr "Tous les lieux"
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -596,9 +593,6 @@ msgstr "Tous les horaires sont dans le fuseau horaire %(tz_name)s sauf si indica
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politique de protection des données"
-
-#~ msgid "All venuTous les lieuxes"
-#~ msgstr "Tous les lieux"
 
 #~ msgid "Final results."
 #~ msgstr "Classement final."

@@ -600,39 +600,3 @@ msgstr "Všetky časy sú v časovom pásme %(tz_name)s, pokiaľ nie je uvedené
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Ochrana osobných údajov"
-
-#~ msgid "Final results."
-#~ msgstr "Finálne výsledky."
-
-#~ msgid "Showing official results."
-#~ msgstr "Zobrazujú sa oficiálne výsledky súťaže."
-
-#~ msgid "Organizers"
-#~ msgstr "Organizátori"
-
-#~ msgid "Our partners"
-#~ msgstr "Partneri"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Registrácia začína dňa %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Súťaž prebehne dňa %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Zaregistrovať tím"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Registrácia končí dňa %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Dôležité dátumy"
-
-#~ msgid "Registration starts"
-#~ msgstr "Začiatok registrácie"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Druhé kolo registrácie"

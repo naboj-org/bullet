@@ -161,10 +161,9 @@ msgstr "Neem contact met ons op als u denkt dat dit niet klopt."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:10
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "Op deze locatie begint de wedstrijd om %(time)s in plaats van de algemene begintijd."
+msgstr "Op deze locatie begint de wedstrijd om %(time)s in plaats van de gebruikelijke begintijd van %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -598,39 +597,3 @@ msgstr "Alle tijden zijn in tijdzone %(tz_name)s tenzij anders vermeld."
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Beleid inzake gegevensbescherming"
-
-#~ msgid "Final results."
-#~ msgstr "Eindresultaten."
-
-#~ msgid "Showing official results."
-#~ msgstr "Toont officiële resultaten."
-
-#~ msgid "Organizers"
-#~ msgstr "Organisatoren"
-
-#~ msgid "Our partners"
-#~ msgstr "Onze partners"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Inschrijving begint op %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "De wedstrijd vindt plaats op %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Inschrijving"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "De inschrijving eindigt op %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Belangrijke data"
-
-#~ msgid "Registration starts"
-#~ msgstr "Inschrijving begint"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Tweede ronde van de inschrijving"

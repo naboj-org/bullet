@@ -602,39 +602,3 @@ msgstr "Alle Zeiten sind in der Zeitzone %(tz_name)s, sofern nicht anderes angeg
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Datenschutzrichtlinie"
-
-#~ msgid "Final results."
-#~ msgstr "Endergebnisse."
-
-#~ msgid "Showing official results."
-#~ msgstr "Offizielle Ergebnisse anzeigen."
-
-#~ msgid "Organizers"
-#~ msgstr "Veranstalter"
-
-#~ msgid "Our partners"
-#~ msgstr "Unsere Partner"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Anmeldung startet um %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Der Wettbewerb findet am %(start)s statt."
-
-#~ msgid "Registration"
-#~ msgstr "Anmeldung"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Anmeldung endet in %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Wichtige Termine"
-
-#~ msgid "Registration starts"
-#~ msgstr "Anmeldung startet"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Zweite Anmeldungsrunde"

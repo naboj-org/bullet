@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -604,33 +603,3 @@ msgstr "Toate orele sunt în ora locală %(tz_name)s dacă nu se specifică altc
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Protecția datelor"
-
-#~ msgid "Organizers"
-#~ msgstr "Organizatori"
-
-#~ msgid "Our partners"
-#~ msgstr "Parteneri"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Înregistrarea începe la %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Concursul va avea loc pe %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Înregistrare"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Înregistrarea se termină la %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Date importante"
-
-#~ msgid "Registration starts"
-#~ msgstr "Înregistrarea începe"
-
-#~ msgid "Second round of registration"
-#~ msgstr "A doua rundă de înregistrări"

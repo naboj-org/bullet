@@ -488,8 +488,6 @@ msgstr "Dostáváte tuto zprávu, protože jste se registroval/a do soutěže %(
 #: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
-#, fuzzy, python-format
-#| msgid "Hello, %(name)s!"
 msgid "Hello, %(name)s!"
 msgstr "Dobrý den,"
 
@@ -599,39 +597,3 @@ msgstr "Všechny časy jsou v časové zóně %(tz_name)s pokud není napsáno j
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Zásady ochrany dat"
-
-#~ msgid "Organizers"
-#~ msgstr "Organizátoři"
-
-#~ msgid "Our partners"
-#~ msgstr "Naši partneři"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Registrace začíná %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Soutěž se bude konat %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Registrace"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Registrace končí %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Důležitá data"
-
-#~ msgid "Registration starts"
-#~ msgstr "Začátek registrace"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Druhé kolo registrace"
-
-#~ msgid "Final results."
-#~ msgstr "Finální výsledky."
-
-#~ msgid "Showing official results."
-#~ msgstr "Zveřejnění oficiálních výsledků."

@@ -602,39 +602,3 @@ msgstr "Kõik kellaajad on ajavööndis %(tz_name)s, kui ei ole öeldud teisiti.
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Andmekaitsetingimused"
-
-#~ msgid "Final results."
-#~ msgstr "Lõplikud tulemused."
-
-#~ msgid "Showing official results."
-#~ msgstr "Näidatakse ametlikke tulemusi."
-
-#~ msgid "Organizers"
-#~ msgstr "Korraldajad"
-
-#~ msgid "Our partners"
-#~ msgstr "Meie partnerid"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Registreerumine algus: %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Võistluse kuupäev: %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Registreerumine"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Registreerumise lõpp: %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Olulised kuupäevad"
-
-#~ msgid "Registration starts"
-#~ msgstr "Registreerumine algus"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Registreerumise teine voor"

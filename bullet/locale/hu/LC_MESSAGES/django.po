@@ -597,39 +597,3 @@ msgstr "Minden időpont a %(tz_name)s időzónában van megadja."
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Adatvédelmi szabályzat"
-
-#~ msgid "Final results."
-#~ msgstr "Végleges eredmények."
-
-#~ msgid "Showing official results."
-#~ msgstr "Hivatalos eredmények mutatása."
-
-#~ msgid "Organizers"
-#~ msgstr "Szervezők"
-
-#~ msgid "Our partners"
-#~ msgstr "Partnereink"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "A regisztráció kezdete %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "A verseny napja %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Regisztráció"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "A regisztráció lezárul %(end)s múlva."
-
-#~ msgid "Important dates"
-#~ msgstr "Fontos dátumok"
-
-#~ msgid "Registration starts"
-#~ msgstr "A regisztráció elkezdődik"
-
-#~ msgid "Second round of registration"
-#~ msgstr "A regisztráció második fordulója"

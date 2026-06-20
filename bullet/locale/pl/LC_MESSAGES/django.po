@@ -488,8 +488,6 @@ msgstr "Otrzymałeś tę wiadomość, ponieważ zarejestrowałeś drużynę w za
 #: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
-#, fuzzy, python-format
-#| msgid "Hello, %(name)s!"
 msgid "Hello, %(name)s!"
 msgstr "Dzień dobry!"
 
@@ -599,39 +597,3 @@ msgstr "Jeśli nie zaznaczono inaczej, czas podany jest według strefy czasowej 
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Polityka ochrony danych osobowych"
-
-#~ msgid "Final results."
-#~ msgstr "Ostateczne wyniki."
-
-#~ msgid "Showing official results."
-#~ msgstr "Prezentacja oficjalnych wyników."
-
-#~ msgid "Organizers"
-#~ msgstr "Organizatorzy"
-
-#~ msgid "Our partners"
-#~ msgstr "Nasi partnerzy"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Rejestracja rozpoczyna się %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Zawody odbędą się %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Rejestracja"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Rejestracja kończy się %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Ważne daty"
-
-#~ msgid "Registration starts"
-#~ msgstr "Początek rejestracji"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Druga tura rejestracji"

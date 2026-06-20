@@ -597,39 +597,3 @@ msgstr "Todas las horas se muestran en la zona horaria %(tz_name)s si no está e
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Política de protección de datos"
-
-#~ msgid "Final results."
-#~ msgstr "Resultados finales."
-
-#~ msgid "Showing official results."
-#~ msgstr "Mostrando los resultados oficiales."
-
-#~ msgid "Organizers"
-#~ msgstr "Organizadores"
-
-#~ msgid "Our partners"
-#~ msgstr "Nuestros socios"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "El registro comienza el %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "La competición comenzará el %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Registro"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "El registro finaliza el %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Fechas importantes"
-
-#~ msgid "Registration starts"
-#~ msgstr "El registro comienza"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Segunda ronda de registro"

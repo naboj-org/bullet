@@ -122,10 +122,8 @@ msgid "Albums"
 msgstr ""
 
 #: competitions/templates/archive/list.html:53
-#, fuzzy
-#| msgid "Competition day"
 msgid "Older competitions"
-msgstr "Natjecanje"
+msgstr "Starija natjecanja"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
@@ -159,10 +157,9 @@ msgstr "Ako vjerujete da je ovo greška, kontaktirajte nas."
 
 #: competitions/templates/register/_venue.html:13
 #: competitions/templates/register/partials/venue.html:10
-#, fuzzy, python-format
-#| msgid "At this venue, the competition will begin at %(time)s instead of the usual start time."
+#, python-format
 msgid "At this venue, the competition will begin at %(time)s instead of the usual start time of %(usual)s."
-msgstr "Na ovoj lokaciji pisanja natjecanje će početi u %(time)s umjesto normalnog vremena početka."
+msgstr "Na ovoj lokaciji natjecanje će početi u %(time)s umjesto uobičajenog početka u %(usual)s."
 
 #. Translators: The user attempted to search for a venue, but we were unable to find any matching results.
 #: competitions/templates/register/_venue.html:20
@@ -596,42 +593,3 @@ msgstr "Sva vremena su prikazana u vremenskoj zoni %(tz_name)s osim ako je nagla
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politika zaštite osobnih podataka"
-
-#~ msgid "Final results."
-#~ msgstr "Konačni rezultati."
-
-#~ msgid "Showing official results."
-#~ msgstr "Prikazuju se službeni rezultati."
-
-#~ msgid "Organizers"
-#~ msgstr "Organizatori"
-
-#~ msgid "Our partners"
-#~ msgstr "Naši partneri"
-
-#, fuzzy, python-format
-#~| msgid "Registration starts"
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Početak registracije"
-
-#, fuzzy, python-format
-#~| msgid "The competition did not start yet."
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Natjecanje još nije započelo"
-
-#~ msgid "Registration"
-#~ msgstr "Registracija"
-
-#, fuzzy, python-format
-#~| msgid "Registration ends in %(end)s"
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Registracija završava za %(end)s"
-
-#~ msgid "Important dates"
-#~ msgstr "Važni datumi"
-
-#~ msgid "Registration starts"
-#~ msgstr "Početak registracije"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Drugi krug registracije"

@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: Tekmovanje Naboj Slovenija\n"
@@ -605,33 +604,3 @@ msgstr "Vsi časi so v časovnem pasu %(tz_name)s, razen če ni navedeno drugač
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politika varstva podatkov"
-
-#~ msgid "Organizers"
-#~ msgstr "Organizatorji"
-
-#~ msgid "Our partners"
-#~ msgstr "Naši partnerji"
-
-#, python-format
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Registracija se začne %(start)s."
-
-#, python-format
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Tekmovanje bo potekalo %(start)s."
-
-#~ msgid "Registration"
-#~ msgstr "Registracija"
-
-#, python-format
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Registracija se konča %(end)s."
-
-#~ msgid "Important dates"
-#~ msgstr "Pomembni datumi"
-
-#~ msgid "Registration starts"
-#~ msgstr "Registracija se začne"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Drugi krog registracij"

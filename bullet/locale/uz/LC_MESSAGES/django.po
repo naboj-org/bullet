@@ -3,7 +3,6 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <fka1988@gmail.com>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -19,10 +18,8 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: competitions/branches.py:72
-#, fuzzy
-#| msgid "Naboj Math"
 msgid "Náboj Math"
-msgstr "Naboj Matematika"
+msgstr "Náboj Matematika"
 
 #: competitions/branches.py:72
 msgctxt "branch name"
@@ -30,10 +27,8 @@ msgid "Math"
 msgstr "Matematika"
 
 #: competitions/branches.py:76
-#, fuzzy
-#| msgid "Naboj Physics"
 msgid "Náboj Physics"
-msgstr "Naboj Fizika"
+msgstr "Náboj Fizika"
 
 #: competitions/branches.py:77
 msgctxt "branch name"
@@ -41,10 +36,8 @@ msgid "Physics"
 msgstr "Fizika"
 
 #: competitions/branches.py:83
-#, fuzzy
-#| msgid "Naboj Junior"
 msgid "Náboj Junior"
-msgstr "Naboj Junior"
+msgstr "Náboj Junior"
 
 #: competitions/branches.py:84
 msgctxt "branch name"
@@ -52,10 +45,8 @@ msgid "Junior"
 msgstr "Junior"
 
 #: competitions/branches.py:90
-#, fuzzy
-#| msgid "Naboj Chemistry"
 msgid "Náboj Chemistry"
-msgstr "Naboj Kimyo"
+msgstr "Náboj Kimyo"
 
 #: competitions/branches.py:91
 msgctxt "branch name"
