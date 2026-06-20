@@ -7,6 +7,8 @@ from django.contrib.auth.models import UserManager as DjUserManager
 from django.db import models
 from django.utils import timezone
 
+from users.validators import validate_email_mx_record
+
 
 class UserManager(DjUserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -41,7 +43,9 @@ class UserManager(DjUserManager):
 class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField("first name", max_length=150, blank=True)
     last_name = models.CharField("last name", max_length=150, blank=True)
-    email = models.EmailField("email address", unique=True)
+    email = models.EmailField(
+        "email address", unique=True, validators=[validate_email_mx_record]
+    )
     is_staff = models.BooleanField(
         "staff status",
         default=False,

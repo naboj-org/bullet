@@ -13,6 +13,7 @@ from phonenumbers import PhoneNumberFormat
 from simple_history.models import HistoricalRecords
 
 from bullet import search
+from users.validators import validate_email_mx_record
 
 if TYPE_CHECKING:
     from django.db.models.manager import RelatedManager
@@ -66,7 +67,7 @@ class TeamQuerySet(models.QuerySet):
 class Team(models.Model):
     id: int
     contact_name = models.CharField(max_length=256)
-    contact_email = models.EmailField()
+    contact_email = models.EmailField(validators=[validate_email_mx_record])
     contact_phone = PhoneNumberField(null=True, blank=True)
     secret_link = models.CharField(max_length=48, unique=True)
     online_password = models.CharField(max_length=10, blank=True)

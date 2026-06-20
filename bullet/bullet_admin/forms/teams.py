@@ -1,8 +1,5 @@
-import dns.message
-import dns.resolver
 from competitions.models import Category, Competition, Venue, Wildcard
 from django import forms
-from django.core.exceptions import ValidationError
 from django.db import models
 from django_countries.fields import CountryField
 from users.models import SpanishTeamData, Team, TeamStatus, User
@@ -50,21 +47,6 @@ class TeamForm(forms.ModelForm):
             self.fields["language"].choices = get_language_choices(competition.branch)
 
         self.fields["school"].required = True
-
-    def clean_contact_email(self):
-        contact_email = self.cleaned_data["contact_email"]
-        #   Check if domain has an MX record
-        domain_name = contact_email.split("@")[1]
-        try:
-            dns.resolver.query(domain_name, "MX")
-        except (
-            dns.resolver.NXDOMAIN,
-            dns.resolver.NoAnswer,
-            dns.resolver.NoNameservers,
-            dns.exception.Timeout,
-        ):
-            return ValidationError("Invalid email address.")
-        return contact_email
 
 
 class OperatorTeamForm(TeamForm):
