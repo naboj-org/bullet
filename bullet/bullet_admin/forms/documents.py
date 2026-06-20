@@ -89,11 +89,6 @@ class SequenceListField(forms.CharField):
 
 
 class TearoffForm(forms.Form):
-    primary_tearoff_language = forms.ChoiceField(
-        label="Primary venue language",
-        required=True,
-    )
-
     teams_selected = SequenceListField(
         label="Selected teams",
         help_text='Teams to be included in the printed tearoffs. Syntax example: "1-4, 5, 7" (teams with numbers 1 to 4, 5 and 7). Leave empty to include all available teams',
@@ -113,6 +108,11 @@ class TearoffForm(forms.Form):
     )
     backup_team_language = forms.ChoiceField(
         label="Backup team language",
+    )
+
+    primary_tearoff_language = forms.ChoiceField(
+        label="Primary venue language",
+        required=True,
     )
 
     language_print_options = forms.ChoiceField(
@@ -135,8 +135,6 @@ class TearoffForm(forms.Form):
         accepted_languages = list(
             filter(lambda lang: lang[0] in venue.accepted_languages, settings.LANGUAGES)
         )
-        self.fields["primary_tearoff_language"].choices = [
-            ("", "---------")
-        ] + accepted_languages
+        self.fields["primary_tearoff_language"].choices = accepted_languages
         self.fields["backup_team_language"].choices = accepted_languages
         self._problem_count = problems
