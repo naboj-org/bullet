@@ -31,6 +31,7 @@ class TearoffGenerator:
     def __init__(self, problem_pdf_root: Path, primary_language: str):
         self._problem_pdfs = {}
         self.problem_pdf_root = problem_pdf_root
+        self.primary_language = primary_language
         statement_height = float(
             self.get_problem_pdf(primary_language).pages[0].trimbox[3]
         )
@@ -59,20 +60,24 @@ class TearoffGenerator:
     def close_problem_pdfs(self):
         for pdf in self._problem_pdfs.values():
             pdf.close()
+        self._problem_pdfs = {}
+
+    def check_requirement_for_language(self, language, problem_count: int):
+        try:
+            problem_pdf = self.get_problem_pdf(language)
+        except TearoffRequirementMissingError:
+            raise
+
+        if len(problem_pdf.pages) != problem_count + 1:
+            raise TearoffRequirementMissingError(
+                f"Wrong page count for language {language}: expected "
+                f"{problem_count + 1}, got {len(problem_pdf.pages)}."
+            )
 
     def check_requirements(self, teams: Sequence[Team], problem_count: int):
         languages = set(map(attrgetter("language"), teams))
         for language in languages:
-            try:
-                problem_pdf = self.get_problem_pdf(language)
-            except TearoffRequirementMissingError:
-                raise
-
-            if len(problem_pdf.pages) != problem_count + 1:
-                raise TearoffRequirementMissingError(
-                    f"Wrong page count for language {language}: expected "
-                    f"{problem_count + 1}, got {len(problem_pdf.pages)}."
-                )
+            self.check_requirement_for_language(language, problem_count)
 
     def sequential_tearoffs(
         self, teams: Sequence[Team], problem_count: int, offset: int
@@ -110,10 +115,13 @@ class TearoffGenerator:
         first_problem: int,
         problem_count: int,
         ordering: str,
+        target_lang: bool,  # If true, will generate all Tearoffs in primary_language, instead of particular team's language
         include_qr: bool = True,
     ) -> BinaryIO:
-        self.check_requirements(teams, problem_count)
-
+        if not target_lang:
+            self.check_requirements(teams, problem_count)
+        else:
+            self.check_requirement_for_language(self.primary_language, problem_count)
         offset = first_problem - 1
         problem_count -= offset
 
@@ -123,10 +131,44 @@ class TearoffGenerator:
         if ordering == "align":
             tearoffs = self.aligned_tearoffs(teams, problem_count, offset)
 
-        return self.generate_tearoffs(tearoffs, include_qr)
+        return self.generate_tearoffs(tearoffs, include_qr, target_lang)
+
+    def generate_bilingual_pdf(
+        self,
+        teams: Sequence[Team],
+        first_problem: int,
+        problem_count: int,
+        ordering: str,
+        include_qr: bool = True,
+    ):
+        primary_language_io = self.generate_pdf(
+            teams, first_problem, problem_count, ordering, True, include_qr
+        )
+        secondary_language_io = self.generate_pdf(
+            teams, first_problem, problem_count, ordering, False, include_qr
+        )
+
+        with (
+            Pdf.open(primary_language_io) as primary_pdf,
+            Pdf.open(secondary_language_io) as secondary_pdf,
+        ):
+            result = Pdf.new()
+
+            for i in range(len(primary_pdf.pages)):
+                result.pages.append(primary_pdf.pages[i])
+                result.pages.append(secondary_pdf.pages[i])
+
+            output = io.BytesIO()
+            result.save(output)
+
+        output.seek(0)
+        return output
 
     def generate_tearoffs(
-        self, tearoffs: Sequence[Tearoff | None], include_qr: bool
+        self,
+        tearoffs: Sequence[Tearoff | None],
+        include_qr: bool,
+        target_lang: bool,
     ) -> BinaryIO:
         output_stream = io.BytesIO()
         canvas = Canvas(output_stream)
@@ -140,7 +182,7 @@ class TearoffGenerator:
 
         pdf = Pdf.open(output_stream)
         for i, page in enumerate(pages):
-            self.add_statements_to_page(pdf.pages[i], page)
+            self.add_statements_to_page(pdf.pages[i], page, target_lang)
 
         final_stream = io.BytesIO()
         pdf.save(final_stream)
@@ -254,11 +296,16 @@ class TearoffGenerator:
 
         canvas.restoreState()
 
-    def add_statements_to_page(self, page: Page, tearoffs: Iterable[Tearoff | None]):
+    def add_statements_to_page(
+        self, page: Page, tearoffs: Iterable[Tearoff | None], target_lang: bool
+    ):
+        language = self.primary_language
         for i, tearoff in enumerate(tearoffs):
             if tearoff is None:
                 continue
-            pdf_file = self.get_problem_pdf(tearoff.team.language)
+            if not target_lang:
+                language = tearoff.team.language
+            pdf_file = self.get_problem_pdf(language)
             page.add_underlay(
                 pdf_file.pages[tearoff.page_number],
                 Rectangle(

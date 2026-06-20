@@ -1,10 +1,18 @@
 {% extends "bullet_admin/generic/form.html" %}
 
 {% block before_form %}
-<p class="mb-4">Current uploaded tearoff files:
-{% for lang in available_langs %}
-    <a href = "{% url 'badmin:competition_upload_tearoffs_file' tearoff_filename=lang %}">
-        {{ lang }}</a>{% if not forloop.last %}, {% endif %}
-{% endfor %}
-</p>
+  <p class="mb-2">Current uploaded tearoff files:</p>
+
+  {% if available_files %}
+    <ul class="mb-4">
+      {% for file in available_files %}
+        <li>
+          <a class="link" href="{% url 'badmin:competition_upload_tearoffs_file' tearoff_filename=file.name %}">{{ file.name }}</a>
+          ({{ file.modified_time|date:"d.m.Y H:i:s" }})
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="mb-4">No tearoff files uploaded.</p>
+  {% endif %}
 {% endblock before_form %}

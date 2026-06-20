@@ -14,5 +14,18 @@
                 <b>Sequential:</b> Problems are sorted sequentially on the page, meaning you will need to order them manually. For example, you will get a page containing problems 1–4 for the first team, then another page containing problems 5–8, and so on.
             </li>
         </ul>
+
+        <p class="mb-2">There are three language print options:</p>
+        <ul class="list-disc list-outside ml-6">
+            <li>
+                <b>Mixed:</b> Will print tear-offs for all teams. The language of the problems is derived from the team's specified language.
+            </li>
+            <li>
+                <b>Monolingual:</b> Only prints tear-offs for teams whose specified language matches the primary venue language.
+            </li>
+            <li>
+                <b>Bilingual:</b> Returns a double-sided document with primary venue language on one side and team's specified language on the other. Only prints teams whose specified language differs from primary venue language.
+            </li>
+        </ul>
     </div>
 {% endblock before_form %}

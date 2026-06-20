@@ -49,7 +49,53 @@ class CertificateForm(forms.Form):
         return self.cleaned_data
 
 
+class SequenceListField(forms.CharField):
+    def __init__(self, *args, min_value=None, max_value=None, **kwargs):
+        self.min_value = 0 if min_value is None else min_value
+        self.max_value = 999 if max_value is None else max_value
+        super().__init__(*args, **kwargs)
+
+    def clean(self, value):
+        vals = super().clean(value).strip(",").strip()
+        result_set = set()
+        if len(vals) == 0:
+            return set()
+
+        for val in vals.split(","):
+            numbers = []
+            parts = val.split("-")
+            if len(parts) > 2:
+                raise ValidationError("Invalid sequence: " + f"'{val}'")
+
+            try:
+                for x in parts:
+                    num = int(x)
+                    if num > self.max_value:
+                        raise ValidationError("Number too large: " + x)
+                    if num < self.min_value:
+                        raise ValueError
+                    numbers.append(num)
+            except ValueError:
+                raise ValidationError("Invalid input: " + f"'{val}'")
+
+            if len(numbers) == 1:
+                result_set.add(numbers[0])
+            elif len(numbers) == 2:
+                if numbers[0] > numbers[1]:
+                    raise ValidationError("Invalid sequence: " + f"'{val}'")
+                result_set.update(range(numbers[0], numbers[1] + 1))
+
+        return result_set
+
+
 class TearoffForm(forms.Form):
+    teams_selected = SequenceListField(
+        label="Selected teams",
+        help_text='Teams to be included in the printed tearoffs. Syntax example: "1-4, 5, 7" (teams with numbers 1 to 4, 5 and 7). Leave empty to include all available teams',
+        required=False,
+        max_length=500,
+    )
+
     first_problem = forms.IntegerField(
         label="First problem",
         initial=1,
@@ -63,6 +109,17 @@ class TearoffForm(forms.Form):
     backup_team_language = forms.ChoiceField(
         label="Backup team language",
     )
+
+    primary_tearoff_language = forms.ChoiceField(
+        label="Primary venue language",
+        required=True,
+    )
+
+    language_print_options = forms.ChoiceField(
+        label="Language print options",
+        choices=[("mixed", "Mixed"), ("mono", "Monolingual"), ("bil", "Bilingual")],
+    )
+
     ordering = forms.ChoiceField(
         label="Problem ordering",
         choices=[("align", "Aligned"), ("seq", "Sequential")],
@@ -75,7 +132,9 @@ class TearoffForm(forms.Form):
         super().__init__(**kwargs)
 
         self.fields["first_problem"].initial = first_problem
-        self.fields["backup_team_language"].choices = list(
+        accepted_languages = list(
             filter(lambda lang: lang[0] in venue.accepted_languages, settings.LANGUAGES)
         )
+        self.fields["primary_tearoff_language"].choices = accepted_languages
+        self.fields["backup_team_language"].choices = accepted_languages
         self._problem_count = problems
