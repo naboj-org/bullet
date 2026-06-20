@@ -90,7 +90,7 @@ class SequenceListField(forms.CharField):
 
 class TearoffForm(forms.Form):
     primary_tearoff_language = forms.ChoiceField(
-        label="Primary language of the Venue",
+        label="Primary venue language",
         required=True,
     )
 
@@ -107,7 +107,7 @@ class TearoffForm(forms.Form):
         min_value=1,
     )
     backup_teams = forms.IntegerField(
-        label="Number of Backup teams",
+        label="Number of backup teams",
         initial=0,
         min_value=0,
     )
