@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj_Translation\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "PO-Revision-Date: 2023-02-15 21:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: Persian\n"
@@ -505,6 +505,10 @@ msgstr "تیم از فهرست انتظار خارج شده است"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "تیم شما حذف شده است"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "نشانی ایمیل نامعتبر است."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"

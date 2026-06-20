@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <fka1988@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -480,6 +480,10 @@ msgstr "Jamoa kutish ro'yxatidan olindi"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Sizning jamoangiz o'chirildi"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Noto'g'ri elektron pochta manzili."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"

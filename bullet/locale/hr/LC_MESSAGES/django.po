@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "Language: hr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -466,6 +466,10 @@ msgstr "Tim je maknut s liste čekanja"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Vaš tim je obrisan"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Nevažeća adresa e-pošte."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"

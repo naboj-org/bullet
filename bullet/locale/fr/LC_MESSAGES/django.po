@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-18 17:05+0000\n"
+"POT-Creation-Date: 2026-06-20 21:55+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -452,8 +452,8 @@ msgid "(No team has solved any problem yet)"
 msgstr "(Aucune équipe n'a résolu aucun problème pour l'instant)"
 
 #: problems/templatetags/results_selects.py:97
-msgid "All venuTous les lieuxes"
-msgstr "Tous les lieux"
+msgid "All venues"
+msgstr ""
 
 #: users/emails/teams.py:34
 msgid "Confirm your team registration"
@@ -466,6 +466,10 @@ msgstr "Équipe déplacée de la liste d'attente"
 #: users/emails/teams.py:64
 msgid "Your team has been deleted"
 msgstr "Votre équipe a été supprimée"
+
+#: users/validators.py:17
+msgid "Invalid email address."
+msgstr "Adresse e-mail invalide."
 
 #: web/templates/mail/base.html:351
 msgid "Competition logo"
@@ -592,6 +596,9 @@ msgstr "Tous les horaires sont dans le fuseau horaire %(tz_name)s sauf si indica
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politique de protection des données"
+
+#~ msgid "All venuTous les lieuxes"
+#~ msgstr "Tous les lieux"
 
 #~ msgid "Final results."
 #~ msgstr "Classement final."
