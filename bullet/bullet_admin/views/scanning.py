@@ -294,6 +294,12 @@ class TableReviewView(PermissionCheckMixin, TemplateView):
                 )
 
             team = selected_team or scanned_barcode.team
+            if not selected_team:
+                request.session[self.session_key(request)] = {
+                    "team_id": team.id,
+                    "checked_problem_numbers": [],
+                }
+                selected_team = team
             problems = self.get_expected_problems(team)
             expected_problem_numbers = {problem.number for problem in problems}
             if scanned_barcode.problem_number not in expected_problem_numbers:
