@@ -56,7 +56,10 @@ class ProblemStatementView(ArchiveCompetitionMixin, ListView):
 
     def inject_stats(self, object_list):
         stats = (
-            ProblemStat.objects.filter(problem__in=object_list.values("problem"))
+            ProblemStat.objects.filter(
+                problem__in=object_list.values("problem"),
+                team__is_disqualified=False,
+            )
             .values("problem")
             .annotate(
                 received=Count("*"),
