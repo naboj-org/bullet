@@ -22,7 +22,11 @@ from bullet_admin.views.education import SchoolListView
 from bullet_admin.views.emails import CampaignListView
 from bullet_admin.views.files import FileTreeView
 from bullet_admin.views.results import ResultsHomeView
-from bullet_admin.views.scanning import ProblemScanView, VenueReviewView
+from bullet_admin.views.scanning import (
+    ProblemScanView,
+    TableReviewView,
+    VenueReviewView,
+)
 from bullet_admin.views.teams import RecentlyDeletedTeamsView, TeamListView
 from bullet_admin.views.tex import TemplateListView
 from bullet_admin.views.users import UserListView
@@ -77,6 +81,12 @@ SIDEBAR: list[Group] = [
                 "Review",
                 reverse_lazy("badmin:scanning_review"),
                 VenueReviewView.required_permissions,
+            ),
+            Item(
+                "mdi:table-furniture",
+                "Table review",
+                reverse_lazy("badmin:scanning_table_review"),
+                TableReviewView.required_permissions,
             ),
             Item(
                 "mdi:trophy",

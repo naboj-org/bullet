@@ -218,6 +218,16 @@ urlpatterns = [
         name="scanning_review",
     ),
     path(
+        "scanning/table-review/",
+        scanning.TableReviewView.as_view(),
+        name="scanning_table_review",
+    ),
+    path(
+        "scanning/table-review/clear/",
+        scanning.TableReviewClearView.as_view(),
+        name="scanning_table_review_clear",
+    ),
+    path(
         "scanning/review/<int:pk>/",
         scanning.TeamReviewView.as_view(),
         name="scanning_review_team",

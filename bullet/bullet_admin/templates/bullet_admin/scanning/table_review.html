@@ -1,0 +1,58 @@
+{% extends "bullet_admin/base.html" %}
+{% load static %}
+{% block title %}
+    Table review
+{% endblock title %}
+
+{% block content %}
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b border-gray-200 flex justify-between items-baseline">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Scan problem</h2>
+            <button id="js-open-reader"
+                    class="btn-admin-sm bg-blue-500 hover:bg-blue-600 flex items-center gap-2">
+                <b-icon icon="mdi:cellphone" class="size-5"></b-icon> Phone scanner
+            </button>
+        </header>
+        <div>
+            <p class="p-4 border-b border-gray-200">
+                Scan a problem from a team's table to select the team and check their problems.
+            </p>
+            <form hx-post="{% url "badmin:scanning_table_review" %}"
+                  hx-target="#js-table-review"
+                  class="flex p-4 gap-2"
+                  id="js-scanform"
+                  autocomplete="off">
+                {% csrf_token %}
+                <input type="text"
+                       name="barcode"
+                       id="js-scanfield"
+                       class="form-input input"
+                       placeholder="Barcode"
+                       autofocus>
+                <button type="submit"
+                        class="btn-admin bg-primary hover:bg-primary-dark shrink-0">
+                    Scan
+                </button>
+            </form>
+            <div id="reader-wrapper"
+                 class="relative hidden">
+                <div id="js-reader"></div>
+                <div id="success-indicator"
+                     class="z-10 absolute inset-0 ring-inset ring-8 ring-green-500/0">
+                </div>
+            </div>
+            <div id="js-reader-status"></div>
+        </div>
+    </article>
+    <article class="m-8 border border-gray-200 rounded-md bg-white shadow-lg overflow-hidden">
+        <header class="px-4 py-3 bg-slate-100 border-b border-gray-200">
+            <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Team table</h2>
+        </header>
+        <div class="p-4"
+             id="js-table-review">
+            {% include "bullet_admin/scanning/_table_review.html" %}
+        </div>
+    </article>
+    <script src="{% static "js/html5-qrcode.min.js" %}"></script>
+    <script src="{% static "js/admin_barcode.js" %}"></script>
+{% endblock content %}
