@@ -43,6 +43,14 @@ class TeamForm(forms.ModelForm):
             self.fields["language"].choices = get_language_choices_for_venue(
                 self.instance.venue
             )
+
+            if kwargs["instance"].venue.is_reviewed:
+                self.fields["is_disqualified"].disabled = True
+                self.fields["is_disqualified"].help_text = (
+                    "A country admin must unreview the venue before the team's "
+                    "disqualification status can be modified."
+                )
+
         else:
             self.fields["language"].choices = get_language_choices(competition.branch)
 
