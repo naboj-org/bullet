@@ -210,7 +210,7 @@ class UserCreateView(PermissionCheckMixin, UserFormsMixin, View):
         return TemplateResponse(
             request,
             "bullet_admin/users/form.html",
-            {"form": form, "bform": bform, "cform": cform, "user_create_flag": True},
+            {"form": form, "bform": bform, "cform": cform},
         )
 
     @transaction.atomic
@@ -229,7 +229,6 @@ class UserCreateView(PermissionCheckMixin, UserFormsMixin, View):
                     "form": form,
                     "bform": bform,
                     "cform": cform,
-                    "user_create_flag": True,
                 },
             )
 

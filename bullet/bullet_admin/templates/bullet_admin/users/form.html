@@ -32,19 +32,17 @@
                     <label for="{{ form.last_name.id_for_label }}">Last name</label>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.last_name %}</div>
                 </div>
-                {% if form.email %}
-                    <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
-                        <div>
-                            <label for="{{ form.email.id_for_label }}">
-                                Email {% if user_create_flag %}<span class="text-red-600">*</span>{% endif %}
-                            </label>
-                            {% if user_create_flag %}<p class="text-gray-700 text-sm">A password will be sent to this email address.</p>{% endif %}
-                        </div>
-                        <div class="mt-1 sm:mt-0 sm:col-span-2">
-                            {% bfield form.email %}
-                        </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>
+                        <label for="{{ form.email.id_for_label }}">
+                            Email {% if not object %}<span class="text-red-600">*</span>{% endif %}
+                        </label>
+                        {% if not object %}<p class="text-gray-700 text-sm">A password will be sent to this email address.</p>{% endif %}
                     </div>
-                {% endif %}
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% bfield form.email %}
+                    </div>
+                </div>
             </div>
         </article>
         {% if bform %}
