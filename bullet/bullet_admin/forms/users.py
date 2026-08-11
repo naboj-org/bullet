@@ -17,7 +17,7 @@ class UserForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         if self.instance.pk:
-            self.fields.pop("email")
+            self.fields["email"].disabled = True
 
 
 class BranchRoleForm(forms.ModelForm):

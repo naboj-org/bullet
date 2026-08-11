@@ -225,7 +225,11 @@ class UserCreateView(PermissionCheckMixin, UserFormsMixin, View):
             return TemplateResponse(
                 request,
                 "bullet_admin/users/form.html",
-                {"form": form, "bform": bform, "cform": cform},
+                {
+                    "form": form,
+                    "bform": bform,
+                    "cform": cform,
+                },
             )
 
         user: User = form.save(commit=False)
