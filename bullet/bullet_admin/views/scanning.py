@@ -146,17 +146,24 @@ class VenueReviewView(PermissionCheckMixin, VenueMixin, TemplateView):
             .order_by("is_reviewed", "number")
         )
 
+    def is_dry_run(self) -> bool:
+        start = self.venue.start_time
+        end = start + self.venue.category.competition.competition_duration
+        return start <= timezone.now() < end
+
     def get_context_data(self, *args, **kwargs):
         ctx = super().get_context_data()
         ctx["teams"] = self.get_teams()
+        ctx["is_review_dry_run"] = self.is_dry_run()
         return ctx
 
     def scan(self, request):
         start = self.venue.start_time
         end = start + self.venue.category.competition.competition_duration
 
-        if timezone.now() < end:
-            raise ValueError("The competition did not end yet.")
+        now = timezone.now()
+        if now < start:
+            raise ValueError("The competition did not start yet.")
 
         scanned_barcode = parse_barcode(
             get_active_competition(request),
@@ -185,9 +192,10 @@ class VenueReviewView(PermissionCheckMixin, VenueMixin, TemplateView):
                     f"got {scanned_barcode.problem_number}."
                 )
 
-        scanned_barcode.team.is_reviewed = True
-        scanned_barcode.team._change_reason = "reviewed via barcode"
-        scanned_barcode.team.save()
+        if now >= end:
+            scanned_barcode.team.is_reviewed = True
+            scanned_barcode.team._change_reason = "reviewed via barcode"
+            scanned_barcode.team.save()
 
     def post(self, request, *args, **kwargs):
         error = ""
@@ -203,6 +211,7 @@ class VenueReviewView(PermissionCheckMixin, VenueMixin, TemplateView):
                 "teams": self.get_teams(),
                 "venue": self.venue,
                 "error": error,
+                "is_review_dry_run": self.is_dry_run(),
             },
         )
         return trigger_client_event(
