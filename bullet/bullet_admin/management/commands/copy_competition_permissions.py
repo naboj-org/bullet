@@ -120,7 +120,6 @@ class Command(BaseCommand):
                 user=source_role.user,
                 competition=dest_comp,
                 countries=source_role.countries,
-                can_delegate=source_role.can_delegate,
                 is_operator=source_role.is_operator,
             )
 
