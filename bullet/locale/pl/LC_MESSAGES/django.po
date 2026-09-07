@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 21:55+0000\n"
+"POT-Creation-Date: 2026-09-07 07:17+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: Justyna Jaworska\n"
@@ -124,10 +124,6 @@ msgstr "Zadania"
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Galeria"
-
-#: competitions/templates/archive/list.html:53
-msgid "Older competitions"
-msgstr "Poprzednie zawody"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
@@ -488,6 +484,8 @@ msgstr "Otrzymałeś tę wiadomość, ponieważ zarejestrowałeś drużynę w za
 #: web/templates/mail/messages/team_delete.txt:1
 #: web/templates/mail/messages/to_competition.html:5
 #: web/templates/mail/messages/to_competition.txt:1
+#, fuzzy, python-format
+#| msgid "Hello, %(name)s!"
 msgid "Hello, %(name)s!"
 msgstr "Dzień dobry!"
 

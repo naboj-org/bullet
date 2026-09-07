@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 21:55+0000\n"
+"POT-Creation-Date: 2026-09-07 07:17+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -124,10 +124,6 @@ msgstr "Probleemopgaven"
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Fotoalbums"
-
-#: competitions/templates/archive/list.html:53
-msgid "Older competitions"
-msgstr "Vorige wedstrijden"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 21:55+0000\n"
+"POT-Creation-Date: 2026-09-07 07:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -128,10 +128,6 @@ msgstr "Задания и решения"
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Альбомы"
-
-#: competitions/templates/archive/list.html:53
-msgid "Older competitions"
-msgstr "Прошедшие олимпиады"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
