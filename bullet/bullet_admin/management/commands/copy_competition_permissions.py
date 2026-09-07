@@ -1,7 +1,7 @@
+from competitions.models import Competition, Venue
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
-from competitions.models import Competition, Venue
 from bullet_admin.models import CompetitionRole
 
 
@@ -31,12 +31,18 @@ class Command(BaseCommand):
             action="store_true",
             help="Overwrite existing permissions in destination competition",
         )
+        parser.add_argument(
+            "--exclude-operators",
+            action="store_true",
+            help="Do not copy permissions of operators",
+        )
 
     def handle(self, *args, **options):
         source_id = options["source_competition_id"]
         dest_id = options["destination_competition_id"]
         dry_run = options["dry_run"]
         overwrite = options["overwrite"]
+        exclude_operators = options["exclude_operators"]
 
         try:
             source_competition = Competition.objects.get(id=source_id)
@@ -63,7 +69,11 @@ class Command(BaseCommand):
         try:
             with transaction.atomic():
                 self.copy_permissions(
-                    source_competition, dest_competition, dry_run, overwrite
+                    source_competition,
+                    dest_competition,
+                    dry_run,
+                    overwrite,
+                    exclude_operators,
                 )
         except Exception as e:
             raise CommandError(f"Error copying permissions: {e}")
@@ -71,7 +81,9 @@ class Command(BaseCommand):
         if not dry_run:
             self.stdout.write(self.style.SUCCESS("Permissions copied successfully!"))
 
-    def copy_permissions(self, source_comp, dest_comp, dry_run, overwrite):
+    def copy_permissions(
+        self, source_comp, dest_comp, dry_run, overwrite, exclude_operators
+    ):
         """Copy competition permissions from source to destination"""
 
         # Get venue mapping by shortcode
@@ -79,6 +91,8 @@ class Command(BaseCommand):
 
         # Get all source competition roles
         source_roles = CompetitionRole.objects.filter(competition=source_comp)
+        if exclude_operators:
+            source_roles = source_roles.filter(is_operator=False)
 
         self.stdout.write(f"Found {source_roles.count()} roles to copy")
 
@@ -184,4 +198,3 @@ class Command(BaseCommand):
                 f"User {dest_role.user}: "
                 f"{len(mapped_venues)} venues mapped successfully"
             )
-
