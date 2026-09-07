@@ -219,6 +219,147 @@ class VenueReviewView(PermissionCheckMixin, VenueMixin, TemplateView):
         )
 
 
+class TableReviewView(PermissionCheckMixin, TemplateView):
+    required_permissions = [is_operator]
+    template_name = "bullet_admin/scanning/table_review.html"
+
+    @staticmethod
+    def session_key(request) -> str:
+        return f"table-review-{get_active_competition(request).id}"
+
+    def get_session_state(self) -> dict:
+        state = self.request.session.get(self.session_key(self.request), {})
+        return state if isinstance(state, dict) else {}
+
+    def get_selected_team(self) -> Team | None:
+        team_id = self.get_session_state().get("team_id")
+        if not isinstance(team_id, int):
+            return None
+
+        return (
+            Team.objects.select_related("venue__category")
+            .filter(
+                id=team_id,
+                venue__category__competition=get_active_competition(self.request),
+            )
+            .first()
+        )
+
+    def get_expected_problems(self, team: Team) -> list[Problem]:
+        category = team.venue.category
+        solved_problem_ids = team.solved_problems.values("problem_id")
+        return list(
+            Problem.objects.filter(
+                competition=get_active_competition(self.request),
+                number__gte=category.first_problem,
+                number__lte=get_last_problem_for_team(team),
+            )
+            .exclude(id__in=solved_problem_ids)
+            .order_by("number")
+        )
+
+    def get_review_context(self, team: Team | None = None) -> dict:
+        if team is None:
+            return {
+                "team": None,
+                "problems": [],
+                "checked_problem_numbers": set(),
+            }
+
+        problems = self.get_expected_problems(team)
+        checked_numbers = set(
+            self.get_session_state().get("checked_problem_numbers", [])
+        )
+        return {
+            "team": team,
+            "problems": problems,
+            "checked_problem_numbers": checked_numbers,
+        }
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+        ctx.update(self.get_review_context(self.get_selected_team()))
+        return ctx
+
+    def post(self, request, *args, **kwargs):
+        error = ""
+        selected_team = self.get_selected_team()
+        try:
+            scanned_barcode = parse_barcode(
+                get_active_competition(request),
+                request.POST.get("barcode", ""),
+            )
+
+            if not is_operator_in(request.user, scanned_barcode.venue):
+                raise ValueError(
+                    f"You don't have the required permissions to review "
+                    f"problems in {scanned_barcode.venue.shortcode}."
+                )
+
+            if selected_team and selected_team != scanned_barcode.team:
+                raise ValueError(
+                    f"Team {selected_team.code} is currently selected. "
+                    f"Clear the team before reviewing {scanned_barcode.team.code}."
+                )
+
+            team = selected_team or scanned_barcode.team
+            if not selected_team:
+                request.session[self.session_key(request)] = {
+                    "team_id": team.id,
+                    "checked_problem_numbers": [],
+                }
+                selected_team = team
+            problems = self.get_expected_problems(team)
+            expected_problem_numbers = {problem.number for problem in problems}
+            if scanned_barcode.problem_number not in expected_problem_numbers:
+                raise ValueError(
+                    f"Problem {scanned_barcode.problem_number} is not expected "
+                    f"on team {team.code}'s table."
+                )
+
+            checked_numbers = set()
+            if selected_team:
+                previous_checks = self.get_session_state().get(
+                    "checked_problem_numbers", []
+                )
+                checked_numbers = {
+                    problem.number
+                    for problem in problems
+                    if problem.number in previous_checks
+                }
+            checked_numbers.add(scanned_barcode.problem_number)
+            request.session[self.session_key(request)] = {
+                "team_id": team.id,
+                "checked_problem_numbers": sorted(checked_numbers),
+            }
+            selected_team = team
+        except ValueError as e:
+            error = str(e)
+
+        context = self.get_review_context(selected_team)
+        context["error"] = error
+        return trigger_client_event(
+            TemplateResponse(
+                request,
+                "bullet_admin/scanning/_table_review_response.html",
+                context,
+            ),
+            "scan-complete",
+            {"result": 1 if error else 0},
+        )
+
+
+class TableReviewClearView(PermissionCheckMixin, View):
+    required_permissions = [is_operator]
+
+    def post(self, request, *args, **kwargs):
+        request.session.pop(TableReviewView.session_key(request), None)
+        return TemplateResponse(
+            request,
+            "bullet_admin/scanning/_table_review_cleared.html",
+        )
+
+
 class UndoScanView(PermissionCheckMixin, TemplateView):
     required_permissions = [is_operator]
     template_name = "bullet_admin/scanning/undo.html"

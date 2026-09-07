@@ -1,0 +1,36 @@
+{% load access utils %}
+{% if team %}
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+            <div class="font-mono text-lg">{{ team.code }}</div>
+            <div class="text-sm text-gray-600">{{ team.display_name }}</div>
+        </div>
+        <button hx-post="{% url "badmin:scanning_table_review_clear" %}"
+                hx-target="#js-table-review"
+                class="btn-admin-sm bg-slate-500 hover:bg-slate-600 flex items-center gap-2">
+            <b-icon icon="mdi:close" class="size-5"></b-icon> Clear team
+        </button>
+    </div>
+    {% if problems %}
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
+            {% for problem in problems %}
+                <div class="border rounded-md px-3 py-2 flex items-center gap-2 {% if problem.number in checked_problem_numbers %}bg-green-100 border-green-700{% else %}bg-red-100 border-red-700{% endif %}">
+                    {% if problem.number in checked_problem_numbers %}
+                        <b-icon icon="mdi:check-circle" class="size-6 text-green-600"></b-icon>
+                    {% else %}
+                        <b-icon icon="mdi:cross-circle" class="size-6 text-red-600"></b-icon>
+                    {% endif %}
+                    <span class="font-mono">{{ problem.number }}</span>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        {% aalert color="green" %}
+            <p>All problems issued to this team have been solved. No problems should be on its table.</p>
+        {% endaalert %}
+    {% endif %}
+{% else %}
+    {% aalert color="blue" %}
+        <p>Scan a problem to select a team.</p>
+    {% endaalert %}
+{% endif %}
