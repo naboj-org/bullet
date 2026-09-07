@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj Bullet\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 21:55+0000\n"
+"POT-Creation-Date: 2026-09-07 07:17+0000\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -120,10 +120,6 @@ msgstr ""
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr ""
-
-#: competitions/templates/archive/list.html:53
-msgid "Older competitions"
-msgstr "Concours précédents"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
@@ -593,42 +589,3 @@ msgstr "Tous les horaires sont dans le fuseau horaire %(tz_name)s sauf si indica
 #: web/templates/web/snippets/copyright.html:10
 msgid "Data protection policy"
 msgstr "Politique de protection des données"
-
-#~ msgid "Final results."
-#~ msgstr "Classement final."
-
-#~ msgid "Showing official results."
-#~ msgstr "Affichage du classement final."
-
-#~ msgid "Organizers"
-#~ msgstr "Organisateurs"
-
-#~ msgid "Our partners"
-#~ msgstr "Nos partenaires"
-
-#, fuzzy, python-format
-#~| msgid "Registration starts"
-#~ msgid "Registration starts on %(start)s."
-#~ msgstr "Début des inscriptions"
-
-#, fuzzy, python-format
-#~| msgid "The competition did not start yet."
-#~ msgid "The competition will take place on %(start)s."
-#~ msgstr "Le concours n'a pas encore commencé."
-
-#~ msgid "Registration"
-#~ msgstr "Inscription"
-
-#, fuzzy, python-format
-#~| msgid "Registration ends in %(end)s"
-#~ msgid "Registration ends on %(end)s."
-#~ msgstr "Les inscriptions se terminent dans %(end)s"
-
-#~ msgid "Important dates"
-#~ msgstr "Les dates importantes"
-
-#~ msgid "Registration starts"
-#~ msgstr "Début des inscriptions"
-
-#~ msgid "Second round of registration"
-#~ msgstr "Second tour d'inscriptions"

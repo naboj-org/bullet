@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Naboj-Ua\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-20 21:55+0000\n"
+"POT-Creation-Date: 2026-09-07 07:17+0000\n"
 "PO-Revision-Date: 2025-10-15 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -129,10 +129,6 @@ msgstr "Задачі та розв'язання"
 #: gallery/templates/gallery/list.html:4 gallery/templates/gallery/list.html:8
 msgid "Albums"
 msgstr "Альбоми"
-
-#: competitions/templates/archive/list.html:53
-msgid "Older competitions"
-msgstr "Старіші турніри"
 
 #: competitions/templates/live/countdown.html:4
 #: competitions/templates/live/first_problem.html:4
