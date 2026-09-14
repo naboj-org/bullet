@@ -7,28 +7,29 @@ and this project uses the `YYYY.N` version format.
 
 ### Added
 
-- Email fields now check if domain is valid
-- Informative team review can now be run during competition
-- Table review
+- More options for tearoff generation, including bilingual variant.
+- Email fields now check if domain is valid.
+- Informative team review can now be run during competition.
+- Table review.
 
 ### Changed
 
-- Uploaded tearoffs can now be downloaded
-- Better error messages in photo upload
-- Venue must be unreviewed to edit disqualified teams
-- User email can now be copied
-- Disqualified teams are now excluded from stats
-- Removed links to `old.naboj.org`
+- Uploaded tearoffs can now be downloaded.
+- Better error messages in photo upload.
+- Venue must be unreviewed to edit disqualified teams.
+- User email can now be copied.
+- Disqualified teams are now excluded from stats.
+- Removed links to `old.naboj.org`.
 
 ### Fixed
 
-- Certificates are now generated for all teams if no results
+- Certificates are now generated for all teams if no results.
 
 ## 2026.11 - 2026-04-23
 
 ### Fixed
 
-- Allow generating all certificates without results
+- Allow generating all certificates without results.
 
 ## 2026.10 - 2026-03-09
 
