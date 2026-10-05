@@ -487,7 +487,7 @@ msgstr "Dostáváte tuto zprávu, protože jste se registroval/a do soutěže %(
 #, fuzzy, python-format
 #| msgid "Hello, %(name)s!"
 msgid "Hello, %(name)s!"
-msgstr "Dobrý den,"
+msgstr "Dobrý den, %(name)s!"
 
 #: web/templates/mail/messages/registration.html:8
 #: web/templates/mail/messages/registration.txt:3
