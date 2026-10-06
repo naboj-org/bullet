@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.13 - 2026-10-06
+
+### Fixed
+
+- Added missing placeholder in cs translation
+- Update uk translation
+
 ## 2026.12 - 2026-09-07
 
 ### Added
