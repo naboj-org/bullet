@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Naboj-Ua\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-09-07 07:17+0000\n"
-"PO-Revision-Date: 2025-10-15 15:14+0200\n"
+"PO-Revision-Date: 2026-10-06 13:30+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: uk_UA\n"
@@ -68,7 +68,7 @@ msgstr "Вказана школа є недійсною."
 #: competitions/templates/teams/edit.html:77
 #: competitions/templates/teams/edit.html:137
 msgid "Full name"
-msgstr "Повне ім'я"
+msgstr "Ім'я та прізвище"
 
 #: competitions/forms/registration.py:81
 #: competitions/templates/teams/edit.html:47
