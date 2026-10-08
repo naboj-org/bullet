@@ -2,20 +2,62 @@
 @plugin "@tailwindcss/typography";
 @plugin "@tailwindcss/forms";
 
+/* cyrillic only versions from https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100..900;1,100..900&subset=cyrillic&display=swap */
+
+/* cyrillic-ext */
+@font-face {
+    font-family: 'Overpass';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/overpass/v19/qFdB35WCmI96Ajtm81GgY9TqxycJ.woff2) format('woff2');
+    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* cyrillic */
+@font-face {
+    font-family: 'Overpass';
+    font-style: italic;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/overpass/v19/qFdB35WCmI96Ajtm81GgY93qxycJ.woff2) format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+/* cyrillic-ext */
+@font-face {
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/overpass/v19/qFdH35WCmI96Ajtm81GoU9vyww.woff2) format('woff2');
+    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+
+/* cyrillic */
+@font-face {
+    font-family: 'Overpass';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url(https://fonts.gstatic.com/s/overpass/v19/qFdH35WCmI96Ajtm81GhU9vyww.woff2) format('woff2');
+    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
 @theme inline {
-  --font-sans: "Work Sans", "sans-serif";
+    --font-sans: "Work Sans", "Overpass", "sans-serif";
 
-  --aspect-ratio-4/3: 4 / 3;
+    --aspect-ratio-4/3: 4 / 3;
 
-  --grid-template-columns-registration: min-content 3fr 2fr;
-  --grid-template-columns-contestants-edit: min-content 3fr 2fr min-content;
+    --grid-template-columns-registration: min-content 3fr 2fr;
+    --grid-template-columns-contestants-edit: min-content 3fr 2fr min-content;
 
-  --color-primary: var(--primary);
-  --color-primary-light: var(--primary-light);
-  --color-primary-lighter: var(--gradient-dark);
-  --color-primary-dark: var(--primary-dark);
+    --color-primary: var(--primary);
+    --color-primary-light: var(--primary-light);
+    --color-primary-lighter: var(--gradient-dark);
+    --color-primary-dark: var(--primary-dark);
 
-  --typography-max-width: 75ch;
+    --typography-max-width: 75ch;
 }
 
 .branch-math {
@@ -64,12 +106,15 @@
     .branch-math .bg-hero-image {
         background-image: url('/static/img/math/hero.png');
     }
+
     .branch-physics .bg-hero-image {
         background-image: url('/static/img/physics/hero.png');
     }
+
     .branch-junior .bg-hero-image {
         background-image: url('/static/img/junior/home/hall.jpg');
     }
+
     .branch-chemistry .bg-hero-image {
         background-image: url('/static/img/chemistry/hero.png');
     }
@@ -104,7 +149,8 @@
         @apply bg-yellow-400/50 hover:bg-yellow-400 transition-colors;
     }
 
-    .bold-primary b, .bold-primary strong {
+    .bold-primary b,
+    .bold-primary strong {
         @apply text-primary;
         font-weight: inherit;
     }
