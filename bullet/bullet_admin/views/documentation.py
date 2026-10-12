@@ -9,7 +9,7 @@ from bullet_admin.access import (
     is_country_admin,
     is_operator,
 )
-from bullet_admin.documentation import Access, get_page, get_pages
+from bullet_admin.documentation import Access, get_page, get_sections
 from bullet_admin.mixins import MixinProtocol
 from bullet_admin.utils import get_active_competition
 
@@ -38,10 +38,7 @@ class DocumentationHomeView(LoginRequiredMixin, DocumentationAccessMixin, Templa
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
-        pages = get_pages()
-        access = self.get_user_access()
-        pages = filter(lambda p: bool(p.access & access), pages)
-        ctx["pages"] = pages
+        ctx["sections"] = get_sections(self.get_user_access())
         return ctx
 
 
