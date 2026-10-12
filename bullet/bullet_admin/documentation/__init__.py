@@ -49,6 +49,24 @@ pages = [
         Access.COUNTRY | Access.BRANCH,
     ),
     Page(
+        "pages",
+        "Pages and page blocks",
+        "Learn how to manage website pages, layouts and competition-phase visibility.",
+        Access.COUNTRY | Access.BRANCH,
+    ),
+    Page(
+        "menu-items",
+        "Menu items",
+        "Learn how to configure navigation links for each country and language.",
+        Access.COUNTRY | Access.BRANCH,
+    ),
+    Page(
+        "file-browser",
+        "File browser",
+        "Learn how to upload, organise and use public website files.",
+        Access.COUNTRY | Access.BRANCH,
+    ),
+    Page(
         "teams",
         "Teams",
         'Learn more about viewing and managing teams using the "Teams" page.',
