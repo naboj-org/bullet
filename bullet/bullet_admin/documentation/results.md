@@ -16,6 +16,8 @@ Links on the results page will lead to the country-language combination you last
 
 ## Announcing Results
 
+Complete the [team and venue review](/admin/documentation/review/) and resolve any result corrections before announcing the final rankings.
+
 You can access the result announcement for a selected venue / country. The system will show you a simple slideshow-like
 interface.
 

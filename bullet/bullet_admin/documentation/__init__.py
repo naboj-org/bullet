@@ -92,14 +92,37 @@ sections = [
         ],
     ),
     Section(
-        "Running the competition",
+        "Before the competition",
         [
             Page(
-                "teams",
-                "Teams",
-                'Learn more about viewing and managing teams using the "Teams" page.',
+                "registration",
+                "Registration",
+                "Understand registration, email confirmation and common problems.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "waiting-list",
+                "Waiting list",
+                "Understand waiting-list order and move eligible teams into the competition.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "tearoffs",
+                "Tearoff upload, generation and printing",
+                "Upload problem PDFs and prepare numbered tearoffs for your venue.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "check-in",
+                "Check-in",
+                "Check team details and mark teams as present at the venue.",
                 Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
             ),
+        ],
+    ),
+    Section(
+        "Running the competition",
+        [
             Page(
                 "problem_scanning",
                 "Problem scanning",
@@ -108,11 +131,63 @@ sections = [
                 Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
             ),
             Page(
+                "table-review",
+                "Table review",
+                "Check the problem tearoffs on a team's table against its expected problems.",
+                Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "live-signage",
+                "Live signage",
+                "Set up a venue screen with the countdown and public results.",
+                Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+        ],
+    ),
+    Section(
+        "After the competition",
+        [
+            Page(
+                "review",
+                "Review",
+                "Check problem records, review teams and finish the venue review.",
+                Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
                 "results",
                 "Results",
                 "Learn how to view (unfrozen) results, announce them and "
                 "understand how are the teams ordered in the results.",
                 Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "certificates",
+                "Certificate generation",
+                "Generate and print certificates after reviewing the final results.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+        ],
+    ),
+    Section(
+        "Tools and reference",
+        [
+            Page(
+                "email-campaigns",
+                "Email campaigns",
+                "Choose recipients, test a message and send it to team contacts.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "teams",
+                "Managing teams",
+                "View team details, understand statuses and make corrections.",
+                Access.OPERATOR | Access.VENUE | Access.COUNTRY | Access.BRANCH,
+            ),
+            Page(
+                "team-export",
+                "Exporting teams",
+                "Filter and download team data as CSV, JSON or YAML.",
+                Access.VENUE | Access.COUNTRY | Access.BRANCH,
             ),
             Page(
                 "tex",

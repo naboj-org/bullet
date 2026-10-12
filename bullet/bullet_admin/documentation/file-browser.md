@@ -65,11 +65,9 @@ File browser from the sidebar.
 Click the file in the File browser and copy its public address from the opened
 tab. Use that address in Markdown:
 
-```markdown
-[Download the instructions](https://math.naboj.org/path/to/instructions.pdf)
+    [Download the instructions](https://math.naboj.org/path/to/instructions.pdf)
 
-![Venue entrance](https://math.naboj.org/path/to/entrance.jpg)
-```
+    ![Venue entrance](https://math.naboj.org/path/to/entrance.jpg)
 
 Replace the example addresses with your files' public addresses. Do not use
 the short path shown in the image picker, such as `sponsors/partner-logo.png`,
