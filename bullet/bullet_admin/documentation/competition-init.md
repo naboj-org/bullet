@@ -5,7 +5,7 @@
 2. Click on "New competition" button.
 3. Fill out competition details:
 
-- **Year:** The edition number of the competition (e.g., 4 for the 4th Náboj).
+- **Competition edition:** The edition number of the competition (e.g., 4 for the 4th Náboj).
 - **Web start:** The date from which the website starts displaying dates, teams
   and other details of this competition.
 - **Registration start:** The date when registration opens.

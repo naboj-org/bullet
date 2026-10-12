@@ -34,8 +34,8 @@ class AlbumForm(forms.ModelForm):
         fields = ("title", "slug", "country")
         labels = {"slug": "URL suffix"}
         help_texts = {
-            "title": "You don't need to include year here.",
-            "slug": "You don't need to include year here.",
+            "title": "You don't need to include the competition edition here.",
+            "slug": "You don't need to include the competition edition here.",
         }
 
     def __init__(self, competition: Competition, **kwargs):
