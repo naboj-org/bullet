@@ -14,6 +14,10 @@ The result is colored to indicate status, and an error message is shown if avail
 If you scan a problem by accident, you can undo the scan by clicking on the undo button in the history log. You can
 also retry any failed scan by clicking on the retry button.
 
+If you need to check whether a team has the right problem tearoffs on its table, use the optional
+[Table review tool](/admin/documentation/table-review/). It helps compare the papers with the team's recorded solutions
+without changing scores or marking the team as reviewed.
+
 ## Green
 
 Green status means that the scanning was successful.

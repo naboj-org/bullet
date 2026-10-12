@@ -1,80 +1,87 @@
-# Teams
+# Managing teams
 
-## Team List
+## Team list
 
-The system provides a list of all registered teams. You always see a list of teams that are determined by your access
-permissions. Teams can be filtered based on country, venue, or status. There is also a full-text search available.
+Open "Teams" to view the teams within your access permissions. You can filter by country, venue or status, or use the full-text search.
 
-_Unfortunately, searching through contestant names is currently not possible._
+Searching contestant names is not supported. Search by school or contact details instead.
 
-The table offers the following columns:
+The table shows:
 
-* **Number:** This column contains the assigned team number (the number that will be printed on the barcodes, if
-  assigned) and a team ID (number prefixed with #). When communicating with IT support, please provide them with the
-  team ID.
-* **School:** The name and address of the team's school. This column also contains the school team identifier (A, B, C…)
-  used to identify different teams from the same school.
-* **Contact information:** The name, phone number and email of the person who registered the team. Phone number is not a
-  required field, so it may be omitted. _The phone number and email are not shown to operators._
-* **Contestants:** The list of the contestants' names.
-* **Venue / Category:** The venue and category of the team. This column may be omitted if you only have access to a
-  single venue.
-* **Status:** The current status of the team (see below). This column also indicates their consent to taking photos
-  during the competition.
+* Number: the assigned team number used on printed barcodes and the database ID prefixed with `#`. Give IT support the database ID when reporting a problem.
+* School: the school's name and address, plus an identifier such as A, B or C to distinguish teams from the same school.
+* Contact information: the name, email and optional phone number of the person who registered the team. Operators cannot see the email or phone number.
+* Contestants: the contestants' names.
+* Venue / Category: the team's venue and category. This column may be omitted if you have access to only one venue.
+* Status: the team's current status and its photo consent.
 
-### Team Statuses
+### Team statuses
 
-* **Unconfirmed:** The team did not confirm their registration yet. This is done by clicking a link that was delivered
-  by email upon registering.
-* **Waiting list:** The team was placed on the waiting list due to insufficient venue capacity or due to hitting the
-  per-school team limit.
-* **Checked in:** The team was marked as checked in at and is present at the venue.
-* **Reviewed:** The team's problem tear-off was reviewed.
-* **Registered:** The team is registered for the competition.
-* **Disqualified:** The team was marked as disqualified and will not be shown in any results.
+* Unconfirmed: the team has not opened its email confirmation link yet.
+* Waiting list: the team has confirmed but does not have a place. This can happen because the venue is full, the school limit has been reached or the team confirmed after registration closed.
+* Registered: the team has a place in the competition.
+* Checked in: the team has been marked as present at the venue.
+* Reviewed: the team's problem tearoff has been reviewed.
+* Disqualified: the team will not appear in results.
 
-## Assigning Team Numbers
+See [registration](/admin/documentation/registration/), [waiting lists](/admin/documentation/waiting-list/) and [check-in](/admin/documentation/check-in/) for those workflows.
 
-When the registration closes, and you want to start printing the problem tear-offs, you should assign team numbers using
-the “Assign numbers” button.
+## Editing teams
 
-This will assign numbers 001, 002, 003… to the teams with the “Registered” status. If the teams change after this (for
-example because someone unregisters), you can assign the numbers again. The system will by default try to fill in any
-gaps in the numbering sequence.
+Open a team's edit page to correct its details and contestant list. Check that you have the right team, especially when a school has several entries.
 
-There is also an option to force reassignment for all teams, which will reset the numbering altogether. This can be
-useful in some situations, but beware that this will entirely change the team numbers, which can introduce difficulties
-if you already have any materials printed out.
+### Operator permissions
 
-## Exporting Teams
-
-There is also the option to export all teams to CSV/JSON/YAML format. You can filter which teams you want to export.
-This filter is the same as the one on the team list page.
-
-## Editing Teams
-
-The team editing interface is pretty straightforward. Herein, we point out some important notes about team editing:
-
-### Operators and Editing
-
-An operator has limited ability to edit teams. Operator does not have access to view or edit the following fields:
+Operators can edit contestant details, language, check-in and photo consent. They cannot edit:
 
 * School
 * Venue
-* Contact's name, email, and phone number
+* Contact name, email or phone number
 * Team number
-* Disqualified flag
+* Disqualification
 
-### Changing Team Numbers
+Operators cannot see the contact email or phone number. Ask an administrator to handle changes outside these permissions.
 
-You can change team number manually. This can be used to use backup problem tear-off for a team by changing their number
-to 999 (or whatever is used on the backup tear-off). Keep in mind that team numbers must be unique, and the system will
-enforce such constraint (this can be an issue when you want to swap a team number between two teams).
+### Changing team numbers
 
-Also note that when changing the team's venue, the system will keep the team's number. If that number is already
-assigned to another team in the destination venue, the system will disallow such edit.
+An administrator can change a team's number manually. For example, if you give a team a backup tearoff set numbered 999, change its saved number to 999 before it uses the set.
 
-### Changing Team Status
+Numbers must be unique within a venue. The system rejects duplicates, so swapping two teams' numbers may require a temporary unused number.
 
-The system allows you to change team status in some instances, like moving the team from the waiting list to the
-competition. The system allows you to do so even if it is against the competition rules.
+Moving a team to another venue keeps its number. If that number is already in use at the destination, you must resolve the conflict before saving.
+
+For initial assignment and reassignment before printing, see [assigning team numbers](/admin/documentation/tearoffs/#assigning-team-numbers).
+
+### Changing team status
+
+Administrators can move teams from the waiting list into the competition even when doing so exceeds capacity or the school limit. Use manual promotion only for an agreed exception. See [waiting lists](/admin/documentation/waiting-list/) for the automatic and manual options.
+
+## Deleting teams and unregistration
+
+Deleting a team removes its registration, contestant records and any recorded solutions and results. It is not the same as marking the team absent or disqualified, and there is no undo button. Check that you have the right team before confirming.
+
+### When a team unregisters itself
+
+A team can unregister through its private email link before the competition starts, provided it has not checked in. It must confirm the removal on the "Unregister team" page. After check-in or the competition start, self-service unregistration is blocked.
+
+While registration is open, removing a team that is not on the waiting list can trigger promotion of the first waiting team at the same venue. The system checks that team's corrected school count against the current limit. If it passes, the waiting team gets a place and receives an email. Removing a waiting team does not trigger promotion.
+
+If a team unregisters after registration closes, the system emails the venue administrators. It does not automatically promote a replacement at that point. Review the [waiting list](/admin/documentation/waiting-list/) and arrange any replacement with the organisers.
+
+### When an administrator deletes a team
+
+Venue, country and branch administrators can delete teams within their scope while the competition is unlocked. Operators cannot delete teams.
+
+Open the team's edit page and choose the delete action. On the confirmation page, "Send mail to contact person" is selected by default. Leave it selected to notify the contact that their team has been deleted, or clear it if you have a reason not to send that email. Confirm with "Delete team".
+
+Administrative deletion does not automatically promote a waiting team, even while registration is open. Check the venue's waiting list afterwards and use "Move automatically" if you want to fill the vacancy under the current rules.
+
+Unlike self-service unregistration, administrative deletion is not blocked by check-in or the competition start. Be especially careful once a team has submitted solutions: deletion removes its recorded results too. For a team excluded under the competition rules, use disqualification rather than deleting its registration and solution records.
+
+### Paper sets after a cancellation
+
+Set aside any tearoffs already printed for the deleted team so they are not handed out by mistake. A replacement team needs its own assigned number matching the papers it receives. See [team number assignment](/admin/documentation/tearoffs/#assigning-team-numbers) before reusing or reprinting a set.
+
+## Related tasks
+
+Assign numbers and prepare printed sets using the [tearoffs guide](/admin/documentation/tearoffs/). To download team data, see [exporting teams](/admin/documentation/team-export/).

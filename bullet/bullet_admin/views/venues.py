@@ -44,7 +44,7 @@ from bullet_admin.forms.venues import TeamListForm, VenueForm
 from bullet_admin.mixins import AuthedHttpRequest, RedirectBackMixin
 from bullet_admin.utils import get_active_competition
 from bullet_admin.views import GenericForm
-from bullet_admin.views.generic.links import Link, NewLink, ViewIcon
+from bullet_admin.views.generic.links import HelpLink, Link, NewLink, ViewIcon
 from bullet_admin.views.generic.list import GenericList
 
 
@@ -70,6 +70,7 @@ class VenueListView(PermissionCheckMixin, GenericList, ListView):
         competition = get_active_competition(self.request)
         if is_country_admin(self.request.user, competition):
             links.append(NewLink("venue", reverse("badmin:venue_create")))
+            links.append(HelpLink(reverse("badmin:documentation", args=["venues"])))
 
         return links
 

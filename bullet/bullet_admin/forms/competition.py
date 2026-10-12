@@ -26,7 +26,10 @@ class CompetitionForm(forms.ModelForm):
             "end the result table freezes",
         }
 
-        labels = {"is_cancelled": "Cancel the competition?", "number": "Year"}
+        labels = {
+            "is_cancelled": "Cancel the competition?",
+            "number": "Competition edition",
+        }
 
         widgets = {
             "web_start": forms.DateTimeInput(attrs={"type": "datetime"}),
@@ -49,9 +52,7 @@ class CompetitionForm(forms.ModelForm):
             .exclude(id=self.instance.id)
             .exists()
         ):
-            raise forms.ValidationError(
-                "A competition with this number already exists."
-            )
+            raise forms.ValidationError("This competition edition already exists.")
         return number
 
     def save(self, commit: bool = True):

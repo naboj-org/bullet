@@ -1,38 +1,82 @@
 # Permissions
 
-Every account with access to the administration system can have different access permissions. These can be edited in
-the [“Users” page](/admin/users/) of the administration interface.
+You can edit account permissions on the ["Users" page](/admin/users/) in the administration interface.
+Permissions apply to the selected branch and competition. Check which competition is selected before editing a user's
+competition permissions.
 
 There are two types of permissions:
 
-* **Branch permissions:** These are bound to the whole branch (Math, Physics…) and are persisted between competition
-  years.
-* **Competition permissions:** These are bound to a given competition (Math 2023, Physics 2024…) and do not persist
-  between competition years.
+- Branch permissions apply to the whole branch (Math, Physics...) and persist between competition editions.
+- Competition permissions apply to one competition (Math 2025, Physics 2026...) and do not automatically carry over
+  to another edition.
 
-## Branch Permissions
+## Branch permissions
 
-* **“Allow access to content management”:** This allows the user to access all admin pages in the “Content” section.
-  This includes access to edit page content, menu items, and others.
-* **“Photo management”:** This allows the user to upload and manage photos in the album section of the website.
-* **“Is branch administrator”:** This allows the user to access and manage everything in the current branch (excluding
-  the 2 prior options, which must be granted separately).
+The "Is branch administrator" option gives a user access to all administration features in the current branch,
+across competition editions. Branch administrators can manage competition and category settings, create and finalize
+competitions, edit website content, manage photos, and manage users.
 
-## Competition Permissions
+Branch administrators do not need country or venue assignments. If you save a user with this option enabled, the form
+saves their branch permissions but does not save changes to their competition permissions.
 
-There are two main types of competition permissions: Venue administrator and Country administrator. These are granted
-using the “Venue administrator in” and “Country administrator in” options and are mutually exclusive.
+## Competition permissions
 
-A venue administrator can manage everything (teams, email campaigns, problem scanning…) in his/her venue(s).
+Choose either venue or country access:
 
-A country administrator has all the permissions that a venue administrator with all venues of a given country/countries
-would have. Moreover, he/she can also create new venues and manage schools in their country.
+- "Venue administrator in" lets you select one or more venues. The user can manage teams and venue operations at those
+  venues, including team data, email campaigns, document generation, problem scanning, and review.
+- "Country administrator in" lets you select one or more countries. The user has venue administrator access to every
+  venue in those countries, including new venues. They can also create venues, manage schools in their countries,
+  manage wildcards, and upload competition files.
 
-There are two additional options that can be selected when granting competition permissions:
+A user cannot have both venue and country assignments in the same competition role.
 
-* **“Can delegate permissions”:** This allows the user to grant the same (or lower) permissions to another user. This is
-  useful to allow country administrators to create and manage accounts for their venue administrators. It is also useful
-  to allow venue administrators to create more accounts for their helpers and operators.
-* **“Limit to operator access”:** This limits the user access to operator actions. The operator is designed to only
-  allow access to the most important functions, while limiting access to potentially sensitive data and destructive
-  features. The operator can do team check-in, problem scanning and review.
+### Content and photo management
+
+Country administrators and branch administrators can manage pages, page blocks, content blocks, and menu items.
+They can edit content throughout the branch, not just content for their assigned countries.
+
+Venue, country, and branch administrators can manage albums and photos. Album access is not limited to their assigned
+venues or countries. Country and venue administrators need their role in the selected competition to access content or
+photo management. Branch administrators have access across competition editions.
+
+### Operator access
+
+Select "Limit to operator access" to give a user access to competition-day tasks at their assigned venues without full
+venue administrator access. Select the venues where they will work. You cannot combine this option with country assignments.
+
+Operators can:
+
+- View teams and use the restricted team editing form, including team check-in.
+- Generate documents for individual teams.
+- Scan problems, undo scans, and review teams and problems when the scanning and review state allows it.
+- Use results announcement tools for venues or countries they have access to, once the applicable review requirements
+  are met.
+
+Operators cannot manage user permissions, email campaigns, albums or website content, or create venues. They also cannot
+use team actions reserved for administrators, such as deleting teams or moving them from the waiting list into the competition.
+
+## Managing users and delegating permissions
+
+Branch, country, and venue administrators can create users and edit users whose permissions are within their own scope.
+
+- Branch administrators can edit any user in the current branch and grant or remove branch administrator access.
+  Only branch administrators see the branch permission checkbox.
+- Country administrators can grant country access within their assigned countries, or venue administrator and operator
+  access to venues in those countries. They can edit another country administrator only if they have access to all of
+  that user's countries. To edit a venue administrator or operator, all of that user's venues must be in their countries.
+- Venue administrators can grant venue administrator or operator access at their assigned venues. They can edit
+  another venue administrator or operator only if they have access to all of that user's venues.
+
+Country and venue administrators cannot edit branch administrators. Administrators can also edit users who have no
+branch administrator access and no country or venue assignments in the selected competition.
+
+## Competition state restrictions
+
+Some actions also require an unlocked competition. Once results are public, administrators cannot delete teams, move
+teams into the competition, resend confirmation emails, change venue start times, or upload tearoffs.
+These restrictions apply to branch administrators too.
+
+Scanning and review have their own checks. For example, problem scanning requires the competition to have started,
+and a team or venue already marked as reviewed prevents further scans and some review actions.
+Operators and administrators must both meet these requirements.
