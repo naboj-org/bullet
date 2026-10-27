@@ -3,7 +3,8 @@ from competitions.branches import Branches
 from countries.utils import country_reverse
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
-from django.db.models import Count
+from django.db.models import Count, Min
+from django.db.models.functions import Lower
 from django.template import Context, Template
 from django_countries.fields import CountryField
 from django_rq import job
@@ -21,8 +22,14 @@ def _send_campaign(campaign_id: int, team_id: int, override_email=None):
 
     with TeamCountry(team):
         branch = Branches[team.venue.category.competition.branch]
-        link = country_reverse("team_edit", kwargs={"secret_link": team.secret_link})
-        context = Context({"team": team, "edit_link": f"https://{branch.domain}{link}"})
+        context = Context()
+        if not campaign.unique_email_addresses:
+            link = country_reverse(
+                "team_edit", kwargs={"secret_link": team.secret_link}
+            )
+            context.update(
+                {"team": team, "edit_link": f"https://{branch.domain}{link}"}
+            )
 
         send_email(
             branch,
@@ -41,6 +48,7 @@ class EmailCampaign(models.Model):
     )
     subject = models.CharField(max_length=128)
     template = models.TextField(blank=True)
+    unique_email_addresses = models.BooleanField(default=False)
     last_sent = models.DateTimeField(blank=True, null=True)
 
     team_countries = ChoiceArrayField(CountryField(), blank=True)
@@ -87,6 +95,25 @@ class EmailCampaign(models.Model):
     def send_single(self, team: Team, override_email=None):
         _send_campaign.delay(self.id, team.id, override_email=override_email)
 
+    def get_recipient_teams(self):
+        teams = self.get_teams()
+        if not self.unique_email_addresses:
+            return teams
+
+        # Apply selection filters separately so contestant counts do not
+        # change the grouping used to choose one team per email address.
+        recipient_ids = (
+            Team.objects.filter(pk__in=teams.values("pk"))
+            .order_by()
+            .values(normalized_email=Lower("contact_email"))
+            .annotate(recipient_id=Min("pk"))
+            .values("recipient_id")
+        )
+        return teams.filter(pk__in=recipient_ids).order_by("pk")
+
+    def get_recipient_count(self):
+        return self.get_recipient_teams().count()
+
     def send_all(self):
-        for team in self.get_teams():
+        for team in self.get_recipient_teams():
             self.send_single(team)

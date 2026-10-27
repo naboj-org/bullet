@@ -14,6 +14,7 @@ class EmailCampaignForm(forms.ModelForm):
         fields = (
             "subject",
             "template",
+            "unique_email_addresses",
             "team_countries",
             "team_languages",
             "team_venues",
@@ -29,7 +30,15 @@ class EmailCampaignForm(forms.ModelForm):
             "template": MarkdownWidget(attrs={"rows": 30}),
         }
 
+        labels = {
+            "unique_email_addresses": "Send only to unique email addresses",
+        }
+
         help_texts = {
+            "unique_email_addresses": (
+                "Send one email per contact address instead of one per team. "
+                "The team and edit_link template variables will not be available."
+            ),
             "team_contestants": "Comma separated list of numbers.",
         }
 

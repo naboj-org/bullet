@@ -1,6 +1,6 @@
 # Email campaigns
 
-Use email campaigns to send instructions or reminders to team contacts. Each matching team receives a separate message at its contact email address. If one contact registered several teams, they may receive several emails.
+Use email campaigns to send instructions or reminders to team contacts. By default, each matching team receives a separate message at its contact email address. If one contact registered several teams, they may receive several emails. Check "Send only to unique email addresses" to send one message per contact address instead.
 
 Open "Email campaigns" in the sidebar and create a new campaign. Check that you have selected the correct competition first.
 
@@ -20,6 +20,8 @@ Enter contestant counts as a comma-separated list, such as `0, 1, 2`, to reach t
 
 Save the campaign, then open "List teams" on its detail page. Review the recipients, select "Exclude?" for any teams you do not want to contact, and save the exclusions.
 
+With "Send only to unique email addresses" checked, addresses are deduplicated after applying all filters and team exclusions. Differences in letter case are ignored when deduplicating addresses. The recipient count shows unique addresses rather than teams. Excluding a team does not exclude its address if another selected team uses it.
+
 Recipient selection is live, not a saved snapshot. Teams can enter or leave the selection as they register, check in or change details. Review the list again just before sending.
 
 ## Writing the message
@@ -34,7 +36,9 @@ Enter a subject and write the message template. The body supports Markdown and D
 - `{{ team.id }}` for the database ID.
 - `{{ team.online_password }}` for an online team's password.
 
-For example:
+When "Send only to unique email addresses" is checked, neither `team` nor `edit_link` is available. Write a generic message without team-specific details or private links.
+
+For example, when sending one email per team:
 
     Hello {{ team.display_name }},
 
@@ -55,11 +59,11 @@ Treat private edit links and online passwords as confidential. Do not copy them 
 4. Check the message in the inbox of your organiser account.
 5. Review the selection once more, then click "Send campaign".
 
-The test uses the first matching team's details but sends the email to your organiser account, not to that team. Testing and sending are unavailable when the campaign has no matching recipients.
+The test sends the email to your organiser account, not to a team. In per-team mode it uses the first matching team's details. In unique-address mode it omits `team` and `edit_link`, just like the actual campaign. Testing and sending are unavailable when the campaign has no matching recipients.
 
 Sending queues the emails in the background. The success message and last-sent time record the send action; they do not confirm that every message has arrived.
 
-You cannot recall sent emails. Sending the campaign again queues another message for every team currently selected, including teams contacted by the previous send. Do not click again just because delivery is taking time.
+You cannot recall sent emails. Sending the campaign again queues another message for every currently selected team (or unique address when that option is checked), including recipients contacted by the previous send. Do not click again just because delivery is taking time.
 
 Replies go to each team's venue contact address, with the country's default address used when the venue has no email configured.
 
