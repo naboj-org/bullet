@@ -192,7 +192,7 @@ class CampaignDetailView(PermissionCheckMixin, DetailView):
         ctx["venues_display"] = [
             str(x) for x in self.object.team_venues.select_related("category").all()
         ]
-        ctx["team_count"] = self.object.get_teams().count()
+        ctx["recipient_count"] = self.object.get_recipient_count()
         ctx["excluded_count"] = self.object.excluded_teams.count()
         ctx["can_edit"] = can_edit_campaign(self.request, self.object)
         return ctx
@@ -251,7 +251,12 @@ class CampaignSendTestView(PermissionCheckMixin, View):
         )
         if not can_edit_campaign(self.request, campaign):
             raise PermissionDenied()
-        team = campaign.get_teams().first()
+        team = campaign.get_recipient_teams().first()
+        if team is None:
+            messages.error(request, "This campaign has no recipients.")
+            return HttpResponseRedirect(
+                reverse("badmin:email_detail", kwargs={"pk": campaign.id})
+            )
         campaign.send_single(team, request.user.email)
 
         messages.success(request, "Testing email sent.")

@@ -60,6 +60,12 @@
       </header>
       <div class="divide-y divide-gray-200">
         <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+          <label for="{{ form.unique_email_addresses.id_for_label }}">
+            {{ form.unique_email_addresses.label }}
+          </label>
+          <div class="mt-1 sm:mt-0 sm:col-span-2">{% bfield form.unique_email_addresses %}</div>
+        </div>
+        <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
           <label for="{{ form.subject.id_for_label }}">
             Subject <span class="text-red-600">*</span>
           </label>
@@ -70,7 +76,7 @@
             <label for="{{ form.template.id_for_label }}">Message template</label>
             <p class="text-gray-700 text-sm">
               Templates support <a href="https://docs.djangoproject.com/en/4.1/ref/templates/language/" target="_blank" class="link-primary">Django templates syntax</a> and Markdown.
-              Useful variables:
+              The variables below are available only when “Send only to unique email addresses” is unchecked:
             </p>
             <ul class="text-gray-700 text-sm">
               {% verbatim %}

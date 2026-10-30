@@ -35,8 +35,8 @@
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <div>Countries:</div>
                     <div class="mt-1 sm:mt-0 sm:col-span-2">
-                        {% if object.team_countries %}
-                            {{ object.team_countries|join:", " }}
+                        {% if object.recipient_countries %}
+                            {{ object.recipient_countries|join:", " }}
                         {% else %}
                             <span class="text-gray-700">(all)</span>
                         {% endif %}
@@ -93,8 +93,18 @@
                     </div>
                 </div>
                 <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
+                    <div>Delivery mode:</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">
+                        {% if object.unique_email_addresses %}
+                            One email per unique address. Team and edit_link template variables are unavailable.
+                        {% else %}
+                            One email per team.
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="sm:grid sm:grid-cols-3 sm:gap-4 items-baseline p-4">
                     <div>Total recipients:</div>
-                    <div class="mt-1 sm:mt-0 sm:col-span-2">{{ team_count }}</div>
+                    <div class="mt-1 sm:mt-0 sm:col-span-2">{{ recipient_count }}</div>
                 </div>
                 {% if can_edit %}
                     <div class="p-4 flex gap-2">
@@ -116,7 +126,7 @@
                     <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Testing email</h2>
                 </header>
                 <div class="p-4">
-                    {% if team_count %}
+                    {% if recipient_count %}
                         <p class="mb-4">
                             You can test the campaign by clicking on the button below. We will send an testing email to {{ user.email }}.
                         </p>
@@ -140,7 +150,7 @@
                     <h2 class="text-sm tracking-wide text-slate-600 uppercase font-bold">Send emails</h2>
                 </header>
                 <div class="p-4">
-                    {% if team_count %}
+                    {% if recipient_count %}
                         <p class="mb-4">
                             You can send the campaign to the teams. Beware, this action is irreversible.
                         </p>
