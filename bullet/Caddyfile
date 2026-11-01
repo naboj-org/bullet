@@ -20,3 +20,11 @@
         }
     }
 }
+
+# used for serveing /robots.txt on staging domains in kube
+:8002 {
+    handle /robots.txt {
+        respond "User-Agent: *
+        Disallow: /"
+    }
+}
