@@ -3,12 +3,27 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.14 - 2026-11-01
+
+### Added
+
+- Option to only send campaigns to unique email adresses.
+
+### Changed
+
+- Updated and expanded documentation.
+
+### Fixed
+
+- Better fallback font for cyrillic.
+- Page edit icon was invisible.
+
 ## 2026.13 - 2026-10-06
 
 ### Fixed
 
-- Added missing placeholder in cs translation
-- Update uk translation
+- Added missing placeholder in cs translation.
+- Update uk translation.
 
 ## 2026.12 - 2026-09-07
 
