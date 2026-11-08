@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.15 - 2026-11-08
+
+### Fixed
+
+- Missing icon in registration thanks page.
+- Fast team edit resubmition causing new participants to be added twice.
+
 ## 2026.14 - 2026-11-01
 
 ### Added
