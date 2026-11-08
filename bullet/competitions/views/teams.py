@@ -52,7 +52,21 @@ class TeamEditView(FormView):
         )
         return ctx
 
+    @transaction.atomic
     def form_valid(self, form):
+        self.team = Team.objects.select_for_update().get(pk=self.team.pk)
+
+        submitted_ids = {
+            f.instance.pk for f in form.initial_forms if f.instance.pk is not None
+        }
+        if submitted_ids != set(self.team.contestants.values_list("id", flat=True)):
+            return HttpResponseRedirect(
+                country_reverse(
+                    "team_edit", kwargs={"secret_link": self.team.secret_link}
+                )
+            )
+
+        form.instance = self.team
         form.save()
         if "consent_photos" in self.request.POST:
             self.team.consent_photos = True
