@@ -207,7 +207,11 @@ class TeamDeleteView(DeleteView):
         self.object._change_reason = "unregistered via team edit link"
         self.object.delete()
 
-        if competition.is_registration_open and not team.is_waiting:
+        if (
+            competition.is_registration_open
+            and not team.is_waiting
+            and team.venue.remaining_capacity > 0
+        ):
             waiting_list = get_venue_waiting_list(team.venue)
             if len(waiting_list):
                 first_team = waiting_list[0]
