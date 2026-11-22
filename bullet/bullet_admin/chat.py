@@ -62,6 +62,19 @@ def get_chat_channels(competition: Competition, user: User) -> list[dict[str, st
     ]
 
 
+def get_chat_affiliation(competition: Competition, user: User) -> str:
+    """Describe explicit permissions, rather than inherited channel access."""
+    if is_branch_admin(user, competition):
+        return "branch"
+
+    role = user.get_competition_role(competition)
+    suffix = "~" if role.is_operator else ""
+    affiliations = {f"{venue.shortcode}{suffix}" for venue in role.venues}
+    if not role.is_operator:
+        affiliations.update(str(country).upper() for country in role.countries or [])
+    return ",".join(sorted(affiliations))
+
+
 def _encode_json(value) -> bytes:
     raw = json.dumps(value, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     return base64.urlsafe_b64encode(raw).rstrip(b"=")
@@ -86,7 +99,12 @@ def generate_chat_login_jwt(competition: Competition, user: User) -> str:
         "sub": user_id,
         "iat": now,
         "exp": now + 60,
-        "user": {"id": user_id, "username": username, "affiliation": ""},
+        "admin": is_branch_admin(user, competition),
+        "user": {
+            "id": user_id,
+            "username": username,
+            "affiliation": get_chat_affiliation(competition, user),
+        },
         "channels": channels,
     }
 
