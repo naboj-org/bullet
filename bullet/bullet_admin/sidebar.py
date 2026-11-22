@@ -8,6 +8,7 @@ from bullet_admin.access import PermissionCallable, check_access
 from bullet_admin.views.album import AlbumListView
 from bullet_admin.views.archive import ProblemImportView, ProblemPDFUploadView
 from bullet_admin.views.category import CategoryListView
+from bullet_admin.views.chat import ChatLoginView
 from bullet_admin.views.competition import (
     CompetitionAutomoveView,
     CompetitionTearoffUploadView,
@@ -40,6 +41,7 @@ class Item:
     name: str
     link: str
     permissions: list[PermissionCallable] | PermissionCallable
+    new_tab: bool = False
 
 
 @dataclass
@@ -99,6 +101,13 @@ SIDEBAR: list[Group] = [
                 "Wildcards",
                 reverse_lazy("badmin:wildcard_list"),
                 WildcardListView.required_permissions,
+            ),
+            Item(
+                "mdi:chat",
+                "Chat",
+                reverse_lazy("badmin:chat"),
+                ChatLoginView.required_permissions,
+                new_tab=True,
             ),
         ],
     ),

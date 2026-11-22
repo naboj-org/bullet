@@ -6,6 +6,7 @@ from bullet_admin.views import (
     archive,
     auth,
     category,
+    chat,
     competition,
     content,
     education,
@@ -20,6 +21,8 @@ from bullet_admin.views import (
 app_name = "badmin"
 urlpatterns = [
     path("", home.HomeView.as_view(), name="home"),
+    path("chat/", chat.ChatLoginView.as_view(), name="chat"),
+    path("chat/token/", chat.ChatTokenView.as_view(), name="chat_token"),
     path("release_notes/", home.ReleaseNotesView.as_view(), name="release_notes"),
     path("auth/login/", auth.LoginView.as_view(), name="login"),
     path("auth/logout/", auth.LogoutView.as_view(), name="logout"),
