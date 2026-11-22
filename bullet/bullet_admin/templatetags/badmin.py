@@ -1,4 +1,5 @@
 from bullet.search import DumbPage
+from bullet_admin.access import is_operator
 from bullet_admin.sidebar import get_sidebar
 from bullet_admin.utils import get_active_competition
 from competitions.models import Competition
@@ -23,6 +24,24 @@ def admin_sidebar(context):
         }
     )
     return context
+
+
+@register.inclusion_tag("bullet_admin/partials/chat_widget.html", takes_context=True)
+def admin_chat_widget(context):
+    request = context.request
+    user = request.user
+    if (
+        not user.is_authenticated
+        or not user.is_active
+        or len(settings.ORGCHAT_JWT_SECRET.encode("utf-8")) < 32
+    ):
+        return {}
+
+    competition = get_active_competition(request)
+    if competition is None or not is_operator(user, competition):
+        return {}
+
+    return {"widget_url": f"{settings.ORGCHAT_URL.rstrip('/')}/widget.js"}
 
 
 @register.inclusion_tag("bullet_admin/form.html")

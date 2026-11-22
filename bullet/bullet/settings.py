@@ -231,3 +231,6 @@ else:
 LETTER_URL = env("LETTER_URL", default="")
 LETTER_TOKEN = env("LETTER_TOKEN", default="")
 LETTER_CALLBACK_ROOT = env("LETTER_CALLBACK_ROOT", default="https://math.naboj.org")
+
+ORGCHAT_URL = env("ORGCHAT_URL", default="https://chat.naboj.online")
+ORGCHAT_JWT_SECRET = env("ORGCHAT_JWT_SECRET", default="")

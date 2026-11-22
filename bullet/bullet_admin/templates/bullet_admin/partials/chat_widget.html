@@ -1,0 +1,19 @@
+{% if widget_url %}
+    <script>
+        window.orgchatConfig = {
+            getToken: async () => {
+                const response = await fetch('{% url "badmin:chat_token" %}', {
+                    credentials: 'same-origin',
+                    cache: 'no-store',
+                    headers: {Accept: 'application/json'}
+                });
+                if (!response.ok || response.redirected) {
+                    throw new Error('Unable to authenticate chat');
+                }
+                const {token} = await response.json();
+                return token;
+            }
+        };
+    </script>
+    <script src="{{ widget_url }}" defer></script>
+{% endif %}
