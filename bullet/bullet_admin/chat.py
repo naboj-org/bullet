@@ -49,7 +49,7 @@ def get_chat_channels(competition: Competition, user: User) -> list[dict[str, st
     for venue in venues:
         channel_id = f"{prefix}-{venue.shortcode}"
         channels[channel_id] = channel_id
-        if branch_admin or not role.is_operator:
+        if not role.is_operator:
             countries.add(venue.country.code)
 
     for country in countries:
