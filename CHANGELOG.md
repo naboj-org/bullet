@@ -3,6 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## 2026.16 - 2026-11-22
+
+### Added
+
+- Organizer chat integrated into the admin interface, with channels based on competition permissions.
+
+### Fixed
+
+- Downloading uploaded tearoffs no longer fails due to redirects.
+- Teams are only moved from the waiting list after a team unregisters if the venue has remaining capacity.
+
 ## 2026.15 - 2026-11-08
 
 ### Fixed
