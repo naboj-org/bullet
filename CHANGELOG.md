@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project uses the `YYYY.N` version format.
 
+## Unreleased
+
+### Added
+
+- Organizer chat profiles now show permission-based affiliations, and branch administrators receive chat admin access.
+
 ## 2026.16 - 2026-11-22
 
 ### Added
